@@ -18,7 +18,7 @@ class ActivityPageSelectContent extends GridProxyAbstract_1.GridProxyAbstract {
       (this.g5e = () => {
         this.IsUiActiveInHierarchy() && this.Oqe();
       }),
-      (this.vXs = (t) => {
+      (this.cJs = (t) => {
         this.Pe?.Id && this.Pe.Id === t && (this.P5e(), this.u3e(), this.Kbe());
       }),
       (this.jbe = (t) => {
@@ -45,7 +45,7 @@ class ActivityPageSelectContent extends GridProxyAbstract_1.GridProxyAbstract {
       [2, UE.UIItem],
       [3, UE.UIText],
       [4, UE.UIItem],
-      [5, UE.UISprite],
+      [5, UE.UITexture],
     ]),
       (this.BtnBindInfo = [[0, this.jbe]]);
   }
@@ -59,7 +59,7 @@ class ActivityPageSelectContent extends GridProxyAbstract_1.GridProxyAbstract {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshActivityTab,
-        this.vXs,
+        this.cJs,
       );
   }
   RemoveEventListener() {
@@ -69,7 +69,7 @@ class ActivityPageSelectContent extends GridProxyAbstract_1.GridProxyAbstract {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshActivityTab,
-        this.vXs,
+        this.cJs,
       );
   }
   OnBeforeShow() {
@@ -132,14 +132,16 @@ class ActivityPageSelectContent extends GridProxyAbstract_1.GridProxyAbstract {
         this.GetText(3).SetText(t));
   }
   Kbe() {
-    var e = this.Pe.LocalConfig.TabSprite;
-    const i = this.GetSprite(5);
-    if ((i.SetUIActive(!1), e && 0 !== e.length)) {
-      var s = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
+    var e,
+      i = this.Pe.LocalConfig.TabTexture;
+    const s = this.GetTexture(5);
+    if ((s.SetUIActive(!1), i && 0 !== i.length)) {
       let t = 0;
-      2 <= e.length && (t = 0 === s ? 0 : 1),
-        this.SetSpriteByPath(e[t], i, !1, void 0, () => {
-          i.SetUIActive(!0);
+      2 <= i.length &&
+        ((e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender()),
+        (t = 0 === e ? 0 : 1)),
+        this.SetTextureByPath(i[t], s, void 0, () => {
+          s.SetUIActive(!0);
         });
     }
   }

@@ -59,9 +59,8 @@ class ActivitySubViewTowerGuide extends ActivitySubViewBase_1.ActivitySubViewBas
           );
       }),
       (this.$3e = () => {
-        var e,
-          i = this.ActivityBaseData.GetPreGuideQuestFinishState();
-        i
+        var e;
+        this.ActivityBaseData.GetPreGuideQuestFinishState()
           ? ((e = {
               MarkId: this.ActivityBaseData.MapMarkId,
               MarkType: 0,
@@ -72,8 +71,12 @@ class ActivitySubViewTowerGuide extends ActivitySubViewBase_1.ActivitySubViewBas
             UiManager_1.UiManager.OpenView("QuestView", e)),
           ModelManager_1.ModelManager.ActivityModel.SendActivityViewJumpClickLogData(
             this.ActivityBaseData,
-            i ? 2 : 1,
           );
+      }),
+      (this.BZa = () => {
+        ControllerHolder_1.ControllerHolder.ActivityController.OpenActivityConditionView(
+          this.ActivityBaseData.Id,
+        );
       });
   }
   OnRegisterComponent() {
@@ -101,6 +104,7 @@ class ActivitySubViewTowerGuide extends ActivitySubViewBase_1.ActivitySubViewBas
       [19, UE.UIText],
       [21, UE.UIItem],
       [22, UE.UIText],
+      [23, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
         [5, this.X2e],
@@ -108,6 +112,7 @@ class ActivitySubViewTowerGuide extends ActivitySubViewBase_1.ActivitySubViewBas
         [6, this.Q3e],
         [11, this.X3e],
         [12, this.$3e],
+        [23, this.BZa],
       ]);
   }
   OnSetData() {}
@@ -164,6 +169,7 @@ class ActivitySubViewTowerGuide extends ActivitySubViewBase_1.ActivitySubViewBas
         this.GetItem(2).SetUIActive(t),
         this.GetItem(8).SetUIActive(t),
         this.GetItem(13).SetUIActive(t),
+        this.GetButton(23).RootUIComp.SetUIActive(t),
         t && this.GetText(14).ShowTextNew(this.GetCurrentLockConditionText()),
         this.ActivityBaseData.GetTowerProgressState(1)),
       h = this.ActivityBaseData.GetTowerProgressState(2);

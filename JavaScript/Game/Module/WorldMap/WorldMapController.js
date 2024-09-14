@@ -14,6 +14,8 @@ const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
   InputManager_1 = require("../../Ui/Input/InputManager"),
   UiManager_1 = require("../../Ui/UiManager"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  QuestController_1 = require("../QuestNew/Controller/QuestController"),
   ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
   TeleportController_1 = require("../Teleport/TeleportController"),
   WorldMapDefine_1 = require("./WorldMapDefine");
@@ -52,22 +54,33 @@ class WorldMapController extends UiControllerBase_1.UiControllerBase {
         this.u3o,
       );
   }
-  static TryTeleport(e) {
+  static TryTeleport(e, r) {
+    var o;
     TeleportController_1.TeleportController.CheckCanTeleport()
-      ? TeleportController_1.TeleportController.SendTeleportTransferRequest(e)
+      ? QuestController_1.QuestNewController.IsTrackItemOutFailRange(e)
+        ? ((o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(220)).FunctionMap.set(
+            2,
+            () => {
+              TeleportController_1.TeleportController.SendTeleportTransferRequest(
+                e,
+              ),
+                r?.();
+            },
+          ),
+          ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+            o,
+          ))
+        : (TeleportController_1.TeleportController.SendTeleportTransferRequest(
+            e,
+          ),
+          r?.())
       : ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "TrialRoleTransmitLimit",
         );
   }
   static MapOpenPush(e) {
-    var r = new Protocol_1.Aki.Protocol._as();
-    (r._jn = e), Net_1.Net.Send(27516, r);
-  }
-  static LockView(e) {
-    this.c3o = e;
-  }
-  static CanWoldMapViewOpen() {
-    return this.c3o;
+    var r = new Protocol_1.Aki.Protocol.fas();
+    (r.vjn = e), Net_1.Net.Send(20514, r);
   }
   static OpenView(o, e, r, t) {
     (ModelManager_1.ModelManager.WorldMapModel.IsBattleViewOpen = e),
@@ -134,7 +147,6 @@ class WorldMapController extends UiControllerBase_1.UiControllerBase {
 }
 (exports.WorldMapController = WorldMapController),
   ((_a = WorldMapController).l3o = void 0),
-  (WorldMapController.c3o = !0),
   (WorldMapController.m3o = void 0),
   (WorldMapController.iUi =
     new WorldMapDefine_1.MarkPriority2HierarchyIndexHelper()),
@@ -178,20 +190,22 @@ class WorldMapController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (WorldMapController.iVe = (e) => {
-    return _a.CanWoldMapViewOpen()
-      ? ModelManager_1.ModelManager.WorldMapModel.LevelEventDisableFlag
-        ? (ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
-            "DisableMapView",
+    return ModelManager_1.ModelManager.WorldMapModel.LevelEventDisableFlag
+      ? (ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
+          "DisableMapView",
+        ),
+        !1)
+      : ModelManager_1.ModelManager.FunctionModel.IsOpen(10015)
+        ? !ModelManager_1.ModelManager.FunctionModel.IsLockByBehaviorTree(
+            10015,
+          ) ||
+          (ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+            "UnableSystem",
           ),
           !1)
-        : !!ModelManager_1.ModelManager.FunctionModel.IsOpen(10015) ||
-          (ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+        : (ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
             "PhantomLock",
           ),
-          !1)
-      : (ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-          "UnableSystem",
-        ),
-        !1);
+          !1);
   });
 //# sourceMappingURL=WorldMapController.js.map

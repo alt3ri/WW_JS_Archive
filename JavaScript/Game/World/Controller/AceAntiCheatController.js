@@ -19,11 +19,12 @@ const ue_1 = require("ue"),
   CharacterAttributeTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterAttributeTypes"),
   POSTICKTIME = 1e3,
   POSTICKCOUNT = 120,
-  REPORTDATA2TIME = 6e4;
+  REPORTDATA2TIME = 6e4,
+  MINSPEEDINIT = 999999;
 class AceAntiCheatController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      Net_1.Net.Register(13760, AceAntiCheatController.iEa),
+      Net_1.Net.Register(20404, AceAntiCheatController.ATa),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDone,
         this.nye,
@@ -33,7 +34,7 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
   }
   static OnClear() {
     return (
-      Net_1.Net.UnRegister(13760),
+      Net_1.Net.UnRegister(20404),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDone,
         this.nye,
@@ -44,28 +45,28 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
   static OnTick(t) {
     var e;
     if (
-      (this.rEa &&
+      (this.RTa &&
         0 <
           (e =
-            Global_1.Global.BaseCharacter?.GetMovementComponent()?.GetMaxSpeed() ??
+            Global_1.Global.BaseCharacter?.CharacterActorComponent?.ActorVelocityProxy.Size() ??
             0) &&
-        ((this.oEa = (this.nEa * this.oEa + e) / (this.nEa + 1)),
-        (this.nEa += 1),
-        e < this.sEa && (this.sEa = e),
+        ((this.UTa = (this.xTa * this.UTa + e) / (this.xTa + 1)),
+        (this.xTa += 1),
+        e < this.PTa && (this.PTa = e),
         e > this.nun) &&
         (this.nun = e),
-      this.aEa && this.hEa && ((this.lEa += t), this.lEa > POSTICKTIME))
+      this.wTa && this.BTa && ((this.bTa += t), this.bTa > POSTICKTIME))
     ) {
-      this.lEa -= POSTICKTIME;
-      for (const r of this.hEa.keys()) {
+      this.bTa -= POSTICKTIME;
+      for (const r of this.BTa.keys()) {
         var o,
           i =
             ModelManager_1.ModelManager.CreatureModel.GetEntity(
               r,
-            ).Entity.GetComponent(1)?.ActorLocationProxy;
+            )?.Entity?.GetComponent(1)?.ActorLocationProxy;
         i &&
-          ((o = this.hEa.get(r).ALa).push(i), o.length > POSTICKCOUNT) &&
-          (this.aEa = !1);
+          ((o = this.BTa.get(r).tih).push(i), o.length > POSTICKCOUNT) &&
+          (this.wTa = !1);
       }
     }
   }
@@ -78,138 +79,138 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Net", 36, "StartSecFbRound playerId Error");
   }
-  static _Ea(t) {
+  static qTa(t) {
     var e, o;
-    0 < this.uEa
+    0 < this.GTa
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Net", 36, "StartSecFbRound repeat", ["logId", t])
-      : ((this.uEa = t),
-        (this.cEa = Time_1.Time.WorldTime),
-        ((e = Protocol_1.Aki.Protocol.VTa.create()).mEa =
+      : ((this.GTa = t),
+        (this.OTa = Time_1.Time.WorldTime),
+        ((e = Protocol_1.Aki.Protocol.WZa.create()).kTa =
           MathUtils_1.MathUtils.BigIntToLong(t)),
-        (e.dEa = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
+        (e.NTa = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
         (o = this.YNr())
-          ? ((e.CEa = o[0] ? this.gEa(o[0]) : void 0),
-            (e.fEa = o[1] ? this.gEa(o[1]) : void 0),
-            (e.pEa = o[2] ? this.gEa(o[2]) : void 0),
-            (e.vEa = o[3] ? this.gEa(o[3]) : void 0),
-            this.MEa(!0),
-            Net_1.Net.Call(5045, e, () => {}))
+          ? ((e.FTa = o[0] ? this.VTa(o[0]) : void 0),
+            (e.HTa = o[1] ? this.VTa(o[1]) : void 0),
+            (e.jTa = o[2] ? this.VTa(o[2]) : void 0),
+            (e.WTa = o[3] ? this.VTa(o[3]) : void 0),
+            this.QTa(!0),
+            Net_1.Net.Call(26143, e, () => {}))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("Net", 36, "StartSecFbRound roleList Error", [
               "logId",
               t,
             ]));
   }
-  static gEa(t) {
-    var e = Protocol_1.Aki.Protocol.CRa.create(),
+  static VTa(t) {
+    var e = Protocol_1.Aki.Protocol.Vrh.create(),
       o = ModelManager_1.ModelManager.RoleModel?.GetRoleInstanceById(t.RoleId),
       i = o?.GetLevelData();
-    (e.Qws = i?.GetBreachLevel() ?? 0),
-      (e.P6n = i?.GetLevel() ?? 0),
-      (e.M8n = i?.GetExp() ?? 0),
-      (e.O6n = t.RoleId);
+    (e.txs = i?.GetBreachLevel() ?? 0),
+      (e.F6n = i?.GetLevel() ?? 0),
+      (e.U8n = i?.GetExp() ?? 0),
+      (e.Q6n = t.RoleId);
     var r = ModelManager_1.ModelManager.CreatureModel.GetEntity(
       t.CreatureDataId,
-    )?.Entity?.GetComponent(158);
+    )?.Entity?.GetComponent(159);
     if (r) {
       var a = [];
       for (let t = 1; t < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX; t++) {
-        var l = Protocol_1.Aki.Protocol.Vks.create();
-        (l.J4n = t), (l.W4n = r.GetCurrentValue(t)), a.push(l);
+        var l = Protocol_1.Aki.Protocol.Xks.create();
+        (l.s5n = t), (l.e5n = r.GetCurrentValue(t)), a.push(l);
       }
-      e.SEa = a;
+      e.KTa = a;
     }
     var s = o?.GetSkillData(),
       i = s?.GetSkillList();
     if (s && i) {
       var _ = [];
       for (const h of i) {
-        var n = Protocol_1.Aki.Protocol.EEa.create();
-        (n.X4n = h.Id), (n.P6n = s.GetSkillLevel(h.Id)), _.push(n);
+        var n = Protocol_1.Aki.Protocol.$Ta.create();
+        (n.r5n = h.Id), (n.F6n = s.GetSkillLevel(h.Id)), _.push(n);
       }
-      e.EEa = _;
+      e.$Ta = _;
     }
     return e;
   }
-  static MEa(t) {
-    (this.rEa = t),
-      (this.nEa = 0),
-      (this.oEa = 0),
+  static QTa(t) {
+    (this.RTa = t),
+      (this.xTa = 0),
+      (this.UTa = 0),
       (this.nun = 0),
-      (this.sEa = 999999);
+      (this.PTa = MINSPEEDINIT);
   }
-  static yEa(t) {
+  static XTa(t) {
     var e;
-    this.uEa !== t
+    this.GTa !== t
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Net",
           36,
           "EndSecFbRound logId Error",
           ["logId", t],
-          ["SecFbRoundLogId", this.uEa],
+          ["SecFbRoundLogId", this.GTa],
         )
-      : (((e = Protocol_1.Aki.Protocol.WTa.create()).mEa =
+      : (((e = Protocol_1.Aki.Protocol.YZa.create()).kTa =
           MathUtils_1.MathUtils.BigIntToLong(t)),
-        (e.IEa = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
-        (e.TEa = Time_1.Time.WorldTime - this.cEa),
-        (e.LEa = this.nun),
-        (e.DEa = this.sEa),
-        (e.AEa = this.oEa),
-        this.MEa(!1),
-        Net_1.Net.Call(9159, e, () => {}),
-        (this.uEa = -1n));
+        (e.YTa = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
+        (e.JTa = Time_1.Time.WorldTime - this.OTa),
+        (e.zTa = this.nun),
+        (e.ZTa = this.PTa === MINSPEEDINIT ? 0 : this.PTa),
+        (e.eLa = this.UTa),
+        this.QTa(!1),
+        Net_1.Net.Call(18558, e, () => {}),
+        (this.GTa = -1n));
   }
-  static REa(t) {
-    0 < this.UEa
+  static tLa(t) {
+    0 < this.iLa
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Net", 36, "StartSecRoleFightFlowBigWorld repeat", [
           "logId",
           t,
         ])
-      : (this.xEa(), (this.UEa = t));
+      : (this.rLa(), (this.iLa = t));
   }
-  static PEa(t) {
-    this.UEa !== t
+  static oLa(t) {
+    this.iLa !== t
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Net",
           36,
           "EndSecRoleFightFlowBigWorld logId Error",
           ["logId", t],
-          ["SecRoleFightFlowBigWorldLogId", this.UEa],
+          ["SecRoleFightFlowBigWorldLogId", this.iLa],
         )
-      : (this.wEa(
+      : (this.nLa(
           t,
-          Protocol_1.Aki.Protocol.mRa
+          Protocol_1.Aki.Protocol.Frh
             .Proto_LogType_SecRoleFightFlow_BigWorldEnd,
         ),
-        (this.UEa = -1n));
+        (this.iLa = -1n));
   }
-  static xEa() {
+  static rLa() {
     var t = this.YNr();
     if (t) {
-      for (const i of (this.BEa = t)) {
-        this.hEa || (this.hEa = new Map()),
-          this.hEa.get(i.CreatureDataId) ||
-            (((e = Protocol_1.Aki.Protocol.gRa.create()).bEa = i.RoleId),
-            this.hEa.set(i.CreatureDataId, e));
-        var e = this.gEa(i),
+      for (const i of (this.sLa = t)) {
+        this.BTa || (this.BTa = new Map()),
+          this.BTa.get(i.CreatureDataId) ||
+            (((e = Protocol_1.Aki.Protocol.Hrh.create()).aLa = i.RoleId),
+            this.BTa.set(i.CreatureDataId, e));
+        var e = this.VTa(i),
           o =
-            ((this.hEa.get(i.CreatureDataId).qEa = e),
+            ((this.BTa.get(i.CreatureDataId).hLa = e),
             ModelManager_1.ModelManager.CreatureModel.GetEntity(
               i.CreatureDataId,
             )),
           o = o?.Entity;
         o
-          ? (o.GetComponent(157)?.AddGeneralListener(this.qbr),
+          ? (o.GetComponent(158)?.AddGeneralListener(this.qbr),
             EventSystem_1.EventSystem.AddWithTarget(
               o,
               EventDefine_1.EEventName.CharDamage,
               this.Uie,
             ),
-            (this.aEa = !0),
+            (this.wTa = !0),
             EventSystem_1.EventSystem.AddWithTarget(
               o,
               EventDefine_1.EEventName.CharInputPress,
@@ -222,11 +223,11 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
               "StartColletRoleFightFlow roleEntity Error",
             );
       }
-      this.GEa = Time_1.Time.WorldTime;
+      this.lLa = Time_1.Time.WorldTime;
       t = ModelManager_1.ModelManager.CharacterModel.GetHandle(
         Global_1.Global.BaseCharacter?.EntityId ?? 0,
       );
-      (this.OEa = t?.Entity?.GetComponent(0).GetCreatureDataId()),
+      (this._La = t?.Entity?.GetComponent(0).GetCreatureDataId()),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.OnChangeRole,
           this.xie,
@@ -235,13 +236,13 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Net", 36, "StartColletRoleFightFlow roleList Error");
   }
-  static wEa(t, e) {
-    if (this.BEa && this.hEa) {
+  static nLa(t, e) {
+    if (this.sLa && this.BTa) {
       var o,
-        i = Protocol_1.Aki.Protocol.KTa.create(),
+        i = Protocol_1.Aki.Protocol.JZa.create(),
         r =
-          ((i.mEa = MathUtils_1.MathUtils.BigIntToLong(t)),
-          (i.p6n = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
+          ((i.kTa = MathUtils_1.MathUtils.BigIntToLong(t)),
+          (i.D6n = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
           []),
         t = ModelManager_1.ModelManager.CharacterModel.GetHandle(
           Global_1.Global.BaseCharacter?.EntityId ?? 0,
@@ -249,17 +250,17 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
           ?.Entity?.GetComponent(0)
           .GetCreatureDataId();
       t &&
-        this.hEa.get(t) &&
-        ((o = MathUtils_1.MathUtils.LongToNumber(this.hEa.get(t).kEa)),
-        (this.hEa.get(t).kEa = Time_1.Time.WorldTime - this.GEa + o));
-      for (const l of this.hEa.values()) r.push(l);
-      (i.NEa = r), (i.FEa = e), Net_1.Net.Call(11278, i, () => {});
-      for (const s of this.BEa) {
+        this.BTa.get(t) &&
+        ((o = MathUtils_1.MathUtils.LongToNumber(this.BTa.get(t).uLa)),
+        (this.BTa.get(t).uLa = Time_1.Time.WorldTime - this.lLa + o));
+      for (const l of this.BTa.values()) r.push(l);
+      (i.cLa = r), (i.mLa = e), Net_1.Net.Call(28338, i, () => {});
+      for (const s of this.sLa) {
         var a = ModelManager_1.ModelManager.CreatureModel.GetEntity(
           s.CreatureDataId,
         )?.Entity;
         a
-          ? (a.GetComponent(157)?.RemoveGeneralListener(this.qbr),
+          ? (a.GetComponent(158)?.RemoveGeneralListener(this.qbr),
             EventSystem_1.EventSystem.RemoveWithTarget(
               a,
               EventDefine_1.EEventName.CharDamage,
@@ -270,7 +271,7 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
               EventDefine_1.EEventName.CharInputPress,
               this.LZo,
             ),
-            (this.aEa = !1))
+            (this.wTa = !1))
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Net",
@@ -282,260 +283,260 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.OnChangeRole,
         this.xie,
       ),
-        (this.hEa = void 0),
-        (this.BEa = void 0);
+        (this.BTa = void 0),
+        (this.sLa = void 0);
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Net", 36, "SendRoleFightFlowRequest List Error");
   }
-  static VEa(t) {
-    0 < this.HEa
+  static dLa(t) {
+    0 < this.CLa
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Net", 36, "StartSecRoleFightFlowInst repeat", [
           "logId",
           t,
         ])
-      : (this.xEa(), (this.HEa = t));
+      : (this.rLa(), (this.CLa = t));
   }
-  static jEa(t) {
-    this.HEa !== t
+  static gLa(t) {
+    this.CLa !== t
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Net",
           36,
           "EndSecRoleFightFlowInst logId Error",
           ["logId", t],
-          ["SecRoleFightFlowInstLogId", this.HEa],
+          ["SecRoleFightFlowInstLogId", this.CLa],
         )
-      : (this.wEa(
+      : (this.nLa(
           t,
-          Protocol_1.Aki.Protocol.mRa.Proto_LogType_SecRoleFightFlow_InstEnd,
+          Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecRoleFightFlow_InstEnd,
         ),
-        (this.HEa = -1n));
+        (this.CLa = -1n));
   }
-  static WEa(t, e) {
-    0 < this.QEa
+  static fLa(t, e) {
+    0 < this.pLa
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Net", 36, "StartSecFbRound repeat", ["logId", t])
-      : ((this.QEa = t),
-        this.MEa(!0),
-        (this.KEa = TimerSystem_1.TimerSystem.Delay(() => {
-          (this.KEa = void 0), this.$Ea(this.QEa);
+      : ((this.pLa = t),
+        this.QTa(!0),
+        (this.vLa = TimerSystem_1.TimerSystem.Delay(() => {
+          (this.vLa = void 0), this.MLa(this.pLa);
         }, e)));
   }
-  static $Ea(t) {
+  static MLa(t) {
     var e;
-    this.QEa !== t
+    this.pLa !== t
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Net",
           36,
           "EndSecWorldInfoFlow logId Error",
           ["logId", t],
-          ["SecWorldInfoFlowLogId", this.QEa],
+          ["SecWorldInfoFlowLogId", this.pLa],
         )
-      : (this.KEa &&
-          (TimerSystem_1.TimerSystem.Remove(this.KEa), (this.KEa = void 0)),
-        ((e = Protocol_1.Aki.Protocol.XTa.create()).mEa =
+      : (this.vLa &&
+          (TimerSystem_1.TimerSystem.Remove(this.vLa), (this.vLa = void 0)),
+        ((e = Protocol_1.Aki.Protocol.eeh.create()).kTa =
           MathUtils_1.MathUtils.BigIntToLong(t)),
-        (e.p6n = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
-        (e.LEa = this.nun),
-        (e.DEa = this.sEa),
-        (e.AEa = this.oEa),
-        this.MEa(!1),
-        Net_1.Net.Call(22311, e, () => {}),
-        (this.QEa = -1n));
+        (e.D6n = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
+        (e.zTa = this.nun),
+        (e.ZTa = this.PTa === MINSPEEDINIT ? 0 : this.PTa),
+        (e.eLa = this.UTa),
+        this.QTa(!1),
+        Net_1.Net.Call(16235, e, () => {}),
+        (this.pLa = -1n));
   }
-  static XEa(t) {
+  static SLa(t) {
     var e, o;
-    0 < this.YEa
+    0 < this.ELa
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Net", 36, "StartSecFbRound repeat", ["logId", t])
-      : ((this.YEa = t),
-        (this.cEa = Time_1.Time.WorldTime),
-        ((e = Protocol_1.Aki.Protocol.zTa.create()).mEa =
+      : ((this.ELa = t),
+        (this.OTa = Time_1.Time.WorldTime),
+        ((e = Protocol_1.Aki.Protocol.ieh.create()).kTa =
           MathUtils_1.MathUtils.BigIntToLong(t)),
-        (e.dEa = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
+        (e.NTa = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
         (o = this.YNr())
-          ? ((e.CEa = o[0] ? this.gEa(o[0]) : void 0),
-            (e.fEa = o[1] ? this.gEa(o[1]) : void 0),
-            (e.pEa = o[2] ? this.gEa(o[2]) : void 0),
-            (e.vEa = o[3] ? this.gEa(o[3]) : void 0),
-            this.MEa(!0),
-            Net_1.Net.Call(26575, e, () => {}))
+          ? ((e.FTa = o[0] ? this.VTa(o[0]) : void 0),
+            (e.HTa = o[1] ? this.VTa(o[1]) : void 0),
+            (e.jTa = o[2] ? this.VTa(o[2]) : void 0),
+            (e.WTa = o[3] ? this.VTa(o[3]) : void 0),
+            this.QTa(!0),
+            Net_1.Net.Call(23385, e, () => {}))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("Net", 36, "StartSecWorldFlow roleList Error", [
               "logId",
               t,
             ]));
   }
-  static JEa(t) {
+  static yLa(t) {
     var e;
-    this.YEa !== t
+    this.ELa !== t
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Net",
           36,
           "EndSecWorldFlow logId Error",
           ["logId", t],
-          ["SecWorldFlowLogId", this.YEa],
+          ["SecWorldFlowLogId", this.ELa],
         )
-      : ((this.YEa = -1n),
-        ((e = Protocol_1.Aki.Protocol.eLa.create()).mEa =
+      : ((this.ELa = -1n),
+        ((e = Protocol_1.Aki.Protocol.oeh.create()).kTa =
           MathUtils_1.MathUtils.BigIntToLong(t)),
-        (e.IEa = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
-        (e.TEa = Time_1.Time.WorldTime - this.cEa),
-        (e.LEa = this.nun),
-        (e.DEa = this.sEa),
-        (e.AEa = this.oEa),
-        this.MEa(!1),
-        Net_1.Net.Call(14833, e, () => {}));
+        (e.YTa = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
+        (e.JTa = Time_1.Time.WorldTime - this.OTa),
+        (e.zTa = this.nun),
+        (e.ZTa = this.PTa === MINSPEEDINIT ? 0 : this.PTa),
+        (e.eLa = this.UTa),
+        this.QTa(!1),
+        Net_1.Net.Call(20704, e, () => {}));
   }
 }
 (exports.AceAntiCheatController = AceAntiCheatController),
-  ((_a = AceAntiCheatController).uEa = -1n),
-  (AceAntiCheatController.UEa = -1n),
-  (AceAntiCheatController.HEa = -1n),
-  (AceAntiCheatController.QEa = -1n),
-  (AceAntiCheatController.YEa = -1n),
-  (AceAntiCheatController.iEa = (t) => {
-    var e = MathUtils_1.MathUtils.LongToBigInt(t.mEa);
-    switch (t.FEa) {
-      case Protocol_1.Aki.Protocol.mRa.Proto_LogType_SecGetReportData2Flow:
+  ((_a = AceAntiCheatController).GTa = -1n),
+  (AceAntiCheatController.iLa = -1n),
+  (AceAntiCheatController.CLa = -1n),
+  (AceAntiCheatController.pLa = -1n),
+  (AceAntiCheatController.ELa = -1n),
+  (AceAntiCheatController.ATa = (t) => {
+    var e = MathUtils_1.MathUtils.LongToBigInt(t.kTa);
+    switch (t.mLa) {
+      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecGetReportData2Flow:
         break;
-      case Protocol_1.Aki.Protocol.mRa.Proto_LogType_SecFBRoundStartFlow:
-        _a._Ea(e);
+      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecFBRoundStartFlow:
+        _a.qTa(e);
         break;
-      case Protocol_1.Aki.Protocol.mRa.Proto_LogType_SecFBRoundEndFlow:
-        _a.yEa(e);
+      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecFBRoundEndFlow:
+        _a.XTa(e);
         break;
-      case Protocol_1.Aki.Protocol.mRa
+      case Protocol_1.Aki.Protocol.Frh
         .Proto_LogType_SecRoleFightFlow_BigWorldStart:
-        _a.REa(e);
+        _a.tLa(e);
         break;
-      case Protocol_1.Aki.Protocol.mRa
+      case Protocol_1.Aki.Protocol.Frh
         .Proto_LogType_SecRoleFightFlow_BigWorldEnd:
-        _a.PEa(e);
+        _a.oLa(e);
         break;
-      case Protocol_1.Aki.Protocol.mRa.Proto_LogType_SecRoleFightFlow_InstStart:
-        _a.VEa(e);
+      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecRoleFightFlow_InstStart:
+        _a.dLa(e);
         break;
-      case Protocol_1.Aki.Protocol.mRa.Proto_LogType_SecRoleFightFlow_InstEnd:
-        _a.jEa(e);
+      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecRoleFightFlow_InstEnd:
+        _a.gLa(e);
         break;
-      case Protocol_1.Aki.Protocol.mRa.Proto_LogType_SecWorldInfoFlow_Start:
-        _a.WEa(e, MathUtils_1.MathUtils.LongToNumber(t.gLa));
+      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecWorldInfoFlow_Start:
+        _a.fLa(e, MathUtils_1.MathUtils.LongToNumber(t.Vth));
         break;
-      case Protocol_1.Aki.Protocol.mRa.Proto_LogType_SecWorldInfoFlow_End:
-        _a.$Ea(e);
+      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecWorldInfoFlow_End:
+        _a.MLa(e);
         break;
-      case Protocol_1.Aki.Protocol.mRa.Proto_LogType_SecWorldStartFlow:
-        _a.XEa(e);
+      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecWorldStartFlow:
+        _a.SLa(e);
         break;
-      case Protocol_1.Aki.Protocol.mRa.Proto_LogType_SecWorldSEndFlow:
-        _a.JEa(e);
+      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecWorldSEndFlow:
+        _a.yLa(e);
         break;
       default:
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Net", 36, "UnknownAntiCheatingLogType", [
             "Type",
-            t.FEa,
+            t.mLa,
           ]);
     }
   }),
-  (AceAntiCheatController.cEa = 0),
-  (AceAntiCheatController.oEa = 0),
-  (AceAntiCheatController.sEa = 0),
+  (AceAntiCheatController.OTa = 0),
+  (AceAntiCheatController.UTa = 0),
+  (AceAntiCheatController.PTa = 0),
   (AceAntiCheatController.nun = 0),
-  (AceAntiCheatController.nEa = 0),
-  (AceAntiCheatController.rEa = !1),
-  (AceAntiCheatController.aEa = !1),
-  (AceAntiCheatController.lEa = 0),
-  (AceAntiCheatController.BEa = void 0),
-  (AceAntiCheatController.hEa = void 0),
-  (AceAntiCheatController.GEa = 0),
-  (AceAntiCheatController.OEa = void 0),
+  (AceAntiCheatController.xTa = 0),
+  (AceAntiCheatController.RTa = !1),
+  (AceAntiCheatController.wTa = !1),
+  (AceAntiCheatController.bTa = 0),
+  (AceAntiCheatController.sLa = void 0),
+  (AceAntiCheatController.BTa = void 0),
+  (AceAntiCheatController.lLa = 0),
+  (AceAntiCheatController._La = void 0),
   (AceAntiCheatController.qbr = (t, e, o) => {
-    if (_a.hEa)
-      for (const r of _a.hEa.keys()) {
+    if (_a.BTa)
+      for (const r of _a.BTa.keys()) {
         const o =
           ModelManager_1.ModelManager.CreatureModel.GetEntity(r)
-            ?.Entity?.GetComponent(157)
+            ?.Entity?.GetComponent(158)
             ?.GetCurrentValue(t) ?? 0;
-        var i = _a.hEa.get(r).qEa.SEa[t - 1];
-        i && i.J4n === t && i.W4n < o && (i.W4n = o);
+        var i = _a.BTa.get(r).hLa.KTa[t - 1];
+        i && i.s5n === t && i.e5n < o && (i.e5n = o);
       }
     else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Net", 36, "SetNewAttrMaxValue FightRoleInfoMap nil");
   }),
   (AceAntiCheatController.Uie = (t, e, o, i, r) => {
-    if (_a.hEa) {
+    if (_a.BTa) {
       var a = -o;
-      for (const s of _a.hEa.keys()) {
+      for (const s of _a.BTa.keys()) {
         var l = t.GetComponent(0).GetCreatureDataId();
         s === l &&
-          (((l = _a.hEa.get(s)).zEa =
-            a + MathUtils_1.MathUtils.LongToNumber(l.zEa)),
-          (l.ZEa += 1),
-          (l.eya += r.IsImmune ? 1 : 0),
+          (((l = _a.BTa.get(s)).ILa =
+            a + MathUtils_1.MathUtils.LongToNumber(l.ILa)),
+          (l.TLa += 1),
+          (l.LLa += r.IsImmune ? 1 : 0),
           r.IsCritical
-            ? ((l.tya += 1), a > l.iya && (l.iya = a), a < l.rya && (l.rya = a))
-            : (a > l.oya && (l.oya = a), a < l.nya && (l.nya = a)));
+            ? ((l.DLa += 1), a > l.ALa && (l.ALa = a), a < l.RLa && (l.RLa = a))
+            : (a > l.ULa && (l.ULa = a), a < l.xLa && (l.xLa = a)));
       }
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Net", 36, "OnDamage FightRoleInfoMap nil");
   }),
   (AceAntiCheatController.LZo = (t, e) => {
-    if (_a.OEa && _a.hEa) {
-      var o = _a.hEa.get(_a.OEa);
+    if (_a._La && _a.BTa) {
+      var o = _a.BTa.get(_a._La);
       if (o)
         switch (t) {
           case InputEnums_1.EInputAction.攻击:
-            o.sya += 1;
+            o.PLa += 1;
             break;
           case InputEnums_1.EInputAction.闪避:
-            o.aya += 1;
+            o.wLa += 1;
             break;
           case InputEnums_1.EInputAction.跳跃:
-            o.hya += 1;
+            o.BLa += 1;
             break;
           case InputEnums_1.EInputAction.大招:
-            o.lya += 1;
+            o.bLa += 1;
             break;
           case InputEnums_1.EInputAction.幻象2:
-            o._ya += 1;
+            o.qLa += 1;
             break;
           case InputEnums_1.EInputAction.技能1:
-            o.uya += 1;
+            o.GLa += 1;
         }
     }
   }),
   (AceAntiCheatController.xie = (t, e) => {
     var o;
     e &&
-      _a.hEa &&
+      _a.BTa &&
       ((e = e.Entity?.GetComponent(0).GetCreatureDataId()) &&
-        _a.hEa.get(e) &&
-        ((o = MathUtils_1.MathUtils.LongToNumber(_a.hEa.get(e).kEa)),
-        (_a.hEa.get(e).kEa = Time_1.Time.WorldTime - _a.GEa + o)),
-      (_a.GEa = Time_1.Time.WorldTime),
-      (_a.OEa = t.Entity?.GetComponent(0).GetCreatureDataId()));
+        _a.BTa.get(e) &&
+        ((o = MathUtils_1.MathUtils.LongToNumber(_a.BTa.get(e).uLa)),
+        (_a.BTa.get(e).uLa = Time_1.Time.WorldTime - _a.lLa + o)),
+      (_a.lLa = Time_1.Time.WorldTime),
+      (_a._La = t.Entity?.GetComponent(0).GetCreatureDataId()));
   }),
-  (AceAntiCheatController.KEa = void 0),
-  (AceAntiCheatController.cya = void 0),
+  (AceAntiCheatController.vLa = void 0),
+  (AceAntiCheatController.OLa = void 0),
   (AceAntiCheatController.ReportDataRequest = () => {
     var t, e;
     Net_1.Net.IsServerConnected() &&
-      ((t = Protocol_1.Aki.Protocol.$Ta.create()),
+      ((t = Protocol_1.Aki.Protocol.KZa.create()),
       0 < (e = ue_1.TpSafeProxy.GetAntiData2()).byteLength &&
-        (t.mya = new Uint8Array(e)),
-      Net_1.Net.Call(13692, t, () => {}));
+        (t.kLa = new Uint8Array(e)),
+      Net_1.Net.Call(24479, t, () => {}));
   }),
   (AceAntiCheatController.nye = () => {
-    _a.cya ||
-      (_a.cya = TimerSystem_1.TimerSystem.Forever(
+    _a.OLa ||
+      (_a.OLa = TimerSystem_1.TimerSystem.Forever(
         _a.ReportDataRequest,
         REPORTDATA2TIME,
       ));

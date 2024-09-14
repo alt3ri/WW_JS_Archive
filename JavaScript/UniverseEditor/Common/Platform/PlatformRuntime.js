@@ -1,16 +1,57 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.PlatformRuntime = void 0);
+  (exports.platformRuntime = exports.PlatformRuntime = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
-  Platform_1 = require("./Platform");
-class PlatformRuntime extends Platform_1.Platform {
+  Interface_1 = require("./Interface");
+class PlatformRuntime extends Interface_1.Platform {
   ReadFile(e) {
-    var t = (0, puerts_1.$ref)("");
-    return UE.KuroStaticLibrary.LoadFileToString(t, e), (0, puerts_1.$unref)(t);
+    var r = (0, puerts_1.$ref)("");
+    return UE.KuroStaticLibrary.LoadFileToString(r, e), (0, puerts_1.$unref)(r);
   }
-  WriteFile(e, t) {
-    UE.KuroStaticLibrary.SaveStringToFile(t, e);
+  OUa(e, r) {
+    const t = UE.NewArray(r);
+    return (
+      e.forEach((e) => {
+        t.Add(e);
+      }),
+      t
+    );
+  }
+  kUa(r) {
+    var t = [];
+    for (let e = 0; e < r.Num(); e++) t.push(r.Get(e));
+    return t;
+  }
+  async ReadFileAsync(r) {
+    return new Promise((t, e) => {
+      const o = (e, r) => {
+        (0, puerts_1.releaseManualReleaseDelegate)(o),
+          t({ IsSuccess: e, FileContent: r });
+      };
+      UE.EditorRuntimeOperations.ReadFileAsync(
+        r,
+        (0, puerts_1.toManualReleaseDelegate)(o),
+      );
+    });
+  }
+  async ReadBatchFilesAsync(r) {
+    return new Promise((o, e) => {
+      const s = (r, e) => {
+        (0, puerts_1.releaseManualReleaseDelegate)(s);
+        var t = new Map();
+        for (let e = 0; e < r.Num(); e++)
+          t.set(r.Get(e).FilePath, r.Get(e).FileContent);
+        o({ FileMap: t, FailedFiles: this.kUa(e) });
+      };
+      UE.EditorRuntimeOperations.ReadBatchFilesAsync(
+        this.OUa(r, UE.BuiltinString),
+        (0, puerts_1.toManualReleaseDelegate)(s),
+      );
+    });
+  }
+  WriteFile(e, r) {
+    UE.KuroStaticLibrary.SaveStringToFile(r, e);
   }
   ExistFile(e) {
     return UE.BlueprintPathsLibrary.FileExists(e);
@@ -40,51 +81,51 @@ class PlatformRuntime extends Platform_1.Platform {
       e
     );
   }
-  ListFiles(e, t, r) {
+  ListFiles(e, r, t) {
     let o = void 0;
     if (
-      (o = r
-        ? ((r = (t = t?.startsWith(".") ? t.substring(1) : t) ? "*." + t : "*"),
-          UE.KuroStaticLibrary.GetFilesRecursive(e, r, !0, !1))
-        : (void 0 === t && (t = ""), UE.KuroStaticLibrary.GetFiles(e, t)))
+      (o = t
+        ? ((t = (r = r?.startsWith(".") ? r.substring(1) : r) ? "*." + r : "*"),
+          UE.KuroStaticLibrary.GetFilesRecursive(e, t, !0, !1))
+        : (void 0 === r && (r = ""), UE.KuroStaticLibrary.GetFiles(e, r)))
     ) {
-      var n = [];
-      for (let e = 0; e < o.Num(); e++) n.push(o.Get(e));
-      return n;
+      var s = [];
+      for (let e = 0; e < o.Num(); e++) s.push(o.Get(e));
+      return s;
     }
     return [];
   }
-  ListDirs(e, t) {
-    var r = [],
+  ListDirs(e, r) {
+    var t = [],
       o = UE.KuroStaticLibrary.GetDirectories(e);
     for (let e = 0; e < o.Num(); e++) {
-      var n = o.Get(e);
-      r.push(n), t && ((n = this.ListDirs(n, t)), r.push(...n));
+      var s = o.Get(e);
+      t.push(s), r && ((s = this.ListDirs(s, r)), t.push(...s));
     }
-    return r;
+    return t;
   }
-  GetRelativePathToDir(e, t) {
-    var t = t.endsWith("/") ? t : t + "/",
-      r = (0, puerts_1.$ref)("");
+  GetRelativePathToDir(e, r) {
+    var r = r.endsWith("/") ? r : r + "/",
+      t = (0, puerts_1.$ref)("");
     return (
-      UE.BlueprintPathsLibrary.MakePathRelativeTo(e, t, r),
-      (0, puerts_1.$unref)(r)
+      UE.BlueprintPathsLibrary.MakePathRelativeTo(e, r, t),
+      (0, puerts_1.$unref)(t)
     );
   }
   GetAbsolutePath(e) {
     return UE.KismetSystemLibrary.ConvertToAbsolutePath(e);
   }
-  CopyDir(e, t, r) {
-    for (const n of this.ListFiles(e, void 0, !0)) {
-      var o = this.GetRelativePathToDir(n, e);
-      this.CopyFile(n, t + "/" + o);
+  CopyDir(e, r, t) {
+    for (const s of this.ListFiles(e, void 0, !0)) {
+      var o = this.GetRelativePathToDir(s, e);
+      this.CopyFile(s, r + "/" + o);
     }
   }
-  CopyFile(e, t) {
-    var r = t.replace(/\\/g, "/"),
-      o = r.lastIndexOf("/"),
-      r = r.substring(0, o);
-    this.ExistDir(r) || this.CreateDir(r), UE.KuroStaticLibrary.CopyFile(e, t);
+  CopyFile(e, r) {
+    var t = r.replace(/\\/g, "/"),
+      o = t.lastIndexOf("/"),
+      t = t.substring(0, o);
+    this.ExistDir(t) || this.CreateDir(t), UE.KuroStaticLibrary.CopyFile(e, r);
   }
   GetFileModifyTick(e) {
     throw new Error("Method not implemented.");
@@ -92,31 +133,34 @@ class PlatformRuntime extends Platform_1.Platform {
   ReadUassetInfo(e) {
     throw new Error("Method not implemented.");
   }
-  Log(e, t) {
+  Log(e, r) {
     switch (e) {
       case 0:
-        this.LogLevel <= 0 && puerts_1.logger.log(t);
+        this.LogLevel <= 0 && puerts_1.logger.log(r);
         break;
       case 1:
-        this.LogLevel <= 1 && puerts_1.logger.warn(t);
+        this.LogLevel <= 1 && puerts_1.logger.warn(r);
         break;
       case 2:
-        this.LogLevel <= 2 && puerts_1.logger.error(t);
+        this.LogLevel <= 2 && puerts_1.logger.error(r);
     }
   }
   SetErrorReportFun(e) {
     throw new Error("Method not implemented.");
   }
-  Exec(e, t) {
+  Exec(e, r) {
     throw new Error("Method not implemented.");
   }
   GetMacAddress() {
     throw new Error("Method not implemented.");
   }
+  GetPhysicMacAddress() {
+    throw new Error("Method not implemented.");
+  }
   GetPlatformType() {
     return 2;
   }
-  ConvertExcelToCsv(e, t, r, o) {
+  ConvertExcelToCsv(e, r, t, o) {
     throw new Error("Method not implemented.");
   }
   CheckFileIsInUse(e) {
@@ -131,23 +175,23 @@ class PlatformRuntime extends Platform_1.Platform {
   IsInPie() {
     return !1;
   }
-  async DoJsonHttpReq(e, t, r) {
+  async DoJsonHttpReq(e, r, t) {
     const i = UE.NewMap(UE.BuiltinString, UE.BuiltinString);
     for (const o of Object.entries({ "Content-Type": "application/json" }))
       i.Add(o[0], o[1]);
-    return new Promise((o, n) => {
-      const s = (e, t, r) => {
-        (0, puerts_1.releaseManualReleaseDelegate)(s),
+    return new Promise((o, s) => {
+      const n = (e, r, t) => {
+        (0, puerts_1.releaseManualReleaseDelegate)(n),
           e
-            ? o({ Status: t, Data: r ? JSON.parse(r) : void 0 })
-            : n(new Error(`Http request failed, code: ${t}, response: ` + r));
+            ? o({ Status: r, Data: t ? JSON.parse(t) : void 0 })
+            : s(new Error(`Http request failed, code: ${r}, response: ` + t));
       };
       UE.EditorRuntimeOperations.SendHttpRequest(
         e,
-        t,
+        r,
         i,
-        r ? JSON.stringify(r) : "",
-        (0, puerts_1.toManualReleaseDelegate)(s),
+        t ? JSON.stringify(t) : "",
+        (0, puerts_1.toManualReleaseDelegate)(n),
       );
     });
   }
@@ -158,5 +202,6 @@ class PlatformRuntime extends Platform_1.Platform {
     throw new Error("Method not implemented.");
   }
 }
-exports.PlatformRuntime = PlatformRuntime;
+(exports.PlatformRuntime = PlatformRuntime),
+  (exports.platformRuntime = new PlatformRuntime());
 //# sourceMappingURL=PlatformRuntime.js.map

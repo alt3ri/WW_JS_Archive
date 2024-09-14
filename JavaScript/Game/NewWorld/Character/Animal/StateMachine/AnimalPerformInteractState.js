@@ -16,10 +16,10 @@ class AnimalPerformInteractState extends AnimalPerformStateBase_1.AnimalPerformS
   OnExit(t) {
     var e;
     this.EcologicalInterface?.IsValid() &&
-      ((e = this.Owner.GetComponent(188)).HasTag(502364103) &&
+      ((e = this.Owner.GetComponent(190)).HasTag(502364103) &&
         (e.RemoveTag(502364103), e.AddTag(1900394806)),
       e.RemoveTag(351576188),
-      this.Owner.GetComponent(181)?.SetInteractionState(
+      this.Owner.GetComponent(182)?.SetInteractionState(
         !0,
         "AnimalPerformInteractState OnExit",
       ),

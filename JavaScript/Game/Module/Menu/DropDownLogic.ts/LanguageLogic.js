@@ -40,19 +40,13 @@ class LanguageLogic extends DropDownLogicBase_1.DropDownLogicBase {
     return o;
   }
   GetDataTextId(e, o) {
-    return new LguiUtil_1.TableTextArgNew(
-      o.MenuDataOptionsNameList[e.LanguageType],
-    );
+    return new LguiUtil_1.TableTextArgNew(o.OptionsNameList[e.LanguageType]);
   }
   TriggerSelectChange(e, o) {
-    MenuController_1.MenuController.GetTargetConfig(o.MenuDataFunctionId) !==
+    MenuController_1.MenuController.GetTargetConfig(o.FunctionId) !==
       e.LanguageType &&
-      (MenuController_1.MenuController.NoticeChange(o.MenuDataFunctionId),
-      MenuController_1.MenuController.SetTargetConfig(
-        o.MenuDataFunctionId,
-        e.LanguageType,
-      ),
-      MenuController_1.MenuController.DoConfigFunction(o.MenuDataFunctionId),
+      (MenuController_1.MenuController.NoticeChange(o.FunctionId),
+      MenuController_1.MenuController.SetApplySave(o, e.LanguageType),
       (ModelManager_1.ModelManager.MenuModel.IsEdited = !0),
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
@@ -64,7 +58,7 @@ class LanguageLogic extends DropDownLogicBase_1.DropDownLogicBase {
       );
   }
   GetDefaultIndex(e) {
-    e = MenuController_1.MenuController.GetTargetConfig(e.MenuDataFunctionId);
+    e = MenuController_1.MenuController.GetTargetConfig(e.FunctionId);
     return this._Pi.get(e) ?? 0;
   }
 }

@@ -237,9 +237,9 @@ class RoguelikeTokenOverView extends UiViewBase_1.UiViewBase {
   async OnBeforeStartAsync() {
     var e = this.OpenParam,
       e =
-        ((this.SeasonId = e.MHn),
-        e.mqs.forEach((e) => {
-          this.DataMap.set(e.J4n, e.Jfs);
+        ((this.SeasonId = e.UHn),
+        e.Sqs.forEach((e) => {
+          this.DataMap.set(e.s5n, e.ovs);
         }),
         void 0 === this.CommonGridItem &&
           ((this.CommonGridItem = new RogueTokenCommonItemSmallItemGrid()),

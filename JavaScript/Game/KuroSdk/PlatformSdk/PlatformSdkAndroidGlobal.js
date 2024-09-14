@@ -17,7 +17,8 @@ const cpp_1 = require("cpp"),
   KuroSdkData_1 = require("../KuroSdkData"),
   PlatformSdkBase_1 = require("./PlatformSdkBase"),
   WEBVIEWCD = 5e3,
-  GETINFODELAY = 1e4;
+  GETINFODELAY = 1e4,
+  MAXREVIEWTIME = 1;
 class AndroidSdkRePointSt extends Json_1.JsonObjBase {
   constructor() {
     super(...arguments), (this.showRed = !1);
@@ -345,6 +346,9 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
             EventDefine_1.EEventName.OnShareResult,
             !1,
           );
+  }
+  CurrentPlatformYearReviewTime() {
+    return MAXREVIEWTIME;
   }
 }
 exports.PlatformSdkAndroidGlobal = PlatformSdkAndroidGlobal;

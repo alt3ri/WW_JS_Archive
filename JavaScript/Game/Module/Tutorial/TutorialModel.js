@@ -41,9 +41,9 @@ class TutorialModel extends ModelBase_1.ModelBase {
     for (const r of e) {
       var t = new TutorialDefine_1.TutorialSaveData(),
         i =
-          ((t.TimeStamp = r.ews),
-          (t.TutorialId = r.J4n),
-          (t.HasRedDot = !r.zGs),
+          ((t.TimeStamp = r.aws),
+          (t.TutorialId = r.s5n),
+          (t.HasRedDot = !r.nOs),
           t.TutorialData.TutorialType);
       Object.values(TutorialDefine_1.ETutorialType).includes(i) &&
         (this.bRo.get(i).has(t.TutorialId) ||
@@ -54,9 +54,9 @@ class TutorialModel extends ModelBase_1.ModelBase {
   UpdateUnlockTutorials(e) {
     var t = new TutorialDefine_1.TutorialSaveData(),
       e =
-        ((t.TimeStamp = e.ews),
-        (t.TutorialId = e.J4n),
-        (t.HasRedDot = !e.zGs),
+        ((t.TimeStamp = e.aws),
+        (t.TutorialId = e.s5n),
+        (t.HasRedDot = !e.nOs),
         t.TutorialData.TutorialType);
     Object.values(TutorialDefine_1.ETutorialType).includes(e) &&
       !this.bRo.get(e).has(t.TutorialId) &&

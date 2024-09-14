@@ -11,10 +11,10 @@ class LevelConditionHasBuff extends LevelGeneralBase_1.LevelConditionBase {
       t = Global_1.Global.BaseCharacter;
     if (!t) return !1;
     var t = t.CharacterActorComponent.Entity,
-      n = t.CheckGetComponent(159);
+      n = t.CheckGetComponent(160);
     if (!n) return !1;
     let a = 0 < n.GetBuffTotalStackById(BigInt(l));
-    n = t.CheckGetComponent(174);
+    n = t.CheckGetComponent(175);
     return (
       n &&
         (a ||=

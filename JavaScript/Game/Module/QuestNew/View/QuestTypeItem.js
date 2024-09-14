@@ -176,7 +176,7 @@ class QuestTypeItem extends UiPanelBase_1.UiPanelBase {
     )) {
       var t = ModelManager_1.ModelManager.QuestNewModel.GetQuestsByType(i.Id);
       if (t) {
-        t.sort((t, i) => t.Id - i.Id);
+        t.sort(ModelManager_1.ModelManager.QuestNewModel.SortQuestInView);
         for (const s of t)
           s.CanShowInUiPanel() &&
             (s.ChapterId

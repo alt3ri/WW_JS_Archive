@@ -139,7 +139,7 @@ let CharacterCombatMessageComponent = class CharacterCombatMessageComponent exte
   }
 };
 (CharacterCombatMessageComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(45)],
+  [(0, RegisterComponent_1.RegisterComponent)(46)],
   CharacterCombatMessageComponent,
 )),
   (exports.CharacterCombatMessageComponent = CharacterCombatMessageComponent);

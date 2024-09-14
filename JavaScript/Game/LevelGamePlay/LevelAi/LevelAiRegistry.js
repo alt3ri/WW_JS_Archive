@@ -9,6 +9,7 @@ const LevelAiDecoratorCheckInTodTimeSpan_1 = require("./Decorators/LevelAiDecora
   LevelAiDecoratorEntityState_1 = require("./Decorators/LevelAiDecoratorEntityState"),
   LevelAiDecoratorQuestState_1 = require("./Decorators/LevelAiDecoratorQuestState"),
   LevelAiDecoratorQuestStepState_1 = require("./Decorators/LevelAiDecoratorQuestStepState"),
+  LevelAiTaskEntityTurnTo_1 = require("./Tasks/LevelAiTaskEntityTurnTo"),
   LevelAiTaskLeisureInteract_1 = require("./Tasks/LevelAiTaskLeisureInteract"),
   LevelAiTaskLog_1 = require("./Tasks/LevelAiTaskLog"),
   LevelAiTaskPlayBubble_1 = require("./Tasks/LevelAiTaskPlayBubble"),
@@ -39,6 +40,10 @@ class LevelAiRegistry {
       ),
       this.STe.set("PlayBubble", LevelAiTaskPlayBubble_1.LevelAiTaskPlayBubble),
       this.STe.set("EntityLookAt", LevelAiTaskTurnTo_1.LevelAiTaskTurnTo),
+      this.STe.set(
+        "EntityTurnTo",
+        LevelAiTaskEntityTurnTo_1.LevelAiTaskEntityTurnTo,
+      ),
       this.STe.set(
         "NpcLeisureInteract",
         LevelAiTaskLeisureInteract_1.LevelAiTaskLeisureInteract,

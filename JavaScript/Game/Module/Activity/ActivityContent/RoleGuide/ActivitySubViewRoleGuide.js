@@ -89,7 +89,9 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
         await this.j2e.CreateThenShowByActorAsync(i.GetOwner()),
         this.GetItem(3)),
       i =
-        ((this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
+        ((this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(
+          this.ActivityBaseData,
+        )),
         await this.ANe.CreateThenShowByActorAsync(i.GetOwner()),
         this.GetItem(9)),
       t = this.ActivityBaseData.GetRoleResourcePath();
@@ -107,7 +109,7 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
         i?.Desc && this.DNe.SetContentByTextId(i.Desc),
         this.UNe.SetTitleByTextId("Activity_RoleGuideActivity_RewardDesc"),
         this.UNe.InitGridLayout(this.W2e),
-        this.ANe.FunctionButton.BindCallback(this.Q2e),
+        this.ANe.FunctionButton.SetFunction(this.Q2e),
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
           "CollectActivity_Button_ahead",
         ));
@@ -118,12 +120,8 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
   OnRefreshView() {
     this.FNe(), this.$2e(), this.jqe(), this._Oe();
   }
-  OnTimer(i) {
-    this.FNe();
-  }
   FNe() {
-    var [i, t] = this.GetTimeVisibleAndRemainTime();
-    this.LNe.SetTimeTextVisible(i), i && this.LNe.SetTimeTextByText(t);
+    this.LNe.SetTimeTextVisible(!1);
   }
   $2e() {
     var i,
@@ -157,18 +155,19 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
     this.UNe.RefreshItemLayout(t);
   }
   _Oe() {
-    var i,
-      t = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
+    var i = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
         this.ActivityBaseData.RoleQuestId,
       ),
-      e = this.ActivityBaseData.IsUnLock(),
-      t = 3 === t;
-    e ||
-      ((i = this.GetCurrentLockConditionText()),
-      this.ANe.SetLockTextByTextId(i)),
-      this.ANe.SetPanelConditionVisible(!e),
-      this.ANe.FunctionButton.SetActive(e && !t),
-      this.GetItem(5)?.SetUIActive(e && t);
+      t = this.ActivityBaseData.IsUnLock(),
+      i = 3 === i;
+    t ||
+      this.ANe.SetPerformanceConditionLock(
+        this.ActivityBaseData.ConditionGroupId,
+        this.ActivityBaseData.Id,
+      ),
+      this.ANe.SetPanelConditionVisible(!t),
+      this.ANe.FunctionButton.SetActive(t && !i),
+      this.GetItem(5)?.SetUIActive(t && i);
   }
 }
 exports.ActivitySubViewRoleGuide = ActivitySubViewRoleGuide;

@@ -51,13 +51,21 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
     return this.R1i;
   }
   SetMatchTeamHost(t) {
-    this.R1i.DVn = t;
+    this.R1i.qVn = t;
   }
   SetMatchTeamState(t) {
-    this.R1i.y9n = t;
+    this.R1i.P9n = t;
   }
   GetMatchTeamName(t) {
-    for (const e of this.R1i.vRs) if (e.q5n === t) return e.HMs;
+    for (const e of this.R1i.TRs) if (e.W5n === t) return e.JMs;
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error("InstanceDungeon", 5, "获取匹配副本队伍队员信息失败", [
+        "队员Id",
+        t,
+      ]);
+  }
+  GetMatchTeamOnlineId(t) {
+    for (const e of this.R1i.TRs) if (e.W5n === t) return e.Vxa;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("InstanceDungeon", 5, "获取匹配副本队伍队员信息失败", [
         "队员Id",
@@ -66,13 +74,13 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
   }
   GetMatchTeamRoleCfgId(t) {
     var e = [];
-    for (const r of this.R1i.vRs)
-      if (r.q5n === t) for (const a of r.V6n) e.push(a.O6n);
+    for (const r of this.R1i.TRs)
+      if (r.W5n === t) for (const a of r.J6n) e.push(a.Q6n);
     return e;
   }
   IsMatchTeamHost() {
     return (
-      ModelManager_1.ModelManager.CreatureModel.GetPlayerId() === this.R1i?.DVn
+      ModelManager_1.ModelManager.CreatureModel.GetPlayerId() === this.R1i?.qVn
     );
   }
   IsTeamNotFull() {
@@ -82,17 +90,17 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
     return MATCHINGTEAMSIZE - this.G1i();
   }
   G1i() {
-    var t = this.R1i.vRs;
+    var t = this.R1i.TRs;
     if (!ModelManager_1.ModelManager.GameModeModel.IsMulti) return t.length;
     var e = ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer();
     let r = t.length + e.length;
-    for (const a of e) for (const n of t) a === n.q5n && r--;
+    for (const a of e) for (const n of t) a === n.W5n && r--;
     return r;
   }
   IsAllPlayerInMatchTeam() {
     if (!ModelManager_1.ModelManager.GameModeModel.IsMulti) return !0;
     var t = [];
-    for (const r of this.R1i.vRs) t.push(r.q5n);
+    for (const r of this.R1i.TRs) t.push(r.W5n);
     let e = !0;
     for (const a of ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer())
       t.includes(a) || (e = !1);
@@ -100,9 +108,9 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
   }
   InitMatchingTeamConfirmReadyState(t) {
     for (const e of t) {
-      this.U1i.set(e.q5n, e.gbs), this.P1i.set(e.q5n, e.p9n);
+      this.U1i.set(e.W5n, e.ybs), this.P1i.set(e.W5n, e.D9n);
       for (const r of this.A1i)
-        r.GetPlayerId() === e.q5n && r.SetIsReady(e.p9n);
+        r.GetPlayerId() === e.W5n && r.SetIsReady(e.D9n);
     }
   }
   SetMatchingPlayerConfirmState(t, e) {
@@ -112,14 +120,14 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
     return this.U1i.get(t);
   }
   GetMatchingTeamReady() {
-    return this.R1i.y9n === Protocol_1.Aki.Protocol.D6s.Proto_ReadyConfirm;
+    return this.R1i.P9n === Protocol_1.Aki.Protocol.B5s.Proto_ReadyConfirm;
   }
   GetPlayerUiState(t) {
-    for (const e of this.R1i.vRs) if (e.q5n === t) return e.T9n;
-    return Protocol_1.Aki.Protocol.P6s.Proto_Wait;
+    for (const e of this.R1i.TRs) if (e.W5n === t) return e.w9n;
+    return Protocol_1.Aki.Protocol.G5s.Proto_Wait;
   }
   SetPlayerUiState(t, e) {
-    for (const r of this.R1i.vRs) r.q5n === t && (r.T9n = e);
+    for (const r of this.R1i.TRs) r.W5n === t && (r.w9n = e);
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnRefreshPlayerUiState,
       t,
@@ -145,41 +153,41 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
     t = this.P1i.get(t);
     return t || !1;
   }
-  JYs(t, e) {
-    t.SetLevel(e.Cbs), t.SetConfigId(e.O6n);
+  Kzs(t, e) {
+    t.SetLevel(e.Ebs), t.SetConfigId(e.Q6n);
   }
   SetPrewarFormationDataList() {
     this.ClearPrewarData();
     var t = this.GetMatchTeamInfo();
     if (t) {
-      for (const r of t.vRs)
-        for (const a of r.V6n) {
+      for (const r of t.TRs)
+        for (const a of r.J6n) {
           var e = new PrewarFormationData_1.PrewarFormationData();
-          e.SetPlayerId(r.q5n),
-            e.SetIsReady(this.GetPrewarPlayerReadyState(r.q5n)),
+          e.SetPlayerId(r.W5n),
+            e.SetIsReady(this.GetPrewarPlayerReadyState(r.W5n)),
             e.SetLife(1),
             e.SetMaxLife(1),
-            this.JYs(e, a),
+            this.Kzs(e, a),
             this.A1i.push(e);
         }
       this.N1i();
     }
   }
   AddPrewarFormationDataByPlayerInfo(t, e = !0) {
-    e && this.R1i.vRs.push(t);
-    for (const a of t.V6n) {
+    e && this.R1i.TRs.push(t);
+    for (const a of t.J6n) {
       var r = new PrewarFormationData_1.PrewarFormationData();
-      r.SetPlayerId(t.q5n),
-        r.SetIsReady(this.GetPrewarPlayerReadyState(t.q5n)),
+      r.SetPlayerId(t.W5n),
+        r.SetIsReady(this.GetPrewarPlayerReadyState(t.W5n)),
         r.SetLife(1),
         r.SetMaxLife(1),
-        this.JYs(r, a),
+        this.Kzs(r, a),
         this.A1i.push(r);
     }
     this.N1i();
   }
   N1i() {
-    var t = this.GetMatchTeamInfo().DVn;
+    var t = this.GetMatchTeamInfo().qVn;
     let e = 1,
       r = 1;
     for (const a of this.A1i)
@@ -190,12 +198,12 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
     this.A1i.sort((t, e) => t.GetIndex() - e.GetIndex());
   }
   SetMatchTeamInfoPlayerRole(t, e) {
-    for (const n of this.R1i.vRs) {
+    for (const n of this.R1i.TRs) {
       var r, a;
-      n.q5n === t &&
-        ((r = n.V6n.length),
+      n.W5n === t &&
+        ((r = n.J6n.length),
         (a = e.length),
-        (n.V6n = e),
+        (n.J6n = e),
         r === a && this.O1i(n),
         r < a && (this.k1i(t), this.AddPrewarFormationDataByPlayerInfo(n, !1)),
         a < r) &&
@@ -216,9 +224,9 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
         this.A1i.splice(t, 1),
         this.RemovePrewarPlayerReadyState(e),
         this.RemoveMatchingTeamConfirmState(e));
-    for (let t = this.R1i.vRs.length - 1; 0 <= t; --t) {
-      var a = this.R1i.vRs[t];
-      a && a.q5n === e && ((r = !0), this.R1i.vRs.splice(t, 1));
+    for (let t = this.R1i.TRs.length - 1; 0 <= t; --t) {
+      var a = this.R1i.TRs[t];
+      a && a.W5n === e && ((r = !0), this.R1i.TRs.splice(t, 1));
     }
     return this.N1i(), r;
   }
@@ -228,18 +236,18 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
     for (let t = 0; t < r; t++) {
       var n,
         o = this.A1i[t];
-      e.q5n === o.GetPlayerId() && ((n = e.V6n[a++]), this.JYs(o, n));
+      e.W5n === o.GetPlayerId() && ((n = e.J6n[a++]), this.Kzs(o, n));
     }
   }
   F1i(t) {
-    var r = t.q5n,
-      a = t.V6n;
+    var r = t.W5n,
+      a = t.J6n;
     for (let e = this.A1i.length - 1; 0 <= e; --e) {
       var n = this.A1i[e];
       if (n.GetPlayerId() === r) {
         let t = !1;
         for (const o of a)
-          if (o.O6n === n.GetConfigId()) {
+          if (o.Q6n === n.GetConfigId()) {
             t = !0;
             break;
           }

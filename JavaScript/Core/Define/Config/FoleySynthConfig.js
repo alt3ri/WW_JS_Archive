@@ -15,13 +15,15 @@ class FoleySynthConfig {
   get Model1Config() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.model1configLength(),
-      (t) => this.model1config(t),
+      this.model1config,
+      this,
     );
   }
   get Model2Config() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.model2configLength(),
-      (t) => this.model2config(t),
+      this.model2config,
+      this,
     );
   }
   get Model2AccMaxCount() {

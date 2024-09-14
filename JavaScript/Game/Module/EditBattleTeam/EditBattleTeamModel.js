@@ -569,9 +569,13 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
       o = e.GetPlayerId(),
       a = e.GetLevel(),
       n = e.IsSelf(),
-      e = e.GetIsReady(),
-      s = new EditBattleRoleData_1.EditBattleRoleData();
-    return s.Init(o, t, r, i, a, n, e), s;
+      s = e.GetIsReady(),
+      l = new EditBattleRoleData_1.EditBattleRoleData();
+    return (
+      l.Init(o, t, r, i, a, n, s),
+      (l.ThirdPartyOnlineId = e.GetPlayerOnlineId()),
+      l
+    );
   }
   CreateRoleDataFromRoleInstance(e) {
     var t = e.GetDataId(),

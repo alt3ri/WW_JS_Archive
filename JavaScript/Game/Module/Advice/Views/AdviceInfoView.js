@@ -48,7 +48,7 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
           AdviceController_1.AdviceController.RequestVote(
             e,
             t,
-            Protocol_1.Aki.Protocol.Uks.Proto_Cancel,
+            Protocol_1.Aki.Protocol.Oks.Proto_Cancel,
           ));
       }),
       (this.MHe = () => {
@@ -66,12 +66,12 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
             ? AdviceController_1.AdviceController.RequestVote(
                 e,
                 t,
-                Protocol_1.Aki.Protocol.Uks.Proto_Cancel,
+                Protocol_1.Aki.Protocol.Oks.Proto_Cancel,
               )
             : AdviceController_1.AdviceController.RequestVote(
                 e,
                 t,
-                Protocol_1.Aki.Protocol.Uks.Proto_Up,
+                Protocol_1.Aki.Protocol.Oks.Proto_Up,
               );
       }),
       (this.EHe = () => {
@@ -174,13 +174,13 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
     var e,
       t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     t.Valid &&
-      ((e = t.Entity.GetComponent(188)),
+      ((e = t.Entity.GetComponent(190)),
       (this.p7e = e.HasTag(1996802261)),
       this.N7e(),
       this.p7e ? this.CloseMe() : this.O7e(t));
   }
   O7e(e) {
-    e = e.Entity.GetComponent(188);
+    e = e.Entity.GetComponent(190);
     this.f7e = e.ListenForTagAddOrRemove(1996802261, this.v7e);
   }
   N7e() {

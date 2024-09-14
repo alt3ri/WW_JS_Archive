@@ -19,13 +19,13 @@ class TsAnimNotifyStateSetHitPriority extends UE.KuroAnimNotifyState {
       t instanceof TsBaseCharacter_1.default &&
       (t
         .GetEntityNoBlueprint()
-        .GetComponent(163)
+        .GetComponent(164)
         .ResetHitPriorityAndGoThrough(),
       !0)
     );
   }
   GetNotifyName() {
-    return "设置帧状态事件期间碰撞等级";
+    return "（废弃别使用）设置帧状态事件期间碰撞等级";
   }
 }
 exports.default = TsAnimNotifyStateSetHitPriority;

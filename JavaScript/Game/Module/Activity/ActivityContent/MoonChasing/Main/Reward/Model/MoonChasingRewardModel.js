@@ -14,20 +14,20 @@ const CommonParamById_1 = require("../../../../../../../../Core/Define/ConfigCom
 class MoonChasingRewardModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.eOn = new Map()),
+      (this.lOn = new Map()),
       (this.NQ = new Map()),
       (this.TargetTotalCount = 0),
       (this.TargetGetCount = 0),
       (this.SortTaskData = (e, t) =>
         e.Status === t.Status ? e.TaskId - t.TaskId : e.Status - t.Status);
   }
-  tOn(e) {
+  _On(e) {
     var t =
       ConfigManager_1.ConfigManager.MoonChasingRewardConfig.GetRewardTargetById(
         e.Id,
       );
-    let a = this.eOn.get(t.Type);
-    a || ((a = []), this.eOn.set(t.Type, a)), a.push(e);
+    let a = this.lOn.get(t.Type);
+    a || ((a = []), this.lOn.set(t.Type, a)), a.push(e);
   }
   SetAllRewardTargetData(e) {
     for (const t of e) this.SetRewardTargetData(t);
@@ -36,17 +36,17 @@ class MoonChasingRewardModel extends ModelBase_1.ModelBase {
     );
   }
   SetRewardTargetData(e) {
-    let t = this.NQ.get(e.J4n);
+    let t = this.NQ.get(e.s5n);
     t ||
-      ((t = new RewardTargetData_1.RewardTargetData(e.J4n)),
-      this.tOn(t),
-      this.SIa(t),
-      this.NQ.set(e.J4n, t)),
-      (t.Current = e.iMs),
-      (t.Target = e.b6n),
-      (t.Status = e.w6n);
+      ((t = new RewardTargetData_1.RewardTargetData(e.s5n)),
+      this._On(t),
+      this.hRa(t),
+      this.NQ.set(e.s5n, t)),
+      (t.Current = e.lMs),
+      (t.Target = e.j6n),
+      (t.Status = e.H6n);
   }
-  SIa(e) {
+  hRa(e) {
     var e = e.GetRewardList(),
       t = ConfigManager_1.ConfigManager.BusinessConfig.GetTokenItemId();
     for (const a of e) a[0].ItemId === t && (this.TargetTotalCount += a[1]);
@@ -55,7 +55,7 @@ class MoonChasingRewardModel extends ModelBase_1.ModelBase {
     var t = this.NQ.get(e);
     t &&
       ((t.Current = t.Target),
-      (t.Status = Protocol_1.Aki.Protocol.G8s.Proto_TrackMoonTargetTaken),
+      (t.Status = Protocol_1.Aki.Protocol.H8s.Proto_TrackMoonTargetTaken),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.TakenRewardTargetData,
         e,
@@ -66,7 +66,7 @@ class MoonChasingRewardModel extends ModelBase_1.ModelBase {
     if (e) return e.ConvertToTaskData();
   }
   GetTaskDataByTabId(e) {
-    e = this.eOn.get(e);
+    e = this.lOn.get(e);
     if (!e) return [];
     var t = [];
     for (const a of e) t.push(a.ConvertToTaskData());

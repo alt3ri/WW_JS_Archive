@@ -64,7 +64,7 @@ class AiTeam {
         if (r)
           if (
             r.CreatureData.GetEntityType() !==
-            Protocol_1.Aki.Protocol.wks.Proto_Player
+            Protocol_1.Aki.Protocol.kks.Proto_Player
           )
             BlackboardController_1.BlackboardController.SetBooleanValueByEntity(
               t.CharAiDesignComp.Entity.Id,

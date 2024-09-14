@@ -9,6 +9,9 @@ class UiCameraPostEffectComponent extends UiCameraComponent_1.UiCameraComponent 
   SetCameraFocalDistance(e) {
     this.CineCameraComponent.FocusSettings.ManualFocusDistance = e;
   }
+  SetCameraCurrentFocalLength(e) {
+    this.CineCameraComponent.CurrentFocalLength = e;
+  }
   SetCameraAperture(e) {
     this.CineCameraComponent.CurrentAperture = e;
   }

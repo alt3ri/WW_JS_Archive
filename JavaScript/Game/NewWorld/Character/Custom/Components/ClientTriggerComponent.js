@@ -44,60 +44,60 @@ let ClientTriggerComponent =
         (this.vtn = void 0),
         (this.Lo = void 0),
         (this.HYo = 0),
-        (this.dpa = !1),
-        (this.Cpa = !1),
-        (this.gpa = 0),
-        (this.fpa = 0),
-        (this.ppa = void 0),
-        (this.vpa = void 0),
-        (this.Mpa = void 0),
+        (this.VDa = !1),
+        (this.HDa = !1),
+        (this.jDa = 0),
+        (this.WDa = 0),
+        (this.QDa = void 0),
+        (this.KDa = void 0),
+        (this.$Da = void 0),
         (this.wS = void 0),
         (this._un = void 0),
         (this.zcn = (t, i) => {
           if (i?.Valid) {
             let e = !1;
             var r;
-            this.dpa &&
+            this.VDa &&
               i.Entity.GetComponent(3)?.IsRoleAndCtrlByMe &&
               (e =
-                !(this.ppa && 0 < this.ppa?.length) ||
+                !(this.QDa && 0 < this.QDa?.length) ||
                 SceneTeamController_1.SceneTeamController.IsMatchRoleOption(
-                  this.ppa,
+                  this.QDa,
                 )),
               (e =
-                this.Cpa &&
+                this.HDa &&
                 (r = i.Entity.GetComponent(0)) &&
                 (r = r.GetBaseInfo())
-                  ? this.Spa(r.Category)
+                  ? this.XDa(r.Category)
                   : e) &&
                 (t
-                  ? (this.gpa &&
-                      ((this.fpa = e ? this.fpa++ : this.fpa),
-                      (e = this.fpa === this.gpa)),
-                    e && this.Epa(i))
-                  : (this.gpa &&
-                      ((this.fpa = e ? this.fpa-- : this.fpa),
-                      (e = this.fpa === this.gpa - 1)),
-                    e && this.ypa(i)));
+                  ? (this.jDa &&
+                      ((this.WDa = e ? this.WDa++ : this.WDa),
+                      (e = this.WDa === this.jDa)),
+                    e && this.YDa(i))
+                  : (this.jDa &&
+                      ((this.WDa = e ? this.WDa-- : this.WDa),
+                      (e = this.WDa === this.jDa - 1)),
+                    e && this.JDa(i)));
           }
         }),
         (this.Znn = (e) => {
           let t = !1;
           var i;
           (t =
-            this.ppa && 0 < this.ppa?.length
+            this.QDa && 0 < this.QDa?.length
               ? SceneTeamController_1.SceneTeamController.IsMatchRoleOption(
-                  this.ppa,
+                  this.QDa,
                 )
               : t) &&
             (i =
               ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity) &&
-            (e ? this.Epa(i) : this.ypa(i));
+            (e ? this.YDa(i) : this.JDa(i));
         }),
-        (this.Ipa = () => {
-          if (0 === this.wS.size) this.Tpa();
-          else if (this._un?.IsLocked) this.Tpa();
-          else for (var [e, t] of this.wS) this.wS.delete(e), this.Epa(t);
+        (this.zDa = () => {
+          if (0 === this.wS.size) this.ZDa();
+          else if (this._un?.IsLocked) this.ZDa();
+          else for (var [, e] of this.wS) this.YDa(e);
         });
     }
     get Actions() {
@@ -109,25 +109,25 @@ let ClientTriggerComponent =
     OnInitData(e) {
       var e = e.GetParam(ClientTriggerComponent_1)[0],
         e = e || void 0,
-        t = this.Entity.GetComponent(108);
+        t = this.Entity.GetComponent(109);
       return (
         t && !t.LogicRange && t.SetLogicRange(300),
         (this.Lo = e),
         (this.EIe = this.Entity.GetComponent(0)),
         (this.HYo = this.EIe.GetPbDataId()),
         (this.wS = new Map()),
-        (this.gpa = this.Lo?.TriggerMatch?.EntityMatchCount || 0),
+        (this.jDa = this.Lo?.TriggerMatch?.EntityMatchCount || 0),
         !0
       );
     }
     OnStart() {
-      if (((this.vtn = this.Entity.GetComponent(76)), !this.vtn)) return !1;
+      if (((this.vtn = this.Entity.GetComponent(77)), !this.vtn)) return !1;
       var e = this.Lo?.TriggerMatch?.EntityMatch;
       if (e)
-        switch (((this._un = this.Entity.GetComponent(117)), e.Type)) {
+        switch (((this._un = this.Entity.GetComponent(118)), e.Type)) {
           case "AllCharacter":
-            (this.Cpa = !0),
-              (this.dpa = !0),
+            (this.HDa = !0),
+              (this.VDa = !0),
               EventSystem_1.EventSystem.AddWithTarget(
                 this.Entity,
                 EventDefine_1.EEventName.OnEntityInOutRangeLocal,
@@ -135,8 +135,8 @@ let ClientTriggerComponent =
               );
             break;
           case "DynamicEntityMatch":
-            (this.Cpa = !0),
-              (this.vpa = e.MatchEntity),
+            (this.HDa = !0),
+              (this.KDa = e.MatchEntity),
               EventSystem_1.EventSystem.AddWithTarget(
                 this.Entity,
                 EventDefine_1.EEventName.OnEntityInOutRangeLocal,
@@ -144,9 +144,9 @@ let ClientTriggerComponent =
               );
             break;
           case "Player":
-            (this.dpa = e.ChangeRoleTrigger || !1),
-              (this.ppa = e.MatchRoleOption),
-              this.dpa
+            (this.VDa = e.ChangeRoleTrigger || !1),
+              (this.QDa = e.MatchRoleOption),
+              this.VDa
                 ? EventSystem_1.EventSystem.AddWithTarget(
                     this.Entity,
                     EventDefine_1.EEventName.OnEntityInOutRangeLocal,
@@ -177,7 +177,7 @@ let ClientTriggerComponent =
         e,
       );
     }
-    Lpa(e) {
+    eAa(e) {
       return (
         !!e?.Valid &&
         !this._un?.IsLocked &&
@@ -189,7 +189,7 @@ let ClientTriggerComponent =
           ))
       );
     }
-    Dpa(e) {
+    tAa(e) {
       return (
         !!e?.Valid &&
         !this._un?.IsLocked &&
@@ -201,15 +201,16 @@ let ClientTriggerComponent =
           ))
       );
     }
-    Epa(e) {
+    YDa(e) {
       e?.Valid &&
-        (this.Lpa(e)
+        (this.eAa(e)
           ? e.Entity.GetComponent(0)?.GetCreatureDataId()
             ? this.Actions
-              ? LevelGeneralController_1.LevelGeneralController.ExecuteActionsNew(
+              ? (LevelGeneralController_1.LevelGeneralController.ExecuteActionsNew(
                   this.Actions,
                   this.CreateTriggerContext(e.Id),
-                )
+                ),
+                this.wS.delete(e.Id))
               : Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "SceneItem",
@@ -222,11 +223,11 @@ let ClientTriggerComponent =
                 32,
                 "[ClientTriggerComponent] 找不到target对应的CreatureId",
               )
-          : (this.wS.set(e.Id, e), this.Rpa()));
+          : (this.wS.set(e.Id, e), this.iAa()));
     }
-    ypa(e) {
+    JDa(e) {
       e?.Valid &&
-        this.Dpa(e) &&
+        this.tAa(e) &&
         (e.Entity.GetComponent(0)?.GetCreatureDataId()
           ? this.ExitActions
             ? LevelGeneralController_1.LevelGeneralController.ExecuteActionsNew(
@@ -246,27 +247,27 @@ let ClientTriggerComponent =
               "[ClientTriggerComponent] 找不到target对应的CreatureId",
             ));
     }
-    Rpa() {
-      this.Mpa ||
-        (this.Mpa = TimerSystem_1.TimerSystem.Forever(
-          this.Ipa,
+    iAa() {
+      this.$Da ||
+        (this.$Da = TimerSystem_1.TimerSystem.Forever(
+          this.zDa,
           UPDATE_INTERVAL,
         ));
     }
-    Tpa() {
-      this.Mpa && TimerSystem_1.TimerSystem.Remove(this.Mpa),
-        (this.Mpa = void 0);
+    ZDa() {
+      this.$Da && TimerSystem_1.TimerSystem.Remove(this.$Da),
+        (this.$Da = void 0);
     }
-    Spa(e) {
-      if (!this.vpa || this.vpa?.length <= 0) return !0;
-      for (const t of this.vpa)
+    XDa(e) {
+      if (!this.KDa || this.KDa?.length <= 0) return !0;
+      for (const t of this.KDa)
         if ((0, IUtil_1.isEntitiyMatch)(t, e)) return !0;
       return !1;
     }
   });
 (ClientTriggerComponent = ClientTriggerComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(205)],
+    [(0, RegisterComponent_1.RegisterComponent)(212)],
     ClientTriggerComponent,
   )),
   (exports.ClientTriggerComponent = ClientTriggerComponent);

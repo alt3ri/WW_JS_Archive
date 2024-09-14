@@ -61,7 +61,7 @@ let RoleStrengthComponent = class RoleStrengthComponent extends EntityComponent_
               return (
                 this.HBr.MoveState ===
                   CharacterUnifiedStateTypes_1.ECharMoveState.Glide &&
-                  (i = this.Entity.GetComponent(51)).Valid &&
+                  (i = this.Entity.GetComponent(52)).Valid &&
                   i.ExitGlideState(),
                 void this.EmptyStrengthPunish()
               );
@@ -69,7 +69,7 @@ let RoleStrengthComponent = class RoleStrengthComponent extends EntityComponent_
               this.Xte.HasTag(400631093) ||
                 (ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity
                   ?.Id === this.Entity.Id &&
-                  this.Entity.CheckGetComponent(175)?.Drowning());
+                  this.Entity.CheckGetComponent(176)?.Drowning());
           }
       }),
       (this.Wqr = (t, e) => {
@@ -123,9 +123,9 @@ let RoleStrengthComponent = class RoleStrengthComponent extends EntityComponent_
   OnStart() {
     return (
       (this.Hte = this.Entity.CheckGetComponent(3)),
-      (this.$zo = this.Entity.CheckGetComponent(159)),
-      (this.Xte = this.Entity.CheckGetComponent(188)),
-      (this.HBr = this.Entity.CheckGetComponent(160)),
+      (this.$zo = this.Entity.CheckGetComponent(160)),
+      (this.Xte = this.Entity.CheckGetComponent(190)),
+      (this.HBr = this.Entity.CheckGetComponent(161)),
       (this.u1t = this.Entity.CheckGetComponent(0)),
       (this.Crn = -1),
       this.vrn(),
@@ -236,7 +236,7 @@ let RoleStrengthComponent = class RoleStrengthComponent extends EntityComponent_
 };
 (RoleStrengthComponent.ForbidStrengthRecoveryTimeExtra = 0.5),
   (RoleStrengthComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(90)],
+    [(0, RegisterComponent_1.RegisterComponent)(91)],
     RoleStrengthComponent,
   )),
   (exports.RoleStrengthComponent = RoleStrengthComponent);

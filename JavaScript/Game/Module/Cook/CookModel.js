@@ -153,54 +153,54 @@ class CookModel extends ModelBase_1.ModelBase {
     let r = void 0;
     for (const h of t) {
       var s = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
-          h.J4n,
+          h.s5n,
         ),
         n = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(s.FoodItemId);
-      i.has(h.J4n)
-        ? (((r = i.get(h.J4n)).CookCount = h.pVn),
+      i.has(h.s5n)
+        ? (((r = i.get(h.s5n)).CookCount = h.DVn),
           (r.IsNew = ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
             LocalStorageDefine_1.ELocalStoragePlayerKey.CookerLevelKey,
-            h.J4n,
+            h.s5n,
           )),
-          (r.LastRoleId = h.nPs),
+          (r.LastRoleId = h.cPs),
           (r.IsCook = 0),
-          (r.LimitTotalCount = h.sPs),
-          (r.LimitedCount = h.aPs),
+          (r.LimitTotalCount = h.dPs),
+          (r.LimitedCount = h.mPs),
           (r.DataId = s.FoodItemId),
           (r.ExistStartTime =
-            MathUtils_1.MathUtils.LongToNumber(h.hPs) *
+            MathUtils_1.MathUtils.LongToNumber(h.CPs) *
             TimeUtil_1.TimeUtil.Millisecond),
           (r.ExistEndTime =
-            MathUtils_1.MathUtils.LongToNumber(h.lPs) *
+            MathUtils_1.MathUtils.LongToNumber(h.gPs) *
             TimeUtil_1.TimeUtil.Millisecond),
           (r.IsUnLock = !0))
         : ((r = {
             MainType: 0,
             SubType: 0,
             UniqueId: 0,
-            ItemId: h.J4n,
-            CookCount: h.pVn,
+            ItemId: h.s5n,
+            CookCount: h.DVn,
             IsNew: ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
               LocalStorageDefine_1.ELocalStoragePlayerKey.CookerLevelKey,
-              h.J4n,
+              h.s5n,
             ),
-            LastRoleId: h.nPs,
+            LastRoleId: h.cPs,
             IsCook: 0,
             Quality: n.QualityId,
             EffectType: s.TypeId,
             DataId: s.FoodItemId,
-            LimitTotalCount: h.sPs,
-            LimitedCount: h.aPs,
+            LimitTotalCount: h.dPs,
+            LimitedCount: h.mPs,
             ExistStartTime:
-              MathUtils_1.MathUtils.LongToNumber(h.hPs) *
+              MathUtils_1.MathUtils.LongToNumber(h.CPs) *
               TimeUtil_1.TimeUtil.Millisecond,
             ExistEndTime:
-              MathUtils_1.MathUtils.LongToNumber(h.lPs) *
+              MathUtils_1.MathUtils.LongToNumber(h.gPs) *
               TimeUtil_1.TimeUtil.Millisecond,
             IsUnLock: !0,
           }),
           this.Jqt.push(r)),
-        (r.IsCook = this.CheckCanCook(h.J4n) ? 1 : 0);
+        (r.IsCook = this.CheckCanCook(h.s5n) ? 1 : 0);
     }
   }
   UpdateCookingDataList(t) {
@@ -208,41 +208,41 @@ class CookModel extends ModelBase_1.ModelBase {
     for (const i of t)
       for (const o of this.Jqt) {
         var e;
-        i.J4n === o.ItemId &&
-          ((o.CookCount = i.pVn),
-          (o.LimitedCount = i.aPs),
+        i.s5n === o.ItemId &&
+          ((o.CookCount = i.DVn),
+          (o.LimitedCount = i.mPs),
           o.IsUnLock ||
             ((e = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
-              i.J4n,
+              i.s5n,
             )),
             (o.IsNew = !0),
             (o.IsUnLock = !0),
             (o.DataId = e.FoodItemId),
             (o.ExistStartTime =
-              MathUtils_1.MathUtils.LongToNumber(i.hPs) *
+              MathUtils_1.MathUtils.LongToNumber(i.CPs) *
               TimeUtil_1.TimeUtil.Millisecond),
             (o.ExistEndTime =
-              MathUtils_1.MathUtils.LongToNumber(i.lPs) *
+              MathUtils_1.MathUtils.LongToNumber(i.gPs) *
               TimeUtil_1.TimeUtil.Millisecond),
             ModelManager_1.ModelManager.NewFlagModel.AddNewFlag(
               LocalStorageDefine_1.ELocalStoragePlayerKey.CookerLevelKey,
-              i.J4n,
+              i.s5n,
             ),
             ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
               "FormulaLearned",
             )),
-          (o.IsCook = this.CheckCanCook(i.J4n) ? 1 : 0));
+          (o.IsCook = this.CheckCanCook(i.s5n) ? 1 : 0));
       }
   }
   UpdateCookingDataByServerConfig(t) {
     for (const r of t) {
       var e =
-          MathUtils_1.MathUtils.LongToNumber(r.hPs) *
+          MathUtils_1.MathUtils.LongToNumber(r.CPs) *
           TimeUtil_1.TimeUtil.Millisecond,
         i =
-          MathUtils_1.MathUtils.LongToNumber(r.lPs) *
+          MathUtils_1.MathUtils.LongToNumber(r.gPs) *
           TimeUtil_1.TimeUtil.Millisecond,
-        o = this.Jqt.findIndex((t) => t.ItemId === r.J4n);
+        o = this.Jqt.findIndex((t) => t.ItemId === r.s5n);
       -1 !== o &&
         ((this.Jqt[o].ExistStartTime = e), (this.Jqt[o].ExistEndTime = i));
     }
@@ -268,7 +268,7 @@ class CookModel extends ModelBase_1.ModelBase {
     t = this.GetCookingDataById(t);
     return t?.LastRoleId
       ? t.LastRoleId
-      : ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerRoleId() ?? 1502;
+      : (ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerRoleId() ?? 1502);
   }
   CreateMachiningDataList() {
     this.Zqt || (this.Zqt = new Array());
@@ -296,17 +296,17 @@ class CookModel extends ModelBase_1.ModelBase {
   UpdateMachiningDataList(t, e) {
     for (const s of t)
       for (const n of this.Zqt)
-        if (s.J4n === n.ItemId) {
+        if (s.s5n === n.ItemId) {
           let t = [];
           var i = [],
             o = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
-              s.J4n,
+              s.s5n,
             );
-          if (s._Ps) {
+          if (s.fPs) {
             for (const a of o.ConsumeItemsId) i.push(a.ItemId);
             t = o.InterationId;
           } else
-            for (const h of (t = s.uPs)) {
+            for (const h of (t = s.vPs)) {
               var r = o.InterationId.indexOf(h);
               0 <= r && ((r = o.ConsumeItemsId[r].ItemId), i.push(r));
             }
@@ -314,7 +314,7 @@ class CookModel extends ModelBase_1.ModelBase {
             (n.InteractiveList = t),
             (n.UnlockList = i),
             (n.IsMachining = CookController_1.CookController.CheckCanProcessed(
-              s.J4n,
+              s.s5n,
             )
               ? 1
               : 0),
@@ -322,9 +322,9 @@ class CookModel extends ModelBase_1.ModelBase {
               ((n.IsNew = e),
               ModelManager_1.ModelManager.NewFlagModel.AddNewFlag(
                 LocalStorageDefine_1.ELocalStoragePlayerKey.CookerLevelKey,
-                s.J4n,
+                s.s5n,
               ),
-              s._Ps) &&
+              s.fPs) &&
               ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "FormulaLearned",
               );
@@ -353,8 +353,8 @@ class CookModel extends ModelBase_1.ModelBase {
     let e = 0;
     this.oGt &&
       ((this.LastExp = this.oGt.TotalProficiencys),
-      (e = t.oPs - this.oGt.TotalProficiencys)),
-      (this.oGt = { CookingLevel: t.rPs, TotalProficiencys: t.oPs, AddExp: e });
+      (e = t.uPs - this.oGt.TotalProficiencys)),
+      (this.oGt = { CookingLevel: t._Ps, TotalProficiencys: t.uPs, AddExp: e });
   }
   GetCookerInfo() {
     return this.oGt;
@@ -388,7 +388,7 @@ class CookModel extends ModelBase_1.ModelBase {
       this.sGt.clear(),
       (this.rGt.length = 0),
       (this.nGt.length = 0);
-    for (const e of t) this.rGt.push(e), e.G6n || this.nGt.push(e);
+    for (const e of t) this.rGt.push(e), e.K6n || this.nGt.push(e);
   }
   UpdateTmpMachiningItemList(t, e) {
     this.rGt[t] = e;
@@ -396,14 +396,14 @@ class CookModel extends ModelBase_1.ModelBase {
   SubOneTmpMachiningItemSelectNum(e) {
     if (this.rGt[e]) {
       e = this.rGt[e];
-      if (this.sGt.has(e.f8n)) {
-        var i = this.sGt.get(e.f8n) - 1;
-        if ((this.sGt.set(e.f8n, i), !(0 < i))) {
-          this.sGt.delete(e.f8n);
+      if (this.sGt.has(e.L8n)) {
+        var i = this.sGt.get(e.L8n) - 1;
+        if ((this.sGt.set(e.L8n, i), !(0 < i))) {
+          this.sGt.delete(e.L8n);
           var o = function (t, e) {
-              (t.G6n = e.G6n), (t.f8n = e.f8n);
+              (t.K6n = e.K6n), (t.L8n = e.L8n);
             },
-            i = { G6n: (e.G6n = !1), f8n: 0, MVn: 0 };
+            i = { K6n: (e.K6n = !1), L8n: 0, UVn: 0 };
           o(i, e);
           let t = this.nGt.indexOf(e);
           for (; t < this.nGt.length - 1; t++) {
@@ -420,7 +420,7 @@ class CookModel extends ModelBase_1.ModelBase {
   }
   SetEmptyBySelectedItem(t, e, i, o) {
     t = this.nGt[t];
-    t && (i && ((t.f8n = i), o) && this.sGt.set(i, o), (t.G6n = e));
+    t && (i && ((t.L8n = i), o) && this.sGt.set(i, o), (t.K6n = e));
   }
   IsSelectNumFromEmpty(t) {
     let e = !1,
@@ -432,9 +432,9 @@ class CookModel extends ModelBase_1.ModelBase {
       return CookController_1.CookController.CheckCanProcessed(t);
     let e = !0;
     for (const o of this.rGt)
-      if (this.sGt.has(o.f8n)) {
-        var i = this.sGt.get(o.f8n);
-        if (o.MVn > i) {
+      if (this.sGt.has(o.L8n)) {
+        var i = this.sGt.get(o.L8n);
+        if (o.UVn > i) {
           e = !1;
           break;
         }
@@ -480,16 +480,16 @@ class CookModel extends ModelBase_1.ModelBase {
       for (const r of ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
         t,
       ).ConsumeItems)
-        i.push({ f8n: r.ItemId, MVn: r.Count, G6n: !0 });
+        i.push({ L8n: r.ItemId, UVn: r.Count, K6n: !0 });
     else {
       var o = this.GetMachiningDataById(t);
       for (const s of ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
         t,
       ).ConsumeItemsId)
         i.push({
-          f8n: s.ItemId,
-          MVn: s.Count,
-          G6n: o.UnlockList.includes(s.ItemId),
+          L8n: s.ItemId,
+          UVn: s.Count,
+          K6n: o.UnlockList.includes(s.ItemId),
         });
     }
     return i;
@@ -501,7 +501,7 @@ class CookModel extends ModelBase_1.ModelBase {
       t,
     ).ConsumeItemsId) {
       var o = i.UnlockList.includes(r.ItemId);
-      e.push({ f8n: o ? r.ItemId : 0, MVn: r.Count, G6n: o });
+      e.push({ L8n: o ? r.ItemId : 0, UVn: r.Count, K6n: o });
     }
     return e;
   }
@@ -535,7 +535,7 @@ class CookModel extends ModelBase_1.ModelBase {
   }
   UpdateCookItemList(t) {
     this.uGt || (this.uGt = new Array()), (this.uGt.length = 0);
-    for (const e of t) this.uGt.push({ ItemId: e.f8n, ItemNum: e.MVn });
+    for (const e of t) this.uGt.push({ ItemId: e.L8n, ItemNum: e.UVn });
   }
   GetCookItemList() {
     return this.uGt;

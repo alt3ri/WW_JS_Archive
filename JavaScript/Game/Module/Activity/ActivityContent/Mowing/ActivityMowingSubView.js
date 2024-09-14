@@ -69,7 +69,9 @@ class ActivityMowingSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
   }
   async OnBeforeStartAsync() {
     var i = this.GetItem(6);
-    (this.ANe = new ActivityFunctionalArea_1.ActivityFunctionalArea()),
+    (this.ANe = new ActivityFunctionalArea_1.ActivityFunctionalArea(
+      this.ActivityBaseData,
+    )),
       await this.ANe.CreateThenShowByActorAsync(i.GetOwner());
   }
   OnStart() {
@@ -113,7 +115,11 @@ class ActivityMowingSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
   _Oe() {
     var i = this.ActivityBaseData.IsUnLock();
     this.ANe.SetPanelConditionVisible(!i),
-      i || this.ANe.SetLockTextByText(this.GetCurrentLockConditionText()),
+      i ||
+        this.ANe.SetPerformanceConditionLock(
+          this.ActivityBaseData.ConditionGroupId,
+          this.ActivityBaseData.Id,
+        ),
       this.GetItem(11)?.SetUIActive(i);
   }
   BNe() {

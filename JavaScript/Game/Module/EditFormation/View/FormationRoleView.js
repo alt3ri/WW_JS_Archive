@@ -2,8 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FormationRoleView = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
@@ -28,7 +30,7 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
       (this.N5t = void 0),
       (this.O5t = void 0),
       (this.k5t = void 0),
-      (this.HYs = void 0),
+      (this.Nzs = void 0),
       (this.SPe = void 0),
       (this.F5t = void 0),
       (this.V5t = void 0),
@@ -38,8 +40,8 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
       (this.W5t = () => {
         this.b5t && this.b5t(this.cC);
       }),
-      (this.jYs = () => {
-        this.WYs();
+      (this.kzs = () => {
+        this.Fzs();
       }),
       (this.cC = e);
   }
@@ -72,6 +74,10 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
       [24, UE.UIItem],
       [25, UE.UIItem],
       [26, UE.UIItem],
+      [27, UE.UIItem],
+      [28, UE.UIItem],
+      [30, UE.UIText],
+      [29, UE.UIItem],
     ]),
       (this.BtnBindInfo = [[0, this.W5t]]);
   }
@@ -81,17 +87,17 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
   OnBeforeShow() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.TowerDefensePhantomChanged,
-      this.jYs,
+      this.kzs,
     );
   }
   OnBeforeHide() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.TowerDefensePhantomChanged,
-      this.jYs,
+      this.kzs,
     );
   }
   async OnBeforeStartAsync() {
-    await super.OnBeforeStartAsync(), await this.QYs();
+    await super.OnBeforeStartAsync(), await this.Vzs();
   }
   OnStart() {
     (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
@@ -100,13 +106,13 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
       this.GetTexture(6).SetAlpha(0);
   }
   OnBeforeDestroy() {
-    this.SPe?.Clear(), (this.SPe = void 0), (this.HYs = void 0);
+    this.SPe?.Clear(), (this.SPe = void 0), (this.Nzs = void 0);
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     var t;
-    return !this.HYs ||
+    return !this.Nzs ||
       e.length < 2 ||
-      void 0 === (t = this.HYs.GetGuideUiItemAndUiItemForShowEx(e))
+      void 0 === (t = this.Nzs.GetGuideUiItemAndUiItemForShowEx(e))
       ? void 0
       : ("G" === e[1] && (t[1] = this.GetButton(0).RootUIComp), t);
   }
@@ -119,12 +125,37 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
       this.U5t(e, t, i, o),
       this.RefreshTowerCost(e),
       this.wyt(s, o),
+      this.RefreshPlayStationItem(void 0),
       (this.H5t = !1),
       this.K5t(!1),
-      this.WYs(),
+      this.Fzs(),
       this.GetItem(14).SetUIActive(!1),
       this.GetItem(2).SetUIActive(!1),
       this.GetItem(3).SetUIActive(!0);
+  }
+  RefreshPlayStationItem(e) {
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
+      ? (this.GetItem(27)?.SetUIActive(!0),
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Formation",
+            28,
+            "当前第三方信息",
+            ["onlineId", e],
+            ["playStationItem", this.GetItem(27)],
+          ),
+        void 0 !== e && "" !== e
+          ? (this.GetText(30)?.SetText(e),
+            this.GetText(30)?.SetUIActive(!0),
+            this.GetItem(29)?.SetUIActive(!1),
+            this.GetItem(28)?.SetUIActive(!0))
+          : (this.GetText(30)?.SetUIActive(!1),
+            this.GetItem(29)?.SetUIActive(!0),
+            this.GetItem(28)?.SetUIActive(!1)))
+      : (this.GetItem(27)?.SetUIActive(!1),
+        this.GetText(30)?.SetUIActive(!1),
+        this.GetItem(29)?.SetUIActive(!1),
+        this.GetItem(28)?.SetUIActive(!1));
   }
   U5t(t, i, s, o) {
     this.Mne = t;
@@ -230,10 +261,10 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
   RefreshPing(e) {
     let t = void 0;
     switch (e) {
-      case Protocol_1.Aki.Protocol.Y8s.Proto_UNKNOWN:
+      case Protocol_1.Aki.Protocol.r7s.Proto_UNKNOWN:
         t = "SP_SignalUnknown";
         break;
-      case Protocol_1.Aki.Protocol.Y8s.Proto_POOR:
+      case Protocol_1.Aki.Protocol.r7s.Proto_POOR:
         t = "SP_SignalPoor";
     }
     var i,
@@ -267,28 +298,28 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
         s.SetUIActive(this.j5t);
         e = ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo();
         if (e) {
-          var o = e.DVn,
+          var o = e.qVn,
             h = this.q5t ?? o;
           switch (
             ModelManager_1.ModelManager.InstanceDungeonModel.GetPlayerUiState(h)
           ) {
-            case Protocol_1.Aki.Protocol.P6s.Proto_Selecting:
+            case Protocol_1.Aki.Protocol.G5s.Proto_Selecting:
               t.SetUIActive(!0),
                 this.GetItem(15).SetUIActive(!0),
-                this.G2e !== Protocol_1.Aki.Protocol.P6s.Proto_Selecting &&
+                this.G2e !== Protocol_1.Aki.Protocol.G5s.Proto_Selecting &&
                   this.SPe.PlayLevelSequenceByName("Connecting"),
-                (this.G2e = Protocol_1.Aki.Protocol.P6s.Proto_Selecting);
+                (this.G2e = Protocol_1.Aki.Protocol.G5s.Proto_Selecting);
               break;
-            case Protocol_1.Aki.Protocol.P6s.hTs:
+            case Protocol_1.Aki.Protocol.G5s.CTs:
               h !== o &&
                 (t.SetUIActive(!0),
                 this.GetItem(15).SetUIActive(!1),
-                this.G2e !== Protocol_1.Aki.Protocol.P6s.hTs &&
+                this.G2e !== Protocol_1.Aki.Protocol.G5s.CTs &&
                   this.SPe.PlayLevelSequenceByName("Match"),
-                (this.G2e = Protocol_1.Aki.Protocol.P6s.hTs));
+                (this.G2e = Protocol_1.Aki.Protocol.G5s.CTs));
               break;
             default:
-              this.G2e = Protocol_1.Aki.Protocol.P6s.Proto_Wait;
+              this.G2e = Protocol_1.Aki.Protocol.G5s.Proto_Wait;
           }
         }
       }
@@ -357,7 +388,7 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
           : (this.O5t.Update(t), this.k5t.Update(t - i));
     } else this.GetItem(17).SetUIActive(!1);
   }
-  async QYs() {
+  async Vzs() {
     var e, t;
     TowerDefenceController_1.TowerDefenseController.CheckInUiFlow() &&
       ((e = this.GetItem(5)),
@@ -366,31 +397,29 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
           this.RootItem,
         )).CreateThenShowByActorAsync(e.GetOwner()),
       t.SetRelativeUiActive(!0),
-      (this.HYs = t),
+      (this.Nzs = t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.TowerDefenseOnShowPhantomInFormation,
       ));
   }
-  WYs() {
-    var e, t;
-    this.HYs &&
-      ((e =
-        void 0 !== this.q5t && this.q5t <= 0
-          ? ModelManager_1.ModelManager.PlayerInfoModel.GetId()
-          : this.q5t),
-      (t = this.Mne),
-      (this.HYs.PlayerId = e),
-      (this.HYs.RoleCfgId = t),
-      (t =
+  Fzs() {
+    var e, t, i;
+    this.Nzs &&
+      ((e = ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
+      (t = void 0 !== this.q5t && this.q5t <= 0 ? e : this.q5t),
+      (i = this.Mne),
+      (this.Nzs.PlayerId = t),
+      (this.Nzs.RoleCfgId = i),
+      (i =
         TowerDefenceController_1.TowerDefenseController.BuildTeamPhantomIconData(
-          e,
           t,
+          i,
         )),
-      this.HYs.SetIcon(
-        t,
-        TowerDefenceController_1.TowerDefenseController.CheckIsSelf(e),
+      this.Nzs.SetIcon(
+        i,
+        TowerDefenceController_1.TowerDefenseController.CheckIsSelf(t),
       ),
-      this.HYs.SetRedDotActive(!t));
+      this.Nzs.SetRedDotActive(e === t && !i));
   }
 }
 exports.FormationRoleView = FormationRoleView;

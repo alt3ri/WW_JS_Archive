@@ -75,7 +75,7 @@ class MergeHeadStateMonsterInfo {
           this.EntityHandle.Id,
         ]),
       this.RemoveListener());
-    var t = this.EntityHandle.Entity.GetComponent(188);
+    var t = this.EntityHandle.Entity.GetComponent(190);
     if (!t)
       return (
         Log_1.Log.CheckError() &&
@@ -88,7 +88,7 @@ class MergeHeadStateMonsterInfo {
         !1
       );
     if (
-      ((this.AttributeComponent = this.EntityHandle.Entity.GetComponent(158)),
+      ((this.AttributeComponent = this.EntityHandle.Entity.GetComponent(159)),
       !this.AttributeComponent)
     )
       return (
@@ -109,7 +109,7 @@ class MergeHeadStateMonsterInfo {
         CharacterAttributeTypes_1.EAttributeId.Proto_Life,
         this.hXe,
       ),
-      t.AddListener(CharacterAttributeTypes_1.EAttributeId.e5n, this.lXe),
+      t.AddListener(CharacterAttributeTypes_1.EAttributeId.l5n, this.lXe),
       !0
     );
   }
@@ -122,7 +122,7 @@ class MergeHeadStateMonsterInfo {
           CharacterAttributeTypes_1.EAttributeId.Proto_Life,
           this.hXe,
         ),
-        t.RemoveListener(CharacterAttributeTypes_1.EAttributeId.e5n, this.lXe),
+        t.RemoveListener(CharacterAttributeTypes_1.EAttributeId.l5n, this.lXe),
         (this.AttributeComponent = void 0));
   }
 }
@@ -189,7 +189,7 @@ class BattleUiMergeHeadStateData {
                 CharacterAttributeTypes_1.EAttributeId.Proto_Life,
               ),
               o = h.AttributeComponent.GetCurrentValue(
-                CharacterAttributeTypes_1.EAttributeId.e5n,
+                CharacterAttributeTypes_1.EAttributeId.l5n,
               );
             if (s !== h.Hp || o !== h.HpMax) {
               let t = 0,
@@ -239,13 +239,13 @@ class BattleUiMergeHeadStateData {
       (r.TreeId = t),
       (r.NodeId = e),
       (r.MonsterGroupName = s ?? EMPTY_STR);
-    for (const o of i.SEs)
-      for (const a of o.REs) {
+    for (const o of i.DEs)
+      for (const a of o.bEs) {
         var h = new MergeHeadStateMonsterInfo();
         (h.Id = r.Id),
-          (h.PbDataId = a.v5n),
-          (h.IsDead = 2 === a.F4n),
-          (h.BaseLife = MathUtils_1.MathUtils.LongToNumber(a.MEs)),
+          (h.PbDataId = a.A5n),
+          (h.IsDead = 2 === a.Y4n),
+          (h.BaseLife = MathUtils_1.MathUtils.LongToNumber(a.REs)),
           (h.EntityHandle =
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
               h.PbDataId,
@@ -257,7 +257,7 @@ class BattleUiMergeHeadStateData {
                   CharacterAttributeTypes_1.EAttributeId.Proto_Life,
                 )),
                 (h.HpMax = h.AttributeComponent.GetCurrentValue(
-                  CharacterAttributeTypes_1.EAttributeId.e5n,
+                  CharacterAttributeTypes_1.EAttributeId.l5n,
                 ))))
             : (h.IsDead
                 ? (h.Hp = 0)
@@ -274,12 +274,12 @@ class BattleUiMergeHeadStateData {
       r.IsVisible && this.fXe(r);
   }
   mXe(t, e) {
-    for (const s of e.SEs)
-      for (const r of s.REs) {
-        var i = t.MonsterInfos.get(r.v5n);
+    for (const s of e.DEs)
+      for (const r of s.bEs) {
+        var i = t.MonsterInfos.get(r.A5n);
         i
           ? i.IsDead ||
-            ((i.IsDead = 2 === r.F4n),
+            ((i.IsDead = 2 === r.Y4n),
             i.IsDead &&
               (this.uXe(i),
               (0 === i.Hp && i.HpMax === i.BaseLife) ||

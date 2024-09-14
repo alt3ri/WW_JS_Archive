@@ -21,7 +21,7 @@ class ActivityTurntableQuestItem extends UiPanelBase_1.UiPanelBase {
       (this.uLn = () => {
         this.FRe &&
           (UiManager_1.UiManager.OpenView("QuestView", this.FRe),
-          this.OOn()?.ReadCurrentUnlockQuest());
+          this.t2n()?.ReadCurrentUnlockQuest());
       });
   }
   OnRegisterComponent() {
@@ -57,7 +57,7 @@ class ActivityTurntableQuestItem extends UiPanelBase_1.UiPanelBase {
   SetRedDot(t) {
     this.GetItem(4).SetUIActive(t);
   }
-  OOn() {
+  t2n() {
     if (this.LOe)
       return ModelManager_1.ModelManager.ActivityModel.GetActivityById(
         this.LOe,

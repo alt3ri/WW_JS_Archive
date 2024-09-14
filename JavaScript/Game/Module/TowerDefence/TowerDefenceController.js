@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerDefenseController = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  InstOnlineType_1 = require("../../../Core/Define/Config/SubType/InstOnlineType"),
   InstanceDungeonById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonById"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   PhantomItemByItemId_1 = require("../../../Core/Define/ConfigQuery/PhantomItemByItemId"),
@@ -12,6 +13,8 @@ const Log_1 = require("../../../Core/Common/Log"),
   TowerDefencePhantomById_1 = require("../../../Core/Define/ConfigQuery/TowerDefencePhantomById"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
@@ -33,21 +36,21 @@ const Log_1 = require("../../../Core/Common/Log"),
 class TowerDefenseController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
-      (this.nJs = (e) => {
+      (this.tZs = (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("TowerDefense", 65, "塔防活动状态变化时刷新的数据", [
             "notify",
             e,
           ]),
-          e.AYs &&
+          e.Izs &&
             (ModelManager_1.ModelManager.TowerDefenseModel.PhantomMessageCache.ParseTowerDefenseActivityData(
-              e.AYs,
+              e.Izs,
             ),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.TowerDefenseOnActivityInfoUpdateNotify,
             ));
       }),
-      (this.sJs = (e) => {
+      (this.iZs = (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "TowerDefense",
@@ -56,14 +59,14 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
             ["notify", e],
           ),
           ModelManager_1.ModelManager.TowerDefenseModel.PhantomMessageCache.ParseTowerDefenseInstanceDataList(
-            e.IYs,
+            e.Mzs,
             !1,
           ),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.TowerDefenseOnInstanceInfoUpdateNotify,
           );
       }),
-      (this.aJs = (e) => {
+      (this.rZs = (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "TowerDefense",
@@ -72,20 +75,20 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
             ["notify", e],
           ),
           ModelManager_1.ModelManager.TowerDefenseModel.PhantomMessageCache.ParseTowerDefenseOwnPhantomDataList(
-            e.Sps,
+            e.Dps,
           ),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.TowerDefenseOnPhantomInfoUpdateNotify,
           ),
-          TowerDefenseController.wta();
+          TowerDefenseController.zra();
       }),
-      (this.Mca = (e) => {
+      (this.SCa = (e) => {
         ModelManager_1.ModelManager.GameModeModel.WorldDoneAndLoadingClosed
-          ? TowerDefenseController.EIa(e)
+          ? TowerDefenseController.pRa(e)
           : (ModelManager_1.ModelManager.TowerDefenseModel.DelayedEndNotify =
               e);
       }),
-      (this.Bta = (e) => {
+      (this.Zra = (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("TowerDefense", 65, "进入战斗副本时刷新的数据", [
             "notify",
@@ -95,14 +98,104 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
           r,
           t = ModelManager_1.ModelManager.TowerDefenseModel;
         t.ResetPhantomOwnerDataList();
-        for ([n, r] of e.F7n.entries()) {
+        for ([n, r] of e.Y7n.entries()) {
           var o = t.PhantomOwnerDataList[n],
-            a = r.txs,
-            l = a.J4n;
-          (o.RoleCfgId = r.O6n),
-            (o.PhantomId = l),
-            t.PhantomMessageCache.OwnPhantomInBattleDataCache.set(l, a);
+            a = r.hxs,
+            i = a.s5n;
+          (o.RoleCfgId = r.Q6n),
+            (o.PhantomId = i),
+            t.PhantomMessageCache.OwnPhantomInBattleDataCache.set(i, a);
         }
+      }),
+      (this.Z7a = (e) => {
+        const n = MathUtils_1.MathUtils.LongToNumber(e.pih);
+        var r = TimeUtil_1.TimeUtil.GetServerStopTimeStamp();
+        const t = TimeUtil_1.TimeUtil.SetTimeSecond(n - r);
+        var o = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat3(t);
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "TowerDefense",
+            65,
+            "局内角色角色角色复活通知",
+            ["notify", e],
+            ["time", n],
+            ["local time with stop", r],
+            ["local time", TimeUtil_1.TimeUtil.GetServerTimeStamp()],
+            ["count down", o],
+          ),
+          TowerDefenseController.CheckIsSelf(e.W5n)
+            ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
+                "TowerDefenceRoleDie",
+                o.CountDownText,
+              )
+            : ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
+                "TowerDefencePlayerDie",
+                o.CountDownText,
+              );
+        const a =
+          ModelManager_1.ModelManager.BattleUiModel.FormationPanelData?.GetRolePosition(
+            e.W5n,
+            e.Q6n,
+          );
+        if (void 0 !== a) {
+          const i = ModelManager_1.ModelManager.TowerDefenseModel,
+            l = TimerSystem_1.TimerSystem.Forever(() => {
+              var e = TimeUtil_1.TimeUtil.GetServerStopTimeStamp();
+              e >= n
+                ? (EventSystem_1.EventSystem.Emit(
+                    EventDefine_1.EEventName
+                      .OnRefreshFormationCooldownExternalInBattleView,
+                    a - 1,
+                  ),
+                  i.TryRemoveTimerInBattle(l))
+                : EventSystem_1.EventSystem.Emit(
+                    EventDefine_1.EEventName
+                      .OnRefreshFormationCooldownExternalInBattleView,
+                    a - 1,
+                    TimeUtil_1.TimeUtil.SetTimeSecond(n - e),
+                    t,
+                  );
+            }, 100);
+          i.TryAddTimerInBattle(l);
+        }
+      }),
+      (this.eHa = (e) => {
+        var n,
+          r = MathUtils_1.MathUtils.LongToNumber(e.pih),
+          t = TimeUtil_1.TimeUtil.GetServerStopTimeStamp(),
+          r = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat3(
+            TimeUtil_1.TimeUtil.SetTimeSecond(r - t),
+          );
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "TowerDefense",
+            65,
+            "局内玩家玩家玩家复活通知",
+            ["notify", e],
+            ["time", MathUtils_1.MathUtils.LongToNumber(e.pih)],
+            [
+              "local time with stop",
+              TimeUtil_1.TimeUtil.GetServerStopTimeStamp(),
+            ],
+            ["local time", TimeUtil_1.TimeUtil.GetServerTimeStamp()],
+            ["count down", r],
+          ),
+          TowerDefenseController.CheckIsSelf(e.W5n)
+            ? (EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName.ResetToBattleView,
+              ),
+              (t = TowerDefenseController.TryGetReviveViewName()) &&
+                ((n = { RemainTime: r.RemainingTime }),
+                UiManager_1.UiManager.OpenView(t, n)))
+            : ((t =
+                ModelManager_1.ModelManager.OnlineModel?.GetCurrentTeamListById(
+                  e.W5n,
+                )?.PlayerNumber ?? 0),
+              ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
+                "TowerDefencePlayerRoleDie",
+                t,
+                r.CountDownText,
+              ));
       });
   }
   OnCreateActivityData(e) {
@@ -121,111 +214,147 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
-      TowerDefenseController._Js,
+      TowerDefenseController.sZs,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TowerDefenseBeforeConfirmQuickRoleSelect,
-        TowerDefenseController.uJs,
+        TowerDefenseController.aZs,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeRole,
-        TowerDefenseController.cJs,
+        TowerDefenseController.hZs,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.EnterInstanceDungeon,
-        TowerDefenseController.mJs,
+        TowerDefenseController.lZs,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.LeaveInstanceDungeon,
-        TowerDefenseController.dJs,
+        TowerDefenseController._Zs,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.LeaveInstanceDungeonConfirm,
-        TowerDefenseController.CJs,
+        TowerDefenseController.uZs,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleScoreChanged,
-        TowerDefenseController.fJs,
+        TowerDefenseController.mZs,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBeforeDestroyInstanceDungeonEntranceView,
-        TowerDefenseController.XJs,
+        TowerDefenseController.WZs,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TowerDefenseSelfPhantomConfirm,
-        TowerDefenseController.Sca,
+        TowerDefenseController.ECa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-        TowerDefenseController.yIa,
+        TowerDefenseController.vRa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseView,
-        TowerDefenseController.IIa,
+        TowerDefenseController.MRa,
       );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
-      TowerDefenseController._Js,
+      TowerDefenseController.sZs,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TowerDefenseBeforeConfirmQuickRoleSelect,
-        TowerDefenseController.uJs,
+        TowerDefenseController.aZs,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChangeRole,
-        TowerDefenseController.cJs,
+        TowerDefenseController.hZs,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.EnterInstanceDungeon,
-        TowerDefenseController.mJs,
+        TowerDefenseController.lZs,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.LeaveInstanceDungeon,
-        TowerDefenseController.dJs,
+        TowerDefenseController._Zs,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.LeaveInstanceDungeonConfirm,
-        TowerDefenseController.CJs,
+        TowerDefenseController.uZs,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleScoreChanged,
-        TowerDefenseController.fJs,
+        TowerDefenseController.mZs,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBeforeDestroyInstanceDungeonEntranceView,
-        TowerDefenseController.XJs,
+        TowerDefenseController.WZs,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TowerDefenseSelfPhantomConfirm,
-        TowerDefenseController.Sca,
+        TowerDefenseController.ECa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-        TowerDefenseController.yIa,
+        TowerDefenseController.vRa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
-        TowerDefenseController.IIa,
+        TowerDefenseController.MRa,
       );
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(14546, this.nJs),
-      Net_1.Net.Register(17953, this.sJs),
-      Net_1.Net.Register(26856, this.aJs),
-      Net_1.Net.Register(16288, this.Mca),
-      Net_1.Net.Register(2055, this.Bta);
+    Net_1.Net.Register(22477, this.tZs),
+      Net_1.Net.Register(16126, this.iZs),
+      Net_1.Net.Register(18323, this.rZs),
+      Net_1.Net.Register(16382, this.SCa),
+      Net_1.Net.Register(23289, this.Zra),
+      Net_1.Net.Register(28214, this.Z7a),
+      Net_1.Net.Register(17341, this.eHa);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(14546),
-      Net_1.Net.UnRegister(17953),
-      Net_1.Net.UnRegister(26856),
-      Net_1.Net.UnRegister(16288),
-      Net_1.Net.UnRegister(2055);
+    Net_1.Net.UnRegister(22477),
+      Net_1.Net.UnRegister(16126),
+      Net_1.Net.UnRegister(18323),
+      Net_1.Net.UnRegister(16382),
+      Net_1.Net.UnRegister(23289),
+      Net_1.Net.UnRegister(28214),
+      Net_1.Net.UnRegister(17341);
   }
   GetActivityLevelUnlockState(e) {
     return TowerDefenseController.CheckIsInstanceUnlock(e);
+  }
+  static MarkPhantomIconScrollDataChosen(e, n, r) {
+    var t = ModelManager_1.ModelManager.TowerDefenseModel,
+      o = ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+      o = t.GetOwnerData(o, r);
+    if (n)
+      if (o && o.PhantomId !== TowerDefenceDefine_1.DEFAULT_ID)
+        t.CurrentSelfPhantomIdInUiTemp = o.PhantomId;
+      else
+        for (const l of e) {
+          var a = l.Data;
+          if (!a.IsOccupied && !a.IsLocked) {
+            t.CurrentSelfPhantomIdInUiTemp = a.ConfigId;
+            break;
+          }
+        }
+    for (const s of e) {
+      var i = s.Data;
+      i.IsChosen = t.CurrentSelfPhantomIdInUiTemp === i.ConfigId;
+    }
+  }
+  static CheckSelfPhantomCancelAble(e) {
+    var n = ModelManager_1.ModelManager.TowerDefenseModel,
+      r = ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+      r = n.GetOwnerData(r, e);
+    return (
+      !(!r || r.PhantomId === TowerDefenceDefine_1.DEFAULT_ID) &&
+      n.CurrentSelfPhantomIdInUiTemp === r.PhantomId
+    );
+  }
+  static BuildCurrentPhantomNameTextIdInBattle() {
+    return ModelManager_1.ModelManager.TowerDefenseModel.GetCurrentPhantomNameTextId();
   }
   static BuildPreviewRewardData() {
     return ModelManager_1.ModelManager.TowerDefenseModel.GetPreviewRewardData();
@@ -260,13 +389,14 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
   static BuildPhantomTipsInBattleData() {
     var e = ModelManager_1.ModelManager.TowerDefenseModel,
       n = e.GetCurrentPhantomSkillCfgListInBattle(),
-      e = e.GetCurrentPhantomLevelInBattle(),
-      n = n[e - 1];
+      r = e.GetCurrentPhantomLevelInBattle(),
+      n = n[r - 1];
     return {
       TitleTextId: n.Name,
       PhantomTextId: n.Name,
-      Level: e,
+      Level: r,
       DescTextId: n.Description,
+      DescArgs: e.GetCurrentPhantomSkillDescriptionArgsInBattle(),
     };
   }
   static BuildTeamPhantomIconData(e, n) {
@@ -283,14 +413,14 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
       }
     }
   }
-  static lJs(e) {
+  static nZs(e) {
     return [
       {
         ButtonTextId: "Text_ButtonTextExit_Text",
         DescriptionTextId: void 0,
         IsTimeDownCloseView: !1,
         IsClickedCloseView: !1,
-        OnClickedCallback: TowerDefenseController.vJs,
+        OnClickedCallback: TowerDefenseController.CZs,
       },
       {
         ButtonTextId: "TowerDefence_Restart",
@@ -298,7 +428,7 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
         DescriptionArgs: [e],
         IsTimeDownCloseView: !1,
         IsClickedCloseView: !1,
-        OnClickedCallback: TowerDefenseController.MJs,
+        OnClickedCallback: TowerDefenseController.gZs,
       },
     ];
   }
@@ -359,27 +489,27 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
           e,
         ]);
   }
-  static pJs() {
+  static dZs() {
     if (
       TowerDefenseController.CheckInUiFlow() &&
-      TowerDefenseController.qta()
+      TowerDefenseController.toa()
     ) {
       var r = ModelManager_1.ModelManager.TowerDefenseModel,
         e = ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo();
       if (e) {
         let n = 0;
-        for (const s of e.vRs) {
-          var t = s.q5n;
-          for (const _ of s.V6n) {
-            var o = _.O6n,
-              a = _.DYs,
-              l = TowerDefenseController.CheckIsSelf(t),
-              i = r.PhantomOwnerDataList[n++];
-            (i.PlayerId = t),
-              (i.IsSelf = l),
-              (i.RoleCfgId = o),
-              (i.PhantomId = a),
-              l && r.RoleCfgId2PhantomIdMapCache.set(o, a);
+        for (const s of e.TRs) {
+          var t = s.W5n;
+          for (const _ of s.J6n) {
+            var o = _.Q6n,
+              a = _.Tzs,
+              i = TowerDefenseController.CheckIsSelf(t),
+              l = r.PhantomOwnerDataList[n++];
+            (l.PlayerId = t),
+              (l.IsSelf = i),
+              (l.RoleCfgId = o),
+              (l.PhantomId = a),
+              i && r.RoleCfgId2PhantomIdMapCache.set(o, a);
           }
         }
         for (let e = n; e < EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM; e++)
@@ -394,7 +524,7 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
       }
     }
   }
-  static Ozs() {
+  static Fea() {
     var n = ModelManager_1.ModelManager.TowerDefenseModel,
       r = ModelManager_1.ModelManager.EditBattleTeamModel;
     for (let e = 0; e < EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM; e++) {
@@ -420,7 +550,7 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
         n.PhantomOwnerDataList,
       ]);
   }
-  static wta() {
+  static zra() {
     var e = ModelManager_1.ModelManager.TowerDefenseModel,
       n = e.GetCurrentPhantomIdInBattle(),
       e =
@@ -436,16 +566,19 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
       r = e.InstanceId;
     return r
       ? ((n = n.GetOwnRoleConfigIdList[0]),
-        InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
-          r,
-          n,
-          e.EntranceId,
-          0,
-          void 0,
-          ModelManager_1.ModelManager.TowerDefenseModel.GetProtocolPhantomIdList(
+        (e =
+          await InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
+            r,
             n,
-          ),
-        ))
+            e.EntranceId,
+            0,
+            void 0,
+            ModelManager_1.ModelManager.TowerDefenseModel.GetProtocolPhantomIdList(
+              n,
+            ),
+          )) ||
+          InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.RevertEntranceFlowStep(),
+        e)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("TowerDefense", 65, "进入副本失败，副本Id不存在", [
             "instanceId",
@@ -454,10 +587,10 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
         !1);
   }
   static RequestScoreReward(n) {
-    var e = Protocol_1.Aki.Protocol.MYs.create();
+    var e = Protocol_1.Aki.Protocol.gzs.create();
     const r = ModelManager_1.ModelManager.TowerDefenseModel;
-    (e.IVn = [n]),
-      Net_1.Net.CallAsync(24347, e).then(
+    (e.BVn = [n]),
+      Net_1.Net.CallAsync(27456, e).then(
         (e) => {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("TowerDefense", 65, "塔防积分奖励的response", [
@@ -465,7 +598,7 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
               e,
             ]),
             e &&
-              e.O4n === Protocol_1.Aki.Protocol.O4n.NRs &&
+              e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs &&
               (r.PhantomMessageCache.UpdateByScoreRewardRequest(n),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.RefreshCommonActivityRewardPopUpView,
@@ -476,10 +609,10 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
       );
   }
   static RequestInstanceReward(n) {
-    var e = Protocol_1.Aki.Protocol.vYs.create();
+    var e = Protocol_1.Aki.Protocol.mzs.create();
     const r = ModelManager_1.ModelManager.TowerDefenseModel;
-    (e.IVn = [n]),
-      Net_1.Net.CallAsync(27007, e).then(
+    (e.BVn = [n]),
+      Net_1.Net.CallAsync(15504, e).then(
         (e) => {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("TowerDefense", 65, "塔防关卡奖励的response", [
@@ -487,7 +620,7 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
               e,
             ]),
             e &&
-              e.O4n === Protocol_1.Aki.Protocol.O4n.NRs &&
+              e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs &&
               (r.PhantomMessageCache.UpdateByInstanceRewardRequest(n),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.RefreshCommonActivityRewardPopUpView,
@@ -516,38 +649,33 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
     n.PhantomMessageCache.OwnPhantomInBattleNewLevelUpFlagCache.set(r, e < t);
   }
   static TryReopenInBattleTip() {
-    TowerDefenseController.wta();
+    TowerDefenseController.zra();
   }
-  static SyncSelfTowerDefensePhantomId(n) {
-    const r = ModelManager_1.ModelManager.TowerDefenseModel;
-    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
-    const t = r.GetOwnerData(e, n);
-    t
-      ? ((t.PhantomId = r.CurrentSelfPhantomIdInUiTemp),
-        r.RoleCfgId2PhantomIdMapCache.set(n, r.CurrentSelfPhantomIdInUiTemp),
-        TowerDefenseController.qta()
-          ? ((e = ModelManager_1.ModelManager.EditBattleTeamModel),
+  static SyncSelfTowerDefensePhantomId(e) {
+    var n = ModelManager_1.ModelManager.TowerDefenseModel,
+      r = ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+      r = n.GetOwnerData(r, e);
+    r
+      ? ((r.PhantomId = n.CurrentSelfPhantomIdInUiTemp),
+        n.RoleCfgId2PhantomIdMapCache.set(e, n.CurrentSelfPhantomIdInUiTemp),
+        TowerDefenseController.toa()
+          ? ((r = ModelManager_1.ModelManager.EditBattleTeamModel),
             InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.MatchChangeRoleRequest(
-              e.GetOwnRoleConfigIdList[0],
+              r.GetOwnRoleConfigIdList[0],
             ).then(
               (e) => {
-                e
-                  ? EventSystem_1.EventSystem.Emit(
-                      EventDefine_1.EEventName.TowerDefensePhantomChanged,
-                    )
-                  : ((t.PhantomId = TowerDefenceDefine_1.DEFAULT_ID),
-                    r.RoleCfgId2PhantomIdMapCache.delete(n));
+                e &&
+                  EventSystem_1.EventSystem.Emit(
+                    EventDefine_1.EEventName.TowerDefensePhantomChanged,
+                  );
               },
-              () => {
-                (t.PhantomId = TowerDefenceDefine_1.DEFAULT_ID),
-                  r.RoleCfgId2PhantomIdMapCache.delete(n);
-              },
+              () => {},
             ))
           : (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "TowerDefense",
                 65,
-                "单机同步自己的声骸数据，id：" + r.CurrentSelfPhantomIdInUiTemp,
+                "单机同步自己的声骸数据，id：" + n.CurrentSelfPhantomIdInUiTemp,
               ),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.TowerDefensePhantomChanged,
@@ -557,54 +685,88 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
           "TowerDefense",
           65,
           "自己选择声骸后，找不到自己的OwnerData，声骸ID不进行同步",
-          ["roleCfgId", n],
+          ["roleCfgId", e],
         );
   }
-  static EIa(e) {
-    Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug(
-        "TowerDefense",
-        65,
-        "战斗结束时刷新的数据，然后根据是否在副本中决定是否打开奖励面板",
-        ["notify", e],
-      ),
-      ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
-        (ItemRewardController_1.ItemRewardController.OpenExploreRewardView(
-          e.NRs
+  static pRa(t) {
+    if (
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "TowerDefense",
+          65,
+          "战斗结束时刷新的数据，然后根据是否在副本中决定是否打开奖励面板",
+          ["notify", t],
+        ),
+      ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance())
+    ) {
+      var o = t.r6n,
+        o =
+          TowerDefenceInstanceById_1.configTowerDefenceInstanceById.GetConfig(
+            o,
+          );
+      if (void 0 !== o) {
+        o = o.IsDifficult;
+        let e = "",
+          n = "",
+          r = void 0;
+        var a = TowerDefenseController.nZs(t.tBs),
+          o =
+            (o
+              ? t.KRs
+                ? ((e = "TowerDefenceWinTime"),
+                  (n = TimeUtil_1.TimeUtil.GetTimeString(t.Qxs)),
+                  (a[1].DescriptionTextId = "TowerDefenceBestTime"),
+                  (a[1].DescriptionArgs = [t.fih]))
+                : ((e = "TowerDefencelose"), (n = ""))
+              : ((e = "MowingCurrentPoint"), (n = ""), (r = t.SMs)),
+            TowerDefenseController.CheckIsInstanceSingle()
+              ? void 0
+              : ItemRewardController_1.ItemRewardController.BuildExploreFriendDataList());
+        ItemRewardController_1.ItemRewardController.OpenExploreRewardView(
+          t.KRs
             ? TowerDefenceDefine_1.INSTANCE_SUCCESS
             : TowerDefenceDefine_1.INSTANCE_FAIL,
-          e.NRs,
+          t.KRs,
           void 0,
           {
-            TitleTextId: "MowingCurrentPoint",
-            Record: "",
-            RecordRollingTo: e.mMs,
-            IsNewRecord: e.mMs >= e.Qbs && 0 !== e.mMs,
+            TitleTextId: e,
+            Record: n,
+            RecordRollingTo: r,
+            IsNewRecord: t.SMs >= t.tBs && 0 !== t.SMs,
           },
           void 0,
-          TowerDefenseController.lJs(e.Qbs),
+          a,
           void 0,
           void 0,
           void 0,
           void 0,
           void 0,
           void 0,
-          ItemRewardController_1.ItemRewardController.BuildExploreFriendDataList(),
+          o,
         ),
-        UiManager_1.UiManager.IsViewOpen("TowerDefenceInBattleTips") &&
-          UiManager_1.UiManager.CloseView("TowerDefenceInBattleTips"),
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.TowerDefenseOnTowerDefenseBattleEndNotify,
-        ));
+          UiManager_1.UiManager.IsViewOpen("TowerDefenceInBattleTips") &&
+            UiManager_1.UiManager.CloseView("TowerDefenceInBattleTips"),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.TowerDefenseOnTowerDefenseBattleEndNotify,
+          );
+      }
+    }
   }
   static GetLevelInBattle() {
     return ModelManager_1.ModelManager.TowerDefenseModel.GetCurrentPhantomLevelInBattle();
   }
   static GetLevelContentInBattle() {
-    return ModelManager_1.ModelManager.TowerDefenseModel.GetCurrentPhantomLevelInBattle().toString();
+    var e = ModelManager_1.ModelManager.TowerDefenseModel;
+    return e.CheckCurrentActivityIsSecondEdition()
+      ? (MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          "TowerDefencewenhao",
+        ) ?? "")
+      : e.GetCurrentPhantomLevelInBattle().toString();
   }
   static GetExpDataInBattle() {
-    return ModelManager_1.ModelManager.TowerDefenseModel.GetCurrentPhantomExpPairInBattle();
+    var e = ModelManager_1.ModelManager.TowerDefenseModel;
+    if (!e.CheckCurrentActivityIsSecondEdition())
+      return e.GetCurrentPhantomExpPairInBattle();
   }
   static GetProgressInBattle() {
     var e =
@@ -640,7 +802,21 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
         TowerDefenceInstanceByInstanceId_1.configTowerDefenceInstanceByInstanceId.GetConfig(
           e,
         );
-    return e ? n.PhantomMessageCache.StageMapCache.get(e.Id)?.Record ?? 0 : 0;
+    return e ? (n.PhantomMessageCache.StageMapCache.get(e.Id)?.Record ?? 0) : 0;
+  }
+  static GetPassTimeContentByInstanceId(e) {
+    var n = ModelManager_1.ModelManager.TowerDefenseModel,
+      e =
+        TowerDefenceInstanceByInstanceId_1.configTowerDefenceInstanceByInstanceId.GetConfig(
+          e,
+        );
+    let r = 0;
+    return (
+      e &&
+        ((n = n.PhantomMessageCache.StageMapCache.get(e.Id)),
+        (r = n && n.Passed ? n.PassTime : 0)),
+      TimeUtil_1.TimeUtil.GetTimeString(r)
+    );
   }
   static GetTotalScoreLimitByInstanceId(e) {
     e =
@@ -669,6 +845,23 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
       );
     return void 0 === e ? 0 : e.MarkId;
   }
+  static GetSuitableInstanceId() {
+    return ModelManager_1.ModelManager.TowerDefenseModel.PhantomMessageCache.GetSuitableInstanceId();
+  }
+  static GetPhantomSkillDescriptionArgsByPhantomId(e) {
+    var n = ModelManager_1.ModelManager.TowerDefenseModel;
+    if (n.CheckCurrentActivityIsSecondEdition())
+      return (
+        (n = n.PhantomConfigCache.get(e)),
+        (e = PhantomItemByItemId_1.configPhantomItemByItemId.GetConfig(
+          n.PhantomItemId,
+        ).SkillId),
+        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSkillDescExByPhantomSkillIdAndQuality(
+          e,
+          5,
+        )
+      );
+  }
   static CheckActivityUnlockByCondition() {
     return ModelManager_1.ModelManager.TowerDefenseModel.GetOrCreateParsedTowerDefenseMsg().IsUnLock();
   }
@@ -685,6 +878,15 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
   static CheckIsInstanceUnlock(e) {
     return ModelManager_1.ModelManager.TowerDefenseModel.PhantomMessageCache.IsStageUnLocked(
       e,
+    );
+  }
+  static CheckIsInstanceSingle() {
+    var e;
+    return (
+      !!ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
+      ((e = ModelManager_1.ModelManager.CreatureModel.GetInstanceId()),
+      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
+        ?.OnlineType === InstOnlineType_1.InstOnlineType.Single)
     );
   }
   static CheckHasReward() {
@@ -729,11 +931,30 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
       n.BaseEntityId === e.TrackTarget
     );
   }
-  static qta() {
+  static toa() {
     return (
       0 !==
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState()
     );
+  }
+  static CheckIsChallengeInstanceByInstanceId(e) {
+    e =
+      TowerDefenceInstanceByInstanceId_1.configTowerDefenceInstanceByInstanceId.GetConfig(
+        e,
+      );
+    return void 0 !== e && e.IsDifficult;
+  }
+  static CheckInstancePassedByInstanceId(e) {
+    var n = ModelManager_1.ModelManager.TowerDefenseModel,
+      e =
+        TowerDefenceInstanceByInstanceId_1.configTowerDefenceInstanceByInstanceId.GetConfig(
+          e,
+        );
+    return !!e && (n.PhantomMessageCache.StageMapCache.get(e.Id)?.Passed ?? !1);
+  }
+  static CheckCurrentPhantomIsOccupiedInUi() {
+    var e = ModelManager_1.ModelManager.TowerDefenseModel;
+    return e.CheckPhantomIsOccupied(e.CurrentSelfPhantomIdInUiTemp);
   }
   static SetIsUiFlowOpen(e) {
     var n = ModelManager_1.ModelManager.TowerDefenseModel;
@@ -750,70 +971,79 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
     new TowerDefencePhantomSkillItem_1.TowerDefensePhantomSkillItem()),
   (TowerDefenseController.BuildPhantomSkillInBattleItem = () =>
     new TowerDefenceInBattleView_1.TowerDefensePhantomSkillInBattleItem()),
-  (TowerDefenseController.BuildPhantomIconScrollData = (e) => {
-    var n = [],
-      r = ModelManager_1.ModelManager.TowerDefenseModel;
-    for (const i of r.SortedPhantomConfigCache) {
-      var t = PhantomItemByItemId_1.configPhantomItemByItemId.GetConfig(
-          i.PhantomItemId,
-        ),
-        o =
+  (TowerDefenseController.BuildPhantomIconScrollData = () => {
+    var e,
+      n,
+      r,
+      t = [],
+      o = ModelManager_1.ModelManager.TowerDefenseModel;
+    for (const a of o.SortedPhantomConfigCache)
+      o.CheckPhantomAvailableInActivityByActivityId(a.ActivityId) &&
+        ((e = PhantomItemByItemId_1.configPhantomItemByItemId.GetConfig(
+          a.PhantomItemId,
+        )),
+        (n =
           (ModelManager_1.ModelManager.GameModeModel.IsMulti
             ? ModelManager_1.ModelManager.EditBattleTeamModel
                 .GetInstanceDungeonId
             : ModelManager_1.ModelManager.InstanceDungeonEntranceModel
-                .SelectInstanceId) ?? 0,
-        a =
+                .SelectInstanceId) ?? 0),
+        (r =
           TowerDefenceInstanceByInstanceId_1.configTowerDefenceInstanceByInstanceId.GetConfig(
-            o,
-          ),
-        o =
-          (a ||
-            (Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "Activity",
-                65,
-                "副本ID配置错误，无法在塔防副本配置中找到，请检查联机塔防表和副本表",
-                ["选中的副本ID", o],
-              )),
-          !a?.OptionalBuff.includes(i.Id) ?? !0),
-        a = {
+            n,
+          )) ||
+          (Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Activity",
+              65,
+              "副本ID配置错误，无法在塔防副本配置中找到，请检查联机塔防表和副本表",
+              ["选中的副本ID", n],
+            )),
+        (n = !r?.OptionalBuff.includes(a.Id) ?? !0),
+        (r = {
           Type: 3,
-          Data: { ConfigId: i.Id, IsLocked: o, IsChosen: !1 },
-          PhantomId: i.PhantomItemId,
-          QualityId: t.QualityId,
-          IsLockVisibleBlack: o || !r.IsPhantomViewOpened,
-        };
-      n.push(a);
-    }
-    n.sort(TowerDefenseController.wla),
-      e && (r.CurrentSelfPhantomIdInUiTemp = n[0].Data.ConfigId);
-    for (const s of n) {
-      var l = s.Data;
-      l.IsChosen = r.CurrentSelfPhantomIdInUiTemp === l.ConfigId;
-    }
-    return n;
+          Data: {
+            ConfigId: a.Id,
+            HexColorPath:
+              ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
+                a.MarkResourceId,
+              ) ?? "",
+            IsLocked: n,
+            IsChosen: !1,
+            IsOccupied: o.CheckPhantomIsOccupied(a.Id),
+          },
+          PhantomId: a.PhantomItemId,
+          QualityId: e.QualityId,
+          IsLockVisibleBlack: n || !o.IsPhantomViewOpened,
+        }),
+        t.push(r));
+    return t.sort(TowerDefenseController.Bua), t;
   }),
   (TowerDefenseController.BuildPhantomSkillLayoutData = () => {
     var e,
       n,
-      r = [];
-    for ([
-      e,
-      n,
-    ] of ModelManager_1.ModelManager.TowerDefenseModel.GetCurrentPhantomSkillCfgTemp().entries())
+      r = [],
+      t = ModelManager_1.ModelManager.TowerDefenseModel,
+      o = t.PhantomConfigCache.get(t.CurrentSelfPhantomIdInUiTemp),
+      a = TowerDefenseController.GetPhantomSkillDescriptionArgsByPhantomId(
+        t.CurrentSelfPhantomIdInUiTemp,
+      );
+    for ([e, n] of o.SkillDataList.entries()) {
+      var i = n.Description;
       r.push({
         SkillTextId: n.Name,
-        DescriptionTextId: n.Description,
+        DescriptionTextId: i,
+        DescriptionArgs: a,
         Level: (e + 1).toString(),
       });
+    }
     return r;
   }),
   (TowerDefenseController.BuildPhantomOtherData = () => {
     var e = ModelManager_1.ModelManager.TowerDefenseModel,
       n = ModelManager_1.ModelManager.InstanceDungeonEntranceModel,
       r = e.PhantomConfigCache.get(e.CurrentSelfPhantomIdInUiTemp),
-      n = TowerDefenseController.qta() ? n.GetMatchingId() : n.SelectInstanceId,
+      n = TowerDefenseController.toa() ? n.GetMatchingId() : n.SelectInstanceId,
       t =
         TowerDefenceInstanceByInstanceId_1.configTowerDefenceInstanceByInstanceId.GetConfig(
           n,
@@ -854,10 +1084,15 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
       o = t.GetCurrentPhantomSkillCfgListInBattle(),
       a = t.GetCurrentPhantomLevelInBattle();
     for ([e, n] of o.entries())
-      r.push({ Skill: n.Name, Description: n.Description, IsUnlock: a > e });
+      r.push({
+        Skill: n.Name,
+        Description: n.Description,
+        DescriptionArgs: t.GetCurrentPhantomSkillDescriptionArgsInBattle(),
+        IsUnlock: a > e,
+      });
     return r;
   }),
-  (TowerDefenseController.wla = (e, n) => {
+  (TowerDefenseController.Bua = (e, n) => {
     (e = e.Data), (n = n.Data);
     return e.IsLocked === n.IsLocked
       ? e.ConfigId - n.ConfigId
@@ -871,30 +1106,43 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
       ModelManager_1.ModelManager.TowerDefenseModel.GetPreviewRewardData(),
     );
   }),
-  (TowerDefenseController.uJs = () => {
+  (TowerDefenseController.aZs = () => {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("TowerDefense", 65, "当塔防快速选人确定时"),
       TowerDefenseController.CheckInUiFlow() &&
-        (TowerDefenseController.Ozs(),
+        (TowerDefenseController.Fea(),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.TowerDefensePhantomChanged,
         ));
   }),
-  (TowerDefenseController.cJs = () => {}),
-  (TowerDefenseController.mJs = () => {
+  (TowerDefenseController.hZs = () => {}),
+  (TowerDefenseController.lZs = () => {
     TowerDefenseController.CheckInInstanceDungeon() &&
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.TowerDefenseShowInBattleView,
         !0,
       );
   }),
-  (TowerDefenseController.dJs = () => {
-    EventSystem_1.EventSystem.Emit(
-      EventDefine_1.EEventName.TowerDefenseShowInBattleView,
-      !1,
-    );
+  (TowerDefenseController._Zs = () => {
+    ModelManager_1.ModelManager.TowerDefenseModel.ResetTimerCacheInBattle();
+    var e = UiManager_1.UiManager.GetViewByName("BattleView");
+    e && e.ResetFormationCooldownExternal(),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.TowerDefenseShowInBattleView,
+        !1,
+      );
   }),
-  (TowerDefenseController.CJs = () => {
+  (TowerDefenseController.uZs = () => {
+    TowerDefenseController.CheckInInstanceDungeon() &&
+      InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon().finally(
+        () => {
+          UiManager_1.UiManager.IsViewShow("ExploreRewardView") &&
+            UiManager_1.UiManager.CloseView("ExploreRewardView"),
+            ModelManager_1.ModelManager.TowerDefenseModel.ResetAllCache();
+        },
+      );
+  }),
+  (TowerDefenseController.CZs = (e) => {
     InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon().finally(
       () => {
         UiManager_1.UiManager.IsViewShow("ExploreRewardView") &&
@@ -903,16 +1151,7 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
       },
     );
   }),
-  (TowerDefenseController.vJs = (e) => {
-    InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon().finally(
-      () => {
-        UiManager_1.UiManager.IsViewShow("ExploreRewardView") &&
-          UiManager_1.UiManager.CloseView("ExploreRewardView"),
-          ModelManager_1.ModelManager.TowerDefenseModel.ResetAllCache();
-      },
-    );
-  }),
-  (TowerDefenseController.MJs = (e) => {
+  (TowerDefenseController.gZs = (e) => {
     ModelManager_1.ModelManager.GameModeModel.IsMulti
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("TowerDefense", 65, "奖励结算时，申请多人投票"),
@@ -928,7 +1167,7 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
           },
         ));
   }),
-  (TowerDefenseController.fJs = (e, n) => {
+  (TowerDefenseController.mZs = (e, n) => {
     TowerDefenseController.CheckInInstanceDungeon() &&
       Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
@@ -939,7 +1178,7 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
         ["scoreValue", n],
       );
   }),
-  (TowerDefenseController.XJs = () => {
+  (TowerDefenseController.WZs = () => {
     TowerDefenseController.CheckInUiFlow() ||
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -949,38 +1188,34 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
         )),
       TowerDefenseController.SetIsUiFlowOpen(!1);
   }),
-  (TowerDefenseController._Js = (e) => {
+  (TowerDefenseController.sZs = (e) => {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("TowerDefense", 65, "当队伍选人变化时", ["Reason", e]),
-      TowerDefenseController.CheckInUiFlow()
-        ? (TowerDefenseController.qta()
-            ? TowerDefenseController.pJs()
-            : TowerDefenseController.Ozs(),
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.TowerDefensePhantomChanged,
-          ))
-        : Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "TowerDefense",
-            65,
-            "队伍选人变化，但是不在UI Flow中",
-          );
+      TowerDefenseController.CheckInUiFlow() &&
+        (TowerDefenseController.toa()
+          ? TowerDefenseController.dZs()
+          : TowerDefenseController.Fea(),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.TowerDefensePhantomChanged,
+        ));
   }),
-  (TowerDefenseController.Sca = (e) => {
+  (TowerDefenseController.ECa = (e) => {
     TowerDefenseController.SyncSelfTowerDefensePhantomId(e),
       TowerDefenseController.ResetCurrentTowerDefensePhantomIdInUiTemp();
   }),
-  (TowerDefenseController.yIa = () => {
+  (TowerDefenseController.vRa = () => {
     var e;
     TowerDefenseController.CheckInInstanceDungeon() &&
       (e = ModelManager_1.ModelManager.TowerDefenseModel).DelayedEndNotify &&
-      (TowerDefenseController.EIa(e.DelayedEndNotify),
+      (TowerDefenseController.pRa(e.DelayedEndNotify),
       (e.DelayedEndNotify = void 0));
   }),
-  (TowerDefenseController.IIa = (e) => {
+  (TowerDefenseController.MRa = (e) => {
     TowerDefenseController.CheckInUiFlow() &&
       "EditBattleTeamView" === e &&
-      (ModelManager_1.ModelManager.TowerDefenseModel.RoleCfgId2PhantomIdMapCache.clear(),
+      (UiManager_1.UiManager.IsViewOpen("TowerDefencePhantomView") &&
+        UiManager_1.UiManager.CloseView("TowerDefencePhantomView"),
+      ModelManager_1.ModelManager.TowerDefenseModel.RoleCfgId2PhantomIdMapCache.clear(),
       TowerDefenseController.CheckActivityUnlockByMulti() ||
         TowerDefenseController.SetIsUiFlowOpen(!1));
   });

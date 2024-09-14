@@ -21,9 +21,9 @@ exports.inputDistributeSetups = [
   CreateCharacterInputDistribute_1.CreateCharacterInputDistribute,
   LoginInputDistribute_1.LoginInputDistribute,
   UiProhibitFightInputDistribute_1.UiProhibitFightInputDistribute,
+  ExploreInputDistribute_1.ExploreInputDistribute,
   LevelEventInputDistribute_1.LevelEventInputDistribute,
   InteractionInputDistribute_1.InteractionInputDistribute,
-  ExploreInputDistribute_1.ExploreInputDistribute,
   FightInputDistribute_1.FightInputDistribute,
   UiInputDistribute_1.UiInputDistribute,
 ];

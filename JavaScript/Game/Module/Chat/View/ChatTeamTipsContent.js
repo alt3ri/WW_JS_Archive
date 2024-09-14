@@ -22,7 +22,7 @@ class ChatTeamTipsContent extends ChatContentBase_1.ChatContentBase {
   }
   bl() {
     switch (this.ChatContentData.NoticeType) {
-      case Protocol_1.Aki.Protocol.PFs.Proto_EnterTeam:
+      case Protocol_1.Aki.Protocol.GFs.Proto_EnterTeam:
         var e = this.GetItem(1),
           t = this.GetItem(3),
           i = this.GetText(4),
@@ -31,7 +31,7 @@ class ChatTeamTipsContent extends ChatContentBase_1.ChatContentBase {
           t.SetUIActive(!0),
           LguiUtil_1.LguiUtil.SetLocalText(i, "PlayerEnterTeam", r);
         break;
-      case Protocol_1.Aki.Protocol.PFs.Proto_ExitTeam:
+      case Protocol_1.Aki.Protocol.GFs.Proto_ExitTeam:
         (e = this.GetItem(1)),
           (t = this.GetItem(3)),
           (i = this.GetText(2)),

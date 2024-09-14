@@ -3,15 +3,20 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityDailyAdventureData = exports.rewardStateResolver = void 0);
 const Log_1 = require("../../../../../Core/Common/Log"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   ActivityData_1 = require("../../ActivityData"),
-  ActivityDailyAdventureDefine_1 = require("./ActivityDailyAdventureDefine");
-exports.rewardStateResolver = {
-  [Protocol_1.Aki.Protocol.cks.Proto_DailyAdventureTaskRunning]: 1,
-  [Protocol_1.Aki.Protocol.cks.Proto_DailyAdventureTaskFinish]: 0,
-  [Protocol_1.Aki.Protocol.cks.Proto_DailyAdventureTaskTaken]: 2,
-};
+  ActivityDailyAdventureDefine_1 = require("./ActivityDailyAdventureDefine"),
+  DAILY_TIME_FLAG =
+    ((exports.rewardStateResolver = {
+      [Protocol_1.Aki.Protocol.pks.Proto_DailyAdventureTaskRunning]: 1,
+      [Protocol_1.Aki.Protocol.pks.Proto_DailyAdventureTaskFinish]: 0,
+      [Protocol_1.Aki.Protocol.pks.Proto_DailyAdventureTaskTaken]: 2,
+    }),
+    1);
 class ActivityDailyAdventureData extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments),
@@ -31,16 +36,32 @@ class ActivityDailyAdventureData extends ActivityData_1.ActivityBaseData {
       );
     if (e) {
       this.$Ne(e.RewardList);
-      var i = t.Ops;
+      var i = t.jps;
       if (i) {
         (this.ProgressPoint =
           ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
             ActivityDailyAdventureDefine_1.DAILY_ADVENTURE_PT_CONFIGID,
           )),
-          this.CreateTaskInfo(i.rMs);
-        for (const o of this.QNe.values()) {
-          var r = i.oMs.includes(o.RewardId);
-          o.RefreshState(r, this.ProgressPoint);
+          this.XNe.clear();
+        for (const n of i._Ms) {
+          var r = new ActivityDailyAdventureDefine_1.DailyAdventureTaskData();
+          (r.TaskId = n.s5n),
+            (r.CurrentProgress = n.lMs),
+            (r.TargetProgress = n.j6n),
+            (r.TaskState = exports.rewardStateResolver[n.H6n]),
+            this.XNe.set(n.s5n, r),
+            Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info(
+                "Activity",
+                38,
+                "[日常探险活动] 任务信息打印",
+                ["TaskId", n.s5n],
+                ["State", r.TaskState],
+              );
+        }
+        for (const a of this.QNe.values()) {
+          var o = i.uMs.includes(a.RewardId);
+          a.RefreshState(o, this.ProgressPoint);
         }
       }
     } else
@@ -49,17 +70,6 @@ class ActivityDailyAdventureData extends ActivityData_1.ActivityBaseData {
           "ActivityId",
           this.Id,
         ]);
-  }
-  CreateTaskInfo(t) {
-    this.XNe.clear();
-    for (const i of t) {
-      var e = new ActivityDailyAdventureDefine_1.DailyAdventureTaskData();
-      (e.TaskId = i.J4n),
-        (e.CurrentProgress = i.iMs),
-        (e.TargetProgress = i.b6n),
-        (e.TaskState = exports.rewardStateResolver[i.w6n]),
-        this.XNe.set(i.J4n, e);
-    }
   }
   $Ne(t) {
     this.QNe.clear();
@@ -111,7 +121,10 @@ class ActivityDailyAdventureData extends ActivityData_1.ActivityBaseData {
     return t ? t.AreaDefaultMarkId : 0;
   }
   GetExDataRedPointShowState() {
-    return !this.YNe() && (this.IsTaskHasReward() || this.IsPointHasReward());
+    return (
+      !this.YNe() &&
+      (this.IsTaskHasReward() || this.IsPointHasReward() || this.IsDailyTips())
+    );
   }
   NeedSelfControlFirstRedPoint() {
     return !1;
@@ -123,6 +136,32 @@ class ActivityDailyAdventureData extends ActivityData_1.ActivityBaseData {
   IsPointHasReward() {
     for (const t of this.QNe.values()) if (0 === t.RewardState) return !0;
     return !1;
+  }
+  IsDailyTips() {
+    return (
+      TimeUtil_1.TimeUtil.GetCurrentCrossDayStamp() !==
+      ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
+        this.Id,
+        0,
+        DAILY_TIME_FLAG,
+        0,
+        0,
+      )
+    );
+  }
+  ReadDailyTips() {
+    var t = TimeUtil_1.TimeUtil.GetCurrentCrossDayStamp();
+    ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
+      this.Id,
+      DAILY_TIME_FLAG,
+      0,
+      0,
+      t,
+    ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+        this.Id,
+      );
   }
   YNe() {
     let t = !0;

@@ -52,7 +52,7 @@ class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
                       ) && e
                   ? OnlineController_1.OnlineController.InviteRechallengeRequest()
                   : OnlineController_1.OnlineController.ApplyRechallengeRequest(
-                      Protocol_1.Aki.Protocol.J6s.Proto_Settle,
+                      Protocol_1.Aki.Protocol.o8s.Proto_Settle,
                     ))
             : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "CannotInvite",

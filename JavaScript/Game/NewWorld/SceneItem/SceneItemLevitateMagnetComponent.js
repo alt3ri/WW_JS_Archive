@@ -103,8 +103,8 @@ let SceneItemLevitateMagnetComponent =
                 this.Kfn(o));
           }
         }),
-        (this.gIe = (e, t) => {
-          -1 < e.indexOf(-709838471) &&
+        (this.b$a = (e, t) => {
+          t &&
             (EventSystem_1.EventSystem.RemoveWithTarget(
               this,
               EventDefine_1.EEventName.OnSceneItemHitByHitData,
@@ -177,13 +177,14 @@ let SceneItemLevitateMagnetComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(185)),
-        (this.Gce = this.Entity.GetComponent(115)),
-        (this.Xln = this.Entity.GetComponent(140)),
+        (this.Hte = this.Entity.GetComponent(187)),
+        (this.Gce = this.Entity.GetComponent(116)),
+        (this.Xln = this.Entity.GetComponent(141)),
         this.Xln.RegisterComponent(this),
-        (this.Ffn = this.Entity.GetComponent(124)),
-        (this.Lie = this.Entity.GetComponent(180)),
+        (this.Ffn = this.Entity.GetComponent(125)),
+        (this.Lie = this.Entity.GetComponent(181)),
         this.Lie.AddTag(-1063846162),
+        this.Lie.AddTagAddOrRemoveListener(-709838471, this.b$a),
         this.Lie.ContainsTag(
           GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(-709838471),
         ) ||
@@ -199,11 +200,6 @@ let SceneItemLevitateMagnetComponent =
           )),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
-          EventDefine_1.EEventName.OnLevelTagChanged,
-          this.gIe,
-        ),
-        EventSystem_1.EventSystem.AddWithTarget(
-          this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
           this.Qfn,
         ),
@@ -213,6 +209,7 @@ let SceneItemLevitateMagnetComponent =
     }
     OnEnd() {
       return (
+        this.Lie.RemoveTagAddOrRemoveListener(-709838471, this.b$a),
         EventSystem_1.EventSystem.HasWithTarget(
           this,
           EventDefine_1.EEventName.OnSceneItemHitByHitData,
@@ -233,11 +230,6 @@ let SceneItemLevitateMagnetComponent =
             EventDefine_1.EEventName.OnSceneItemEntityHitAlways,
             this.GTn,
           ),
-        EventSystem_1.EventSystem.RemoveWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.OnLevelTagChanged,
-          this.gIe,
-        ),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
@@ -339,7 +331,7 @@ let SceneItemLevitateMagnetComponent =
 (SceneItemLevitateMagnetComponent.TraceDebug = !1),
   (SceneItemLevitateMagnetComponent = SceneItemLevitateMagnetComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(141)],
+      [(0, RegisterComponent_1.RegisterComponent)(142)],
       SceneItemLevitateMagnetComponent,
     )),
   (exports.SceneItemLevitateMagnetComponent = SceneItemLevitateMagnetComponent);

@@ -14,10 +14,10 @@ const Log_1 = require("../../../Core/Common/Log"),
   UiManager_1 = require("../../Ui/UiManager");
 class ChannelController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(17292, this.dEt);
+    Net_1.Net.Register(19382, this.dEt);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(17292);
+    Net_1.Net.UnRegister(19382);
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -50,11 +50,11 @@ class ChannelController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.ChannelModel.ProcessAccountSetting(e);
   }
   static RequestFirstShareReward(t) {
-    var e = Protocol_1.Aki.Protocol.DCs.create();
-    (e.E8n = t),
-      Net_1.Net.Call(4458, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.BCs.create();
+    (e.x8n = t),
+      Net_1.Net.Call(18370, e, (e) => {
         e &&
-          e.O4n === Protocol_1.Aki.Protocol.O4n.NRs &&
+          e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs &&
           (ModelManager_1.ModelManager.ChannelModel.MarkActionShared(t),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnFirstShare,
@@ -100,7 +100,7 @@ class ChannelController extends UiControllerBase_1.UiControllerBase {
 }
 (exports.ChannelController = ChannelController),
   ((_a = ChannelController).dEt = (e) => {
-    for (const t of e.aGs)
+    for (const t of e.mGs)
       ModelManager_1.ModelManager.ChannelModel.MarkActionShared(t);
   }),
   (ChannelController.CEt = (e) => {

@@ -17,9 +17,10 @@ class EditBattleRoleSlotData {
       o = t.GetPlayerId(),
       r = t.GetLevel(),
       s = t.IsSelf(),
-      t = t.GetIsReady();
+      l = t.GetIsReady();
     this.Wst || (this.Wst = new EditBattleRoleData_1.EditBattleRoleData()),
-      this.Wst.Init(o, e, a, i, r, s, t);
+      this.Wst.Init(o, e, a, i, r, s, l),
+      (this.Wst.ThirdPartyOnlineId = t.GetPlayerOnlineId());
   }
   ResetRoleData() {
     this.Wst = void 0;

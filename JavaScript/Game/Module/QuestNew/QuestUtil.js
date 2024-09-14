@@ -10,7 +10,7 @@ const ue_1 = require("ue"),
   LguiUtil_1 = require("../Util/LguiUtil");
 class QuestUtil {
   static SetTrackDistanceText(e, r) {
-    if (!ObjectUtils_1.ObjectUtils.IsValid(e)) return !1;
+    if (!e || !ObjectUtils_1.ObjectUtils.IsValid(e)) return !1;
     if (!r) return !1;
     var t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
     if (!t) return !1;
@@ -20,20 +20,33 @@ class QuestUtil {
         ? Vector_1.Vector.Dist(r, t) * MapDefine_1.FLOAT_0_01
         : ue_1.Vector.Dist(r, t.ToUeVector()) * MapDefine_1.FLOAT_0_01),
       (i = Math.round(i));
-    r = r.Z - t.Z;
-    let a = i.toString();
+    var r = r.Z - t.Z,
+      t = i.toString();
+    LguiUtil_1.LguiUtil.SetLocalText(e, "Meter", t);
+    let a = e.GetText();
     return (
-      (a =
-        300 < r
-          ? `<texture=${ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath("T_YellowArrowUp")}/>` +
-            i
-          : r < -300
-            ? `<texture=${ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath("T_YellowArrowDown")}/>` +
-              i
-            : i.toString()),
-      LguiUtil_1.LguiUtil.SetLocalText(e, "Meter", a),
+      300 < r
+        ? ((t =
+            ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+              "T_YellowArrowUp",
+            )),
+          (a += `<texture=${t}/>`))
+        : r < -300 &&
+          ((t =
+            ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+              "T_YellowArrowDown",
+            )),
+          (a += `<texture=${t}/>`)),
+      e.SetText(a),
       !0
     );
+  }
+  static GetQuestMarkId(e, r) {
+    if (r) {
+      r = ConfigManager_1.ConfigManager.MapConfig.GetTaskMarkConfigByQuestId(r);
+      if (r) return r.MarkId;
+    }
+    return ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeMarkId(e);
   }
 }
 exports.QuestUtil = QuestUtil;

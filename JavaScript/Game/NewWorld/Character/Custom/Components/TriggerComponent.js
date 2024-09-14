@@ -44,7 +44,7 @@ let TriggerComponent = (TriggerComponent_1 = class TriggerComponent extends (
   OnInitData(e) {
     var e = e.GetParam(TriggerComponent_1)[0],
       e = e || void 0,
-      t = this.Entity.GetComponent(108);
+      t = this.Entity.GetComponent(109);
     return (
       t && !t.LogicRange && t.SetLogicRange(300),
       (this.Lo = e),
@@ -55,7 +55,7 @@ let TriggerComponent = (TriggerComponent_1 = class TriggerComponent extends (
   }
   OnStart() {
     return (
-      (this.vtn = this.Entity.GetComponent(76)),
+      (this.vtn = this.Entity.GetComponent(77)),
       !!this.vtn ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error("SceneItem", 40, "[TriggerComponent] RangeComp缺失", [
@@ -74,7 +74,7 @@ let TriggerComponent = (TriggerComponent_1 = class TriggerComponent extends (
 });
 (TriggerComponent = TriggerComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(77)],
+    [(0, RegisterComponent_1.RegisterComponent)(78)],
     TriggerComponent,
   )),
   (exports.TriggerComponent = TriggerComponent);

@@ -18,67 +18,88 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configRoleLevelConsumeByConsumeGroupIdAndLevel.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configRoleLevelConsumeByConsumeGroupIdAndLevel.GetConfig",
+  ),
   CONFIG_STAT_PREFIX =
     "configRoleLevelConsumeByConsumeGroupIdAndLevel.GetConfig(";
 exports.configRoleLevelConsumeByConsumeGroupIdAndLevel = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (e, o, n = !0) => {
-    if (
-      (l = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+  GetConfig: (o, e, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var C = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${e})`),
+      i =
+        (C.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
       if (n) {
-        var i = KEY_PREFIX + `#${e}#${o})`;
-        const C = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (C) return C;
+        var t = KEY_PREFIX + `#${o}#${e})`;
+        const l = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (l)
+          return (
+            C.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            l
+          );
       }
       if (
-        (l =
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, o, ...logPair) &&
+        (i =
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, e, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(
               handleId,
               !0,
               ...logPair,
-              ["ConsumeGroupId", e],
-              ["Level", o],
+              ["ConsumeGroupId", o],
+              ["Level", e],
             ))
       ) {
-        var l,
-          i = void 0;
+        t = void 0;
         if (
-          (([l, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
-            ["ConsumeGroupId", e],
-            ["Level", o],
+            ["ConsumeGroupId", o],
+            ["Level", e],
           )),
-          l)
+          i)
         ) {
-          const C =
+          const l =
             RoleLevelConsume_1.RoleLevelConsume.getRootAsRoleLevelConsume(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
             );
           return (
             n &&
-              ((l = KEY_PREFIX + `#${e}#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(l, C)),
+              ((i = KEY_PREFIX + `#${o}#${e})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, l)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            C
+            C.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            l
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    C.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=RoleLevelConsumeByConsumeGroupIdAndLevel.js.map

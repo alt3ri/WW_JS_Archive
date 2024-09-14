@@ -22,8 +22,10 @@ class GuideTutorialPage {
     return this.content();
   }
   get Button() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buttonLength(), (t) =>
-      this.button(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buttonLength(),
+      this.button,
+      this,
     );
   }
   __init(t, i) {

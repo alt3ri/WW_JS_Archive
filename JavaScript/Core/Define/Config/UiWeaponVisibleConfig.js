@@ -10,8 +10,10 @@ class UiWeaponVisibleConfig {
     return this.id();
   }
   get VisibleList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.visiblelistLength(), (i) =>
-      this.visiblelist(i),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.visiblelistLength(),
+      this.visiblelist,
+      this,
     );
   }
   __init(i, t) {

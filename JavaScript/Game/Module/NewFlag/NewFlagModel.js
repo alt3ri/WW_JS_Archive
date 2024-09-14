@@ -12,7 +12,7 @@ class NewFlagModel extends ModelBase_1.ModelBase {
     super(...arguments),
       (this.DGi = new Map()),
       (this.RGi = new Array()),
-      (this.vZs = new Map()),
+      (this.xta = new Map()),
       (this.LoadNewFlagConfig = () => {
         for (const t of [
           LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
@@ -35,14 +35,14 @@ class NewFlagModel extends ModelBase_1.ModelBase {
         ]) {
           var e = LocalStorage_1.LocalStorage.GetPlayer(t),
             e = new Set(e || void 0);
-          this.DGi.set(t, e), this.vZs.set(t, !1);
+          this.DGi.set(t, e), this.xta.set(t, !1);
         }
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnLoadedNewFlagConfig,
         );
       }),
       (this.ClearNewFlag = () => {
-        this.DGi.clear(), (this.RGi.length = 0), this.vZs.clear();
+        this.DGi.clear(), (this.RGi.length = 0), this.xta.clear();
       });
   }
   OnInit() {
@@ -82,18 +82,18 @@ class NewFlagModel extends ModelBase_1.ModelBase {
           ]),
         !1
       );
-    if (!this.vZs.get(e)) return !1;
+    if (!this.xta.get(e)) return !1;
     this.RGi.length = t.size;
     let o = 0;
     for (const n of t) this.RGi[o++] = n;
     return (
-      this.vZs.set(e, !1), LocalStorage_1.LocalStorage.SetPlayer(e, this.RGi)
+      this.xta.set(e, !1), LocalStorage_1.LocalStorage.SetPlayer(e, this.RGi)
     );
   }
   AddNewFlag(e, t) {
     var o = this.DGi.get(e);
     return o
-      ? (o.add(t), this.vZs.set(e, !0), !0)
+      ? (o.add(t), this.xta.set(e, !0), !0)
       : (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "NewFlag",
@@ -106,7 +106,7 @@ class NewFlagModel extends ModelBase_1.ModelBase {
   RemoveNewFlag(e, t) {
     var o = this.DGi.get(e);
     return o
-      ? ((o = o.delete(t)), (t = this.vZs.get(e)), this.vZs.set(e, o || t), o)
+      ? ((o = o.delete(t)), (t = this.xta.get(e)), this.xta.set(e, o || t), o)
       : (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "NewFlag",

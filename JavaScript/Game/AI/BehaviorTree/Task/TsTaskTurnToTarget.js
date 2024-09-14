@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const Log_1 = require("../../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
   GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
   AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskTurnToTarget extends TsTaskAbortImmediatelyBase_1.default {
@@ -19,18 +21,23 @@ class TsTaskTurnToTarget extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsBlackboardKeyActor = this.BlackboardKeyActor),
       (this.TsTurnSpeed = this.TurnSpeed));
   }
-  ReceiveTickAI(e, s, t) {
+  ReceiveTickAI(t, e, r) {
     this.InitTsVariables();
-    var r = e.AiController;
-    if (r) {
-      var i = r.CharActorComp;
-      let e = r.AiHateList.GetCurrentTarget()?.Entity?.GetComponent(3);
-      (e = this.TsBlackboardKeyActor
-        ? r.CharAiDesignComp.Entity.GetComponent(3)
-        : e)
+    var s = t.AiController;
+    if (s) {
+      var o = s.CharActorComp;
+      let t = s.AiHateList.GetCurrentTarget()?.Entity?.GetComponent(3);
+      (t =
+        this.TsBlackboardKeyActor &&
+        (s = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
+          s.CharAiDesignComp.Entity.Id,
+          this.TsBlackboardKeyActor,
+        ))
+          ? EntitySystem_1.EntitySystem.GetComponent(s, 3)
+          : t)
         ? (AiContollerLibrary_1.AiControllerLibrary.TurnToTarget(
-            i,
-            e.ActorLocationProxy,
+            o,
+            t.ActorLocationProxy,
             this.TsTurnSpeed,
           ),
           this.FinishExecute(!0))
@@ -39,7 +46,7 @@ class TsTaskTurnToTarget extends TsTaskAbortImmediatelyBase_1.default {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
           "Type",
-          e.GetClass().GetName(),
+          t.GetClass().GetName(),
         ]),
         this.FinishExecute(!1);
   }

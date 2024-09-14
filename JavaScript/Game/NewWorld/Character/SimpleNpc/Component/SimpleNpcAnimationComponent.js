@@ -47,7 +47,7 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
       (this.p3r = -1);
   }
   static get Dependencies() {
-    return [178, 0];
+    return [179, 0];
   }
   x3r() {
     0 < this.p3r
@@ -97,7 +97,7 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
   }
   OnStart() {
     return (
-      (this.ActorComp = this.Entity.CheckGetComponent(178)),
+      (this.ActorComp = this.Entity.CheckGetComponent(179)),
       this.ActorComp.Actor?.Mesh
         ? ((this.Actor = this.ActorComp.Actor),
           (this.Mesh = this.Actor.Mesh),
@@ -135,7 +135,7 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
         ["Entity:", this.Entity.Id],
       ),
       (this.p3r = -1),
-      this.Entity.GetComponent(171)?.AnyIdleLoopMontagePlaying ||
+      this.Entity.GetComponent(172)?.AnyIdleLoopMontagePlaying ||
         (this.MainAnimInstanceInternal?.IsValid() &&
           (this.StopMontage(),
           UE.KuroAnimLibrary.EndAnimNotifyStates(
@@ -243,7 +243,7 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
   }
 };
 (SimpleNpcAnimationComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(179)],
+  [(0, RegisterComponent_1.RegisterComponent)(180)],
   SimpleNpcAnimationComponent,
 )),
   (exports.SimpleNpcAnimationComponent = SimpleNpcAnimationComponent);

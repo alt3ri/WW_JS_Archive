@@ -21,8 +21,8 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
       (this.ConfirmBoxData = void 0),
       (this.SelectedIndex = -1),
       (this.ButtonComponentList = new Array()),
-      (this.SQs = void 0),
-      (this.Szs = void 0),
+      (this.NXs = void 0),
+      (this.fea = void 0),
       (this.OnClose = () => {
         this.ConfirmBoxButtonClick();
       }),
@@ -95,17 +95,17 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
       this.InitPropItem(),
       this.Mqt(),
       this.ConfirmBoxData.ShowPowerItem &&
-        ((this.Szs = new PowerCurrencyItem_1.PowerCurrencyItem()),
-        await this.Szs.CreateThenShowByResourceIdAsync(
+        ((this.fea = new PowerCurrencyItem_1.PowerCurrencyItem()),
+        await this.fea.CreateThenShowByResourceIdAsync(
           "UIItem_CommonCurrencyItem",
         ),
-        this.Szs.ShowWithoutText(ItemDefines_1.EItemId.OverPower),
-        this.Szs.RefreshAddButtonActive(),
-        this.Szs.SetActive(
+        this.fea.ShowWithoutText(ItemDefines_1.EItemId.OverPower),
+        this.fea.RefreshAddButtonActive(),
+        this.fea.SetActive(
           ModelManager_1.ModelManager.FunctionModel.IsOpen(10066),
         ),
-        (this.SQs = new PowerCurrencyItem_1.PowerCurrencyItem()),
-        await this.SQs.CreateThenShowByResourceIdAsync(
+        (this.NXs = new PowerCurrencyItem_1.PowerCurrencyItem()),
+        await this.NXs.CreateThenShowByResourceIdAsync(
           "UIItem_CommonCurrencyItem",
         ));
   }
@@ -123,14 +123,14 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
       ),
       this.ChildPopView?.PopItem.OverrideBackBtnCallBack(this.OnClose),
       this.ConfirmBoxData.ShowPowerItem &&
-        (this.Szs?.GetRootItem().SetUIParent(
+        (this.fea
+          ?.GetRootItem()
+          .SetUIParent(this.ChildPopView?.PopItem?.GetCostParent()),
+        this.NXs?.GetRootItem().SetUIParent(
           this.ChildPopView?.PopItem?.GetCostParent(),
         ),
-        this.SQs?.GetRootItem().SetUIParent(
-          this.ChildPopView?.PopItem?.GetCostParent(),
-        ),
-        this.SQs.ShowWithoutText(ItemDefines_1.EItemId.Power),
-        this.SQs?.SetButtonFunction(() => {
+        this.NXs.ShowWithoutText(ItemDefines_1.EItemId.Power),
+        this.NXs?.SetButtonFunction(() => {
           PowerController_1.PowerController.OpenPowerView();
         }));
   }
@@ -204,8 +204,8 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
     var t = this.ConfirmBoxData?.FunctionMap.get(this.SelectedIndex);
     t && t(),
       this.ConfirmBoxData?.DestroyFunction?.(),
-      this.SQs?.Destroy(),
-      this.Szs?.Destroy();
+      this.NXs?.Destroy(),
+      this.fea?.Destroy();
   }
 }
 exports.ConfirmBoxView = ConfirmBoxView;

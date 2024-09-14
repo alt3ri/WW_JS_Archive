@@ -16,16 +16,20 @@ class OverlayMap {
     return this.mapaddress();
   }
   get MapPos() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.mapposLength(), (t) =>
-      this.mappos(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.mapposLength(),
+      this.mappos,
+      this,
     );
   }
   get Rotation() {
     return this.rotation();
   }
   get WidthHeight() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.widthheightLength(), (t) =>
-      this.widthheight(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.widthheightLength(),
+      this.widthheight,
+      this,
     );
   }
   __init(t, s) {

@@ -161,9 +161,9 @@ let CharacterExploreComponent =
     }
     OnStart() {
       return (
-        (this.O4r = this.Entity.GetComponent(89)),
+        (this.O4r = this.Entity.GetComponent(90)),
         (this.H4r = this.Entity.GetComponent(1)),
-        (this.cBe = this.Entity.GetComponent(33)),
+        (this.cBe = this.Entity.GetComponent(34)),
         (this.Y4r = 0),
         this.i5r() && this.Ore(),
         EventSystem_1.EventSystem.Add(
@@ -209,7 +209,7 @@ let CharacterExploreComponent =
       this.k4r
         ? t !== MANIPULATE_VISION_ID && this.m5r(1)
         : ((s = this.H4r.ActorLocationProxy),
-          (i = this.F4r.Location),
+          (i = this.F4r.HookLocation),
           (e = this.j4r.ActorLocationProxy),
           (i = Vector_1.Vector.DistSquared(s, i)),
           (s = Vector_1.Vector.DistSquared(s, e)),
@@ -376,7 +376,7 @@ let CharacterExploreComponent =
         this.W4r ||
           ((this.W4r =
             new HighlightExploreSkillLogic_1.HighlightExploreSkillLogic()),
-          this.W4r.Init(this.Entity.GetComponent(188))),
+          this.W4r.Init(this.Entity.GetComponent(190))),
         this.W4r
       );
     }
@@ -384,7 +384,7 @@ let CharacterExploreComponent =
 (CharacterExploreComponent.r5r = !1),
   (CharacterExploreComponent = CharacterExploreComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(46)],
+      [(0, RegisterComponent_1.RegisterComponent)(47)],
       CharacterExploreComponent,
     )),
   (exports.CharacterExploreComponent = CharacterExploreComponent);

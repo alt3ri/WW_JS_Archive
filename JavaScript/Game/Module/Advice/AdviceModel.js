@@ -10,10 +10,10 @@ const Log_1 = require("../../../Core/Common/Log"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GameSettingsManager_1 = require("../../GameSettings/GameSettingsManager"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  MenuController_1 = require("../Menu/MenuController"),
   AdviceController_1 = require("./AdviceController"),
   AdviceCreateActor_1 = require("./AdviceCreateActor"),
   AdviceData_1 = require("./AdviceData"),
@@ -86,12 +86,12 @@ class AdviceModel extends ModelBase_1.ModelBase {
   }
   PhraseAdviceData(e) {
     this.G9e.clear(),
-      e.WMs.forEach((e) => {
+      e.ZMs.forEach((e) => {
         e = MathUtils_1.MathUtils.LongToBigInt(e);
         this.G9e.add(e);
       }),
       this.N9e.clear(),
-      e.jMs.forEach((e) => {
+      e.zMs.forEach((e) => {
         var t = new AdviceData_1.AdviceData();
         t.Phrase(e), this.N9e.set(t.GetAdviceBigId(), t);
       }),
@@ -102,7 +102,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
   }
   PhraseAdviceCreateData(e) {
     var t = new AdviceData_1.AdviceData();
-    t.Phrase(e.$Ms),
+    t.Phrase(e.YMs),
       this.N9e.set(t.GetAdviceBigId(), t),
       (this.k9e = !0),
       EventSystem_1.EventSystem.Emit(
@@ -111,7 +111,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
   }
   OnAdviceUpdateNotify(e) {
     this.G9e.clear(),
-      e.WMs.forEach((e) => {
+      e.ZMs.forEach((e) => {
         e = MathUtils_1.MathUtils.LongToBigInt(e);
         this.G9e.add(e);
       }),
@@ -119,16 +119,22 @@ class AdviceModel extends ModelBase_1.ModelBase {
         EventDefine_1.EEventName.OnAdviceVoteNotify,
       );
   }
+  ResetVoteIds() {
+    this.G9e.clear(),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnAdviceVoteNotify,
+      );
+  }
   OnRequestVote(e, t) {
     this.G9e.delete(e),
-      t === Protocol_1.Aki.Protocol.Uks.Proto_Up && this.G9e.add(e),
+      t === Protocol_1.Aki.Protocol.Oks.Proto_Up && this.G9e.add(e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnAdviceVoteNotify,
       );
   }
   OnAdviceVoteUpdate(e, t) {
     e = this.N9e.get(e);
-    e && e.PhraseUpDownData(t.VMs);
+    e && e.PhraseUpDownData(t.XMs);
   }
   OnModifyAdvice(e, t) {
     var i = MathUtils_1.MathUtils.LongToBigInt(e),
@@ -162,11 +168,11 @@ class AdviceModel extends ModelBase_1.ModelBase {
       i,
       r = this.CurrentSentenceWordMap,
       n = this.CurrentConjunctionId,
-      o = this.CurrentWordMap;
+      a = this.CurrentWordMap;
     for ([t, i] of r.entries())
       if ((0 !== e || 1 !== t) && 0 < i) {
-        var a = o.get(t);
-        if (!a || a <= 0) return !1;
+        var o = a.get(t);
+        if (!o || o <= 0) return !1;
       }
     return !(1 === e && (!n || n <= 0));
   }
@@ -210,7 +216,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
   SetAdviceShowSetting(e) {
     this.H9e = e;
     e = this.H9e ? 1 : 0;
-    MenuController_1.MenuController.SetTargetConfig(59, e),
+    GameSettingsManager_1.GameSettingsManager.SetApplySave(59, e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshMenuSetting,
         59,
@@ -231,7 +237,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
             ? !(
                 (e =
                   ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
-                    188,
+                    190,
                   )).HasTag(1996802261) ||
                 (!e.HasTag(248240472) &&
                   (Log_1.Log.CheckDebug() &&
@@ -280,7 +286,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
           ? AdviceController_1.AdviceController.CheckIfStandAndInValidActor()
             ? (e =
                 ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
-                  188,
+                  190,
                 )).HasTag(1996802261)
               ? "AdviceCannotOpenOnBattle"
               : e.HasTag(248240472)
@@ -387,7 +393,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
         (t.SetData(
           this.CurrentSentenceWordMap.get(0),
           this.CurrentWordMap.get(0),
-          Protocol_1.Aki.Protocol.Aks.Proto_Sentence,
+          Protocol_1.Aki.Protocol.qks.Proto_Sentence,
         ),
         e.push(t),
         new AdviceData_1.AdviceData());
@@ -399,13 +405,13 @@ class AdviceModel extends ModelBase_1.ModelBase {
     t.SetData(
       this.CurrentConjunctionId,
       0,
-      Protocol_1.Aki.Protocol.Aks.Proto_Conjunction,
+      Protocol_1.Aki.Protocol.qks.Proto_Conjunction,
     ),
       e.push(t),
       (t = new AdviceData_1.AdviceContentData()).SetData(
         this.CurrentSentenceWordMap.get(1),
         this.CurrentWordMap.get(1),
-        Protocol_1.Aki.Protocol.Aks.Proto_Sentence,
+        Protocol_1.Aki.Protocol.qks.Proto_Sentence,
       ),
       e.push(t);
     var i = new AdviceData_1.AdviceData();
@@ -418,7 +424,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
       e.SetData(
         this.CurrentSentenceWordMap.get(0),
         this.CurrentWordMap.get(0),
-        Protocol_1.Aki.Protocol.Aks.Proto_Sentence,
+        Protocol_1.Aki.Protocol.qks.Proto_Sentence,
       ),
         t.push(e);
     } else {
@@ -426,19 +432,19 @@ class AdviceModel extends ModelBase_1.ModelBase {
       e.SetData(
         this.CurrentSentenceWordMap.get(0),
         this.CurrentWordMap.get(0),
-        Protocol_1.Aki.Protocol.Aks.Proto_Sentence,
+        Protocol_1.Aki.Protocol.qks.Proto_Sentence,
       ),
         t.push(e),
         (e = new AdviceData_1.AdviceContentData()).SetData(
           this.CurrentConjunctionId,
           0,
-          Protocol_1.Aki.Protocol.Aks.Proto_Conjunction,
+          Protocol_1.Aki.Protocol.qks.Proto_Conjunction,
         ),
         t.push(e),
         (e = new AdviceData_1.AdviceContentData()).SetData(
           this.CurrentSentenceWordMap.get(1),
           this.CurrentWordMap.get(1),
-          Protocol_1.Aki.Protocol.Aks.Proto_Sentence,
+          Protocol_1.Aki.Protocol.qks.Proto_Sentence,
         ),
         t.push(e);
     }
@@ -451,12 +457,12 @@ class AdviceModel extends ModelBase_1.ModelBase {
       i,
       r,
       n = new Array(),
-      o = ModelManager_1.ModelManager.AdviceModel,
-      a = o.CurrentSentenceWordMap,
-      s = o.CurrentConjunctionId,
-      d = o.CurrentWordMap;
+      a = ModelManager_1.ModelManager.AdviceModel,
+      o = a.CurrentSentenceWordMap,
+      s = a.CurrentConjunctionId,
+      d = a.CurrentWordMap;
     let c = 0;
-    for ([e, t] of a.entries())
+    for ([e, t] of o.entries())
       t <= 0 ||
         (0 === this.CurrentLineModel && 1 === e) ||
         (0 < (r = d.get(e)) &&
@@ -464,7 +470,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
           (i = new AdviceData_1.AdviceContentData()).SetData(
             t,
             r,
-            Protocol_1.Aki.Protocol.Aks.Proto_Sentence,
+            Protocol_1.Aki.Protocol.qks.Proto_Sentence,
           ),
           n.push(i)),
         1 === c &&
@@ -473,24 +479,24 @@ class AdviceModel extends ModelBase_1.ModelBase {
           ((r = new AdviceData_1.AdviceContentData()).SetData(
             s,
             0,
-            Protocol_1.Aki.Protocol.Aks.Proto_Conjunction,
+            Protocol_1.Aki.Protocol.qks.Proto_Conjunction,
           ),
           n.push(r)));
     return (
-      0 < o.CurrentExpressionId &&
-        ((a = new AdviceData_1.AdviceContentData()).SetData(
-          o.CurrentExpressionId,
+      0 < a.CurrentExpressionId &&
+        ((o = new AdviceData_1.AdviceContentData()).SetData(
+          a.CurrentExpressionId,
           0,
-          Protocol_1.Aki.Protocol.Aks.Proto_Expression,
+          Protocol_1.Aki.Protocol.qks.Proto_Expression,
         ),
-        n.push(a)),
-      0 < o.CurrentSelectMotionId &&
-        ((a = new AdviceData_1.AdviceContentData()).SetData(
-          o.CurrentSelectMotionId,
+        n.push(o)),
+      0 < a.CurrentSelectMotionId &&
+        ((o = new AdviceData_1.AdviceContentData()).SetData(
+          a.CurrentSelectMotionId,
           0,
-          Protocol_1.Aki.Protocol.Aks.r8n,
+          Protocol_1.Aki.Protocol.qks.c8n,
         ),
-        n.push(a)),
+        n.push(o)),
       n
     );
   }

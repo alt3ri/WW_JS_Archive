@@ -239,13 +239,13 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
     this.oEo(1);
   }
   OnBeforeDestroy() {
-    this.Vfa(),
+    this.aSa(),
       (this.NMo = void 0),
       (this.GMo = void 0),
       (this.kMo = void 0),
       (this.OMo = void 0);
   }
-  Vfa() {
+  aSa() {
     AudioController_1.AudioController.StopEvent(this.FMo),
       AudioController_1.AudioController.StopEvent(this.VMo),
       AudioController_1.AudioController.StopEvent(this.HMo),
@@ -255,7 +255,7 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
       AudioController_1.AudioController.StopEvent(this.QMo),
       AudioController_1.AudioController.StopEvent(this.XMo);
   }
-  Hfa() {
+  hSa() {
     this.GetUiNiagara(13)?.SetNiagaraUIActive(!1, !1),
       this.GetUiNiagara(12)?.SetNiagaraUIActive(!1, !1),
       this.GetUiNiagara(11)?.SetNiagaraUIActive(!1, !1);
@@ -339,7 +339,7 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
             );
           break;
         case 2: {
-          this.Hfa(),
+          this.hSa(),
             this.GetItem(0).SetUIActive(!1),
             this.GetItem(1).SetUIActive(!0),
             i && this.dEo();
@@ -353,7 +353,7 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
           break;
         }
         case 3: {
-          this.Vfa(), this.GetItem(1).SetUIActive(!1), this.BMo.Show();
+          this.aSa(), this.GetItem(1).SetUIActive(!1), this.BMo.Show();
           let e = BG_NOISE_STOP_AUDIO_EVENTNAME;
           3 ===
             ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
@@ -362,7 +362,7 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
           break;
         }
         case 4: {
-          this.Vfa(), this.GetItem(1).SetUIActive(!1), this.bMo.Open();
+          this.aSa(), this.GetItem(1).SetUIActive(!1), this.bMo.Open();
           let e = BG_NOISE_STOP_AUDIO_EVENTNAME;
           3 ===
             ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
@@ -371,7 +371,7 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
           break;
         }
         case 5: {
-          this.Vfa(), this.GetItem(1).SetUIActive(!1), this.qMo.Open();
+          this.aSa(), this.GetItem(1).SetUIActive(!1), this.qMo.Open();
           let e = BG_NOISE_STOP_AUDIO_EVENTNAME;
           3 ===
             ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&

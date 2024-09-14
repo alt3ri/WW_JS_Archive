@@ -36,7 +36,7 @@ class AttachToActorController extends ControllerBase_1.ControllerBase {
                     r,
                   )
                   ? (i && t.K2_AttachToActor(o, a, n, c, A, _),
-                    t.OnEndPlay.Add(AttachToActorController.ZBn),
+                    t.OnEndPlay.Add(AttachToActorController.hbn),
                     !0)
                   : (Log_1.Log.CheckError() &&
                       Log_1.Log.Error(
@@ -109,7 +109,7 @@ class AttachToActorController extends ControllerBase_1.ControllerBase {
                       r,
                     )
                     ? (i && t.K2_AttachToComponent(o, a, n, c, A, _),
-                      t.OnEndPlay.Add(AttachToActorController.ZBn),
+                      t.OnEndPlay.Add(AttachToActorController.hbn),
                       !0)
                     : (Log_1.Log.CheckError() &&
                         Log_1.Log.Error(
@@ -256,7 +256,7 @@ class AttachToActorController extends ControllerBase_1.ControllerBase {
             ? (A =
                 ModelManager_1.ModelManager
                   .AttachToActorModel).GetAttachActorItem(r, t)
-              ? (t.OnEndPlay.Remove(AttachToActorController.ZBn),
+              ? (t.OnEndPlay.Remove(AttachToActorController.hbn),
                 A.RemoveEntityActor(r, t, o)
                   ? (e ? t.K2_DestroyActor() : t.K2_DetachFromActor(a, n, c),
                     !0)
@@ -397,7 +397,7 @@ class AttachToActorController extends ControllerBase_1.ControllerBase {
   }
 }
 (exports.AttachToActorController = AttachToActorController),
-  ((_a = AttachToActorController).ZBn = (t, o) => {
+  ((_a = AttachToActorController).hbn = (t, o) => {
     if (t) {
       switch (o) {
         case 2:

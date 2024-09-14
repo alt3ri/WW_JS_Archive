@@ -16,9 +16,9 @@ class FastJsObjectController extends ControllerBase_1.ControllerBase {
         "Roll",
       ),
       Cpp.FFastMoveReplaySample.RegisterMoveReplaySampleInfo(
-        "GVn",
+        "KVn",
         "Proto_ControllerPitch",
-        "YMs",
+        "rSs",
       ),
       !0
     );

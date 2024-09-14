@@ -3,8 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BuffEffect = exports.BuffEffectBase = void 0);
 const Log_1 = require("../../../../../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../../../../../Core/Define/CommonDefine"),
+  Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol"),
   EntitySystem_1 = require("../../../../../../../Core/Entity/EntitySystem"),
   RegisterComponent_1 = require("../../../../../../../Core/Entity/RegisterComponent"),
+  Macro_1 = require("../../../../../../../Core/Preprocessor/Macro"),
   RandomSystem_1 = require("../../../../../../../Core/Random/RandomSystem"),
   GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils"),
   ModelManager_1 = require("../../../../../../Manager/ModelManager"),
@@ -33,13 +35,13 @@ class BuffEffectBase {
     );
   }
   get InstigatorBuffComponent() {
-    return this.InstigatorEntity?.Entity?.CheckGetComponent(159);
+    return this.InstigatorEntity?.Entity?.CheckGetComponent(160);
   }
   get OpponentEntity() {
     return EntitySystem_1.EntitySystem.Get(this.OpponentEntityId);
   }
   get OpponentBuffComponent() {
-    return this.OpponentEntity?.CheckGetComponent(159);
+    return this.OpponentEntity?.CheckGetComponent(160);
   }
   get OwnerEntity() {
     return this.OwnerBuffComponent?.GetEntity();
@@ -60,7 +62,7 @@ class BuffEffectBase {
   IsPlayerBuff() {
     return (0, RegisterComponent_1.isComponentInstance)(
       this.OwnerBuffComponent,
-      183,
+      184,
     );
   }
   CheckLoop() {
@@ -132,7 +134,20 @@ class BuffEffectBase {
           e.BulletTags,
         );
       case 12:
-        return t.DamageGenres.includes(e.DamageGenre ?? -1);
+        return t.DamageTypes.includes(e.DamageType ?? -1);
+      case 17: {
+        const s = e.DamageSubTypes ?? [];
+        switch (t.IncludeType) {
+          case 1:
+            return t.DamageSubTypes.every((t) => s.includes(t));
+          case 3:
+            return t.DamageSubTypes.every((t) => !s.includes(t));
+          case 2:
+            return t.DamageSubTypes.some((t) => !s.includes(t));
+          default:
+            return t.DamageSubTypes.some((t) => s.includes(t));
+        }
+      }
       case 13:
         var r = this.eXo(t.RequireTargetType)
           ?.GetEntity()
@@ -154,7 +169,7 @@ class BuffEffectBase {
             t.SummonType,
             t.SummonIndex,
           )
-            ?.Entity?.CheckGetComponent(188)
+            ?.Entity?.CheckGetComponent(190)
             ?.HasAnyTag(t.RequireTagContainer) === t.IsExist
         );
       case 16:
@@ -175,9 +190,6 @@ class BuffEffectBase {
       default:
         return;
     }
-  }
-  GetDebugString() {
-    return "" + this.constructor.name;
   }
 }
 class BuffEffect extends (exports.BuffEffectBase = BuffEffectBase) {

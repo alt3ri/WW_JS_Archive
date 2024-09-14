@@ -47,8 +47,8 @@ class AnimNotifyStateEffect extends UE.KuroEffectMakerANS {
     this.IsInited || ((this.ParamsMap = new Map()), (this.IsInited = !0));
   }
   K2_NotifyBegin(e, t, i) {
-    this.Init();
-    var s = (this.LastMeshComp = e).GetOwner();
+    this.Init(), Info_1.Info.IsPlayInEditor && (this.LastMeshComp = e);
+    var s = e.GetOwner();
     if (
       s?.IsA(UE.TsUiSceneRoleActor_C.StaticClass()) ||
       s?.IsA(UE.TsSkeletalObserver_C.StaticClass())
@@ -124,7 +124,7 @@ class AnimNotifyStateEffect extends UE.KuroEffectMakerANS {
     i.Tags.Contains(RenderConfig_1.RenderConfig.UIName)
       ? (f = 1)
       : ((i instanceof TsBaseCharacter_1.default &&
-          i.CharacterActorComponent?.Entity?.GetComponent(33)) ||
+          i.CharacterActorComponent?.Entity?.GetComponent(34)) ||
           (i instanceof TsEffectActor_1.default && 0 === i.GetEffectType())) &&
         (f = 0),
       EffectSystem_1.EffectSystem.InitializeWithPreview(!1);
@@ -153,7 +153,7 @@ class AnimNotifyStateEffect extends UE.KuroEffectMakerANS {
   }
   AttachEffectToSkill(e, i) {
     if (e instanceof TsBaseCharacter_1.default) {
-      e = e.CharacterActorComponent?.Entity?.GetComponent(33);
+      e = e.CharacterActorComponent?.Entity?.GetComponent(34);
       if (e) {
         let t = 0;
         (!this.DetachWhenSkillEnd && 0 === this.WhenSkillEnd) ||
@@ -176,7 +176,7 @@ class AnimNotifyStateEffect extends UE.KuroEffectMakerANS {
   }
   AttachEffectToWeapon(t, e, i) {
     if (this.IsWeaponEffect && e instanceof TsBaseCharacter_1.default) {
-      e = e.CharacterActorComponent?.Entity?.GetComponent(71);
+      e = e.CharacterActorComponent?.Entity?.GetComponent(72);
       if (e?.Valid)
         for (const s of e.GetWeaponMesh().CharacterWeapons)
           s.Mesh === t && s.AddBuffEffect(i);
@@ -230,8 +230,8 @@ class AnimNotifyStateEffect extends UE.KuroEffectMakerANS {
             this.ParamsMap.delete(t),
             !0
           );
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
             "RenderEffect",
             26,
             "AnimNotifyStateEffect未成对，model为空",
@@ -248,7 +248,7 @@ class AnimNotifyStateEffect extends UE.KuroEffectMakerANS {
     if (
       this.PlayOnEnd &&
       i instanceof TsBaseCharacter_1.default &&
-      !i.CharacterActorComponent?.Entity?.GetComponent(188)?.HasAnyTag(
+      !i.CharacterActorComponent?.Entity?.GetComponent(190)?.HasAnyTag(
         GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
           this.WithOutTag,
         ),
@@ -269,7 +269,7 @@ class AnimNotifyStateEffect extends UE.KuroEffectMakerANS {
     );
   }
   GameplayTagsCheck(t) {
-    var e = t.CharacterActorComponent?.Entity?.GetComponent(188);
+    var e = t.CharacterActorComponent?.Entity?.GetComponent(190);
     if (e) {
       var i = this.PlayNeedTags.Num();
       if (this.NeedAnyTag) {

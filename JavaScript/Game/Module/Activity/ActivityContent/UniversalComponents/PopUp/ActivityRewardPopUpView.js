@@ -154,7 +154,7 @@ class ActivityRewardPopUpContent extends GridProxyAbstract_1.GridProxyAbstract {
   Refresh(t, i, e) {
     var s;
     t.NameTextId
-      ? ((s = t.NameTextArgs ?? []), this.Kua(t.NameTextId, s))
+      ? ((s = t.NameTextArgs ?? []), this.Jma(t.NameTextId, s))
       : this.mGe(t.NameText),
       this.v4e(t.RewardList ?? [], t.RewardState),
       this._Oe(t);
@@ -162,7 +162,7 @@ class ActivityRewardPopUpContent extends GridProxyAbstract_1.GridProxyAbstract {
   mGe(t) {
     this.GetText(0).SetText(t);
   }
-  Kua(t, i) {
+  Jma(t, i) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), t, ...i);
   }
   v4e(t, i) {

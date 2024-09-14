@@ -24,7 +24,7 @@ class ActivityNoviceJourneyController extends ActivityControllerBase_1.ActivityC
       (this.w2e = (e) => {
         ModelManager_1.ModelManager.ActivityModel.GetActivityById(
           this.sNe,
-        ).SetReceiveData(e.vps);
+        ).SetReceiveData(e.Tps);
       });
   }
   OnAddEvents() {
@@ -40,10 +40,10 @@ class ActivityNoviceJourneyController extends ActivityControllerBase_1.ActivityC
     );
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(24259, this.w2e);
+    Net_1.Net.Register(26420, this.w2e);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(24259);
+    Net_1.Net.UnRegister(26420);
   }
   OnOpenView(e) {}
   OnGetActivityResource(e) {
@@ -54,7 +54,7 @@ class ActivityNoviceJourneyController extends ActivityControllerBase_1.ActivityC
   }
   OnCreateActivityData(e) {
     return (
-      (this.sNe = e.J4n),
+      (this.sNe = e.s5n),
       new ActivityNoviceJourneyData_1.ActivityNoviceJourneyData()
     );
   }
@@ -62,13 +62,13 @@ class ActivityNoviceJourneyController extends ActivityControllerBase_1.ActivityC
     return !1;
   }
   RequestReward(t) {
-    var e = Protocol_1.Aki.Protocol.Ehs.create();
-    (e.P6n = t),
-      Net_1.Net.Call(17371, e, (e) => {
-        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+    var e = Protocol_1.Aki.Protocol.Ahs.create();
+    (e.F6n = t),
+      Net_1.Net.Call(22195, e, (e) => {
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              15369,
+              e.Q4n,
+              19281,
             )
           : (ModelManager_1.ModelManager.ActivityModel.GetActivityById(
               this.sNe,

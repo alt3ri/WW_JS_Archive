@@ -40,7 +40,9 @@ class OpenSystemInstanceEntrance extends OpenSystemBase_1.OpenSystemBase {
               TowerData_1.VARIATION_RISK_DIFFICULTY
               ? "TowerNormalView"
               : "TowerVariationView"
-            : "InstanceDungeonEntranceView";
+            : 9 === e
+              ? "InstanceDungeonEntranceRootView"
+              : "InstanceDungeonEntranceView";
   }
 }
 exports.OpenSystemInstanceEntrance = OpenSystemInstanceEntrance;

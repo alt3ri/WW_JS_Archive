@@ -38,7 +38,7 @@ class TsDecoratorEntityStateCheck extends UE.BTDecorator_BlueprintBase {
       this.TsStatusEntityId,
     );
     if (!t?.Valid) return !1;
-    t = t.Entity.GetComponent(180);
+    t = t.Entity.GetComponent(181);
     if (!t) return !1;
     var r = t.ContainsTagByName(this.TsState);
     switch (this.TsCheckType) {

@@ -12,31 +12,31 @@ class WeaponInstance extends WeaponDataBase_1.WeaponDataBase {
     this.WeaponItem = e;
   }
   SetLevel(e) {
-    this.WeaponItem.sjn = e;
+    this.WeaponItem.Cjn = e;
   }
   GetLevel() {
-    return this.WeaponItem.sjn;
+    return this.WeaponItem.Cjn;
   }
   SetExp(e) {
-    this.WeaponItem.ajn = e;
+    this.WeaponItem.gjn = e;
   }
   GetExp() {
-    return this.WeaponItem.ajn;
+    return this.WeaponItem.gjn;
   }
   SetResonanceLevel(e) {
-    this.WeaponItem.hjn = e;
+    this.WeaponItem.fjn = e;
   }
   GetResonanceLevel() {
-    return this.WeaponItem.hjn;
+    return this.WeaponItem.fjn;
   }
   SetBreachLevel(e) {
-    this.WeaponItem.ijn = e;
+    this.WeaponItem.ujn = e;
   }
   GetBreachLevel() {
-    return this.WeaponItem.ijn;
+    return this.WeaponItem.ujn;
   }
   GetIncId() {
-    return this.WeaponItem.L9n;
+    return this.WeaponItem.b9n;
   }
   GetItemId() {
     var e = this.GetIncId();
@@ -57,10 +57,10 @@ class WeaponInstance extends WeaponDataBase_1.WeaponDataBase {
     return 0 < this.GetRoleId();
   }
   SetRoleId(e) {
-    this.WeaponItem.O6n = e;
+    this.WeaponItem.Q6n = e;
   }
   GetRoleId() {
-    return this.WeaponItem.O6n;
+    return this.WeaponItem.Q6n;
   }
   GetMaterialExp() {
     var e = this.GetItemConfig().QualityId,

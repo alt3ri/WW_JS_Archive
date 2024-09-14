@@ -95,7 +95,7 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
       return !1;
     var t =
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity.GetComponent(
-        188,
+        190,
       );
     if (!t) return 0 === e.AllowTags.length;
     for (const n of e.AllowTags) {
@@ -112,7 +112,7 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
     if (SpecialItemController.IsSpecialItem(e)) {
       var r = ConfigManager_1.ConfigManager.SpecialItemConfig.GetConfig(e);
       if (r) {
-        var l = t?.Entity?.GetComponent(188);
+        var l = t?.Entity?.GetComponent(190);
         SpecialItemController.StopListenSpecialItemRelatedTags();
         for (const a of r.AllowTags) {
           var n = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(a);
@@ -139,7 +139,7 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
   static StopListenSpecialItemRelatedTags() {
     var e =
       ModelManager_1.ModelManager.SpecialItemModel?.TagWatchedEntityHandle?.Entity?.GetComponent(
-        188,
+        190,
       );
     if (e)
       for (const t of ModelManager_1.ModelManager.SpecialItemModel
@@ -230,7 +230,7 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
   static tgi(e, t, r) {
     var l = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity;
     l?.Valid &&
-      (l = l.GetComponent(33)).Valid &&
+      (l = l.GetComponent(34)).Valid &&
       l.BeginSkill(r, { Context: "Explore skill item: UseSkill" });
   }
 }
@@ -275,8 +275,8 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
   }),
   (SpecialItemController.JCi = (e) => {
     for (const t of e)
-      SpecialItemController.IsSpecialItem(t.J4n) &&
-        SpecialItemController.EquipSpecialItem(t.J4n);
+      SpecialItemController.IsSpecialItem(t.s5n) &&
+        SpecialItemController.EquipSpecialItem(t.s5n);
   }),
   (SpecialItemController.YCi = (e, t) => {
     var r;

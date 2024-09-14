@@ -105,7 +105,7 @@ class FlowController extends ControllerWithAssistantBase_1.ControllerWithAssista
   }
   static StartFlowByRes(t) {}
   static StartFlow(t, i, e, s, r, o, n, a, c) {
-    return this.cYt(3).StartFlow(t, i, e, s, r, o, n, void 0, void 0, a);
+    return this.cYt(3).StartFlow(t, i, e, s, r, o, n, void 0, void 0, a, c);
   }
   static StartFlowForView(t, i, e, s, r = !0) {
     return this.cYt(3).StartFlow(t, i, e, void 0, void 0, !1, !1, s, r);

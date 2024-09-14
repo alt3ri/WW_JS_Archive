@@ -2,24 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckLockEnemyMode = void 0);
 const Info_1 = require("../../../Core/Common/Info"),
-  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  GameSettingsManager_1 = require("../../GameSettings/GameSettingsManager"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckLockEnemyMode extends LevelGeneralBase_1.LevelConditionBase {
-  Check(e, t) {
+  Check(e, n) {
     e = e.LimitParams.get("ModeIndex");
     if (void 0 === e) return !1;
-    var n = parseInt(e),
-      e =
-        GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo(),
-      r = e.KeyboardLockEnemyMode,
-      a = e.GamepadLockEnemyMode;
+    var r = parseInt(e),
+      t = GameSettingsManager_1.GameSettingsManager.GetCurrentValue(129),
+      a = GameSettingsManager_1.GameSettingsManager.GetCurrentValue(134);
     switch (Info_1.Info.InputControllerMainType) {
-      case 0:
-        return n === r;
       case 1:
-        return n === a;
+        return r === t;
       case 2:
-        return 0 === n;
+        return r === a;
+      case 3:
+        return 0 === r;
       default:
         return !1;
     }

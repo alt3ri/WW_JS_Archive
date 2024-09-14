@@ -240,7 +240,7 @@ class AiControllerLibrary {
           ? (r.ToOrientationQuat(i),
             i.Inverse(i),
             i.RotateVector(l, e),
-            (s = AiControllerLibrary.Wbn(e, t.WanderDirectionType, o)),
+            (s = AiControllerLibrary.tqn(e, t.WanderDirectionType, o)),
             (c = t.GetNearestDirection(r, s)),
             0 !== s && 1 !== s && c.UnaryNegation(c),
             AiControllerLibrary.TurnToDirect(t, c, a))
@@ -249,7 +249,7 @@ class AiControllerLibrary {
         i.RotateVector(r, e))
       : (t.ActorQuatProxy.Inverse(i),
         i.RotateVector(r, e),
-        (s = AiControllerLibrary.Wbn(e, t.WanderDirectionType, o)),
+        (s = AiControllerLibrary.tqn(e, t.WanderDirectionType, o)),
         (c =
           (!o && 2 !== t.WanderDirectionType) || 0 === t.WanderDirectionType
             ? r
@@ -257,7 +257,7 @@ class AiControllerLibrary {
         AiControllerLibrary.TurnToDirect(t, c, a)),
       t.InputWanderDirection(r, e);
   }
-  static Wbn(t, r, i) {
+  static tqn(t, r, i) {
     let e = 0;
     return (
       0 === r && i

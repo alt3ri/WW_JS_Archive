@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configTrialRoleInfoById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configTrialRoleInfoById.GetConfig"),
   CONFIG_STAT_PREFIX = "configTrialRoleInfoById.GetConfig(";
 exports.configTrialRoleInfoById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, n = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      e =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
       if (n) {
-        var e = KEY_PREFIX + `#${o})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (r) return r;
+        var t = KEY_PREFIX + `#${o})`;
+        const f = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (f)
+          return (
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            f
+          );
       }
       if (
-        (i =
+        (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,31 +58,36 @@ exports.configTrialRoleInfoById = {
               o,
             ]))
       ) {
-        var i,
-          e = void 0;
+        t = void 0;
         if (
-          (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
           )),
-          i)
+          e)
         ) {
-          const r = TrialRoleInfo_1.TrialRoleInfo.getRootAsTrialRoleInfo(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
+          const f = TrialRoleInfo_1.TrialRoleInfo.getRootAsTrialRoleInfo(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
             n &&
-              ((i = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(i, r)),
+              ((e = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(e, f)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            r
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            f
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=TrialRoleInfoById.js.map

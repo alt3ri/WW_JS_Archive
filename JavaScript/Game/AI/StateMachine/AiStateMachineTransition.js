@@ -3,19 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineTransition = void 0);
 const ModelManager_1 = require("../../Manager/ModelManager");
 class AiStateMachineTransition {
-  constructor(i, t) {
+  constructor(t, i) {
     (this.Conditions = void 0),
       (this.HasTaskFinishCondition = !1),
-      (this.Node = i),
-      (this.From = i.Owner.GetNodeData(t.From)?.Uuid),
-      (this.To = i.Owner.GetNodeData(t.To)?.Uuid),
-      (this.TransitionPredictionType = t.TransitionPredictionType),
-      (this.Weight = t.Weight),
-      (this.ConditionDatas = t.Conditions),
+      (this.Node = t),
+      (this.From = t.Owner.GetNodeData(i.From)?.Uuid),
+      (this.To = t.Owner.GetNodeData(i.To)?.Uuid),
+      (this.TransitionPredictionType = i.TransitionPredictionType),
+      (this.Weight = i.Weight),
+      (this.ConditionDatas = i.Conditions),
       (this.Condition =
         ModelManager_1.ModelManager.AiStateMachineModel.AiStateMachineFactory.CreateCondition(
           this,
-          t.Conditions[0],
+          i.Conditions[0],
           0,
         )),
       (this.HasTaskFinishCondition = this.Condition.HasTaskFinishCondition);
@@ -38,8 +38,18 @@ class AiStateMachineTransition {
       ) && this.Condition.Result
     );
   }
-  HandleServerDebugInfo(i) {
-    this.Condition.HandleServerDebugInfo(i);
+  CanPrediction() {
+    return (
+      (1 === this.TransitionPredictionType &&
+        this.Node.ActorComponent.IsAutonomousProxy) ||
+      2 === this.TransitionPredictionType
+    );
+  }
+  GetResult() {
+    return this.Condition.Result;
+  }
+  HandleServerDebugInfo(t) {
+    this.Condition.HandleServerDebugInfo(t);
   }
   Clear() {
     this.Condition.Clear(),

@@ -48,20 +48,20 @@ class DelegationNonDetailsModule extends UiPanelBase_1.UiPanelBase {
       (this.SecondCurrency = void 0),
       (this.Data = void 0),
       (this.StarLayout = void 0),
-      (this.zGn = void 0),
+      (this.aOn = void 0),
       (this.xke = () => {
         var t, i, e;
         this.Data.IsVisible
           ? (t = this.Data.GetNotEnoughConsumeItemId()) <= 0
-            ? this.zGn?.SwitchToState(1, this.Data.Id)
+            ? this.aOn?.SwitchToState(1, this.Data.Id)
             : ((i =
                 ConfigManager_1.ConfigManager.BusinessConfig.GetPowerItemId()),
               (e =
                 ConfigManager_1.ConfigManager.BusinessConfig.GetCoinItemId()),
               t === i
-                ? this.zGn?.JumpEnergyNotEnough()
-                : t === e && this.zGn?.JumpMoneyNotEnough())
-          : this.zGn?.JumpByConfigCondition(this.Data.Id);
+                ? this.aOn?.JumpEnergyNotEnough()
+                : t === e && this.aOn?.JumpMoneyNotEnough())
+          : this.aOn?.JumpByConfigCondition(this.Data.Id);
       }),
       (this.vke = () => new StarItem());
   }
@@ -105,7 +105,7 @@ class DelegationNonDetailsModule extends UiPanelBase_1.UiPanelBase {
   LAn() {
     this.GetText(2)?.SetText(this.Data.GetLockText());
   }
-  BTa() {
+  Ewa() {
     var t = this.Data.GetConsumeList(),
       i = t[0],
       i = (this.FirstCost.UpdateItem(i.ItemId, i.Count), t[1]);
@@ -143,26 +143,26 @@ class DelegationNonDetailsModule extends UiPanelBase_1.UiPanelBase {
     this.SetTextureByPath(t.Icon, i),
       i.SetChangeColor(!this.Data.IsVisible, i.changeColor);
   }
-  _Ta() {
+  KPa() {
     this.GetItem(12)?.SetUIActive(!this.Data.HasBestEvaluate());
   }
   Refresh(t) {
     (this.Data = t),
       this.Data.IsVisible
         ? (this.wke(),
-          this.BTa(),
+          this.Ewa(),
           this.mGe(),
           this.aqe(),
           this.Rke(),
           this.Kbe(),
-          this._Ta())
+          this.KPa())
         : (this.wke(), this.LAn(), this.Kbe());
   }
   RefreshConsume() {
-    this.Data.IsVisible && this.BTa();
+    this.Data.IsVisible && this.Ewa();
   }
   RegisterViewController(t) {
-    this.zGn = t;
+    this.aOn = t;
   }
 }
 exports.DelegationNonDetailsModule = DelegationNonDetailsModule;

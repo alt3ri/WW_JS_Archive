@@ -17,7 +17,7 @@ class PersonalCardView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.xqe = void 0),
       (this.L0 = !0),
-      (this.esa = void 0),
+      (this.bha = void 0),
       (this.p5i = void 0),
       (this.lqe = void 0),
       (this.uHt = () => {
@@ -25,13 +25,13 @@ class PersonalCardView extends UiViewBase_1.UiViewBase {
         this.L0 ||
           ((e = this.p5i.CurCardId),
           (i = PersonalController_1.PersonalController.CheckCardIsUnLock(
-            this.esa.CardId,
+            this.bha.CardId,
           )),
-          this.GetButton(9).RootUIComp.SetUIActive(e !== this.esa.CardId && i));
+          this.GetButton(9).RootUIComp.SetUIActive(e !== this.bha.CardId && i));
       }),
       (this.p5t = () => {
         PersonalController_1.PersonalController.SendChangeCardRequest(
-          this.esa.CardId,
+          this.bha.CardId,
         ),
           UiManager_1.UiManager.CloseView("PersonalEditView"),
           UiManager_1.UiManager.CloseView("PersonalOptionView");
@@ -39,15 +39,15 @@ class PersonalCardView extends UiViewBase_1.UiViewBase {
       (this.Jvt = () => {
         this.CloseMe();
       }),
-      (this.tsa = () => {
-        UiManager_1.UiManager.OpenView("PersonalCardPreviewView", this.esa);
+      (this.qha = () => {
+        UiManager_1.UiManager.OpenView("PersonalCardPreviewView", this.bha);
       }),
       (this.Y5i = () => {
         var e = new PersonalCardItem_1.PersonalCardItem();
-        return e.SetToggleCallBack(this.rsa), e.SetNeedShowRedDot(!1), e;
+        return e.SetToggleCallBack(this.Oha), e.SetNeedShowRedDot(!1), e;
       }),
-      (this.rsa = (e, i) => {
-        this.esa = i;
+      (this.Oha = (e, i) => {
+        this.bha = i;
         var t,
           s,
           r = this.p5i.CardDataList,
@@ -66,7 +66,7 @@ class PersonalCardView extends UiViewBase_1.UiViewBase {
           (s = PersonalController_1.PersonalController.CheckCardIsUnLock(
             i.CardId,
           )),
-          this.GetButton(9).RootUIComp.SetUIActive(t !== this.esa.CardId && s)),
+          this.GetButton(9).RootUIComp.SetUIActive(t !== this.bha.CardId && s)),
           this.RefreshCardInfo(i),
           this.xqe.SelectGridProxy(e);
       });
@@ -86,7 +86,7 @@ class PersonalCardView extends UiViewBase_1.UiViewBase {
     ]),
       (this.BtnBindInfo = [
         [9, this.p5t],
-        [8, this.tsa],
+        [8, this.qha],
       ]);
   }
   OnStart() {
@@ -100,8 +100,8 @@ class PersonalCardView extends UiViewBase_1.UiViewBase {
         )),
         this.xqe.RefreshByData(e),
         0 < e.length &&
-          ((this.esa = e[0]),
-          this.RefreshCardInfo(this.esa),
+          ((this.bha = e[0]),
+          this.RefreshCardInfo(this.bha),
           this.xqe.SelectGridProxy(0)),
         (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(7))),
         this.lqe.SetCloseCallBack(this.Jvt),

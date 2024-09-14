@@ -31,7 +31,7 @@ class PrewarFormationData {
   IsLeader() {
     return (
       this.j8 ===
-      ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo()?.DVn
+      ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo()?.qVn
     );
   }
   IsSelf() {
@@ -52,6 +52,13 @@ class PrewarFormationData {
   GetPlayerName() {
     return (
       ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamName(
+        this.j8,
+      ) ?? ""
+    );
+  }
+  GetPlayerOnlineId() {
+    return (
+      ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamOnlineId(
         this.j8,
       ) ?? ""
     );

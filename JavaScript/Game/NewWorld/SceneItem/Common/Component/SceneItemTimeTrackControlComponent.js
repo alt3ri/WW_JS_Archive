@@ -68,14 +68,14 @@ let SceneItemTimeTrackControlComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(185)),
-        (this.Lie = this.Entity.GetComponent(188)),
-        (this.mBe = this.Entity.GetComponent(119)),
+        (this.Hte = this.Entity.GetComponent(187)),
+        (this.Lie = this.Entity.GetComponent(190)),
+        (this.mBe = this.Entity.GetComponent(120)),
         !0
       );
     }
     OnActivate() {
-      var e = this.Entity.GetComponent(181);
+      var e = this.Entity.GetComponent(182);
       if (e) {
         var t = e.GetInteractController();
         if (t) {
@@ -130,29 +130,32 @@ let SceneItemTimeTrackControlComponent =
         r ? r.DoIntactType : "Direct",
         void 0,
         this.m_n[t].TidContent,
+        void 0,
+        void 0,
+        !0,
       );
     }
     GetTargetActions(i) {
       if (i) {
         let t = void 0;
-        for (const e of this.m_n[i.Jvs].ControlPointEvents)
-          if (e.Index === i.zvs) {
+        for (const e of this.m_n[i.ops].ControlPointEvents)
+          if (e.Index === i.nps) {
             t = e;
             break;
           }
         if (t) {
           let e = void 0;
-          switch (i.Zvs) {
-            case Protocol_1.Aki.Protocol.iks.Proto_LeftIn:
+          switch (i.sps) {
+            case Protocol_1.Aki.Protocol.lks.Proto_LeftIn:
               e = t.LeftInEventActions;
               break;
-            case Protocol_1.Aki.Protocol.iks.Proto_LeftOut:
+            case Protocol_1.Aki.Protocol.lks.Proto_LeftOut:
               e = t.LeftOutEventActions;
               break;
-            case Protocol_1.Aki.Protocol.iks.Proto_RightIn:
+            case Protocol_1.Aki.Protocol.lks.Proto_RightIn:
               e = t.RightInEventActions;
               break;
-            case Protocol_1.Aki.Protocol.iks.Proto_RightOut:
+            case Protocol_1.Aki.Protocol.lks.Proto_RightOut:
               e = t.RightOutEventActions;
           }
           return e;
@@ -182,7 +185,7 @@ let SceneItemTimeTrackControlComponent =
   });
 (SceneItemTimeTrackControlComponent = SceneItemTimeTrackControlComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(120)],
+    [(0, RegisterComponent_1.RegisterComponent)(121)],
     SceneItemTimeTrackControlComponent,
   )),
   (exports.SceneItemTimeTrackControlComponent =

@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configHardnessModeById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configHardnessModeById.GetConfig"),
   CONFIG_STAT_PREFIX = "configHardnessModeById.GetConfig(";
 exports.configHardnessModeById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, e = !0) => {
-    if (
-      (d = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
-        var n = KEY_PREFIX + `#${o})`;
-        const i = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (i) return i;
+  GetConfig: (o, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      i =
+        (e.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
+      if (n) {
+        var t = KEY_PREFIX + `#${o})`;
+        const d = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (d)
+          return (
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            d
+          );
       }
       if (
-        (d =
+        (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,31 +58,36 @@ exports.configHardnessModeById = {
               o,
             ]))
       ) {
-        var d,
-          n = void 0;
+        t = void 0;
         if (
-          (([d, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
           )),
-          d)
+          i)
         ) {
-          const i = HardnessMode_1.HardnessMode.getRootAsHardnessMode(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+          const d = HardnessMode_1.HardnessMode.getRootAsHardnessMode(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
-            e &&
-              ((d = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(d, i)),
+            n &&
+              ((i = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, d)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            d
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    e.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=HardnessModeById.js.map

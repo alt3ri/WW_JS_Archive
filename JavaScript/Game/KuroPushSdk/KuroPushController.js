@@ -13,9 +13,9 @@ const puerts_1 = require("puerts"),
   LauncherStorageLib_1 = require("../../Launcher/Util/LauncherStorageLib"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
+  GameSettingsManager_1 = require("../GameSettings/GameSettingsManager"),
   ControllerHolder_1 = require("../Manager/ControllerHolder"),
   ConfirmBoxDefine_1 = require("../Module/ConfirmBox/ConfirmBoxDefine"),
-  MenuController_1 = require("../Module/Menu/MenuController"),
   SELFDEFINESN = "push";
 class KuroPushController extends ControllerBase_1.ControllerBase {
   static IfCanUsePush() {
@@ -25,7 +25,7 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
       UE.KuroLauncherLibrary.IsFirstIntoLauncher() &&
-        (this.oSe(), this.BindCurrentLanguageTag(), this.fjs()),
+        (this.oSe(), this.BindCurrentLanguageTag(), this.Ojs()),
       this.BindCurrentLanguageTag(),
       this.nSe(),
       Log_1.Log.CheckInfo() &&
@@ -36,10 +36,10 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
       !0
     );
   }
-  static async fjs() {
-    await this.pjs(), await this.rSe();
+  static async Ojs() {
+    await this.Njs(), await this.rSe();
   }
-  static async pjs() {
+  static async Njs() {
     var t;
     LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
       LauncherStorageLib_1.ELauncherStorageGlobalKey
@@ -72,8 +72,8 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
   static async HSr(e) {
     return new Promise((t) => {
       const n = UE.AndroidPermissionFunctionLibrary.AcquirePermissions(e),
-        u = (e, r) => {
-          n.OnPermissionsGrantedDynamicDelegate.Remove(u);
+        a = (e, r) => {
+          n.OnPermissionsGrantedDynamicDelegate.Remove(a);
           var o = new Array(),
             s = e.Num();
           for (let t = 0; t < s; t++) {
@@ -82,7 +82,7 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
           }
           t(o);
         };
-      n.OnPermissionsGrantedDynamicDelegate.Add(u);
+      n.OnPermissionsGrantedDynamicDelegate.Add(a);
     });
   }
   static BindCurrentLanguageTag() {
@@ -92,10 +92,13 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
       UE.KuroPushSdkStaticLibrary.SetTag(t, SELFDEFINESN);
   }
   static nSe() {
-    var t = this.GetPushState() ? 1 : 0;
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("KuroSdk", 8, "刷新推送状态", ["result", t]),
-      MenuController_1.MenuController.SetTargetConfig(121, t),
+    var t = this.GetPushState() ? 1 : 0,
+      e =
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("KuroSdk", 8, "刷新推送状态", ["result", t]),
+        GameSettingsManager_1.GameSettingsManager.Get(121));
+    e?.Set(t),
+      e?.RefreshCurrentValue(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshMenuSetting,
         121,

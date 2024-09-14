@@ -65,7 +65,7 @@ class TsTaskFollowPlayerHardMode extends TsTaskAbortImmediatelyBase_1.default {
       if (s?.Valid) {
         if (
           (this.InitTsVariables(),
-          (this.MoveComp = s.Entity?.GetComponent(37)),
+          (this.MoveComp = s.Entity?.GetComponent(38)),
           this.MoveComp?.CharacterMovement?.SetMovementMode(5),
           (this.UpdateRotateOffsetTime = 0),
           this.RotateOffset.Reset(),

@@ -294,7 +294,7 @@ class ForgingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
           t.BindOnExtendToggleClicked((t) => {
             t = t.Data;
             ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-              t.f8n,
+              t.L8n,
             );
           }),
           t
@@ -426,8 +426,8 @@ class ForgingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       i = 0;
     t = t.filter(
       (t) =>
-        t.f8n !== ComposeController_1.ComposeController.ComposeCoinId ||
-        ((e = !0), (i = t.MVn), !1),
+        t.L8n !== ComposeController_1.ComposeController.ComposeCoinId ||
+        ((e = !0), (i = t.UVn), !1),
     );
     return [e, i, t];
   }
@@ -469,7 +469,7 @@ class ForgingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       !1)
     );
   }
-  j2n() {
+  Z2n() {
     var t = CommonManager_1.CommonManager.GetCurrentRoleId();
     t && this.gGt.SetRoleTexture(t);
   }
@@ -483,7 +483,7 @@ class ForgingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     }
   }
   RefreshHelpRole() {
-    this.j2n();
+    this.Z2n();
   }
   OnSecondTimerRefresh() {
     this.fGt && this.AGt(this.fGt);

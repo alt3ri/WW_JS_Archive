@@ -8,7 +8,7 @@ class TsTaskUseSkill extends TsTaskAbortImmediatelyBase_1.default {
     var o = e.AiController;
     if (o) {
       var s = o.CharAiDesignComp.Entity.Id,
-        a = o.CharAiDesignComp.Entity.GetComponent(33);
+        a = o.CharAiDesignComp.Entity.GetComponent(34);
       if (a.Valid) {
         let e =
           BlackboardController_1.BlackboardController.GetStringValueByEntity(

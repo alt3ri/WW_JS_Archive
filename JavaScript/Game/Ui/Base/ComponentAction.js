@@ -161,10 +161,9 @@ class ComponentAction {
   }
   async StartAsync() {
     var t;
-    return (
-      !!this.p_r(EActionCommandType.Start) ||
-      ((t = await this.v_r()), this.M_r(), t)
-    );
+    return this.IsBusy
+      ? this.p_r(EActionCommandType.Start)
+      : ((t = await this.v_r()), this.M_r(), t);
   }
   async v_r() {
     if (this.IsStartOrStarting)
@@ -219,10 +218,9 @@ class ComponentAction {
   }
   async ShowAsync() {
     var t;
-    return (
-      !!this.p_r(EActionCommandType.Show) ||
-      ((t = await this.E_r()), this.M_r(), t)
-    );
+    return this.IsBusy
+      ? this.p_r(EActionCommandType.Show)
+      : ((t = await this.E_r()), this.M_r(), t);
   }
   async E_r() {
     if (this.IsShowOrShowing)
@@ -277,10 +275,9 @@ class ComponentAction {
   }
   async HideAsync() {
     var t;
-    return (
-      !!this.p_r(EActionCommandType.Hide) ||
-      ((t = await this.S_r()), this.M_r(), t)
-    );
+    return this.IsBusy
+      ? this.p_r(EActionCommandType.Hide)
+      : ((t = await this.S_r()), this.M_r(), t);
   }
   async S_r() {
     if (this.IsHideOrHiding)
@@ -338,8 +335,9 @@ class ComponentAction {
     return (
       (this.WaitToDestroy = !0),
       this.g_r.RemoveAllNodeWithoutHead(),
-      !!this.p_r(EActionCommandType.Destroy) ||
-        ((t = await this.y_r()), this.g_r.RemoveAllNodeWithoutHead(), t)
+      this.IsBusy
+        ? this.p_r(EActionCommandType.Destroy)
+        : ((t = await this.y_r()), this.g_r.RemoveAllNodeWithoutHead(), t)
     );
   }
   async CloseMeAsync() {
@@ -454,23 +452,32 @@ class ComponentAction {
   }
   p_r(t) {
     var e, n;
-    return (
-      !!this.IsBusy &&
-      (this.T_r() === t
+    return this.T_r() === t
+      ? (Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn(
+            "UiCore",
+            17,
+            "[TryCacheAction] is same with current action",
+            ["actionType", EActionCommandType[t]],
+            ["ComponentState", EComponentState[this.C_r]],
+            ["ComponentName", this.constructor.name],
+            ["ComponentId", this.ComponentId],
+          ),
+        !1)
+      : (n = (e = this.g_r.TailNode).Element.ActionCommand) === t
         ? (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "UiCore",
               17,
-              "[TryCacheAction] is same with current action",
+              "[TryCacheAction] is same with tail action",
               ["actionType", EActionCommandType[t]],
-              ["ComponentState", EComponentState[this.C_r]],
+              ["ComponentState", EComponentState[n]],
               ["ComponentName", this.constructor.name],
               ["ComponentId", this.ComponentId],
             ),
           !1)
-        : ((n = (e = this.g_r.TailNode).Element.ActionCommand) ===
-          EActionCommandType.Destroy
-            ? Log_1.Log.CheckWarn() &&
+        : n === EActionCommandType.Destroy
+          ? (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "UiCore",
                 17,
@@ -479,21 +486,23 @@ class ComponentAction {
                 ["ComponentState", EComponentState[this.C_r]],
                 ["ComponentName", this.constructor.name],
                 ["ComponentId", this.ComponentId],
-              )
-            : (ComponentAction.I_r(n, t) &&
-                (Log_1.Log.CheckWarn() &&
-                  Log_1.Log.Warn(
-                    "UiCore",
-                    17,
-                    "[TryCacheAction] remove tail action which is pair with this action",
-                    ["actionType", EActionCommandType[t]],
-                    ["tailActionType", EActionCommandType[n]],
-                    ["ComponentState", EComponentState[this.C_r]],
-                    ["ComponentName", this.constructor.name],
-                    ["ComponentId", this.ComponentId],
-                  ),
-                this.g_r.RemoveNode(e)),
-              Log_1.Log.CheckDebug() &&
+              ),
+            !1)
+          : ComponentAction.I_r(n, t)
+            ? (Log_1.Log.CheckWarn() &&
+                Log_1.Log.Warn(
+                  "UiCore",
+                  17,
+                  "[TryCacheAction] remove tail action which is pair with this action",
+                  ["actionType", EActionCommandType[t]],
+                  ["tailActionType", EActionCommandType[n]],
+                  ["ComponentState", EComponentState[this.C_r]],
+                  ["ComponentName", this.constructor.name],
+                  ["ComponentId", this.ComponentId],
+                ),
+              this.g_r.RemoveNode(e),
+              !1)
+            : (Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "UiCore",
                   17,
@@ -507,9 +516,8 @@ class ComponentAction {
                   ["ComponentName", this.constructor.name],
                   ["ComponentId", this.ComponentId],
                 ),
-              this.g_r.AddTail({ ActionCommand: t, Processed: !1 })),
-          !0))
-    );
+              this.g_r.AddTail({ ActionCommand: t, Processed: !1 }),
+              !0);
   }
   async M_r() {
     let t = this.g_r.GetHeadNextNode();

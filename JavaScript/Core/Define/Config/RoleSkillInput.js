@@ -12,15 +12,18 @@ class RoleSkillInput {
   get SkillInputIdList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.skillinputidlistLength(),
-      (t) => this.skillinputidlist(t),
+      this.skillinputidlist,
+      this,
     );
   }
   get Icon() {
     return this.icon();
   }
   get DescList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.desclistLength(), (t) =>
-      this.desclist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.desclistLength(),
+      this.desclist,
+      this,
     );
   }
   __init(t, i) {

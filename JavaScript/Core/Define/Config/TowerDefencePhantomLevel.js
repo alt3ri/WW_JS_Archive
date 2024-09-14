@@ -16,8 +16,10 @@ class TowerDefencePhantomLevel {
     return this.level();
   }
   get SkillId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.skillidLength(), (t) =>
-      this.skillid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.skillidLength(),
+      this.skillid,
+      this,
     );
   }
   get Title() {

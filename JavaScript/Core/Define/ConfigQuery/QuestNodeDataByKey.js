@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configQuestNodeDataByKey.Init"),
+  getConfigStat = Stats_1.Stat.Create("configQuestNodeDataByKey.GetConfig"),
   CONFIG_STAT_PREFIX = "configQuestNodeDataByKey.GetConfig(";
 exports.configQuestNodeDataByKey = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, e = !0) => {
-    if (
-      (t = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
-        var n = KEY_PREFIX + `#${o})`;
-        const i = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (i) return i;
+  GetConfig: (o, t = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      n =
+        (e.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (n) {
+      if (t) {
+        var i = KEY_PREFIX + `#${o})`;
+        const a = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (a)
+          return (
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
-        (t =
+        (n =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,31 +58,36 @@ exports.configQuestNodeDataByKey = {
               o,
             ]))
       ) {
-        var t,
-          n = void 0;
+        i = void 0;
         if (
-          (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Key", o],
           )),
-          t)
+          n)
         ) {
-          const i = QuestNodeData_1.QuestNodeData.getRootAsQuestNodeData(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+          const a = QuestNodeData_1.QuestNodeData.getRootAsQuestNodeData(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
           );
           return (
-            e &&
-              ((t = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(t, i)),
+            t &&
+              ((n = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(n, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    e.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=QuestNodeDataByKey.js.map

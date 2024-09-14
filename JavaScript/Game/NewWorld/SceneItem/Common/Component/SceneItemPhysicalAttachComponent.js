@@ -82,11 +82,11 @@ let SceneItemPhysicalAttachComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(185)),
+        (this.Hte = this.Entity.GetComponent(187)),
         (this.Qln = this.Hte.Owner?.GetComponentByClass(
           UE.StaticMeshComponent.StaticClass(),
         )),
-        (this.Xln = this.Entity.GetComponent(140)),
+        (this.Xln = this.Entity.GetComponent(141)),
         this.Xln.RegisterComponent(this),
         this.mSe(),
         !0
@@ -255,7 +255,7 @@ let SceneItemPhysicalAttachComponent =
   });
 (SceneItemPhysicalAttachComponent = SceneItemPhysicalAttachComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(201)],
+    [(0, RegisterComponent_1.RegisterComponent)(203)],
     SceneItemPhysicalAttachComponent,
   )),
   (exports.SceneItemPhysicalAttachComponent = SceneItemPhysicalAttachComponent);

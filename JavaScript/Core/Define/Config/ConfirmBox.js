@@ -19,8 +19,10 @@ class ConfirmBox {
     return this.secondarycontent();
   }
   get ButtonText() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buttontextLength(), (t) =>
-      this.buttontext(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buttontextLength(),
+      this.buttontext,
+      this,
     );
   }
   get DelayTime() {

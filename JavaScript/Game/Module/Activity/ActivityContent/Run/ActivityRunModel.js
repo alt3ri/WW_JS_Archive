@@ -15,18 +15,18 @@ class ActivityRunModel extends ModelBase_1.ModelBase {
       (this.h3e = new Map());
   }
   OnReceiveMessageData(e) {
-    e.aps &&
-      e.aps.forEach((e) => {
-        this.GetActivityRunData(e.W6n).Phrase(e);
+    e.mps &&
+      e.mps.forEach((e) => {
+        this.GetActivityRunData(e.e8n).Phrase(e);
       }),
-      e.Jbs &&
-        e.Jbs.forEach((e) => {
+      e.oBs &&
+        e.oBs.forEach((e) => {
           this.GetActivityRunData(e).SetIsOpen(!0);
         });
   }
   OnReceiveChallengeOpenNotify(e) {
-    var t = this.GetActivityRunData(e.W6n);
-    t.SetIsOpen(e.dps),
+    var t = this.GetActivityRunData(e.e8n);
+    t.SetIsOpen(e.Sps),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
         t.GetActivityId(),
@@ -108,9 +108,9 @@ class RunEndData extends UiViewData_1.UiViewData {
       (this.IfNewRecord = !1);
   }
   Phrase(e) {
-    (this.CurrentChallengeId = e.W6n),
-      (this.CurrentScore = e.mMs),
-      (this.CurrentTime = e.Y4n);
+    (this.CurrentChallengeId = e.e8n),
+      (this.CurrentScore = e.SMs),
+      (this.CurrentTime = e.n5n);
   }
   SetIfNewRecord(e) {
     this.IfNewRecord = e;

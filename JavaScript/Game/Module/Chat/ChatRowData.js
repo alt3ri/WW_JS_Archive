@@ -10,7 +10,7 @@ class ChatRowData {
       (this.SenderPlayerName = void 0),
       (this.TargetPlayerId = void 0),
       (this.Content = ""),
-      (this.ContentType = Protocol_1.Aki.Protocol.l8n.SIs),
+      (this.ContentType = Protocol_1.Aki.Protocol.p8n.DIs),
       (this.ContentChatRoomType = 0),
       (this.IsOfflineMassage = !1),
       (this.TimeStamp = 0),

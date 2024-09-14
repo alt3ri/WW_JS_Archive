@@ -9,16 +9,16 @@ const UE = require("ue"),
 class RewardExploreFriendItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.oJs = void 0),
+      (this.eZs = void 0),
       (this.sMt = () => {
-        var e = this.oJs.PlayerId;
+        var e = this.eZs.PlayerId;
         this.GetSprite(5).SetUIActive(!0),
           this.GetTexture(6).SetUIActive(!0),
           this.SetButtonUiActive(4, !1),
-          this.oJs.IsMyFriend || this.oJs.OnClickCallback(e);
+          this.eZs.IsMyFriend || this.eZs.OnClickCallback(e);
       }),
-      (this.Pta = (e) => {
-        e === this.oJs.PlayerId && this.SetButtonUiActive(4, !1);
+      (this.Jra = (e) => {
+        e === this.eZs.PlayerId && this.SetButtonUiActive(4, !1);
       });
   }
   OnRegisterComponent() {
@@ -37,18 +37,18 @@ class RewardExploreFriendItem extends GridProxyAbstract_1.GridProxyAbstract {
     super.OnAfterShow(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ApplicationSent,
-        this.Pta,
+        this.Jra,
       );
   }
   OnBeforeHide() {
     super.OnBeforeHide(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ApplicationSent,
-        this.Pta,
+        this.Jra,
       );
   }
   Refresh(e, t, i) {
-    var s = (this.oJs = e).IsMyFriend;
+    var s = (this.eZs = e).IsMyFriend;
     this.GetSprite(5).SetUIActive(s),
       this.GetTexture(6).SetUIActive(s),
       this.SetButtonUiActive(4, !s),

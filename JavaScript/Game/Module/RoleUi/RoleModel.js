@@ -11,7 +11,6 @@ const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParam
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   ItemDefines_1 = require("../Item/Data/ItemDefines"),
-  MenuController_1 = require("../Menu/MenuController"),
   SkillNodeDataInfo_1 = require("./RoleData/Module/DataInfo/SkillNodeDataInfo"),
   RoleOnlineInstanceData_1 = require("./RoleData/RoleOnlineInstanceData"),
   RoleRobotData_1 = require("./RoleData/RoleRobotData"),
@@ -20,12 +19,13 @@ const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParam
   RoleLevelResponseData_1 = require("./RoleLevel/RoleLevelResponseData"),
   RoleSkillResponseData_1 = require("./RoleSkill/RoleSkillResponseData"),
   RoleInstance_1 = require("./View/ViewData/RoleInstance");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
   RolePropertyGrowthByLevelAndBreachLevel_1 = require("../../../Core/Define/ConfigQuery/RolePropertyGrowthByLevelAndBreachLevel"),
   StringBuilder_1 = require("../../../Core/Utils/StringBuilder"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  GameSettingsManager_1 = require("../../GameSettings/GameSettingsManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   RoleNewJoinAgent_1 = require("./View/AgentData/RoleNewJoinAgent"),
   RolePreviewAgent_1 = require("./View/AgentData/RolePreviewAgent"),
@@ -59,12 +59,12 @@ class RoleModel extends ModelBase_1.ModelBase {
       (this.zyn = !1),
       (this.xie = (e, t) => {
         t &&
-          t.Entity?.GetComponent(177).RemoveTagAddOrRemoveListener(
+          t.Entity?.GetComponent(178).RemoveTagAddOrRemoveListener(
             1733479717,
             this.Zyn,
           ),
           e &&
-            ((t = e.Entity?.GetComponent(177)).AddTagAddOrRemoveListener(
+            ((t = e.Entity?.GetComponent(178)).AddTagAddOrRemoveListener(
               1733479717,
               this.Zyn,
             ),
@@ -121,19 +121,23 @@ class RoleModel extends ModelBase_1.ModelBase {
   RoleChange(e, t) {
     this.dco.delete(e),
       this.UpdateRoleInfo(t),
-      this.UpdateMainRoleMap(t.O6n),
+      this.UpdateMainRoleMap(t.Q6n),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RoleSystemDeleteRole,
+        e,
+      ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RoleSystemChangeRole,
-        t.O6n,
+        t.Q6n,
       );
   }
   UpdateRoleInfo(e) {
-    let t = this.dco.get(e.O6n);
+    let t = this.dco.get(e.Q6n);
     var r;
-    t || ((t = new RoleInstance_1.RoleInstance(e.O6n)), this.dco.set(e.O6n, t)),
-      this.IsMainRole(e.O6n) &&
-        ((r = ConfigManager_1.ConfigManager.RoleConfig.GetMainRoleById(e.O6n)),
-        MenuController_1.MenuController.SetTargetConfig(88, r.Gender),
+    t || ((t = new RoleInstance_1.RoleInstance(e.Q6n)), this.dco.set(e.Q6n, t)),
+      this.IsMainRole(e.Q6n) &&
+        ((r = ConfigManager_1.ConfigManager.RoleConfig.GetMainRoleById(e.Q6n)),
+        GameSettingsManager_1.GameSettingsManager.SetApplySave(88, r.Gender),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.RefreshMenuSetting,
           88,
@@ -180,7 +184,7 @@ class RoleModel extends ModelBase_1.ModelBase {
   }
   RoleSkillLevelUp(e, t) {
     var r = this.GetRoleInstanceById(e);
-    r && r.RefreshSkillInfo(t.j4n, t.W4n),
+    r && r.RefreshSkillInfo(t.Z4n, t.e5n),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RoleSkillLevelUp,
         e,
@@ -198,7 +202,7 @@ class RoleModel extends ModelBase_1.ModelBase {
     e && e.RefreshRoleAttr(t, r);
   }
   RoleResonanceLockFinish(e) {
-    this.dco.get(e.O6n).GetResonanceData().SetResonanceLock(e.zws);
+    this.dco.get(e.Q6n).GetResonanceData().SetResonanceLock(e.nxs);
   }
   GetRoleViewAgent(e) {
     switch (e) {
@@ -372,9 +376,9 @@ class RoleModel extends ModelBase_1.ModelBase {
       var r = new Map();
       let e = void 0;
       for (const n of t)
-        n.j4n === ItemDefines_1.EItemId.Gold
-          ? (e = n.W4n)
-          : r.set(n.j4n, n.W4n);
+        n.Z4n === ItemDefines_1.EItemId.Gold
+          ? (e = n.e5n)
+          : r.set(n.Z4n, n.e5n);
       return { needGold: e, costItemList: r };
     }
   }
@@ -617,7 +621,7 @@ class RoleModel extends ModelBase_1.ModelBase {
         for (let e = 0; e < r; e++) {
           var o = t[e];
           n.push(
-            new SkillNodeDataInfo_1.SkillNodeDataInfo(o.DHn, o.qHn, o.X4n),
+            new SkillNodeDataInfo_1.SkillNodeDataInfo(o.qHn, o.WHn, o.r5n),
           );
         }
         e.SetSkillNodeStateData(n);
@@ -640,15 +644,15 @@ class RoleModel extends ModelBase_1.ModelBase {
       r,
       n,
       o,
-      i = e.O6n,
+      i = e.Q6n,
       i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(i);
     i &&
       (i = i.GetFavorData()) &&
-      ((t = e.P6n),
-      (r = e.M8n),
-      (n = e.NPs),
-      (o = e.FPs),
-      (e = e.VPs),
+      ((t = e.F6n),
+      (r = e.U8n),
+      (n = e.KPs),
+      (o = e.QPs),
+      (e = e.XPs),
       i.SetFavorLevel(t),
       i.SetFavorExp(r),
       i.UpdateRoleFavorData(0, n),
@@ -656,18 +660,18 @@ class RoleModel extends ModelBase_1.ModelBase {
       i.UpdateRoleFavorData(3, e));
   }
   UpdateRoleFavorNewCanUnLockId(e) {
-    var t = e.O6n;
+    var t = e.Q6n;
     ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(t)
       .GetFavorData()
-      .UpdateCanUnlockId(e.w9n, e.KPs);
+      .UpdateCanUnlockId(e.H9n, e.eUs);
   }
   UpdateRoleFavorLevelAndExp(e) {
-    var t = e.O6n,
+    var t = e.Q6n,
       t =
         ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
           t,
         ).GetFavorData();
-    t.SetFavorLevel(e.P6n), t.SetFavorExp(e.M8n);
+    t.SetFavorLevel(e.F6n), t.SetFavorExp(e.U8n);
   }
   GetRoleSystemRoleList() {
     if (!ModelManager_1.ModelManager.GameModeModel.IsMulti) {
@@ -761,7 +765,7 @@ class RoleModel extends ModelBase_1.ModelBase {
         return r.Atk;
       case EAttributeId.Proto_Def:
         return r.Def;
-      case EAttributeId.e5n:
+      case EAttributeId.l5n:
         return r.LifeMax;
     }
     return 0;
@@ -777,7 +781,7 @@ class RoleModel extends ModelBase_1.ModelBase {
         return n.AtkRatio;
       case EAttributeId.Proto_Def:
         return n.DefRatio;
-      case EAttributeId.e5n:
+      case EAttributeId.l5n:
         return n.LifeMaxRatio;
     }
     return 0;

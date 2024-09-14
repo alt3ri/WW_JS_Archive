@@ -131,6 +131,9 @@ class DamageUiController extends ControllerBase_1.ControllerBase {
         this.O2t,
       );
   }
+  static SetDamageTimeScaleEnable(e) {
+    DamageUiManager_1.DamageUiManager.SetDamageTimeScaleEnable(e);
+  }
 }
 ((exports.DamageUiController = DamageUiController).nye = () => {
   DamageUiManager_1.DamageUiManager.PreloadSequence();

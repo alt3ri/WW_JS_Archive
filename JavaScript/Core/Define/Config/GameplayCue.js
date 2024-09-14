@@ -73,6 +73,9 @@ class GameplayCue {
   get LockRotation() {
     return this.lockrotation();
   }
+  get LockCamera() {
+    return this.lockcamera();
+  }
   get InterpSpeed() {
     return this.interpspeed();
   }
@@ -85,17 +88,22 @@ class GameplayCue {
   get TargetScaleUp() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.targetscaleupLength(),
-      (t) => this.targetscaleup(t),
+      this.targetscaleup,
+      this,
     );
   }
   get Resources() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.resourcesLength(), (t) =>
-      this.resources(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.resourcesLength(),
+      this.resources,
+      this,
     );
   }
   get Parameters() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.parametersLength(), (t) =>
-      this.parameters(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.parametersLength(),
+      this.parameters,
+      this,
     );
   }
   get Group() {
@@ -221,16 +229,20 @@ class GameplayCue {
         )
       : null;
   }
-  interpspeed() {
+  lockcamera() {
     var t = this.J7.__offset(this.z7, 48);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
+  interpspeed() {
+    var t = this.J7.__offset(this.z7, 50);
     return t ? this.J7.readInt32(this.z7 + t) : 5;
   }
   farthestdistance() {
-    var t = this.J7.__offset(this.z7, 50);
+    var t = this.J7.__offset(this.z7, 52);
     return t ? this.J7.readInt32(this.z7 + t) : 100;
   }
   faulttolerance(t) {
-    var r = this.J7.__offset(this.z7, 52);
+    var r = this.J7.__offset(this.z7, 54);
     return r
       ? (t || new Vector_1.Vector()).__init(
           this.J7.__indirect(this.z7 + r),
@@ -242,15 +254,15 @@ class GameplayCue {
     return this.targetscaleup(t);
   }
   targetscaleup(t) {
-    var r = this.J7.__offset(this.z7, 54);
+    var r = this.J7.__offset(this.z7, 56);
     return r ? this.J7.readFloat32(this.J7.__vector(this.z7 + r) + 4 * t) : 0;
   }
   targetscaleupLength() {
-    var t = this.J7.__offset(this.z7, 54);
+    var t = this.J7.__offset(this.z7, 56);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   targetscaleupArray() {
-    var t = this.J7.__offset(this.z7, 54);
+    var t = this.J7.__offset(this.z7, 56);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -263,34 +275,34 @@ class GameplayCue {
     return this.resources(t);
   }
   resources(t, r) {
-    var s = this.J7.__offset(this.z7, 56);
+    var s = this.J7.__offset(this.z7, 58);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, r)
       : null;
   }
   resourcesLength() {
-    var t = this.J7.__offset(this.z7, 56);
+    var t = this.J7.__offset(this.z7, 58);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetParametersAt(t) {
     return this.parameters(t);
   }
   parameters(t, r) {
-    var s = this.J7.__offset(this.z7, 58);
+    var s = this.J7.__offset(this.z7, 60);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, r)
       : null;
   }
   parametersLength() {
-    var t = this.J7.__offset(this.z7, 58);
+    var t = this.J7.__offset(this.z7, 60);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   group() {
-    var t = this.J7.__offset(this.z7, 60);
+    var t = this.J7.__offset(this.z7, 62);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   priority() {
-    var t = this.J7.__offset(this.z7, 62);
+    var t = this.J7.__offset(this.z7, 64);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

@@ -80,15 +80,15 @@ class TrackTextExpressController {
   UpdateTrackTextData(e, t) {
     if (e instanceof LogicNodeBase_1.LogicNodeBase)
       switch (t) {
-        case Protocol_1.Aki.Protocol.DNs.t5n:
+        case Protocol_1.Aki.Protocol.BNs._5n:
           e.ContainTag(0) && this.IXt(e.NodeId, e.CustomUiConfig);
           break;
-        case Protocol_1.Aki.Protocol.DNs.Proto_CompletedSuccess:
-        case Protocol_1.Aki.Protocol.DNs.Proto_CompletedFailed:
-        case Protocol_1.Aki.Protocol.DNs.Proto_Destroy:
+        case Protocol_1.Aki.Protocol.BNs.Proto_CompletedSuccess:
+        case Protocol_1.Aki.Protocol.BNs.Proto_CompletedFailed:
+        case Protocol_1.Aki.Protocol.BNs.Proto_Destroy:
           this.IXt(e.NodeId, void 0);
       }
-    else this.Yre.ContainTag(11) || this.TXt();
+    else this.Yre.ContainTag(10) || this.TXt();
   }
   IXt(i, e) {
     var t = this.MXt.findIndex((e, t) => e.SourceOfAdd === i);
@@ -100,13 +100,15 @@ class TrackTextExpressController {
       if (t < 0) return;
       this.MXt.splice(t, 1);
     }
-    this.Yre.RemoveTag(11);
+    this.Yre.RemoveTag(10), this.Yre.RemoveTag(11);
     let s = void 0;
     0 !== this.MXt.length
-      ? (this.Yre.AddTag(11),
+      ? (this.Yre.AddTag(10),
         (e = this.MXt[0].CustomUiConfig),
         this.pXt.CopyConfig(e),
         (s = e.TrackRadius?.TrackRadius),
+        e.UiType === IQuest_1.EQuestScheduleUiType.LevelPlay &&
+          this.Yre.AddTag(11),
         this.fXt.Clear(),
         this.fXt.SetMainTitle(this.pXt.MainTitle),
         this.pXt.SubTitles?.forEach((e) => {
@@ -172,7 +174,7 @@ class TrackTextExpressController {
     this.DXt(), 0 !== this.vXt.size && this.SXt(3);
   }
   DXt() {
-    this.Yre.ContainTag(11) &&
+    this.Yre.ContainTag(10) &&
       (this.fXt.Clear(),
       this.fXt.SetMainTitle(this.pXt.MainTitle),
       this.pXt.SubTitles?.forEach((e) => {

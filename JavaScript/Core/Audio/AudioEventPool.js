@@ -28,9 +28,9 @@ class AudioEventPool {
       (this.j6 = 1e4),
       (this.W6 = 6e4),
       (this.K6 = new Map()),
-      (this.UZs = []),
-      (this.RZs = !1),
-      (this.xZs = 0);
+      (this.Fta = []),
+      (this.Vta = !1),
+      (this.Hta = 0);
   }
   async GetAudioEvent(o) {
     return new Promise((t, i) => {
@@ -54,7 +54,7 @@ class AudioEventPool {
                   : (((e = new AudioEventPoolItem()).AudioEvent = i),
                     (e.LastActiveTime = Time_1.Time.Now),
                     this.K6.set(o, e),
-                    this.UZs.push(o)),
+                    this.Fta.push(o)),
                 t(i))
               : (Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
@@ -68,24 +68,24 @@ class AudioEventPool {
     });
   }
   Tick(i) {
-    if (this.RZs) {
-      let i = this.xZs;
-      for (; 0 <= i && i > this.xZs - 5; ) {
-        var e = this.UZs[i],
+    if (this.Vta) {
+      let i = this.Hta;
+      for (; 0 <= i && i > this.Hta - 5; ) {
+        var e = this.Fta[i],
           t = this.K6.get(e);
         t?.AudioEvent?.IsValid()
           ? UE.AkGameplayStatics.IsAudioEventActive(t.AudioEvent)
             ? (t.LastActiveTime = Time_1.Time.Now)
             : Time_1.Time.Now - t.LastActiveTime >= this.W6 &&
-              (t.Destroy(), this.K6.delete(e), this.UZs.splice(i, 1))
-          : (this.K6.delete(e), this.UZs.splice(i, 1)),
+              (t.Destroy(), this.K6.delete(e), this.Fta.splice(i, 1))
+          : (this.K6.delete(e), this.Fta.splice(i, 1)),
           i--;
       }
-      i < 0 ? (this.RZs = !1) : (this.xZs = i);
+      i < 0 ? (this.Vta = !1) : (this.Hta = i);
     } else
       (this.H6 += i),
         this.H6 > this.j6 &&
-          ((this.RZs = !0), (this.xZs = this.UZs.length - 1), (this.H6 = 0));
+          ((this.Vta = !0), (this.Hta = this.Fta.length - 1), (this.H6 = 0));
   }
 }
 exports.AudioEventPool = AudioEventPool;

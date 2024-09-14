@@ -11,40 +11,41 @@ class FlowActionAwakeEntity extends FlowActionServerAction_1.FlowActionServerAct
   constructor() {
     super(...arguments),
       (this.Task = void 0),
-      (this.W$i = (t) => {
+      (this.W$i = (o) => {
         this.Task = void 0;
-        var o = this.ActionInfo.Params,
+        var t = this.ActionInfo.Params,
           e =
-            (t ||
+            (o ||
               ControllerHolder_1.ControllerHolder.FlowController.LogError(
                 "加载实体失败",
               ),
             new Array());
-        for (const r of o.EntityIds) {
-          var i =
-            ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(r);
-          i
+        for (const i of t.EntityIds) {
+          var r =
+            ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(i);
+          r
             ? ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
-                i.Entity,
+                r.Entity,
                 !0,
                 "FlowActionAwakeEntity.OnEntityReady",
               )
-            : e.push(r);
+            : e.push(i);
         }
         0 < e.length &&
           ControllerHolder_1.ControllerHolder.FlowController.LogError(
             "实体未下发，联系服务端检查配置",
             ["ids", e],
           ),
+          this.RecordAction(),
           this.FinishExecute(!0);
       });
   }
   OnExecute() {
     if (this.ActionInfo.Params) {
-      var o = this.ActionInfo.Params;
-      if (o.EntityIds?.length) {
-        let t = !1;
-        for (const e of o.EntityIds)
+      var t = this.ActionInfo.Params;
+      if (t.EntityIds?.length) {
+        let o = !1;
+        for (const e of t.EntityIds)
           FlowActionUtils_1.FlowActionUtils.CheckEntityInAoi(e) ||
             (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
@@ -55,16 +56,21 @@ class FlowActionAwakeEntity extends FlowActionServerAction_1.FlowActionServerAct
                 ["flow", this.Context.FormatId],
                 ["id", this.ActionInfo.ActionId],
               ),
-            (t = !0));
-        t
-          ? (this.RequestServerAction(!1), this.FinishExecute(!0))
-          : (this.Task = WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
-              o.EntityIds,
-              this.W$i,
-              !0,
-              FlowActionUtils_1.WAIT_ENTITY_TIME,
-              !1,
-            ));
+            (o = !0));
+        if (o) this.RequestServerAction(!1), this.FinishExecute(!0);
+        else {
+          for (const r of t.EntityIds)
+            ControllerHolder_1.ControllerHolder.CreatureController.RecoverDensityEntity(
+              r,
+              "Plot",
+            );
+          this.Task = WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
+            t.EntityIds,
+            this.W$i,
+            FlowActionUtils_1.WAIT_ENTITY_TIME,
+            !1,
+          );
+        }
       } else this.FinishExecute(!0);
     } else this.FinishExecute(!0);
   }
@@ -73,6 +79,17 @@ class FlowActionAwakeEntity extends FlowActionServerAction_1.FlowActionServerAct
   }
   OnInterruptExecute() {
     this.Task?.Cancel(), (this.Task = void 0), this.FinishExecute(!0);
+  }
+  OnRollback(o, t) {
+    for (const r of o.ActionInfo.Params.EntityIds) {
+      var e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(r);
+      e?.IsInit &&
+        ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
+          e.Entity,
+          !1,
+          "FlowActionAwakeEntity.OnRollback",
+        );
+    }
   }
 }
 exports.FlowActionAwakeEntity = FlowActionAwakeEntity;

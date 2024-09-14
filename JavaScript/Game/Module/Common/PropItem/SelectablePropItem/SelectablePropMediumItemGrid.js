@@ -60,6 +60,8 @@ class SelectablePropMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScroll
           ItemConfigId: s,
           StarLevel: o.QualityId,
           ReduceButtonInfo: { IsVisible: 0 < a, LongPressConfigId: 1 },
+          IsLockVisible: n.GetIsLock(),
+          IsDeprecate: n.GetIsDeprecated(),
         };
       switch (r) {
         case 0:

@@ -10,22 +10,22 @@ const Log_1 = require("../../../../Core/Common/Log"),
   VisibleStateUtil_1 = require("../../BattleUi/VisibleStateUtil");
 class BattleInputModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this._na = []), (this.EQe = []);
+    super(...arguments), (this.Waa = []), (this.EQe = []);
   }
   OnInit() {
-    this._na.length = 0;
+    this.Waa.length = 0;
     for (let t = (this.EQe.length = 0); t < 16; t++)
-      this._na.push(0), this.EQe.push(0);
+      this.Waa.push(0), this.EQe.push(0);
     return !0;
   }
   GetInputEnable(t) {
-    return 0 === this._na[t];
+    return 0 === this.Waa[t];
   }
   GetInputVisible(t) {
     return 0 === this.EQe[t];
   }
   SetInputEnable(t, e, n) {
-    var i = this._na[t],
+    var i = this.Waa[t],
       e =
         (!e &&
           0 === i &&
@@ -39,7 +39,7 @@ class BattleInputModel extends ModelBase_1.ModelBase {
             ["action", t],
           ),
         VisibleStateUtil_1.VisibleStateUtil.SetVisible(i, e, n));
-    i !== (this._na[t] = e) && this.una(t, 0 === e);
+    i !== (this.Waa[t] = e) && this.Qaa(t, 0 === e);
   }
   SetInputVisible(t, e, n) {
     var i = this.EQe[t],
@@ -54,7 +54,7 @@ class BattleInputModel extends ModelBase_1.ModelBase {
     var i = InputEnums_1.EInputAction.MaxCount;
     for (let t = 0; t < i; t++) this.SetInputVisible(t, e, n);
   }
-  una(t, e) {
+  Qaa(t, e) {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.BattleInputEnableChanged,
       t,

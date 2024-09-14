@@ -85,7 +85,7 @@ class CameraSidestepController extends CameraControllerBase_1.CameraControllerBa
   Pce(t) {
     var i, h, s;
     this.Lce < this.MoveDurationThreshold ||
-      ((s = this.Camera.CharacterEntityHandle?.Entity?.GetComponent(162)) &&
+      ((s = this.Camera.CharacterEntityHandle?.Entity?.GetComponent(163)) &&
         ((s = s.MovementTerrainNormal),
         (s = Vector_1.Vector.Create(0, 0, 1)
           .CrossProductEqual(this.Dce)
@@ -121,7 +121,7 @@ class CameraSidestepController extends CameraControllerBase_1.CameraControllerBa
     return (
       !!this.Camera.Character &&
       void 0 !==
-        (t = this.Camera.CharacterEntityHandle.Entity.GetComponent(163)) &&
+        (t = this.Camera.CharacterEntityHandle.Entity.GetComponent(164)) &&
       t.Valid &&
       t.Speed > FightCameraLogicComponent_1.CLEAN_TARGET_SPEED_THRESHOLD &&
       !this.Camera.ContainsTag(-1371021686) &&
@@ -130,7 +130,7 @@ class CameraSidestepController extends CameraControllerBase_1.CameraControllerBa
   }
   xce(i) {
     var h =
-      this.Camera.Character?.CharacterActorComponent.Entity.GetComponent(163);
+      this.Camera.Character?.CharacterActorComponent.Entity.GetComponent(164);
     if (h && h.HasMoveInput) {
       let t = 0;
       var s,

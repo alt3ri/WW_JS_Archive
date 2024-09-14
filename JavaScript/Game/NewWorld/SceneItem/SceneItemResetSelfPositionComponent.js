@@ -70,13 +70,18 @@ let SceneItemResetSelfPositionComponent =
               (this.TDe = TimerSystem_1.TimerSystem.Delay(() => {
                 (this.TDe = void 0), this.AMn("ResetPositionTip2");
               }, FIX_DELAY * TimeUtil_1.TimeUtil.InverseMillisecond))),
-            void 0 !== this.Lo?.ResetPosDelayTime) &&
-            "BeCastingFree" === t &&
-            (void 0 !== this.TDe &&
-              (TimerSystem_1.TimerSystem.Remove(this.TDe), (this.TDe = void 0)),
-            (this.TDe = TimerSystem_1.TimerSystem.Delay(() => {
-              (this.TDe = void 0), this.AMn(void 0);
-            }, this.Lo.ResetPosDelayTime * TimeUtil_1.TimeUtil.InverseMillisecond)));
+            void 0 !== this.Lo?.ResetPosDelayTime &&
+              "BeCastingFree" !== e &&
+              "BeCastingFree" === t &&
+              (void 0 !== this.TDe &&
+                (TimerSystem_1.TimerSystem.Remove(this.TDe),
+                (this.TDe = void 0)),
+              (this.TDe = TimerSystem_1.TimerSystem.Delay(() => {
+                (this.TDe = void 0), this.AMn(void 0);
+              }, this.Lo.ResetPosDelayTime * TimeUtil_1.TimeUtil.InverseMillisecond))),
+            "BeAdsorbed" === t) &&
+            void 0 !== this.TDe &&
+            (TimerSystem_1.TimerSystem.Remove(this.TDe), (this.TDe = void 0));
         });
     }
     OnInitData(e) {
@@ -90,8 +95,8 @@ let SceneItemResetSelfPositionComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.CheckGetComponent(185)),
-        this.Entity.CheckGetComponent(142)
+        (this.Hte = this.Entity.CheckGetComponent(187)),
+        this.Entity.CheckGetComponent(143)
           ? (this.DMn(
               "[SceneItemResetSelfPositionComponent] 初始关闭检查距离Tick",
             ),
@@ -178,7 +183,7 @@ let SceneItemResetSelfPositionComponent =
   });
 (SceneItemResetSelfPositionComponent = SceneItemResetSelfPositionComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(151)],
+    [(0, RegisterComponent_1.RegisterComponent)(152)],
     SceneItemResetSelfPositionComponent,
   )),
   (exports.SceneItemResetSelfPositionComponent =

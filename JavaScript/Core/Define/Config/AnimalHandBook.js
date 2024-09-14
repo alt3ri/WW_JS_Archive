@@ -16,18 +16,24 @@ class AnimalHandBook {
     return this.name();
   }
   get Scale() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.scaleLength(), (t) =>
-      this.scale(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.scaleLength(),
+      this.scale,
+      this,
     );
   }
   get Position() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.positionLength(), (t) =>
-      this.position(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.positionLength(),
+      this.position,
+      this,
     );
   }
   get Rotator() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.rotatorLength(), (t) =>
-      this.rotator(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.rotatorLength(),
+      this.rotator,
+      this,
     );
   }
   get StandAnim() {
@@ -46,8 +52,10 @@ class AnimalHandBook {
     return this.descrtption();
   }
   get DropItemId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.dropitemidLength(), (t) =>
-      this.dropitemid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.dropitemidLength(),
+      this.dropitemid,
+      this,
     );
   }
   __init(t, i) {

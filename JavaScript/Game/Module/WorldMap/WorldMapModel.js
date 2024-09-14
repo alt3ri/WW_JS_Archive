@@ -4,8 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../Manager/ModelManager"),
-  MapDefine_1 = require("../Map/MapDefine");
+  ModelManager_1 = require("../../Manager/ModelManager");
 class WorldMapModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -18,6 +17,7 @@ class WorldMapModel extends ModelBase_1.ModelBase {
       (this.f3o = void 0),
       (this.CurrentFocalMarkType = 0),
       (this.CurrentFocalMarkId = 0),
+      (this.WorldMapMapId = void 0),
       (this.IsBattleViewOpen = !1),
       (this.p3o = void 0);
   }
@@ -40,7 +40,8 @@ class WorldMapModel extends ModelBase_1.ModelBase {
           "custom_mark_size",
         )),
       this.ResetMapScale(),
-      !(this.HideCustomMarks = !1)
+      (this.HideCustomMarks = !1),
+      !(this.WorldMapMapId = void 0)
     );
   }
   OnLeaveLevel() {
@@ -61,15 +62,19 @@ class WorldMapModel extends ModelBase_1.ModelBase {
         r,
         e,
       )?.Transform[0];
-    return (t =
-      t || r === MapDefine_1.BIG_WORLD_MAP_ID
-        ? t
-        : ConfigManager_1.ConfigManager.MapConfig.GetEntityConfigByMapIdAndEntityId(
-            MapDefine_1.BIG_WORLD_MAP_ID,
+    return (
+      t ||
+        ConfigManager_1.ConfigManager.WorldMapConfig.IsInBigWorld(r) ||
+        ((r = ModelManager_1.ModelManager.GameModeModel.MapId),
+        (t =
+          ConfigManager_1.ConfigManager.MapConfig.GetEntityConfigByMapIdAndEntityId(
+            r,
             e,
-          )?.Transform[0])
-      ? Vector_1.Vector.Create(t.X, t.Y, t.Z)
-      : Vector_1.Vector.Create(0, 0, 0);
+          )?.Transform[0])),
+      t
+        ? Vector_1.Vector.Create(t.X, t.Y, t.Z)
+        : Vector_1.Vector.Create(0, 0, 0)
+    );
   }
   GetEntityAreaId(e) {
     return (
@@ -79,9 +84,9 @@ class WorldMapModel extends ModelBase_1.ModelBase {
   UpdateAreaExploreInfo(e) {
     if (e) {
       var r = new Array();
-      for (const t of e.wVn)
-        r.push({ ExploreProgressId: t.APs, ExplorePercent: t.DPs });
-      this.p3o = { AreaId: e.l6n, ExploreProgress: r, ExplorePercent: e.DPs };
+      for (const t of e.HVn)
+        r.push({ ExploreProgressId: t.qPs, ExplorePercent: t.BPs });
+      this.p3o = { AreaId: e.p6n, ExploreProgress: r, ExplorePercent: e.BPs };
     }
   }
   GetAreaExploreInfo() {

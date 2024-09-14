@@ -35,14 +35,28 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       (this.Vri = 0),
       (this.Hri = 0),
       (this.gri = void 0),
-      (this.GUe = (t, s, i) => {
-        this.jri(s.Entity) && (this.Wri(s.Entity), this.Kri());
+      (this.GUe = (t, s, e) => {
+        this.jri(s.Entity) &&
+          (this.Wri(s.Entity),
+          this.Kri(),
+          EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+            this,
+            s,
+            EventDefine_1.EEventName.RemoveEntity,
+            this.zpe,
+          ));
       }),
       (this.zpe = (t, s) => {
-        var i;
+        var e;
         this.jri(s.Entity) &&
-          ((i = this.HudEntitySet.GetByEntity(s.Entity)) &&
-            (this.Qri(i), this.Xri(s.Entity)),
+          (EventSystem_1.EventSystem.RemoveWithTargetUseKey(
+            this,
+            s,
+            EventDefine_1.EEventName.RemoveEntity,
+            this.zpe,
+          ),
+          (e = this.HudEntitySet.GetByEntity(s.Entity)) &&
+            (this.Qri(e), this.Xri(s.Entity)),
           this.HudEntitySet.Num() <= 0) &&
           this.$ri();
       }),
@@ -60,18 +74,21 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       (this.zri = () => {
         var t;
         this.CurrentEntity?.Valid &&
-          (this.Nri.clear(),
+          (MonsterCursorHandle.Zri.Start(),
+          this.Nri.clear(),
           (t = this.j$e()),
           this.HudEntitySet.Num() <= this.bri
             ? this.eni(t)
-            : this.tni(t) || this.ini(t) || this.oni(t));
+            : this.tni(t) || this.ini(t) || this.oni(t),
+          MonsterCursorHandle.Zri.Stop());
       });
   }
   OnInitialize() {
     var t;
-    (this.bri = CommonParamById_1.configCommonParamById.GetIntConfig(
-      "MonsterCursorMaxCount",
-    )),
+    this.InitCursorAxis(),
+      (this.bri = CommonParamById_1.configCommonParamById.GetIntConfig(
+        "MonsterCursorMaxCount",
+      )),
       (this.qri = CommonParamById_1.configCommonParamById.GetIntConfig(
         "MonsterCursorRefreshInterval",
       )),
@@ -96,7 +113,7 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
       this.CurrentEntity?.Valid &&
         ((this.dri = this.CurrentEntity.Entity.GetComponent(1)),
-        (t = this.CurrentEntity.Entity.GetComponent(188)),
+        (t = this.CurrentEntity.Entity.GetComponent(190)),
         (this.p7e = t.HasTag(1996802261)),
         this.NewHudEntitySet(),
         this.rni(),
@@ -127,31 +144,27 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Valid
     ) {
       var s,
-        i,
-        e = this.j$e();
-      for (const r of this.xri.values())
-        r.IsValid() &&
-          (i = r.GetHudEntityData()).IsValid() &&
-          ((s = i.GetLocation()),
-          (s = this.GetInEllipsePosition(e, s)[0]),
-          (i = i.GetDistanceSquaredTo(e)),
-          (i = MathUtils_1.MathUtils.RangeClamp(
-            i,
+        e,
+        r = this.j$e();
+      for (const i of this.xri.values())
+        i.IsValid() &&
+          (e = i.GetHudEntityData()).IsValid() &&
+          ((s = e.GetLocation()),
+          (s = this.GetInEllipsePosition(r, s)[0]),
+          (e = e.GetDistanceSquaredTo(r)),
+          (e = MathUtils_1.MathUtils.RangeClamp(
+            e,
             this.Vri,
             this.Fri,
             this.Ori,
             this.kri,
           )),
-          r.Refresh(i / CommonDefine_1.PERCENTAGE_FACTOR, s),
-          r.GetActive() || r.SetActive(!0));
+          i.Refresh(e / CommonDefine_1.PERCENTAGE_FACTOR, s),
+          i.GetActive() || i.SetActive(!0));
     }
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.AddEntity, this.GUe),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.RemoveEntity,
-        this.zpe,
-      ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeRole,
         this.fHe,
@@ -162,10 +175,7 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       EventDefine_1.EEventName.AddEntity,
       this.GUe,
     ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.RemoveEntity,
-        this.zpe,
-      ),
+      EventSystem_1.EventSystem.RemoveAllTargetUseKey(this),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChangeRole,
         this.fHe,
@@ -198,25 +208,25 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       s =
         (t.SetComponent(0),
         t.SetComponent(1),
-        t.SetComponent(188),
+        t.SetComponent(190),
         t.ListenForTagCountChanged(-1371021686, this.Yri),
         t.GetMonsterMatchType());
-    let i = this.Bri.get(s);
-    i || ((i = new Set()), this.Bri.set(s, i)), i.add(t);
+    let e = this.Bri.get(s);
+    e || ((e = new Set()), this.Bri.set(s, e)), e.add(t);
   }
   Xri(t) {
     var s,
-      i = this.HudEntitySet.GetByEntity(t);
-    i &&
-      ((s = i.GetMonsterMatchTypeNumber()),
+      e = this.HudEntitySet.GetByEntity(t);
+    e &&
+      ((s = e.GetMonsterMatchTypeNumber()),
       this.HudEntitySet.Remove(t),
-      this.wri.delete(i),
+      this.wri.delete(e),
       (t = this.Bri.get(s))) &&
-      t.delete(i);
+      t.delete(e);
   }
   O7e(t) {
     this.N7e();
-    t = t.Entity.GetComponent(188);
+    t = t.Entity.GetComponent(190);
     this.f7e = t.ListenForTagAddOrRemove(
       1996802261,
       this.v7e,
@@ -250,25 +260,32 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   }
   ini(s) {
     for (let t = 2; 1 <= t; t--) {
-      var i = this.Bri.get(t);
-      if (i && !(i.size <= 0))
-        for (const e of i)
-          if ((this.lni(e, s), this.Nri.size >= this.bri))
+      var e = this.Bri.get(t);
+      if (e && !(e.size <= 0))
+        for (const r of e)
+          if ((this.lni(r, s), this.Nri.size >= this.bri))
             return this._ni(this.Nri), !0;
     }
     return !1;
   }
-  oni(i) {
-    let e = 0;
-    var r = this.HudEntitySet.GetAll(),
-      h = this.HudEntitySet.Num();
-    for (let s = 0; s < h; s++) {
-      var o = r[(e = s)].GetDistanceSquaredTo(i);
-      for (let t = s + 1; t < h; t++)
-        r[t].GetDistanceSquaredTo(i) < o && (e = t);
-      e !== s && ((t = r[e]), (r[e] = r[s]), (r[s] = t));
-      var t = r[s];
-      if ((this.lni(t, i), this.Nri.size >= this.bri)) break;
+  oni(e) {
+    let r = 0;
+    var i = this.HudEntitySet.GetAll(),
+      o = this.HudEntitySet.Num();
+    for (let s = 0; s < o; s++) {
+      var t = i[(r = s)],
+        n = (MonsterCursorHandle.uni.Start(), t.GetDistanceSquaredTo(e));
+      MonsterCursorHandle.uni.Stop();
+      for (let t = s + 1; t < o; t++) {
+        var h = i[t],
+          h =
+            (MonsterCursorHandle.GetTargetInfo2StatObject.Start(),
+            h.GetDistanceSquaredTo(e));
+        MonsterCursorHandle.GetTargetInfo2StatObject.Stop(), h < n && (r = t);
+      }
+      r !== s && ((t = i[r]), (i[r] = i[s]), (i[s] = t));
+      t = i[s];
+      if ((this.lni(t, e), this.Nri.size >= this.bri)) break;
     }
     this._ni(this.Nri);
   }
@@ -280,37 +297,44 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       this.Nri.add(t.GetId());
   }
   cni(t) {
-    return !!t.ContainsTagById(1996802261) && !t.ContainsTagById(1963731483);
+    return (
+      MonsterCursorHandle.dni.Start(),
+      !t.ContainsTagById(1996802261) || t.ContainsTagById(1963731483)
+        ? (MonsterCursorHandle.dni.Stop(), !1)
+        : (MonsterCursorHandle.dni.Stop(), !0)
+    );
   }
   mni(t) {
-    return this.gri.CheckPositionInScreen(
+    MonsterCursorHandle.Cni.Start();
+    t = this.gri.CheckPositionInScreen(
       t,
       this.gri.CameraAdjustController.CheckInScreenMinX,
       this.gri.CameraAdjustController.CheckInScreenMaxX,
       this.gri.CameraAdjustController.CheckInScreenMinY,
       this.gri.CameraAdjustController.CheckInScreenMaxY,
     );
+    return MonsterCursorHandle.Cni.Stop(), t;
   }
   _ni(t) {
     var s,
-      i,
-      e = [];
-    for (const h of this.xri.values()) {
-      var r = h.GetEntityId();
-      t.has(r) ||
-        (h.Deactivate(), h.SetActive(!1), e.push(r), this.Pri.push(h));
+      e,
+      r = [];
+    for (const o of this.xri.values()) {
+      var i = o.GetEntityId();
+      t.has(i) ||
+        (o.Deactivate(), o.SetActive(!1), r.push(i), this.Pri.push(o));
     }
-    for (const o of e) this.xri.delete(o);
-    for (const n of t)
-      this.gni(n) ||
+    for (const n of r) this.xri.delete(n);
+    for (const h of t)
+      this.gni(h) ||
         ((s = this.fni()) &&
-          ((i = this.HudEntitySet.GetByEntityId(n)), this.pni(i, s)));
+          ((e = this.HudEntitySet.GetByEntityId(h)), this.pni(e, s)));
   }
   pni(t, s) {
-    var i;
+    var e;
     s &&
-      ((i = t.GetId()), s.GetEntityId() !== i) &&
-      (s.Activate(t), this.xri.set(i, s));
+      ((e = t.GetId()), s.GetEntityId() !== e) &&
+      (s.Activate(t), this.xri.set(e, s));
   }
   Qri(t) {
     var s;
@@ -346,10 +370,18 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     );
   }
 }
-((exports.MonsterCursorHandle = MonsterCursorHandle).Zri = void 0),
-  (MonsterCursorHandle.Cni = void 0),
-  (MonsterCursorHandle.dni = void 0),
-  (MonsterCursorHandle.uni = void 0),
-  (MonsterCursorHandle.GetTargetInfo2StatObject = void 0),
-  (MonsterCursorHandle.SYe = void 0);
+((exports.MonsterCursorHandle = MonsterCursorHandle).Zri = Stats_1.Stat.Create(
+  "[MonsterCursor]RefreshMonsterCursor",
+)),
+  (MonsterCursorHandle.Cni = Stats_1.Stat.Create("[MonsterCursor]IsInScreen")),
+  (MonsterCursorHandle.dni = Stats_1.Stat.Create(
+    "[MonsterCursor]CheckMonsterCursorTagStatObject",
+  )),
+  (MonsterCursorHandle.uni = Stats_1.Stat.Create(
+    "[MonsterCursor]GetTargetInfo1StatObject",
+  )),
+  (MonsterCursorHandle.GetTargetInfo2StatObject = Stats_1.Stat.Create(
+    "[MonsterCursor]GetTargetInfo2StatObject",
+  )),
+  (MonsterCursorHandle.SYe = Stats_1.Stat.Create("[MonsterCursor]ListenTag"));
 //# sourceMappingURL=MonsterCursorHandle.js.map

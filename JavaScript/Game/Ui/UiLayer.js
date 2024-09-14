@@ -4,14 +4,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
+  Macro_1 = require("../../Core/Preprocessor/Macro"),
   StringUtils_1 = require("../../Core/Utils/StringUtils"),
   LguiUtil_1 = require("../../Game/Module/Util/LguiUtil"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
   GlobalData_1 = require("../GlobalData"),
   ModelManager_1 = require("../Manager/ModelManager"),
-  UiLayerType_1 = require("./Define/UiLayerType"),
-  Macro_1 = require("../../Core/Preprocessor/Macro");
+  UiLayerType_1 = require("./Define/UiLayerType");
 var EInitState;
 !(function (i) {
   (i[(i.None = 0)] = "None"),
@@ -142,8 +142,7 @@ class UiLayer {
     await Promise.all(i).then(() => {
       let i = 0;
       for (const t of UiLayerType_1.LayerTypeEnumValues)
-        (UE.KuroStaticLibrary.IsBuildShipping() &&
-          t === UiLayerType_1.ELayerType.Debug) ||
+        (Info_1.Info.IsBuildShipping && t === UiLayerType_1.ELayerType.Debug) ||
           this.GetLayerRootUiItem(t).SetHierarchyIndex(++i);
     });
   }
@@ -155,7 +154,7 @@ class UiLayer {
           UiLayerType_1.ELayerType[t],
         ]);
     else if (
-      !UE.KuroStaticLibrary.IsBuildShipping() ||
+      !Info_1.Info.IsBuildShipping ||
       t !== UiLayerType_1.ELayerType.Debug
     ) {
       let i = "UiItem_Layer_Prefab";
@@ -167,19 +166,13 @@ class UiLayer {
         case UiLayerType_1.ELayerType.NormalMask:
           i = "UiItem_LayerMask_Prefab";
       }
-      var e,
-        a = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(i, this.gCr);
-      LguiUtil_1.LguiUtil.SetActorIsPermanent(a, !0, !1),
-        this.SCr.set(t, a.RootComponent),
-        t === UiLayerType_1.ELayerType.Pool && a.RootComponent.SetUIActive(!1),
-        Macro_1.NOT_SHIPPING_ENVIRONMENT &&
-          ((e = UiLayerType_1.ELayerType[t]),
-          (a = a.RootComponent).SetDisplayName(e),
-          t === UiLayerType_1.ELayerType.Debug) &&
-          UE.LGUIManagerActor.SetDebugRootLayer(
-            GlobalData_1.GlobalData.World,
-            a,
-          );
+      var e = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
+        i,
+        this.gCr,
+      );
+      LguiUtil_1.LguiUtil.SetActorIsPermanent(e, !0, !1),
+        this.SCr.set(t, e.RootComponent),
+        t === UiLayerType_1.ELayerType.Pool && e.RootComponent.SetUIActive(!1);
     }
   }
   static async DCr() {

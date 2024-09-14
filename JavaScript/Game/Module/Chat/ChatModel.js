@@ -74,19 +74,19 @@ class ChatModel extends ModelBase_1.ModelBase {
   ClearChatPlayerData() {
     this.kEt.clear();
   }
-  AddChatContent(t, e, a, o, i, r, n, h, s, C, m) {
-    e = t.AddChatContent(e, a, o, i, r, n, h, s, C, m);
-    let _ = 0,
-      v = 0;
+  AddChatContent(t, e, a, o, i, r, n, h, s, C, m, _, v) {
+    e = t.AddChatContent(e, a, o, i, r, n, h, s, C, m, _, v);
+    let f = 0,
+      l = 0;
     t instanceof PrivateChatRoom_1.PrivateChatRoom
-      ? ((_ = t.GetTargetPlayerId()), (v = 1))
+      ? ((f = t.GetTargetPlayerId()), (l = 1))
       : t instanceof TeamChatRoom_1.TeamChatRoom
-        ? (v = 2)
-        : t instanceof WorldTeamChatRoom_1.WorldChatRoom && (v = 3),
+        ? (l = 2)
+        : t instanceof WorldTeamChatRoom_1.WorldChatRoom && (l = 3),
       a !== ModelManager_1.ModelManager.PlayerInfoModel.GetId() &&
         this.SetChatRoomRedDot(t, !0),
-      r === Protocol_1.Aki.Protocol.PFs.Proto_None &&
-        this.AddChatRowData(a, o, i, !1, v, h, _, C, m),
+      r === Protocol_1.Aki.Protocol.GFs.Proto_None &&
+        this.AddChatRowData(a, o, i, !1, l, h, f, C, m),
       this.YEt(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnAddChatContent,
@@ -192,14 +192,14 @@ class ChatModel extends ModelBase_1.ModelBase {
   AddPrivateHistoryChatContent(t, e) {
     var a = [];
     for (const r of e) {
-      var o = r.R8n,
+      var o = r.N8n,
         i = {
-          UtcTime: r.x8n,
-          MsgId: r.U8n,
+          UtcTime: r.k8n,
+          MsgId: r.O8n,
           SenderUid: o,
-          Content: r.y8n,
-          ChatContentType: r.l8n,
-          OfflineMsg: r.P8n,
+          Content: r.P8n,
+          ChatContentType: r.p8n,
+          OfflineMsg: r.F8n,
         },
         i =
           (a.push(i),
@@ -217,13 +217,13 @@ class ChatModel extends ModelBase_1.ModelBase {
     var a = [];
     for (const i of e) {
       var o = {
-        SenderPlayerId: i.PLs,
-        SenderPlayerName: i.wLs,
-        UtcTime: i.bLs,
-        SenderIcon: i.ULs,
-        Content: i.y8n,
-        ChatContentType: i.l8n,
-        NoticeType: i.xLs,
+        SenderPlayerId: i.GLs,
+        SenderPlayerName: i.kLs,
+        UtcTime: i.FLs,
+        SenderIcon: i.OLs,
+        Content: i.P8n,
+        ChatContentType: i.p8n,
+        NoticeType: i.NLs,
       };
       a.push(o);
     }

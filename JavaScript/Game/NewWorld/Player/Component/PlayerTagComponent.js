@@ -25,7 +25,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   BaseTagComponent_1 = require("../../Common/Component/BaseTagComponent");
 let PlayerTagComponent = class PlayerTagComponent extends BaseTagComponent_1.BaseTagComponent {
   constructor() {
-    super(),
+    super(...arguments),
       (this.PlayerId = 0),
       (this.OnAnyExactTagChanged = (e, t, o) => {
         if (void 0 !== e && o !== t)
@@ -33,13 +33,18 @@ let PlayerTagComponent = class PlayerTagComponent extends BaseTagComponent_1.Bas
             this.PlayerId,
           ))
             r.EntityHandle?.Entity?.GetComponent(
-              188,
+              190,
             )?.TagContainer.UpdateExactTag(5, e, t - o);
-      }),
-      this.TagContainer.AddAnyExactTagListener(this.OnAnyExactTagChanged);
+      });
   }
-  OnCreate(e) {
-    return (this.PlayerId = e?.PlayerId ?? 0), !0;
+  OnCreate() {
+    return (
+      this.TagContainer.AddAnyExactTagListener(this.OnAnyExactTagChanged), !0
+    );
+  }
+  OnInitData() {
+    var e = this.Entity.CheckGetComponent(0);
+    return (this.PlayerId = e?.GetPlayerId() ?? 0), !0;
   }
   OnClear() {
     Log_1.Log.CheckInfo() &&
@@ -51,7 +56,7 @@ let PlayerTagComponent = class PlayerTagComponent extends BaseTagComponent_1.Bas
       for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItemsByPlayer(
         this.PlayerId,
       ))
-        t.EntityHandle?.Entity?.GetComponent(188)?.TagContainer.RemoveExactTag(
+        t.EntityHandle?.Entity?.GetComponent(190)?.TagContainer.RemoveExactTag(
           5,
           e,
         );
@@ -64,14 +69,14 @@ let PlayerTagComponent = class PlayerTagComponent extends BaseTagComponent_1.Bas
     )?.EntityHandle?.Entity;
   }
   GetCurrentTagComponent() {
-    return this.GetEntity()?.GetComponent(188);
+    return this.GetEntity()?.GetComponent(190);
   }
   HasTag(e) {
     return this.GetCurrentTagComponent()?.HasTag(e) ?? !1;
   }
 };
 (PlayerTagComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(184)],
+  [(0, RegisterComponent_1.RegisterComponent)(185)],
   PlayerTagComponent,
 )),
   (exports.PlayerTagComponent = PlayerTagComponent);

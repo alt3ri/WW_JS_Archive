@@ -29,7 +29,7 @@ class PerformActionChangeMaterial extends (exports.PerformAction =
   }
   Register(t) {
     this.IsRegister = !0;
-    t = t.GetComponent(171);
+    t = t.GetComponent(172);
     this.NpcMatController = t.MaterialController;
   }
   UnRegister() {
@@ -55,7 +55,7 @@ class PerformActionPlayMontage extends PerformAction {
 exports.PerformActionPlayMontage = PerformActionPlayMontage;
 class PerformGroup {
   constructor() {
-    (this.Id = PerformGroup.Xsa++),
+    (this.Id = PerformGroup.Yla++),
       (this.SwitchKey = "None"),
       (this.ActionList = new Array());
   }
@@ -75,7 +75,7 @@ class PerformGroup {
     for (const t of this.ActionList) t.End();
   }
 }
-(exports.PerformGroup = PerformGroup).Xsa = 0;
+(exports.PerformGroup = PerformGroup).Yla = 0;
 class PerformGroupController {
   constructor() {
     (this.Entity = void 0),
@@ -104,7 +104,7 @@ class PerformGroupController {
         for (const h of ICommon_1.npcPerformStateConfig[r.InitState.Type])
           this.PerformStateMap.has(h) ||
             ((e = new PerformGroup()), this.AddPerformGroup(e));
-        let t = o.ComponentDataMap.get("Usa")?.Usa?.F4n;
+        let t = o.ComponentDataMap.get("cla")?.cla?.Y4n;
         (t = t || r.InitState.State), this.SwitchPerformState(t);
       }
     }

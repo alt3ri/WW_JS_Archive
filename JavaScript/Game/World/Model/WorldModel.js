@@ -18,7 +18,7 @@ class WorldEnvironmentInfo {
       (this.NEr = ""),
       (this.OEr = ""),
       (this.un = 6),
-      (this.bNn = 1);
+      (this.jNn = 1);
   }
   get DataLayerType() {
     return this.NEr;
@@ -30,10 +30,10 @@ class WorldEnvironmentInfo {
     return this.un;
   }
   get CaveMode() {
-    return this.bNn;
+    return this.jNn;
   }
-  IsEqual(e) {
-    return this.E9 === e;
+  IsEqual(t) {
+    return this.E9 === t;
   }
   IsEnCloseEnvironment() {
     return 0 === this.E9 || 1 === this.E9;
@@ -41,27 +41,27 @@ class WorldEnvironmentInfo {
   get EnvType() {
     return this.E9;
   }
-  SetInfo(e) {
-    switch (e.EnvType) {
+  SetInfo(t) {
+    switch (t.EnvType) {
       case 0:
         (this.NEr = "DataLayerRuntime_EncloseSpace"),
           (this.OEr = "DataLayerRuntime_EncloseSpaceSub"),
-          (this.bNn = 2);
+          (this.jNn = 2);
         break;
       case 2:
         (this.NEr = "DataLayerRuntime_EncloseSpace"),
           (this.OEr = "DataLayerRuntime_EncloseSpaceSub"),
-          (this.bNn = 3);
+          (this.jNn = 3);
         break;
       case 1:
         (this.NEr = "DataLayerRuntime_EncloseSpaceRoom"),
           (this.OEr = "DataLayerRuntime_EncloseSpaceSubRoom"),
-          (this.bNn = 2);
+          (this.jNn = 2);
         break;
       default:
-        this.bNn = 1;
+        this.jNn = 1;
     }
-    (this.un = e.StreamingType), (this.E9 = e.EnvType);
+    (this.un = t.StreamingType), (this.E9 = t.EnvType);
   }
   ResetInfo() {
     this.E9 = DEFAULT_ENVIRONMENTTYPE;
@@ -79,6 +79,7 @@ class WorldModel extends ModelBase_1.ModelBase {
       (this.ChangeSchedulerDeltaFrameCount = 0),
       (this.CurrentSchedulerDelta = 0),
       (this.VEr = new Map()),
+      (this.VZa = new Map()),
       (this.DestroyActorQueue = new Queue_1.Queue()),
       (this.ActorsToIgnoreSet = new Set()),
       (this.CurEnvironmentInfo = new WorldEnvironmentInfo()),
@@ -87,86 +88,97 @@ class WorldModel extends ModelBase_1.ModelBase {
   get ControlPlayerLastLocation() {
     return ModelManager_1.ModelManager.WorldModel.kEr;
   }
-  set ControlPlayerLastLocation(e) {
-    this.kEr = e;
+  set ControlPlayerLastLocation(t) {
+    this.kEr = t;
   }
   get WorldStateMap() {
     return this.VEr;
   }
-  set WorldStateMap(e) {
-    this.VEr = e;
+  set WorldStateMap(t) {
+    this.VEr = t;
+  }
+  get WorldStateBooleanMap() {
+    return this.VZa;
+  }
+  set WorldStateBooleanMap(t) {
+    this.VZa = t;
   }
   UpdateWorldState(e) {
     for (const r of Object.keys(e)) {
-      var t = e[r],
-        s = Number(MathUtils_1.MathUtils.LongToBigInt(t.JIs));
-      switch (r) {
+      var s = e[r];
+      let t = void 0;
+      switch (
+        (s.oTs && (t = Number(MathUtils_1.MathUtils.LongToBigInt(s.oTs))), r)
+      ) {
         case "DefaultState":
         case "NpcWorldState":
-          this.VEr.set(r, s);
+          t && this.VEr.set(r, t);
+          break;
+        default:
+          t && this.VEr.set(r, t), this.VZa.set(r, s.rTs ?? !1);
       }
     }
   }
   GetMapDone() {
     return this.FEr;
   }
-  SetMapDone(e) {
-    this.FEr = e;
+  SetMapDone(t) {
+    this.FEr = t;
   }
   GetWorldDone() {
     return this.$5e;
   }
-  SetWorldDone(e) {
-    this.$5e = e;
+  SetWorldDone(t) {
+    this.$5e = t;
   }
-  static AddTsSimpleInteractItem(e) {
-    let t = this.HEr.get(e.TypeId);
-    t || ((t = new Set()), this.HEr.set(e.TypeId, t)), t.add(e);
+  static AddTsSimpleInteractItem(t) {
+    let e = this.HEr.get(t.TypeId);
+    e || ((e = new Set()), this.HEr.set(t.TypeId, e)), e.add(t);
   }
-  static RemoveTsSimpleInteractItem(e) {
-    var t = this.HEr.get(e.TypeId);
-    t && t.delete(e);
+  static RemoveTsSimpleInteractItem(t) {
+    var e = this.HEr.get(t.TypeId);
+    e && e.delete(t);
   }
-  static GetTsSimpleInteractItemById(e) {
-    return this.HEr.get(e);
+  static GetTsSimpleInteractItemById(t) {
+    return this.HEr.get(t);
   }
-  AddDestroyActor(e, t, s) {
-    s?.IsValid() && this.DestroyActorQueue.Push([e, t, s]);
+  AddDestroyActor(t, e, s) {
+    s?.IsValid() && this.DestroyActorQueue.Push([t, e, s]);
   }
   PopDestroyActor() {
     if (0 !== this.DestroyActorQueue.Size) return this.DestroyActorQueue.Pop();
   }
-  AddIgnore(e) {
-    !e?.IsValid() ||
-      this.ActorsToIgnoreSet.has(e) ||
-      this.ActorsToIgnoreSet.add(e);
+  AddIgnore(t) {
+    !t?.IsValid() ||
+      this.ActorsToIgnoreSet.has(t) ||
+      this.ActorsToIgnoreSet.add(t);
   }
-  RemoveIgnore(e) {
-    return !!e?.IsValid() && this.ActorsToIgnoreSet.delete(e);
+  RemoveIgnore(t) {
+    return !!t?.IsValid() && this.ActorsToIgnoreSet.delete(t);
   }
   ClearIgnore() {
     this.ActorsToIgnoreSet.clear();
   }
-  HandleEnvironmentUpdate(e) {
-    let t = 0;
-    if (!this.CurEnvironmentInfo.IsEqual(e.EnvType)) {
+  HandleEnvironmentUpdate(t) {
+    let e = 0;
+    if (!this.CurEnvironmentInfo.IsEqual(t.EnvType)) {
       switch (this.CurEnvironmentInfo.EnvType) {
         case DEFAULT_ENVIRONMENTTYPE:
-          2 === e.EnvType && (t = 1),
-            (0 !== e.EnvType && 1 !== e.EnvType) || (t = 5);
+          2 === t.EnvType && (e = 1),
+            (0 !== t.EnvType && 1 !== t.EnvType) || (e = 5);
           break;
         case 2:
-          e.EnvType === DEFAULT_ENVIRONMENTTYPE && (t = 4),
-            (0 !== e.EnvType && 1 !== e.EnvType) || (t = 3);
+          t.EnvType === DEFAULT_ENVIRONMENTTYPE && (e = 4),
+            (0 !== t.EnvType && 1 !== t.EnvType) || (e = 3);
           break;
         case 0:
         case 1:
-          e.EnvType === DEFAULT_ENVIRONMENTTYPE && (t = 6),
-            2 === e.EnvType && (t = 2);
+          t.EnvType === DEFAULT_ENVIRONMENTTYPE && (e = 6),
+            2 === t.EnvType && (e = 2);
       }
-      this.CurEnvironmentInfo.SetInfo(e);
+      this.CurEnvironmentInfo.SetInfo(t);
     }
-    return t;
+    return e;
   }
 }
 ((exports.WorldModel = WorldModel).IsStandalone = !1),

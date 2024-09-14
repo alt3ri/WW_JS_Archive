@@ -22,9 +22,16 @@ class RoleBreach {
   get BreachConsume() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.breachconsumeLength(),
-      (t) => this.breachconsume(t)?.key(),
-      (t) => this.breachconsume(t)?.value(),
+      this.breachconsumeKey,
+      this.breachconsumeValue,
+      this,
     );
+  }
+  breachconsumeKey(t) {
+    return this.breachconsume(t)?.key();
+  }
+  breachconsumeValue(t) {
+    return this.breachconsume(t)?.value();
   }
   get BreachReward() {
     return this.breachreward();

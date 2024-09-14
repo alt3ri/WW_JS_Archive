@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
   Macro_1 = require("../../Core/Preprocessor/Macro"),
   FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
   Quat_1 = require("../../Core/Utils/Math/Quat"),
@@ -34,11 +35,11 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetSequenceCameraActor() {
     return CameraController_1.CameraController.Model.SequenceCamera.PlayerComponent.GetCurrentLevelSequenceActor();
   }
-  static EnterCameraMode(e, r, a, t) {
-    CameraController_1.CameraController.EnterCameraMode(e, r, a, t);
+  static EnterCameraMode(e, a, r, t) {
+    CameraController_1.CameraController.EnterCameraMode(e, a, r, t);
   }
-  static ExitCameraMode(e, r, a, t) {
-    CameraController_1.CameraController.ExitCameraMode(e, r, a, t);
+  static ExitCameraMode(e, a, r, t) {
+    CameraController_1.CameraController.ExitCameraMode(e, a, r, t);
   }
   static SetCameraRotation(e) {
     CameraController_1.CameraController.FightCamera.LogicComponent.SetRotation(
@@ -66,17 +67,17 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     CameraController_1.CameraController.FightCamera.LogicComponent.IsFollowing =
       e;
   }
-  static ApplyCameraModify(e, r, a, t, o, i, l, n, C, s, m, c, _) {
+  static ApplyCameraModify(e, a, r, t, o, i, l, n, C, m, s, c, u) {
     CameraUtility_1.CameraUtility.CheckApplyCameraModifyCondition(
-      ModelManager_1.ModelManager.CreatureModel.GetEntityById(m),
+      ModelManager_1.ModelManager.CreatureModel.GetEntityById(s),
       i,
       c,
-      (0, puerts_1.$unref)(_),
+      (0, puerts_1.$unref)(u),
     ) &&
       CameraController_1.CameraController.FightCamera.LogicComponent.ApplyCameraModify(
         e,
-        r,
         a,
+        r,
         t,
         i,
         l,
@@ -84,28 +85,28 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         n,
         C,
         void 0,
-        s,
+        m,
       );
   }
-  static ApplyCameraGuide(e, r, a, t, o, i, l) {
+  static ApplyCameraGuide(e, a, r, t, o, i, l) {
     this.CacheLookAtVector ||
       (this.CacheLookAtVector = Vector_1.Vector.Create()),
       this.CacheLookAtVector.FromUeVector(e),
       CameraController_1.CameraController.FightCamera.LogicComponent.ApplyCameraGuide(
         this.CacheLookAtVector,
-        r,
         a,
+        r,
         t,
         o,
         i,
         l,
       );
   }
-  static EnterCameraExplore(e, r, a, t, o, i, l) {
+  static EnterCameraExplore(e, a, r, t, o, i, l) {
     CameraController_1.CameraController.FightCamera.LogicComponent.EnterCameraExplore(
       e,
-      r,
       a,
+      r,
       t,
       o,
       i,
@@ -117,26 +118,26 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       e,
     );
   }
-  static PlayCameraSequence(e, r, a, t, o, i, l, n, C, s, m, c, _, u) {
-    var r = ModelManager_1.ModelManager.CreatureModel.GetEntityById(r);
+  static PlayCameraSequence(e, a, r, t, o, i, l, n, C, m, s, c, u, _) {
+    var a = ModelManager_1.ModelManager.CreatureModel.GetEntityById(a);
     return (
-      !!r &&
-      !!(r = r.Entity?.GetComponent(3)?.Actor) &&
-      !!CameraUtility_1.CameraUtility.CheckCameraSequenceCondition(r, e) &&
+      !!a &&
+      !!(a = a.Entity?.GetComponent(3)?.Actor) &&
+      !!CameraUtility_1.CameraUtility.CheckCameraSequenceCondition(a, e) &&
       CameraController_1.CameraController.SequenceCamera.PlayerComponent.PlayCameraSequence(
-        a,
+        r,
         t,
         o,
-        r,
+        a,
         FNameUtil_1.FNameUtil.GetDynamicFName(i),
         FNameUtil_1.FNameUtil.GetDynamicFName(l),
         n,
         C,
-        s,
         m,
+        s,
         c,
-        _,
         u,
+        _,
       )
     );
   }
@@ -144,26 +145,26 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return CameraController_1.CameraController.WidgetCamera.DisplayComponent
       .CineCamera;
   }
-  static SetWidgetCameraBlendParams(e, r, a, t, o, i, l, n, C, s, m) {
+  static SetWidgetCameraBlendParams(e, a, r, t, o, i, l, n, C, m, s) {
     CameraController_1.CameraController.WidgetCamera.BlendComponent.SetBlendParams(
       e,
-      r,
       a,
+      r,
       t,
       o,
       i,
       l,
       n,
       C,
-      s,
       m,
+      s,
     );
   }
-  static PlayCameraOrbital(e, r, a, t, o) {
+  static PlayCameraOrbital(e, a, r, t, o) {
     CameraController_1.CameraController.OrbitalCamera.PlayerComponent.PlayCameraOrbital(
       e,
-      r,
       a,
+      r,
       t,
       o,
     );
@@ -194,9 +195,9 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static IsRoleOnCameraRight() {
     var e =
         Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(1),
-      r = ModelManager_1.ModelManager.CameraModel.FightCamera.LogicComponent;
+      a = ModelManager_1.ModelManager.CameraModel.FightCamera.LogicComponent;
     return (
-      r.CameraRotation.Quaternion(CameraBlueprintFunctionLibrary.TmpQuat),
+      a.CameraRotation.Quaternion(CameraBlueprintFunctionLibrary.TmpQuat),
       CameraBlueprintFunctionLibrary.TmpQuat.RotateVector(
         Vector_1.Vector.RightVectorProxy,
         CameraBlueprintFunctionLibrary.TmpVector,
@@ -205,7 +206,7 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         e.ActorLocationProxy.DotProduct(
           CameraBlueprintFunctionLibrary.TmpVector,
         ) -
-          r.CameraLocation.DotProduct(CameraBlueprintFunctionLibrary.TmpVector)
+          a.CameraLocation.DotProduct(CameraBlueprintFunctionLibrary.TmpVector)
     );
   }
   static GetIsCameraTargetInScreen() {
@@ -223,9 +224,9 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static EnterSpecialGameplayCamera(e) {
-    var r =
+    var a =
       ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
-    if (r) return r.EnterSpecialGameplayCamera(e);
+    if (a) return a.EnterSpecialGameplayCamera(e);
   }
   static ExitSpecialGameplayCamera() {
     var e =
@@ -237,12 +238,33 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
     e && e.ExitSpecialGameplayCamera();
   }
-  static SetAimAssistModeByKey(e, r) {
-    ModelManager_1.ModelManager.CameraModel?.SetAimAssistModeWithKey(e, r);
+  static SetAimAssistModeByKey(e, a) {
+    ModelManager_1.ModelManager.CameraModel?.SetAimAssistModeWithKey(e, a);
   }
   static ClearAimAssistModeByKey(e) {
     ModelManager_1.ModelManager.CameraModel?.ClearAimAssistModeWithKey(e);
   }
+  static SetSequenceCameraCollisionState(e) {
+    var a =
+      ModelManager_1.ModelManager?.CameraModel?.SequenceCamera?.PlayerComponent;
+    a && a.SetCameraCollisionState(e);
+  }
+  static SetXRayState(e) {
+    var a =
+      CameraController_1.CameraController.FightCamera?.LogicComponent
+        ?.CameraCollision;
+    a &&
+      ((a.IsPlayerXRayEnable = e), Log_1.Log.CheckInfo()) &&
+      Log_1.Log.Info(
+        "Camera",
+        58,
+        "CameraBlueprintFunctionLibrary SetXRayState",
+        ["isEnable", e],
+      );
+  }
 }
-exports.default = CameraBlueprintFunctionLibrary;
+(CameraBlueprintFunctionLibrary.CacheLookAtVector = void 0),
+  (CameraBlueprintFunctionLibrary.TmpVectorInternal = void 0),
+  (CameraBlueprintFunctionLibrary.TmpQuatInternal = void 0),
+  (exports.default = CameraBlueprintFunctionLibrary);
 //# sourceMappingURL=CameraBlueprintFunctionLibrary.js.map

@@ -9,6 +9,7 @@ const UE = require("ue"),
   CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
@@ -20,6 +21,7 @@ const UE = require("ue"),
   UiLayer_1 = require("../../../Ui/UiLayer"),
   UiManager_1 = require("../../../Ui/UiManager"),
   CommonTextItem_1 = require("../../Common/Button/CommonTextItem"),
+  ConfirmBoxController_1 = require("../../ConfirmBox/ConfirmBoxController"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
   CdnServerDebugConfig_1 = require("../../Debug/CdnServerDebugConfig"),
   CommonExchangeData_1 = require("../../ItemExchange/View/CommonExchangeData"),
@@ -55,10 +57,17 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
       (this.Cjt = void 0),
       (this.gjt = void 0),
       (this.Dvt = !1),
-      (this.z0a = 0),
+      (this.MMa = 0),
       (this.TDe = void 0),
       (this.fjt = new Queue_1.Queue()),
       (this.pjt = !1),
+      (this._Mo = () => {
+        var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(68);
+        e.FunctionMap.set(0, () => {
+          GachaController_1.GachaController.GachaInfoRequest(!1);
+        }),
+          ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(e);
+      }),
       (this.dpt = () => {
         this.vjt
           ? 0 === this.vjt.UsePoolId
@@ -139,11 +148,11 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
                     ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(
                       _,
                     ),
-                  h = new WeaponTrialData_1.WeaponTrialData();
-                h.SetTrialId(s.TrialId), r.push(h);
+                  o = new WeaponTrialData_1.WeaponTrialData();
+                o.SetTrialId(s.TrialId), r.push(o);
               }
-              var o = { WeaponDataList: r, SelectedIndex: 0 };
-              UiManager_1.UiManager.OpenView("WeaponPreviewView", o);
+              var h = { WeaponDataList: r, SelectedIndex: 0 };
+              UiManager_1.UiManager.OpenView("WeaponPreviewView", h);
           }
         }
       }),
@@ -195,8 +204,7 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
           (i = this._jt?.GetScrollItemByIndex(r)),
           e &&
             i &&
-            (t = (a = e.GachaInfo).UsePoolId) !== e.PoolInfo.Id &&
-            (a = a.GetPoolInfo(t)) &&
+            ((t = (a = e.GachaInfo).UsePoolId), (a = a.GetPoolInfo(t))) &&
             ((e.PoolInfo = a), i.Refresh(e, !0, r), this.Djt(), this.xjt()));
       }),
       (this.wjt = () => {
@@ -356,6 +364,10 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GachaPoolSelectResponse,
         this.Pjt,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.CrossDay,
+        this._Mo,
       );
   }
   OnRemoveEventListener() {
@@ -370,6 +382,10 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GachaPoolSelectResponse,
         this.Pjt,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.CrossDay,
+        this._Mo,
       );
   }
   OnRegisterComponent() {
@@ -432,7 +448,7 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
         this.wjt,
       )),
       await this.Vjt(),
-      (this.z0a = Time_1.Time.ServerTimeStamp);
+      (this.MMa = Time_1.Time.ServerTimeStamp);
   }
   async OnPlayingStartSequenceAsync() {
     await this.gjt?.PlayStartSeqAsync();
@@ -442,11 +458,11 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
       (this.Dvt = !1);
   }
   OnTick(e) {
-    Time_1.Time.ServerTimeStamp - this.z0a >=
+    Time_1.Time.ServerTimeStamp - this.MMa >=
       5 *
         CommonDefine_1.SECOND_PER_MINUTE *
         CommonDefine_1.MILLIONSECOND_PER_SECOND &&
-      ((this.z0a = Time_1.Time.ServerTimeStamp),
+      ((this.MMa = Time_1.Time.ServerTimeStamp),
       GachaController_1.GachaController.GachaInfoRequest(!1));
   }
   async Ajt() {
@@ -474,14 +490,14 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
     if (this.Fjt) {
       let e = !1;
       for (const a of this.vjt.GachaConsumes)
-        if (a.qUs === this.djt.Times) {
-          this.djt.Refresh(this.Fjt, a.GUs), (e = !0);
+        if (a.$Us === this.djt.Times) {
+          this.djt.Refresh(this.Fjt, a.HUs), (e = !0);
           break;
         }
       let i = !1;
       for (const r of this.vjt.GachaConsumes)
-        if (r.qUs === this.Cjt.Times) {
-          this.Cjt.Refresh(this.Fjt, r.GUs), (i = !0);
+        if (r.$Us === this.Cjt.Times) {
+          this.Cjt.Refresh(this.Fjt, r.HUs), (i = !0);
           break;
         }
       this.djt.GetRootItem().SetUIActive(e && 0 !== this.vjt.UsePoolId),
@@ -497,6 +513,7 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
           ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewTypeConfig(
             t,
           )) &&
+        !StringUtils_1.StringUtils.IsBlank(t.GachaButtonTip) &&
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(24), t.GachaButtonTip);
     }
   }
@@ -582,14 +599,14 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
           (t = i ? "Text_GachaUpList1_Text" : "Text_GachaUpList2_Text"),
           LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(16), t))
         : this.GetItem(15)?.SetUIActive(!1),
-      (t = a.GetValidPoolList()) && 1 < t.length
+      (t = a.GetValidPoolList()) && 1 < t.length && 0 !== a.UsePoolId
         ? this.GetButton(18)?.RootUIComp.SetUIActive(!0)
         : this.GetButton(18)?.RootUIComp.SetUIActive(!1),
       this.SetTextureByPath(e.UnderBgTexturePath, this.GetTexture(19)),
-      (a = UE.Color.FromHex(this.Mjt.ThemeColor)),
-      this.GetTexture(20)?.SetColor(a),
-      (t = this.GetTexture(21)).SetUIActive(i),
-      i && t.SetColor(a),
+      (t = UE.Color.FromHex(this.Mjt.ThemeColor)),
+      this.GetTexture(20)?.SetColor(t),
+      (a = this.GetTexture(21)).SetUIActive(i),
+      i && a.SetColor(t),
       this.GetText(10).SetText(this.Mjt.Title),
       this.GetText(13).SetText(this.Mjt.Description));
   }

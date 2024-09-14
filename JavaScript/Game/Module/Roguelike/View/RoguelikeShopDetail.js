@@ -72,7 +72,7 @@ class RoguelikeShopDetail extends UiPanelBase_1.UiPanelBase {
     var e = new AsyncTask_1.AsyncTask(
       "RoguelikeShopDetail.Refresh",
       async () => {
-        if (s.RoguelikeGainDataType === Protocol_1.Aki.Protocol.e8s.txs) {
+        if (s.RoguelikeGainDataType === Protocol_1.Aki.Protocol.a8s.hxs) {
           var e =
               ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePhantomConfig(
                 s.ConfigId,

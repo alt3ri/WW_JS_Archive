@@ -7,8 +7,10 @@ class IntArray {
     (this.J7 = null), (this.z7 = 0);
   }
   get ArrayInt() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.arrayintLength(), (t) =>
-      this.arrayint(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.arrayintLength(),
+      this.arrayint,
+      this,
     );
   }
   __init(t, r) {

@@ -15,7 +15,7 @@ class TsAnimNotifyStateAccelInSplineMove extends UE.KuroAnimNotifyState {
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
     var n = t.GetEntityNoBlueprint();
     if (!n?.Valid) return !1;
-    n = n.GetComponent(97);
+    n = n.GetComponent(98);
     if (!n?.Active) return !1;
     if ("PathLine" !== n.CurrentSplineMoveType) return !1;
     n = t.CharacterActorComponent;
@@ -23,9 +23,9 @@ class TsAnimNotifyStateAccelInSplineMove extends UE.KuroAnimNotifyState {
     if (
       (TsAnimNotifyStateAccelInSplineMove.Initialize(),
       this.InitializeSelf(),
-      n.Entity.GetComponent(162)?.HasKuroRootMotion)
+      n.Entity.GetComponent(163)?.HasKuroRootMotion)
     ) {
-      var o = n.Entity.GetComponent(163);
+      var o = n.Entity.GetComponent(164);
       if (!o) return !1;
       let e = this.AddSpeedMap.get(t);
       return (e ||

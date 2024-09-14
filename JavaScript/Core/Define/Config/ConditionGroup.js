@@ -10,8 +10,10 @@ class ConditionGroup {
     return this.id();
   }
   get GroupId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.groupidLength(), (t) =>
-      this.groupid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.groupidLength(),
+      this.groupid,
+      this,
     );
   }
   get Relation() {

@@ -3,54 +3,76 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
   Global_1 = require("../../../Global"),
   GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskFollowPlayerSoftMode extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
-      (this.CameraDistance = 0),
       (this.DistanceMin = 0),
       (this.DistanceMax = 0),
       (this.DistanceForceMove = 0),
       (this.MoveSpeed = 0),
-      (this.RotateSpeed = 0),
       (this.Offset = void 0),
-      (this.TsCameraDistance = 0),
+      (this.RotateInfo = void 0),
       (this.TsDistanceMin = 0),
       (this.TsDistanceMax = 0),
       (this.TsDistanceForceMove = 0),
       (this.TsMoveSpeed = 0),
-      (this.TsRotateSpeed = 0),
       (this.TsOffset = Vector_1.Vector.Create()),
+      (this.TsRotateSpeed = 0),
+      (this.TsRotateType = 0),
+      (this.TsEntityIdBlackboardKey = ""),
+      (this.TsCameraDistance = 0),
+      (this.TsNotSyncAxisList = new Array()),
       (this.IsInitTsVariables = !1),
       (this.MoveComp = void 0),
       (this.TraceElement = void 0),
       (this.TempCameraForward = Vector_1.Vector.Create()),
       (this.TempTarget = Vector_1.Vector.Create()),
       (this.TempVector = Vector_1.Vector.Create()),
-      (this.TempDirection = Vector_1.Vector.Create());
+      (this.TempDirection = Vector_1.Vector.Create()),
+      (this.TempRotator = Rotator_1.Rotator.Create());
   }
   InitTsVariables() {
-    (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
-      ((this.IsInitTsVariables = !0),
-      (this.TsCameraDistance = this.CameraDistance),
-      (this.TsDistanceMin = this.DistanceMin),
-      (this.TsDistanceMax = this.DistanceMax),
-      (this.TsDistanceForceMove = this.DistanceForceMove),
-      (this.TsMoveSpeed = this.MoveSpeed),
-      (this.TsRotateSpeed = this.RotateSpeed),
-      (this.TsOffset = Vector_1.Vector.Create()),
-      (this.TempCameraForward = Vector_1.Vector.Create()),
-      (this.TempTarget = Vector_1.Vector.Create()),
-      (this.TempVector = Vector_1.Vector.Create()),
-      (this.TempDirection = Vector_1.Vector.Create()),
+    if (!this.IsInitTsVariables || GlobalData_1.GlobalData.IsPlayInEditor) {
+      if (
+        ((this.IsInitTsVariables = !0),
+        (this.TsDistanceMin = this.DistanceMin),
+        (this.TsDistanceMax = this.DistanceMax),
+        (this.TsDistanceForceMove = this.DistanceForceMove),
+        (this.TsMoveSpeed = this.MoveSpeed),
+        (this.TsOffset = Vector_1.Vector.Create()),
+        (this.TempCameraForward = Vector_1.Vector.Create()),
+        (this.TempTarget = Vector_1.Vector.Create()),
+        (this.TempVector = Vector_1.Vector.Create()),
+        (this.TempDirection = Vector_1.Vector.Create()),
+        (this.TempRotator = Rotator_1.Rotator.Create()),
+        this.RotateInfo)
+      ) {
+        (this.TsRotateSpeed = this.RotateInfo.RotateSpeed),
+          (this.TsRotateType = this.RotateInfo.RotateType),
+          (this.TsCameraDistance = this.RotateInfo.CameraDistance),
+          (this.TsEntityIdBlackboardKey =
+            this.RotateInfo.EntityIdBlackboardKey);
+        var i = this.RotateInfo.NotSyncAxisList;
+        this.TsNotSyncAxisList = new Array();
+        for (let t = 0; t < i.Num(); t++) this.TsNotSyncAxisList.push(i.Get(t));
+      } else
+        (this.TsRotateSpeed = 2e3),
+          (this.TsRotateType = 0),
+          (this.TsCameraDistance = 1500),
+          (this.TsEntityIdBlackboardKey = "");
       this.Offset
         ? this.TsOffset.FromUeVector(this.Offset)
-        : this.TsOffset.Set(0, 0, 0));
+        : this.TsOffset.Set(0, 0, 0);
+    }
   }
   ReceiveExecuteAI(t, i) {
     var s,
@@ -58,7 +80,7 @@ class TsTaskFollowPlayerSoftMode extends TsTaskAbortImmediatelyBase_1.default {
     e
       ? (s = e.CharActorComp)?.Valid
         ? (this.InitTsVariables(),
-          (this.MoveComp = e.CharActorComp?.Entity?.GetComponent(37)),
+          (this.MoveComp = e.CharActorComp?.Entity?.GetComponent(38)),
           this.MoveComp?.CharacterMovement?.SetMovementMode(5),
           this.TraceElement ||
             ((this.TraceElement = UE.NewObject(
@@ -89,28 +111,8 @@ class TsTaskFollowPlayerSoftMode extends TsTaskAbortImmediatelyBase_1.default {
       var e = e.CharActorComp,
         h = Global_1.Global.BaseCharacter?.CharacterActorComponent;
       if (h?.Valid && e?.Valid) {
-        this.TempTarget.FromUeVector(
-          Global_1.Global.CharacterCameraManager.GetCameraLocation(),
-        ),
-          this.TempCameraForward.FromUeVector(
-            Global_1.Global.CharacterCameraManager.GetActorForwardVector(),
-          ),
-          this.TempTarget.AdditionEqual(
-            this.TempCameraForward.MultiplyEqual(this.TsCameraDistance),
-          );
-        var o = UE.KismetMathLibrary.FindLookAtRotation(
-            e.ActorLocation,
-            this.TempTarget.ToUeVector(),
-          ),
-          o =
-            (this.MoveComp?.SmoothCharacterRotation(
-              o,
-              this.TsRotateSpeed,
-              s,
-              !1,
-              "FollowPlayerSoftMode",
-            ),
-            h.ActorLocationProxy),
+        this.UpdateRotate(e, s);
+        var o = h.ActorLocationProxy,
           r = e.ActorLocationProxy,
           o =
             (this.TempTarget.DeepCopy(o),
@@ -199,6 +201,57 @@ class TsTaskFollowPlayerSoftMode extends TsTaskAbortImmediatelyBase_1.default {
       ) &&
         this.TraceElement.HitResult?.bBlockingHit) ??
         !1)
+    );
+  }
+  UpdateRotate(t, i) {
+    var s,
+      e = t.Entity;
+    let h = void 0;
+    switch (this.TsRotateType) {
+      case 1:
+      case 2:
+        "" !== this.TsEntityIdBlackboardKey &&
+          (s = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
+            e.Id,
+            this.TsEntityIdBlackboardKey,
+          )) &&
+          (h = EntitySystem_1.EntitySystem.Get(s));
+        break;
+      case 3:
+        h = e.GetComponent(34)?.SkillTarget?.Entity;
+    }
+    let o = void 0;
+    (o = h?.Valid ? h.GetComponent(1) : o) && 2 === this.TsRotateType
+      ? this.TempRotator.DeepCopy(o.ActorRotationProxy)
+      : (o
+          ? this.TempTarget.DeepCopy(o.ActorLocationProxy)
+          : (this.TempTarget.FromUeVector(
+              Global_1.Global.CharacterCameraManager.GetCameraLocation(),
+            ),
+            this.TempCameraForward.FromUeVector(
+              Global_1.Global.CharacterCameraManager.GetActorForwardVector(),
+            ),
+            this.TempTarget.AdditionEqual(
+              this.TempCameraForward.MultiplyEqual(this.TsCameraDistance),
+            )),
+        this.TempRotator.FromUeRotator(
+          UE.KismetMathLibrary.FindLookAtRotation(
+            t.ActorLocation,
+            this.TempTarget.ToUeVector(),
+          ),
+        ));
+    for (const r of this.TsNotSyncAxisList)
+      0 === r
+        ? (this.TempRotator.Roll = t.ActorRotationProxy.Roll)
+        : 1 === r
+          ? (this.TempRotator.Pitch = t.ActorRotationProxy.Pitch)
+          : 2 === r && (this.TempRotator.Yaw = t.ActorRotationProxy.Yaw);
+    this.MoveComp?.SmoothCharacterRotation(
+      this.TempRotator,
+      this.TsRotateSpeed,
+      i,
+      !1,
+      "FollowPlayerSoftMode",
     );
   }
 }

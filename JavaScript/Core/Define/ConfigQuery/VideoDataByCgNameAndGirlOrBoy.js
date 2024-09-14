@@ -17,28 +17,44 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configVideoDataByCgNameAndGirlOrBoy.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configVideoDataByCgNameAndGirlOrBoy.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configVideoDataByCgNameAndGirlOrBoy.GetConfig(";
 exports.configVideoDataByCgNameAndGirlOrBoy = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, i, e = !0) => {
-    if (
-      (a = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
-        var n = KEY_PREFIX + `#${o}#${i})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (r) return r;
+  GetConfig: (o, i, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${i})`),
+      t =
+        (e.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
+      if (n) {
+        var a = KEY_PREFIX + `#${o}#${i})`;
+        const C = ConfigCommon_1.ConfigCommon.GetConfig(a);
+        if (C)
+          return (
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
+          );
       }
       if (
-        (a =
+        (t =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, i, ...logPair) &&
           0 <
@@ -50,32 +66,37 @@ exports.configVideoDataByCgNameAndGirlOrBoy = {
               ["GirlOrBoy", i],
             ))
       ) {
-        var a,
-          n = void 0;
+        a = void 0;
         if (
-          (([a, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([t, a] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["CgName", o],
             ["GirlOrBoy", i],
           )),
-          a)
+          t)
         ) {
-          const r = VideoData_1.VideoData.getRootAsVideoData(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+          const C = VideoData_1.VideoData.getRootAsVideoData(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
           );
           return (
-            e &&
-              ((a = KEY_PREFIX + `#${o}#${i})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(a, r)),
+            n &&
+              ((t = KEY_PREFIX + `#${o}#${i})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(t, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            r
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    e.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=VideoDataByCgNameAndGirlOrBoy.js.map

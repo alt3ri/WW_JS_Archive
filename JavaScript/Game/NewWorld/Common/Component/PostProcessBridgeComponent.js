@@ -122,7 +122,7 @@ let PostProcessBridgeComponent =
           this.tsn(),
           this.Knn)
         ) {
-          if (((this.jnn = this.Entity.GetComponent(76)), !this.jnn))
+          if (((this.jnn = this.Entity.GetComponent(77)), !this.jnn))
             return (
               (this.gU = !1),
               Log_1.Log.CheckError() &&
@@ -281,7 +281,7 @@ let PostProcessBridgeComponent =
   });
 (PostProcessBridgeComponent = PostProcessBridgeComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(96)],
+    [(0, RegisterComponent_1.RegisterComponent)(97)],
     PostProcessBridgeComponent,
   )),
   (exports.PostProcessBridgeComponent = PostProcessBridgeComponent);

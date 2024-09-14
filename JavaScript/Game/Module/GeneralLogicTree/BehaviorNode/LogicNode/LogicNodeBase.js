@@ -29,7 +29,9 @@ class LogicNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
   OnNodeActive() {
     var t,
       i = this.Config;
-    i.DungeonId && (this.Blackboard.DungeonId = i.DungeonId),
+    i.DungeonId &&
+      ((this.Blackboard.DungeonId = i.DungeonId),
+      (this.Blackboard.ChangeDungeonIdNodeId = this.InnerNodeId)),
       i.DisableOnline && this.L$t(!0),
       this.CustomUiConfig && this.AddTag(0),
       this.SuspendTrackText &&
@@ -45,7 +47,7 @@ class LogicNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
       i.CompositeTrackViewMode &&
         ((this.Blackboard.TrackViewModel = i.CompositeTrackViewMode),
         (this.AddTrackViewMode = !0)),
-      this.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
+      this.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
         ((t = ModelManager_1.ModelManager.QuestNewModel),
         i.TidQuestAliasName &&
           !StringUtils_1.StringUtils.IsEmpty(
@@ -67,7 +69,7 @@ class LogicNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
     this.RemoveTag(0),
       this.SilentAreaInfoViewConfig &&
         this.Blackboard?.RemoveSilentShowInfo(this.NodeId),
-      this.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
+      this.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
         ((i = ModelManager_1.ModelManager.QuestNewModel),
         this.Config.TidQuestAliasName &&
           !StringUtils_1.StringUtils.IsEmpty(
@@ -86,7 +88,12 @@ class LogicNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
         this.Config.RewardConfig?.RewardId) &&
         i.SetQuestStageReward(this.TreeConfigId, 0),
       this.AddTrackViewMode && (this.Blackboard.TrackViewModel = "All"),
-      this.Config.DungeonId && (this.Blackboard.DungeonId = void 0),
+      this.Config.DungeonId &&
+        (0 !== this.Blackboard.ChangeDungeonIdNodeId
+          ? this.Blackboard.ChangeDungeonIdNodeId === this.InnerNodeId &&
+            ((this.Blackboard.DungeonId = void 0),
+            (this.Blackboard.ChangeDungeonIdNodeId = 0))
+          : (this.Blackboard.DungeonId = void 0)),
       this.Config?.SpecialGamePlayConfig &&
         SneakController_1.SneakController.EndSneaking(),
       this.Config.DisableOnline && this.L$t(!1),
@@ -94,14 +101,14 @@ class LogicNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
   }
   L$t(t) {
     switch (this.BtType) {
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest:
         ModelManager_1.ModelManager.OnlineModel.DisableOnline(
           0,
           t,
           this.TreeConfigId,
         );
         break;
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay:
         ModelManager_1.ModelManager.OnlineModel.DisableOnline(
           1,
           t,

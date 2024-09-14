@@ -18,12 +18,15 @@ class ComboTeachingCondition {
   get FailedCondition() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.failedconditionLength(),
-      (t) => this.failedcondition(t),
+      this.failedcondition,
+      this,
     );
   }
   get FailedParam() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.failedparamLength(), (t) =>
-      this.failedparam(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.failedparamLength(),
+      this.failedparam,
+      this,
     );
   }
   __init(t, i) {

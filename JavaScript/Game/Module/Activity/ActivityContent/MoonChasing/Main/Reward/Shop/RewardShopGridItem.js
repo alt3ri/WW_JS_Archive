@@ -1,18 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardShopGridItem = void 0);
-const PayShopItemBase_1 = require("../../../../../../PayShop/PayShopTab/TabItem/PayShopItemBase"),
-  GridProxyAbstract_1 = require("../../../../../../Util/Grid/GridProxyAbstract");
-class RewardShopGridItem extends GridProxyAbstract_1.GridProxyAbstract {
+const ModelManager_1 = require("../../../../../../../Manager/ModelManager"),
+  PayShopGoods_1 = require("../../../../../../PayShop/PayShopData/PayShopGoods"),
+  PayShopItem_1 = require("../../../../../../PayShop/PayShopTab/TabItem/PayShopItem");
+class RewardShopGridItem extends PayShopItem_1.PayShopItem {
   constructor() {
-    super(...arguments), (this.Data = void 0), (this.g3i = void 0);
+    super(...arguments),
+      (this.o2a = (e, o) => {
+        ModelManager_1.ModelManager.MoonChasingRewardModel.ReadShopItemUnlockFlag(
+          o,
+        ) && this.SetNewFlagState(!1);
+      });
   }
   OnStart() {
-    (this.g3i = new PayShopItemBase_1.PayShopItemBase(this.RootItem)),
-      this.g3i.Init();
+    super.OnStart(), this.SetExtraFunction(this.o2a);
   }
-  Refresh(t, e, r) {
-    (this.Data = t), this.g3i.Refresh(t.ConvertToPayShopBaseSt(), e, r);
+  Refresh(e, o, a) {
+    e instanceof PayShopGoods_1.PayShopGoods &&
+      (super.Refresh(e, o, a),
+      (o =
+        ModelManager_1.ModelManager.MoonChasingRewardModel.CheckShopItemRedDotState(
+          e,
+        )),
+      this.SetNewFlagState(o));
   }
 }
 exports.RewardShopGridItem = RewardShopGridItem;

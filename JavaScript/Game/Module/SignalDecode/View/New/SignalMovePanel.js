@@ -14,7 +14,7 @@ class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
       (this.AEo = void 0),
       (this.PEo = void 0),
       (this.xEo = void 0),
-      (this.uBn = void 0),
+      (this.aBn = void 0),
       (this.Ist = 0);
   }
   async Init(t, i) {
@@ -34,12 +34,12 @@ class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
     (this.AEo = this.GetItem(0)),
       (this.PEo = this.GetItem(1)),
       (this.xEo = this.GetItem(2)),
-      (this.uBn = this.GetItem(3)),
+      (this.aBn = this.GetItem(3)),
       this.wEo(),
       this.AEo.SetUIActive(!1),
       this.xEo.SetUIActive(!1),
       this.PEo.SetUIActive(!1),
-      this.uBn.SetUIActive(!1);
+      this.aBn.SetUIActive(!1);
   }
   wEo() {
     var t = ModelManager_1.ModelManager.SignalDecodeModel,
@@ -68,7 +68,7 @@ class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
       }
       0 === r &&
         o &&
-        ((h = LguiUtil_1.LguiUtil.CopyItem(this.uBn, this.RootItem)),
+        ((h = LguiUtil_1.LguiUtil.CopyItem(this.aBn, this.RootItem)),
         (a = new SignalLineItem_1.SignalLineItem(0, s, n)).Init(h),
         this.UEo.push(a)),
         this.UEo.push(t),

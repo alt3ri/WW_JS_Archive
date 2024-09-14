@@ -16,41 +16,29 @@ const Log_1 = require("../../../Core/Common/Log"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiPopViewData_1 = require("../../Ui/Define/UiPopViewData"),
   UiManager_1 = require("../../Ui/UiManager"),
   ItemDefines_1 = require("../Item/Data/ItemDefines"),
   CommonExchangeData_1 = require("../ItemExchange/View/CommonExchangeData"),
   ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
   ShopController_1 = require("../Shop/ShopController"),
-  PowerDefines_1 = require("./PowerDefines"),
   DEFAULTEXCHANGETIME = 60,
   REQUESTPOWERGAP = 1,
   CHECKPOWERGAP = 500;
 class PowerController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(3663, (e) => {
-      ModelManager_1.ModelManager.PowerModel.UpdatePowerData(e.I$s);
+    Net_1.Net.Register(21384, (e) => {
+      ModelManager_1.ModelManager.PowerModel.UpdatePowerData(e._Xs);
     });
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(3663);
+    Net_1.Net.UnRegister(21384);
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
-      EventDefine_1.EEventName.ShopUpdate,
-      this.aoo,
+      EventDefine_1.EEventName.BackLoginView,
+      this.loo,
     ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.PowerShopReady,
-        this.Pdi,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnShopInfoResponded,
-        this.hoo,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.BackLoginView,
-        this.loo,
-      ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnLoadingNetDataDone,
         this.xkt,
@@ -58,50 +46,69 @@ class PowerController extends UiControllerBase_1.UiControllerBase {
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.ShopUpdate,
-      this.aoo,
+      EventDefine_1.EEventName.BackLoginView,
+      this.loo,
     ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.PowerShopReady,
-        this.Pdi,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnShopInfoResponded,
-        this.hoo,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.BackLoginView,
-        this.loo,
-      ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnLoadingNetDataDone,
         this.xkt,
       );
   }
   static OpenPowerView(e = 2, r = 0) {
-    ModelManager_1.ModelManager.PowerModel.ResetPowerShopCount(),
-      (ModelManager_1.ModelManager.PowerModel.CurrentNeedPower =
-        0 < r ? r : DEFAULTEXCHANGETIME),
+    (ModelManager_1.ModelManager.PowerModel.CurrentNeedPower =
+      0 < r ? r : DEFAULTEXCHANGETIME),
       ModelManager_1.ModelManager.PowerModel.CreateConfirmBoxData(e, r),
       ModelManager_1.ModelManager.FunctionModel.IsOpen(10017) &&
         !UiManager_1.UiManager.IsViewOpen("PowerView") &&
-        this._oo();
+        this.JGa();
   }
-  static RequestPowerViewData() {
-    ModelManager_1.ModelManager.PowerModel.ResetPowerShopCount(),
-      ModelManager_1.ModelManager.FunctionModel.IsOpen(10017)
-        ? this._oo()
-        : ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
-            "Function_notopen_tili",
-          );
+  static async JGa() {
+    var e;
+    await this.ZGa(),
+      ModelManager_1.ModelManager.PowerModel.ConfirmBoxData &&
+        ((e = new UiPopViewData_1.UiPopViewData()),
+        UiManager_1.UiManager.OpenView("PowerView", e));
+  }
+  static async TryExchangePowerItem(r, e = 1) {
+    var o;
+    ModelManager_1.ModelManager.FunctionModel.IsOpen(10017)
+      ? (await this.ZGa(),
+        (o = ModelManager_1.ModelManager.PowerModel.GetPowerItemInfos(r)),
+        ModelManager_1.ModelManager.PowerModel.PowerCount + o.RenewValue * e >
+        ConfigManager_1.ConfigManager.PowerConfig.GetPowerChargeLimit()
+          ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+              "PowerBound",
+            )
+          : PowerController.ExchangePower(o, e, () => {
+              var e =
+                ModelManager_1.ModelManager.PowerModel.GetPowerItemInfos(r);
+              ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                "PowerBuySucceed",
+                e.RenewValue,
+              );
+            }))
+      : ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
+          "Function_notopen_tili",
+        );
+  }
+  static async ZGa() {
+    await ShopController_1.ShopController.SendShopInfoRequest(
+      ModelManager_1.ModelManager.ShopModel.VersionId,
+    );
+    var e = ConfigManager_1.ConfigManager.PowerConfig.GetPowerShopIds();
+    const r = [];
+    e.forEach((e) => {
+      r.push(ShopController_1.ShopController.SendShopUpdateRequestAsync(e));
+    }),
+      await Promise.all(r);
   }
   static R6t() {
-    void 0 !== PowerController.yzs &&
-      (TimerSystem_1.TimerSystem.Remove(PowerController.yzs),
-      (PowerController.yzs = void 0));
+    void 0 !== PowerController.vea &&
+      (TimerSystem_1.TimerSystem.Remove(PowerController.vea),
+      (PowerController.vea = void 0));
   }
   static GetIfCanRequestNewPower() {
-    return TimeUtil_1.TimeUtil.GetServerTime() - this.Izs > REQUESTPOWERGAP;
+    return TimeUtil_1.TimeUtil.GetServerTime() - this.Mea > REQUESTPOWERGAP;
   }
   static OpenOverPowerExchangeView() {
     var r = ModelManager_1.ModelManager.PowerModel.GetPowerDataById(
@@ -193,7 +200,10 @@ class PowerController extends UiControllerBase_1.UiControllerBase {
         UiManager_1.UiManager.OpenView("CommonExchangeView", r);
     }
   }
-  static ExchangePower(e, r) {
+  static async UseSinglePowerRecoveryItem() {
+    return Promise.resolve();
+  }
+  static ExchangePower(e, r, o) {
     e.ItemId === ItemDefines_1.EItemId.OverPower
       ? this.OpenOverPowerExchangeView()
       : ShopController_1.ShopController.SendShopBuyRequest(
@@ -201,12 +211,8 @@ class PowerController extends UiControllerBase_1.UiControllerBase {
           e.GoodsId,
           e.ItemId,
           r,
+          o,
         );
-  }
-  static _oo() {
-    ShopController_1.ShopController.SendShopInfoRequest(
-      ModelManager_1.ModelManager.ShopModel.VersionId,
-    );
   }
   static Clear() {
     return this.R6t(), super.Clear();
@@ -214,54 +220,38 @@ class PowerController extends UiControllerBase_1.UiControllerBase {
 }
 (exports.PowerController = PowerController),
   ((_a = PowerController).IsTickEvenPausedInternal = !0),
-  (PowerController.yzs = void 0),
-  (PowerController.Izs = 0),
+  (PowerController.vea = void 0),
+  (PowerController.Mea = 0),
   (PowerController.loo = () => {
     UiManager_1.UiManager.IsViewShow("PowerView") &&
       UiManager_1.UiManager.CloseView("PowerView");
-  }),
-  (PowerController.hoo = () => {
-    var e = ConfigManager_1.ConfigManager.PowerConfig.GetPowerShopIds().size;
-    if (!(ModelManager_1.ModelManager.PowerModel.PowerShopCount >= e))
-      for (const r of ConfigManager_1.ConfigManager.PowerConfig.GetPowerShopIds())
-        ShopController_1.ShopController.SendShopUpdateRequest(r);
-  }),
-  (PowerController.aoo = (e) => {
-    ModelManager_1.ModelManager.PowerModel.AddOnePowerShopCount(e);
-  }),
-  (PowerController.Pdi = () => {
-    var e;
-    UiManager_1.UiManager.IsViewShow("InventoryView") ||
-      (ModelManager_1.ModelManager.PowerModel.ConfirmBoxData &&
-        ((e = new PowerDefines_1.PowerViewData()),
-        UiManager_1.UiManager.OpenView("PowerView", e)));
   }),
   (PowerController.xkt = () => {
     _a.SendUpdatePowerRequest(
       ModelManager_1.ModelManager.PowerModel.PowerItemKeyArray,
     ),
       _a.R6t(),
-      (PowerController.yzs = TimerSystem_1.TimerSystem.Forever(
-        PowerController.Tzs,
+      (PowerController.vea = TimerSystem_1.TimerSystem.Forever(
+        PowerController.Sea,
         CHECKPOWERGAP,
       ));
   }),
-  (PowerController.Tzs = () => {
+  (PowerController.Sea = () => {
     ModelManager_1.ModelManager.PowerModel.UpdatePowerRenewTimer();
   }),
   (PowerController.SendUpdatePowerRequest = (e) => {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("PowerModule", 28, "体力拉取", ["itemList", e]);
-    var r = Protocol_1.Aki.Protocol.$Zn.create();
-    (r.IVn = e),
-      (_a.Izs = TimeUtil_1.TimeUtil.GetServerTime()),
-      Net_1.Net.Call(17898, r, (e) => {
+    var r = Protocol_1.Aki.Protocol.YZn.create();
+    (r.BVn = e),
+      (_a.Mea = TimeUtil_1.TimeUtil.GetServerTime()),
+      Net_1.Net.Call(19739, r, (e) => {
         e &&
-          (e.A9n === Protocol_1.Aki.Protocol.O4n.NRs
-            ? ModelManager_1.ModelManager.PowerModel.UpdatePowerData(e.T$s)
+          (e.G9n === Protocol_1.Aki.Protocol.Q4n.KRs
+            ? ModelManager_1.ModelManager.PowerModel.UpdatePowerData(e.uXs)
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.A9n,
-                14608,
+                e.G9n,
+                29167,
               ));
       });
   });

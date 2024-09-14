@@ -42,7 +42,8 @@ const ue_1 = require("ue"),
   MowingDifficultyDropDownPanel_1 = require("./MowingDifficultyDropDownPanel"),
   MATCHING_ITEM_OFFSET = -98,
   TowerDefenceController_1 = require("../TowerDefence/TowerDefenceController"),
-  InstanceDungeonEntranceTowerDefenceItem_1 = require("./InstanceDungeonEntranceTowerDefenceItem");
+  InstanceDungeonEntranceTowerDefenceItem_1 = require("./InstanceDungeonEntranceTowerDefenceItem"),
+  CLICK_INSTANCE_BEGIN_BUTTON_CD = 500;
 class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -64,9 +65,10 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       (this.Cli = void 0),
       (this.gli = void 0),
       (this.fli = void 0),
-      (this.$Ys = void 0),
-      (this.SQs = void 0),
-      (this.Szs = void 0),
+      (this.jzs = void 0),
+      (this.NXs = void 0),
+      (this.fea = void 0),
+      (this.KFa = 0),
       (this.Qai = void 0),
       (this.Xai = !1),
       (this.pli = []),
@@ -96,7 +98,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
           ),
           this.Tli());
       }),
-      (this.Pla = () => {
+      (this.wua = () => {
         TowerDefenceController_1.TowerDefenseController.CheckIsInstanceUnlock(
           this.NUe,
         ) &&
@@ -107,7 +109,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
             ),
           ),
           this.Tli(),
-          this.XYs(),
+          this.Wzs(),
           this.Qli());
         var e =
           TowerDefenceController_1.TowerDefenseController.BuildInstanceCountDownText(
@@ -160,107 +162,128 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
           this.UiViewSequence.PlaySequencePurely("Close01", !0);
       }),
       (this.wli = () => {
-        const e = this.NUe;
-        if (e)
-          if (
-            ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceCanChallenge(
-              e,
-            )
-          )
-            if (RoleController_1.RoleController.IsInRoleTrial())
-              ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
-                "TrialRoleDungeonsLimit",
-              );
-            else {
-              ModelManager_1.ModelManager.EditBattleTeamModel.InstanceMultiEnter =
-                !1;
-              const n = ModelManager_1.ModelManager.PowerModel.IsPowerEnough(
-                ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
-                  this.NUe,
-                ),
-              );
-              var t, i;
-              ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceLevelTooLow(
-                this.NUe,
+        if (this.$Fa()) {
+          this.KFa =
+            TimeUtil_1.TimeUtil.GetServerTimeStamp() +
+            CLICK_INSTANCE_BEGIN_BUTTON_CD;
+          const i = this.NUe;
+          if (i)
+            if (
+              ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceCanChallenge(
+                i,
               )
-                ? ((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
-                    200,
-                  )).FunctionMap.set(2, () => {
-                    n
-                      ? ((ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId =
-                          e),
-                        InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.ContinueEntranceFlow())
-                      : this.Jra();
-                  }),
-                  t.FunctionMap.set(1, () => {
-                    this.Bli();
-                  }),
-                  (i =
-                    ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetUnlockCondition(
+            )
+              if (RoleController_1.RoleController.IsInRoleTrial())
+                ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
+                  "TrialRoleDungeonsLimit",
+                );
+              else if (
+                ControllerHolder_1.ControllerHolder.InstanceDungeonController.IsForbidDungeon(
+                  i,
+                )
+              )
+                ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                  "PhantomFormationEnterInstanceTip",
+                );
+              else {
+                ModelManager_1.ModelManager.EditBattleTeamModel.InstanceMultiEnter =
+                  !1;
+                const n = ModelManager_1.ModelManager.PowerModel.IsPowerEnough(
+                  ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
+                    this.NUe,
+                  ),
+                );
+                var e, t;
+                ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceLevelTooLow(
+                  this.NUe,
+                )
+                  ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+                      200,
+                    )).FunctionMap.set(2, () => {
+                      n
+                        ? ((ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId =
+                            i),
+                          InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.ContinueEntranceFlow())
+                        : this.Bsa();
+                    }),
+                    e.FunctionMap.set(1, () => {
+                      this.Bli();
+                    }),
+                    (t =
+                      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetUnlockCondition(
+                        i,
+                      )),
+                    e.SetTextArgs(t[1].toString()),
+                    ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
                       e,
-                    )),
-                  t.SetTextArgs(i[1].toString()),
-                  ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                    t,
-                  ))
-                : n
-                  ? ((ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId =
-                      e),
-                    InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.ContinueEntranceFlow())
-                  : this.Jra();
-            }
+                    ))
+                  : n
+                    ? ((ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId =
+                        i),
+                      InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.ContinueEntranceFlow())
+                    : this.Bsa();
+              }
+            else
+              ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                "InstanceDungeonLackChallengeTimes",
+              );
           else
-            ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-              "InstanceDungeonLackChallengeTimes",
-            );
-        else
-          Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "InstanceDungeon",
-              17,
-              "副本入口界面点击挑战错误，当前未选择副本",
-            );
+            Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "InstanceDungeon",
+                17,
+                "副本入口界面点击挑战错误，当前未选择副本",
+              );
+        }
       }),
       (this.bli = () => {
         var e;
-        ModelManager_1.ModelManager.GameModeModel.IsMulti
-          ? ((ModelManager_1.ModelManager.EditBattleTeamModel.InstanceMultiEnter =
-              !0),
-            ModelManager_1.ModelManager.InstanceDungeonEntranceModel.SetMatchingId(
-              this.NUe,
-            ),
-            ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamSize() <= 1
-              ? InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.TeamChallengeRequest(
-                  this.NUe,
-                  !1,
-                )
-              : ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
-                  111,
-                )).FunctionMap.set(2, () => {
-                  InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.TeamChallengeRequest(
-                    this.NUe,
-                    !0,
-                  );
-                }),
-                e.FunctionMap.set(1, () => {
-                  InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.TeamChallengeRequest(
+        this.$Fa() &&
+          ((this.KFa =
+            TimeUtil_1.TimeUtil.GetServerTimeStamp() +
+            CLICK_INSTANCE_BEGIN_BUTTON_CD),
+          ModelManager_1.ModelManager.GameModeModel.IsMulti
+            ? ((ModelManager_1.ModelManager.EditBattleTeamModel.InstanceMultiEnter =
+                !0),
+              ModelManager_1.ModelManager.InstanceDungeonEntranceModel.SetMatchingId(
+                this.NUe,
+              ),
+              ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamSize() <= 1
+                ? InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.TeamChallengeRequest(
                     this.NUe,
                     !1,
-                  );
-                }),
-                ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                  e,
-                )))
-          : Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "InstanceDungeon",
-              5,
-              "非联机下无法进行组队挑战，请联系程序查BUG",
-            );
+                  )
+                : ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+                    111,
+                  )).FunctionMap.set(2, () => {
+                    InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.TeamChallengeRequest(
+                      this.NUe,
+                      !0,
+                    );
+                  }),
+                  e.FunctionMap.set(1, () => {
+                    InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.TeamChallengeRequest(
+                      this.NUe,
+                      !1,
+                    );
+                  }),
+                  ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+                    e,
+                  )))
+            : Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "InstanceDungeon",
+                5,
+                "非联机下无法进行组队挑战，请联系程序查BUG",
+              ));
       }),
       (this.qli = () => {
         var e;
-        OnlineController_1.OnlineController.ShowTipsWhenOnlineDisabled() &&
+        this.$Fa() &&
+          ((this.KFa =
+            TimeUtil_1.TimeUtil.GetServerTimeStamp() +
+            CLICK_INSTANCE_BEGIN_BUTTON_CD),
+          OnlineController_1.OnlineController.ShowTipsWhenOnlineDisabled()) &&
           (ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceCanChallenge(
             this.NUe,
           )
@@ -269,40 +292,46 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
                   "TrialRoleDungeonsLimit",
                 )
               : ModelManager_1.ModelManager.FunctionModel.IsOpen(10021)
-                ? ((ModelManager_1.ModelManager.EditBattleTeamModel.InstanceMultiEnter =
-                    !0),
-                  this.oli.BindOnStopTimer(
-                    () =>
-                      1 !==
-                      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState(),
-                  ),
-                  !ModelManager_1.ModelManager.GameModeModel.IsMulti ||
-                  (e =
-                    ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamSize()) <=
-                    1
-                    ? InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.StartMatchRequest(
-                        this.NUe,
-                      )
-                    : e < ModelManager_1.ModelManager.OnlineModel.TeamMaxSize
-                      ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
-                          111,
-                        )).FunctionMap.set(2, () => {
-                          InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.StartMatchRequest(
-                            this.NUe,
-                            !0,
-                          );
-                        }),
-                        e.FunctionMap.set(1, () => {
-                          InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.StartMatchRequest(
-                            this.NUe,
-                          );
-                        }),
-                        ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                          e,
-                        ))
-                      : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-                          "CanNotMatching",
-                        ))
+                ? ControllerHolder_1.ControllerHolder.InstanceDungeonController.IsForbidDungeon(
+                    this.NUe,
+                  )
+                  ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                      "PhantomFormationEnterInstanceTip",
+                    )
+                  : ((ModelManager_1.ModelManager.EditBattleTeamModel.InstanceMultiEnter =
+                      !0),
+                    this.oli.BindOnStopTimer(
+                      () =>
+                        1 !==
+                        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState(),
+                    ),
+                    !ModelManager_1.ModelManager.GameModeModel.IsMulti ||
+                    (e =
+                      ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamSize()) <=
+                      1
+                      ? InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.StartMatchRequest(
+                          this.NUe,
+                        )
+                      : e < ModelManager_1.ModelManager.OnlineModel.TeamMaxSize
+                        ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+                            111,
+                          )).FunctionMap.set(2, () => {
+                            InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.StartMatchRequest(
+                              this.NUe,
+                              !0,
+                            );
+                          }),
+                          e.FunctionMap.set(1, () => {
+                            InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.StartMatchRequest(
+                              this.NUe,
+                            );
+                          }),
+                          ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+                            e,
+                          ))
+                        : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                            "CanNotMatching",
+                          ))
                 : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                     "IsNotOpenOnline",
                   )
@@ -329,7 +358,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       (this.Oli = (e) => {
         "PowerView" === e
           ? this.Bli()
-          : "ActivityRewardPopUpView" === e && this.XYs();
+          : "ActivityRewardPopUpView" === e && this.Wzs();
       }),
       (this.$Ye = () => {
         switch (
@@ -446,6 +475,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       [45, ue_1.UIItem],
       [47, ue_1.UIItem],
       [48, ue_1.UIText],
+      [49, ue_1.UIText],
     ]),
       (this.BtnBindInfo = [
         [0, this.xli],
@@ -463,24 +493,24 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       new InstanceDungeonEntranceRewardItem_1.InstanceDungeonEntranceRewardItem()),
       await this.fli.CreateByActorAsync(this.GetItem(33).GetOwner());
     var e = this.GetItem(17);
-    (this.Szs = new PowerCurrencyItem_1.PowerCurrencyItem()),
-      await this.Szs.CreateThenShowByResourceIdAsync(
+    (this.fea = new PowerCurrencyItem_1.PowerCurrencyItem()),
+      await this.fea.CreateThenShowByResourceIdAsync(
         "UIItem_CommonCurrencyItem",
         e.GetParentAsUIItem(),
       ),
-      this.Szs.RefreshAddButtonActive(),
-      this.Szs.ShowWithoutText(ItemDefines_1.EItemId.OverPower),
-      this.Szs.SetActive(
+      this.fea.RefreshAddButtonActive(),
+      this.fea.ShowWithoutText(ItemDefines_1.EItemId.OverPower),
+      this.fea.SetActive(
         ModelManager_1.ModelManager.FunctionModel.IsOpen(10066),
       ),
-      (this.SQs = new PowerCurrencyItem_1.PowerCurrencyItem()),
-      (this.SQs.SkipAutoAddEvent = !0),
-      await this.SQs.CreateThenShowByResourceIdAsync(
+      (this.NXs = new PowerCurrencyItem_1.PowerCurrencyItem()),
+      (this.NXs.SkipAutoAddEvent = !0),
+      await this.NXs.CreateThenShowByResourceIdAsync(
         "UIItem_CommonCurrencyItem",
         e.GetParentAsUIItem(),
       ),
       e.SetUIActive(!1),
-      this.SQs.ShowWithoutText(ItemDefines_1.EItemId.Power),
+      this.NXs.ShowWithoutText(ItemDefines_1.EItemId.Power),
       (this.cli = this.GetUIDynScrollViewComponent(3)),
       (this.mli = new InstanceDetectDynamicItem_1.InstanceDetectDynamicItem()),
       (this.Cli = new DynScrollView_1.DynamicScrollView(
@@ -490,10 +520,10 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
         this.Lli,
       )),
       await this.Cli.Init(),
-      (this.$Ys =
+      (this.jzs =
         new InstanceDungeonEntranceTowerDefenceItem_1.InstanceDungeonEntranceTowerDefenceItem()),
-      await this.$Ys.CreateByActorAsync(this.GetItem(45).GetOwner()),
-      this.$Ys.SetUiActive(!1),
+      await this.jzs.CreateByActorAsync(this.GetItem(45).GetOwner()),
+      this.jzs.SetUiActive(!1),
       (this.Eli = new RoguelikeInstanceBtnPanel_1.RoguelikeInstanceBtnPanel()),
       await this.Eli.CreateByActorAsync(this.GetItem(32).GetOwner()),
       (this.Sli =
@@ -511,9 +541,9 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnStart() {
     this.UiViewSequence.AddSequenceFinishEvent("Close01", this.yli),
-      this.SQs.SetButtonFunction(this.Ili),
+      this.NXs.SetButtonFunction(this.Ili),
       ModelManager_1.ModelManager.FunctionModel.IsOpen(10017) ||
-        this.SQs?.SetActive(!1),
+        this.NXs?.SetActive(!1),
       (this.gli =
         new InstanceDungeonEntranceRewardItem_1.InstanceDungeonEntranceRewardItem()),
       this.gli.SetRootActor(this.GetItem(31).GetOwner(), !0),
@@ -537,7 +567,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       let e = this.nli.get(i);
       e || ((e = []), this.nli.set(i, e)), e.push(t);
     }
-    for ([, e] of this.nli) for (const s of e) this.rli.push(s);
+    for ([, e] of this.nli) for (const r of e) this.rli.push(r);
     this.AddChild(this.Sli);
   }
   OnTick(e) {
@@ -577,8 +607,8 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
     (this.vli.length = 0),
       (this.oli = void 0),
       (this.nli = void 0),
-      this.SQs.Destroy(),
-      this.Szs.Destroy(),
+      this.NXs.Destroy(),
+      this.fea.Destroy(),
       this.Cli && (this.Cli.ClearChildren(), (this.Cli = void 0)),
       (this.cli = void 0),
       (this.Sli = void 0),
@@ -624,9 +654,14 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       0 ===
         ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() &&
         (this.oli?.PlayAnimation("Close"), this.oli?.SetUiActive(!1)),
+      TowerDefenceController_1.TowerDefenseController.CheckInUiFlow() &&
+        ((e =
+          TowerDefenceController_1.TowerDefenseController.GetSuitableInstanceId()),
+        (this.ili = e),
+        (this.NUe = e)),
       this.Qli(),
       this.Ali(),
-      this.XYs();
+      this.Wzs();
   }
   Jai() {
     var e;
@@ -640,7 +675,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
           ((e =
             TowerDefenceController_1.TowerDefenseController.CheckIsInstanceUnlock(
               this.NUe,
-            )) || (this.Qai = this.Pla),
+            )) || (this.Qai = this.wua),
           !e);
   }
   Qli() {
@@ -653,10 +688,10 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
           this.Cli.UnBindLateUpdate();
       });
   }
-  XYs() {
+  Wzs() {
     if (this.Kli) {
       if (19 === this.Kli.InstSubType) return void this.kli();
-      var e, t;
+      var e;
       if (21 === this.Kli.InstSubType)
         return (
           (e =
@@ -671,9 +706,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
             ),
             (e =
               TowerDefenceController_1.TowerDefenseController.BuildTotalScoreContent()),
-            (t =
-              TowerDefenceController_1.TowerDefenseController.GetCurrentScoreLimit()),
-            this.GetText(43).SetText(e + "/" + t))
+            this.GetText(43).SetText("" + e))
           )
         );
     }
@@ -699,7 +732,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       this.Hli(),
       this.Zli(),
       this.e1i(),
-      this.YYs(),
+      this.Qzs(),
       this.t1i(),
       (this.Xai = this.Jai());
   }
@@ -715,18 +748,18 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
     var e = 15 === this.Kli.InstSubType;
     this.Eli?.SetUiActive(e);
   }
-  YYs() {
+  Qzs() {
     var e;
     this.Kli
       ? ((e = 21 === this.Kli.InstSubType),
-        this.$Ys.SetUiActive(e),
+        this.jzs.SetUiActive(e),
         this.GetItem(47).SetUIActive(e),
         e &&
           ((e =
             TowerDefenceController_1.TowerDefenseController.BuildPhantomForInstanceDungeonEntranceData(
               this.Kli.Id,
             )),
-          this.$Ys.SetPhantoms(e),
+          this.jzs.SetPhantoms(e),
           (e =
             TowerDefenceController_1.TowerDefenseController.BuildRecommendLevelForInstanceDungeonEntranceData(
               this.Kli.Id,
@@ -735,8 +768,12 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
             this.GetText(48),
             e.TextId,
             e.Level,
+          ),
+          LguiUtil_1.LguiUtil.SetLocalTextNew(
+            this.GetText(49),
+            "TowerDefence_Score",
           )))
-      : (this.$Ys.SetUiActive(!1), this.GetItem(47).SetUIActive(!1));
+      : (this.jzs.SetUiActive(!1), this.GetItem(47).SetUIActive(!1));
   }
   t1i() {
     var e = 19 === this.Kli.InstSubType,
@@ -809,7 +846,13 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
               this.NUe,
             )),
           this.gli.RefreshRewardText(!e && 0 !== t)),
-      this.gli.RefreshReward(this.sOe, !i[1]),
+      this.gli.RefreshReward(
+        this.sOe,
+        i[1] ||
+          ModelManager_1.ModelManager.ExchangeRewardModel.IsFinishInstanceCompatible(
+            this.Kli.Id,
+          ),
+      ),
       this.gli.SetDoubleRewardActivity(
         ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivity(
           this.Kli.CustomTypes,
@@ -828,7 +871,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       this.ali.length <= 0
         ? this.GetItem(33).SetUIActive(!1)
         : (this.GetItem(33).SetUIActive(!0), this.fli.RefreshRewardText(!1)),
-      this.fli.RefreshReward(this.ali, !0);
+      this.fli.RefreshReward(this.ali, !1);
   }
   zli() {
     this.GetItem(21).SetUIActive(!1);
@@ -840,16 +883,16 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       n =
         1 ===
         ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState(),
-      s = this.NUe;
-    s &&
+      r = this.NUe;
+    r &&
       (this.GetItem(20).SetUIActive(!1),
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
-        s,
+        r,
       )
         ? (this.i1i(), t.SetUIActive(!n), e.SetUIActive(!1))
         : ((n =
             ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetUnlockConditionGroupHintText(
-              s,
+              r,
             ))
             ? (i.ShowTextNew(n), i.SetUIActive(!0))
             : i.SetUIActive(!1),
@@ -863,13 +906,13 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       );
     !e || e <= 0
       ? (this.GetItem(20).SetUIActive(!1),
-        this.SQs.SetActive(!1),
-        this.Szs.SetActive(!1))
+        this.NXs.SetActive(!1),
+        this.fea.SetActive(!1))
       : (this.GetItem(20).SetUIActive(!0),
-        this.Szs.SetActive(
+        this.fea.SetActive(
           ModelManager_1.ModelManager.FunctionModel.IsOpen(10066),
         ),
-        this.SQs.SetActive(!0),
+        this.NXs.SetActive(!0),
         (e =
           ModelManager_1.ModelManager.ExchangeRewardModel.GetExchangeNormalConsume(
             this.NUe,
@@ -886,7 +929,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       );
     this.GetItem(30).SetUIActive(!e && t), this.GetItem(18)?.SetUIActive(e);
   }
-  Jra() {
+  Bsa() {
     const e = this.NUe;
     var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(35);
     t.FunctionMap.set(2, () => {
@@ -912,13 +955,13 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
     this.o1i();
     var i,
       n,
-      s = 1 === this.sli.size;
-    let r = !1;
+      r = 1 === this.sli.size;
+    let s = !1;
     for ([i, n] of this.nli) {
       var o = i === this.ili,
         h = 1 === this.sli.get(i);
       for (const l of n) {
-        if ((t !== i && !s) || (t !== i && s && h)) {
+        if ((t !== i && !r) || (t !== i && r && h)) {
           var a = new InstanceDungeonData_1.InstanceDetectionDynamicData();
           if (
             ((a.InstanceSeriesTitle = i),
@@ -927,8 +970,8 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
             (a.IsOnlyOneGrid = h),
             (t = i),
             e.push(a),
-            r || this.dli++,
-            s && h)
+            s || this.dli++,
+            r && h)
           )
             break;
         }
@@ -940,7 +983,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
           (a.IsSelect = l === (this.NUe ?? 0)),
           (a.IsShow = o),
           e.push(a),
-          (r = !!a.IsSelect || r)) ||
+          (s = !!a.IsSelect || s)) ||
           this.dli++;
       }
     }
@@ -952,17 +995,17 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       i = 0;
     this.sli.clear();
     var n,
-      s,
       r,
+      s,
       o,
       h,
       a = !!this.NUe;
-    for ([n, s] of this.nli)
-      if (((t = t || n), this.sli.set(n, s.length), !a))
-        for (const l of s)
+    for ([n, r] of this.nli)
+      if (((t = t || n), this.sli.set(n, r.length), !a))
+        for (const l of r)
           (this.ili && n !== this.ili) ||
             ((e = e || l),
-            (r =
+            (s =
               ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
                 l,
               )) &&
@@ -976,7 +1019,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
                   l,
                   ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
                 )),
-              r) &&
+              s) &&
               !o &&
               h > i &&
               ((this.NUe = l), (this.ili = n), (i = h)));
@@ -1070,6 +1113,18 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
         "副本入口聚焦引导extraParam字段配置错误, 找不到对应的副本选项",
         ["configParams", e],
       );
+  }
+  $Fa() {
+    return !(
+      this.KFa > TimeUtil_1.TimeUtil.GetServerTimeStamp() &&
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "InstanceDungeon",
+          5,
+          "不允许短时间内触发多次进入副本的按钮",
+        ),
+      1)
+    );
   }
 }
 exports.InstanceDungeonEntranceView = InstanceDungeonEntranceView;

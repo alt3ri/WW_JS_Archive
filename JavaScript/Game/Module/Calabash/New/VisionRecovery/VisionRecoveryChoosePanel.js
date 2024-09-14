@@ -11,8 +11,7 @@ const UE = require("ue"),
   FilterEntrance_1 = require("../../../Common/FilterSort/Filter/View/FilterEntrance"),
   SortEntrance_1 = require("../../../Common/FilterSort/Sort/View/SortEntrance"),
   ItemTipsComponent_1 = require("../../../Common/ItemTips/ItemTipsComponent"),
-  ItemTipsUtilTool_1 = require("../../../Common/ItemTips/ItemTipsUtilTool"),
-  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
+  ItemTipsUtilTool_1 = require("../../../Common/ItemTips/ItemTipsUtilTool");
 class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -23,6 +22,7 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
       (this.vpt = void 0),
       (this.Hvt = void 0),
       (this.jvt = void 0),
+      (this.uNa = void 0),
       (this.OnClickMask = () => {
         this.GetItem(3).SetUIActive(!1),
           this.GetButton(2).RootUIComp.SetUIActive(!1);
@@ -30,28 +30,17 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
       (this.OnClickCloseBtn = () => {
         this.Hvt ? this.Hvt() : this.SetActive(!1);
       }),
+      (this.OnClickSelectAllToggle = (e) => {
+        this.uNa && this.uNa(e);
+      }),
       (this.Wvt = (e, t) => {
         e = ItemTipsUtilTool_1.ItemTipsComponentUtilTool.GetTipsDataById(e, t);
-        (e.CanClickLockButton = this.Kvt),
-          this.Vvt.Refresh(e),
-          this.GetItem(3).SetUIActive(!0),
-          this.GetButton(2).RootUIComp.SetUIActive(!0);
-      }),
-      (this.Kvt = (t) => {
-        var i = this.Fvt.GetCurrentSelectedData(),
-          s = i?.length;
-        for (let e = 0; e < s; e++)
-          if (i[e].IncId === t)
-            return (
-              ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-                "NoLock",
-              ),
-              !1
-            );
-        return !0;
+        this.ShowTipsComponent(e);
       }),
       (this.Qvt = (e) => {
-        this.Fvt.UpdateByDataList(e), this.jvt && this.jvt(e);
+        this.Fvt.UpdateByDataList(e),
+          this.Vvt.SetActive(!1),
+          this.jvt && this.jvt(e);
       });
   }
   OnRegisterComponent() {
@@ -63,10 +52,12 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
       [4, UE.UIItem],
       [5, UE.UIItem],
       [6, UE.UIButtonComponent],
+      [7, UE.UIExtendToggle],
     ]),
       (this.BtnBindInfo = [
         [2, this.OnClickMask],
         [6, this.OnClickCloseBtn],
+        [7, this.OnClickSelectAllToggle],
       ]);
   }
   OnBeforeCreateImplement() {
@@ -105,7 +96,9 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
       e.ExpData,
     ),
       this.Mpt.SetSortToggleState(e.InitSortToggleState),
-      this.UpdateFilterComponent(e.UseWayId, e.ItemDataBaseList);
+      this.UpdateFilterComponent(e.UseWayId, e.ItemDataBaseList),
+      e.SelectedDataList.length <= 0 &&
+        this.GetExtendToggle(7).SetToggleStateForce(0);
   }
   UpdateFilterComponent(e, t) {
     let i = !1,
@@ -124,11 +117,25 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
         ? (i && this.Mpt.UpdateData(e, t), s && this.vpt.UpdateData(e, t))
         : this.Fvt.UpdateByDataList(t);
   }
+  SetAllSelectToggleVisible(e) {
+    this.GetExtendToggle(7).RootUIComp.SetUIActive(e);
+  }
+  UpdatePartByIndex(e) {
+    this.Fvt.RefreshPartByIndex(e);
+  }
   BindClickCloseCallBack(e) {
     this.Hvt = e;
   }
+  BindClickSelectAllToggleCallback(e) {
+    this.uNa = e;
+  }
   BindFilterSortRefresh(e) {
     this.jvt = e;
+  }
+  ShowTipsComponent(e) {
+    this.Vvt.Refresh(e),
+      this.GetItem(3).SetUIActive(!0),
+      this.GetButton(2).RootUIComp.SetUIActive(!0);
   }
   OnBeforeHide() {
     this.OnRemoveEventListener();

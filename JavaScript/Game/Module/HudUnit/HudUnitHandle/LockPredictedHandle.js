@@ -16,12 +16,12 @@ const UE = require("ue"),
 class LockPredictedHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
-      (this.Uua = new Vector2D_1.Vector2D()),
-      (this.Sda = void 0),
+      (this.Nma = new Vector2D_1.Vector2D()),
+      (this.lga = void 0),
       (this.v$e = !1),
       (this.dDr = !1),
       (this.rqo = void 0),
-      (this.Eda = () => {
+      (this._ga = () => {
         this.yyo();
       }),
       (this.lne = (e, t) => {
@@ -37,17 +37,17 @@ class LockPredictedHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.BattleUiCurRoleDataChangedNextTick,
-      this.Eda,
+      this._ga,
     );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.BattleUiCurRoleDataChangedNextTick,
-      this.Eda,
+      this._ga,
     );
   }
   yyo() {
-    this.yda();
+    this.uga();
     var e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
     e &&
       e.EntityHandle?.Valid &&
@@ -57,9 +57,9 @@ class LockPredictedHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       this.dDr || this.Deactivate());
   }
   OnDestroyed() {
-    (this.Sda = void 0), this.yda();
+    (this.lga = void 0), this.uga();
   }
-  yda() {
+  uga() {
     (this.dDr = !1), this.rqo && (this.rqo.EndTask(), (this.rqo = void 0));
   }
   OnTick(e) {
@@ -71,18 +71,18 @@ class LockPredictedHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         (e = this.GetWorldLocation(e)) &&
         HudUnitUtils_1.HudUnitUtils.PositionUtil.ProjectWorldToScreen(
           e,
-          this.Uua,
+          this.Nma,
         )
           ? (this.Activate(),
-            this.Sda &&
-              this.Sda.GetRootItem()?.SetAnchorOffset(
-                this.Uua.ToUeVector2D(!0),
-              ))
+            this.lga &&
+              this.lga
+                .GetRootItem()
+                ?.SetAnchorOffset(this.Nma.ToUeVector2D(!0)))
           : this.Deactivate());
   }
   Activate() {
-    this.Sda
-      ? this.Sda.Activate()
+    this.lga
+      ? this.lga.Activate()
       : this.v$e ||
         ((this.v$e = !0),
         this.NewHudUnit(
@@ -90,13 +90,13 @@ class LockPredictedHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
           "UiItem_SuoDingArrow",
         ).then(
           (e) => {
-            e && ((this.v$e = !1), (this.Sda = e));
+            e && ((this.v$e = !1), (this.lga = e));
           },
           () => {},
         ));
   }
   Deactivate() {
-    this.Sda && this.Sda.Deactivate();
+    this.lga && this.lga.Deactivate();
   }
   GetTargetInfo() {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;

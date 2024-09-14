@@ -20,7 +20,7 @@ class TsAnimNotifyStateSubMeshControl extends UE.KuroAnimNotifyState {
     var t = t?.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
-      !!(t = t.GetEntityNoBlueprint()?.GetComponent(203)) &&
+      !!(t = t.GetEntityNoBlueprint()?.GetComponent(205)) &&
       (t.SetSubMeshOrder(
         this.MeshName,
         this.开始是否可见,
@@ -35,7 +35,7 @@ class TsAnimNotifyStateSubMeshControl extends UE.KuroAnimNotifyState {
     var t = t?.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
-      !!(t = t.GetEntityNoBlueprint()?.GetComponent(203)) &&
+      !!(t = t.GetEntityNoBlueprint()?.GetComponent(205)) &&
       (t.SetSubMeshOrder(
         this.MeshName,
         this.结束是否可见,

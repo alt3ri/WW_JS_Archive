@@ -9,13 +9,14 @@ const UE = require("ue"),
 class ItemTipsWithButtonComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.vQs = void 0),
+      (this.GXs = void 0),
       (this.Mxt = void 0),
       (this.Sxt = (t, e, i) => {
         e = new ButtonItem_1.ButtonItem(e);
         return (
           e.SetFunction(t.Function),
           e.SetShowText(t.Text),
+          t.RedDotName && e.BindRedDot(t.RedDotName, t.RedDotId),
           { Key: t.Index, Value: e }
         );
       });
@@ -28,8 +29,8 @@ class ItemTipsWithButtonComponent extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.vQs = new ItemTipsComponent_1.ItemTipsComponentContentComponent()),
-      await this.vQs.CreateByActorAsync(this.GetItem(0).GetOwner());
+    (this.GXs = new ItemTipsComponent_1.ItemTipsComponentContentComponent()),
+      await this.GXs.CreateByActorAsync(this.GetItem(0).GetOwner());
   }
   OnStart() {
     this.Mxt = new GenericLayoutNew_1.GenericLayoutNew(
@@ -38,10 +39,10 @@ class ItemTipsWithButtonComponent extends UiPanelBase_1.UiPanelBase {
     );
   }
   OnBeforeDestroy() {
-    this.vQs.Destroy(), this.Mxt.ClearChildren();
+    this.GXs.Destroy(), this.Mxt.ClearChildren();
   }
   RefreshTips(t) {
-    this.vQs.Refresh(t);
+    this.GXs.Refresh(t);
   }
   RefreshButton(t) {
     this.Mxt.RebuildLayoutByDataNew(t);
@@ -65,7 +66,7 @@ class ItemTipsWithButtonComponent extends UiPanelBase_1.UiPanelBase {
     this.SetActive(t);
   }
   SetTipsComponentLockButton(t) {
-    this.vQs.SetTipsComponentLockButton(t);
+    this.GXs.SetTipsComponentLockButton(t);
   }
 }
 exports.ItemTipsWithButtonComponent = ItemTipsWithButtonComponent;

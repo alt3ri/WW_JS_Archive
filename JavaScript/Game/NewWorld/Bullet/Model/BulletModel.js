@@ -17,6 +17,7 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   StatDefine_1 = require("../../../Common/StatDefine"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
   GlobalData_1 = require("../../../GlobalData"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   CombatMessage_1 = require("../../../Module/CombatMessage/CombatMessage"),
@@ -32,39 +33,39 @@ class BulletInitParams {
   constructor(
     t,
     e,
-    i,
     l,
+    i,
     s = 0,
     o = 0,
     r = 0,
     n = 0,
-    h = 0,
-    u = void 0,
+    u = 0,
+    h = void 0,
     a = !1,
     _ = 0,
     B = void 0,
-    v = Protocol_1.Aki.Protocol.C4s.Proto_NormalSource,
-    d = void 0,
+    d = Protocol_1.Aki.Protocol.E4s.Proto_NormalSource,
+    v = void 0,
     c = void 0,
-    m = -1,
+    f = -1,
   ) {
     (this.Owner = t),
       (this.BulletRowName = e),
-      (this.InitialTransform = i),
-      (this.InitTargetLocation = l),
+      (this.InitialTransform = l),
+      (this.InitTargetLocation = i),
       (this.SkillId = s),
       (this.ParentId = o),
       (this.TargetId = r),
       (this.BaseTransformId = n),
-      (this.BaseVelocityId = h),
-      (this.Size = u),
+      (this.BaseVelocityId = u),
+      (this.Size = h),
       (this.FromRemote = a),
       (this.SyncType = _),
       (this.ContextId = B),
-      (this.Source = v),
-      (this.LocationOffset = d),
+      (this.Source = d),
+      (this.LocationOffset = v),
       (this.BeginRotatorOffset = c),
-      (this.DtType = m);
+      (this.DtType = f);
   }
 }
 exports.BulletInitParams = BulletInitParams;
@@ -76,11 +77,13 @@ class BulletModel extends ModelBase_1.ModelBase {
       (this.tjo = new Map()),
       (this.ijo = new Set()),
       (this.ojo = void 0),
-      (this.BKs = 0),
-      (this.C0a = !0),
+      (this.Y$s = 0),
+      (this.jva = !0),
       (this.nye = () => {
-        ConfigManager_1.ConfigManager.BulletConfig.PreloadCommonBulletData(),
-          BulletActorPool_1.BulletActorPool.Preload();
+        BulletModel.rjo.Start(),
+          ConfigManager_1.ConfigManager.BulletConfig.PreloadCommonBulletData(),
+          BulletActorPool_1.BulletActorPool.Preload(),
+          BulletModel.rjo.Stop();
       }),
       (this.njo = new Map()),
       (this.sjo = (t) => {
@@ -97,25 +100,19 @@ class BulletModel extends ModelBase_1.ModelBase {
       (this.Index2HeavyHitAnimMap = void 0),
       (this.cjo = new Set()),
       (this.mjo = !1),
-      (this.djo = (t) => {
-        if (
-          "LevelA" === t.PlotLevel ||
-          "LevelB" === t.PlotLevel ||
-          "LevelC" === t.PlotLevel
-        ) {
-          this.mjo = !0;
-          for (const e of this.cjo) this.DestroyBullet(e, !1, 0);
-          this.cjo.clear();
-        }
+      (this.djo = () => {
+        this.mjo = !0;
+        for (const t of this.cjo) this.DestroyBullet(t, !1, 0);
+        this.c5a(!0), this.cjo.clear();
       }),
       (this.Cjo = () => {
-        this.mjo = !1;
+        this.c5a(!1), (this.mjo = !1);
       }),
       (this.PersistentTimeScaleMap = new Map()),
       (this.PersistentTimeScaleId = 0),
-      (this.gna = 0),
+      (this.Jaa = 0),
       (this.IsSceneBulletOwnerCreated = !1),
-      (this.fsa = void 0);
+      (this.ala = void 0);
   }
   GetBulletEntityMap() {
     return this.ZHo;
@@ -130,10 +127,10 @@ class BulletModel extends ModelBase_1.ModelBase {
     return this.tjo.values();
   }
   get OnHitMaterialMsDelay() {
-    return this.BKs;
+    return this.Y$s;
   }
   get OpenHitMaterial() {
-    return this.C0a;
+    return this.jva;
   }
   set OpenHitMaterial(t) {
     Log_1.Log.CheckInfo() &&
@@ -141,7 +138,7 @@ class BulletModel extends ModelBase_1.ModelBase {
         "val",
         t,
       ]),
-      (this.C0a = t);
+      (this.jva = t);
   }
   OnInit() {
     ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -149,7 +146,7 @@ class BulletModel extends ModelBase_1.ModelBase {
       UE.BulletCommonDataAsset_C,
       (t) => {
         (this.ojo = t),
-          (this.BKs =
+          (this.Y$s =
             t.OnHitMaterialDelay * MathUtils_1.MathUtils.SecondToMillisecond);
       },
     ),
@@ -195,7 +192,7 @@ class BulletModel extends ModelBase_1.ModelBase {
       (BulletMoveInfo_1.BulletMoveInfo.StickGroundLineTrace = void 0),
       this.fjo(),
       (this.SceneBulletOwnerId = 0),
-      this.psa(),
+      this.hla(),
       !0
     );
   }
@@ -226,29 +223,29 @@ class BulletModel extends ModelBase_1.ModelBase {
       (this.ejo.length = 0),
       this.pjo(),
       (this.SceneBulletOwnerId = 0),
-      this.psa(),
+      this.hla(),
       !0
     );
   }
   CreateBullet(
     t,
     e,
-    i,
     l,
+    i,
     s = 0,
     o,
     r = !1,
     n = 0,
-    h,
     u,
+    h,
     a,
     _,
     B = 0,
-    v = void 0,
-    d = Protocol_1.Aki.Protocol.C4s.Proto_NormalSource,
+    d = void 0,
+    v = Protocol_1.Aki.Protocol.E4s.Proto_NormalSource,
     c = void 0,
-    m = void 0,
-    f = -1,
+    f = void 0,
+    m = -1,
     y = void 0,
     g = void 0,
   ) {
@@ -257,14 +254,14 @@ class BulletModel extends ModelBase_1.ModelBase {
       if (t?.Valid) {
         _ =
           _ ??
-          ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(t, e, !0, f);
+          ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(t, e, !0, m);
         if (_) {
           if (!r) {
-            var S = t.GetComponent(188),
-              C = _.Base.BornForbidTagIds;
-            if (C)
-              for (const E of C)
-                if (S.HasTag(E))
+            var S = t.GetComponent(190),
+              E = _.Base.BornForbidTagIds;
+            if (E)
+              for (const C of E)
+                if (S.HasTag(C))
                   return void (
                     Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug(
@@ -274,9 +271,9 @@ class BulletModel extends ModelBase_1.ModelBase {
                       ["子弹名称:", e],
                     )
                   );
-            C = _.Base.BornRequireTagIds;
-            if (C)
-              for (const I of C)
+            E = _.Base.BornRequireTagIds;
+            if (E)
+              for (const I of E)
                 if (!S.HasTag(I))
                   return void (
                     Log_1.Log.CheckDebug() &&
@@ -288,30 +285,32 @@ class BulletModel extends ModelBase_1.ModelBase {
                     )
                   );
           }
-          (C = new BulletInitParams(
+          (E = new BulletInitParams(
             t,
             e,
-            i,
             l,
+            i,
             s,
             o,
             n,
             3 !== _.Base.BornPositionStandard &&
             2 !== _.Base.BornPositionStandard
-              ? h
+              ? u
               : 0,
-            u,
+            h,
             a,
             r,
             B,
-            v,
             d,
+            v,
             c,
-            m,
             f,
+            m,
           )),
-            (i = BulletPool_1.BulletPool.CreateBulletEntity());
-          if (i?.Valid)
+            (l =
+              (BulletModel.Mjo.Start(),
+              BulletPool_1.BulletPool.CreateBulletEntity()));
+          if (l?.Valid)
             return (
               BulletConstant_1.BulletConstant.OpenCreateLog &&
                 Log_1.Log.CheckDebug() &&
@@ -320,25 +319,26 @@ class BulletModel extends ModelBase_1.ModelBase {
                   18,
                   "创建子弹",
                   ["BulletId", e],
-                  ["EntityId", i.Id],
+                  ["EntityId", l.Id],
                 ),
-              (l = i.GetBulletInfo()),
+              (i = l.GetBulletInfo()),
               r &&
-                (y && l.RandomPosOffset.FromUeVector(y), g) &&
-                l.RandomInitSpeedOffset.FromUeVector(g),
-              l.Init(C, _),
-              l.InitEntity(i),
-              this.ZHo.set(i.Id, i),
-              (s = l.AttackerId),
+                (y && i.RandomPosOffset.FromUeVector(y), g) &&
+                i.RandomInitSpeedOffset.FromUeVector(g),
+              i.Init(E, _),
+              i.InitEntity(l),
+              this.ZHo.set(l.Id, l),
+              (s = i.AttackerId),
               (
                 this.tjo.get(s) ||
                 ((o = this.ejo.pop() ?? new Set()), this.tjo.set(s, o), o)
-              ).add(i),
-              EntitySystem_1.EntitySystem.Start(i),
-              EntitySystem_1.EntitySystem.Activate(i),
-              BulletController_1.BulletController.AddSimpleAction(l, 1),
-              M && this.cjo.add(i.Id),
-              i
+              ).add(l),
+              EntitySystem_1.EntitySystem.Start(l),
+              EntitySystem_1.EntitySystem.Activate(l),
+              BulletModel.Mjo.Stop(),
+              BulletController_1.BulletController.AddSimpleAction(i, 1),
+              M && this.cjo.add(l.Id),
+              l
             );
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -347,7 +347,8 @@ class BulletModel extends ModelBase_1.ModelBase {
               "BulletModel.InitBullet error, 子弹创建 失败!",
               ["子弹创建者:", t.GetComponent(1)?.Owner.GetName()],
               ["子弹名称:", e],
-            );
+            ),
+            BulletModel.Mjo.Stop();
         }
       } else
         Log_1.Log.CheckInfo() &&
@@ -358,63 +359,67 @@ class BulletModel extends ModelBase_1.ModelBase {
             ["子弹名称:", e],
           );
   }
-  DestroyBullet(t, e, i = 0) {
-    var l,
-      s = this.ZHo.get(t);
-    !s ||
-      (s = s.GetBulletInfo()).NeedDestroy ||
-      ((s.NeedDestroy = !0),
+  DestroyBullet(t, e, l = 0) {
+    var i,
+      s,
+      o = this.ZHo.get(t);
+    !o ||
+      (o = o.GetBulletInfo()).NeedDestroy ||
+      ((o.NeedDestroy = !0),
       BulletConstant_1.BulletConstant.OpenCreateLog &&
         Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Bullet",
           18,
           "销毁子弹开始",
-          ["BulletId", s.BulletRowName],
-          ["EntityId", s.BulletEntityId],
+          ["BulletId", o.BulletRowName],
+          ["EntityId", o.BulletEntityId],
         ),
-      s.BulletRowName,
-      StatDefine_1.BATTLESTAT_ENABLED,
-      ((l =
+      (i = o.BulletRowName),
+      StatDefine_1.BATTLESTAT_ENABLED &&
+        BulletController_1.BulletController.GetBulletDestroyStat(i).Start(),
+      ((s =
         BulletController_1.BulletController.GetActionCenter().CreateBulletActionInfo(
           13,
         )).SummonChild = e),
-      (l.DestroyReason = i),
+      (s.DestroyReason = l),
       this.ijo.add(t),
-      BulletController_1.BulletController.GetActionRunner().AddAction(s, l),
-      StatDefine_1.BATTLESTAT_ENABLED);
+      BulletController_1.BulletController.GetActionRunner().AddAction(o, s),
+      StatDefine_1.BATTLESTAT_ENABLED &&
+        BulletController_1.BulletController.GetBulletDestroyStat(i).Stop());
   }
   DestroyAllBullet(t = !1) {
     for (var [e] of this.ZHo) this.DestroyBullet(e, t, 0);
   }
   ClearDestroyedBullets() {
+    BulletModel.Ejo.Start();
     for (const s of this.ijo) {
       var t,
         e,
-        i,
-        l = this.ZHo.get(s);
-      l &&
-        ((i = (t = l.GetBulletInfo()).AttackerId),
-        (e = this.tjo.get(i))
-          ? (e.delete(l), e.size || (this.tjo.delete(i), this.ejo.push(e)))
+        l,
+        i = this.ZHo.get(s);
+      i &&
+        ((l = (t = i.GetBulletInfo()).AttackerId),
+        (e = this.tjo.get(l))
+          ? (e.delete(i), e.size || (this.tjo.delete(l), this.ejo.push(e)))
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Bullet",
               5,
               "BulletModel.DestroyBullet Warn, 获取被销毁子弹所在集合 失败！ ",
-              ["子弹创建者Id:", i],
-              ["子弹:", l],
+              ["子弹创建者Id:", l],
+              ["子弹:", i],
             ),
         (e = this.GetBulletHandleById(s)) &&
-          (((i = Protocol_1.Aki.Protocol.v3n.create()).iVn = e),
-          CombatMessage_1.CombatNet.Call(20471, t.Attacker, i),
+          (((l = Protocol_1.Aki.Protocol.A3n.create()).uVn = e),
+          CombatMessage_1.CombatNet.Call(20656, t.Attacker, l),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Bullet",
               20,
               "删除子弹Request",
-              ["handleId", e?.rVn],
-              ["playerId", e?.q5n],
+              ["handleId", e?.cVn],
+              ["playerId", e?.W5n],
             ),
           this.DeregisterBullet(e)),
         BulletConstant_1.BulletConstant.OpenCreateLog &&
@@ -427,9 +432,11 @@ class BulletModel extends ModelBase_1.ModelBase {
             ["EntityId", t.BulletEntityId],
           ),
         this.ZHo.delete(s),
-        BulletPool_1.BulletPool.RecycleBulletEntity(l));
+        BulletModel.Sjo.Start(),
+        BulletPool_1.BulletPool.RecycleBulletEntity(i),
+        BulletModel.Sjo.Stop());
     }
-    this.ijo.clear();
+    this.ijo.clear(), BulletModel.Ejo.Stop();
   }
   GetFastMoveTrace(t, e) {
     switch (t) {
@@ -465,62 +472,75 @@ class BulletModel extends ModelBase_1.ModelBase {
     return this.ojo.HitPoint;
   }
   RegisterBullet(t, e) {
-    var i, l;
+    var l, i;
     t &&
-      (({ q5n: i, rVn: l } = t),
+      (({ W5n: l, cVn: i } = t),
       this.hjo.set(e, t),
-      this.ajo.has(i) || this.ajo.set(i, new Map()),
-      this.ajo.get(i)?.set(l, e));
+      this.ajo.has(l) || this.ajo.set(l, new Map()),
+      this.ajo.get(l).set(i, e));
   }
   DeregisterBullet(t) {
-    var e, i;
+    var e, l;
     t &&
       ((e = this.GetIdByBulletHandle(t)),
-      this.ajo.has(e) && this.hjo.delete(e),
-      this.ajo.has(t.q5n)) &&
-      (({ q5n: e, rVn: t } = t),
-      (i = this.ajo.get(e)).delete(t),
-      i.size <= 0) &&
+      this.hjo.has(e) && this.hjo.delete(e),
+      this.ajo.has(t.W5n)) &&
+      (({ W5n: e, cVn: t } = t),
+      (l = this.ajo.get(e)).delete(t),
+      l.size <= 0) &&
       this.ajo.delete(e);
   }
   GetIdByBulletHandle(t) {
     var e;
-    return t ? (({ q5n: t, rVn: e } = t), this.ajo.get(t)?.get(e) ?? 0) : 0;
+    return t ? (({ W5n: t, cVn: e } = t), this.ajo.get(t)?.get(e) ?? 0) : 0;
   }
   GetBulletHandleById(t) {
     return this.hjo.get(t);
   }
   DestroyBulletRemote(t, e) {
-    var i;
+    var l;
     t &&
-      this.ajo.has(t.q5n) &&
-      0 !== (i = this.GetIdByBulletHandle(t)) &&
-      (this.DeregisterBullet(t), this.DestroyBullet(i, e, 2));
+      this.ajo.has(t.W5n) &&
+      0 !== (l = this.GetIdByBulletHandle(t)) &&
+      (this.DeregisterBullet(t), this.DestroyBullet(l, e, 2));
   }
-  NewTraceElement(t, e, i, l = 0) {
+  NewTraceElement(t, e, l, i = 0) {
     var s = UE.NewObject(t);
     if (((s.WorldContextObject = GlobalData_1.GlobalData.World), e))
       for (let t = 0; t < e.Num(); t++) {
         var o = e.Get(t);
-        i?.has(o) || s.AddObjectTypeQuery(o);
+        l?.has(o) || s.AddObjectTypeQuery(o);
       }
     return (s.bTraceComplex = !1), (s.bIgnoreSelf = !0), s;
   }
-  GetEntityIdByCustomKey(t, e, i) {
+  GetEntityIdByCustomKey(t, e, l) {
     (e = e.concat(t.toString())), (t = this.ljo.get(e));
     return (
       t ||
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Bullet", 21, "自定义目标表不存在攻击者", [
-          "Bullet.Data.RowName",
-          i,
-        ]),
+        Log_1.Log.Error(
+          "Bullet",
+          21,
+          "获取自定义目标失败",
+          ["Bullet", l],
+          ["Key", e],
+          ["Entity", t],
+        ),
       0)
     );
   }
-  SetEntityIdByCustomKey(t, e, i) {
+  SetEntityIdByCustomKey(t, e, l) {
     e = e.concat(t.toString());
-    this.ljo.set(e, i);
+    this.ljo.set(e, l),
+      l ||
+        (Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Bullet",
+            21,
+            "设置自定义目标失败",
+            ["Key", e],
+            ["Entity", l],
+          ));
   }
   ShowBulletCollision(t = 0) {
     return this._jo.has(t) && (this._jo.get(t) ?? !1);
@@ -547,29 +567,29 @@ class BulletModel extends ModelBase_1.ModelBase {
       (this.Index2HeavyHitAnimMap = void 0);
   }
   vjo(t) {
-    return "310000001" === t || "110504030" === t;
+    return "310000001" === t;
   }
-  SetAllBulletTimeScale(t, e, i, l, s, o, r) {
+  SetAllBulletTimeScale(t, e, l, i, s, o, r) {
     this.PersistentTimeScaleId--;
     var n = this.PersistentTimeScaleId;
     for (const a of this.GetBulletEntityMap().values()) {
-      var h = a.GetBulletInfo();
+      var u = a.GetBulletInfo();
       if (
-        h.IsInit &&
-        !h.NeedDestroy &&
-        !h.BulletDataMain.TimeScale.TimeScaleWithAttacker
+        u.IsInit &&
+        !u.NeedDestroy &&
+        !u.BulletDataMain.TimeScale.TimeScaleWithAttacker
       ) {
         if (t) {
-          var u = h.CollisionInfo.LastFramePosition;
-          if (!u) continue;
+          var h = u.CollisionInfo.LastFramePosition;
+          if (!h) continue;
           if (
-            Math.abs(u.X - t.X) > e ||
-            Math.abs(u.Y - t.Y) > e ||
-            Math.abs(u.Z - t.Z) > e
+            Math.abs(h.X - t.X) > e ||
+            Math.abs(h.Y - t.Y) > e ||
+            Math.abs(h.Z - t.Z) > e
           )
             continue;
         }
-        BulletUtil_1.BulletUtil.SetTimeScale(h, i, l, s, o, 5, 0, n);
+        BulletUtil_1.BulletUtil.SetTimeScale(u, l, i, s, o, 5, 0, n);
       }
     }
     return (
@@ -580,8 +600,8 @@ class BulletModel extends ModelBase_1.ModelBase {
             t,
             e,
             Time_1.Time.WorldTimeSeconds,
-            i,
             l,
+            i,
             s,
             o,
             5,
@@ -592,9 +612,9 @@ class BulletModel extends ModelBase_1.ModelBase {
     );
   }
   RemoveAllBulletTimeScale(t, e) {
-    for (const l of this.GetBulletEntityMap().values()) {
-      var i = l.GetBulletInfo();
-      i.IsInit && BulletUtil_1.BulletUtil.RemoveTimeScale(i, t);
+    for (const i of this.GetBulletEntityMap().values()) {
+      var l = i.GetBulletInfo();
+      l.IsInit && BulletUtil_1.BulletUtil.RemoveTimeScale(l, t);
     }
     e && this.PersistentTimeScaleMap.delete(t);
   }
@@ -602,12 +622,12 @@ class BulletModel extends ModelBase_1.ModelBase {
     (this.PersistentTimeScaleId = 0), this.PersistentTimeScaleMap.clear();
   }
   get SceneBulletOwnerId() {
-    return this.gna;
+    return this.Jaa;
   }
   set SceneBulletOwnerId(t) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Bullet", 18, "设置场景子弹owner", ["CreatureDataId", t]),
-      (this.gna = t);
+      (this.Jaa = t);
   }
   WaitSceneBulletOwnerInit() {
     const e = this.SceneBulletOwnerId;
@@ -618,8 +638,8 @@ class BulletModel extends ModelBase_1.ModelBase {
           18,
           "等待场景子弹owner创建失败, creatureDataId为0",
         )
-      : (this.psa(),
-        (this.fsa = WaitEntityTask_1.WaitEntityTask.Create(
+      : (this.hla(),
+        (this.ala = WaitEntityTask_1.WaitEntityTask.Create(
           e,
           (t) => {
             t
@@ -630,7 +650,7 @@ class BulletModel extends ModelBase_1.ModelBase {
                     18,
                     "等待场景子弹owner创建返回时，creatureDataId已改变",
                   )
-                : ((this.fsa = void 0),
+                : ((this.ala = void 0),
                   (this.IsSceneBulletOwnerCreated = !0),
                   EventSystem_1.EventSystem.Emit(
                     EventDefine_1.EEventName.SceneBulletOwnerCreated,
@@ -638,32 +658,42 @@ class BulletModel extends ModelBase_1.ModelBase {
               : Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn("Bullet", 18, "等待场景子弹owner创建失败");
           },
-          !1,
           -1,
         )),
-        this.IsSceneBulletOwnerCreated && (this.fsa = void 0));
+        this.IsSceneBulletOwnerCreated && (this.ala = void 0));
   }
-  psa() {
+  hla() {
     (this.IsSceneBulletOwnerCreated = !1),
-      this.fsa && (this.fsa.Cancel(), (this.fsa = void 0));
+      this.ala && (this.ala.Cancel(), (this.ala = void 0));
+  }
+  c5a(t) {
+    for (var [e] of this.ZHo) {
+      e = this.ZHo.get(e);
+      this.m5a(e, t);
+    }
+  }
+  m5a(t, e) {
+    t?.Valid &&
+      ((t = t.GetBulletInfo()),
+      EffectSystem_1.EffectSystem.SetEffectHidden(t.EffectInfo.Effect, e));
   }
 }
 ((exports.BulletModel = BulletModel).DefaultBulletSceneInteraction = void 0),
-  (BulletModel.rjo = void 0),
-  (BulletModel.Mjo = void 0),
-  (BulletModel.Ejo = void 0),
-  (BulletModel.Sjo = void 0);
+  (BulletModel.rjo = Stats_1.Stat.Create("BulletPreload")),
+  (BulletModel.Mjo = Stats_1.Stat.Create("BulletCreateEntity")),
+  (BulletModel.Ejo = Stats_1.Stat.Create("BulletClearDestroyed")),
+  (BulletModel.Sjo = Stats_1.Stat.Create("BulletRecycleBulletEntity"));
 class BulletPersistentTimeScale {
-  constructor(t, e, i, l, s, o, r, n, h) {
+  constructor(t, e, l, i, s, o, r, n, u) {
     (this.CenterLocation = t),
       (this.Radius = e),
-      (this.StartTime = i),
-      (this.Priority = l),
+      (this.StartTime = l),
+      (this.Priority = i),
       (this.TimeDilation = s),
       (this.Curve = o),
       (this.Duration = r),
       (this.SourceType = n),
-      (this.TimeScaleId = h);
+      (this.TimeScaleId = u);
   }
 }
 exports.BulletPersistentTimeScale = BulletPersistentTimeScale;

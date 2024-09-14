@@ -10,16 +10,16 @@ const Log_1 = require("../../../Core/Common/Log"),
   FunctionController_1 = require("../Functional/FunctionController");
 class AppLinksController extends ControllerBase_1.ControllerBase {
   static OnInit() {
-    return this.ZOn(), super.OnInit();
+    return this.h2n(), super.OnInit();
   }
   static OnClear() {
-    return this.e2n(), super.OnClear();
+    return this.l2n(), super.OnClear();
   }
-  static ZOn() {
-    AppLinks_1.AppLinks.SetDeepValueHandle("10009", this.t2n),
+  static h2n() {
+    AppLinks_1.AppLinks.SetDeepValueHandle("10009", this._2n),
       AppLinks_1.AppLinks.SetDeepValueHandle("10053", this.y4e);
   }
-  static e2n() {
+  static l2n() {
     AppLinks_1.AppLinks.RemoveDeepValueHandle("10009"),
       AppLinks_1.AppLinks.RemoveDeepValueHandle("10053");
   }
@@ -32,7 +32,7 @@ class AppLinksController extends ControllerBase_1.ControllerBase {
   }
 }
 (exports.AppLinksController = AppLinksController),
-  ((_a = AppLinksController).t2n = (e, r) => {
+  ((_a = AppLinksController)._2n = (e, r) => {
     _a.iVe()
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Functional", 22, "打开抽卡界面"),

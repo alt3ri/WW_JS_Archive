@@ -118,7 +118,7 @@ let CharacterPhysicsAssetComponent =
         (this.Djr = 0),
         (this.Ype = !1),
         (this.I3r = (t) => {
-          t = t.GetComponent(63);
+          t = t.GetComponent(64);
           t.Tjr.ClearAnimState();
         }),
         (this.Rjr = (t, e) => {
@@ -127,7 +127,7 @@ let CharacterPhysicsAssetComponent =
         });
     }
     static get Dependencies() {
-      return [3, 188, 162];
+      return [3, 190, 163];
     }
     OnInitData() {
       return (
@@ -140,12 +140,12 @@ let CharacterPhysicsAssetComponent =
       if (
         ((this.Hte = this.Entity.GetComponent(3)),
         this.Hte.CreatureData?.GetEntityType() !==
-          Protocol_1.Aki.Protocol.wks.Proto_Player ||
+          Protocol_1.Aki.Protocol.kks.Proto_Player ||
           !this.Hte.IsAutonomousProxy)
       )
         return (this.Ijr = !1), !(this.Hte = void 0);
-      (this.Lie = this.Entity.GetComponent(188)),
-        (this.oRe = this.Entity.GetComponent(162));
+      (this.Lie = this.Entity.GetComponent(190)),
+        (this.oRe = this.Entity.GetComponent(163));
       var t = this.Hte.CreatureData.GetRoleConfig().RoleBody,
         t =
           ConfigManager_1.ConfigManager.EntityPhysicsAssetConfig.GetPhysicsAssetConfigByRoleBody(
@@ -272,7 +272,7 @@ let CharacterPhysicsAssetComponent =
 (CharacterPhysicsAssetComponent.Ajr = [-648310348]),
   (CharacterPhysicsAssetComponent = CharacterPhysicsAssetComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(63)],
+      [(0, RegisterComponent_1.RegisterComponent)(64)],
       CharacterPhysicsAssetComponent,
     )),
   (exports.CharacterPhysicsAssetComponent = CharacterPhysicsAssetComponent);

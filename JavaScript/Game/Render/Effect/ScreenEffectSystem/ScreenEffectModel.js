@@ -11,7 +11,8 @@ class ScreenEffectHandle {
     (this.HandleIds = new Set()),
       (this.Path = void 0),
       (this.EffectData = void 0),
-      (this.LoadResId = -1);
+      (this.LoadResId = -1),
+      (this.WaitingFightRootInit = !1);
   }
 }
 exports.ScreenEffectHandle = ScreenEffectHandle;
@@ -21,44 +22,47 @@ class ScreenEffectModel extends ModelBase_1.ModelBase {
       (this.HandleIdGenerator = 1),
       (this.HandleMap = new Map()),
       (this.PathToHandleMap = new Map()),
-      (this.HandlePool = []);
+      (this.HandlePool = []),
+      (this.FightRootInited = !1);
   }
   PlayScreenEffect(e) {
     let t = this.PathToHandleMap.get(e);
     t || (((t = this.GetHandle()).Path = e), this.PathToHandleMap.set(e, t));
-    var r = this.HandleIdGenerator++;
+    var s = this.HandleIdGenerator++;
     return (
-      t.HandleIds.add(r),
-      this.HandleMap.set(r, t),
+      t.HandleIds.add(s),
+      this.HandleMap.set(s, t),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "RenderEffect",
           18,
           "调用播放镜头特效接口",
-          ["handleId", r],
+          ["handleId", s],
           ["path", e],
         ),
-      1 === t.HandleIds.size && (t.LoadResId = this.GSa(e)),
-      r
+      1 === t.HandleIds.size && (t.LoadResId = this.lTa(e)),
+      s
     );
   }
-  GSa(r) {
+  lTa(s) {
     return ResourceSystem_1.ResourceSystem.LoadAsync(
-      r,
+      s,
       UE.EffectScreenPlayData_C,
       (e) => {
-        var t = this.PathToHandleMap.get(r);
+        var t = this.PathToHandleMap.get(s);
         t &&
           0 !== t.HandleIds.size &&
           ((t.EffectData = e),
-          Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("RenderEffect", 18, "开始播放镜头特效", [
-              "path",
-              r,
-            ]),
-          ScreenEffectSystem_1.ScreenEffectSystem.GetInstance().PlayScreenEffect(
-            e,
-          ));
+          this.FightRootInited
+            ? (Log_1.Log.CheckDebug() &&
+                Log_1.Log.Debug("RenderEffect", 18, "开始播放镜头特效", [
+                  "path",
+                  s,
+                ]),
+              ScreenEffectSystem_1.ScreenEffectSystem.GetInstance().PlayScreenEffect(
+                e,
+              ))
+            : (t.WaitingFightRootInit = !0));
       },
     );
   }
@@ -72,17 +76,16 @@ class ScreenEffectModel extends ModelBase_1.ModelBase {
     t &&
       t.HandleIds.has(e) &&
       (t.HandleIds.delete(e), 0 === t.HandleIds.size) &&
-      (this.PathToHandleMap.delete(t.Path), this.OSa(t));
+      (this.PathToHandleMap.delete(t.Path), this._Ta(t));
   }
   OnClear() {
-    return (this.HandleIdGenerator = 0), this.kSa(), !0;
+    return (this.HandleIdGenerator = 0), this.uTa(), !0;
   }
-  kSa() {
-    this.PathToHandleMap.clear();
-    for (const e of this.HandleMap.values()) this.OSa(e);
-    this.HandleMap.clear();
+  uTa() {
+    for (const e of this.PathToHandleMap.values()) this._Ta(e);
+    this.PathToHandleMap.clear(), this.HandleMap.clear();
   }
-  OSa(e) {
+  _Ta(e) {
     e.HandleIds.clear(),
       e.EffectData &&
         (Log_1.Log.CheckDebug() &&
@@ -95,14 +98,39 @@ class ScreenEffectModel extends ModelBase_1.ModelBase {
         (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(e.LoadResId),
         (e.LoadResId = -1)),
       (e.Path = void 0),
+      (e.WaitingFightRootInit = !1),
       this.ReleaseHandle(e);
+  }
+  SetFightRootInited(e) {
+    if (
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("RenderEffect", 18, "设置战斗镜头特效根节点", [
+          "isInit",
+          e,
+        ]),
+      this.FightRootInited !== e && (this.FightRootInited = e))
+    )
+      for (const t of this.PathToHandleMap.values())
+        t.WaitingFightRootInit &&
+          ((t.WaitingFightRootInit = !1), t.EffectData) &&
+          (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("RenderEffect", 18, "开始播放镜头特效", [
+              "path",
+              t.Path,
+            ]),
+          ScreenEffectSystem_1.ScreenEffectSystem.GetInstance().PlayScreenEffect(
+            t.EffectData,
+          ));
   }
   GetHandle() {
     var e = this.HandlePool.pop();
     return e || new ScreenEffectHandle();
   }
   ReleaseHandle(e) {
-    this.HandlePool.push(e);
+    this.HandlePool.includes(e)
+      ? Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn("RenderEffect", 18, "镜头特效Handel重复入池")
+      : this.HandlePool.push(e);
   }
 }
 exports.ScreenEffectModel = ScreenEffectModel;

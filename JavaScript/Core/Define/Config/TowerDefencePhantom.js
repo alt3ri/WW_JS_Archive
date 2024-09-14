@@ -20,8 +20,14 @@ class TowerDefencePhantom {
   get TypeIcon() {
     return this.typeicon();
   }
+  get MarkHex() {
+    return this.markhex();
+  }
   get SkillGroup() {
     return this.skillgroup();
+  }
+  get ActivityId() {
+    return this.activityid();
   }
   __init(t, e) {
     return (this.z7 = t), (this.J7 = e), this;
@@ -52,8 +58,16 @@ class TowerDefencePhantom {
     var e = this.J7.__offset(this.z7, 12);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
+  markhex(t) {
+    var e = this.J7.__offset(this.z7, 14);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
+  }
   skillgroup() {
-    var t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 16);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  activityid() {
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

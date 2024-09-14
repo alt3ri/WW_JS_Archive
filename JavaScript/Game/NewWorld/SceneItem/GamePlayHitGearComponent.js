@@ -63,7 +63,7 @@ let GamePlayHitGearComponent =
         (this.acn = Vector_1.Vector.Create()),
         (this.Lo = void 0),
         (this.hcn = () => {
-          this.Entity.GetComponent(115).RemoveStopMoveCallback(this.hcn),
+          this.Entity.GetComponent(116).RemoveStopMoveCallback(this.hcn),
             this.ocn ||
               (EventSystem_1.EventSystem.AddWithTarget(
                 this,
@@ -73,11 +73,10 @@ let GamePlayHitGearComponent =
               (this.ocn = !0)),
             this.BDe();
         }),
-        (this.gIe = () => {}),
         (this.Zln = (e) => {
           this.lcn(e) &&
             e.ReBulletData.Base.DamageId !== BigInt(0) &&
-            !this.Entity.GetComponent(119).IsInState(3) &&
+            !this.Entity.GetComponent(120).IsInState(3) &&
             (e = TimeUtil_1.TimeUtil.GetServerTimeStamp()) - this.ncn >
               this.rcn * THOUSAND &&
             (LevelGamePlayController_1.LevelGamePlayController.ShootTargetHitGearStateChangeRequest(
@@ -85,25 +84,25 @@ let GamePlayHitGearComponent =
               (e) => {
                 if (e)
                   if (
-                    e.O4n ===
-                    Protocol_1.Aki.Protocol.O4n.Proto_ErrTargetGearFinished
+                    e.Q4n ===
+                    Protocol_1.Aki.Protocol.Q4n.Proto_ErrTargetGearFinished
                   )
                     Log_1.Log.CheckWarn() &&
                       Log_1.Log.Warn("World", 32, "靶机关已完成");
                   else {
                     if (
-                      e.O4n !==
-                      Protocol_1.Aki.Protocol.O4n
+                      e.Q4n !==
+                      Protocol_1.Aki.Protocol.Q4n
                         .Proto_ErrTargetGearEntityNotExist
                     )
-                      return e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
-                        ? e.O4n ===
-                          Protocol_1.Aki.Protocol.O4n
+                      return e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
+                        ? e.Q4n ===
+                          Protocol_1.Aki.Protocol.Q4n
                             .Proto_ErrOnlineInteractNoPermission
                           ? void 0
                           : void ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                              e.O4n,
-                              11184,
+                              e.Q4n,
+                              19766,
                             )
                         : void (
                             this.Entity?.Valid &&
@@ -157,14 +156,14 @@ let GamePlayHitGearComponent =
         }
       }
       return (
-        this.Entity.GetComponent(108).SetLogicRange(
+        this.Entity.GetComponent(109).SetLogicRange(
           ConfigManager_1.ConfigManager.ManipulateConfig.SearchRange,
         ),
         !0
       );
     }
     OnStart() {
-      if (((this.Hte = this.Entity.GetComponent(185)), !this.Hte))
+      if (((this.Hte = this.Entity.GetComponent(187)), !this.Hte))
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -174,9 +173,9 @@ let GamePlayHitGearComponent =
             ),
           !1
         );
-      (this.Jun = this.Entity.GetComponent(140)),
+      (this.Jun = this.Entity.GetComponent(141)),
         this.Jun.RegisterComponent(this, this.Lo);
-      var e = this.Entity.GetComponent(144);
+      var e = this.Entity.GetComponent(145);
       if (
         (e &&
           e.SetEnableMovementSync(
@@ -242,7 +241,7 @@ let GamePlayHitGearComponent =
               )),
             (this.Zun = this.md.SplineData),
             this.md.K2_SetActorLocation(o.ToUeVector(), !1, void 0, !1),
-            this.Entity.GetComponent(115)),
+            this.Entity.GetComponent(116)),
           o = Vector_1.Vector.Create(
             this.zie.GetWorldLocationAtDistanceAlongSpline(0),
           ),
@@ -261,11 +260,6 @@ let GamePlayHitGearComponent =
             this.Zln,
           ),
           (this.ocn = !0)),
-        EventSystem_1.EventSystem.AddWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.OnGameplayTagChanged,
-          this.gIe,
-        ),
         !0
       );
     }
@@ -274,7 +268,7 @@ let GamePlayHitGearComponent =
         t = UE.NewArray(UE.BuiltinFloat);
       for (const o of this.Zun.Points)
         e.Add(o.MoveSpeed), t.Add(o.StayTime ?? -1);
-      this.Entity.GetComponent(115).StartPatrol(
+      this.Entity.GetComponent(116).StartPatrol(
         this.zie,
         e,
         t,
@@ -291,16 +285,16 @@ let GamePlayHitGearComponent =
             this.zun,
             this.Entity.GetComponent(0).GetPbDataId(),
           ),
-        EventSystem_1.EventSystem.RemoveWithTarget(
+        EventSystem_1.EventSystem.HasWithTarget(
           this,
           EventDefine_1.EEventName.OnSceneItemHitByHitData,
           this.Zln,
-        ),
-        EventSystem_1.EventSystem.RemoveWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.OnGameplayTagChanged,
-          this.gIe,
-        ),
+        ) &&
+          EventSystem_1.EventSystem.RemoveWithTarget(
+            this,
+            EventDefine_1.EEventName.OnSceneItemHitByHitData,
+            this.Zln,
+          ),
         (this.Jun = void 0),
         Info_1.Info.EnableForceTick ||
           ComponentForceTickController_1.ComponentForceTickController.UnregisterTick(
@@ -310,7 +304,7 @@ let GamePlayHitGearComponent =
       );
     }
     IsCanBeManipulateLock() {
-      var e = this.Entity.GetComponent(180);
+      var e = this.Entity.GetComponent(181);
       return -1590436469 === this.scn && e.HasTag(-3775711);
     }
     GetHitPoint() {
@@ -331,7 +325,7 @@ let GamePlayHitGearComponent =
   });
 (GamePlayHitGearComponent = GamePlayHitGearComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(126)],
+    [(0, RegisterComponent_1.RegisterComponent)(127)],
     GamePlayHitGearComponent,
   )),
   (exports.GamePlayHitGearComponent = GamePlayHitGearComponent);

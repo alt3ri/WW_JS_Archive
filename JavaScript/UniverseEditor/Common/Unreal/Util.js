@@ -51,7 +51,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.loadClass =
     exports.isValidActor =
       void 0),
-  (exports.endActorPickerMode = void 0);
+  (exports.isFileInUse = exports.endActorPickerMode = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   ue_1 = require("ue"),
@@ -503,6 +503,30 @@ function beginActorPickerMode(o, e) {
 function endActorPickerMode() {
   isInActorPickerMode() && ue_1.EditorOperations.EndActorPickerMode();
 }
+function isFileInUse(t) {
+  if (!(0, File_1.existFile)(t)) return !1;
+  var o = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
+    e = (0, puerts_1.$ref)("");
+  if (
+    !execPythonCommand(
+      [
+        "try:",
+        `    with open('${t}', 'r+'):`,
+        '        print("False")',
+        "except IOError:",
+        '    print("True")',
+      ].join("\n"),
+      e,
+      o,
+    )
+  )
+    return !1;
+  t = (0, puerts_1.$unref)(o);
+  let r = (0, puerts_1.$unref)(e);
+  return (
+    "True" === (r = (!r || "None" === r) && 0 < t.Num() ? t.Get(0).Output : r)
+  );
+}
 (exports.findActorInEditorWorld = findActorInEditorWorld),
   (exports.isInPieOrPkg = isInPieOrPkg),
   (exports.getVectorInfoFromTransformInUeClipboard =
@@ -517,5 +541,6 @@ function endActorPickerMode() {
     copyRotatorToTransformInUeClipboard),
   (exports.isInActorPickerMode = isInActorPickerMode),
   (exports.beginActorPickerMode = beginActorPickerMode),
-  (exports.endActorPickerMode = endActorPickerMode);
+  (exports.endActorPickerMode = endActorPickerMode),
+  (exports.isFileInUse = isFileInUse);
 //# sourceMappingURL=Util.js.map

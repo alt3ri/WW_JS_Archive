@@ -10,8 +10,8 @@ const UE = require("ue"),
   GeographyHandBookChildItem_1 = require("./GeographyHandBookChildItem"),
   HandBookDefine_1 = require("./HandBookDefine");
 class GeographyHandBookItem extends GridProxyAbstract_1.GridProxyAbstract {
-  constructor(e = void 0) {
-    super(),
+  constructor() {
+    super(...arguments),
       (this.VZt = void 0),
       (this.Cei = []),
       (this.gei = []),
@@ -19,8 +19,7 @@ class GeographyHandBookItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.WZt = (e, i, t) => {
         i = new GeographyHandBookChildItem_1.GeographyHandBookChildItem(i);
         return i.Refresh(e, !1, t), this.fei.push(i), { Key: t, Value: i };
-      }),
-      e && this.CreateThenShowByActor(e.GetOwner());
+      });
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [

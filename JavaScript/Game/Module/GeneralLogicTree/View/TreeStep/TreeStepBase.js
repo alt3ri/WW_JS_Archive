@@ -2,10 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TreeStepBase = void 0);
 const ue_1 = require("ue"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiComponentsAction_1 = require("../../../../Ui/Base/UiComponentsAction"),
+  MapUtil_1 = require("../../../Map/MapUtil"),
   QuestUtil_1 = require("../../../QuestNew/QuestUtil"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
   GeneralLogicTreeController_1 = require("../../GeneralLogicTreeController");
 class TreeStepBase extends UiComponentsAction_1.UiComponentsAction {
   constructor() {
@@ -48,15 +51,30 @@ class TreeStepBase extends UiComponentsAction_1.UiComponentsAction {
               GeneralLogicTreeController_1.GeneralLogicTreeController.GetTitleTrackNodeId(
                 this.Config,
               ),
-            t = t.GetNodeTrackPosition(e);
-          if (!t) return this.DistanceTextComp.SetUIActive(!1), !1;
-          if (
-            !QuestUtil_1.QuestUtil.SetTrackDistanceText(
+            i = t.GetNodeDungeonId(e) ?? 0,
+            r = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
+          if (MapUtil_1.MapUtil.IsDungeonDiffWorld(r, i)) {
+            (r = t.GetNodeTrackPosition(e)),
+              (i = MapUtil_1.MapUtil.GetInstanceDungeonTempWorldName(
+                i,
+                r ?? Vector_1.Vector.ZeroVectorProxy,
+              ));
+            LguiUtil_1.LguiUtil.SetLocalTextNew(
               this.DistanceTextComp,
-              t,
+              "CrossMapMissionTips",
+              i,
+            );
+          } else {
+            r = t.GetNodeTrackPosition(e);
+            if (!r) return this.DistanceTextComp.SetUIActive(!1), !1;
+            if (
+              !QuestUtil_1.QuestUtil.SetTrackDistanceText(
+                this.DistanceTextComp,
+                r,
+              )
             )
-          )
-            return this.DistanceTextComp.SetUIActive(!1), !1;
+              return this.DistanceTextComp.SetUIActive(!1), !1;
+          }
           this.DistanceTextComp.SetUIActive(!0);
         }
         return !0;

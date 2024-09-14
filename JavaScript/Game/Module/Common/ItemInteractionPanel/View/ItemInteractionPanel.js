@@ -23,7 +23,7 @@ class ItemInteractionPanel extends UiPanelBase_1.UiPanelBase {
       (this.ZPt = void 0),
       (this.LPt = void 0),
       (this.ext = void 0),
-      (this.v0a = void 0),
+      (this.Qva = void 0),
       (this.cHe = () => {
         var t =
           new ItemInteractionMediumItemGrid_1.ItemInteractionMediumItemGrid();
@@ -44,7 +44,7 @@ class ItemInteractionPanel extends UiPanelBase_1.UiPanelBase {
       (this.gke = (t, i, e) => {
         return (
           !(
-            (this.v0a && this.v0a.IsSelected && t === this.v0a) ||
+            (this.Qva && this.Qva.IsSelected && t === this.Qva) ||
             this.$Pt.indexOf(t) < 0
           ) &&
           (!this.LPt || this.LPt(t))
@@ -158,7 +158,7 @@ class ItemInteractionPanel extends UiPanelBase_1.UiPanelBase {
     this.YPt.clear();
   }
   RefreshItemPanel(t) {
-    this.JPt?.RefreshByData(t), (this.$Pt = t), (this.v0a = void 0);
+    this.JPt?.RefreshByData(t), (this.$Pt = t), (this.Qva = void 0);
   }
   RefreshItemGrid(t) {
     t = this.$Pt.indexOf(t);
@@ -168,7 +168,7 @@ class ItemInteractionPanel extends UiPanelBase_1.UiPanelBase {
     var e = this.$Pt.indexOf(i);
     e < 0 ||
       ((i.IsSelected = t),
-      (this.v0a = t ? i : void 0),
+      (this.Qva = t ? i : void 0),
       this.JPt?.RefreshGridProxy(e));
   }
   GetCurrentItemDataList() {

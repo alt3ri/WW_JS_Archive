@@ -56,7 +56,7 @@ class VisionSubPropData {
   GetSubPropName() {
     var t =
         ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSubPropertyById(
-          this.PhantomSubProp.$ws,
+          this.PhantomSubProp.Yws,
         ).PropId,
       t =
         ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
@@ -76,9 +76,9 @@ class VisionSubPropData {
           ) ?? ""),
         StringUtils_1.StringUtils.Format(t, this.GetUnlockLevel().toString()))
       : 1 === this.SlotState
-        ? MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+        ? (MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             "WaitForIdentify",
-          ) ?? ""
+          ) ?? "")
         : 3 === this.SlotState
           ? this.GetSubPropName()
           : 2 === this.SlotState
@@ -91,19 +91,19 @@ class VisionSubPropData {
                 this.GetUnlockLevel().toString(),
               ))
             : 5 === this.SlotState || 4 === this.SlotState
-              ? MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+              ? (MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
                   "CurrentIdentifyUnlockText",
-                ) ?? ""
+                ) ?? "")
               : "";
   }
   GetAttributeValueString() {
     var t =
         ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSubPropertyById(
-          this.PhantomSubProp.$ws,
+          this.PhantomSubProp.Yws,
         ),
       e = t.AddType === CommonComponentDefine_1.RATIO,
       r = AttributeModel_1.TipsDataTool.GetPropRatioValue(
-        this.PhantomSubProp.W4n,
+        this.PhantomSubProp.e5n,
         e,
       );
     return ModelManager_1.ModelManager.AttributeModel.GetFormatAttributeValueString(
@@ -159,7 +159,7 @@ class PhantomDataBase {
     this.PhantomExp = t;
   }
   CurrentPhantomInstance() {
-    return this.GetPhantomInstance();
+    return this.GetPhantomInstanceWithSkinId();
   }
   GetCurrentSuspendSlotData() {
     return this.SuspendSlot;
@@ -179,7 +179,7 @@ class PhantomDataBase {
     for (let t = 1; t <= this.GetPhantomLevel(); t++)
       e +=
         ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomLevelExpByGroupIdAndLevel(
-          this.CurrentPhantomInstance().PhantomItem.LevelUpGroupId,
+          this.b4a().PhantomItem.LevelUpGroupId,
           t,
         );
     return e + this.PhantomExp;
@@ -188,14 +188,14 @@ class PhantomDataBase {
     return this.PhantomExp;
   }
   UpdateData(t) {
-    (this.BVi = t.L9n ?? 0),
-      (this.FuncValue = t.Bws ?? 0),
-      (this.PhantomLevel = t.qws ?? 0),
-      (this.PhantomExp = t.Gws ?? 0),
-      (this.PhantomMainProp = t.Ows ?? []),
-      (this.PhantomSubProp = t.kws ?? []),
-      (this.FetterGroupId = t.Nws ?? 0),
-      (this.bVi = t.j7n ?? 0);
+    (this.BVi = t.b9n ?? 0),
+      (this.FuncValue = t.Vws ?? 0),
+      (this.PhantomLevel = t.$ws ?? 0),
+      (this.PhantomExp = t.Hws ?? 0),
+      (this.PhantomMainProp = t.jws ?? []),
+      (this.PhantomSubProp = t.Wws ?? []),
+      (this.FetterGroupId = t.Kws ?? 0),
+      (this.bVi = t.Z7n ?? 0);
   }
   SetMainProp(t) {
     this.PhantomMainProp = t;
@@ -210,20 +210,20 @@ class PhantomDataBase {
     this.FuncValue = t;
   }
   GetSuspendAttributeData() {
-    var t = this.SuspendSlot.Fws;
+    var t = this.SuspendSlot.Qws;
     const i = new Array();
     return (
       t.forEach((t) => {
         var e =
             ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSubPropertyById(
-              t.$ws,
+              t.Yws,
             ),
           r =
             ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
-              t.$ws,
+              t.Yws,
             ),
           n = e.AddType === CommonComponentDefine_1.RATIO,
-          t = AttributeModel_1.TipsDataTool.GetPropRatioValue(t.W4n, n);
+          t = AttributeModel_1.TipsDataTool.GetPropRatioValue(t.e5n, n);
         i.push(
           new AttrListScrollData_1.AttrListScrollData(
             e.PropId,
@@ -246,14 +246,14 @@ class PhantomDataBase {
         (r = new Array()),
         (n =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSubPropertyById(
-            t.$ws,
+            t.Yws,
           )),
         (i =
           ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
-            t.$ws,
+            t.Yws,
           )),
         (a = n.AddType === CommonComponentDefine_1.RATIO),
-        (t = AttributeModel_1.TipsDataTool.GetPropRatioValue(t.W4n, a)),
+        (t = AttributeModel_1.TipsDataTool.GetPropRatioValue(t.e5n, a)),
         r.push(
           new AttrListScrollData_1.AttrListScrollData(
             n.PropId,
@@ -267,8 +267,14 @@ class PhantomDataBase {
         r
       );
   }
-  GetIfActivePersonalSkill() {
-    return 0 < (2 & this.FuncValue);
+  IsFunctionValue(t) {
+    return 0 < (this.FuncValue & (1 << t));
+  }
+  GetIsLock() {
+    return this.IsFunctionValue(0);
+  }
+  GetIsDeprecated() {
+    return this.IsFunctionValue(1);
   }
   GetEquipRoleId() {
     return (
@@ -365,8 +371,8 @@ class PhantomDataBase {
         );
       h && s.push(h);
     }
-    const l = PhantomDataBase.CalculateFetterByPhantomBattleData(s),
-      u = o.length;
+    const u = PhantomDataBase.CalculateFetterByPhantomBattleData(s),
+      l = o.length;
     return (
       r.forEach((e, t) => {
         var r = new VisionFetterData(),
@@ -374,11 +380,11 @@ class PhantomDataBase {
             ((r.FetterGroupId = this.FetterGroupId),
             (r.FetterId = e),
             (r.NeedActiveNum = t),
-            (r.ActiveFetterGroupNum = l.get(this.FetterGroupId) ?? 0),
-            (r.ActiveState = l.get(this.FetterGroupId) >= t),
-            l.get(this.FetterGroupId) >= t);
+            (r.ActiveFetterGroupNum = u.get(this.FetterGroupId) ?? 0),
+            (r.ActiveState = u.get(this.FetterGroupId) >= t),
+            u.get(this.FetterGroupId) >= t);
         let i = !1;
-        for (let t = 0; t < u; t++)
+        for (let t = 0; t < l; t++)
           if (o[t].FetterId === e && o[t].ActiveState !== n && n) {
             i = !0;
             break;
@@ -442,9 +448,6 @@ class PhantomDataBase {
     return ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupById(
       this.GetFetterGroupId(),
     );
-  }
-  GetIfLock() {
-    return 0 < (1 & this.FuncValue);
   }
   GetCost() {
     var t = this.GetConfig().Rarity;
@@ -726,7 +729,7 @@ class PhantomDataBase {
     return i;
   }
   GetCurrentSkillId() {
-    return this.GetPhantomInstance().PhantomItem.SkillId;
+    return this.GetPhantomInstanceWithSkinId().PhantomItem.SkillId;
   }
   GetSkillDescExParam(t) {
     return ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSkillDescExBySkillIdAndQuality(
@@ -735,7 +738,7 @@ class PhantomDataBase {
     );
   }
   GetNormalSkillDesc() {
-    var t = this.GetPhantomInstance(),
+    var t = this.GetPhantomInstanceWithSkinId(),
       t =
         ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSkillBySkillId(
           t.PhantomItem.SkillId,
@@ -748,26 +751,29 @@ class PhantomDataBase {
       };
   }
   GetNormalSkillConfig() {
-    var t = this.GetPhantomInstance();
+    var t = this.GetPhantomInstanceWithSkinId();
     return ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSkillBySkillId(
       t.PhantomItem.SkillId,
     );
   }
   GetNormalSkillId() {
-    return this.GetPhantomInstance().PhantomItem.SkillId;
+    return this.GetPhantomInstanceWithSkinId().PhantomItem.SkillId;
   }
   GetPersonalSkillId() {
     return 0;
   }
-  GetPhantomInstance() {
+  GetPhantomInstanceWithSkinId() {
     var t = this.SkinId;
     return t
       ? ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomInstanceByItemId(
           t,
         )
-      : ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomInstanceByItemId(
-          this.GetConfigId(),
-        );
+      : this.b4a();
+  }
+  b4a() {
+    return ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomInstanceByItemId(
+      this.GetConfigId(),
+    );
   }
   GetLevelUpPreviewData(t) {
     const a = new Array();
@@ -775,7 +781,7 @@ class PhantomDataBase {
     const o = new Map();
     return (
       this.PhantomMainProp.forEach((t) => {
-        o.set(t.$ws, t.W4n);
+        o.set(t.Yws, t.e5n);
       }),
       t.forEach((t, e) => {
         var r = o.has(e) ? o.get(e) : 0,
@@ -812,7 +818,7 @@ class PhantomDataBase {
     for (const i of this.GetPhantomMainProp()) {
       var r =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomMainPropertyItemId(
-            i.$ws,
+            i.Yws,
           ),
         n =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomGrowthValueByGrowthIdAndLevel(
@@ -824,7 +830,7 @@ class PhantomDataBase {
           n,
           !1,
         );
-      e.set(i.$ws, Math.floor(r));
+      e.set(i.Yws, Math.floor(r));
     }
     return e;
   }
@@ -879,7 +885,7 @@ class PhantomDataBase {
     var r = new Array();
     const n = new Map();
     this.PhantomMainProp.forEach((t) => {
-      n.set(t.$ws, t.W4n);
+      n.set(t.Yws, t.e5n);
     });
     var i = Array.from(n.keys()),
       a = i.length;
@@ -915,14 +921,14 @@ class PhantomDataBase {
       this.PhantomSubProp.forEach((t) => {
         var e =
             ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
-              t.$ws,
+              t.Yws,
             ),
           r =
             ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSubPropertyById(
-              t.$ws,
+              t.Yws,
             ),
           n = r.AddType === CommonComponentDefine_1.RATIO,
-          t = AttributeModel_1.TipsDataTool.GetPropRatioValue(t.W4n, n);
+          t = AttributeModel_1.TipsDataTool.GetPropRatioValue(t.e5n, n);
         a.push(
           new AttrListScrollData_1.AttrListScrollData(
             r.PropId,
@@ -942,11 +948,11 @@ class PhantomDataBase {
     const n = new Map(),
       i =
         (this.PhantomMainProp.forEach((t) => {
-          n.set(t.$ws, t.W4n);
+          n.set(t.Yws, t.e5n);
         }),
         new Map());
     this.PhantomSubProp.forEach((t) => {
-      i.set(t.$ws, t.W4n), n.has(t.$ws) || n.set(t.$ws, 0);
+      i.set(t.Yws, t.e5n), n.has(t.Yws) || n.set(t.Yws, 0);
     });
     var a = Array.from(n.keys()),
       o = a.length;

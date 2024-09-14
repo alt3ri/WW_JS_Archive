@@ -37,8 +37,8 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
       (this.vNt = void 0),
       (this.MNt = void 0),
       (this.GOe = void 0),
-      (this.qjs = void 0),
-      (this.zVs = !1),
+      (this.oWs = void 0),
+      (this.p9s = !1),
       (this.DLi = void 0),
       (this.BNt = () => {
         this.AGt(),
@@ -70,18 +70,18 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
           (e = ModelManager_1.ModelManager.ComposeModel.ComposeSuccessFlow),
           ForgingController_1.ForgingController.PlayForgingFlow(e));
       }),
-      (this.Gjs = () => {
+      (this.nWs = () => {
         this.MNt.UpdateData(24, this.LNt()), this.AGt();
       }),
       (this.jwe = (e) => {
         "OnBlackScreen" === e &&
           (this.ChildPopView?.PlayLevelSequenceByName("BlackScreenShow"),
-          this.qjs?.IsPending() && this.qjs.SetResult(),
+          this.oWs?.IsPending() && this.oWs.SetResult(),
           this.ChildPopView?.PopItem.SetActive(!0),
           ForgingController_1.ForgingController.PlayForgingEnterDisplay(
             this.VTi,
           ),
-          (this.zVs = !0));
+          (this.p9s = !0));
       }),
       (this.xNt = (e, i, t) => {
         i = new MainTypeItem(i, e);
@@ -152,7 +152,7 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.GetForgingData,
-      this.Gjs,
+      this.nWs,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OpenHelpRole,
@@ -179,7 +179,7 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.GetForgingData,
-      this.Gjs,
+      this.nWs,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OpenHelpRole,
@@ -275,7 +275,7 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
       CommonManager_1.CommonManager.SetCurrentSystem(2),
       (ModelManager_1.ModelManager.ForgingModel.CurrentForgingViewType = 0);
     for (const e of this.wTi.GetLayoutItemMap().values()) e.OnSelectedItem();
-    (this.qjs = new CustomPromise_1.CustomPromise()),
+    (this.oWs = new CustomPromise_1.CustomPromise()),
       (ModelManager_1.ModelManager.ForgingModel.CurrentInteractCreatureDataLongId =
         ModelManager_1.ModelManager.InteractionModel.InteractCreatureDataLongId),
       void 0 ===
@@ -294,14 +294,14 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
   }
   async OnBeforeShowAsyncImplement() {
     UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingBlendInSequence() &&
-      this.qjs &&
-      (await this.qjs.Promise);
+      this.oWs &&
+      (await this.oWs.Promise);
   }
   OnBeforeShow() {
-    this.Gjs(), this.ChildPopView?.PopItem.SetMaskResponsibleState(!1);
+    this.nWs(), this.ChildPopView?.PopItem.SetMaskResponsibleState(!1);
   }
   OnAfterShow() {
-    this.JNt(), (this.qjs = void 0);
+    this.JNt(), (this.oWs = void 0);
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
@@ -314,14 +314,14 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
       this.DLi.Destroy(),
       ForgingController_1.ForgingController.PlayLeaveForgingAudio(),
       ForgingController_1.ForgingController.ClearCurrentInteractionEntityDisplay(),
-      (this.qjs = void 0),
+      (this.oWs = void 0),
       (ModelManager_1.ModelManager.ForgingModel.CurrentForgingRoleId = 0);
   }
   JNt() {
     var e,
       i = this.ChildPopView.PopItem;
     i &&
-      !this.zVs &&
+      !this.p9s &&
       ((e =
         !UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingBlendInSequence()),
       i.GetActive() !== e) &&

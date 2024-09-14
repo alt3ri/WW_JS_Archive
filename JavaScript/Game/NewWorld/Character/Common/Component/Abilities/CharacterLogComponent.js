@@ -63,7 +63,7 @@ let CharacterLogComponent =
                   o.has(r) ||
                     (((t = CharacterLogComponent_1.VGr(r)).i_monster_level =
                       e
-                        .GetComponent(158)
+                        .GetComponent(159)
                         ?.GetCurrentValue(
                           CharacterAttributeTypes_1.EAttributeId.Proto_Lv,
                         ) ?? 0),
@@ -143,18 +143,18 @@ let CharacterLogComponent =
             (((t = CharacterLogComponent_1.tNr(this.Entity.Id)).l_acc_energy +=
               e - r),
             e >=
-              this.Entity.GetComponent(158).GetCurrentValue(
+              this.Entity.GetComponent(159).GetCurrentValue(
                 CharacterAttributeTypes_1.EAttributeId.Proto_EnergyMax,
               ) -
                 Number.EPSILON) &&
             t.i_full_energy_times++;
         }),
         (this.hUe = () => {
-          this.Entity.GetComponent(160)?.IsInFightState() &&
+          this.Entity.GetComponent(161)?.IsInFightState() &&
             CharacterLogComponent_1.hNr();
         }),
         (this.BJe = (t, e) => {
-          this.Entity.GetComponent(160)?.IsInFightState() &&
+          this.Entity.GetComponent(161)?.IsInFightState() &&
             CharacterLogComponent_1.hNr();
         }),
         (this.lNr = () => {
@@ -170,7 +170,7 @@ let CharacterLogComponent =
           r <= 0 ||
             ((e = CharacterLogComponent_1.VGr(this.Entity.Id)) &&
               ((e.l_acc_rage += r),
-              this.Entity.GetComponent(52)?.IsTriggerCounterAttack) &&
+              this.Entity.GetComponent(53)?.IsTriggerCounterAttack) &&
               (e.l_acc_rage_counter += r));
         }),
         (this.QGr = 0),
@@ -233,7 +233,7 @@ let CharacterLogComponent =
         EventDefine_1.EEventName.AiHateAddOrRemove,
         this.OnAggroChanged,
       ),
-        (this.qGr = this.Entity.CheckGetComponent(188).ListenForTagAddOrRemove(
+        (this.qGr = this.Entity.CheckGetComponent(190).ListenForTagAddOrRemove(
           1922078392,
           this.cNr,
         )),
@@ -280,25 +280,25 @@ let CharacterLogComponent =
             this.hUe,
           ),
           this.GGr.push(
-            this.Entity.CheckGetComponent(188).ListenForTagAddOrRemove(
+            this.Entity.CheckGetComponent(190).ListenForTagAddOrRemove(
               -1371021686,
               this.BJe,
             ),
           ),
           this.GGr.push(
-            this.Entity.CheckGetComponent(188).ListenForTagAddOrRemove(
+            this.Entity.CheckGetComponent(190).ListenForTagAddOrRemove(
               -1800191060,
               this.BJe,
             ),
           ),
           this.GGr.push(
-            this.Entity.CheckGetComponent(188).ListenForTagAddOrRemove(
+            this.Entity.CheckGetComponent(190).ListenForTagAddOrRemove(
               -1221493771,
               this.BJe,
             ),
           ))
         : t.IsMonster() &&
-          this.Entity.GetComponent(158)?.AddListener(
+          this.Entity.GetComponent(159)?.AddListener(
             CharacterAttributeTypes_1.EAttributeId.Proto_Rage,
             this.uNr,
           );
@@ -355,7 +355,7 @@ let CharacterLogComponent =
         for (const e of this.GGr) e.EndTask();
         this.GGr.length = 0;
       } else if (t.IsMonster()) {
-        this.Entity.GetComponent(158)?.RemoveListener(
+        this.Entity.GetComponent(159)?.RemoveListener(
           CharacterAttributeTypes_1.EAttributeId.Proto_Rage,
           this.uNr,
         );
@@ -402,7 +402,7 @@ let CharacterLogComponent =
       );
     }
     LNr() {
-      var t = this.Entity.GetComponent(188);
+      var t = this.Entity.GetComponent(190);
       return t.HasTag(-1800191060) || t.HasTag(-1221493771)
         ? 7
         : t.HasTag(-1371021686)
@@ -410,7 +410,7 @@ let CharacterLogComponent =
           : void 0;
     }
     DNr() {
-      switch (this.Entity.GetComponent(160).MoveState) {
+      switch (this.Entity.GetComponent(161).MoveState) {
         case CharacterUnifiedStateTypes_1.ECharMoveState.Walk:
         case CharacterUnifiedStateTypes_1.ECharMoveState.WalkStop:
         case CharacterUnifiedStateTypes_1.ECharMoveState.Run:
@@ -440,7 +440,7 @@ let CharacterLogComponent =
     static RNr() {
       if (void 0 === this.CurrentEntity)
         for (const r of this.UNr.values())
-          if (r.Entity.GetComponent(160)?.IsInFightState()) {
+          if (r.Entity.GetComponent(161)?.IsInFightState()) {
             this.CurrentEntity = r;
             break;
           }
@@ -449,7 +449,7 @@ let CharacterLogComponent =
         ? void 0 !==
           (e = (t = this.CurrentEntity.Entity.GetComponent(21))?.LNr())
           ? e
-          : t?.DNr() ?? 0
+          : (t?.DNr() ?? 0)
         : 0;
     }
     static ANr() {
@@ -670,7 +670,7 @@ let CharacterLogComponent =
             String(this.c9)),
           (e.i_monster_level =
             a
-              .GetComponent(158)
+              .GetComponent(159)
               ?.GetCurrentValue(
                 CharacterAttributeTypes_1.EAttributeId.Proto_Lv,
               ) ?? 0),
@@ -687,6 +687,7 @@ let CharacterLogComponent =
           this.c9 <= 0)
         )
       ) {
+        this.aOr.Start();
         var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity,
           e = t.Entity.GetComponent(3),
           t =
@@ -701,12 +702,12 @@ let CharacterLogComponent =
           a = new Array();
         for (const i of t) {
           var o = this.tNr(i.Id),
-            n = i.Entity.GetComponent(158);
+            n = i.Entity.GetComponent(159);
           (o.i_begin_hp = n.GetCurrentValue(
             CharacterAttributeTypes_1.EAttributeId.Proto_Life,
           )),
             (o.i_hp_max = n.GetCurrentValue(
-              CharacterAttributeTypes_1.EAttributeId.e5n,
+              CharacterAttributeTypes_1.EAttributeId.l5n,
             )),
             (o.i_enter_battle_score = this.hOr(i.Id)),
             r.push(o.i_role_id),
@@ -736,7 +737,8 @@ let CharacterLogComponent =
               Log_1.Log.Debug("Battle", 4, "战斗ID不合法", [
                 "battle_id",
                 this.c9,
-              ]);
+              ]),
+          this.aOr.Stop();
       }
     }
     static _Or() {
@@ -745,6 +747,7 @@ let CharacterLogComponent =
         0 !== this.c9 &&
         !this.eOr()
       ) {
+        this.uOr.Start();
         var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity,
           [r, a] = this.cOr(e.Entity);
         const o = this.PNr;
@@ -777,13 +780,13 @@ let CharacterLogComponent =
           });
         e = o.s_run_monster.length;
         let t = this.WNr;
-        t !== Protocol_1.Aki.Protocol.T4s.Proto_Death &&
+        t !== Protocol_1.Aki.Protocol.w4s.Proto_Death &&
           (0 === e
-            ? (t = Protocol_1.Aki.Protocol.T4s.Proto_AllKill)
+            ? (t = Protocol_1.Aki.Protocol.w4s.Proto_AllKill)
             : e < this.OGr.size
-              ? (t = Protocol_1.Aki.Protocol.T4s.aEs)
+              ? (t = Protocol_1.Aki.Protocol.w4s.mEs)
               : e === this.OGr.size &&
-                (t = Protocol_1.Aki.Protocol.T4s.Proto_Run)),
+                (t = Protocol_1.Aki.Protocol.w4s.Proto_Run)),
           (o.i_result = t),
           (o.i_death_role_count = this.qNr),
           (o.i_revive_times = this._Nr),
@@ -816,7 +819,8 @@ let CharacterLogComponent =
           this.COr(),
           this.gOr(),
           this.fOr(),
-          this.bNr();
+          this.bNr(),
+          this.uOr.Stop();
       }
     }
     static mOr() {
@@ -942,8 +946,8 @@ let CharacterLogComponent =
     static hOr(t) {
       var e = 0,
         r = EntitySystem_1.EntitySystem.Get(t),
-        a = r.GetComponent(158),
-        r = r.GetComponent(81),
+        a = r.GetComponent(159),
+        r = r.GetComponent(82),
         r = CharacterDamageCalculations_1.Calculation.GetElementDamageBonus(
           a.TakeSnapshot(),
           r.RoleElementType,
@@ -1046,7 +1050,7 @@ let CharacterLogComponent =
       }
     }
     static iOr(t) {
-      var t = EntitySystem_1.EntitySystem.Get(t).GetComponent(158),
+      var t = EntitySystem_1.EntitySystem.Get(t).GetComponent(159),
         e =
           (t.GetCurrentValue(
             CharacterAttributeTypes_1.EAttributeId.Proto_DamageResistancePhys,
@@ -1078,7 +1082,7 @@ let CharacterLogComponent =
           7 /
           CharacterAttributeTypes_1.PER_TEN_THOUSAND,
         t =
-          t.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.e5n) /
+          t.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.l5n) /
           (1 - e) /
           0.5;
       let r = 0;
@@ -1101,12 +1105,12 @@ let CharacterLogComponent =
         r = new Array();
       for (const n of t) {
         var a = this.tNr(n.Id),
-          o = n.Entity.GetComponent(158);
+          o = n.Entity.GetComponent(159);
         (a.i_end_hp = o.GetCurrentValue(
           CharacterAttributeTypes_1.EAttributeId.Proto_Life,
         )),
           (a.i_hp_max = o.GetCurrentValue(
-            CharacterAttributeTypes_1.EAttributeId.e5n,
+            CharacterAttributeTypes_1.EAttributeId.l5n,
           )),
           e.push(a.i_role_id),
           r.push(Math.round((a.i_end_hp / a.i_hp_max) * 1e4));
@@ -1156,7 +1160,7 @@ let CharacterLogComponent =
       1 === e &&
       1 !== r &&
       CharacterLogComponent_1.WGr() &&
-      ((CharacterLogComponent_1.WNr = Protocol_1.Aki.Protocol.T4s.Proto_Death),
+      ((CharacterLogComponent_1.WNr = Protocol_1.Aki.Protocol.w4s.Proto_Death),
       CharacterLogComponent_1.dNr(!1));
   }),
   (CharacterLogComponent.c9 = 0),
@@ -1198,9 +1202,9 @@ let CharacterLogComponent =
   (CharacterLogComponent.pOr = new Map()),
   (CharacterLogComponent.vOr = new Map()),
   (CharacterLogComponent.lOr = new LogReportDefine_1.BattleStartLogData()),
-  (CharacterLogComponent.aOr = void 0),
+  (CharacterLogComponent.aOr = Stats_1.Stat.Create("LogOnBattleStart")),
   (CharacterLogComponent.PNr = new LogReportDefine_1.BattleEndLogData()),
-  (CharacterLogComponent.uOr = void 0),
+  (CharacterLogComponent.uOr = Stats_1.Stat.Create("LogOnBattleEnd")),
   (CharacterLogComponent.fNr = (t) => {
     var e;
     ModelManager_1.ModelManager.GameModeModel.IsMulti ||
@@ -1212,8 +1216,8 @@ let CharacterLogComponent =
       CharacterLogComponent_1.JGr.i_death_role_count++);
   }),
   (CharacterLogComponent.ENr = (t) => {
-    t.Qps && (CharacterLogComponent_1.JGr.i_result = Number(t.Qps)),
-      t.E9n && (CharacterLogComponent_1.JGr.i_reason = t.E9n);
+    t.tMs && (CharacterLogComponent_1.JGr.i_result = Number(t.tMs)),
+      t.x9n && (CharacterLogComponent_1.JGr.i_reason = t.x9n);
   }),
   (CharacterLogComponent.SNr = () => {
     1 < ModelManager_1.ModelManager.GameModeModel.InstanceType &&

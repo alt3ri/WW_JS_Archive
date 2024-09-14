@@ -97,7 +97,7 @@ class MonthCardModel extends ModelBase_1.ModelBase {
           void 0,
         ) ?? 0);
     var e = Time_1.Time.ServerTimeStamp;
-    return this.NextShowPayButtonRedDotTime < e;
+    return this.NextShowPayButtonRedDotTime < e && this.GetRemainDays() < 0;
   }
   RefreshNextShowPayButtonRedDotTime() {
     var e;

@@ -101,19 +101,20 @@ class LevelAiNodeBehaviourSpline extends LevelAiStandaloneNode_1.LevelAiStandalo
         var h = this.UTe(o.Option.Points, o);
         let r = !1,
           s = [];
-        var v = o.Option.UsePathFinding ?? !1;
+        var v = o.Option.UsePathFinding ?? !1,
+          _ = o.Option.IsPassEveryKeyPoint ?? !1;
         let a = 0;
         for (let t = 0; t < l; ++t) {
-          var _ = t,
-            p = o.Option.Points[t];
+          var p = t,
+            S = o.Option.Points[t];
           if (
-            (s.push(p), (p.Actions && 0 !== p.Actions.length) || _ === l - 1)
+            (s.push(S), (S.Actions && 0 !== S.Actions.length) || p === l - 1)
           ) {
-            var p = this.ATe(o, s, i, _, v),
-              S = "INTERNAL_PATROL_" + a.toString(),
-              A =
+            var S = this.ATe(o, s, i, p, v, _),
+              A = "INTERNAL_PATROL_" + a.toString(),
+              L =
                 (h >= i &&
-                  h <= _ &&
+                  h <= p &&
                   !r &&
                   (Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
@@ -122,44 +123,44 @@ class LevelAiNodeBehaviourSpline extends LevelAiStandaloneNode_1.LevelAiStandalo
                       "选择初始的移动状态",
                       ["EntityId", this.CreatureDataComponent.GetPbDataId()],
                       ["最近的点", h],
-                      ["当前状态名称", S],
+                      ["当前状态名称", A],
                     ),
                   (r = !0),
                   this.CharacterPlanComponent.WorldState.SetBooleanWorldState(
-                    S,
+                    A,
                     !0,
                   )),
-                new SelfVarCompareParam(S, !0)),
-              L = new LevelAiDecoratorCompareVar_1.LevelAiDecoratorCompareVar(),
-              A =
-                (L.Serialize(
+                new SelfVarCompareParam(A, !0)),
+              c = new LevelAiDecoratorCompareVar_1.LevelAiDecoratorCompareVar(),
+              L =
+                (c.Serialize(
                   this.CharacterPlanComponent,
                   this.CreatureDataComponent,
-                  "检查巡逻状态 " + S,
-                  A,
+                  "检查巡逻状态 " + A,
+                  L,
                 ),
-                p.First.Decorators.push(L),
-                new SelfVarSetParam(S, !1)),
-              L = new LevelAiTaskSetVar_1.LevelAiTaskSetVar();
+                S.First.Decorators.push(c),
+                new SelfVarSetParam(A, !1)),
+              c = new LevelAiTaskSetVar_1.LevelAiTaskSetVar();
+            c.Serialize(
+              this.CharacterPlanComponent,
+              this.CreatureDataComponent,
+              "设置当前巡逻状态 " + A,
+              L,
+            ),
+              S.Last.NextNodes.push(c);
+            let e = "INTERNAL_PATROL_" + (++a).toString();
+            p === l - 1 && (e = "INTERNAL_PATROL_0");
+            (A = new SelfVarSetParam(e, !0)),
+              (L = new LevelAiTaskSetVar_1.LevelAiTaskSetVar());
             L.Serialize(
               this.CharacterPlanComponent,
               this.CreatureDataComponent,
-              "设置当前巡逻状态 " + S,
+              "设置下个巡逻状态 " + e,
               A,
             ),
-              p.Last.NextNodes.push(L);
-            let e = "INTERNAL_PATROL_" + (++a).toString();
-            _ === l - 1 && (e = "INTERNAL_PATROL_0");
-            (S = new SelfVarSetParam(e, !0)),
-              (A = new LevelAiTaskSetVar_1.LevelAiTaskSetVar());
-            A.Serialize(
-              this.CharacterPlanComponent,
-              this.CreatureDataComponent,
-              "设置下个巡逻状态 " + e,
-              S,
-            ),
-              L.NextNodes.push(A),
-              n.NextNodes.push(p.First),
+              c.NextNodes.push(L),
+              n.NextNodes.push(S.First),
               (s = []),
               (i = t + 1);
           }
@@ -176,7 +177,7 @@ class LevelAiNodeBehaviourSpline extends LevelAiStandaloneNode_1.LevelAiStandalo
           ["SplineEntityId", this.SplineId],
         );
   }
-  ATe(t, i, r, e, s) {
+  ATe(t, i, r, e, s, a) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "LevelAi",
@@ -186,43 +187,39 @@ class LevelAiNodeBehaviourSpline extends LevelAiStandaloneNode_1.LevelAiStandalo
         ["startIndex", r],
         ["endIndex", e],
       );
-    var a = new LevelAiTaskMoveAlong_1.LevelAiTaskMoveAlong(),
-      o =
-        (a.Serialize(
+    var o = new LevelAiTaskMoveAlong_1.LevelAiTaskMoveAlong(),
+      n =
+        (o.Serialize(
           this.CharacterPlanComponent,
           this.CreatureDataComponent,
           this.Description + " 样条路径" + r + "到" + e,
         ),
         []);
     for (let e = 0; e < i.length; e++) {
-      var n = i[e],
-        l = {
+      var l = i[e],
+        h = {
           Index: e,
           Position: Vector_1.Vector.Create(),
-          MoveSpeed: n.MoveSpeed,
-          MoveState: 1,
-          PosState: n.CharPositionState
-            ? this.kea(n.CharPositionState)
+          MoveSpeed: l.MoveSpeed,
+          MoveState: l.MoveState,
+          PosState: l.CharPositionState
+            ? this.Yia(l.CharPositionState)
             : void 0,
         };
-      switch (n.MoveState) {
-        case IComponent_1.EPatrolMoveState.Walk:
-          l.MoveState = 1;
-          break;
-        case IComponent_1.EPatrolMoveState.Run:
-          l.MoveState = 2;
-      }
-      l.Position.DeepCopy(t.GetWorldLocationAtSplinePoint(r + e)), o.push(l);
+      l.MoveState === IComponent_1.EPatrolMoveState.Sprint &&
+        (h.MoveState = IComponent_1.EPatrolMoveState.Run),
+        h.Position.DeepCopy(t.GetWorldLocationAtSplinePoint(r + e)),
+        n.push(h);
     }
-    (a.PathPoint = o), (a.Navigation = s);
-    var s = i[i.length - 1];
+    (o.PathPoint = n), (o.Navigation = s), (o.ResetAllPoints = a);
+    s = i[i.length - 1];
     return s.Actions && 0 !== s.Actions.length
-      ? ((s = this.PTe(s.Actions, e)),
-        a.NextNodes.push(s.First),
-        { First: a, Last: s.Last })
-      : { First: a, Last: a };
+      ? ((a = this.PTe(s.Actions, e)),
+        o.NextNodes.push(a.First),
+        { First: o, Last: a.Last })
+      : { First: o, Last: o };
   }
-  kea(e) {
+  Yia(e) {
     switch (e) {
       case 0:
         return CharacterUnifiedStateTypes_1.ECharPositionState.Ground;

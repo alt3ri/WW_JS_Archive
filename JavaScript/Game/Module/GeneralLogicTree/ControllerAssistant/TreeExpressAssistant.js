@@ -19,13 +19,21 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
         e &&
           e.BtType &&
           e.TreeIncId &&
-          this.ApplyOccupyTreeExpression(e.BtType, e.TreeIncId, e.ShowByCustom);
+          this.ApplyOccupyTreeExpression(
+            e.BtType,
+            e.TreeIncId,
+            e.IsInChallenge,
+          );
       }),
       (this.aYt = (e) => {
         e &&
           e.BtType &&
           e.TreeIncId &&
-          this.ApplyOccupyTreeExpression(e.BtType, e.TreeIncId, e.ShowByCustom);
+          this.ApplyOccupyTreeExpression(
+            e.BtType,
+            e.TreeIncId,
+            e.IsInChallenge,
+          );
       });
   }
   OnDestroy() {}
@@ -105,9 +113,9 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
             r.QuestScheduleType.EntityId,
           );
           s &&
-            (s = s.Entity.GetComponent(158)) &&
-            ((n = s.GetCurrentValue(Protocol_1.Aki.Protocol.Bks.Proto_Life)),
-            (s = s.GetCurrentValue(Protocol_1.Aki.Protocol.Bks.e5n)),
+            (s = s.Entity.GetComponent(159)) &&
+            ((n = s.GetCurrentValue(Protocol_1.Aki.Protocol.Vks.Proto_Life)),
+            (s = s.GetCurrentValue(Protocol_1.Aki.Protocol.Vks.l5n)),
             (n = Math.floor((n / s) * ONE_HUNDRED)),
             (a = (a = PublicUtil_1.PublicUtil.GetConfigTextByKey(
               r.TidTitle,
@@ -129,7 +137,7 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
         }
         case IQuest_1.EQuestScheduleType.Score:
           a = PublicUtil_1.PublicUtil.GetConfigTextByKey(r.TidTitle);
-          n = this.Ukn(
+          n = this.Okn(
             ModelManager_1.ModelManager.ScoreModel.GetCurrentScore()?.toString(),
           );
           a = (a = a.replace("{currentScore}", "" + n)).replace(
@@ -168,7 +176,7 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
       }
     return a;
   }
-  Ukn(t) {
+  Okn(t) {
     let r = "";
     if (t)
       for (let e = 0; e < t.length; e++) {
@@ -197,16 +205,16 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
     if ("Self" === r || "Other" === r) {
       var s = e.GetTreeVarByKey(t.Name);
       if (void 0 === s) return "";
-      if (s.XIs === (0, IVar_1.getVarConfigIndex)(a))
+      if (s.iTs === (0, IVar_1.getVarConfigIndex)(a))
         switch (a) {
           case "Boolean":
-            return String(s.YIs);
+            return String(s.rTs);
           case "Int":
-            return String(MathUtils_1.MathUtils.LongToNumber(s.JIs));
+            return String(MathUtils_1.MathUtils.LongToNumber(s.oTs));
           case "Float":
-            return String(s.ZIs);
+            return String(s.sTs);
           case "String":
-            return s.zIs ?? "";
+            return s.nTs ?? "";
         }
     }
     return "";
@@ -237,10 +245,10 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
   }
   ApplyOccupyTreeExpression(e, t, r) {
     switch (e) {
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest:
         break;
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeInst:
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeInst:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay:
         r && this._Yt(t);
     }
   }

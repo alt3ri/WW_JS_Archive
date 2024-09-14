@@ -69,20 +69,20 @@ class WeaponEquipInfo {
       (this.WeaponBreachLevel = 0);
   }
   SetData(t) {
-    if (!t.jys && !t._Ts)
+    if (!t.zys && !t.fTs)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Character",
             58,
             "[武器组件]获取武器配置失败 pb",
-            ["weaponId", t.jys ?? void 0],
-            ["WeaponBreachLevel", t._Ts ?? void 0],
+            ["weaponId", t.zys ?? void 0],
+            ["WeaponBreachLevel", t.fTs ?? void 0],
           ),
         !1
       );
-    if (this.WeaponId !== t.jys) {
-      this.WeaponId = t.jys;
+    if (this.WeaponId !== t.zys) {
+      this.WeaponId = t.zys;
       var i =
         ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponConfigByItemId(
           this.WeaponId,
@@ -98,7 +98,7 @@ class WeaponEquipInfo {
         );
       this.WeaponConfig = i;
     }
-    return (this.WeaponBreachLevel = t._Ts), !0;
+    return (this.WeaponBreachLevel = t.fTs), !0;
   }
 }
 let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComponent_1.EntityComponent {
@@ -110,6 +110,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       (this.y5r = void 0),
       (this.Hulu = void 0),
       (this.WKr = 0),
+      (this.oba = !1),
       (this.HuluHideEffect = 0),
       (this.Paragliding = void 0),
       (this.ParaglidingIsOpen = !1),
@@ -154,13 +155,13 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       (this.I3r = (t, i) => {
         var s;
         (t?.Valid
-          ? ((s = t.GetComponent(71)),
+          ? ((s = t.GetComponent(72)),
             this.vQr(),
             this.CheckAndHangWeapons(!1),
             i
               ? (this.MQr(0),
                 this.SyncParagliding(s),
-                (i = t.GetComponent(188)).HasTag(this.oQr) &&
+                (i = t.GetComponent(190)).HasTag(this.oQr) &&
                   !this.Lie.HasTag(this.oQr) &&
                   (i.RemoveTag(this.oQr), this.Lie.AddTag(this.oQr)),
                 s)
@@ -171,7 +172,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       (this.EQr = (t, i) => {
         !i ||
           this.ParaglidingIsOpen ||
-          this.Entity.GetComponent(160).MoveState !==
+          this.Entity.GetComponent(161).MoveState !==
             CharacterUnifiedStateTypes_1.ECharMoveState.Glide ||
           this.OpenParagliding(!0);
       }),
@@ -305,12 +306,12 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   OnStart() {
     if (
       ((this.Hte = this.Entity.CheckGetComponent(3)),
-      (this.oRe = this.Entity.GetComponent(162)),
-      (this.Lie = this.Entity.GetComponent(188)),
-      (this.y5r = this.Entity.GetComponent(43)),
+      (this.oRe = this.Entity.GetComponent(163)),
+      (this.Lie = this.Entity.GetComponent(190)),
+      (this.y5r = this.Entity.GetComponent(44)),
       (this.Xjt =
         this.Hte.CreatureData.GetEntityType() ===
-        Protocol_1.Aki.Protocol.wks.Proto_Player),
+        Protocol_1.Aki.Protocol.kks.Proto_Player),
       (this.zKr =
         this.Xjt ||
         4 === this.Hte.CreatureData.GetBaseInfo()?.Category.MonsterMatchType),
@@ -319,7 +320,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       !this.Hte)
     )
       return !1;
-    if ((this.PQr(), this.xQr(), this.wQr(), this.Xjt)) {
+    if ((this.nba(), this.PQr(), this.xQr(), this.wQr(), this.Xjt)) {
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.RoleOnStateInherit,
@@ -334,7 +335,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         (this.uQr = this.Lie.ListenForTagAddOrRemove(-1775045118, this.LQr)),
         this.BQr(),
         this.InitWeaponVisibleData(),
-        this.zQs();
+        this.gYs();
       for (const t of this.QKr.CharacterWeapons) this.bQr(t, !0, !1);
     }
     return !0;
@@ -494,9 +495,9 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   }
   FQr() {
     this.VQr();
-    var t = this.Hte.CreatureData?.ComponentDataMap.get("_ys");
+    var t = this.Hte.CreatureData?.ComponentDataMap.get("fys");
     t &&
-      ((t = t._ys?.jys)
+      ((t = t.fys?.zys)
         ? (this.RegisterCharacterDropWeaponEvent(t),
           this.ChangeWeaponByWeaponByConfigId(t))
         : ((this._Pr = -1), this.WeaponIn(!1)));
@@ -668,7 +669,8 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
                 this.Hte.Actor.CharRenderingComponent.AddComponentByCase(
                   6,
                   this.Hulu,
-                ))
+                ),
+                this.SetHuluHidden(!1, !0, !0))
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error("Character", 58, "该葫芦Id没有配置网格体", [
                   "Id",
@@ -701,34 +703,45 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     return this.WKr;
   }
   SetHuluHidden(t, i = !0, s = !1) {
-    (s && this.Hulu.bHiddenInGame === t) ||
-      (!i || t
-        ? (this.cQr &&
-            0 <= this.cQr &&
-            (this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(
-              this.cQr,
-            ),
-            (this.cQr = void 0)),
-          this.Hulu.SetHiddenInGame(t))
-        : (this.cQr &&
-            0 <= this.cQr &&
-            (this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(
-              this.cQr,
-            ),
-            (this.cQr = void 0)),
-          this.Hulu.SetHiddenInGame(!0),
-          ResourceSystem_1.ResourceSystem.LoadAsync(
-            "/Game/Aki/Effect/MaterialController/Common/DA_Fx_HuluStart.DA_Fx_HuluStart",
-            UE.PD_CharacterControllerData_C,
-            (t) => {
-              1 !== this.hQr &&
-                ((this.cQr =
-                  this.Hte.Actor.CharRenderingComponent.AddMaterialControllerData(
-                    t,
-                  )),
-                this.Hulu.SetHiddenInGame(!1));
-            },
-          )));
+    let e = t,
+      h = i;
+    this.oba && 0 === this.hQr && ((e = !0), (h = !1)),
+      (s && this.Hulu.bHiddenInGame === e) ||
+        (h
+          ? e
+            ? (this.cQr &&
+                0 <= this.cQr &&
+                (this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(
+                  this.cQr,
+                ),
+                (this.cQr = void 0)),
+              this.Hulu.SetHiddenInGame(t))
+            : (this.cQr &&
+                0 <= this.cQr &&
+                (this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(
+                  this.cQr,
+                ),
+                (this.cQr = void 0)),
+              this.Hulu.SetHiddenInGame(!0),
+              ResourceSystem_1.ResourceSystem.LoadAsync(
+                "/Game/Aki/Effect/MaterialController/Common/DA_Fx_HuluStart.DA_Fx_HuluStart",
+                UE.PD_CharacterControllerData_C,
+                (t) => {
+                  1 !== this.hQr &&
+                    ((this.cQr =
+                      this.Hte.Actor.CharRenderingComponent.AddMaterialControllerData(
+                        t,
+                      )),
+                    this.Hulu.SetHiddenInGame(!1));
+                },
+              ))
+          : (this.cQr &&
+              0 <= this.cQr &&
+              (this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(
+                this.cQr,
+              ),
+              (this.cQr = void 0)),
+            this.Hulu.SetHiddenInGame(e)));
   }
   VQr() {
     this.AiWeaponConfigId = 0;
@@ -810,7 +823,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         ]);
   }
   EquipWeaponForRole() {
-    var t = this.Entity.GetComponent(0).ComponentDataMap.get("pys")?.pys;
+    var t = this.Entity.GetComponent(0).ComponentDataMap.get("Lys")?.Lys;
     return !!t && this.EquipWeaponForRoleByWeaponComponent(t);
   }
   EquipWeaponForRoleByWeaponComponent(t) {
@@ -823,8 +836,8 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
             "[武器组件]获取武器配置失败 pb",
             ["Character", this.Hte?.Actor.GetName()],
             ["ConfigId", this.Hte?.CreatureData.GetRoleId()],
-            ["weaponId", t.jys ?? void 0],
-            ["WeaponBreachLevel", t._Ts ?? void 0],
+            ["weaponId", t.zys ?? void 0],
+            ["WeaponBreachLevel", t.fTs ?? void 0],
           ),
         !1
       );
@@ -908,7 +921,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     return (this.iQr = s), !0;
   }
   OnEquipWeaponForRoleNotify(t) {
-    this.EquipWeaponForRoleByWeaponComponent(t.pys);
+    this.EquipWeaponForRoleByWeaponComponent(t.Lys);
   }
   CheckAndHangWeapons(t) {
     0 === this._Pr
@@ -980,16 +993,15 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
             this.W7o(s, s.NormalSocket, this.dQr, 0 < i), this.bQr(s, !1);
         else {
           for (const e of this.QKr.CharacterWeapons)
-            e.WeaponHidden || this.bQr(e, !0);
+            (e.BattleEffectId =
+              this.Hte.Actor.CharRenderingComponent.AddMaterialControllerData(
+                this.Hte.Actor.WeaponInEffect,
+              )),
+              e.WeaponHidden || this.bQr(e, !0);
           this.YKr = TimerSystem_1.TimerSystem.Delay(() => {
             this.YKr = void 0;
             for (const t of this.QKr.CharacterWeapons)
-              (t.BattleEffectId =
-                this.Hte.Actor.CharRenderingComponent.AddMaterialControllerData(
-                  this.Hte.Actor.WeaponInEffect,
-                )),
-                this.W7o(t, t.NormalSocket, this.dQr, 0 < i),
-                this.bQr(t, !1);
+              this.W7o(t, t.NormalSocket, this.dQr, 0 < i), this.bQr(t, !1);
           }, WEAPON_IN_DELAY);
         }
       else
@@ -1208,7 +1220,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         ),
         i++;
   }
-  zQs() {
+  gYs() {
     var t = this.Hte.CreatureData,
       t = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(t.GetRoleId()),
       t =
@@ -1220,6 +1232,11 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         t = this.Lie.ListenForTagAddOrRemove(t, this.RQr);
         t && this.aQr.push(t);
       });
+  }
+  nba() {
+    var t = this.Hte.CreatureData,
+      t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t.GetRoleId());
+    this.oba = t?.HideHuLu ?? !1;
   }
   InitDebugWeaponVisibleDataById(t) {
     var i =
@@ -1284,7 +1301,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   }
 };
 (CharacterWeaponComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(71)],
+  [(0, RegisterComponent_1.RegisterComponent)(72)],
   CharacterWeaponComponent,
 )),
   (exports.CharacterWeaponComponent = CharacterWeaponComponent);

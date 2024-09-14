@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommunicateNode = void 0);
 const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   UiManager_1 = require("../../../../Ui/UiManager"),
@@ -15,7 +16,7 @@ class CommunicateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
       (this.bXt = !1),
       (this.qXt = (e) => {
         e === this.CommunicateId &&
-          (this.Blackboard.RemoveTag(8), this.SubmitNode());
+          (this.Blackboard.RemoveTag(7), this.SubmitNode());
       }),
       (this.GXt = (e) => {
         e === this.CommunicateId && this.NXt();
@@ -33,9 +34,9 @@ class CommunicateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
       (this.$Ge = (e) => {
         "CommunicateView" !== e ||
           this.ChildQuestStatus !==
-            Protocol_1.Aki.Protocol.bNs.Proto_CQNS_Progress ||
-          (this.Blackboard.AddTag(8), this.bXt) ||
-          this.BtType !== Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest ||
+            Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Progress ||
+          (this.Blackboard.AddTag(7), this.bXt) ||
+          this.BtType !== Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest ||
           ((this.bXt = !0),
           QuestController_1.QuestNewController.RedDotRequest(
             this.TreeConfigId,
@@ -50,7 +51,7 @@ class CommunicateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnCreate(e) {
     return (
       !!super.OnCreate(e) &&
-      "ReceiveTelecom" === (e = e.Condition).Type &&
+      (e = e.Condition).Type === IQuest_1.EChildQuest.ReceiveTelecom &&
       ((this.CommunicateId = e.TelecomId), !0)
     );
   }
@@ -111,7 +112,7 @@ class CommunicateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
       super.OnEnd(e);
   }
   NXt() {
-    this.Blackboard.RemoveTag(8),
+    this.Blackboard.RemoveTag(7),
       UiManager_1.UiManager.OpenView("CommunicateView", this.CommunicateId);
   }
 }

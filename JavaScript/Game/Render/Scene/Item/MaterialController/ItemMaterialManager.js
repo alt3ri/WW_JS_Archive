@@ -19,7 +19,8 @@ class ItemMaterialManager {
       (this.IsInit = !0);
   }
   static Tick(t) {
-    RenderModuleConfig_1.RenderStats.Init();
+    RenderModuleConfig_1.RenderStats.Init(),
+      RenderModuleConfig_1.RenderStats.StatItemMaterialManagerTick.Start();
     var e = 0.001 * t,
       r = [];
     if (
@@ -59,6 +60,7 @@ class ItemMaterialManager {
     )
       for (const h of this.AllMaterialSimpleControllers.keys())
         this.AllMaterialSimpleControllers.get(h).UpdateParameters();
+    RenderModuleConfig_1.RenderStats.StatItemMaterialManagerTick.Stop();
   }
   static AddMaterialData(t, e) {
     if (!t?.IsValid())
@@ -108,21 +110,12 @@ class ItemMaterialManager {
         r);
   }
   static DisableActorData(t) {
-    if (this.AllActorControllerInfoMap) {
-      if (this.AllActorControllerInfoMap.has(t))
-        return (
-          !!this.AllActorControllerInfoMap.get(t) &&
-          (this.AllActorControllerInfoMap.get(t).Stop(), !0)
-        );
-      Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "RenderEffect",
-          33,
-          "不满足删除单体交互物材质控制器的条件，返回false",
-          ["handle", t],
-        );
-    }
-    return !1;
+    return !(
+      !this.AllActorControllerInfoMap ||
+      !this.AllActorControllerInfoMap.has(t) ||
+      !this.AllActorControllerInfoMap.get(t) ||
+      (this.AllActorControllerInfoMap.get(t).Stop(), 0)
+    );
   }
   static DisableAllActorData() {
     if (!this.AllActorControllerInfoMap)

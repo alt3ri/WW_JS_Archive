@@ -59,8 +59,7 @@ class BattleSkillExploreItem extends BattleSkillItem_1.BattleSkillItem {
       super.OnSkillButtonPressed();
   }
   OnSkillButtonReleased() {
-    this.IsLongPress && UiManager_1.UiManager.CloseView("PhantomExploreView"),
-      super.OnSkillButtonReleased();
+    super.OnSkillButtonReleased();
   }
   OnSkillButtonCancel() {
     this.OnSkillButtonReleased();
@@ -69,7 +68,7 @@ class BattleSkillExploreItem extends BattleSkillItem_1.BattleSkillItem {
     super.OnLongPressButton(),
       (ModelManager_1.ModelManager.BattleUiModel.IsLongPressExploreButton = !0),
       void 0 !== this.ztt &&
-        (UiManager_1.UiManager.OpenView("PhantomExploreView", this.ztt),
+        (UiManager_1.UiManager.OpenView("PhantomExploreView", [1, this.ztt]),
         (this.ztt = void 0));
   }
 }

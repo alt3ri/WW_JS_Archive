@@ -16,33 +16,33 @@ class MotionController extends ControllerBase_1.ControllerBase {
   static OnAddEvents() {}
   static OnRemoveEvents() {}
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(9975, MotionController.hqi),
-      Net_1.Net.Register(10771, MotionController.lqi),
-      Net_1.Net.Register(4959, MotionController._qi),
-      Net_1.Net.Register(14592, MotionController.uqi);
+    Net_1.Net.Register(24294, MotionController.hqi),
+      Net_1.Net.Register(20835, MotionController.lqi),
+      Net_1.Net.Register(18891, MotionController._qi),
+      Net_1.Net.Register(26611, MotionController.uqi);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(9975),
-      Net_1.Net.UnRegister(10771),
-      Net_1.Net.UnRegister(4959),
-      Net_1.Net.UnRegister(14592);
+    Net_1.Net.UnRegister(24294),
+      Net_1.Net.UnRegister(20835),
+      Net_1.Net.UnRegister(18891),
+      Net_1.Net.UnRegister(26611);
   }
 }
 ((exports.MotionController = MotionController).RequestUnlockMotion = (e, o) => {
-  var t = new Protocol_1.Aki.Protocol.kts();
-  (t.O6n = e),
-    (t.P7n = o),
-    Net_1.Net.Call(6347, t, (e) => {
-      e.A9n !== Protocol_1.Aki.Protocol.O4n.NRs
+  var t = new Protocol_1.Aki.Protocol.Wts();
+  (t.Q6n = e),
+    (t.F7n = o),
+    Net_1.Net.Call(18903, t, (e) => {
+      e.G9n !== Protocol_1.Aki.Protocol.Q4n.KRs
         ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.A9n,
-            19789,
+            e.G9n,
+            21359,
           )
-        : ModelManager_1.ModelManager.MotionModel.OnMotionUnlock(e.O6n, e.P7n);
+        : ModelManager_1.ModelManager.MotionModel.OnMotionUnlock(e.Q6n, e.F7n);
     });
 }),
   (MotionController.hqi = (e) => {
-    ModelManager_1.ModelManager.MotionModel.OnNewMotionCanUnlock(e.O6n, e.KPs);
+    ModelManager_1.ModelManager.MotionModel.OnNewMotionCanUnlock(e.Q6n, e.eUs);
   }),
   (MotionController.lqi = (e) => {
     ModelManager_1.ModelManager.MotionModel.OnRoleMotionActive(e);

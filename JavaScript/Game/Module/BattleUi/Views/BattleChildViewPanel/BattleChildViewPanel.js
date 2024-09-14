@@ -171,7 +171,7 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
     return Info_1.Info.OperationType;
   }
   ListenForTagSignificantChanged(i, t, e) {
-    var i = i.Entity.GetComponent(188);
+    var i = i.Entity.GetComponent(190);
     i && ((i = i.ListenForTagAddOrRemove(t, e)), this.i$e.push(i));
   }
   ClearAllTagSignificantChangedCallback() {
@@ -181,13 +181,14 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
     }
   }
   ContainsTag(i, t) {
-    i = i.Entity.GetComponent(188);
+    i = i.Entity.GetComponent(190);
     return !!i && i.HasTag(t);
   }
   GetItem(i) {
     return super.GetItem(i);
   }
   GetUiActorForGuide() {}
+  OnSeamlessTravelFinish() {}
 }
 exports.BattleChildViewPanel = BattleChildViewPanel;
 //# sourceMappingURL=BattleChildViewPanel.js.map

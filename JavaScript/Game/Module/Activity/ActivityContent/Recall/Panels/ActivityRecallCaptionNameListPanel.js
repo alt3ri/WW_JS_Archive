@@ -6,7 +6,7 @@ const UE = require("ue"),
   ActivityRecallCaptionPanel_1 = require("./ActivityRecallCaptionPanel");
 class ActivityRecallCaptionNameListPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.E_a = void 0);
+    super(...arguments), (this.xda = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -16,9 +16,9 @@ class ActivityRecallCaptionNameListPanel extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    this.E_a = new ActivityRecallCaptionPanel_1.ActivityRecallCaptionPanel();
+    this.xda = new ActivityRecallCaptionPanel_1.ActivityRecallCaptionPanel();
     var e = this.GetItem(0).GetOwner();
-    await this.E_a.CreateThenShowByActorAsync(e);
+    await this.xda.CreateThenShowByActorAsync(e);
   }
   OnAfterShow() {}
   RefreshData(e) {}

@@ -99,12 +99,22 @@ class FunctionAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
           UiManager_1.UiManager.CloseView("PlotLogoView"), (this.lio = void 0);
         }, e)));
   }
-  async OpenBackgroundImage(e) {
+  async OpenBackgroundImage(e, o) {
+    var t = PlotController_1.PlotController.GetCurrentViewName();
+    t && UiManager_1.UiManager.IsViewShow(t)
+      ? await UiManager_1.UiManager.GetViewByName(t).OpenBackgroundUi(e, o)
+      : Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn("Plot", 46, "Ui预览图:尝试打开预览图但PlotView未打开", [
+          "viewName",
+          t,
+        ]);
+  }
+  async PlayUiLevelSequence(e) {
     var o = PlotController_1.PlotController.GetCurrentViewName();
     o && UiManager_1.UiManager.IsViewShow(o)
-      ? await UiManager_1.UiManager.GetViewByName(o).OpenBackgroundUi(e)
+      ? await UiManager_1.UiManager.GetViewByName(o).PlayUiLevelSeq(e)
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Plot", 46, "尝试打开预览图但PlotView未打开", [
+        Log_1.Log.Warn("Plot", 46, "Ui预览图:尝试打开预览图但PlotView未打开", [
           "viewName",
           o,
         ]);
@@ -114,7 +124,7 @@ class FunctionAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
     e && UiManager_1.UiManager.IsViewShow(e)
       ? await UiManager_1.UiManager.GetViewByName(e).CloseBackgroundUi()
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Plot", 46, "尝试打开预览图但PlotView未打开", [
+        Log_1.Log.Warn("Plot", 46, "Ui预览图:尝试打开预览图但PlotView未打开", [
           "viewName",
           e,
         ]);

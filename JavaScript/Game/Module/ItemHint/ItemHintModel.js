@@ -97,16 +97,16 @@ class InsideInterfaceData {
   InsertItemRewardInfo(t) {
     var e = this.Kgi();
     for (const s of t) {
-      var r,
-        i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          s.J4n,
+      var i,
+        r = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          s.s5n,
         );
-      i &&
-        i.ShowInBag &&
-        (((r = new ItemHintDefines_1.ItemRewardInfo()).ItemCount = s.o9n),
-        (r.ItemId = s.J4n),
-        (r.Quality = i.QualityId),
-        e.WaitList.push(r));
+      r &&
+        r.ShowInBag &&
+        (((i = new ItemHintDefines_1.ItemRewardInfo()).ItemCount = s.m9n),
+        (i.ItemId = s.s5n),
+        (i.Quality = r.QualityId),
+        e.WaitList.push(i));
     }
     this.Wgi();
   }
@@ -125,16 +125,16 @@ class MainInterfaceData {
     this.WaitList = new Array();
   }
   InsertItemRewardInfo(t) {
-    for (const i of t) {
+    for (const r of t) {
       var e,
-        r = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          i.J4n,
+        i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          r.s5n,
         );
-      r &&
-        r.ShowInBag &&
-        (((e = new ItemHintDefines_1.ItemRewardInfo()).ItemCount = i.o9n),
-        (e.ItemId = i.J4n),
-        (e.Quality = r.QualityId),
+      i &&
+        i.ShowInBag &&
+        (((e = new ItemHintDefines_1.ItemRewardInfo()).ItemCount = r.m9n),
+        (e.ItemId = r.s5n),
+        (e.Quality = i.QualityId),
         this.WaitList.push(e));
     }
     this.WaitList.sort((t, e) => e.Quality - t.Quality);
@@ -184,13 +184,13 @@ class ItemHintModel extends ModelBase_1.ModelBase {
     (e.ItemReward = t), this.Ygi.push(e);
   }
   AddItemRewardTest() {
-    var t = Protocol_1.Aki.Protocol.nns.create(),
-      e = Protocol_1.Aki.Protocol.V5s.create(),
+    var t = Protocol_1.Aki.Protocol.cns.create(),
+      e = Protocol_1.Aki.Protocol.X6s.create(),
       e =
-        ((e.o9n = 1),
-        (e.f8n = 21010014),
-        (e.q9n = 3),
-        t.U9n.push(e),
+        ((e.m9n = 1),
+        (e.L8n = 21010014),
+        (e.W9n = 3),
+        t.O9n.push(e),
         new ItemRewardData());
     (e.ItemReward = t), this.$gi.push(e);
   }
@@ -213,17 +213,17 @@ class ItemHintModel extends ModelBase_1.ModelBase {
     return this.Ygi.length <= 0;
   }
   MainInterfaceInsertItemRewardInfo(t) {
-    for (const i of t) {
+    for (const r of t) {
       var e,
-        r = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          i.J4n,
+        i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          r.s5n,
         );
-      r &&
-        r.ShowInBag &&
-        (((e = new ItemHintDefines_1.ItemRewardInfo()).ItemCount = i.o9n),
-        (e.ItemId = i.J4n),
-        (e.Quality = r.QualityId),
-        (9 === r.ItemType || e.Quality >= HIGH_QUALITY
+      i &&
+        i.ShowInBag &&
+        (((e = new ItemHintDefines_1.ItemRewardInfo()).ItemCount = r.m9n),
+        (e.ItemId = r.s5n),
+        (e.Quality = i.QualityId),
+        (9 === i.ItemType || e.Quality >= HIGH_QUALITY
           ? this.Xgi
           : this.Qgi
         ).AddItemRewardInfo(e));
@@ -241,6 +241,12 @@ class ItemHintModel extends ModelBase_1.ModelBase {
   }
   ShiftPriorInterfaceData() {
     return this.Xgi.WaitList.shift();
+  }
+  GmClear() {
+    (this.Qgi.WaitList.length = 0),
+      (this.Xgi.WaitList.length = 0),
+      this.CleanItemRewardList(),
+      (this.Ygi.length = 0);
   }
 }
 exports.ItemHintModel = ItemHintModel;

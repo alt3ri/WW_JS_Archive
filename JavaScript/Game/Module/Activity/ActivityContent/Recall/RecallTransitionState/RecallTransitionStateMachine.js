@@ -9,8 +9,8 @@ class RecallTransitionStateMachine {
     (this.kh = void 0),
       (this.DIe = void 0),
       (this.G2e = void 0),
-      (this.T_a = (t) => {
-        this.L_a(t);
+      (this.qda = (t) => {
+        this.Oda(t);
       });
   }
   Start() {
@@ -34,7 +34,7 @@ class RecallTransitionStateMachine {
   SetState(t) {
     var i, e;
     4 !== t &&
-      (i = this.D_a(t)) &&
+      (i = this.kda(t)) &&
       ((this.G2e = i),
       (e = UiManager_1.UiManager.GetViewByName("ActivityRecallStartView"))
         ? ((this.DIe = t), i.Transition(e))
@@ -47,7 +47,7 @@ class RecallTransitionStateMachine {
             ["当前状态", this.DIe],
           ));
   }
-  L_a(t) {
+  Oda(t) {
     void 0 !== this.G2e &&
       t !== this.G2e &&
       Log_1.Log.CheckWarn() &&
@@ -62,19 +62,19 @@ class RecallTransitionStateMachine {
     t = t.GetNextStatus();
     this.SetState(t);
   }
-  D_a(t) {
+  kda(t) {
     this.kh = this.kh ?? new Map();
     let i = this.kh.get(t);
     if (void 0 === i)
       switch (t) {
         case 0:
-          i = new RecallTansitionStateDefine_1.RecallFirstShowState(this.T_a);
+          i = new RecallTansitionStateDefine_1.RecallFirstShowState(this.qda);
           break;
         case 2:
-          i = new RecallTansitionStateDefine_1.RecallShowRewardState(this.T_a);
+          i = new RecallTansitionStateDefine_1.RecallShowRewardState(this.qda);
           break;
         case 3:
-          i = new RecallTansitionStateDefine_1.RecallFinishState(this.T_a);
+          i = new RecallTansitionStateDefine_1.RecallFinishState(this.qda);
           break;
         default:
           Log_1.Log.CheckError() &&

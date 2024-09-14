@@ -17,13 +17,13 @@ class DynamicFlowController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
       this.jYo(),
-      Net_1.Net.Register(18847, DynamicFlowController.WYo),
-      Net_1.Net.Register(5877, DynamicFlowController.KYo),
+      Net_1.Net.Register(20817, DynamicFlowController.WYo),
+      Net_1.Net.Register(15410, DynamicFlowController.KYo),
       !0
     );
   }
   static OnClear() {
-    return Net_1.Net.UnRegister(18847), Net_1.Net.UnRegister(5877), !0;
+    return Net_1.Net.UnRegister(20817), Net_1.Net.UnRegister(15410), !0;
   }
   static jYo() {
     this.QYo.set(1, 5),
@@ -112,14 +112,14 @@ class DynamicFlowController extends ControllerBase_1.ControllerBase {
   (DynamicFlowController.XYo = new Map()),
   (DynamicFlowController.QYo = new Map()),
   (DynamicFlowController.WYo = (r) => {
-    var r = ConfigManager_1.ConfigManager.BubbleConfig.GetBubbleData(r.pIs);
+    var r = ConfigManager_1.ConfigManager.BubbleConfig.GetBubbleData(r.LIs);
     r &&
       r.EntityIds.length &&
       ((r = DynamicFlowController.CreateCharacterFlowData(r)),
       DynamicFlowController.AddDynamicFlow(r));
   }),
   (DynamicFlowController.KYo = (r) => {
-    var r = ConfigManager_1.ConfigManager.BubbleConfig.GetBubbleData(r.pIs);
+    var r = ConfigManager_1.ConfigManager.BubbleConfig.GetBubbleData(r.LIs);
     r &&
       r.EntityIds.length &&
       ((r = r.EntityIds[0]), DynamicFlowController.RemoveDynamicFlow(r));

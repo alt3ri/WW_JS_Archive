@@ -38,46 +38,46 @@ class FunctionModel extends ModelBase_1.ModelBase {
     );
   }
   SetFunctionOpenInfo(e) {
-    for (const t of e.BUs) {
-      var n = new FunctionInstance_1.FunctionInstance(t.$4n, t.J4n),
+    for (const t of e.VUs) {
+      var n = new FunctionInstance_1.FunctionInstance(t.o5n, t.s5n),
         n =
           (this.I7t.set(
-            t.J4n,
-            new FunctionInstance_1.FunctionInstance(t.$4n, t.J4n),
+            t.s5n,
+            new FunctionInstance_1.FunctionInstance(t.o5n, t.s5n),
           ),
           n.GetIsOpen());
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnFunctionOpenSet,
-        t.J4n,
+        t.s5n,
         n,
       ),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
             "Functional",
             11,
             "功能数据添加",
-            ["Id", t.J4n],
+            ["Id", t.s5n],
             ["IsOpen", n],
           );
     }
   }
   UpdateFunctionOpenInfo(e) {
-    for (const o of e.BUs) {
+    for (const o of e.VUs) {
       var n,
-        t = this.I7t.get(o.J4n);
+        t = this.I7t.get(o.s5n);
       t
-        ? (t.SetFlag(o.$4n),
+        ? (t.SetFlag(o.o5n),
           (n =
             ((t = t.GetIsOpen()) &&
               Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Functional", 11, "功能数据更新", ["Id", o.J4n]),
+              Log_1.Log.Info("Functional", 11, "功能数据更新", ["Id", o.s5n]),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnFunctionOpenUpdate,
-              o.J4n,
+              o.s5n,
               t,
             ),
             FunctionConditionByFunctionId_1.configFunctionConditionByFunctionId.GetConfig(
-              o.J4n,
+              o.s5n,
             ))),
           t &&
             1 === n.ShowUIType &&
@@ -90,15 +90,35 @@ class FunctionModel extends ModelBase_1.ModelBase {
               11,
               "[UpdateFunctionOpenInfo]用了GM屏蔽功能开启界面显示",
             ))
-        : Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Functional", 11, "当前刷新的功能id不在功能列表中", [
+        : Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Functional", 11, "当前刷新的功能id不在功能列表中", [
             "功能Id",
-            o.J4n,
+            o.s5n,
           ]);
     }
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnFunctionOpenUpdateNotify,
     );
+  }
+  UpdateFunctionOpenLockByBehaviorTree(e, n) {
+    var t = this.I7t.get(e);
+    t
+      ? (t.SetIsLockByBehaviorTree(n),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Functional",
+            11,
+            "[UpdateFunctionOpenLockByBehaviorTree]行为树执行了系统功能的启用/禁用",
+            ["功能ID", e],
+            ["是否禁用", n],
+          ))
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error(
+          "Functional",
+          11,
+          "[BehaviorTree]当前的功能id不在功能列表中",
+          ["功能Id", e],
+        );
   }
   RefreshInfoManualState(e) {
     for (const o of e) {
@@ -124,8 +144,8 @@ class FunctionModel extends ModelBase_1.ModelBase {
               11,
               "[RefreshInfoManualState]用了GM屏蔽功能开启界面显示",
             ))
-        : Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Functional", 11, "当前刷新的功能id不在功能列表中", [
+        : Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Functional", 11, "当前刷新的功能id不在功能列表中", [
             "功能Id",
             o,
           ]);
@@ -150,8 +170,8 @@ class FunctionModel extends ModelBase_1.ModelBase {
   UpdatePlayerAttributeNumberInfo(e) {
     let n = 0,
       t = void 0;
-    e.has(Protocol_1.Aki.Protocol.pNs.P6n) && (n = this.GetPlayerLevel()),
-      e.has(Protocol_1.Aki.Protocol.pNs.M8n) && (t = this.GetPlayerExp()),
+    e.has(Protocol_1.Aki.Protocol.LNs.F6n) && (n = this.GetPlayerLevel()),
+      e.has(Protocol_1.Aki.Protocol.LNs.U8n) && (t = this.GetPlayerExp()),
       e.forEach((e, n) => {
         this.PlayerAttributeNum.set(n, e);
       });
@@ -201,27 +221,27 @@ class FunctionModel extends ModelBase_1.ModelBase {
     this.PlayerId = e;
   }
   GetPlayerName() {
-    return this.PlayerAttributeString.get(Protocol_1.Aki.Protocol.pNs.w8n);
+    return this.PlayerAttributeString.get(Protocol_1.Aki.Protocol.LNs.H8n);
   }
   SetPlayerName(e) {
-    this.PlayerAttributeString.set(Protocol_1.Aki.Protocol.pNs.w8n, e),
+    this.PlayerAttributeString.set(Protocol_1.Aki.Protocol.LNs.H8n, e),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnNameChange);
   }
   GetPlayerLevel() {
-    return this.PlayerAttributeNum.get(Protocol_1.Aki.Protocol.pNs.P6n);
+    return this.PlayerAttributeNum.get(Protocol_1.Aki.Protocol.LNs.F6n);
   }
   GetPlayerExp() {
-    return this.PlayerAttributeNum.get(Protocol_1.Aki.Protocol.pNs.M8n);
+    return this.PlayerAttributeNum.get(Protocol_1.Aki.Protocol.LNs.U8n);
   }
   GetPlayerCashCoin() {
     var e = this.PlayerAttributeString.get(
-      Protocol_1.Aki.Protocol.pNs.Proto_CashCoin,
+      Protocol_1.Aki.Protocol.LNs.Proto_CashCoin,
     );
     return e || "0";
   }
   GetWorldPermission() {
     return this.PlayerAttributeNum.get(
-      Protocol_1.Aki.Protocol.pNs.Proto_WorldPermission,
+      Protocol_1.Aki.Protocol.LNs.Proto_WorldPermission,
     );
   }
   UpdatePlayerAttributeStringInfo(e) {
@@ -235,6 +255,9 @@ class FunctionModel extends ModelBase_1.ModelBase {
   IsShow(e) {
     e = this.I7t.get(e);
     return !!e && e.GetIsShow();
+  }
+  IsLockByBehaviorTree(e) {
+    return 0 !== e && !!(e = this.I7t.get(e)) && e.GetIsLockByBehaviorTree();
   }
   GetFunctionInstance(e) {
     return this.I7t.get(e);

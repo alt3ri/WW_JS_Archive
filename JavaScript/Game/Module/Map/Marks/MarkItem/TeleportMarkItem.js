@@ -8,17 +8,17 @@ const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   TeleportMarkItemView_1 = require("../MarkItemView/TeleportMarkItemView"),
   ConfigMarkItem_1 = require("./ConfigMarkItem");
 class TeleportMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
-  constructor(e, t, i, s, r, n = 1) {
-    super(e, t, i, s, r, n),
+  constructor(e, t, i, s, n, r = 1) {
+    super(e, t, i, s, n, r),
       (this.IsSelectThisFloor = !1),
       (this.InnerView = void 0),
       (this.IsDirty = !1),
-      (this.$Ca = void 0),
-      (this.jbn = (e) => {
+      (this.kfa = void 0),
+      (this.Zbn = (e) => {
         var t;
         2 === this.MapType &&
-          ((t = this.MarkMultiMapId === e), this.IsSelectThisFloor !== t) &&
-          ((this.IsSelectThisFloor = this.MarkMultiMapId === e),
+          ((t = this.GetMultiMapId() === e), this.IsSelectThisFloor !== t) &&
+          ((this.IsSelectThisFloor = this.GetMultiMapId() === e),
           this.InnerView?.OnIconPathChanged(this.IconPath));
       }),
       (this.WRi = (e) => {
@@ -47,7 +47,7 @@ class TeleportMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
     this.InnerView = new TeleportMarkItemView_1.TeleportMarkItemView(this);
   }
   OnDestroy() {
-    super.OnDestroy(), (this.$Ca = void 0), this.RemoveEventListener();
+    super.OnDestroy(), (this.kfa = void 0), this.RemoveEventListener();
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -60,7 +60,7 @@ class TeleportMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldMapSelectMultiMap,
-        this.jbn,
+        this.Zbn,
       );
   }
   RemoveEventListener() {
@@ -74,7 +74,7 @@ class TeleportMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldMapSelectMultiMap,
-        this.jbn,
+        this.Zbn,
       );
   }
   ViewUpdate(e, t = !1, i = !1) {
@@ -84,10 +84,10 @@ class TeleportMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
     var t, i;
     (2 === this.MapType && !e) ||
       ((e = this.IsSelectThisFloor),
-      this.IsMultiMapTeleport &&
+      this.IsMultiMap() &&
       ((t = ModelManager_1.ModelManager.AreaModel?.GetCurrentAreaId()),
       (i = ConfigManager_1.ConfigManager.MapConfig?.GetSubMapConfigById(
-        this.MarkMultiMapId,
+        this.GetMultiMapId(),
       ))) &&
       i.Area.includes(t)
         ? (this.IsSelectThisFloor = !0)
@@ -97,8 +97,8 @@ class TeleportMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
   }
   CheckIfUpdateIcon() {
     1 === this.MapType &&
-      this.$Ca !== this.IsLocked &&
-      ((this.$Ca = this.IsLocked),
+      this.kfa !== this.IsLocked &&
+      ((this.kfa = this.IsLocked),
       this.cRi(),
       this.View?.OnIconPathChanged(this.IconPath));
   }
@@ -128,10 +128,10 @@ class TeleportMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
       this.MarkConfigId,
     );
   }
-  get IsMultiMapTeleport() {
+  IsMultiMap() {
     return 0 !== this.MarkConfig.MultiMapFloorId;
   }
-  get MarkMultiMapId() {
+  GetMultiMapId() {
     return this.MarkConfig.MultiMapFloorId;
   }
 }

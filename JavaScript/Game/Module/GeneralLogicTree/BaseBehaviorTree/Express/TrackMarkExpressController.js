@@ -65,19 +65,19 @@ class TrackMarkExpressController {
   }
   UpdateTrackMarkExpression(t, e, i) {
     switch (i) {
-      case Protocol_1.Aki.Protocol.DNs.t5n:
+      case Protocol_1.Aki.Protocol.BNs._5n:
         var s;
         "ChildQuest" !== e.NodeType &&
           (s = e.TrackTarget) &&
           e.ContainTag(0) &&
           this.NodeTrackMarkStart(e.NodeId, t, s, t.IsOccupied);
         break;
-      case Protocol_1.Aki.Protocol.DNs.Proto_CompletedSuccess:
-      case Protocol_1.Aki.Protocol.DNs.Proto_CompletedFailed:
+      case Protocol_1.Aki.Protocol.BNs.Proto_CompletedSuccess:
+      case Protocol_1.Aki.Protocol.BNs.Proto_CompletedFailed:
         ("ChildQuest" === e.NodeType && e.IsFinished) ||
           this.NodeTrackMarkEnd(e.NodeId);
         break;
-      case Protocol_1.Aki.Protocol.DNs.Proto_Destroy:
+      case Protocol_1.Aki.Protocol.BNs.Proto_Destroy:
         this.DestroyNodeTrackMarkCreator(e.NodeId);
     }
   }
@@ -492,7 +492,7 @@ class NodeTrackMark {
       if (o) {
         if (r === this.DungeonId)
           return this.eXt.BtType !==
-            Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest ||
+            Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest ||
             13 === a.InstSubType ||
             0 !== i ||
             a.EntranceEntities?.length
@@ -504,9 +504,10 @@ class NodeTrackMark {
           e = 0;
         switch (h) {
           case 13:
-            13 !== n &&
-              (_ = o.EntranceEntities)?.length &&
-              ((t = _[0].EntranceEntityId), (e = _[0].DungeonId));
+            13 === n
+              ? ((t = s), (e = this.DungeonId))
+              : (_ = o.EntranceEntities)?.length &&
+                ((t = _[0].EntranceEntityId), (e = _[0].DungeonId));
             break;
           case 12:
             if (0 === i) {
@@ -575,6 +576,7 @@ class NodeTrackMark {
         ) || e
           ? GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetEntityConfigPosition(
               i,
+              this.DungeonId,
             )
           : void 0;
       if (t) {

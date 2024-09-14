@@ -13,13 +13,15 @@ class MultiMapAreaConfig {
   get MultiMapList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.multimaplistLength(),
-      (t) => this.multimaplist(t),
+      this.multimaplist,
+      this,
     );
   }
   get MultiMapRangeList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.multimaprangelistLength(),
-      (t) => this.multimaprangelist(t),
+      this.multimaprangelist,
+      this,
     );
   }
   __init(t, i) {

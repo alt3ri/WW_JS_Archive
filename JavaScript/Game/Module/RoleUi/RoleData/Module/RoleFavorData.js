@@ -88,8 +88,8 @@ class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
     return r;
   }
   X1o(e) {
-    var t = this.GetClientFavorItemStatus(e.w6n);
-    return new FavorItemInfo_1.FavorItemInfo(e.J4n, t);
+    var t = this.GetClientFavorItemStatus(e.H6n);
+    return new FavorItemInfo_1.FavorItemInfo(e.s5n, t);
   }
   GetFavorItemState(t, e) {
     var r = this.K1o.get(e),
@@ -103,20 +103,20 @@ class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
   GetClientFavorItemStatus(e) {
     let t = void 0;
     return (
-      e === Protocol_1.Aki.Protocol.t5s.Proto_ItemLocked
+      e === Protocol_1.Aki.Protocol.h6s.Proto_ItemLocked
         ? (t = 0)
-        : e === Protocol_1.Aki.Protocol.t5s.Proto_ItemCanUnLock
+        : e === Protocol_1.Aki.Protocol.h6s.Proto_ItemCanUnLock
           ? (t = 1)
-          : e === Protocol_1.Aki.Protocol.t5s.Proto_ItemUnLocked && (t = 2),
+          : e === Protocol_1.Aki.Protocol.h6s.Proto_ItemUnLocked && (t = 2),
       t
     );
   }
   GetClientFavorTabType(e) {
-    return e === Protocol_1.Aki.Protocol.i5s.o8n
+    return e === Protocol_1.Aki.Protocol.l6s.m8n
       ? 0
-      : e === Protocol_1.Aki.Protocol.i5s.Proto_Story
+      : e === Protocol_1.Aki.Protocol.l6s.Proto_Story
         ? 1
-        : e === Protocol_1.Aki.Protocol.i5s.Proto_Goods
+        : e === Protocol_1.Aki.Protocol.l6s.Proto_Goods
           ? 3
           : void 0;
   }

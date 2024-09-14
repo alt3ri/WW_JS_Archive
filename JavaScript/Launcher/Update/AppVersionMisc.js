@@ -64,41 +64,41 @@ class AppVersionMisc {
   }
   SetVersions(s, i, r, h) {
     let n = s.split(","),
-      o = n[n.length - 1],
-      a = i.split(","),
-      u = a[a.length - 1];
+      a = n[n.length - 1],
+      o = i.split(","),
+      u = o[o.length - 1];
     if (r) {
       this.LatestVersion = r;
       var [s, c] = BaseDefine_1.VersionInfo.TryParse(r),
-        [i, d] = BaseDefine_1.VersionInfo.TryParse(o),
-        [L, p] = BaseDefine_1.VersionInfo.TryParse(u);
-      if (!s || !i || !L)
+        [i, L] = BaseDefine_1.VersionInfo.TryParse(a),
+        [_, d] = BaseDefine_1.VersionInfo.TryParse(u);
+      if (!s || !i || !_)
         throw (
           (LauncherLog_1.LauncherLog.Error(
             "转版本号失败",
             ["Type", this.GetResType()],
             ["latestVer", r],
-            ["localVer", o],
+            ["localVer", a],
             ["localSaveVer", u],
           ),
           new Error("转版本号失败"))
         );
       let e = !1,
         t = !1;
-      if (((this.lIr = !1), BaseDefine_1.VersionInfo.PackageEquals(c, d))) {
+      if (((this.lIr = !1), BaseDefine_1.VersionInfo.PackageEquals(c, L))) {
+        if (c.Patch < L.Patch) {
+          this.lIr = !0;
+          for (let e = c.Patch + 1; e <= L.Patch; e++)
+            this._Ir.add(`${c.Major}.${c.Minor}.` + e);
+        }
+      } else (a = this.PackageVersion), (n = [a]), (e = !0);
+      if (BaseDefine_1.VersionInfo.PackageEquals(c, L)) {
         if (c.Patch < d.Patch) {
           this.lIr = !0;
           for (let e = c.Patch + 1; e <= d.Patch; e++)
             this._Ir.add(`${c.Major}.${c.Minor}.` + e);
         }
-      } else (o = this.PackageVersion), (n = [o]), (e = !0);
-      if (BaseDefine_1.VersionInfo.PackageEquals(c, d)) {
-        if (c.Patch < p.Patch) {
-          this.lIr = !0;
-          for (let e = c.Patch + 1; e <= p.Patch; e++)
-            this._Ir.add(`${c.Major}.${c.Minor}.` + e);
-        }
-      } else (u = this.PackageVersion), (a = [u]), (t = !0);
+      } else (u = this.PackageVersion), (o = [u]), (t = !0);
       if (this.lIr) {
         this.LocalResourceVersions = new Array();
         for (const l of n)
@@ -106,8 +106,8 @@ class AppVersionMisc {
         (this.LocalResourceVersion =
           this.LocalResourceVersions[this.LocalResourceVersions.length - 1]),
           (this.LocalSaveResourceVersions = new Array());
-        for (const f of a)
-          this._Ir.has(f) || this.LocalSaveResourceVersions.push(f);
+        for (const p of o)
+          this._Ir.has(p) || this.LocalSaveResourceVersions.push(p);
         (this.LocalSaveResourceVersion =
           this.LocalSaveResourceVersions[
             this.LocalSaveResourceVersions.length - 1
@@ -116,16 +116,16 @@ class AppVersionMisc {
           this.LocalSaveResourceVersion === r && (t = !0);
       } else
         (this.LocalResourceVersions = n),
-          (this.LocalResourceVersion = o),
-          (this.LocalSaveResourceVersions = a),
+          (this.LocalResourceVersion = a),
+          (this.LocalSaveResourceVersions = o),
           (this.LocalSaveResourceVersion = u);
       e && this.UpdateVersion(void 0, !0),
         t && this.UpdateSavedVersion(void 0, !0),
         (this.hIr = h.has(this.PackageVersion)),
         (this.IndexSha1s = new Array());
-      for (const _ of this.LocalSaveResourceVersions)
-        (_ === this.PackageVersion && !this.hIr) ||
-          this.IndexSha1s.push(h.get(_));
+      for (const g of this.LocalSaveResourceVersions)
+        (g === this.PackageVersion && !this.hIr) ||
+          this.IndexSha1s.push(h.get(g));
       this.LocalSaveResourceVersion !== this.LatestVersion &&
         this.IndexSha1s.push(h.get(this.LatestVersion)),
         (this.HasUpdatedResource =
@@ -137,8 +137,8 @@ class AppVersionMisc {
         "远程版本号为空，使用包体版本号做为线上最新版本号",
       ),
         (this.LocalResourceVersions = n),
-        (this.LocalResourceVersion = o),
-        (this.LocalSaveResourceVersions = a),
+        (this.LocalResourceVersion = a),
+        (this.LocalSaveResourceVersions = o),
         (this.LocalSaveResourceVersion = u),
         (this.LatestVersion = this.PackageVersion),
         (this.HasUpdatedResource = !0);
@@ -234,7 +234,11 @@ class AppVersionMisc {
     ),
       LauncherStorageLib_1.LauncherStorageLib.DeleteGlobalString(
         this.GetSaveUpdateVersionKey(),
-      );
+      ),
+      "Launcher" === this.GetResType() &&
+        LauncherStorageLib_1.LauncherStorageLib.DeleteGlobalString(
+          "__kr_blvr__",
+        );
   }
   ReadPatchFileInfoList() {
     var e = new AppPathMisc_1.AppPathMisc(),
@@ -276,7 +280,7 @@ class AppVersionMisc {
   }
   GetMountFilePath() {
     return (
-      `${UE.BlueprintPathsLibrary.ProjectSavedDir()}Resources/${this.GetPackageVersion()}/` +
+      `${UE.KuroLauncherLibrary.GameSavedDir()}Resources/${this.GetPackageVersion()}/` +
       this.GetMountFileName()
     );
   }
@@ -372,6 +376,10 @@ class LanguageVersionMisc extends AppVersionMisc {
       this.uIr?.IndexSha1
     );
   }
+  ClearAllPatchVersion(e) {
+    super.ClearAllPatchVersion(e),
+      LauncherStorageLib_1.LauncherStorageLib.DeleteGlobalString(this.$Ja());
+  }
   HasMountFile() {
     var e = this.GetMountFilePath();
     return UE.BlueprintPathsLibrary.FileExists(e);
@@ -407,9 +415,16 @@ class LanguageVersionMisc extends AppVersionMisc {
     return [i, r];
   }
   NeedUpdate() {
+    var e;
     return (
       this.LanguageCode ===
         LauncherLanguageLib_1.LauncherLanguageLib.GetPackageAudioLanguage() ||
+      (void 0 !==
+        (e = LauncherStorageLib_1.LauncherStorageLib.GetGlobalString(
+          this.$Ja(),
+          "",
+        ).trim()) &&
+        0 < e.length) ||
       (this.HasNewResourceVersionBaseOnPackage() &&
         !this.IsFirstUpdateResources())
     );
@@ -421,7 +436,14 @@ class LanguageVersionMisc extends AppVersionMisc {
     LauncherStorageLib_1.LauncherStorageLib.SetGlobalString(
       this.GetSaveUpdateVersionKey(),
       this.PackageVersion,
-    );
+    ),
+      LauncherStorageLib_1.LauncherStorageLib.DeleteGlobalString(this.$Ja());
+  }
+  $Ja() {
+    return "UseLanguage_" + this.LanguageCode;
+  }
+  SetUseLanguagePackage() {
+    LauncherStorageLib_1.LauncherStorageLib.SetGlobalString(this.$Ja(), "1");
   }
 }
 exports.LanguageVersionMisc = LanguageVersionMisc;

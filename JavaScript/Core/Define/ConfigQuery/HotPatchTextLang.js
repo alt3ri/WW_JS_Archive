@@ -17,88 +17,110 @@ const LanguageSystem_1 = require("../../Common/LanguageSystem"),
     ["语句", COMMAND],
   ],
   langCache = new Map(),
-  initStat = void 0,
-  getLocalTextStat = void 0,
+  initStat = Stats_1.Stat.Create("configHotPatchTextLang.Init"),
+  getLocalTextStat = Stats_1.Stat.Create(
+    "configHotPatchTextLang.GetLocalTextNew",
+  ),
   LOCAL_TEXT_STAT_PREFIX = "configHotPatchTextLang.GetLocalTextNew(";
 exports.configHotPatchTextLang = {
   Init: () => {
-    ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND);
+    initStat.Start(),
+      ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND),
+      initStat.Stop();
   },
-  GetLocalText: (e, o = 0) => {},
-  GetLocalTextNew: (e, o = void 0) => {
-    if (LanguageSystem_1.LanguageSystem.GmShowLanguageKey)
+  GetLocalText: (t, o = 0) => {},
+  GetLocalTextNew: (t, o = void 0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getLocalTextStat.Start();
+    var e = Stats_1.Stat.Create("" + LOCAL_TEXT_STAT_PREFIX + t + `, ${o})`);
+    if ((e.Start(), LanguageSystem_1.LanguageSystem.GmShowLanguageKey))
       return (
-        (n = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(o)),
-        TABLE + `|${e}|` + n
+        (i = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(o)),
+        e.Stop(),
+        getLocalTextStat.Stop(),
+        ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+        TABLE + `|${t}|` + i
       );
-    let i = langCache.get(e);
-    i || ((i = new Map()), langCache.set(e, i));
-    var n = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(o);
-    let t = i.get(n);
-    if (t) return t;
-    var a = ConfigCommon_1.ConfigCommon.GetLangStatementId(
+    let n = langCache.get(t);
+    n || ((n = new Map()), langCache.set(t, n));
+    var i = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(o);
+    let a = n.get(i);
+    if (a)
+      return (
+        e.Stop(),
+        getLocalTextStat.Stop(),
+        ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+        a
+      );
+    var g = ConfigCommon_1.ConfigCommon.GetLangStatementId(
       TABLE,
       DB,
       COMMAND,
-      n,
+      i,
     );
     if (
-      (r =
-        ConfigCommon_1.ConfigCommon.CheckStatement(a) &&
-        ConfigCommon_1.ConfigCommon.BindString(a, 1, e, ...logPair, [
+      (m =
+        ConfigCommon_1.ConfigCommon.CheckStatement(g) &&
+        ConfigCommon_1.ConfigCommon.BindString(g, 1, t, ...logPair, [
           "Id",
-          e,
+          t,
         ]) &&
         0 <
           ConfigCommon_1.ConfigCommon.Step(
-            a,
+            g,
             !0,
             ...logPair,
             ["传入语言", o],
-            ["查询语言", n],
-            ["文本Id", e],
+            ["查询语言", i],
+            ["文本Id", t],
           ))
     ) {
-      var g = void 0;
+      var C = void 0;
       if (
-        (([r, g] = ConfigCommon_1.ConfigCommon.GetValue(
-          a,
-          0,
-          ...logPair,
-          ["传入语言", o],
-          ["查询语言", n],
-          ["文本Id", e],
-        )),
-        r)
-      ) {
-        var r = DeserializeConfig_1.DeserializeConfig.ParseStringRange(
+        (([m, C] = ConfigCommon_1.ConfigCommon.GetValue(
           g,
           0,
-          g.byteLength,
           ...logPair,
           ["传入语言", o],
-          ["查询语言", n],
-          ["文本Id", e],
+          ["查询语言", i],
+          ["文本Id", t],
+        )),
+        m)
+      ) {
+        var m = DeserializeConfig_1.DeserializeConfig.ParseStringRange(
+          C,
+          0,
+          C.byteLength,
+          ...logPair,
+          ["传入语言", o],
+          ["查询语言", i],
+          ["文本Id", t],
         );
-        if (r.Success)
+        if (m.Success)
           return (
-            (t = r.Value),
-            ConfigCommon_1.ConfigCommon.Reset(a),
-            StringUtils_1.StringUtils.IsEmpty(t) &&
+            (a = m.Value),
+            ConfigCommon_1.ConfigCommon.Reset(g),
+            e.Stop(),
+            getLocalTextStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            StringUtils_1.StringUtils.IsEmpty(a) &&
               o !== CommonDefine_1.CHS &&
-              ((g = exports.configHotPatchTextLang.GetLocalTextNew(
-                e,
+              ((C = exports.configHotPatchTextLang.GetLocalTextNew(
+                t,
                 CommonDefine_1.CHS,
               )),
-              StringUtils_1.StringUtils.IsEmpty(g) ||
-                ((r = void 0 === o ? "" : "|" + o),
-                (t = TEXTNOTFOUNT + "|" + e + r))),
-            i.set(n, t),
-            t
+              StringUtils_1.StringUtils.IsEmpty(C) ||
+                ((m = void 0 === o ? "" : "|" + o),
+                (a = TEXTNOTFOUNT + "|" + t + m))),
+            n.set(i, a),
+            a
           );
       }
     }
-    ConfigCommon_1.ConfigCommon.Reset(a);
+    ConfigCommon_1.ConfigCommon.Reset(g),
+      e.Stop(),
+      getLocalTextStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=HotPatchTextLang.js.map

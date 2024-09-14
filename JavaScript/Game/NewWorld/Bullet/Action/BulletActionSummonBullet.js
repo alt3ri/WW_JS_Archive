@@ -21,18 +21,18 @@ class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
     super.Clear(), (this.ChildInfo = void 0), (this.L5o = void 0);
   }
   NVo(e) {
-    var l = this.L5o,
-      i = l.length;
-    let s = void 0;
-    for (let t = 0; t < i; ++t)
-      if (l[t].Condition === e.ChildrenType) {
-        var r = l[t];
+    var i = this.L5o,
+      l = i.length;
+    let r = void 0;
+    for (let t = 0; t < l; ++t)
+      if (i[t].Condition === e.ChildrenType) {
+        var s = i[t];
         if (
-          (!(0 < r.Num) ||
-            this.ChildInfo.HaveSummonedBulletNumber[t] < r.Num) &&
-          0 !== Number(r.RowName)
+          (!(0 < s.Num) ||
+            this.ChildInfo.HaveSummonedBulletNumber[t] < s.Num) &&
+          0 !== Number(s.RowName)
         ) {
-          !s &&
+          !r &&
             e.ParentImpactPoint &&
             e.ParentLastPosition &&
             ((o = BulletPool_1.BulletPool.CreateVector()),
@@ -44,7 +44,7 @@ class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
             (h = o.DotProduct(u)),
             u.Multiply(h, o),
             e.ParentLastPosition.Addition(o, u),
-            (s = this.BulletInfo.ActorComponent.ActorTransform).SetLocation(
+            (r = this.BulletInfo.ActorComponent.ActorTransform).SetLocation(
               u.ToUeVector(),
             ),
             BulletPool_1.BulletPool.RecycleVector(u),
@@ -53,14 +53,15 @@ class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
             u,
             h = BulletController_1.BulletController.CreateBulletCustomTarget(
               this.BulletInfo.AttackerActorComp.Actor,
-              r.RowName.toString(),
-              s ?? this.BulletInfo.ActorComponent.ActorTransform,
+              s.RowName.toString(),
+              r ?? this.BulletInfo.ActorComponent.ActorTransform,
               {
                 SkillId: this.BulletInfo.BulletInitParams.SkillId,
                 ParentVictimId: e.Victim?.Id,
                 ParentTargetId: this.BulletInfo.Target?.Id,
                 ParentId: this.BulletInfo.Entity.Id,
                 DtType: this.BulletInfo.BulletInitParams.DtType,
+                CreateOnAuthority: e.CreateOnAuthority,
               },
               this.BulletInfo.ContextId,
             );
@@ -70,29 +71,29 @@ class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
               h,
             ),
               this.ChildInfo.HaveSummonedBulletNumber[t]++;
-          else if (r.BreakOnFail) return;
+          else if (s.BreakOnFail) return;
         }
       }
   }
   GVo(e) {
-    var l = this.L5o.length;
-    for (let t = 0; t < l; ++t) {
-      var i = this.L5o[t],
-        s = t;
+    var i = this.L5o.length;
+    for (let t = 0; t < i; ++t) {
+      var l = this.L5o[t],
+        r = t;
       if (
-        5 === i.Condition &&
+        5 === l.Condition &&
         !(
-          (0 < i.Num &&
-            !(this.ChildInfo.HaveSummonedBulletNumber[s] < i.Num)) ||
+          (0 < l.Num &&
+            !(this.ChildInfo.HaveSummonedBulletNumber[r] < l.Num)) ||
           this.BulletInfo.LiveTime <
-            this.ChildInfo.HaveSummonedBulletNumber[s] *
-              i.Interval *
+            this.ChildInfo.HaveSummonedBulletNumber[r] *
+              l.Interval *
               TimeUtil_1.TimeUtil.InverseMillisecond
         )
       ) {
-        var r = BulletController_1.BulletController.CreateBulletCustomTarget(
+        var s = BulletController_1.BulletController.CreateBulletCustomTarget(
           this.BulletInfo.AttackerActorComp.Actor,
-          i.RowName.toString(),
+          l.RowName.toString(),
           this.BulletInfo.ActorComponent.ActorTransform,
           {
             SkillId: this.BulletInfo.BulletInitParams.SkillId,
@@ -100,16 +101,17 @@ class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
             ParentTargetId: this.BulletInfo.Target?.Id,
             ParentId: this.BulletInfo.Entity.Id,
             DtType: this.BulletInfo.BulletInitParams.DtType,
+            CreateOnAuthority: e.CreateOnAuthority,
           },
           this.BulletInfo.ContextId,
         );
-        if (r)
+        if (s)
           BulletUtil_1.BulletUtil.ProcessHandOverEffectToSon(
             this.BulletInfo,
-            r,
+            s,
           ),
-            this.ChildInfo.HaveSummonedBulletNumber[s]++;
-        else if (i.BreakOnFail) return;
+            this.ChildInfo.HaveSummonedBulletNumber[r]++;
+        else if (l.BreakOnFail) return;
       }
     }
   }

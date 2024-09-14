@@ -17,8 +17,8 @@ class LevelEventSetActorVisible extends LevelGeneralBase_1.LevelEventBase {
         var a = EntitySystem_1.EntitySystem.Get(e.EntityId);
         if (a?.Valid)
           if (o.Targets && 0 !== o.Targets.length)
-            if (a.GetComponent(185)?.Owner) {
-              var n = a.GetComponent(149);
+            if (a.GetComponent(187)?.Owner) {
+              var n = a.GetComponent(150);
               if (n) {
                 var r = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
                     GlobalData_1.GlobalData.World,
@@ -44,7 +44,7 @@ class LevelEventSetActorVisible extends LevelGeneralBase_1.LevelEventBase {
                       if (l?.IsValid()) {
                         c = a.GetComponent(0).GetPbDataId();
                         switch (
-                          (ModelManager_1.ModelManager.SundryModel?.IsEnableDebugDetail(
+                          (ModelManager_1.ModelManager.SundryModel?.GetModuleDebugLevel(
                             "SceneItemReferenceComponent_" + c,
                           ) &&
                             Log_1.Log.CheckInfo() &&
@@ -114,6 +114,12 @@ class LevelEventSetActorVisible extends LevelGeneralBase_1.LevelEventBase {
                           case "Skybox":
                             l instanceof UE.BP_CloudFuBen_C &&
                               l.ChangeSky(o.Enable);
+                            break;
+                          case "FloatingActor":
+                            l instanceof UE.KuroFloatingStaticMesh &&
+                              (o.Enable
+                                ? l.SetLogicallyShow(3)
+                                : l.SetLogicallyHidden());
                         }
                       } else
                         Log_1.Log.CheckError() &&

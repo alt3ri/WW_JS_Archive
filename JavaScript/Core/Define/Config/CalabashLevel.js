@@ -20,8 +20,10 @@ class CalabashLevel {
     return this.tempcatchgain();
   }
   get BuffIds() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buffidsLength(), (t) =>
-      this.buffids(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buffidsLength(),
+      this.buffids,
+      this,
     );
   }
   get BuffDescription() {
@@ -36,9 +38,16 @@ class CalabashLevel {
   get BuffDescriptionMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.buffdescriptionmapLength(),
-      (t) => this.buffdescriptionmap(t)?.key(),
-      (t) => this.buffdescriptionmap(t)?.value(),
+      this.buffdescriptionmapKey,
+      this.buffdescriptionmapValue,
+      this,
     );
+  }
+  buffdescriptionmapKey(t) {
+    return this.buffdescriptionmap(t)?.key();
+  }
+  buffdescriptionmapValue(t) {
+    return this.buffdescriptionmap(t)?.value();
   }
   get Cost() {
     return this.cost();
@@ -49,9 +58,16 @@ class CalabashLevel {
   get QualityDropWeight() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.qualitydropweightLength(),
-      (t) => this.qualitydropweight(t)?.key(),
-      (t) => this.qualitydropweight(t)?.value(),
+      this.qualitydropweightKey,
+      this.qualitydropweightValue,
+      this,
     );
+  }
+  qualitydropweightKey(t) {
+    return this.qualitydropweight(t)?.key();
+  }
+  qualitydropweightValue(t) {
+    return this.qualitydropweight(t)?.value();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;

@@ -24,6 +24,7 @@ const puerts_1 = require("puerts"),
   GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil"),
   MapDefine_1 = require("../../Map/MapDefine"),
   MapUtil_1 = require("../../Map/MapUtil"),
+  TaskTrackedMarkItem_1 = require("../../Map/Marks/MarkItem/TaskTrackedMarkItem"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   BattleUiControl_1 = require("../BattleUiControl"),
   CENTER_Y = 62.5,
@@ -45,6 +46,7 @@ const puerts_1 = require("puerts"),
   QUEST_TRACK_MARK_INDEX = 999;
 class TrackedMark extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
+    var i;
     super(),
       (this.TrackTarget = void 0),
       (this.IsSubTrack = !1),
@@ -89,6 +91,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       (this.KCt = 0),
       (this.QCt = 0),
       (this.XCt = 0),
+      (this.v$a = void 0),
       (this.ilt = () => {
         var t = MapUtil_1.MapUtil.GetTrackPositionByTrackTarget(
           this.TrackTarget,
@@ -99,14 +102,15 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       (this.Tct = (t) => {
         "Start" === t && (this.PCt = !1);
       }),
+      (this.pYa = [2, 4, 3]),
       (this.$Ct = (t) => {
-        t !== Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest ||
+        t !== Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest ||
           this.IsInTrackRange ||
           this.YCt();
       }),
       (this.JCt = (t, i, e) => {
         6 === t.Type &&
-          t.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
+          t.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
           this.YCt();
       }),
       (this.zCt = (t) => {
@@ -150,6 +154,13 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
         (this.xst = t.IconPath),
         (this.vCt = t.ShowGroupId),
         (this.MCt = t.Id),
+        (i = ModelManager_1.ModelManager.MapModel.GetDynamicMark(
+          this.MCt,
+        )) instanceof MapDefine_1.QuestMarkCreateInfo &&
+          (this.v$a = new TaskTrackedMarkItem_1.TaskTrackedMarkItem(
+            i,
+            this.ECt,
+          )),
         (this.MarkHideDis = t.TrackHideDis),
         (this.TrackTarget = t.TrackTarget),
         (this.IsInTrackRange = t.IsInTrackRange ?? !1),
@@ -169,14 +180,14 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
             (this.IsForceHideDirection = !0),
             (this.jCt = !0),
             (this.HCt = !0),
-            (t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(
+            (i = ModelManager_1.ModelManager.CreatureModel.GetEntityById(
               this.MCt,
-            )?.Entity?.GetComponent(146)),
+            )?.Entity?.GetComponent(147)),
             (this.KCt =
-              (t?.AudioPointNearRadius ?? 0) * MapDefine_1.FLOAT_0_01),
+              (i?.AudioPointNearRadius ?? 0) * MapDefine_1.FLOAT_0_01),
             (this.QCt =
-              (t?.AudioPointMiddleRadius ?? 0) * MapDefine_1.FLOAT_0_01),
-            (this.XCt = (t?.AudioPointFarRadius ?? 0) * MapDefine_1.FLOAT_0_01))
+              (i?.AudioPointMiddleRadius ?? 0) * MapDefine_1.FLOAT_0_01),
+            (this.XCt = (i?.AudioPointFarRadius ?? 0) * MapDefine_1.FLOAT_0_01))
           : ((this.FCt = !1),
             (this.IsForceHideDirection = !1),
             (this.jCt = !1),
@@ -233,6 +244,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
   }
   OnBeforeDestroy() {
     (this.TrackTarget = void 0),
+      (this.v$a = void 0),
       (this.PointTransport = void 0),
       this.RCt?.Clear(),
       (this.RCt = void 0),
@@ -360,7 +372,8 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
     GlobalData_1.GlobalData.World
       ? UiLayer_1.UiLayer.UiRootItem
         ? this.RootItem &&
-          ((this.CurShowTime += t / CommonDefine_1.MILLIONSECOND_PER_SECOND),
+          (this.v$a && this.v$a.Update(),
+          (this.CurShowTime += t / CommonDefine_1.MILLIONSECOND_PER_SECOND),
           this.tgt()
             ? (i = this.LCt) < this.MarkHideDis && !this.PCt
               ? (this.RootItem.SetUIActive(!1), 1 === this.WCt && this.ZCt())
@@ -453,6 +466,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
   tgt() {
     if (this.pCt) return !1;
     if (this.ACt && this.CurShowTime > this.kCt) return !1;
+    if (this.v$a && this.v$a.TargetInDiffWorld()) return !1;
     if (
       !ModelManager_1.ModelManager.TrackModel.CanShowInGroup(
         this.vCt,
@@ -468,11 +482,21 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       )
     )
       return !1;
-    return ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
-      ? !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-          (ModelManager_1.ModelManager.TrackModel.IsTracking(2, this.MCt) ||
-            ModelManager_1.ModelManager.TrackModel.IsTracking(4, this.MCt))
-      : ModelManager_1.ModelManager.TrackModel.IsTracking(this.ECt, this.MCt);
+    if (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()) {
+      if (ModelManager_1.ModelManager.GameModeModel.IsMulti) return !1;
+      let t = !1;
+      for (const i of this.pYa)
+        if (
+          (t =
+            t || ModelManager_1.ModelManager.TrackModel.IsTracking(i, this.MCt))
+        )
+          break;
+      return t;
+    }
+    return ModelManager_1.ModelManager.TrackModel.IsTracking(
+      this.ECt,
+      this.MCt,
+    );
   }
   ClampToEllipse(t, i) {
     var e = t.X,

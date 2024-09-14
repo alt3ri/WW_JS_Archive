@@ -62,25 +62,25 @@ let SceneItemHitComponent =
         (this.Afn = Rotator_1.Rotator.Create()),
         (this.w0n = 0),
         (this.AimParts = new Array()),
-        (this.Vsa = void 0),
-        (this.kpa = void 0),
-        (this.Hsa = (t) =>
+        (this.Pla = void 0),
+        (this.kSa = void 0),
+        (this.wla = (t) =>
           SceneItemHitUtils_1.SceneItemHitUtils.CheckHitDataMatchPlayerAttack(
             { Type: IComponent_1.EHitBulletType.PlayerAttack },
             t,
             this.Entity,
           )),
-        (this.jsa = (t) =>
+        (this.Bla = (t) =>
           SceneItemHitUtils_1.SceneItemHitUtils.CheckHitDataMatchFixedBulletId(
-            this.Vsa,
+            this.Pla,
             t,
             this.Entity,
           ));
     }
     OnStart() {
-      (this.inn = this.Entity.GetComponent(180)),
-        (this.Ifn = this.Entity.GetComponent(117)),
-        (this.Hte = this.Entity.GetComponent(185)),
+      (this.inn = this.Entity.GetComponent(181)),
+        (this.Ifn = this.Entity.GetComponent(118)),
+        (this.Hte = this.Entity.GetComponent(187)),
         (this.w0n = this.Entity.GetComponent(0).GetEntityOnlineInteractType());
       var t = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
         this.Hte?.CreatureData.GetPbDataId(),
@@ -91,28 +91,28 @@ let SceneItemHitComponent =
             t.ComponentsData,
             "HitComponent",
           )) &&
-          (this.kpa = t),
+          (this.kSa = t),
         !0
       );
     }
     OnActivate() {
-      if (this.kpa) {
-        switch (this.kpa.HitBullet?.Type) {
+      if (this.kSa) {
+        switch (this.kSa.HitBullet?.Type) {
           case IComponent_1.EHitBulletType.PlayerAttack:
-            this.AddHitCondition(this.Hsa);
+            this.AddHitCondition(this.wla);
             break;
           case IComponent_1.EHitBulletType.FixedBulletId:
-            (this.Vsa = this.kpa.HitBullet), this.AddHitCondition(this.jsa);
+            (this.Pla = this.kSa.HitBullet), this.AddHitCondition(this.Bla);
         }
-        if (this.kpa.AimParts && this.Hte)
-          for (const e of this.kpa.AimParts) {
+        if (this.kSa.AimParts && this.Hte)
+          for (const e of this.kSa.AimParts) {
             var t = new AimPartUtils_1.AimPart(this.Hte);
             t.InitSceneItem(e), this.AimParts.push(t);
           }
-        this.kpa?.AttackerHitTimeScaleRatio &&
-          (this.Dfn = this.kpa.AttackerHitTimeScaleRatio),
-          this.kpa?.VictimHitTimeScaleRatio &&
-            (this.Rfn = this.kpa.VictimHitTimeScaleRatio);
+        this.kSa?.AttackerHitTimeScaleRatio &&
+          (this.Dfn = this.kSa.AttackerHitTimeScaleRatio),
+          this.kSa?.VictimHitTimeScaleRatio &&
+            (this.Rfn = this.kSa.VictimHitTimeScaleRatio);
       }
     }
     Pfn(t) {
@@ -159,7 +159,7 @@ let SceneItemHitComponent =
         t.BulletEntityId,
       )?.GetBulletInfo();
       if (i) {
-        if (this.Entity.GetComponent(148)?.ReboundBullet(t, i)) return !1;
+        if (this.Entity.GetComponent(149)?.ReboundBullet(t, i)) return !1;
         if (0 !== t.CalculateType)
           return t.ReBulletData.TimeScale.TimeScaleOnHit && this.Ofn(t), !1;
         if (this.Pfn(t)) {
@@ -200,7 +200,7 @@ let SceneItemHitComponent =
         ));
     }
     Bfn(e, i) {
-      var n = this.Entity.GetComponent(180);
+      var n = this.Entity.GetComponent(181);
       if (n) {
         var s =
           SceneInteractionManager_1.SceneInteractionManager.Get().GetPartCollisionActorsNum(
@@ -276,7 +276,7 @@ let SceneItemHitComponent =
             1,
           ))
         : 0 < n.时间膨胀时长 &&
-          (t.Attacker.GetComponent(109)?.SetTimeScale(
+          (t.Attacker.GetComponent(110)?.SetTimeScale(
             n.优先级 - 1,
             n.时间膨胀值 * s,
             n.时间膨胀变化曲线,
@@ -292,7 +292,7 @@ let SceneItemHitComponent =
                 t.BulletId.toString(),
               )) &&
               EntitySystem_1.EntitySystem.Get(i)
-                ?.GetComponent(109)
+                ?.GetComponent(110)
                 ?.SetTimeScale(
                   n.优先级,
                   n.时间膨胀值 * s,
@@ -304,7 +304,7 @@ let SceneItemHitComponent =
     Ofn(t) {
       var e, i, n, s, r, o;
       t.ReBulletData.Base.ContinuesCollision ||
-        ((e = this.Entity.GetComponent(109)) &&
+        ((e = this.Entity.GetComponent(110)) &&
           ((n = (i = t.ReBulletData.TimeScale).TimeScaleOnHit),
           (s = this.Rfn?.ValueRatio ?? 1),
           (r = this.Rfn?.TimeRatio ?? 1),
@@ -334,7 +334,7 @@ let SceneItemHitComponent =
       this.Lfn.has(t) ||
         (((i = new ComponentHitReg()).ComponentHitBaseConfig = e),
         this.Lfn.set(t, i),
-        e && (this.kpa = e));
+        e && (this.kSa = e));
     }
     AddComponentHitCondition(t, e) {
       var i;
@@ -361,7 +361,7 @@ let SceneItemHitComponent =
 ])),
   (SceneItemHitComponent = SceneItemHitComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(140)],
+      [(0, RegisterComponent_1.RegisterComponent)(141)],
       SceneItemHitComponent,
     )),
   (exports.SceneItemHitComponent = SceneItemHitComponent);

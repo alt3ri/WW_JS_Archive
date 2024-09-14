@@ -55,8 +55,8 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
       t instanceof TsAiController_1.default &&
         ((t = t.AiController),
         this.TsWalkOff ||
-          t.CharActorComp.Entity.GetComponent(37)?.SetWalkOffLedgeRecord(!1),
-        t.CharActorComp.Entity.CheckGetComponent(160).SetMoveState(
+          t.CharActorComp.Entity.GetComponent(38)?.SetWalkOffLedgeRecord(!1),
+        t.CharActorComp.Entity.CheckGetComponent(161).SetMoveState(
           CharacterUnifiedStateTypes_1.ECharMoveState.Walk,
         ),
         this.Destination ||
@@ -90,7 +90,7 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
               this.TmpSelfToTarget,
             ),
               this.TmpDirection.DeepCopy(this.TmpSelfToTarget);
-            const n = s.CharActorComp.Entity.GetComponent(37);
+            const n = s.CharActorComp.Entity.GetComponent(38);
             void (
               (n && n.MoveController.IsMovingToLocation()) ||
               this.SetInputParams(
@@ -182,7 +182,7 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
                   ]),
                   this.StopMoveToLocation(s.CharActorComp);
               }
-              const n = r.Entity.GetComponent(37);
+              const n = r.Entity.GetComponent(38);
               (n && n.MoveController.IsMovingToLocation()) ||
                 this.SetInputParams(r, this.TmpSelfToTarget, this.TmpDirection);
             }
@@ -230,7 +230,7 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
     }
   }
   StopMoveToLocation(t) {
-    t = t.Entity.GetComponent(37);
+    t = t.Entity.GetComponent(38);
     t &&
       t.MoveController.IsMovingToLocation() &&
       t?.MoveController.StopMoveToLocation(),
@@ -238,7 +238,7 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
   }
   SetMoveToLocation(t, i, s) {
     this.TmpVector2.DeepCopy(t);
-    t = i.Entity.GetComponent(37);
+    t = i.Entity.GetComponent(38);
     if (!t) return !1;
     if (
       (!this.LastDestination.IsNearlyZero() ||
@@ -270,7 +270,7 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
           this.TmpVector,
           this.CurrentMoveDirect,
         ),
-        t.Entity.GetComponent(91)?.MoveState !==
+        t.Entity.GetComponent(92)?.MoveState !==
         CharacterUnifiedStateTypes_1.ECharMoveState.Walk
           ? (AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
               t,
@@ -317,7 +317,7 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
     this.AIOwner instanceof TsAiController_1.default &&
       ((t =
         this.AIOwner.AiController.CharActorComp.Entity.GetComponent(
-          37,
+          38,
         ))?.MoveController.StopMoveToLocation(),
       this.LastDestination?.Reset(),
       AiContollerLibrary_1.AiControllerLibrary.ClearInput(this.AIOwner),

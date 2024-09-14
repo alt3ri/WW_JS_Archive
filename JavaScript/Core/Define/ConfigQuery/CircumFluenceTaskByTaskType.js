@@ -17,29 +17,42 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0,
+const initStat = Stats_1.Stat.Create("configCircumFluenceTaskByTaskType.Init"),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configCircumFluenceTaskByTaskType.GetConfigList",
+  ),
   CONFIG_LIST_STAT_PREFIX = "configCircumFluenceTaskByTaskType.GetConfigList(";
 exports.configCircumFluenceTaskByTaskType = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfigList: (e, o = !0) => {
-    var n;
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (o) {
-        var i = KEY_PREFIX + `#${e})`;
-        const a = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (a) return a;
+  GetConfigList: (o, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${o})`),
+      e =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
+      if (n) {
+        var t = KEY_PREFIX + `#${o})`;
+        const a = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (a)
+          return (
+            i.Stop(),
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
-        (n = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair))
+        (e = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair))
       ) {
         const a = new Array();
         for (;;) {
@@ -47,36 +60,47 @@ exports.configCircumFluenceTaskByTaskType = {
             1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "TaskType",
-              e,
+              o,
             ])
           )
             break;
-          var r = void 0;
+          var C = void 0;
           if (
-            (([n, r] = ConfigCommon_1.ConfigCommon.GetValue(
+            (([e, C] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
               0,
               ...logPair,
-              ["TaskType", e],
+              ["TaskType", o],
             )),
-            !n)
+            !e)
           )
-            return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
-          r = CircumFluenceTask_1.CircumFluenceTask.getRootAsCircumFluenceTask(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(r.buffer)),
+            return (
+              ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+              i.Stop(),
+              getConfigListStat.Stop(),
+              void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+            );
+          C = CircumFluenceTask_1.CircumFluenceTask.getRootAsCircumFluenceTask(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(C.buffer)),
           );
-          a.push(r);
+          a.push(C);
         }
         return (
-          o &&
-            ((i = KEY_PREFIX + `#${e})`),
-            ConfigCommon_1.ConfigCommon.SaveConfig(i, a, a.length)),
+          n &&
+            ((t = KEY_PREFIX + `#${o})`),
+            ConfigCommon_1.ConfigCommon.SaveConfig(t, a, a.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+          i.Stop(),
+          getConfigListStat.Stop(),
+          ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
           a
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=CircumFluenceTaskByTaskType.js.map

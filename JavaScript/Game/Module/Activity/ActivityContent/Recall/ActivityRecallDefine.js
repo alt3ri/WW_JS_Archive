@@ -10,8 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.activityRecallMainViewComponentsInfo =
       void 0);
 const UE = require("ue"),
-  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
   UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
   UiSequencePlayer_1 = require("../../../../Ui/Base/UiSequencePlayer");
 var ERecallStartCondition, EActivityRecallTaskType;
@@ -50,28 +49,11 @@ class ActivityMainSubViewBase extends UiPanelBase_1.UiPanelBase {
     super(...arguments),
       (this.ActivityRecallData = void 0),
       (this.PassRecallBaseCallBack = void 0),
-      (this.SequencePlayer = void 0),
-      (this.E5e = (t) => {
-        "ContentStart" === t && this.SequencePlayer.PlaySequence("Start");
-      });
+      (this.SequencePlayer = void 0);
   }
   OnStart() {
     var t = this.GetRootItem();
     this.SequencePlayer = new UiSequencePlayer_1.UiSequencePlayer(t);
-  }
-  OnBeforeShow() {
-    this.SequencePlayer.PlaySequence("Start"),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.PlaySequenceEventByStringParam,
-        this.E5e,
-      );
-  }
-  OnAfterHide() {
-    EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.PlaySequenceEventByStringParam,
-      this.E5e,
-    ),
-      this.SequencePlayer.PlaySequence("Close");
   }
   BindPassRecallBaseCallBack(t) {
     this.PassRecallBaseCallBack = t;
@@ -86,6 +68,16 @@ class ActivityMainSubViewBase extends UiPanelBase_1.UiPanelBase {
     (this.ActivityRecallData = t), this.OnRefreshByData(t, e);
   }
   OnRefreshByData(t, e) {}
+  OnBeforeShow() {
+    this.SequencePlayer.StopSequenceByKey("Start");
+    var t = new CustomPromise_1.CustomPromise();
+    this.SequencePlayer.PlaySequenceAsync("Start", t);
+  }
+  OnParentShow() {
+    this.SequencePlayer.StopSequenceByKey("Start");
+    var t = new CustomPromise_1.CustomPromise();
+    this.SequencePlayer.PlaySequenceAsync("Start", t);
+  }
 }
 exports.ActivityMainSubViewBase = ActivityMainSubViewBase;
 class ActivityRecallTaskDynamicData {

@@ -19,14 +19,14 @@ class ActivityTurntableController extends ActivityControllerBase_1.ActivityContr
     super(...arguments),
       (this.DSe = (t, r) => {
         ModelManager_1.ModelManager.ActivityModel.GetCurrentActivitiesByType(
-          Protocol_1.Aki.Protocol.oks.Proto_TurnTableActivity,
+          Protocol_1.Aki.Protocol.uks.Proto_TurnTableActivity,
         ).forEach((e) => {
           e.OnQuestStateChange(t, r);
         });
       }),
       (this.qdi = (t, r) => {
         ModelManager_1.ModelManager.ActivityModel.GetCurrentActivitiesByType(
-          Protocol_1.Aki.Protocol.oks.Proto_TurnTableActivity,
+          Protocol_1.Aki.Protocol.uks.Proto_TurnTableActivity,
         ).forEach((e) => {
           e.OnCommonItemCountAnyChange(t, r);
         });
@@ -74,26 +74,26 @@ class ActivityTurntableController extends ActivityControllerBase_1.ActivityContr
     return !1;
   }
   static RequestTurntableRun(a) {
-    var e = new Protocol_1.Aki.Protocol.Zgs();
-    (e.T6n = a),
-      Net_1.Net.Call(28109, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.sfs();
+    (e.w6n = a),
+      Net_1.Net.Call(18578, e, (e) => {
         if (e) {
-          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+          e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              16171,
+              e.Q4n,
+              29528,
             );
           var t = ModelManager_1.ModelManager.ActivityModel.GetActivityById(a);
           if (t) {
             var r = [];
-            for (const i of Object.keys(e.rvs)) {
-              var n = [{ IncId: 0, ItemId: Number.parseInt(i) }, e.rvs[i]];
+            for (const i of Object.keys(e._vs)) {
+              var n = [{ IncId: 0, ItemId: Number.parseInt(i) }, e._vs[i]];
               r.push(n);
             }
-            t.SetRunResult(e.R6n, r),
+            t.SetRunResult(e.N6n, r),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.TurntableStartRun,
-                e.R6n,
+                e.N6n,
               ),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.RefreshCommonActivityRedDot,

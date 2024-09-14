@@ -235,7 +235,7 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
             .PhotoAndShareShowPlayerName,
           e,
         ),
-          this.QWi?.RefreshNameVisible();
+          this.QWi?.SetNameVisible(e);
       }),
       (this.sKi = (e) => {
         PhotographController_1.PhotographController.CheckIfInMission()
@@ -360,7 +360,7 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
           ? 1 !== e.GachaData.length
             ? (this.$Wi = 5)
             : ((i = ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(
-                e.GachaData[0].WVn.f8n,
+                e.GachaData[0].e9n.L8n,
               )),
               (this.$Wi = 2 === i ? 4 : 3))
           : (this.$Wi = 1)
@@ -416,14 +416,14 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
           : 2 ===
               PhotographController_1.PhotographController.CameraCaptureType &&
             (i.SetUIActive(!1), t.SetUIActive(!1), this.mKi()),
-      this._Nn();
+      this.vNn();
   }
   cKi(e) {
     this.GetItem(14).SetUIActive(!1),
       this.GetItem(15).SetUIActive(!0),
       this.GetItem(7).SetUIActive(!1),
       this.mKi(),
-      this._Nn();
+      this.vNn();
     var t = e.Index;
     this.GetText(18).SetUIActive(void 0 !== e.DateText),
       e.DateText &&
@@ -445,7 +445,7 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
   dKi() {
     return !BaseConfigController_1.BaseConfigController.GetIosAuditFirstDownloadTip();
   }
-  _Nn() {
+  vNn() {
     var e =
       ControllerHolder_1.ControllerHolder.PhotographController.CheckHasSpecifiedFeatureForSave();
     this.GetButton(6)?.RootUIComp.SetUIActive(!e);

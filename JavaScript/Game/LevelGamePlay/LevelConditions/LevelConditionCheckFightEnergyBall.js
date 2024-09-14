@@ -26,8 +26,8 @@ class LevelConditionCheckFightEnergyBall extends LevelGeneralBase_1.LevelConditi
           !1)
         : ((r = (e =
             ModelManager_1.ModelManager.SceneTeamModel
-              .GetCurrentEntity)?.Entity?.GetComponent(81)?.RoleElementEnergy),
-          (e = e?.Entity?.GetComponent(81)?.RoleElementEnergyMax),
+              .GetCurrentEntity)?.Entity?.GetComponent(82)?.RoleElementEnergy),
+          (e = e?.Entity?.GetComponent(82)?.RoleElementEnergyMax),
           (0 === r && 0 === n) ||
             (0 < r && r < e && 2 === n) ||
             (e <= r && 1 === n));

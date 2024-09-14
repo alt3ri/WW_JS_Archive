@@ -19,9 +19,16 @@ class BattlePassTask {
   get TaskReward() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.taskrewardLength(),
-      (t) => this.taskreward(t)?.key(),
-      (t) => this.taskreward(t)?.value(),
+      this.taskrewardKey,
+      this.taskrewardValue,
+      this,
     );
+  }
+  taskrewardKey(t) {
+    return this.taskreward(t)?.key();
+  }
+  taskrewardValue(t) {
+    return this.taskreward(t)?.value();
   }
   __init(t, s) {
     return (this.z7 = t), (this.J7 = s), this;

@@ -26,8 +26,8 @@ class OpenSystemFeed extends OpenSystemBase_1.OpenSystemBase {
           }).ItemIds = i.ItemIds.concat(n.ItemIds)),
           r.push(i),
           (i = ""),
-          (i = o.GetComponent(104)?.PawnName ?? ""),
-          (o = o.GetComponent(156))
+          (i = o.GetComponent(105)?.PawnName ?? ""),
+          (o = o.GetComponent(157))
             ? (o.InitFeedingAnimalConfig(n.ItemIds, n.GameplayTags),
               o.SetUiOpenPerformance(this.GetViewName(e), e.BoardId),
               ItemDeliverController_1.ItemDeliverController.OpenItemDeliverViewByHandInItem(

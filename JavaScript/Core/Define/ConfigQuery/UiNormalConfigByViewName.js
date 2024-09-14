@@ -17,25 +17,39 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configUiNormalConfigByViewName.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configUiNormalConfigByViewName.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configUiNormalConfigByViewName.GetConfig(";
 exports.configUiNormalConfigByViewName = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, i = !0) => {
-    if (
-      (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      e =
+        (n.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
       if (i) {
-        var n = KEY_PREFIX + `#${o})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (r) return r;
+        var t = KEY_PREFIX + `#${o})`;
+        const C = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (C)
+          return (
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
+          );
       }
       if (
         (e =
@@ -46,10 +60,9 @@ exports.configUiNormalConfigByViewName = {
               o,
             ]))
       ) {
-        var e,
-          n = void 0;
+        t = void 0;
         if (
-          (([e, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -57,20 +70,26 @@ exports.configUiNormalConfigByViewName = {
           )),
           e)
         ) {
-          const r = UiNormalConfig_1.UiNormalConfig.getRootAsUiNormalConfig(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+          const C = UiNormalConfig_1.UiNormalConfig.getRootAsUiNormalConfig(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
             i &&
               ((e = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(e, r)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(e, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            r
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    n.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=UiNormalConfigByViewName.js.map

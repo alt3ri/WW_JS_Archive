@@ -5,12 +5,14 @@ const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
   TabComponent_1 = require("../../Common/TabComponent/TabComponent"),
   LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  PayShopGoods_1 = require("../PayShopData/PayShopGoods"),
   PayShopItem_1 = require("./TabItem/PayShopItem"),
   PayShopSwitchItem_1 = require("./TabItem/PayShopSwitchItem"),
   TIMEGAP = 1e3;
@@ -49,6 +51,21 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
         (this.CurrentSelectTabId = t[e]),
           this.RefreshLoopScroll(this.CurrentSelectTabId);
       }),
+      (this.CheckIfNeedShowPlayStationStoreIcon = () => {
+        if (this.GetActive()) {
+          let e = !1;
+          for (const t of this.PayShopGoodsList)
+            if (
+              (e = !(t instanceof PayShopGoods_1.PayShopGoods) || t.IsDirect())
+            )
+              break;
+          e
+            ? PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.ShowPlayStationStoreIcon(
+                0,
+              )
+            : PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.HidePlayStationStoreIcon();
+        }
+      }),
       (this.GetProxyData = (e) => this.PayShopGoodsList[e]);
   }
   OnRegisterComponent() {
@@ -72,6 +89,10 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshGoods,
         this.t3i,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.SdkPayEnd,
+        this.CheckIfNeedShowPlayStationStoreIcon,
       );
   }
   RemoveEventListener() {
@@ -82,6 +103,10 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshGoods,
         this.t3i,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.SdkPayEnd,
+        this.CheckIfNeedShowPlayStationStoreIcon,
       );
   }
   OnStart() {
@@ -123,7 +148,8 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
       this.GetLoopScrollViewComponent(1).RootUIComp.SetUIActive(
         0 < this.PayShopGoodsList.length,
       ),
-      this.GetItem(8).SetUIActive(this.PayShopGoodsList.length <= 0);
+      this.GetItem(8).SetUIActive(this.PayShopGoodsList.length <= 0),
+      this.CheckIfNeedShowPlayStationStoreIcon();
   }
   OnAfterShow() {
     this.CurrentShopId = this.Params;

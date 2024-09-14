@@ -6,6 +6,7 @@ const UE = require("ue"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  RedDotController_1 = require("../../RedDot/RedDotController"),
   AutoAttachItem_1 = require("../AutoAttach/AutoAttachItem"),
   LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer"),
   LguiUtil_1 = require("../Util/LguiUtil");
@@ -15,7 +16,8 @@ class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
       (this.$8i = void 0),
       (this.NHe = 0),
       (this.SPe = void 0),
-      (this.Ypt = !1);
+      (this.Ypt = !1),
+      (this.l4e = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -25,6 +27,7 @@ class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
       [3, UE.UIText],
       [4, UE.UIItem],
       [5, UE.UIExtendToggle],
+      [6, UE.UIItem],
     ];
     this.BtnBindInfo = [
       [
@@ -38,23 +41,47 @@ class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
       ],
     ];
   }
-  MOn() {
+  AOn() {
     void 0 === this.SPe &&
       (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   OnRefreshItem(e) {
-    this.MOn(),
+    var t;
+    this.AOn(),
+      this.Ovt(),
       -1 === (this.NHe = e)
         ? (this.$8i = void 0)
-        : ((e =
+        : ((t =
             ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryTopicById(
               e,
             )),
-          (this.$8i = e)),
+          (this.$8i = t)),
       this.e6e(),
       this.Iwn(),
       this.Wbe(),
-      this.u7e();
+      this.u7e(),
+      this.K8e(e);
+  }
+  K8e(e) {
+    -1 === e
+      ? this.GetItem(6)?.SetUIActive(!1)
+      : ((this.l4e = "FragmentMemoryTopic"),
+        this.l4e &&
+          RedDotController_1.RedDotController.BindRedDot(
+            this.l4e,
+            this.GetItem(6),
+            void 0,
+            e,
+          ));
+  }
+  Ovt() {
+    this.l4e &&
+      (RedDotController_1.RedDotController.UnBindGivenUi(
+        this.l4e,
+        this.GetItem(6),
+        this.$8i?.Id,
+      ),
+      (this.l4e = void 0));
   }
   u7e() {
     -1 === this.NHe
@@ -126,6 +153,9 @@ class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
     this.Ypt && this.SPe?.PlaySequencePurely("Unselect"),
       this.GetExtendToggle(5)?.SetToggleState(0),
       (this.Ypt = !1);
+  }
+  OnBeforeDestroyImplement() {
+    this.Ovt();
   }
   OnMoveItem() {}
 }

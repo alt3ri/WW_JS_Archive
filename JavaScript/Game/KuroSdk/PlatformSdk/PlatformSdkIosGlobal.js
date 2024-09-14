@@ -13,7 +13,8 @@ const cpp_1 = require("cpp"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   KuroSdkData_1 = require("../KuroSdkData"),
   PlatformSdkBase_1 = require("./PlatformSdkBase"),
-  WEBVIEWCD = 5e3;
+  WEBVIEWCD = 5e3,
+  MAXREVIEWTIME = 3;
 class IQueryProduct extends Json_1.JsonObjBase {
   constructor() {
     super(...arguments),
@@ -279,6 +280,9 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
           );
       (this.LastOpenTime = Time_1.Time.Now), this.OpenWebView(e, r, o, t, n);
     }
+  }
+  CurrentPlatformYearReviewTime() {
+    return MAXREVIEWTIME;
   }
 }
 exports.PlatformSdkIosGlobal = PlatformSdkIosGlobal;

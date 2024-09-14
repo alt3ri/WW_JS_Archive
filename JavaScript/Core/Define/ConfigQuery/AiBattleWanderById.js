@@ -17,60 +17,77 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configAiBattleWanderById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configAiBattleWanderById.GetConfig"),
   CONFIG_STAT_PREFIX = "configAiBattleWanderById.GetConfig(";
 exports.configAiBattleWanderById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, e = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
-        var n = KEY_PREFIX + `#${o})`;
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (t) return t;
+  GetConfig: (n, o = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${n})`),
+      i =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
+      if (o) {
+        var e = KEY_PREFIX + `#${n})`;
+        const a = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (a)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
         (i =
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, n, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
               "Id",
-              o,
+              n,
             ]))
       ) {
-        var i,
-          n = void 0;
+        e = void 0;
         if (
-          (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
-            ["Id", o],
+            ["Id", n],
           )),
           i)
         ) {
-          const t = AiBattleWander_1.AiBattleWander.getRootAsAiBattleWander(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+          const a = AiBattleWander_1.AiBattleWander.getRootAsAiBattleWander(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
           );
           return (
-            e &&
-              ((i = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(i, t)),
+            o &&
+              ((i = KEY_PREFIX + `#${n})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=AiBattleWanderById.js.map

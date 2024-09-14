@@ -11,8 +11,8 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   CustomMarkItemView_1 = require("../MarkItemView/CustomMarkItemView"),
   ServerMarkItem_1 = require("./ServerMarkItem");
 class CustomMarkItem extends ServerMarkItem_1.ServerMarkItem {
-  constructor(e, r, t, i) {
-    super(e, r, t, i), (this.NDi = !1);
+  constructor(e, r, t, a) {
+    super(e, r, t, a), (this.NDi = !1);
   }
   get MarkType() {
     return 9;
@@ -31,8 +31,7 @@ class CustomMarkItem extends ServerMarkItem_1.ServerMarkItem {
               e.TrackTarget.Z,
             )),
             (r = MapUtil_1.MapUtil.UiPosition2WorldPosition(r, r)),
-            this.SetTrackData(r),
-            this.s1a())
+            this.SetTrackData(r))
           : e.TrackTarget instanceof Vector2D_1.Vector2D
             ? ((r = Vector_1.Vector.Create(
                 e.TrackTarget.X,
@@ -46,17 +45,6 @@ class CustomMarkItem extends ServerMarkItem_1.ServerMarkItem {
         this.SetConfigId(this.ConfigId),
         CustomMarkByMarkId_1.configCustomMarkByMarkId.GetConfig(this.ConfigId));
     (this.ShowPriority = r ? r.ShowPriority : 0), this.UpdateTrackState();
-  }
-  s1a() {
-    var e,
-      r = this.ServerMarkInfo;
-    r.TrackTarget instanceof Vector_1.Vector &&
-      ((e = this.UiPosition).X <= -2600 ||
-        4200 <= e.X ||
-        e.Y <= -4200 ||
-        2e3 <= e.Y) &&
-      ((e = r.TrackTarget),
-      this.UpdateCustomMapMarkPosition(Vector_1.Vector.Create(e.X, -e.Y, 0)));
   }
   OnCreateView() {
     this.InnerView = new CustomMarkItemView_1.CustomMarkItemView(this);
@@ -81,6 +69,9 @@ class CustomMarkItem extends ServerMarkItem_1.ServerMarkItem {
       ? !ModelManager_1.ModelManager.WorldMapModel.HideCustomMarks
       : !ModelManager_1.ModelManager.WorldMapModel.HideCustomMarks &&
           super.CheckCanShowView();
+  }
+  GetInteractiveFlag() {
+    return !this.IsNewCustomMarkItem && super.GetInteractiveFlag();
   }
 }
 exports.CustomMarkItem = CustomMarkItem;

@@ -6,8 +6,9 @@ const UE = require("ue"),
   Init_1 = require("../../Interface/Init"),
   TS_ENTITY_PATH =
     "/Game/Aki/TypeScript/UniverseEditor/Common/TsEntity/TsEntityBase.TsEntityBase_C";
+let tsEntityClass = void 0;
 function getTsEntityClass() {
-  return ue_1.Class.Load(TS_ENTITY_PATH);
+  return (tsEntityClass = tsEntityClass || ue_1.Class.Load(TS_ENTITY_PATH));
 }
 exports.getTsEntityClass = getTsEntityClass;
 class TsEntityBase extends UE.KuroEffectActor {

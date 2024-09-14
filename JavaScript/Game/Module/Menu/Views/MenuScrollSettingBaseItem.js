@@ -6,13 +6,14 @@ const ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
 class MenuScrollSettingBaseItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
+      (this.Data = void 0),
       (this.FireSaveMenuChange = (e) => {}),
       (this.PlaySequenceByName = (e) => {}),
       (this.wqe = void 0);
   }
-  Initialize(e, t, s) {
+  Initialize(e, t, i) {
     (this.FireSaveMenuChange = t),
-      (this.PlaySequenceByName = s),
+      (this.PlaySequenceByName = i),
       (this.wqe = e);
   }
   async Init() {
@@ -42,6 +43,17 @@ class MenuScrollSettingBaseItem extends UiPanelBase_1.UiPanelBase {
       !0)
     );
   }
+  ExecuteUpdate(e, t) {
+    (this.Data = e),
+      this.Update(e, t),
+      this.SetDetailVisible(e.GetIsDetailTextVisible());
+  }
+  SetDetailVisible(e) {
+    !this.Data ||
+      (e && !this.Data.HasDetailText()) ||
+      (this.Data.SetDetailTextVisible(e), this.OnSetDetailVisible(e));
+  }
+  OnSetDetailVisible(e) {}
 }
 exports.MenuScrollSettingBaseItem = MenuScrollSettingBaseItem;
 //# sourceMappingURL=MenuScrollSettingBaseItem.js.map

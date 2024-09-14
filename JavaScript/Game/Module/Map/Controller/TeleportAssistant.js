@@ -24,11 +24,11 @@ class TeleportAssistant extends ControllerAssistantBase_1.ControllerAssistantBas
       (this.mDi = !1),
       (this.xK = !1),
       (this.dDi = (e) => {
-        ModelManager_1.ModelManager.MapModel.UnlockTeleports(e.IVn),
+        ModelManager_1.ModelManager.MapModel.UnlockTeleports(e.BVn),
           (ModelManager_1.ModelManager.GameModeModel.IsMulti &&
             ModelManager_1.ModelManager.PlayerInfoModel.GetId() !==
               ModelManager_1.ModelManager.CreatureModel.GetWorldOwner()) ||
-            this.CDi(e.IVn);
+            this.CDi(e.BVn);
       }),
       (this.gDi = () => {
         LevelLoadingController_1.LevelLoadingController.CloseLoading(
@@ -81,10 +81,10 @@ class TeleportAssistant extends ControllerAssistantBase_1.ControllerAssistantBas
       (this.xK = void 0);
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(21861, this.dDi);
+    Net_1.Net.Register(27418, this.dDi);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(21861);
+    Net_1.Net.UnRegister(27418);
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -129,23 +129,23 @@ class TeleportAssistant extends ControllerAssistantBase_1.ControllerAssistantBas
         )));
   }
   async RequestTeleportData() {
-    var e = Protocol_1.Aki.Protocol.nCs.create(),
-      e = await Net_1.Net.CallAsync(7491, e);
+    var e = Protocol_1.Aki.Protocol.cCs.create(),
+      e = await Net_1.Net.CallAsync(22883, e);
     e &&
-      (e.A9n !== Protocol_1.Aki.Protocol.O4n.NRs
+      (e.G9n !== Protocol_1.Aki.Protocol.Q4n.KRs
         ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.A9n,
-            20728,
+            e.G9n,
+            22228,
           )
-        : ModelManager_1.ModelManager.MapModel.UnlockTeleports(e.IVn, !0));
+        : ModelManager_1.ModelManager.MapModel.UnlockTeleports(e.BVn, !0));
   }
   RequestUnlockTeleport(t) {
-    var e = Protocol_1.Aki.Protocol.lCs.create({ J4n: t });
-    Net_1.Net.Call(19061, e, (e) => {
-      e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+    var e = Protocol_1.Aki.Protocol.gCs.create({ s5n: t });
+    Net_1.Net.Call(23705, e, (e) => {
+      e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
         ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.O4n,
-            29892,
+            e.Q4n,
+            21719,
           )
         : ModelManager_1.ModelManager.MapModel.UnlockTeleport(t);
     });

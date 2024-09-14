@@ -6,17 +6,17 @@ class ChangeKeyModeGroupData {
   constructor(e) {
     (this.GroupName = void 0),
       (this.DefaultKeyModeRowIndex = 0),
-      (this.jzs = []),
+      (this.Kea = []),
       (this.GroupName = e.GroupName),
       (this.DefaultKeyModeRowIndex = e.DefaultKeyModeRowIndex);
     let t = 0;
     for (const a of e.ChangeKeyModeRowList) {
       var o = new ChangeKeyModeRowData_1.ChangeKeyModeRowData(t, a);
-      this.jzs.push(o), t++;
+      this.Kea.push(o), t++;
     }
   }
   GetChangeKeyModeRowDataList() {
-    return this.jzs;
+    return this.Kea;
   }
 }
 exports.ChangeKeyModeGroupData = ChangeKeyModeGroupData;

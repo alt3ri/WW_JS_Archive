@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseConfigController = void 0);
-const puerts_1 = require("puerts"),
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
   UE = require("ue"),
   UrlPrefixHttpRequest_1 = require("../Download/UrlPrefixHttpRequest"),
+  Platform_1 = require("../Platform/Platform"),
   RemoteConfig_1 = require("../RemoteConfig"),
   AppUtil_1 = require("../Update/AppUtil"),
   LauncherLog_1 = require("../Util/LauncherLog"),
@@ -41,32 +43,98 @@ class BaseConfigController {
         r,
         JSON.parse((0, puerts_1.$unref)(e)),
       ),
+      BaseConfigController.WOa(),
       !0
     );
   }
+  static WOa() {
+    var e = BaseConfigController.GetCdnReturnConfigInfo().GrayBox;
+    if (e && e.Items?.length)
+      for (const t of e.Items)
+        if (t.Name?.length)
+          if (BaseConfigModel_1.BaseConfigModel.GrayBoxConfigMap.has(t.Name))
+            LauncherLog_1.LauncherLog.Error(
+              "存在相同的Name",
+              ["Name", t.Name],
+              ["Content", JSON.stringify(t)],
+            );
+          else {
+            if (void 0 !== t.Divisor) {
+              if (t.Divisor <= 1) {
+                LauncherLog_1.LauncherLog.Error(
+                  "Divisor必须大于1",
+                  ["Name", t.Name],
+                  ["Divisor", t.Divisor],
+                );
+                continue;
+              }
+              if (void 0 === t.Left) {
+                LauncherLog_1.LauncherLog.Error(
+                  "Left参数无效",
+                  ["Name", t.Name],
+                  ["Left", t.Left],
+                );
+                continue;
+              }
+              if (void 0 === t.Right) {
+                LauncherLog_1.LauncherLog.Error(
+                  "Right参数无效",
+                  ["Name", t.Name],
+                  ["Right", t.Right],
+                );
+                continue;
+              }
+              if (t.Left >= t.Right) {
+                LauncherLog_1.LauncherLog.Error(
+                  "Left必须小于Right的值",
+                  ["Name", t.Name],
+                  ["Left", t.Left],
+                  ["Right", t.Right],
+                );
+                continue;
+              }
+              if (t.Right > t.Divisor) {
+                LauncherLog_1.LauncherLog.Error(
+                  "Right必须小于等于Divisor的值",
+                  ["Name", t.Name],
+                  ["Right", t.Right],
+                  ["Divisor", t.Divisor],
+                );
+                continue;
+              }
+            }
+            var r = { Divisor: t.Divisor, Left: t.Left, Right: t.Right };
+            if (t.Ids?.length) {
+              r.PlayerIds = new Set();
+              for (const o of t.Ids) r.PlayerIds.add(o);
+            }
+            BaseConfigModel_1.BaseConfigModel.GrayBoxConfigMap.set(t.Name, r);
+          }
+        else
+          LauncherLog_1.LauncherLog.Error(
+            "Name参数无效",
+            ["Name", t.Name],
+            ["Content", JSON.stringify(t)],
+          );
+  }
   static async tSr(t, o) {
     let i = void 0;
-    if (0 !== t.length)
-      return (
-        await (0, ProcedureUtil_1.whetherRepeatDoOnFailedAsync)(
-          async () => {
-            for (const r of t) {
-              var e = BaseConfigController.TMi(r);
-              if (
-                200 ===
-                (i = await (0, UrlPrefixHttpRequest_1.httpRequest)(e)).Code
-              )
-                return { Success: !0 };
-              LauncherLog_1.LauncherLog.Warn(
-                "从CDN获取配置失败",
-                ["reason", i.Result],
-                ["errorCode", i.Code],
-                ["http", e],
-              );
-            }
-            return { Success: !1, Others: i };
-          },
-          async (e, r) => {
+    if (0 !== t.length) {
+      let e = void 0;
+      e = Platform_1.Platform.IsPs5Platform()
+        ? async (e, r) =>
+            o
+              ? (await o.ShowDialog(
+                  !1,
+                  "HotFixTipsTitle",
+                  "GetRemoteConfigFailed",
+                  void 0,
+                  void 0,
+                  "HotFixRetry",
+                ),
+                r())
+              : { Success: !(i = void 0) }
+        : async (e, r) => {
             return o
               ? (await o.ShowDialog(
                   !0,
@@ -77,15 +145,70 @@ class BaseConfigController {
                   void 0,
                 ))
                 ? r()
-                : (AppUtil_1.AppUtil.QuitGame(),
+                : (AppUtil_1.AppUtil.QuitGame("BaseConfig"),
                   await o.WaitFrame(),
                   { Success: !0 })
               : { Success: !(i = void 0) };
-          },
-        ),
+          };
+      return (
+        await (0, ProcedureUtil_1.whetherRepeatDoOnFailedAsync)(async () => {
+          for (const r of t) {
+            var e = BaseConfigController.TMi(r);
+            if (
+              200 ===
+              (i = await (0, UrlPrefixHttpRequest_1.httpRequest)(e)).Code
+            )
+              return { Success: !0 };
+            LauncherLog_1.LauncherLog.Warn(
+              "从CDN获取配置失败",
+              ["reason", i.Result],
+              ["errorCode", i.Code],
+              ["http", e],
+            );
+          }
+          return { Success: !1, Others: i };
+        }, e),
         i
       );
+    }
     LauncherLog_1.LauncherLog.Error("CDN地址数量为0,请检查配置是否正确");
+  }
+  static CheckGrayBoxHit(e, r) {
+    if (e?.length)
+      if (r) {
+        var t = BaseConfigModel_1.BaseConfigModel.BoxResultMap.get(e);
+        if (t) return 1 === t;
+        t = BaseConfigModel_1.BaseConfigModel.GrayBoxConfigMap.get(e);
+        if (t) {
+          if (t.Divisor) {
+            var o = r % t.Divisor;
+            if (o >= t.Left && o < t.Right)
+              return (
+                BaseConfigModel_1.BaseConfigModel.BoxResultMap.set(e, 1), !0
+              );
+          }
+          if (t.PlayerIds?.size && t.PlayerIds.has(r))
+            return BaseConfigModel_1.BaseConfigModel.BoxResultMap.set(e, 1), !0;
+          BaseConfigModel_1.BaseConfigModel.BoxResultMap.set(e, 2);
+        } else
+          LauncherLog_1.LauncherLog.Error(
+            "不存在GrayBox数据",
+            ["Name", e],
+            ["PlayerId", r],
+          );
+      } else
+        LauncherLog_1.LauncherLog.Error(
+          "playerId参数无效",
+          ["Name", e],
+          ["PlayerId", r],
+        );
+    else
+      LauncherLog_1.LauncherLog.Error(
+        "name参数无效",
+        ["Name", e],
+        ["PlayerId", r],
+      );
+    return !1;
   }
   static GetCdnReturnConfigInfo() {
     return BaseConfigModel_1.BaseConfigModel.EntryJson;
@@ -173,8 +296,8 @@ class BaseConfigController {
     ) {
       LauncherLog_1.LauncherLog.Info("灰度转cdn..."),
         (BaseConfigModel_1.BaseConfigModel.IsGray = !0);
-      for (const l of (0, puerts_1.$unref)(o).split(new RegExp(/\n|\r\n/))) {
-        var i = l?.trim();
+      for (const f of (0, puerts_1.$unref)(o).split(new RegExp(/\n|\r\n/))) {
+        var i = f?.trim();
         i &&
           0 !== i.length &&
           ((i = i.split("=")),
@@ -246,6 +369,17 @@ class BaseConfigController {
     var t = BaseConfigModel_1.BaseConfigModel.ParamsConfig.get(e);
     return t || r;
   }
+  static GetPackageClientFightConfig() {
+    var e =
+        UE.BlueprintPathsLibrary.ProjectContentDir() +
+        "/Aki/Config/Json/CompareFightData/ClientFightDataInfo.json",
+      r = (0, puerts_1.$ref)(""),
+      r =
+        (UE.KuroStaticLibrary.LoadFileToString(r, e),
+        (e = (0, puerts_1.$unref)(r)),
+        JSON.parse(e));
+    return r ? r.clientMd5 : "";
+  }
   static UpdatePackageConfig(e) {
     var r;
     "Editor" !== UE.KuroLauncherLibrary.GetPlatform() &&
@@ -273,7 +407,7 @@ class BaseConfigController {
   static GetVersionString() {
     let e = "CN";
     "CN" !== BaseConfigController.GetPublicValue("SdkArea") && (e = "OS");
-    var r = UE.GameplayStatics.GetPlatformName(),
+    var r = cpp_1.KuroApplication.IniPlatformName(),
       t = UE.KuroLauncherLibrary.GetAppReleaseType(),
       o = UE.KuroLauncherLibrary.GetAppChangeList(),
       i = this.GetPackageConfigOrDefault("PatchVersion"),
@@ -287,8 +421,8 @@ class BaseConfigController {
       s = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
         LauncherStorageLib_1.ELauncherStorageGlobalKey.PatchP4Version,
       ),
-      l = RemoteConfig_1.RemoteInfo?.Config?.ChangeList,
-      s = s || (l && 0 !== l.length ? l : a);
+      f = RemoteConfig_1.RemoteInfo?.Config?.ChangeList,
+      s = s || (f && 0 !== f.length ? f : a);
     return e + `_${r}_${t}_${n}_${o}_${i}_` + s;
   }
 }

@@ -69,10 +69,11 @@ class GravityUtils {
   }
   static GetAngleOffsetInGravityAbs(t, r, e) {
     return !t.MoveComp || t.MoveComp.IsStandardGravity
-      ? MathUtils_1.MathUtils.WrapAngle(
+      ? ((t = MathUtils_1.MathUtils.WrapAngle(
           MathUtils_1.MathUtils.GetAngleByVector2D(e) -
             MathUtils_1.MathUtils.GetAngleByVector2D(r),
-        )
+        )),
+        Math.abs(t))
       : Math.acos(Vector_1.Vector.DotProduct(r, e)) *
           MathUtils_1.MathUtils.RadToDeg;
   }
@@ -146,7 +147,7 @@ class GravityUtils {
         r.AdditionEqual(this.TmpVector));
   }
   static AddZnInGravity(t, r, e) {
-    !t.MoveComp || t.MoveComp.IsStandardGravity
+    !t?.MoveComp || t.MoveComp.IsStandardGravity
       ? (r.Z += e)
       : (t.MoveComp.GravityDirect.Multiply(-e, this.TmpVector),
         r.AdditionEqual(this.TmpVector));

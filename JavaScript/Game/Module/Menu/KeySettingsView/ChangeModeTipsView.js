@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChangeModeTipsView = void 0);
 const UE = require("ue"),
+  Platform_1 = require("../../../../Launcher/Platform/Platform"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
@@ -10,35 +11,35 @@ const UE = require("ue"),
 class ChangeModeTipsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Qzs = void 0),
+      (this.Xea = void 0),
       (this.lqe = void 0),
-      (this.Kzs = 0),
-      (this.ofa = new Map()),
-      (this.$zs = []),
-      (this.Xzs = void 0),
+      (this.Yea = 0),
+      (this.LMa = new Map()),
+      (this.Jea = []),
+      (this.zea = void 0),
       (this.JGt = void 0),
       (this.x4t = () => {
         this.CloseMe();
       }),
       (this.CPi = () => {
-        this.Xzs?.ChangeKeyModeRowData && this.JGt && this.JGt(this.ofa),
+        this.zea?.ChangeKeyModeRowData && this.JGt && this.JGt(this.LMa),
           this.CloseMe();
       }),
       (this.Exi = () => {
-        var i = Math.max(this.Kzs - 1, 0);
-        i !== this.Kzs && ((this.Kzs = i), this.bl());
+        var i = Math.max(this.Yea - 1, 0);
+        i !== this.Yea && ((this.Yea = i), this.bl());
       }),
       (this.yxi = () => {
-        var i = this.Qzs.GetMaxGroupIndex(),
-          i = Math.min(this.Kzs + 1, i);
-        i !== this.Kzs && ((this.Kzs = i), this.bl());
+        var i = this.Xea.GetMaxGroupIndex(),
+          i = Math.min(this.Yea + 1, i);
+        i !== this.Yea && ((this.Yea = i), this.bl());
       }),
-      (this.Yzs = (i) => {
+      (this.Zea = (i) => {
         var t = i.ChangeKeyModeRowData;
         t &&
-          (this.Xzs?.SetSelected(!1),
-          (this.Xzs = i),
-          this.ofa.set(this.Kzs, t.Index));
+          (this.zea?.SetSelected(!1),
+          (this.zea = i),
+          this.LMa.set(this.Yea, t.Index));
       });
   }
   OnRegisterComponent() {
@@ -62,77 +63,80 @@ class ChangeModeTipsView extends UiViewBase_1.UiViewBase {
   async OnBeforeStartAsync() {
     var i = this.OpenParam,
       t =
-        ((this.Qzs = new ChangeKeyModeData_1.ChangeKeyModeData(i)),
-        (this.Kzs = this.Qzs.DefaultGroupIndex),
+        ((this.Xea = new ChangeKeyModeData_1.ChangeKeyModeData(i)),
+        (this.Yea = this.Xea.DefaultGroupIndex),
         i.ChangeKeyModeGroupList);
     for (let i = 0; i < t.length; i++) {
       var s = t[i].DefaultKeyModeRowIndex;
-      this.ofa.set(i, s);
+      this.LMa.set(i, s);
     }
     (this.JGt = i.OnConfirmCallback),
       (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.lqe?.SetTitleByTextIdAndArgNew(this.Qzs.TitleName),
+      this.lqe?.SetTitleByTextIdAndArgNew(this.Xea.TitleName),
       this.lqe?.SetCloseCallBack(this.x4t);
     var i = this.GetItem(7),
       h = (i.SetUIActive(!1), i.GetOwner()),
       e = this.GetItem(6),
       r = [];
-    for (const n of this.Qzs.GetChangeKeyModeGroupDataList()[
-      this.Kzs
+    for (const n of this.Xea.GetChangeKeyModeGroupDataList()[
+      this.Yea
     ].GetChangeKeyModeRowDataList()) {
       var a = LguiUtil_1.LguiUtil.DuplicateActor(h, e),
         o = new ChangeModeRowView_1.ChangeModeRowView(),
-        a = (o.BindOnSelected(this.Yzs), o.CreateThenShowByActorAsync(a, n));
-      this.$zs.push(o), r.push(a);
+        a = (o.BindOnSelected(this.Zea), o.CreateThenShowByActorAsync(a, n));
+      this.Jea.push(o), r.push(a);
     }
     await Promise.all(r);
+    i = Platform_1.Platform.IsPs5Platform();
+    this.GetButton(2)?.RootUIComp.SetUIActive(!i),
+      this.GetButton(4)?.RootUIComp.SetUIActive(!i);
   }
   OnStart() {
     this.bl();
   }
   OnBeforeDestroy() {
-    (this.lqe = void 0), (this.Xzs = void 0), (this.$zs.length = 0);
+    (this.lqe = void 0), (this.zea = void 0), (this.Jea.length = 0);
   }
   bl() {
-    this.Jzs(),
-      this.zzs(),
+    this.eta(),
+      this.tta(),
       this.RefreshLeftAndRightButtonEnable(),
       this.RefreshRowView();
   }
-  Jzs() {
+  eta() {
     var i;
-    this.Qzs &&
-      (i = this.Qzs.GetChangeKeyModeGroupDataList()[this.Kzs]) &&
+    this.Xea &&
+      (i = this.Xea.GetChangeKeyModeGroupDataList()[this.Yea]) &&
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), i.GroupName);
   }
-  zzs() {
+  tta() {
     var i;
-    this.Xzs?.SetSelected(!1),
-      this.Qzs &&
-        this.Qzs.GetChangeKeyModeGroupDataList()[this.Kzs] &&
-        ((i = this.ofa.get(this.Kzs) ?? 0),
-        (i = this.$zs[i]),
-        (this.Xzs = i)?.SetSelected(!0));
+    this.zea?.SetSelected(!1),
+      this.Xea &&
+        this.Xea.GetChangeKeyModeGroupDataList()[this.Yea] &&
+        ((i = this.LMa.get(this.Yea) ?? 0),
+        (i = this.Jea[i]),
+        (this.zea = i)?.SetSelected(!0));
   }
   RefreshLeftAndRightButtonEnable() {
     var i, t, s, h;
-    this.Qzs &&
-      ((h = this.Qzs.GetMaxGroupIndex()),
+    this.Xea &&
+      ((h = this.Xea.GetMaxGroupIndex()),
       (i = this.GetInteractionGroup(3)),
       (t = this.GetInteractionGroup(5)),
-      (s = 0 < this.Kzs),
-      (h = this.Kzs < h),
+      (s = 0 < this.Yea),
+      (h = this.Yea < h),
       i.GetInteractable() !== s && i.SetInteractable(s),
       t.GetInteractable() !== h) &&
       t.SetInteractable(h);
   }
   RefreshRowView() {
-    if (this.Qzs) {
-      var i = this.Qzs.GetChangeKeyModeGroupDataList()[this.Kzs];
+    if (this.Xea) {
+      var i = this.Xea.GetChangeKeyModeGroupDataList()[this.Yea];
       if (i) {
         var t = i.GetChangeKeyModeRowDataList();
-        for (let i = 0; i < this.$zs.length; i++) {
-          var s = this.$zs[i],
+        for (let i = 0; i < this.Jea.length; i++) {
+          var s = this.Jea[i],
             h = t[i];
           s.Refresh(h);
         }

@@ -76,7 +76,8 @@ class PendingState extends StateBase_1.StateBase {
 }
 class FinishingState extends StateBase_1.StateBase {
   OnEnter() {
-    GuideController_1.GuideController.FinishGuide(this.Owner.Id);
+    var e = this.Owner.IsFake;
+    GuideController_1.GuideController.FinishGuide(this.Owner.Id, e);
   }
 }
 class GuideGroupInfo {
@@ -118,13 +119,12 @@ class GuideGroupInfo {
           (t = 3)),
         4 === e &&
           (this.IsFake
-            ? (Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug(
-                  "Guide",
-                  17,
-                  "引导组是通过GM调用的, 跳过服务端完成步骤",
-                ),
-              (t = 0))
+            ? Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
+                "Guide",
+                17,
+                "引导组是通过GM调用的, 跳过服务端完成步骤",
+              )
             : ((e = ModelManager_1.ModelManager.GuideModel.IsGroupFinished(
                 this.Id,
               )),

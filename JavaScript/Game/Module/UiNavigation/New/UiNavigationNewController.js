@@ -154,7 +154,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     var i = this.GetCurrentNavigationActiveListenerByTag(
       HotKeyViewDefine_1.EXIT_TAG,
     );
-    this.JumpNavigationGroup(6)
+    Info_1.Info.IsInGamepad() && this.JumpNavigationGroup(6)
       ? UiNavigationLogic_1.UiNavigationLogic.ExecuteInterfaceMethod(
           i.GetNavigationComponent(),
           "InteractClickPrevGroup",
@@ -239,8 +239,8 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
       var r = n.GetNavigationGroup();
       if (r) {
         let e = void 0;
-        for (let i = 0, t = r.ListenerList.Num(); i < t; ++i) {
-          const n = r.ListenerList.Get(i);
+        for (let i = 0, t = r.ListenerList.length; i < t; ++i) {
+          const n = r.ListenerList[i];
           if (n.IsCanFocus() && n.IsSelectedToggle()) {
             e = n.GetSelectableComponent();
             break;
@@ -395,8 +395,8 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
   }
   static rbo(e) {
     let a = void 0;
-    for (let i = 0, t = e.ListenerList.Num(); i < t; ++i) {
-      var n = e.ListenerList.Get(i);
+    for (let i = 0, t = e.ListenerList.length; i < t; ++i) {
+      var n = e.ListenerList[i];
       if ((!a && n.IsCanFocus() && (a = n), n.IsInScrollOrLayoutCanFocus()))
         return n;
     }
@@ -404,41 +404,41 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
   }
   static nbo(i, t) {
     return t.HasDynamicScrollView()
-      ? UiNavigationNewController.sWs(i, t)
-      : UiNavigationNewController.aWs(i, t);
+      ? UiNavigationNewController.AWs(i, t)
+      : UiNavigationNewController.UWs(i, t);
   }
-  static hWs(i, e) {
-    var a = UE.LGUIBPLibrary.GetComponentsInChildren(
+  static RWs(i, t) {
+    var e = UE.LGUIBPLibrary.GetComponentsInChildren(
       i,
       UE.TsUiNavigationBehaviorListener_C.StaticClass(),
       !0,
     );
-    for (let i = 0, t = a.Num(); i < t; ++i) {
-      var n = a.Get(i);
-      if (n.GroupName === e.GroupName && n.IsCanFocus()) return n;
+    for (let i = e.Num() - 1; 0 <= i; --i) {
+      var a = e.Get(i);
+      if (a.GroupName === t.GroupName && a.IsCanFocus()) return a;
     }
   }
-  static sWs(e, i) {
+  static AWs(e, i) {
     let a = void 0;
     var n = i.ScrollView.DisplayItemArray;
     for (let i = 0, t = n.Num(); i < t; ++i) {
       var r = n.Get(i),
-        o = UiNavigationNewController.hWs(r, e);
+        r = UiNavigationNewController.RWs(r, e);
       if (
-        o &&
-        o.IsInDynScrollDisplay(r) &&
-        o.IsScrollOrLayoutActor() &&
-        (!a && o.IsCanFocus() && (a = o), o.IsInScrollOrLayoutCanFocus())
+        r &&
+        r.IsInDynScrollDisplay() &&
+        r.IsScrollOrLayoutActor() &&
+        (!a && r.IsCanFocus() && (a = r), r.IsInScrollOrLayoutCanFocus())
       )
-        return o;
+        return r;
     }
     return a;
   }
-  static aWs(e, i) {
+  static UWs(e, i) {
     let a = void 0;
     var n = i.GetScrollOrLayoutActor();
-    for (let i = 0, t = e.ListenerList.Num(); i < t; ++i) {
-      var r = e.ListenerList.Get(i);
+    for (let i = 0, t = e.ListenerList.length; i < t; ++i) {
+      var r = e.ListenerList[i];
       if (
         r.IsScrollOrLayoutActor() &&
         r.IsInLoopScrollDisplayByGridActor() &&
@@ -447,6 +447,15 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         r.IsInScrollOrLayoutCanFocus()
       )
         return r;
+    }
+    return a;
+  }
+  static FindSuitableListenerWithoutLayout(e) {
+    let a = void 0;
+    for (let i = 0, t = e.ListenerList.length; i < t; ++i) {
+      var n = e.ListenerList[i];
+      if ((!a && n.IsCanFocus() && (a = n), n.IsInScrollOrLayoutCanFocus()))
+        return n;
     }
     return a;
   }
@@ -715,33 +724,46 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
           ]),
         this.SwitchNavigationFocus(t)));
   }
+  static qBa(i) {
+    var t =
+      UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle();
+    t &&
+      t.HasGamepadControlMouse() &&
+      (Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("UiNavigation", 11, "引导设置了光标位置", [
+          "名字",
+          i.displayName,
+        ]),
+      t.UpdateMousePositionByItem(i));
+  }
   static SetNavigationFocusForGuide(i) {
     var t, e;
     Info_1.Info.IsInGamepad() &&
       i?.IsValid() &&
-      (t = i
+      ((t = i
         ?.GetOwner()
         ?.GetComponentByClass(
           TsUiNavigationBehaviorListener_1.default.StaticClass(),
-        )) &&
-      !StringUtils_1.StringUtils.IsBlank(t.GroupName) &&
-      (e = t.GetNavigationGroup()) &&
-      2 !== e.GroupType &&
-      (0 === e.GroupType
-        ? (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("UiNavigation", 11, "引导设置了导航对象", [
-              "名字",
-              i.displayName,
-            ]),
-          this.SwitchNavigationFocus(t))
-        : (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("UiNavigation", 11, "引导设置了非导航对象", [
-              "名字",
-              i.displayName,
-            ]),
-          ModelManager_1.ModelManager.UiNavigationModel.SetGuideFocusListener(
-            t,
-          )));
+        ))
+        ? StringUtils_1.StringUtils.IsBlank(t.GroupName) ||
+          ((e = t.GetNavigationGroup()) &&
+            2 !== e.GroupType &&
+            (0 === e.GroupType
+              ? (Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info("UiNavigation", 11, "引导设置了导航对象", [
+                    "名字",
+                    i.displayName,
+                  ]),
+                this.SwitchNavigationFocus(t))
+              : (Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info("UiNavigation", 11, "引导设置了非导航对象", [
+                    "名字",
+                    i.displayName,
+                  ]),
+                ModelManager_1.ModelManager.UiNavigationModel.SetGuideFocusListener(
+                  t,
+                ))))
+        : this.qBa(i));
   }
   static ResetNavigationFocusForGuide() {
     Info_1.Info.IsInGamepad() &&
@@ -765,8 +787,8 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     if (!e) return [];
     if (1 !== e?.GroupType) return [];
     var a = [];
-    for (let i = 0, t = e.ListenerList.Num(); i < t; ++i) {
-      var n = e.ListenerList.Get(i);
+    for (let i = 0, t = e.ListenerList.length; i < t; ++i) {
+      var n = e.ListenerList[i];
       n.IsListenerActive() && a.push(n);
     }
     return a;
@@ -799,6 +821,10 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     var t =
       UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle();
     t && t.SetGamepadMouseMoveRight(i);
+  }
+  static RepeatCursorMove() {
+    Info_1.Info.IsInGamepad() &&
+      ModelManager_1.ModelManager.UiNavigationModel?.RepeatMove();
   }
 }
 (exports.UiNavigationNewController = UiNavigationNewController),

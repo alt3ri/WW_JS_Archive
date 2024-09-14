@@ -16,24 +16,24 @@ const UE = require("ue"),
 class ActivityRecallMainLineActivityInfoPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.n_a = void 0),
-      (this.s_a = void 0),
-      (this.a_a = void 0),
-      (this.h_a = void 0),
-      (this.l_a = void 0),
-      (this.d_a = () => {
+      (this.gda = void 0),
+      (this.fda = void 0),
+      (this.vda = void 0),
+      (this.pda = void 0),
+      (this.Mda = void 0),
+      (this.Tda = () => {
         const t =
           ActivityRecallHelper_1.ActivityRecallHelper.IsMainLineTaskFinish(
-            this.n_a,
+            this.gda,
           );
-        this.h_a.GetLayoutItemList().forEach((i) => {
+        this.pda.GetLayoutItemList().forEach((i) => {
           i.SetReceivedVisible(t);
         });
       }),
-      (this.C_a = () => {
+      (this.Lda = () => {
         let i =
           ActivityRecallHelper_1.ActivityRecallHelper.GetFirstUnFinishTask(
-            this.n_a,
+            this.gda,
           );
         void 0 !== i
           ? ActivityRecallHelper_1.ActivityRecallHelper.ReportRecallLog1024(
@@ -59,60 +59,61 @@ class ActivityRecallMainLineActivityInfoPanel extends UiPanelBase_1.UiPanelBase 
   async OnBeforeStartAsync() {
     var i = this.GetItem(0),
       t =
-        ((this.s_a = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
+        ((this.fda = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
         this.GetItem(1)),
       e =
-        ((this.a_a = new ActivityDescriptionTypeB_1.ActivityDescriptionTypeB()),
+        ((this.vda = new ActivityDescriptionTypeB_1.ActivityDescriptionTypeB()),
         this.GetItem(2)),
       s =
-        ((this.h_a = new ActivityRewardList_1.ActivityRewardList()),
+        ((this.pda = new ActivityRewardList_1.ActivityRewardList()),
         this.GetItem(3));
-    (this.l_a = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
+    (this.Mda = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(void 0)),
       await Promise.all([
-        this.s_a.CreateThenShowByActorAsync(i.GetOwner()),
-        this.a_a.CreateThenShowByActorAsync(t.GetOwner()),
-        this.h_a.CreateThenShowByActorAsync(e.GetOwner()),
-        this.l_a.CreateThenShowByActorAsync(s.GetOwner()),
+        this.fda.CreateThenShowByActorAsync(i.GetOwner()),
+        this.vda.CreateThenShowByActorAsync(t.GetOwner()),
+        this.pda.CreateThenShowByActorAsync(e.GetOwner()),
+        this.Mda.CreateThenShowByActorAsync(s.GetOwner()),
       ]);
   }
   OnStart() {
-    this.l_a.FunctionButton.BindCallback(this.C_a);
+    this.Mda.FunctionButton.SetFunction(this.Lda);
     var i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
       "CollectActivity_Button_ahead",
     );
-    this.l_a.FunctionButton.SetText(i),
-      this.h_a.InitGridLayout(this.h_a.InitCommonGridItem),
-      this.s_a.SetTimeTextVisible(!1);
+    this.Mda.FunctionButton.SetText(i),
+      this.pda.InitGridLayout(this.pda.InitCommonGridItem),
+      this.fda.SetTimeTextVisible(!1);
   }
   RefreshByData(i) {
-    (this.n_a = i), this.mGe(), this.Pqe(), this.jqe(), this.g_a();
+    (this.gda = i), this.mGe(), this.Pqe(), this.jqe(), this.Rda();
   }
   mGe() {
-    this.s_a.SetTitleByTextId(this.n_a.Title);
+    this.fda.SetTitleByTextId(this.gda.Title);
   }
   Pqe() {
-    var i = this.n_a.SubTitle,
-      t = this.n_a.Description,
+    var i = this.gda.SubTitle,
+      t = this.gda.Description,
       e = !StringUtils_1.StringUtils.IsEmpty(i);
-    this.s_a.SetSubTitleVisible(e),
-      e && this.s_a.SetSubTitleByTextId(i),
-      this.a_a.SetContentByTextId(t);
+    this.fda.SetSubTitleVisible(e),
+      e && this.fda.SetSubTitleByTextId(i),
+      this.vda.SetContentByTextId(t);
   }
   jqe() {
     var i =
       ModelManager_1.ModelManager.ActivityRecallModel.GetRecallBaseRewardPreviewItemList(
-        this.n_a,
+        this.gda,
       );
-    this.h_a.RefreshItemLayout(i, this.d_a);
+    this.pda.RefreshItemLayout(i, this.Tda);
   }
-  g_a() {
+  Rda() {
     var i = ActivityRecallHelper_1.ActivityRecallHelper.IsMainLineTaskFinish(
-      this.n_a,
+      this.gda,
     );
-    this.l_a.FunctionButton.RefreshEnable(!i),
+    this.Mda.FunctionButton.SetUiActive(!i),
+      this.Mda.PanelActivate.SetUiActive(i),
       i
-        ? this.l_a.FunctionButton.RefreshTextNew("RecallActivity_Finish")
-        : this.l_a.FunctionButton.RefreshTextNew("RecallActivity_Go");
+        ? this.Mda.PanelActivate.SetTextByTextId("RecallActivity_Finish")
+        : this.Mda.FunctionButton.SetLocalTextNew("RecallActivity_Go");
   }
 }
 exports.ActivityRecallMainLineActivityInfoPanel =

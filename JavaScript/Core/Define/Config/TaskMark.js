@@ -9,6 +9,9 @@ class TaskMark {
   get MarkId() {
     return this.markid();
   }
+  get QuestId() {
+    return this.questid();
+  }
   get MarkPic() {
     return this.markpic();
   }
@@ -25,8 +28,10 @@ class TaskMark {
     return this.tracktextstarteffectcolor();
   }
   get ShowRange() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.showrangeLength(), (t) =>
-      this.showrange(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.showrangeLength(),
+      this.showrange,
+      this,
     );
   }
   get ShowPriority() {
@@ -48,39 +53,43 @@ class TaskMark {
     var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  markpic(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+  questid() {
+    var t = this.J7.__offset(this.z7, 6);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  markacceptablepic(t) {
+  markpic(t) {
     var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
-  npctaskicon(t) {
+  markacceptablepic(t) {
     var s = this.J7.__offset(this.z7, 10);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
+  npctaskicon(t) {
+    var s = this.J7.__offset(this.z7, 12);
+    return s ? this.J7.__string(this.z7 + s, t) : null;
+  }
   icondistant() {
-    var t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 2e4;
   }
   tracktextstarteffectcolor(t) {
-    var s = this.J7.__offset(this.z7, 14);
+    var s = this.J7.__offset(this.z7, 16);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   GetShowrangeAt(t) {
     return this.showrange(t);
   }
   showrange(t) {
-    var s = this.J7.__offset(this.z7, 16);
+    var s = this.J7.__offset(this.z7, 18);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   showrangeLength() {
-    var t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   showrangeArray() {
-    var t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 18);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -90,11 +99,11 @@ class TaskMark {
       : null;
   }
   showpriority() {
-    var t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   scale() {
-    var t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readFloat32(this.z7 + t) : 1;
   }
 }

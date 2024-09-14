@@ -13,19 +13,24 @@ class GuideTips {
     return this.content();
   }
   get Button() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buttonLength(), (t) =>
-      this.button(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buttonLength(),
+      this.button,
+      this,
     );
   }
   get InputEnums() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.inputenumsLength(), (t) =>
-      this.inputenums(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.inputenumsLength(),
+      this.inputenums,
+      this,
     );
   }
   get LimitInputEnums() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.limitinputenumsLength(),
-      (t) => this.limitinputenums(t),
+      this.limitinputenums,
+      this,
     );
   }
   get UseLoopAnim() {

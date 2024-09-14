@@ -10,12 +10,12 @@ const UE = require("ue"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GameSettingsManager_1 = require("../../../GameSettings/GameSettingsManager"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   CharacterNameDefines_1 = require("../../../NewWorld/Character/Common/CharacterNameDefines"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
-  MenuController_1 = require("../../Menu/MenuController"),
   MotionController_1 = require("../../Motion/MotionController"),
   ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
   UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
@@ -340,7 +340,7 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
         this.V_o.RoleId,
       ),
       r = o.GetFavorData();
-    if (1 === i) t = Protocol_1.Aki.Protocol.i5s.Proto_Story;
+    if (1 === i) t = Protocol_1.Aki.Protocol.l6s.Proto_Story;
     else {
       if (2 === i)
         return (
@@ -357,9 +357,9 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
             : 0 === s && this.ShowLockItem())
         );
       3 === i
-        ? (t = Protocol_1.Aki.Protocol.i5s.Proto_Goods)
+        ? (t = Protocol_1.Aki.Protocol.l6s.Proto_Goods)
         : 0 === i &&
-          ((t = Protocol_1.Aki.Protocol.i5s.o8n), this.j_o) &&
+          ((t = Protocol_1.Aki.Protocol.l6s.m8n), this.j_o) &&
           this.ClearAudio(this.j_o);
     }
     var s = r.GetFavorItemState(this.V_o.Config.Id, i);
@@ -538,8 +538,8 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
         0 === this.j_o.GetCurVoiceState() &&
         (this.ClearAudio(this.j_o), Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug("Role", 44, "关闭上个选项播放的语音");
-      var e = MenuController_1.MenuController.GetTargetConfig(1),
-        t = MenuController_1.MenuController.GetTargetConfig(2);
+      var e = GameSettingsManager_1.GameSettingsManager.GetCurrentValue(1),
+        t = GameSettingsManager_1.GameSettingsManager.GetCurrentValue(2);
       if (0 === e || 0 === t)
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "FavorVolume",

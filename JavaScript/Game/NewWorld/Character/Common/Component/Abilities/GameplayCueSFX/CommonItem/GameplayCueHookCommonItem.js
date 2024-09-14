@@ -10,18 +10,18 @@ const UE = require("ue"),
   GlobalData_1 = require("../../../../../../../GlobalData"),
   RecorderBlueprintFunctionLibrary_1 = require("../../../../../../../Recorder/RecorderBlueprintFunctionLibrary");
 class GameplayCueHookCommonItem {
-  constructor(t, e, r, o) {
-    (this.OQt = t),
-      (this.u$o = e),
+  constructor(e, t, r, o) {
+    (this.OQt = e),
+      (this.u$o = t),
       (this.TargetPosition = r),
       (this.Paths = o),
       (this.c$o = void 0),
       (this.m$o = 0),
       (this.dce = !1);
   }
-  static Spawn(t, e, r, o) {
-    t = new this(t, e, r, o);
-    return (t.dce = !0), (t.c$o = t.d$o()), (t.m$o = t.C$o()), t;
+  static Spawn(e, t, r, o) {
+    e = new this(e, t, r, o);
+    return (e.dce = !0), (e.c$o = e.d$o()), (e.m$o = e.C$o()), e;
   }
   Destroy() {
     RecorderBlueprintFunctionLibrary_1.default.Recording &&
@@ -38,18 +38,6 @@ class GameplayCueHookCommonItem {
         ),
       this.g$o();
   }
-  static StaticSpawnHookActorRecord(t, e, r) {
-    t = ResourceSystem_1.ResourceSystem.Load(t, UE.NiagaraSystem);
-    t?.IsValid() &&
-      e?.IsValid() &&
-      ((e = e.AddComponentByClass(
-        UE.NiagaraComponent.StaticClass(),
-        !1,
-        MathUtils_1.MathUtils.DefaultTransform,
-        !1,
-      )).SetAsset(t),
-      e.SetNiagaraVariableVec3("End", r));
-  }
   d$o() {
     const r = ActorSystem_1.ActorSystem.Get(
       UE.Actor.StaticClass(),
@@ -63,18 +51,18 @@ class GameplayCueHookCommonItem {
       ResourceSystem_1.ResourceSystem.LoadAsync(
         this.Paths[0],
         UE.NiagaraSystem,
-        (t) => {
-          var e;
+        (e) => {
+          var t;
           this.dce &&
-            t?.IsValid() &&
+            e?.IsValid() &&
             r?.IsValid() &&
-            ((e = r.AddComponentByClass(
+            ((t = r.AddComponentByClass(
               UE.NiagaraComponent.StaticClass(),
               !1,
               MathUtils_1.MathUtils.DefaultTransform,
               !1,
-            )).SetAsset(t),
-            e.SetNiagaraVariableVec3("End", this.TargetPosition),
+            )).SetAsset(e),
+            t.SetNiagaraVariableVec3("End", this.TargetPosition),
             r.K2_AttachToComponent(this.OQt.Mesh, this.u$o, 2, 2, 2, !1),
             RecorderBlueprintFunctionLibrary_1.default.Recording) &&
             RecorderBlueprintFunctionLibrary_1.default.StartRecordGameplayCueHook(

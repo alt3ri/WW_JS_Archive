@@ -5,6 +5,7 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
   ActivityController_1 = require("../../ActivityController"),
+  ActivityRecallHelper_1 = require("./Misc/ActivityRecallHelper"),
   RecallTransitionStateMachine_1 = require("./RecallTransitionState/RecallTransitionStateMachine");
 class ActivityRecallStartView extends UiViewBase_1.UiViewBase {
   constructor() {
@@ -34,8 +35,7 @@ class ActivityRecallStartView extends UiViewBase_1.UiViewBase {
   PlayFirstShow() {}
   PlayRecallRewardTransition() {}
   GotoActivityViewAndCloseSelf() {
-    (ModelManager_1.ModelManager.ActivityRecallModel.ActivityRecallFirstShow =
-      !1),
+    (ActivityRecallHelper_1.ActivityRecallHelper.ActivityRecallFirstShow = !1),
       this.CloseMe();
     var e = ModelManager_1.ModelManager.ActivityRecallModel.ActivityId;
     0 !== e && ActivityController_1.ActivityController.OpenActivityById(e);

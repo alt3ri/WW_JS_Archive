@@ -37,7 +37,7 @@ class BattlePassRewardView extends UiTabViewBase_1.UiTabViewBase {
       (this.T2i = () => {
         this.GetItem(2).SetUIActive(
           ModelManager_1.ModelManager.BattlePassModel.PayType ===
-            Protocol_1.Aki.Protocol.yNs.Proto_NoPaid,
+            Protocol_1.Aki.Protocol.PNs.Proto_NoPaid,
         );
       }),
       (this.L2i = () => {
@@ -105,7 +105,7 @@ class BattlePassRewardView extends UiTabViewBase_1.UiTabViewBase {
     (this.v2i = !0),
       this.GetItem(2).SetUIActive(
         ModelManager_1.ModelManager.BattlePassModel.PayType ===
-          Protocol_1.Aki.Protocol.yNs.Proto_NoPaid,
+          Protocol_1.Aki.Protocol.PNs.Proto_NoPaid,
       ),
       (this.vVt = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(3),

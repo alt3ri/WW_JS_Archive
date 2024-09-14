@@ -9,6 +9,7 @@ const Log_1 = require("../../Core/Common/Log"),
   ConfigManager_1 = require("../Manager/ConfigManager"),
   RedDotAchievement_1 = require("../Module/Achievement/RedDotAchievement"),
   RedDotAchievementCategory_1 = require("../Module/Achievement/RedDotAchievementCategory"),
+  RedDotActivityCorniceMeeting_1 = require("../Module/Activity/ActivityContent/CorniceMeeting/RedDotActivityCorniceMeeting"),
   RedDotActivityRun_1 = require("../Module/Activity/ActivityContent/Run/RedDotActivityRun"),
   RedDotActivityEntrance_1 = require("../Module/Activity/RedDotActivityEntrance"),
   RedDotCommonActivityPage_1 = require("../Module/Activity/RedDotCommonActivityPage"),
@@ -35,12 +36,14 @@ const Log_1 = require("../../Core/Common/Log"),
   BossRushRewardRedDot_1 = require("./RedDots/BossRush/BossRushRewardRedDot"),
   RedDotCalabash_1 = require("./RedDots/CalabashSystem/RedDotCalabash"),
   RedDotCalabashTab_1 = require("./RedDots/CalabashSystem/RedDotCalabashTab"),
+  RedDotVisionRecovery_1 = require("./RedDots/CalabashSystem/RedDotVisionRecovery"),
   RedDotChatRoom_1 = require("./RedDots/Chat/RedDotChatRoom"),
   RedDotChatView_1 = require("./RedDots/Chat/RedDotChatView"),
   RedDotComposeLevel_1 = require("./RedDots/ComposeSystem/RedDotComposeLevel"),
   RedDotCookerLevel_1 = require("./RedDots/CookSystem/RedDotCookerLevel"),
   FragmentMemoryCollectRewardRedDot_1 = require("./RedDots/FragmentMemory/FragmentMemoryCollectRewardRedDot"),
   FragmentMemoryEntranceRedDot_1 = require("./RedDots/FragmentMemory/FragmentMemoryEntranceRedDot"),
+  FragmentMemoryTopicCollectRedDot_1 = require("./RedDots/FragmentMemory/FragmentMemoryTopicCollectRedDot"),
   FragmentMemoryTopicRedDot_1 = require("./RedDots/FragmentMemory/FragmentMemoryTopicRedDot"),
   RedDotFriendNewApplication_1 = require("./RedDots/FriendSystem/RedDotFriendNewApplication"),
   RedDotFunctionAdventureGuide_1 = require("./RedDots/FunctionMenu/RedDotFunctionAdventureGuide"),
@@ -77,6 +80,7 @@ const Log_1 = require("../../Core/Common/Log"),
   RedDotMoonChasingRewardAndShop_1 = require("./RedDots/MoonChasing/RedDotMoonChasingRewardAndShop"),
   RedDotMoonChasingRole_1 = require("./RedDots/MoonChasing/RedDotMoonChasingRole"),
   RedDotMoonChasingShop_1 = require("./RedDots/MoonChasing/RedDotMoonChasingShop"),
+  MowingRiskRedDot_1 = require("./RedDots/MowingRisk/MowingRiskRedDot"),
   PersonalCardRedDot_1 = require("./RedDots/Personal/PersonalCardRedDot"),
   RedDotBattleViewQuestBtn_1 = require("./RedDots/Quest/RedDotBattleViewQuestBtn"),
   RedDotFunctionViewQuestBtn_1 = require("./RedDots/Quest/RedDotFunctionViewQuestBtn"),
@@ -216,6 +220,10 @@ class RedDotModel extends ModelBase_1.ModelBase {
       ),
       this.qp("FunctionCalabash", new RedDotCalabash_1.RedDotCalabashUpdate()),
       this.qp("CalabashTab", new RedDotCalabashTab_1.RedDotCalabashTab()),
+      this.qp(
+        "VisionRecovery",
+        new RedDotVisionRecovery_1.RedDotVisionRecovery(),
+      ),
       this.qp(
         "FunctionFriend",
         new RedDotFunctionFriend_1.RedDotFunctionFriend(),
@@ -370,6 +378,14 @@ class RedDotModel extends ModelBase_1.ModelBase {
         new TowerDefenceRewardRedDot_1.TowerDefenseInstanceRedDot(),
       ),
       this.qp(
+        "RedDotMowingRiskReward",
+        new MowingRiskRedDot_1.RedDotMowingRiskReward(),
+      ),
+      this.qp(
+        "RedDotMowingRiskBuffAll",
+        new MowingRiskRedDot_1.RedDotMowingRiskBuffAll(),
+      ),
+      this.qp(
         "CustomerService",
         new CustomerServerRedDot_1.CustomerServerRedDot(),
       ),
@@ -384,6 +400,10 @@ class RedDotModel extends ModelBase_1.ModelBase {
       this.qp(
         "FragmentMemoryTopic",
         new FragmentMemoryTopicRedDot_1.FragmentMemoryTopicRedDot(),
+      ),
+      this.qp(
+        "FragmentMemoryTopicCollectRedDot",
+        new FragmentMemoryTopicCollectRedDot_1.FragmentMemoryTopicCollectRedDot(),
       ),
       this.qp(
         "BattlePassPayButton",
@@ -437,6 +457,10 @@ class RedDotModel extends ModelBase_1.ModelBase {
       this.qp(
         "MoonChasingBuilding",
         new RedDotMoonChasingBuilding_1.RedDotMoonChasingBuilding(),
+      ),
+      this.qp(
+        "ActivityCorniceMeeting",
+        new RedDotActivityCorniceMeeting_1.RedDotActivityCorniceMeeting(),
       ),
       this.War(),
       !0

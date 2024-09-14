@@ -24,6 +24,7 @@ const UE = require("ue"),
   Time_1 = require("../../../../Core/Common/Time"),
   EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   MIN_MODEL_BUFFER_TIME = 60;
@@ -36,6 +37,7 @@ let UeMovementTickManageComponent = class UeMovementTickManageComponent extends 
       (this.Msn = void 0),
       (this.Esn = void 0),
       (this.Ssn = Vector_1.Vector.Create()),
+      (this.Gwa = Rotator_1.Rotator.Create()),
       (this.ysn = !1),
       (this.Frozen = !1),
       (this.Isn = 0),
@@ -58,7 +60,7 @@ let UeMovementTickManageComponent = class UeMovementTickManageComponent extends 
   OnStart() {
     return (
       (this.Hte = this.Entity.GetComponent(3)),
-      (this.Msn = this.Entity.GetComponent(37)),
+      (this.Msn = this.Entity.GetComponent(38)),
       (this.o4o = this.Hte.Owner.GetComponentByClass(
         UE.CharacterMovementComponent.StaticClass(),
       )),
@@ -66,7 +68,7 @@ let UeMovementTickManageComponent = class UeMovementTickManageComponent extends 
       !!this.o4o &&
         (this.o4o.SetKuroOnlyTickOutside(!0),
         this.o4o.SetComponentTickEnabled(!1),
-        (this.oRe = this.Entity.GetComponent(162)),
+        (this.oRe = this.Entity.GetComponent(163)),
         (this.ForbiddenTickPose = 1 < this.Entity.GetTickInterval()),
         (this.Isn = Time_1.Time.Frame),
         !0)
@@ -122,11 +124,13 @@ let UeMovementTickManageComponent = class UeMovementTickManageComponent extends 
                 )
               : ((s = this.oRe.GetMeshTransform()),
                 this.Ssn.DeepCopy(this.Hte.ActorLocationProxy),
+                this.Gwa.DeepCopy(this.Hte.ActorRotationProxy),
                 this.o4o.KuroTickComponentOutside(
                   t * MathUtils_1.MathUtils.MillisecondToSecond * i,
                 ),
                 this.Hte.ResetAllCachedTime(),
-                this.Ssn.Equals(this.Hte.ActorLocationProxy) ||
+                (this.Ssn.Equals(this.Hte.ActorLocationProxy) &&
+                  this.Gwa.Equals(this.Hte.ActorRotationProxy)) ||
                   this.oRe.SetModelBuffer(s, t))
             : ((s = e ? t : Time_1.Time.DeltaTime),
               this.o4o.KuroTickComponentOutside(
@@ -139,7 +143,7 @@ let UeMovementTickManageComponent = class UeMovementTickManageComponent extends 
   }
 };
 (UeMovementTickManageComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(100)],
+  [(0, RegisterComponent_1.RegisterComponent)(101)],
   UeMovementTickManageComponent,
 )),
   (exports.UeMovementTickManageComponent = UeMovementTickManageComponent);

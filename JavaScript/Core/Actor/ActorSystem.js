@@ -81,23 +81,25 @@ class ActorSystem {
       : 0;
   }
   static Get(r, o, s, c = !0) {
-    if (ActorSystem.c6(r)) {
-      ActorSystem.m6(ActorSystem.d6, r, "ActorSystem.Get.");
-      if (!ActorSystem.Enable || 1 !== ActorSystem.State) {
+    if ((ActorSystem.u6.Start(), ActorSystem.c6(r))) {
+      var S = ActorSystem.m6(ActorSystem.d6, r, "ActorSystem.Get.");
+      if ((S?.Start(), !ActorSystem.Enable || 1 !== ActorSystem.State)) {
         const t = ActorSystem.Spawn(r, o, s);
-        return t;
+        return S?.Stop(), ActorSystem.u6.Stop(), t;
       }
       let e = ActorSystem.ve.get(r);
       if (!e) {
         e = new Entry(r, ActorSystem.C6.get(r) ?? 0);
-        const A = cpp_1.KuroTime.GetMilliseconds64(),
+        const y = cpp_1.KuroTime.GetMilliseconds64(),
           t = ActorSystem.g6(r, o, s);
         return (
-          e.Touch(cpp_1.KuroTime.GetMilliseconds64() - A),
+          e.Touch(cpp_1.KuroTime.GetMilliseconds64() - y),
           ActorSystem.mp.Push(e),
           ActorSystem.ve.set(r, e),
           (ActorSystem.h6 = ActorSystem.h6 * ActorSystem.a6),
           (ActorSystem.l6 = ActorSystem.l6 * ActorSystem.a6 + 1),
+          S?.Stop(),
+          ActorSystem.u6.Stop(),
           Info_1.Info.IsBuildDevelopmentOrDebug &&
             ActorSystemDebugger_1.ActorSystemDebugger.RecordGetPut({
               ClassName: r.GetName(),
@@ -115,11 +117,11 @@ class ActorSystem {
       var m = e.Values;
       let t = void 0;
       for (; m.size; ) {
-        var S = m.values().next();
-        if (((t = S.value), m.delete(t), --ActorSystem.n6, t)) {
+        var A = m.values().next();
+        if (((t = A.value), m.delete(t), --ActorSystem.n6, t)) {
           if (t.IsValid()) {
-            S = t.GetWorld();
-            if (S && S.IsValid()) {
+            A = t.GetWorld();
+            if (A && A.IsValid()) {
               if (c) {
                 if (
                   !ActorPoolGuard_1.ActorPoolGuard.PrepareActorBeforeDePool(t)
@@ -174,6 +176,8 @@ class ActorSystem {
           ActorSystem.mp.Update(e),
           (ActorSystem.h6 = ActorSystem.h6 * ActorSystem.a6 + 1),
           (ActorSystem.l6 = ActorSystem.l6 * ActorSystem.a6),
+          S?.Stop(),
+          ActorSystem.u6.Stop(),
           Info_1.Info.IsBuildDevelopmentOrDebug &&
             ActorSystemDebugger_1.ActorSystemDebugger.RecordGetPut({
               ClassName: r.GetName(),
@@ -186,12 +190,14 @@ class ActorSystem {
               PendingKillNum: ActorSystem.f6.length,
             });
       else {
-        const A = cpp_1.KuroTime.GetMilliseconds64();
+        const y = cpp_1.KuroTime.GetMilliseconds64();
         (t = ActorSystem.g6(r, o, s)),
-          e.Touch(cpp_1.KuroTime.GetMilliseconds64() - A),
+          e.Touch(cpp_1.KuroTime.GetMilliseconds64() - y),
           ActorSystem.mp.Update(e),
           (ActorSystem.h6 = ActorSystem.h6 * ActorSystem.a6),
           (ActorSystem.l6 = ActorSystem.l6 * ActorSystem.a6 + 1),
+          S?.Stop(),
+          ActorSystem.u6.Stop(),
           Info_1.Info.IsBuildDevelopmentOrDebug &&
             ActorSystemDebugger_1.ActorSystemDebugger.RecordGetPut({
               ClassName: r.GetName(),
@@ -206,12 +212,14 @@ class ActorSystem {
       }
       return t;
     }
+    ActorSystem.u6.Stop();
   }
   static Put(e, r) {
-    if (!e || !e.IsValid())
+    if ((ActorSystem.p6.Start(), !e || !e.IsValid()))
       return (
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("ActorSystem", 1, "对象不存在", ["Target", e]),
+        ActorSystem.p6.Stop(),
         !1
       );
     if (ActorSystem.Enable && 1 === ActorSystem.State) {
@@ -220,6 +228,7 @@ class ActorSystem {
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("ActorSystem", 1, "非池化对象", ["Target", e]),
           UE.KuroActorManager.DestroyActor(e),
+          ActorSystem.p6.Stop(),
           !1
         );
       var o = e.GetClass();
@@ -231,11 +240,20 @@ class ActorSystem {
               o.GetName(),
             ]),
           UE.KuroActorManager.DestroyActor(e),
+          ActorSystem.p6.Stop(),
           !1
         );
-      ActorSystem.m6(ActorSystem.v6, o, "ActorSystem.Put.");
-      if (!ActorPoolGuard_1.ActorPoolGuard.CleanActorBeforeEnPool(e, r))
-        return UE.KuroActorManager.DestroyActor(e), !1;
+      var s = ActorSystem.m6(ActorSystem.v6, o, "ActorSystem.Put.");
+      if (
+        (s?.Start(),
+        !ActorPoolGuard_1.ActorPoolGuard.CleanActorBeforeEnPool(e, r))
+      )
+        return (
+          UE.KuroActorManager.DestroyActor(e),
+          s?.Stop(),
+          ActorSystem.p6.Stop(),
+          !1
+        );
       e.OnDestroyed.Add(ActorSystem._Tn);
       let t = ActorSystem.ve.get(o);
       if (t) {
@@ -246,6 +264,8 @@ class ActorSystem {
                 "ueClass",
                 o.GetName(),
               ]),
+            s?.Stop(),
+            ActorSystem.p6.Stop(),
             !1
           );
         t.Values.add(e), t.Touch(), ActorSystem.mp.Update(t);
@@ -271,8 +291,9 @@ class ActorSystem {
 
       )
         ActorSystem._6();
+      s?.Stop();
     } else UE.KuroActorManager.DestroyActor(e);
-    return !0;
+    return ActorSystem.p6.Stop(), !0;
   }
   static Clear() {
     (ActorSystem.n6 = 0),
@@ -283,20 +304,28 @@ class ActorSystem {
       (ActorSystem.l6 = 0);
   }
   static SetBudget(t, e) {
-    if (!ActorSystem.c6(t)) return !1;
-    ActorSystem.m6(ActorSystem.E6, t, "ActorSystem.SetBudget.");
-    if (e < 0)
+    if ((ActorSystem.M6.Start(), !ActorSystem.c6(t)))
+      return ActorSystem.M6.Stop(), !1;
+    var r = ActorSystem.m6(ActorSystem.E6, t, "ActorSystem.SetBudget.");
+    if ((r?.Start(), e < 0))
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("ActorSystem", 1, "预算必须大于等于 0", [
             "ueClass",
             t,
           ]),
+        r?.Stop(),
+        ActorSystem.M6.Stop(),
         !1
       );
     ActorSystem.C6.set(t, e);
     t = ActorSystem.ve.get(t);
-    return t && ((t.Budget = e), ActorSystem.mp.Update(t)), !0;
+    return (
+      t && ((t.Budget = e), ActorSystem.mp.Update(t)),
+      r?.Stop(),
+      ActorSystem.M6.Stop(),
+      !0
+    );
   }
   static c6(t) {
     return t
@@ -338,8 +367,11 @@ class ActorSystem {
         !1);
   }
   static Spawn(t, e, r) {
-    ActorSystem.m6(ActorSystem.y6, t, "ActorSystem.Spawn.");
-    e = UE.KuroActorManager.SpawnActor(Info_1.Info.World, t, e, 1, r);
+    ActorSystem.S6.Start();
+    var o = ActorSystem.m6(ActorSystem.y6, t, "ActorSystem.Spawn."),
+      e =
+        (o?.Start(),
+        UE.KuroActorManager.SpawnActor(Info_1.Info.World, t, e, 1, r));
     return (
       Info_1.Info.IsBuildDevelopmentOrDebug &&
         ActorSystemDebugger_1.ActorSystemDebugger.RecordGetPut({
@@ -352,26 +384,31 @@ class ActorSystem {
           CurrentTotal: ActorSystem.Size,
           PendingKillNum: ActorSystem.f6.length,
         }),
+      o?.Stop(),
+      ActorSystem.S6.Stop(),
       e
     );
   }
   static g6(t, e, r) {
-    ActorSystem.m6(ActorSystem.y6, t, "ActorSystem.SpawnAsPoolActor.");
-    t = UE.KuroActorManager.SpawnActor(
-      Info_1.Info.World,
-      t,
-      e,
-      1,
-      r,
-      void 0,
-      !0,
-    );
-    return ActorSystem.uTn(t), t;
+    ActorSystem.S6.Start();
+    var o = ActorSystem.m6(ActorSystem.y6, t, "ActorSystem.SpawnAsPoolActor."),
+      t =
+        (o?.Start(),
+        UE.KuroActorManager.SpawnActor(
+          Info_1.Info.World,
+          t,
+          e,
+          1,
+          r,
+          void 0,
+          !0,
+        ));
+    return ActorSystem.uTn(t), o?.Stop(), ActorSystem.S6.Stop(), t;
   }
-  static m6(e, r, t) {
+  static m6(e, r, o) {
     if (Stats_1.Stat.Enable) {
       let t = e.get(r);
-      return t || ((t = void 0), e.set(r, t)), t;
+      return t || ((t = Stats_1.Stat.Create(o + r.GetName())), e.set(r, t)), t;
     }
   }
   static uTn(t) {
@@ -417,23 +454,28 @@ class ActorSystem {
   (ActorSystem.a6 = 1 - 1 / ActorSystem.s6),
   (ActorSystem.h6 = 0),
   (ActorSystem.l6 = 0),
-  (ActorSystem.u6 = void 0),
-  (ActorSystem.p6 = void 0),
-  (ActorSystem.S6 = void 0),
-  (ActorSystem.I6 = void 0),
-  (ActorSystem.M6 = void 0),
+  (ActorSystem.u6 = Stats_1.Stat.Create("ActorSystem.Get")),
+  (ActorSystem.p6 = Stats_1.Stat.Create("ActorSystem.Put")),
+  (ActorSystem.S6 = Stats_1.Stat.Create("ActorSystem.Spawn")),
+  (ActorSystem.I6 = Stats_1.Stat.Create("ActorSystem.Destroy")),
+  (ActorSystem.M6 = Stats_1.Stat.Create("ActorSystem.SetBudget")),
   (ActorSystem.d6 = new WeakMap()),
   (ActorSystem.v6 = new WeakMap()),
   (ActorSystem.y6 = new WeakMap()),
   (ActorSystem.T6 = new WeakMap()),
   (ActorSystem.E6 = new WeakMap()),
   (ActorSystem.r6 = () => {
-    for (; ActorSystem.f6.length; ) {
+    for (ActorSystem.I6.Start(); ActorSystem.f6.length; ) {
       var t = ActorSystem.f6.pop(),
         e = t.Actor;
       if (e && e.IsValid()) {
-        ActorSystem.m6(ActorSystem.T6, e.GetClass(), "ActorSystem.Destroy.");
-        UE.KuroActorManager.DestroyActor(e),
+        var r = ActorSystem.m6(
+          ActorSystem.T6,
+          e.GetClass(),
+          "ActorSystem.Destroy.",
+        );
+        r?.Start(),
+          UE.KuroActorManager.DestroyActor(e),
           Info_1.Info.IsBuildShipping ||
             ActorSystemDebugger_1.ActorSystemDebugger.RecordGetPut({
               ClassName: t.Klass,
@@ -444,7 +486,8 @@ class ActorSystem {
               HitRate: ActorSystem.HitRate,
               CurrentTotal: ActorSystem.Size,
               PendingKillNum: ActorSystem.f6.length,
-            });
+            }),
+          r?.Stop();
         break;
       }
       Log_1.Log.CheckWarn() &&
@@ -453,6 +496,7 @@ class ActorSystem {
           t.Klass,
         ]);
     }
+    ActorSystem.I6.Stop();
   }),
   (ActorSystem._Tn = (t) => {
     var e, r;

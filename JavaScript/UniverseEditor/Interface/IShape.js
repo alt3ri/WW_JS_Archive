@@ -88,6 +88,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     },
     [ETipsActorType.Cone]: {
       Radius: 0,
+      Height: 0,
       ColorType: ETipsActorColorType.Inner,
       Type: ETipsActorType.Cone,
     },

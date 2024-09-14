@@ -30,8 +30,8 @@ class AnimalMoveToController {
       )
         ? (this.sKo = this.Hte.Owner.TurnSpeedCurve)
         : (this.sKo = void 0),
-      (this.mBe = t.GetComponent(91)),
-      (this.Gce = t.GetComponent(163)),
+      (this.mBe = t.GetComponent(92)),
+      (this.Gce = t.GetComponent(164)),
       (this.aKo = this.Gce.CharacterMovement.MaxAcceleration);
   }
   Init(t, i) {

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomSort = void 0);
 const ConfigManager_1 = require("../../../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  CalabashDefine_1 = require("../../../../../Calabash/CalabashDefine"),
   CommonItemData_1 = require("../../../../../Inventory/ItemData/CommonItemData"),
   PhantomItemData_1 = require("../../../../../Inventory/ItemData/PhantomItemData"),
   ItemViewData_1 = require("../../../../../Inventory/ItemViewData"),
@@ -11,18 +12,18 @@ class PhantomSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
       (this.oRt = (t, i, s) => {
-        var e, h, a;
+        var e, a, h;
         return (t instanceof ItemViewData_1.ItemViewData &&
           i instanceof ItemViewData_1.ItemViewData) ||
           (t instanceof PhantomItemData_1.PhantomItemData &&
             i instanceof PhantomItemData_1.PhantomItemData)
-          ? ((a = ModelManager_1.ModelManager.PhantomBattleModel),
-            (h = t.GetUniqueId()),
+          ? ((h = ModelManager_1.ModelManager.PhantomBattleModel),
+            (a = t.GetUniqueId()),
             (e = i.GetUniqueId()),
-            (h = a.GetPhantomBattleData(h)),
-            (a = a.GetPhantomBattleData(e)),
-            h.GetPhantomLevel() !== a.GetPhantomLevel()
-              ? (a.GetPhantomLevel() - h.GetPhantomLevel()) * (s ? -1 : 1)
+            (a = h.GetPhantomBattleData(a)),
+            (h = h.GetPhantomBattleData(e)),
+            a.GetPhantomLevel() !== h.GetPhantomLevel()
+              ? (h.GetPhantomLevel() - a.GetPhantomLevel()) * (s ? -1 : 1)
               : 0)
           : t.Level !== i.Level
             ? (i.Level - t.Level) * (s ? -1 : 1)
@@ -30,23 +31,23 @@ class PhantomSort extends CommonSort_1.CommonSort {
       }),
       (this.sRt = (t, i, s) => {
         var e = t,
-          h = i,
+          a = i,
           t = ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomDataBase(
             e.GetUniqueId(),
           ),
           i = ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomDataBase(
-            h.GetUniqueId(),
+            a.GetUniqueId(),
           );
-        let a = 0,
+        let h = 0,
           n = 0;
-        if (t) a = t.GetExp();
+        if (t) h = t.GetExp();
         else {
           var r =
               ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomExpItemList(),
             o = r.length;
           for (let t = 0; t < o; t++)
             if (r[t].ItemId === e.GetConfigId()) {
-              a = r[t].Exp;
+              h = r[t].Exp;
               break;
             }
         }
@@ -56,55 +57,55 @@ class PhantomSort extends CommonSort_1.CommonSort {
               ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomExpItemList(),
             _ = m.length;
           for (let t = 0; t < _; t++)
-            if (m[t].ItemId === h.GetConfigId()) {
+            if (m[t].ItemId === a.GetConfigId()) {
               n = m[t].Exp;
               break;
             }
         }
-        return a !== n ? (n - a) * (s ? -1 : 1) : 0;
+        return h !== n ? (n - h) * (s ? -1 : 1) : 0;
       }),
       (this.aRt = (t, i, s) => {
         var e = t,
-          h = i,
-          a =
+          a = i,
+          h =
             ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomExpItemList(),
-          n = a.length;
+          n = h.length;
         let r = !1;
         for (let t = 0; t < n; t++)
-          if (a[t].ItemId === e.GetConfigId()) {
+          if (h[t].ItemId === e.GetConfigId()) {
             r = !0;
             break;
           }
         let o = !1;
         for (let t = 0; t < n; t++)
-          if (a[t].ItemId === h.GetConfigId()) {
+          if (h[t].ItemId === a.GetConfigId()) {
             o = !0;
             break;
           }
         return r !== o ? ((t = r ? 1 : 0), (o ? 1 : 0) - t) : 0;
       }),
       (this.hRt = (t, i, s) => {
-        var e, h, a;
+        var e, a, h;
         return (t instanceof ItemViewData_1.ItemViewData &&
           i instanceof ItemViewData_1.ItemViewData) ||
           (t instanceof PhantomItemData_1.PhantomItemData &&
             i instanceof PhantomItemData_1.PhantomItemData)
           ? ((e = ModelManager_1.ModelManager.PhantomBattleModel),
-            (h = t.GetUniqueId()),
-            (a = i.GetUniqueId()),
-            (h = e.GetPhantomBattleData(h)),
-            (e = e.GetPhantomBattleData(a)),
-            (a = h.GetPhantomSubProp()),
-            (h = e.GetPhantomSubProp()),
-            (e = 0 < a?.length ? 1 : 0) != (a = 0 < h?.length ? 1 : 0)
-              ? (a - e) * (s ? -1 : 1)
+            (a = t.GetUniqueId()),
+            (h = i.GetUniqueId()),
+            (a = e.GetPhantomBattleData(a)),
+            (e = e.GetPhantomBattleData(h)),
+            (h = a.GetPhantomSubProp()),
+            (a = e.GetPhantomSubProp()),
+            (e = 0 < h?.length ? 1 : 0) != (h = 0 < a?.length ? 1 : 0)
+              ? (h - e) * (s ? -1 : 1)
               : 0)
-          : (h = t.IsBreach ? 1 : 0) != (a = i.IsBreach ? 1 : 0)
-            ? (a - h) * (s ? -1 : 1)
+          : (a = t.IsBreach ? 1 : 0) != (h = i.IsBreach ? 1 : 0)
+            ? (h - a) * (s ? -1 : 1)
             : 0;
       }),
       (this.KDt = (t, i, s) => {
-        var e, h, a;
+        var e, a, h;
         return t instanceof CommonItemData_1.CommonItemData &&
           i instanceof CommonItemData_1.CommonItemData
           ? (i.GetQuality() - t.GetQuality()) * (s ? -1 : 1)
@@ -112,57 +113,57 @@ class PhantomSort extends CommonSort_1.CommonSort {
                 i instanceof ItemViewData_1.ItemViewData) ||
               (t instanceof PhantomItemData_1.PhantomItemData &&
                 i instanceof PhantomItemData_1.PhantomItemData)
-            ? ((a = ModelManager_1.ModelManager.PhantomBattleModel),
-              (h = t.GetUniqueId()),
+            ? ((h = ModelManager_1.ModelManager.PhantomBattleModel),
+              (a = t.GetUniqueId()),
               (e = i.GetUniqueId()),
-              (h = a.GetPhantomBattleData(h)),
-              (a = a.GetPhantomBattleData(e)),
-              h.GetQuality() !== a.GetQuality()
-                ? (a.GetQuality() - h.GetQuality()) * (s ? -1 : 1)
+              (a = h.GetPhantomBattleData(a)),
+              (h = h.GetPhantomBattleData(e)),
+              a.GetQuality() !== h.GetQuality()
+                ? (h.GetQuality() - a.GetQuality()) * (s ? -1 : 1)
                 : 0)
             : t.Quality !== i.Quality
               ? (i.Quality - t.Quality) * (s ? -1 : 1)
               : 0;
       }),
       (this.$Dt = (t, i, s) => {
-        var e, h, a;
+        var e, a, h;
         return (t instanceof ItemViewData_1.ItemViewData &&
           i instanceof ItemViewData_1.ItemViewData) ||
           (t instanceof PhantomItemData_1.PhantomItemData &&
             i instanceof PhantomItemData_1.PhantomItemData)
-          ? ((a = ModelManager_1.ModelManager.PhantomBattleModel),
-            (h = t.GetUniqueId()),
+          ? ((h = ModelManager_1.ModelManager.PhantomBattleModel),
+            (a = t.GetUniqueId()),
             (e = i.GetUniqueId()),
-            (h = a.GetPhantomBattleData(h)),
-            (a = a.GetPhantomBattleData(e)),
-            h.GetConfigId() !== a.GetConfigId()
-              ? (a.GetConfigId() - h.GetConfigId()) * (s ? -1 : 1)
+            (a = h.GetPhantomBattleData(a)),
+            (h = h.GetPhantomBattleData(e)),
+            a.GetConfigId() !== h.GetConfigId()
+              ? (h.GetConfigId() - a.GetConfigId()) * (s ? -1 : 1)
               : 0)
           : t.MonsterId !== i.MonsterId
             ? (i.MonsterId - t.MonsterId) * (s ? -1 : 1)
             : 0;
       }),
       (this.rRt = (t, i, s) => {
-        var e, h, a;
+        var e, a, h;
         return (t instanceof ItemViewData_1.ItemViewData &&
           i instanceof ItemViewData_1.ItemViewData) ||
           (t instanceof PhantomItemData_1.PhantomItemData &&
             i instanceof PhantomItemData_1.PhantomItemData)
-          ? ((a = ModelManager_1.ModelManager.PhantomBattleModel),
-            (h = t.GetUniqueId()),
+          ? ((h = ModelManager_1.ModelManager.PhantomBattleModel),
+            (a = t.GetUniqueId()),
             (e = i.GetUniqueId()),
-            (h = a.GetPhantomBattleData(h)),
-            (a = a.GetPhantomBattleData(e)),
-            h.GetUniqueId() !== a.GetUniqueId()
-              ? (a.GetUniqueId() - h.GetUniqueId()) * (s ? -1 : 1)
+            (a = h.GetPhantomBattleData(a)),
+            (h = h.GetPhantomBattleData(e)),
+            a.GetUniqueId() !== h.GetUniqueId()
+              ? (h.GetUniqueId() - a.GetUniqueId()) * (s ? -1 : 1)
               : 0)
           : t.Id !== i.Id
             ? (i.Id - t.Id) * (s ? -1 : 1)
             : 0;
       }),
       (this.lRt = (i, s, e = !1) => {
-        var h = i.length;
-        for (let t = 0; t < h; t++)
+        var a = i.length;
+        for (let t = 0; t < a; t++)
           if (i[t].PhantomPropId === s) {
             if (e && i[t].IfPercentage) return i[t].Value;
             if (!e && !i[t].IfPercentage) return i[t].Value;
@@ -303,22 +304,22 @@ class PhantomSort extends CommonSort_1.CommonSort {
             i instanceof PhantomItemData_1.PhantomItemData)
         ) {
           var e = t.GetUniqueId(),
-            h = i.GetUniqueId(),
+            a = i.GetUniqueId(),
             e =
               ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
                 e,
               ),
-            h =
+            a =
               ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-                h,
+                a,
               );
-          const a = 0 < e.GetEquipRoleId() ? 1 : 0,
-            n = 0 < h.GetEquipRoleId() ? 1 : 0;
-          if (a != n) return (a - n) * (s ? -1 : 1);
+          const h = 0 < e.GetEquipRoleId() ? 1 : 0,
+            n = 0 < a.GetEquipRoleId() ? 1 : 0;
+          if (h != n) return (h - n) * (s ? -1 : 1);
         }
-        const a = 0 < t.Role ? 1 : 0,
+        const h = 0 < t.Role ? 1 : 0,
           n = 0 < i.Role ? 1 : 0;
-        return a !== n ? (a - n) * (s ? -1 : 1) : 0;
+        return h !== n ? (h - n) * (s ? -1 : 1) : 0;
       }),
       (this.WRt = (t, i, s, e) => {
         if (e <= 0) return 0;
@@ -328,18 +329,18 @@ class PhantomSort extends CommonSort_1.CommonSort {
           (t instanceof PhantomItemData_1.PhantomItemData &&
             i instanceof PhantomItemData_1.PhantomItemData)
         ) {
-          var h = t.GetUniqueId(),
-            a = i.GetUniqueId(),
-            h =
-              ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-                h,
-              ),
+          var a = t.GetUniqueId(),
+            h = i.GetUniqueId(),
             a =
               ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
                 a,
+              ),
+            h =
+              ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+                h,
               );
-          const n = h.GetEquipRoleId() === e ? 1 : 0,
-            r = a.GetEquipRoleId() === e ? 1 : 0;
+          const n = a.GetEquipRoleId() === e ? 1 : 0,
+            r = h.GetEquipRoleId() === e ? 1 : 0;
           if ((1 == n || 1 == r) && n != r) return -1 * (n - r);
         }
         const n = t.Role === e ? 1 : 0,
@@ -354,23 +355,25 @@ class PhantomSort extends CommonSort_1.CommonSort {
             i instanceof PhantomItemData_1.PhantomItemData)
         ) {
           var e = t.GetUniqueId(),
-            h = i.GetUniqueId(),
+            a = i.GetUniqueId(),
             e =
               ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
                 e,
               ),
-            h =
+            a =
               ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-                h,
+                a,
               );
-          const a = e.GetIfLock() ? 1 : 0,
-            n = h.GetIfLock() ? 1 : 0;
-          if (a != n) return a - n;
+          const h = e.GetIsLock() ? 1 : 0,
+            n = a.GetIsLock() ? 1 : 0;
+          if (h != n) return h - n;
         }
-        const a = t.IsLock ? 1 : 0,
+        const h = t.IsLock ? 1 : 0,
           n = i.IsLock ? 1 : 0;
-        return a !== n ? -1 * (a - n) : 0;
+        return h !== n ? -1 * (h - n) : 0;
       }),
+      (this.wWa = (t, i, s) => this.o3a(t, i, s)),
+      (this.BWa = (t, i, s) => -1 * this.o3a(t, i, s)),
       (this.QRt = (t, i, s) => {
         if (
           (t instanceof ItemViewData_1.ItemViewData &&
@@ -379,22 +382,22 @@ class PhantomSort extends CommonSort_1.CommonSort {
             i instanceof PhantomItemData_1.PhantomItemData)
         ) {
           var e = t.GetUniqueId(),
-            h = i.GetUniqueId(),
+            a = i.GetUniqueId(),
             e =
               ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
                 e,
               ),
-            h =
+            a =
               ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-                h,
+                a,
               );
-          const a = e.GetConfig().Rarity,
-            n = h.GetConfig().Rarity;
-          if (a !== n) return (a - n) * (s ? 1 : -1);
+          const h = e.GetConfig().Rarity,
+            n = a.GetConfig().Rarity;
+          if (h !== n) return (h - n) * (s ? 1 : -1);
         }
-        const a = t.Rarity,
+        const h = t.Rarity,
           n = i.Rarity;
-        return a !== n ? (a - n) * (s ? 1 : -1) : 0;
+        return h !== n ? (h - n) * (s ? 1 : -1) : 0;
       }),
       (this.JDt = (t, i, s) => {
         (t =
@@ -407,22 +410,47 @@ class PhantomSort extends CommonSort_1.CommonSort {
             )?.length ?? 0);
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.hVs = (t, i, s) => {
+      (this.uVs = (t, i, s) => {
         (t = this.lRt(t.SubPropMap, 7)), (i = this.lRt(i.SubPropMap, 7));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.lVs = (t, i, s) => {
+      (this.cVs = (t, i, s) => {
         (t = this.lRt(t.SubPropMap, 8)), (i = this.lRt(i.SubPropMap, 8));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this._Vs = (t, i, s) => {
+      (this.mVs = (t, i, s) => {
         (t = this.lRt(t.SubPropMap, 9)), (i = this.lRt(i.SubPropMap, 9));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.uVs = (t, i, s) => {
+      (this.dVs = (t, i, s) => {
         (t = this.lRt(t.SubPropMap, 10)), (i = this.lRt(i.SubPropMap, 10));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       });
+  }
+  o3a(t, i, s) {
+    if (
+      (t instanceof ItemViewData_1.ItemViewData &&
+        i instanceof ItemViewData_1.ItemViewData) ||
+      (t instanceof PhantomItemData_1.PhantomItemData &&
+        i instanceof PhantomItemData_1.PhantomItemData)
+    ) {
+      var t = t.GetUniqueId(),
+        i = i.GetUniqueId(),
+        t =
+          ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+            t,
+          ),
+        i =
+          ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+            i,
+          ),
+        e = CalabashDefine_1.VISION_RECOVERT_FILTER_DEPERCATE,
+        a = CalabashDefine_1.VISION_RECOVERT_FILTER_UNDEPERCATE,
+        t = t.GetIsDeprecated() ? e : a,
+        i = i.GetIsDeprecated() ? e : a;
+      if (t !== i) return (i - t) * (s ? 1 : -1);
+    }
+    return 0;
   }
   OnInitSortMap() {
     this.SortMap.set(1, this.oRt),
@@ -467,10 +495,12 @@ class PhantomSort extends CommonSort_1.CommonSort {
       this.SortMap.set(44, this.KRt),
       this.SortMap.set(45, this.QRt),
       this.SortMap.set(46, this.JDt),
-      this.SortMap.set(47, this.hVs),
-      this.SortMap.set(48, this.lVs),
-      this.SortMap.set(49, this._Vs),
-      this.SortMap.set(50, this.uVs);
+      this.SortMap.set(47, this.uVs),
+      this.SortMap.set(48, this.cVs),
+      this.SortMap.set(49, this.mVs),
+      this.SortMap.set(50, this.dVs),
+      this.SortMap.set(51, this.wWa),
+      this.SortMap.set(52, this.BWa);
   }
 }
 exports.PhantomSort = PhantomSort;

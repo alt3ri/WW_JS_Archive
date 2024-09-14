@@ -6,14 +6,27 @@ const puerts_1 = require("puerts"),
   LauncherLog_1 = require("./LauncherLog");
 var ELauncherStorageGlobalKey;
 !(function (e) {
-  (e[(e.MenuData = 0)] = "MenuData"),
-    (e[(e.CacheP4Version = 1)] = "CacheP4Version"),
-    (e[(e.PatchP4Version = 2)] = "PatchP4Version"),
-    (e[(e.PatchVersion = 3)] = "PatchVersion"),
-    (e[(e.LauncherPatchVersion = 4)] = "LauncherPatchVersion"),
-    (e[(e.NotFirstTimeOpenPush = 5)] = "NotFirstTimeOpenPush"),
-    (e[(e.CachePushOpenState = 6)] = "CachePushOpenState"),
-    (e[(e.AndroidNotFirstTimeOpenPush = 7)] = "AndroidNotFirstTimeOpenPush");
+  (e[(e.PlayMenuInfo = 0)] = "PlayMenuInfo"),
+    (e[(e.MenuData = 1)] = "MenuData"),
+    (e[(e.CacheP4Version = 2)] = "CacheP4Version"),
+    (e[(e.PatchP4Version = 3)] = "PatchP4Version"),
+    (e[(e.PatchVersion = 4)] = "PatchVersion"),
+    (e[(e.LauncherPatchVersion = 5)] = "LauncherPatchVersion"),
+    (e[(e.NotFirstTimeOpenPush = 6)] = "NotFirstTimeOpenPush"),
+    (e[(e.CachePushOpenState = 7)] = "CachePushOpenState"),
+    (e[(e.AndroidNotFirstTimeOpenPush = 8)] = "AndroidNotFirstTimeOpenPush"),
+    (e[(e.SdkProtocolAgreeState = 9)] = "SdkProtocolAgreeState"),
+    (e[(e.UserProtocolAgreeState = 10)] = "UserProtocolAgreeState"),
+    (e[(e.PlayStationFriendOnly = 11)] = "PlayStationFriendOnly"),
+    (e[(e.MasterVolume = 12)] = "MasterVolume"),
+    (e[(e.VoiceVolume = 13)] = "VoiceVolume"),
+    (e[(e.MusicVolume = 14)] = "MusicVolume"),
+    (e[(e.SFXVolume = 15)] = "SFXVolume"),
+    (e[(e.AMBVolume = 16)] = "AMBVolume"),
+    (e[(e.UIVolume = 17)] = "UIVolume"),
+    (e[(e.PcResolutionIndex = 18)] = "PcResolutionIndex"),
+    (e[(e.TextLanguage = 19)] = "TextLanguage"),
+    (e[(e.RemoteVersionUpdate = 20)] = "RemoteVersionUpdate");
 })(
   (ELauncherStorageGlobalKey =
     exports.ELauncherStorageGlobalKey ||
@@ -23,7 +36,7 @@ const DBPATH = "LocalStorage/LocalStorage",
   DBSUFFIX = ".db",
   TABLENAME = "LocalStorage",
   DBNUM = 10,
-  USE_THREAD = !0,
+  USE_THREAD = !1,
   SQLITE_ERR = -1,
   SQLITE_NO_DATA = 1,
   USE_JOURNAL_MODE = 2;
@@ -98,16 +111,18 @@ class LauncherStorageLib {
   static cde() {
     var e;
     LauncherStorageLib.Sde ||
-      ((e = UE.KismetSystemLibrary.GetProjectSavedDirectory()),
+      ((e = UE.KuroLauncherLibrary.GameSavedDir()),
       (LauncherStorageLib.Sde = e + DBPATH + DBSUFFIX));
   }
   static mde() {
     let r = LauncherStorageLib.Sde,
-      t = UE.KuroSqliteLibrary.OpenCreateDB(r, USE_THREAD);
+      t =
+        (LauncherLog_1.LauncherLog.Info("OpenSync", ["dbFilePath", r]),
+        UE.KuroSqliteLibrary.OpenCreateDB(r, USE_THREAD));
     if (!t) {
       LauncherLog_1.LauncherLog.Error("打开DB失败！", ["dbFilePath", r]);
       for (let e = 2; e <= DBNUM; e++) {
-        var a = UE.KismetSystemLibrary.GetProjectSavedDirectory();
+        var a = UE.KuroLauncherLibrary.GameSavedDir();
         if (
           ((r = a + DBPATH + e + DBSUFFIX),
           (t = UE.KuroSqliteLibrary.OpenCreateDB(r, USE_THREAD)))

@@ -11,13 +11,13 @@ class BusinessTipsInvestModule extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.NumberSelect = void 0),
-      (this.Ota = void 0),
+      (this.roa = void 0),
       (this.QGe = (e) => {
         var r =
           ModelManager_1.ModelManager.MoonChasingBusinessModel.GetInvestData(e);
         this.GetText(0).SetText(r.SuccessProbability.toString()),
           this.GetText(1).SetText(r.Ratio.toString()),
-          this.Ota.SetText(e.toString());
+          this.roa.SetText(e.toString());
       }),
       (this.Jke = () => {
         var e =
@@ -72,7 +72,7 @@ class BusinessTipsInvestModule extends UiPanelBase_1.UiPanelBase {
     var e = ConfigManager_1.ConfigManager.BusinessConfig.GetCoinItemId(),
       e =
         (this.SetItemIcon(this.GetTexture(5), e),
-        (this.Ota = this.GetText(6)),
+        (this.roa = this.GetText(6)),
         ModelManager_1.ModelManager.MoonChasingBusinessModel.GetResultData()),
       e = ConfigManager_1.ConfigManager.BusinessConfig.GetDelegationConfig(
         e.EntrustId,

@@ -17,67 +17,93 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configSkillLevelBySkillLevelGroupId.Init",
+  ),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configSkillLevelBySkillLevelGroupId.GetConfigList",
+  ),
   CONFIG_LIST_STAT_PREFIX =
     "configSkillLevelBySkillLevelGroupId.GetConfigList(";
 exports.configSkillLevelBySkillLevelGroupId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfigList: (e, o = !0) => {
-    var i;
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (o) {
-        var l = KEY_PREFIX + `#${e})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(l);
-        if (r) return r;
+  GetConfigList: (o, i = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start();
+    var e = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${o})`),
+      n =
+        (e.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (n) {
+      if (i) {
+        var l = KEY_PREFIX + `#${o})`;
+        const C = ConfigCommon_1.ConfigCommon.GetConfig(l);
+        if (C)
+          return (
+            e.Stop(),
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
+          );
       }
       if (
-        (i = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair))
+        (n = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair))
       ) {
-        const r = new Array();
+        const C = new Array();
         for (;;) {
           if (
             1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "SkillLevelGroupId",
-              e,
+              o,
             ])
           )
             break;
-          var n = void 0;
+          var t = void 0;
           if (
-            (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
+            (([n, t] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
               0,
               ...logPair,
-              ["SkillLevelGroupId", e],
+              ["SkillLevelGroupId", o],
             )),
-            !i)
+            !n)
           )
-            return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
-          n = SkillLevel_1.SkillLevel.getRootAsSkillLevel(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+            return (
+              ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+              e.Stop(),
+              getConfigListStat.Stop(),
+              void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+            );
+          t = SkillLevel_1.SkillLevel.getRootAsSkillLevel(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
-          r.push(n);
+          C.push(t);
         }
         return (
-          o &&
-            ((l = KEY_PREFIX + `#${e})`),
-            ConfigCommon_1.ConfigCommon.SaveConfig(l, r, r.length)),
+          i &&
+            ((l = KEY_PREFIX + `#${o})`),
+            ConfigCommon_1.ConfigCommon.SaveConfig(l, C, C.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          r
+          e.Stop(),
+          getConfigListStat.Stop(),
+          ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+          C
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    e.Stop(),
+      getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=SkillLevelBySkillLevelGroupId.js.map

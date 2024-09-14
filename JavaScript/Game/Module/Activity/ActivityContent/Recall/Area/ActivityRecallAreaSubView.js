@@ -8,12 +8,12 @@ const ModelManager_1 = require("../../../../../Manager/ModelManager"),
 class ActivityRecallAreaSubView extends ActivityRecallDefine_1.ActivityMainSubViewBase {
   constructor() {
     super(...arguments),
-      (this.u_a = void 0),
-      (this.c_a = void 0),
-      (this.m_a = void 0),
+      (this.Eda = void 0),
+      (this.yda = void 0),
+      (this.Ida = void 0),
       (this.Wwn = (e) => {
-        e = this.m_a[e].Config;
-        this.c_a.RefreshByData(e), this.InvokePassRecallBaseCallBack(e, 1);
+        e = this.Ida[e].Config;
+        this.yda.RefreshByData(e), this.InvokePassRecallBaseCallBack(e, 1);
       });
   }
   OnRegisterComponent() {
@@ -22,42 +22,41 @@ class ActivityRecallAreaSubView extends ActivityRecallDefine_1.ActivityMainSubVi
   }
   async OnBeforeStartAsync() {
     var e = this.GetItem(6).GetOwner();
-    (this.c_a =
+    (this.yda =
       new ActivityRecallAreaActivityInfoPanel_1.ActivityRecallAreaActivityInfoPanel()),
-      await this.c_a.CreateThenShowByActorAsync(e);
+      await this.yda.CreateThenShowByActorAsync(e);
   }
   OnStart() {
     super.OnStart();
     var e = this.GetHorizontalLayout(0),
-      t = this.GetItem(5);
-    (this.u_a = new ActivityRecallTabGroupPanel_1.ActivityRecallTabGroupPanel(
+      i = this.GetItem(5);
+    (this.Eda = new ActivityRecallTabGroupPanel_1.ActivityRecallTabGroupPanel(
       e,
-      t,
+      i,
       this.Wwn,
     )),
-      this.u_a.Init(),
+      this.Eda.Init(),
       this.GetItem(3).SetUIActive(!1);
   }
   OnBeforeDestroy() {
-    this.u_a.Destroy(), (this.u_a = void 0);
+    this.Eda.Destroy(), (this.Eda = void 0);
   }
-  OnRefreshByData(e, t) {
-    let i =
-      ModelManager_1.ModelManager.ActivityRecallModel.GetRecallBaseConfigsByEntryType(
+  OnRefreshByData(e, i) {
+    var t =
+      ModelManager_1.ModelManager.ActivityRecallModel.GetRecallBaseConfigNewestList(
         2,
-      ).filter((e) => e.ShowCondition);
-    (i = i.slice(0, 3)).sort((e, t) => t.Id - e.Id),
-      (this.m_a = []),
-      i.forEach((e) => {
-        var t =
+      );
+    (this.Ida = []),
+      t.forEach((e) => {
+        var i =
           new ActivityRecallDefine_1.ActivityRecallTabSwitchItemCommonData();
-        (t.RecallEntryType = 2),
-          (t.Config = e),
-          (t.Title = e.Title),
-          this.m_a.push(t);
+        (i.RecallEntryType = 2),
+          (i.Config = e),
+          (i.Title = e.Title),
+          this.Ida.push(i);
       }),
-      this.GetItem(7).SetUIActive(1 < this.m_a.length),
-      this.u_a.RefreshByData(this.m_a, t);
+      this.GetItem(7).SetUIActive(1 < this.Ida.length),
+      this.Eda.RefreshByData(this.Ida, i);
   }
 }
 exports.ActivityRecallAreaSubView = ActivityRecallAreaSubView;

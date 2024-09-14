@@ -10,33 +10,47 @@ class TsPureActionHandle {
   constructor() {
     (this.R$e = void 0),
       (this.ZMe = void 0),
-      (this.Oya = void 0),
-      (this.kya = void 0),
-      (this.Nya = void 0),
-      (this.OnPressAction = (i) => {
-        this.Oya && this.Oya(this.ZMe, !0, i);
+      (this._Da = void 0),
+      (this.uDa = void 0),
+      (this.cDa = void 0),
+      (this.OnPressAction = (t) => {
+        this.uDa.Start(),
+          this._Da && this._Da(this.ZMe, !0, t),
+          this.uDa.Stop();
       }),
-      (this.OnReleaseAction = (i) => {
-        this.Oya && this.Oya(this.ZMe, !1, i);
+      (this.OnReleaseAction = (t) => {
+        this.cDa.Start(),
+          this._Da && this._Da(this.ZMe, !1, t),
+          this.cDa.Stop();
       });
   }
-  Initialize(i) {
-    (this.R$e = i), (this.kya = void 0), (this.Nya = void 0);
+  Initialize(t) {
+    (this.R$e = t),
+      (this.uDa = Stats_1.Stat.Create(
+        "TsPureActionHandle.OnPressAction",
+        "",
+        StatDefine_1.BATTLESTAT_GROUP,
+      )),
+      (this.cDa = Stats_1.Stat.Create(
+        "TsPureActionHandle.OnReleaseAction",
+        "",
+        StatDefine_1.BATTLESTAT_GROUP,
+      ));
   }
-  AddActionBinding(i, t) {
-    t
-      ? ((this.ZMe = i),
-        (this.Oya = t),
-        (t = FNameUtil_1.FNameUtil.GetDynamicFName(i)),
+  AddActionBinding(t, i) {
+    i
+      ? ((this.ZMe = t),
+        (this._Da = i),
+        (i = FNameUtil_1.FNameUtil.GetDynamicFName(t)),
         cpp_1.FKuroInputInterface.RegisterActionBinding(
-          t,
+          i,
           0,
           this.R$e,
           this,
           this.OnPressAction,
         ),
         cpp_1.FKuroInputInterface.RegisterActionBinding(
-          t,
+          i,
           1,
           this.R$e,
           this,
@@ -45,11 +59,11 @@ class TsPureActionHandle {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Controller", 8, "添加Action输入绑定时，回调不存在", [
           "actionName",
-          i,
+          t,
         ]);
   }
   Reset() {
-    (this.R$e = void 0), (this.ZMe = void 0), (this.Oya = void 0);
+    (this.R$e = void 0), (this.ZMe = void 0), (this._Da = void 0);
   }
 }
 exports.TsPureActionHandle = TsPureActionHandle;

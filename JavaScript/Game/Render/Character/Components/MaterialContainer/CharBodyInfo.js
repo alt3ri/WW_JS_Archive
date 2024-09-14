@@ -33,31 +33,32 @@ class CharBodyInfo {
       (this.Xhr = void 0),
       (this.$hr = void 0),
       (this.Yhr = void 0),
-      (this.Uhr = void 0);
+      (this.Uhr = void 0),
+      (this.LastUpdateCounter = 0);
   }
-  Init(t, i, e, s, h) {
+  Init(t, e, i, s, h) {
     (this.Uhr = h),
       (this.ActorName = t),
-      (this.BodyName = i),
-      (this.BodyType = RenderConfig_1.RenderConfig.GetBodyTypeByName(i)),
-      (this.SkeletalComp = e),
-      (this.SkeletalMesh = e.SkeletalMesh),
+      (this.BodyName = e),
+      (this.BodyType = RenderConfig_1.RenderConfig.GetBodyTypeByName(e)),
+      (this.SkeletalComp = i),
+      (this.SkeletalMesh = i.SkeletalMesh),
       (this.SpecifiedSlotList = new Array(4)),
       (this.SpecifiedSlotList[0] = new Array()),
       (this.SpecifiedSlotList[2] = new Array()),
       (this.SpecifiedSlotList[1] = new Array()),
       (this.SpecifiedSlotList[3] = new Array());
-    var r = e.GetMaterialSlotNames(),
+    var r = i.GetMaterialSlotNames(),
       a = r.Num();
     this.MaterialSlotList = new Array(a);
-    for (let i = 0; i < a; i++) {
+    for (let e = 0; e < a; e++) {
       var o =
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSkeletalMaterialInterface(
-          e.SkeletalMesh,
-          i,
+          i.SkeletalMesh,
+          e,
         );
       if (
-        ((this.MaterialSlotList[i] = new CharMaterialInfo_1.CharMaterialSlot()),
+        ((this.MaterialSlotList[e] = new CharMaterialInfo_1.CharMaterialSlot()),
         o?.IsValid())
       ) {
         let t = void 0;
@@ -65,21 +66,21 @@ class CharBodyInfo {
           (t =
             s && o instanceof UE.MaterialInstanceDynamic
               ? o
-              : e.CreateDynamicMaterialInstance(i, o))?.IsValid()
+              : i.CreateDynamicMaterialInstance(e, o))?.IsValid()
         )
           switch (
-            (this.MaterialSlotList[i].Init(i, r.Get(i).toString(), t),
-            this.SpecifiedSlotList[0].push(i),
-            this.MaterialSlotList[i].SlotType)
+            (this.MaterialSlotList[e].Init(e, r.Get(e).toString(), t),
+            this.SpecifiedSlotList[0].push(e),
+            this.MaterialSlotList[e].SlotType)
           ) {
             case 1:
             case 4:
-              this.SpecifiedSlotList[2].push(i),
-                this.SpecifiedSlotList[1].push(i);
+              this.SpecifiedSlotList[2].push(e),
+                this.SpecifiedSlotList[1].push(e);
               break;
             case 2:
-              this.SpecifiedSlotList[3].push(i),
-                this.SpecifiedSlotList[1].push(i);
+              this.SpecifiedSlotList[3].push(e),
+                this.SpecifiedSlotList[1].push(e);
           }
         else
           Log_1.Log.CheckWarn() &&
@@ -125,12 +126,22 @@ class CharBodyInfo {
       (this.Ohr = 0),
       (this.khr = 0),
       (this.Fhr = 0);
-    this.ActorName, this.BodyName;
-    (this.Khr = void 0),
-      (this.Qhr = void 0),
-      (this.Yhr = void 0),
-      (this.Xhr = void 0),
-      (this.$hr = void 0);
+    h = this.ActorName + "_" + this.BodyName;
+    (this.Khr = Stats_1.Stat.Create(
+      ["Render_CharBodyInfo_UpdateMaterial_", h].join(),
+    )),
+      (this.Qhr = Stats_1.Stat.Create(
+        ["Render_CharBodyInfo_UpdateAlphaTest_", h].join(),
+      )),
+      (this.Yhr = Stats_1.Stat.Create(
+        ["Render_CharBodyInfo_UpdateOutlineStencil_", h].join(),
+      )),
+      (this.Xhr = Stats_1.Stat.Create(
+        ["Render_CharBodyInfo_UpdateBattle_", h].join(),
+      )),
+      (this.$hr = Stats_1.Stat.Create(
+        ["Render_CharBodyInfo_UpdateBattleMask_", h].join(),
+      ));
   }
   UseBattleMaskCommon() {
     ++this.Fhr,
@@ -147,8 +158,8 @@ class CharBodyInfo {
         this.Jhr());
   }
   UseBattleMask(t) {
-    var i = this.Whr.length;
-    t < i
+    var e = this.Whr.length;
+    t < e
       ? (++this.Whr[t],
         (this.Ghr = !0),
         this.Whr[t] >= RenderConfig_1.RenderConfig.RefErrorCount &&
@@ -166,7 +177,7 @@ class CharBodyInfo {
           14,
           "UseBattleMask索引超过最大值",
           ["索引", t],
-          ["最大值", i - 1],
+          ["最大值", e - 1],
           ["Actor", this.ActorName],
         );
   }
@@ -174,8 +185,8 @@ class CharBodyInfo {
     0 < this.Fhr && (--this.Fhr, (this.Ghr = !0)), this.UpdateBattleMask();
   }
   RevertBattleMask(t) {
-    var i = this.Whr.length;
-    t < i
+    var e = this.Whr.length;
+    t < e
       ? 0 < this.Whr[t] && (--this.Whr[t], (this.Ghr = !0))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -183,7 +194,7 @@ class CharBodyInfo {
           14,
           "RevertBattleMask索引超过最大值",
           ["索引", t],
-          ["最大值", i - 1],
+          ["最大值", e - 1],
           ["Actor", this.ActorName],
         );
   }
@@ -202,8 +213,8 @@ class CharBodyInfo {
         this.Jhr());
   }
   UseBattle(t) {
-    var i = this.jhr.length;
-    t < i
+    var e = this.jhr.length;
+    t < e
       ? (++this.jhr[t],
         (this.qhr = !0),
         this.jhr[t] >= RenderConfig_1.RenderConfig.RefErrorCount &&
@@ -222,7 +233,7 @@ class CharBodyInfo {
           14,
           "UseBattle索引超过最大值",
           ["索引", t],
-          ["最大值", i - 1],
+          ["最大值", e - 1],
           ["Actor", this.ActorName],
         );
   }
@@ -230,8 +241,8 @@ class CharBodyInfo {
     0 < this.khr && (--this.khr, (this.qhr = !0)), this.UpdateBattle();
   }
   RevertBattle(t) {
-    var i = this.jhr.length;
-    t < i
+    var e = this.jhr.length;
+    t < e
       ? 0 < this.jhr[t] && (--this.jhr[t], (this.qhr = !0))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -239,7 +250,7 @@ class CharBodyInfo {
           14,
           "RevertBattle索引超过最大值",
           ["索引", t],
-          ["最大值", i - 1],
+          ["最大值", e - 1],
           ["Actor", this.ActorName],
         );
   }
@@ -257,8 +268,8 @@ class CharBodyInfo {
         );
   }
   UseAlphaTest(t) {
-    var i = this.Vhr.length;
-    t < i
+    var e = this.Vhr.length;
+    t < e
       ? (++this.Vhr[t],
         (this.Bhr = !0),
         this.Vhr[t] >= RenderConfig_1.RenderConfig.RefErrorCount &&
@@ -276,7 +287,7 @@ class CharBodyInfo {
           14,
           "UseAlphaTestMask索引超过最大值",
           ["索引", t],
-          ["最大值", i - 1],
+          ["最大值", e - 1],
           ["Actor", this.ActorName],
         );
   }
@@ -284,8 +295,8 @@ class CharBodyInfo {
     0 < this.Nhr && (--this.Nhr, (this.Bhr = !0)), this.UpdateAlphaTest();
   }
   RevertAlphaTest(t) {
-    var i = this.Vhr.length;
-    t < i
+    var e = this.Vhr.length;
+    t < e
       ? 0 < this.Vhr[t] && (--this.Vhr[t], (this.Bhr = !0))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -293,7 +304,7 @@ class CharBodyInfo {
           14,
           "RevertAlphaTestMask索引超过最大值",
           ["索引", t],
-          ["最大值", i - 1],
+          ["最大值", e - 1],
           ["Actor", this.ActorName],
         );
   }
@@ -311,8 +322,8 @@ class CharBodyInfo {
         );
   }
   UseOutlineStencilTest(t) {
-    var i = this.Hhr.length;
-    t < i
+    var e = this.Hhr.length;
+    t < e
       ? (++this.Hhr[t],
         (this.bhr = !0),
         this.Hhr[t] >= RenderConfig_1.RenderConfig.RefErrorCount &&
@@ -330,7 +341,7 @@ class CharBodyInfo {
           14,
           "UseStencilOutlineMask索引超过最大值",
           ["索引", t],
-          ["最大值", i - 1],
+          ["最大值", e - 1],
           ["Actor", this.ActorName],
         );
   }
@@ -339,8 +350,8 @@ class CharBodyInfo {
       this.UpdateStencilOutlineTest();
   }
   RevertOutlineStencilTest(t) {
-    var i = this.Hhr.length;
-    t < i
+    var e = this.Hhr.length;
+    t < e
       ? 0 < this.Hhr[t] && (--this.Hhr[t], (this.bhr = !0))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -348,56 +359,61 @@ class CharBodyInfo {
           14,
           "RevertOutlineStencilMask索引超过最大值",
           ["索引", t],
-          ["最大值", i - 1],
+          ["最大值", e - 1],
           ["Actor", this.ActorName],
         );
   }
-  SetColor(i, e, t) {
+  SetColor(e, i, t) {
     var s = this.SpecifiedSlotList[t],
       h = s.length;
-    for (let t = 0; t < h; t++) this.MaterialSlotList[s[t]].SetColor(i, e);
+    for (let t = 0; t < h; t++) this.MaterialSlotList[s[t]].SetColor(e, i);
   }
-  RevertColor(t, i) {
-    var e = this.SpecifiedSlotList[i],
-      s = e.length,
+  RevertColor(t, e) {
+    var i = this.SpecifiedSlotList[e],
+      s = i.length,
       h = t.toString();
-    for (let t = 0; t < s; t++) this.MaterialSlotList[e[t]].RevertColor(h);
+    for (let t = 0; t < s; t++) this.MaterialSlotList[i[t]].RevertColor(h);
   }
-  SetFloat(i, e, t) {
+  SetFloat(e, i, t) {
     var s = this.SpecifiedSlotList[t],
       h = s.length;
-    for (let t = 0; t < h; t++) this.MaterialSlotList[s[t]].SetFloat(i, e);
+    for (let t = 0; t < h; t++) this.MaterialSlotList[s[t]].SetFloat(e, i);
   }
-  RevertFloat(t, i) {
-    var e = this.SpecifiedSlotList[i],
-      s = e.length,
+  RevertFloat(t, e) {
+    var i = this.SpecifiedSlotList[e],
+      s = i.length,
       h = t.toString();
-    for (let t = 0; t < s; t++) this.MaterialSlotList[e[t]].RevertFloat(h);
+    for (let t = 0; t < s; t++) this.MaterialSlotList[i[t]].RevertFloat(h);
   }
-  SetTexture(i, e, t) {
+  SetTexture(e, i, t) {
     var s = this.SpecifiedSlotList[t],
       h = s.length;
-    for (let t = 0; t < h; t++) this.MaterialSlotList[s[t]].SetTexture(i, e);
+    for (let t = 0; t < h; t++) this.MaterialSlotList[s[t]].SetTexture(e, i);
   }
-  RevertTexture(t, i) {
-    var e = this.SpecifiedSlotList[i],
-      s = e.length,
+  RevertTexture(t, e) {
+    var i = this.SpecifiedSlotList[e],
+      s = i.length,
       h = t.toString();
-    for (let t = 0; t < s; t++) this.MaterialSlotList[e[t]].RevertTexture(h);
+    for (let t = 0; t < s; t++) this.MaterialSlotList[i[t]].RevertTexture(h);
   }
-  SetStarScarEnergy(i) {
-    var e = this.MaterialSlotList.length;
-    for (let t = 0; t < e; t++) this.MaterialSlotList[t].SetStarScarEnergy(i);
+  SetStarScarEnergy(e) {
+    var i = this.MaterialSlotList.length;
+    for (let t = 0; t < i; t++) this.MaterialSlotList[t].SetStarScarEnergy(e);
   }
   Update(t = void 0) {
-    void 0 !== t &&
-      this.SkeletalComp.IsValid() &&
-      this.SkeletalComp.SetMeshShadingRate(t),
-      this.zhr(),
+    this.Khr.Start(),
+      void 0 !== t &&
+        this.SkeletalComp.IsValid() &&
+        this.SkeletalComp.SetMeshShadingRate(t);
+    t = this.zhr();
+    return (
+      this.Khr.Stop(),
       this.UpdateAlphaTest(),
       this.UpdateStencilOutlineTest(),
       this.UpdateBattle(),
-      this.UpdateBattleMask();
+      this.UpdateBattleMask(),
+      t
+    );
   }
   ResetAllState() {
     (this.Bhr = !0),
@@ -421,76 +437,86 @@ class CharBodyInfo {
     t && t.PrintCurrentInfo();
   }
   zhr() {
-    if (this.SkeletalComp && this.SkeletalComp.IsValid()) {
-      var i = this.MaterialSlotList.length;
-      for (let t = 0; t < i; t++) {
-        var e = this.MaterialSlotList[t];
-        e.UpdateMaterialParam(), e.SetSkeletalMeshMaterial(this.SkeletalComp);
-      }
+    if (!this.SkeletalComp || !this.SkeletalComp.IsValid()) return 0;
+    let e = 0;
+    var i = this.MaterialSlotList.length;
+    for (let t = 0; t < i; t++) {
+      var s = this.MaterialSlotList[t];
+      (e += s.UpdateMaterialParam()),
+        s.SetSkeletalMeshMaterial(this.SkeletalComp);
     }
+    return e;
   }
   UpdateBattleMask() {
     if (this.Ghr) {
-      let t = (this.Ghr = !1),
-        i = !1;
-      var e = UE.NewArray(UE.BuiltinInt);
-      if (0 < this.Fhr) (t = !0), (i = !1);
+      (this.Ghr = !1), this.$hr.Start();
+      let t = !1,
+        e = !1;
+      var i = UE.NewArray(UE.BuiltinInt);
+      if (0 < this.Fhr) (t = !0), (e = !1);
       else {
         var s = this.Whr.length;
-        for (let t = 0; t < s; t++) 0 < this.Whr[t] && e.Add(t);
-        (t = 0 < e.Num()), (i = t);
+        for (let t = 0; t < s; t++) 0 < this.Whr[t] && i.Add(t);
+        (t = 0 < i.Num()), (e = t);
       }
       this.SkeletalComp?.IsValid() &&
         (this.SkeletalComp.SetUseEnableBattleMask(t),
-        this.SkeletalComp.SetUseEnableBattleMaskSectionMask(i, e));
+        this.SkeletalComp.SetUseEnableBattleMaskSectionMask(e, i)),
+        this.$hr.Stop();
     }
   }
   UpdateBattle() {
     if (this.qhr) {
-      let t = (this.qhr = !1),
-        i = !1;
-      var e = UE.NewArray(UE.BuiltinInt);
-      if (0 < this.khr) (t = !0), (i = !1);
+      (this.qhr = !1), this.Xhr.Start();
+      let t = !1,
+        e = !1;
+      var i = UE.NewArray(UE.BuiltinInt);
+      if (0 < this.khr) (t = !0), (e = !1);
       else {
         var s = this.jhr.length;
-        for (let t = 0; t < s; t++) 0 < this.jhr[t] && e.Add(t);
-        (t = 0 < e.Num()), (i = t);
+        for (let t = 0; t < s; t++) 0 < this.jhr[t] && i.Add(t);
+        (t = 0 < i.Num()), (e = t);
       }
       this.SkeletalComp?.IsValid() &&
         (this.SkeletalComp.SetUseEnableBattle(t),
-        this.SkeletalComp.SetUseEnableBattleSectionMask(i, e));
+        this.SkeletalComp.SetUseEnableBattleSectionMask(e, i)),
+        this.Xhr.Stop();
     }
   }
   UpdateAlphaTest() {
     if (this.Bhr) {
-      let t = (this.Bhr = !1),
-        i = !1;
-      var e = UE.NewArray(UE.BuiltinInt);
-      if (0 < this.Nhr) (t = !0), (i = !1);
+      (this.Bhr = !1), this.Qhr.Start();
+      let t = !1,
+        e = !1;
+      var i = UE.NewArray(UE.BuiltinInt);
+      if (0 < this.Nhr) (t = !0), (e = !1);
       else {
         var s = this.Vhr.length;
-        for (let t = 0; t < s; t++) 0 < this.Vhr[t] && e.Add(t);
-        (t = 0 < e.Num()), (i = t);
+        for (let t = 0; t < s; t++) 0 < this.Vhr[t] && i.Add(t);
+        (t = 0 < i.Num()), (e = t);
       }
       this.SkeletalComp?.IsValid() &&
         (this.SkeletalComp.SetUseCustomAlphaTest(t),
-        this.SkeletalComp.SetUseCustomAlphaTestSectionMask(i, e));
+        this.SkeletalComp.SetUseCustomAlphaTestSectionMask(e, i)),
+        this.Qhr.Stop();
     }
   }
   UpdateStencilOutlineTest() {
     if (this.bhr) {
-      let t = (this.bhr = !1),
-        i = !1;
-      var e = UE.NewArray(UE.BuiltinInt);
-      if (0 < this.Ohr) (t = !0), (i = !1);
+      (this.bhr = !1), this.Yhr.Start();
+      let t = !1,
+        e = !1;
+      var i = UE.NewArray(UE.BuiltinInt);
+      if (0 < this.Ohr) (t = !0), (e = !1);
       else {
         var s = this.Hhr.length;
-        for (let t = 0; t < s; t++) 0 < this.Hhr[t] && e.Add(t);
-        (t = 0 < e.Num()), (i = t);
+        for (let t = 0; t < s; t++) 0 < this.Hhr[t] && i.Add(t);
+        (t = 0 < i.Num()), (e = t);
       }
       this.SkeletalComp?.IsValid() &&
         (this.SkeletalComp.SetUseOutlineStencilTest(t),
-        this.SkeletalComp.SetUseOutlineStencilTestSectionMask(i, e));
+        this.SkeletalComp.SetUseOutlineStencilTestSectionMask(e, i)),
+        this.Yhr.Stop();
     }
   }
 }

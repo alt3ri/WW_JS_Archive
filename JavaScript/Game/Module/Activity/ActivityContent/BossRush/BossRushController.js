@@ -30,10 +30,10 @@ class BossRushController extends ActivityControllerBase_1.ActivityControllerBase
       }),
       (this.pSn = (e) => {
         var t = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
-          e.T6n,
+          e.w6n,
         );
-        t.PhraseLevelInfo(e.dMs, e.uMs),
-          t.PhraseRewardInfo(e.cMs),
+        t.PhraseLevelInfo(e.MMs, e.vMs),
+          t.PhraseRewardInfo(e.pMs),
           t.CheckIfNewBossRushOpen(),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.BossRushDataUpdate,
@@ -45,7 +45,7 @@ class BossRushController extends ActivityControllerBase_1.ActivityControllerBase
             ),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.BossRefreshBossRushRewardRedDot,
-            e.T6n,
+            e.w6n,
           );
       }),
       (this.OnBossRushFailNotify = () => {
@@ -81,26 +81,26 @@ class BossRushController extends ActivityControllerBase_1.ActivityControllerBase
           o = new ItemRewardDefine_1.ReachTargetData(),
           r = [],
           n = {
-            Target: [e.pMs.toString()],
+            Target: [e.LMs.toString()],
             DescriptionTextId: "BossRushMonsterScoreTips",
             IsReached: !1,
           },
           n =
             (r.push(n),
             {
-              Target: [e.MMs.toString()],
+              Target: [e.RMs.toString()],
               DescriptionTextId: "BossRushTimeScoreTips",
               IsReached: !1,
             }),
           n =
             (r.push(n),
             {
-              Target: [e.SMs.toString()],
+              Target: [e.DMs.toString()],
               DescriptionTextId: "BossRushTechScoreTips",
               IsReached: !1,
             }),
-          n = (r.push(n), (o.TargetReached = r), e.pMs + e.MMs + e.SMs),
-          r = n > e.EMs;
+          n = (r.push(n), (o.TargetReached = r), e.LMs + e.RMs + e.DMs),
+          r = n > e.AMs;
         (o.IfNewRecord = r),
           (o.FullScore = n),
           t.SetScoreReached(o),
@@ -121,14 +121,14 @@ class BossRushController extends ActivityControllerBase_1.ActivityControllerBase
     return !1;
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(17662, this.vSn),
-      Net_1.Net.Register(23821, this.pSn),
-      Net_1.Net.Register(23104, this.OnBossRushFailNotify);
+    Net_1.Net.Register(17625, this.vSn),
+      Net_1.Net.Register(18967, this.pSn),
+      Net_1.Net.Register(23559, this.OnBossRushFailNotify);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(17662),
-      Net_1.Net.UnRegister(23821),
-      Net_1.Net.UnRegister(23104);
+    Net_1.Net.UnRegister(17625),
+      Net_1.Net.UnRegister(18967),
+      Net_1.Net.UnRegister(23559);
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -166,13 +166,13 @@ class BossRushController extends ActivityControllerBase_1.ActivityControllerBase
         n.push({
           ButtonTextId: "Text_ButtonTextChallengeOneMore_Text",
           DescriptionTextId: "BossRushCurrentHighScore",
-          DescriptionArgs: [r.EMs],
+          DescriptionArgs: [r.AMs],
           IsTimeDownCloseView: !1,
           IsClickedCloseView: !1,
           OnClickedCallback: () => {
             var e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
-              r.T6n,
-            ).GetBossRushLevelDetailInfoById(r.X5n);
+              r.w6n,
+            ).GetBossRushLevelDetailInfoById(r.r6n);
             BossRushController.RequestStartBossRushByTeamData(
               e.ConvertToTeamInfo(),
             );
@@ -196,8 +196,8 @@ class BossRushController extends ActivityControllerBase_1.ActivityControllerBase
   static RequestStartBossRushByTeamData(e) {
     var t = [];
     for (const s of e.GetPrepareSelectBuff()) {
-      var o = new Protocol_1.Aki.Protocol.Sks();
-      (o.L6n = s.BuffId), (o.D6n = s.Slot), (o.A6n = s.State), t.push(o);
+      var o = new Protocol_1.Aki.Protocol.Dks();
+      (o.b6n = s.BuffId), (o.q6n = s.Slot), (o.G6n = s.State), t.push(o);
     }
     var r = [];
     for (const i of e.GetCurrentTeamMembers()) r.push(i);
@@ -211,66 +211,66 @@ class BossRushController extends ActivityControllerBase_1.ActivityControllerBase
   }
   static RequestStartBossRush(e, t, o, r) {
     if (
-      0 !== BossRushController.Ila &&
-      Time_1.Time.Now - BossRushController.Ila <= SENDCD
+      0 !== BossRushController.Tua &&
+      Time_1.Time.Now - BossRushController.Tua <= SENDCD
     )
       return void (
         Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Activity", 28, "发送协议太快")
       );
-    this.Ila = Time_1.Time.Now;
+    this.Tua = Time_1.Time.Now;
     var n,
-      s = new Protocol_1.Aki.Protocol.sfs(),
-      i = ((s.T6n = e), (s.n5n = t), (s.s5n = r), []),
+      s = new Protocol_1.Aki.Protocol.dfs(),
+      i = ((s.w6n = e), (s.d5n = t), (s.C5n = r), []),
       t =
         ModelManager_1.ModelManager.BossRushModel.GetBossRushTeamInfoByActivityId(
           e,
         ).GetCurrentSelectBuff();
     for (const a of o)
-      a.A6n !== Protocol_1.Aki.Protocol.fks.Proto_Empty
+      a.G6n !== Protocol_1.Aki.Protocol.Iks.Proto_Empty
         ? i.push(a)
-        : (((n = new Protocol_1.Aki.Protocol.Sks()).L6n = a.L6n),
-          (n.D6n = a.D6n),
-          (n.A6n =
-            0 === a.L6n
-              ? Protocol_1.Aki.Protocol.fks.Proto_Empty
-              : Protocol_1.Aki.Protocol.fks.Proto_Selected),
+        : (((n = new Protocol_1.Aki.Protocol.Dks()).b6n = a.b6n),
+          (n.q6n = a.q6n),
+          (n.G6n =
+            0 === a.b6n
+              ? Protocol_1.Aki.Protocol.Iks.Proto_Empty
+              : Protocol_1.Aki.Protocol.Iks.Proto_Selected),
           i.push(n));
     for (const l of t)
-      l.State === Protocol_1.Aki.Protocol.fks.Proto_Inactive &&
+      l.State === Protocol_1.Aki.Protocol.Iks.Proto_Inactive &&
         i.push({
-          L6n: l.BuffId,
-          D6n: l.Slot,
-          A6n: Protocol_1.Aki.Protocol.fks.Proto_Inactive,
+          b6n: l.BuffId,
+          q6n: l.Slot,
+          G6n: Protocol_1.Aki.Protocol.Iks.Proto_Inactive,
         });
-    (s.U6n = i),
-      Net_1.Net.Call(6991, s, (e) => {
-        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+    (s.O6n = i),
+      Net_1.Net.Call(22360, s, (e) => {
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.O4n,
-            16610,
+            e.Q4n,
+            29947,
           );
       });
   }
   static RequestSettlement() {
-    Net_1.Net.Call(20621, new Protocol_1.Aki.Protocol._fs(), (e) => {
-      e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+    Net_1.Net.Call(22197, new Protocol_1.Aki.Protocol.ffs(), (e) => {
+      e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          e.O4n,
-          28692,
+          e.Q4n,
+          24888,
         );
     });
   }
   static RequestGetBossRushReward(t, e, o) {
-    var r = new Protocol_1.Aki.Protocol.hfs();
-    (r.T6n = t),
-      (r.R6n = e),
-      (r.x6n = o),
-      Net_1.Net.Call(27699, r, (e) => {
-        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+    var r = new Protocol_1.Aki.Protocol.Cfs();
+    (r.w6n = t),
+      (r.N6n = e),
+      (r.k6n = o),
+      Net_1.Net.Call(17402, r, (e) => {
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.O4n,
-            7753,
+            e.Q4n,
+            17035,
           ),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.BossRefreshBossRushRewardRedDot,
@@ -304,5 +304,5 @@ class BossRushController extends ActivityControllerBase_1.ActivityControllerBase
     );
   }
 }
-(exports.BossRushController = BossRushController).Ila = 0;
+(exports.BossRushController = BossRushController).Tua = 0;
 //# sourceMappingURL=BossRushController.js.map

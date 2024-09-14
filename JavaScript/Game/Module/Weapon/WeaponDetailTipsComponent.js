@@ -212,7 +212,9 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
   }
   GetWeaponIncId() {
     var t = this.WeaponData;
-    return t instanceof WeaponInstance_1.WeaponInstance ? t.GetIncId() ?? 0 : 0;
+    return t instanceof WeaponInstance_1.WeaponInstance
+      ? (t.GetIncId() ?? 0)
+      : 0;
   }
   Sko(t) {
     this.GetExtendToggle(3).RootUIComp.SetUIActive(t && this.CanShowLock);

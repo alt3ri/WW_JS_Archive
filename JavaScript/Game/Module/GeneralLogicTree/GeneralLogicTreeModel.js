@@ -11,14 +11,15 @@ const Log_1 = require("../../../Core/Common/Log"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   BaseBehaviorTree_1 = require("./BaseBehaviorTree/BaseBehaviorTree"),
-  GeneralLogicTreeDefine_1 = require("./Define/GeneralLogicTreeDefine");
+  GeneralLogicTreeDefine_1 = require("./Define/GeneralLogicTreeDefine"),
+  GeneralLogicTreeUtil_1 = require("./GeneralLogicTreeUtil");
 class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.dYt = void 0),
       (this.CYt = void 0),
       (this.gYt = void 0),
-      (this.IWs = void 0),
+      (this.pKs = void 0),
       (this.fYt = void 0),
       (this.IsWakeUp = !1),
       (this.ExpressionOccupationTreeIncId = void 0),
@@ -33,7 +34,7 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
       (this.CYt = new Map()),
       (this.gYt = new Map()),
       (this.fYt = new Map()),
-      (this.IWs = new Map()),
+      (this.pKs = new Map()),
       !0
     );
   }
@@ -63,69 +64,73 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
   IsTimerUiOwner(e) {
     return this.dYt === e;
   }
-  CreateBehaviorTree(i) {
-    var r = MathUtils_1.MathUtils.LongToBigInt(i.s9n);
-    let t = this.CYt.get(r);
-    if (t) return t.Recover(i), t;
+  CreateBehaviorTree(r) {
+    var i = MathUtils_1.MathUtils.LongToBigInt(r.C9n);
+    let t = this.CYt.get(i);
+    if (t) return t.Recover(r), t;
     let o = !this.IsWakeUp;
-    switch (i.tps) {
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
-        var n = ModelManager_1.ModelManager.QuestNewModel.GetQuest(i.ZSs);
-        n
+    switch (r.hps) {
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest:
+        var e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(r.sEs);
+        e
           ? ((t = new BaseBehaviorTree_1.BaseBehaviorTree(
-              r,
-              i.ZSs,
-              i.tps,
-              n.DungeonId,
-              n.QuestMarkId,
-              n.IsNewQuest,
+              i,
+              r.sEs,
+              r.hps,
+              e.DungeonId,
+              e.QuestMarkId,
+              e.IsNewQuest,
             )),
-            n.SetUpBehaviorTree(t))
+            e.SetUpBehaviorTree(t))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "GeneralLogicTree",
               19,
               "创建任务行为树时：任务不存在",
-              ["任务Id", i.ZSs],
+              ["任务Id", r.sEs],
             );
         break;
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
-        n =
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay:
+        e =
           ModelManager_1.ModelManager.LevelPlayModel.GetProcessingLevelPlayInfo(
-            i.ZSs,
+            r.sEs,
           );
-        n
-          ? ((t = new BaseBehaviorTree_1.BaseBehaviorTree(
-              r,
-              i.ZSs,
-              i.tps,
+        e
+          ? ((a =
+              ConfigManager_1.ConfigManager.MapConfig.GetTaskMarkIdByQuestId(
+                r.sEs,
+              )),
+            (t = new BaseBehaviorTree_1.BaseBehaviorTree(
+              i,
+              r.sEs,
+              r.hps,
               ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-              GeneralLogicTreeDefine_1.COMMONLEVELPLAY_TRACKICONID,
-            )),
-            n.SetUpBehaviorTree(t))
+              a ?? GeneralLogicTreeDefine_1.COMMONLEVELPLAY_TRACKICONID,
+            )).SetUseInnerTrackIconId(void 0 !== a),
+            e.SetUpBehaviorTree(t))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "GeneralLogicTree",
               19,
               "创建玩法行为树时：玩法不存在",
-              ["玩法Id", i.ZSs],
+              ["玩法Id", r.sEs],
             );
         break;
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeInst: {
-        n =
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeInst: {
+        var a =
           ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceDungeonInfo();
-        if (!n) {
+        if (!a) {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "GeneralLogicTree",
               19,
               "创建副本行为树时：副本不存在",
-              ["副本Id", i.ZSs],
+              ["副本Id", r.sEs],
             );
           break;
         }
         let e = GeneralLogicTreeDefine_1.COMMONLEVELPLAY_TRACKICONID;
-        switch (n.SubType) {
+        switch (a.SubType) {
           case 2:
             e =
               ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeMarkId(
@@ -141,13 +146,13 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
         (o =
           !ModelManager_1.ModelManager.GameModeModel.WorldDoneAndLoadingClosed),
           (t = new BaseBehaviorTree_1.BaseBehaviorTree(
-            r,
-            i.ZSs,
-            i.tps,
+            i,
+            r.sEs,
+            r.hps,
             ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
             e,
           )),
-          n.SetUpBehaviorTree(t);
+          a.SetUpBehaviorTree(t);
         break;
       }
       default:
@@ -156,16 +161,16 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
             "GeneralLogicTree",
             19,
             "创建行为树时找不到对应的行为树类型",
-            ["行为树类型Id", i.tps],
+            ["行为树类型Id", r.hps],
           );
     }
     if (t) {
-      this.CYt.set(r, t), this.fYt.set(r, i.n9n);
-      let e = this.gYt.get(i.tps);
+      this.CYt.set(i, t), this.fYt.set(i, r.d9n);
+      let e = this.gYt.get(r.hps);
       return (
-        e || ((e = new Map()), this.gYt.set(i.tps, e)),
-        e.set(r, t),
-        t.InitTree(i, o),
+        e || ((e = new Map()), this.gYt.set(r.hps, e)),
+        e.set(i, t),
+        t.InitTree(r, o),
         t
       );
     }
@@ -174,13 +179,13 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
         "GeneralLogicTree",
         19,
         "创建行为树失败",
-        ["行为树类型Id", i.tps],
-        ["行为树Id", i.ZSs],
+        ["行为树类型Id", r.hps],
+        ["行为树Id", r.sEs],
       );
   }
   RemoveBehaviorTree(e) {
-    var i = this.CYt.get(e);
-    i && (i.Destroy(), this.CYt.delete(e), this.gYt.get(i.BtType)?.delete(e));
+    var r = this.CYt.get(e);
+    r && (r.Destroy(), this.CYt.delete(e), this.gYt.get(r.BtType)?.delete(e));
   }
   GetBehaviorTree(e) {
     return this.CYt.get(e);
@@ -194,19 +199,19 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
   GetAllBehaviorTrees() {
     return this.CYt;
   }
-  SaveUpdateInfo(e, i, r) {
+  SaveUpdateInfo(e, r, i) {
     var t =
         "Disabled" !==
         ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode(),
-      e = new GeneralLogicTreeDefine_1.NodeStatusChangeInfo(e, i, t, r);
+      e = new GeneralLogicTreeDefine_1.NodeStatusChangeInfo(e, r, t, i);
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.QuestUpdateInfoAdd,
       e,
     );
   }
-  ForceShowDailyQuestInfo(e, i) {
-    var r = this.GetBehaviorTree(e);
-    r && this.SaveUpdateInfo(e, i, r.CreateShowBridge());
+  ForceShowDailyQuestInfo(e, r) {
+    var i = this.GetBehaviorTree(e);
+    i && this.SaveUpdateInfo(e, r, i.CreateShowBridge());
   }
   ApplyExpressionOccupation(e) {
     e &&
@@ -242,24 +247,37 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
     return this.nno;
   }
   AddOccupationInfo(e) {
-    this.IWs.set(e.AEs, MathUtils_1.MathUtils.LongToBigInt(e.T5n));
+    this.pKs.set(e.qEs, MathUtils_1.MathUtils.LongToBigInt(e.w5n));
   }
   RemoveOccupationInfo(e) {
-    this.IWs.delete(e);
+    this.pKs.delete(e);
   }
   IsOccupationExist(e) {
-    return void 0 !== this.IWs.get(e);
+    return void 0 !== this.pKs.get(e);
   }
   GetOccupationTreeId(e) {
-    return this.IWs.get(e);
+    return this.pKs.get(e);
   }
   GetOccupationQuestName(e) {
-    var e = this.IWs.get(e);
+    var e = this.pKs.get(e);
     return (e = e && this.GetBehaviorTree(e)) &&
-      e.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest
-      ? ModelManager_1.ModelManager.QuestNewModel.GetQuest(e.TreeConfigId)
-          ?.Name ?? ""
+      e.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest
+      ? (ModelManager_1.ModelManager.QuestNewModel.GetQuest(e.TreeConfigId)
+          ?.Name ?? "")
       : "";
+  }
+  GetBehaviorTreeName(e) {
+    var e = this.GetBehaviorTree(e);
+    let r = "";
+    return (
+      e &&
+        ((e = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetLogicTreeContainer(
+          e.BtType,
+          e.TreeConfigId,
+        )),
+        (r = e.Name)),
+      r
+    );
   }
 }
 exports.GeneralLogicTreeModel = GeneralLogicTreeModel;

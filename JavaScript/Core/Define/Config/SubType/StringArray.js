@@ -7,8 +7,10 @@ class StringArray {
     (this.J7 = null), (this.z7 = 0);
   }
   get ArrayString() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.arraystringLength(), (t) =>
-      this.arraystring(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.arraystringLength(),
+      this.arraystring,
+      this,
     );
   }
   __init(t, r) {

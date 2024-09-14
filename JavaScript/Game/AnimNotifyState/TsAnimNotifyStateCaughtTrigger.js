@@ -12,10 +12,10 @@ class TsAnimNotifyStateCaughtTrigger extends UE.KuroAnimNotifyState {
     return (
       t instanceof TsBaseCharacter_1.default &&
       !!(t = t.CharacterActorComponent.Entity) &&
-      ((s = t.GetComponent(33)),
+      ((s = t.GetComponent(34)),
       (this.SkillId = s?.CurrentSkill?.SkillId ?? 0),
-      s?.SetCurSkillAnIndex(this.exportIndex),
-      !!(s = t.GetComponent(44))) &&
+      s?.SetCurAnInfo(this.exportIndex, e.GetName()),
+      !!(s = t.GetComponent(45))) &&
       (s.BeginCaughtTrigger(this.CaughtIds, this.SkillId), !0)
     );
   }
@@ -24,9 +24,9 @@ class TsAnimNotifyStateCaughtTrigger extends UE.KuroAnimNotifyState {
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
     t = t.CharacterActorComponent.Entity;
     if (!t) return !1;
-    t.GetComponent(33)?.SetCurSkillAnIndex(this.exportIndex);
-    t = t.GetComponent(44);
-    return !!t && (t.EndCaughtTrigger(), !0);
+    t.GetComponent(34)?.SetCurAnInfo(this.exportIndex, e.GetName());
+    e = t.GetComponent(45);
+    return !!e && (e.EndCaughtTrigger(), !0);
   }
   GetNotifyName() {
     return "抓取判定";

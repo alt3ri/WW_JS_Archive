@@ -36,19 +36,19 @@ let UiModelEffectComponent = class UiModelEffectComponent extends UiModelCompone
       (this.u1o = new Array()),
       (this.Ywr = new Map()),
       (this.Jwr = void 0),
-      (this.zsa = !0),
-      (this.Zsa = 0.5),
-      (this.eaa = 0.5),
+      (this.Zla = !0),
+      (this.e1a = 0.5),
+      (this.t1a = 0.5),
       (this.Twr = (t) => {
         t || this.DestroyAllEffect();
       }),
-      (this.taa = (t) => {
-        t > this.Zsa &&
-          !this.zsa &&
-          ((this.zsa = !0), this.SetAllEffectShowState(this.zsa)),
-          t < this.eaa &&
-            this.zsa &&
-            ((this.zsa = !1), this.SetAllEffectShowState(this.zsa));
+      (this.i1a = (t) => {
+        t > this.e1a &&
+          !this.Zla &&
+          ((this.Zla = !0), this.SetAllEffectShowState(this.Zla)),
+          t < this.t1a &&
+            this.Zla &&
+            ((this.Zla = !1), this.SetAllEffectShowState(this.Zla));
       }),
       (this.OnAnsBegin = (t) => {
         this.PlayEffectByAnsContext(t);
@@ -69,7 +69,7 @@ let UiModelEffectComponent = class UiModelEffectComponent extends UiModelCompone
       EventSystem_1.EventSystem.AddWithTarget(
         this.Owner,
         EventDefine_1.EEventName.OnUiModelSetDitherEffect,
-        this.taa,
+        this.i1a,
       ),
       this.Jwr?.RegisterAnsTrigger(
         "UiEffectAnsContext",
@@ -86,7 +86,7 @@ let UiModelEffectComponent = class UiModelEffectComponent extends UiModelCompone
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Owner,
         EventDefine_1.EEventName.OnUiModelSetDitherEffect,
-        this.taa,
+        this.i1a,
       ),
       this.DestroyAllEffect();
   }
@@ -128,7 +128,7 @@ let UiModelEffectComponent = class UiModelEffectComponent extends UiModelCompone
                 !0,
               ),
               t.SetActorScale3D(r)),
-          t.SetActorHiddenInGame(!this.zsa));
+          t.SetActorHiddenInGame(!this.Zla));
       },
       e,
     );

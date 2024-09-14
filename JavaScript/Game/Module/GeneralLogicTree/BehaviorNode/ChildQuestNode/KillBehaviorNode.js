@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.KillBehaviorNode = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+const IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class KillBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
@@ -14,7 +15,7 @@ class KillBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnCreate(e) {
     if (!super.OnCreate(e)) return !1;
     e = e.Condition;
-    if ("Kill" !== e.Type) return !1;
+    if (e.Type !== IQuest_1.EChildQuest.Kill) return !1;
     (this.TrackTextRuleInner = 1), (this.PXt = []);
     for (const t of e.ExistTargets) this.PXt.push(t);
     for (const s of e.TargetsToAwake) this.PXt.push(s);
@@ -22,12 +23,12 @@ class KillBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   }
   OnUpdateProgress(e) {
     return (
-      !!e.aEs &&
-      ((this.xXt = e.aEs),
+      !!e.mEs &&
+      ((this.xXt = e.mEs),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.GeneralLogicTreeEntityKilled,
         this.NodeId,
-        this.xXt.mEs,
+        this.xXt.SEs,
       ),
       !0)
     );
@@ -35,10 +36,10 @@ class KillBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   GetProgress() {
     return this.IsSuccess
       ? this.GetProgressMax()
-      : this.xXt?.mEs?.length.toString() ?? "0";
+      : (this.xXt?.SEs?.length.toString() ?? "0");
   }
   GetProgressMax() {
-    return this.xXt ? this.xXt?.fEs?.toString() ?? "0" : this.$Xt.toString();
+    return this.xXt ? (this.xXt?.IEs?.toString() ?? "0") : this.$Xt.toString();
   }
 }
 exports.KillBehaviorNode = KillBehaviorNode;

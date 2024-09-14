@@ -3,27 +3,26 @@ var __decorate =
   (this && this.__decorate) ||
   function (e, t, r, i) {
     var o,
-      s = arguments.length,
-      n =
-        s < 3
+      n = arguments.length,
+      a =
+        n < 3
           ? t
           : null === i
             ? (i = Object.getOwnPropertyDescriptor(t, r))
             : i;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      n = Reflect.decorate(e, t, r, i);
+      a = Reflect.decorate(e, t, r, i);
     else
-      for (var a = e.length - 1; 0 <= a; a--)
-        (o = e[a]) && (n = (s < 3 ? o(n) : 3 < s ? o(t, r, n) : o(t, r)) || n);
-    return 3 < s && n && Object.defineProperty(t, r, n), n;
+      for (var s = e.length - 1; 0 <= s; s--)
+        (o = e[s]) && (a = (n < 3 ? o(a) : 3 < n ? o(t, r, a) : o(t, r)) || a);
+    return 3 < n && a && Object.defineProperty(t, r, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterSkillTriggerComponent = void 0);
-const puerts_1 = require("puerts"),
-  UE = require("ue"),
-  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
   EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  DataTableUtil_1 = require("../../../../../../Core/Utils/DataTableUtil"),
   ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
   CombatLog_1 = require("../../../../../Utils/CombatLog"),
   TriggerType_1 = require("../Abilities/Trigger/TriggerType");
@@ -32,80 +31,76 @@ let CharacterSkillTriggerComponent = class CharacterSkillTriggerComponent extend
     super(...arguments),
       (this.cBe = void 0),
       (this.EIe = void 0),
-      (this.iHs = void 0);
+      (this.dHs = void 0);
   }
   OnInit() {
     return (
-      (this.cBe = this.Entity.CheckGetComponent(33)),
+      (this.cBe = this.Entity.CheckGetComponent(34)),
       (this.EIe = this.Entity.CheckGetComponent(0)),
-      (this.iHs = this.Entity.CheckGetComponent(25)),
+      (this.dHs = this.Entity.CheckGetComponent(25)),
       !0
     );
   }
   OnStart() {
-    return this.dVs(), !0;
+    return this.fVs(), !0;
   }
   OnEnd() {
     return !0;
   }
-  dVs() {
+  fVs() {
     if (this.cBe.DtSkillInfo) {
-      var e = (0, puerts_1.$ref)(void 0),
-        t =
-          (UE.DataTableFunctionLibrary.GetDataTableRowNames(
-            this.cBe.DtSkillInfo,
-            e,
-          ),
-          (0, puerts_1.$unref)(e));
-      for (let e = 0; e < t.Num(); e++) {
-        var r = Number(t.Get(e).toString()),
-          i = this.cBe.GetSkillInfo(r);
-        this.CVs(r, i);
+      var e = new Array();
+      DataTableUtil_1.DataTableUtil.GetDataTableAllRowNamesFromTable(
+        this.cBe.DtSkillInfo,
+        e,
+      );
+      for (const l of e) {
+        var t = Number(l),
+          r = this.cBe.GetSkillInfo(t);
+        this.pVs(t, r);
       }
     }
-    let o = [];
+    let i = [];
     switch (this.EIe.GetEntityType()) {
-      case Protocol_1.Aki.Protocol.wks.Proto_Player:
-        o =
+      case Protocol_1.Aki.Protocol.kks.Proto_Player:
+        i =
           ConfigManager_1.ConfigManager.WorldConfig.GetRoleCommonSkillRowNames();
         break;
-      case Protocol_1.Aki.Protocol.wks.Proto_Vision:
-        o =
+      case Protocol_1.Aki.Protocol.kks.Proto_Vision:
+        i =
           ConfigManager_1.ConfigManager.WorldConfig.GetVisionCommonSkillRowNames();
         break;
-      case Protocol_1.Aki.Protocol.wks.Proto_Monster:
-        o =
+      case Protocol_1.Aki.Protocol.kks.Proto_Monster:
+        i =
           ConfigManager_1.ConfigManager.WorldConfig.GetMonsterCommonSkillRowNames();
     }
-    for (const h of o) {
-      var s = Number(h),
-        n = this.cBe.GetSkillInfo(s);
-      this.CVs(s, n);
+    for (const g of i) {
+      var o = Number(g),
+        n = this.cBe.GetSkillInfo(o);
+      this.pVs(o, n);
     }
     if (this.cBe.DtSkillInfoExtra) {
-      var e = (0, puerts_1.$ref)(void 0),
-        a =
-          (UE.DataTableFunctionLibrary.GetDataTableRowNames(
-            this.cBe.DtSkillInfoExtra,
-            e,
-          ),
-          (0, puerts_1.$unref)(e));
-      for (let e = 0; e < a.Num(); e++) {
-        var l = Number(a.Get(e).toString()),
-          g = this.cBe.GetSkillInfo(l);
-        this.CVs(l, g);
+      e = new Array();
+      DataTableUtil_1.DataTableUtil.GetDataTableAllRowNamesFromTable(
+        this.cBe.DtSkillInfoExtra,
+        e,
+      );
+      for (const h of e) {
+        var a = Number(h),
+          s = this.cBe.GetSkillInfo(a);
+        this.pVs(a, s);
       }
     }
   }
-  CVs(r, t) {
+  pVs(r, t) {
     if (t)
       for (let e = 0; e < t.SkillTriggers.Num(); e++) {
         var i,
           o = t.SkillTriggers.Get(e),
-          s = [];
+          n = [];
         if (o.TriggerPreset)
           for (let e = 0; e < o.TriggerPreset.Num(); e++)
-            s.push(o.TriggerPreset.Get(e));
+            n.push(o.TriggerPreset.Get(e));
         TriggerType_1.ETriggerEvent[o.TriggerType] ===
         TriggerType_1.ETriggerEvent.GlobalDamageTrigger
           ? CombatLog_1.CombatLog.Error(
@@ -114,10 +109,10 @@ let CharacterSkillTriggerComponent = class CharacterSkillTriggerComponent extend
               "禁止白名单之外的技能使用全局伤害监听",
               ["skillId", r],
             )
-          : ((i = this.iHs.AddTrigger(
+          : ((i = this.dHs.AddTrigger(
               {
                 Type: o.TriggerType,
-                Preset: s,
+                Preset: n,
                 Params: o.TriggerParams || "{}",
                 Formula: o.TriggerFormula || "TRUE",
               },
@@ -125,15 +120,15 @@ let CharacterSkillTriggerComponent = class CharacterSkillTriggerComponent extend
                 this.cBe.BeginSkill(r, { Context: "技能触发器触发" });
               },
             )),
-            this.iHs.SetTriggerActive(i, !0));
+            this.dHs.SetTriggerActive(i, !0));
       }
   }
   AddSkillTriggerDebug(e, t) {
-    this.CVs(e, t);
+    this.pVs(e, t);
   }
 };
 (CharacterSkillTriggerComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(191)],
+  [(0, RegisterComponent_1.RegisterComponent)(193)],
   CharacterSkillTriggerComponent,
 )),
   (exports.CharacterSkillTriggerComponent = CharacterSkillTriggerComponent);

@@ -2,8 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RenderAssistant = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   Log_1 = require("../../../../../Core/Common/Log"),
-  GameQualitySettingsManager_1 = require("../../../../GameQualitySettings/GameQualitySettingsManager"),
+  GameSettingsDeviceRender_1 = require("../../../../GameSettings/GameSettingsDeviceRender"),
   GlobalData_1 = require("../../../../GlobalData"),
   RenderDataManager_1 = require("../../../../Render/Data/RenderDataManager"),
   RenderUtil_1 = require("../../../../Render/Utils/RenderUtil"),
@@ -22,10 +23,8 @@ class RenderAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
     )),
       RenderUtil_1.RenderUtil.CloseToonSceneShadow(),
       RenderUtil_1.RenderUtil.OpenMobileSpotLightShadow(),
-      GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-        .GetCurrentQualityInfo()
-        .SetSequenceFrameRateLimit(),
-      GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform() &&
+      GameSettingsDeviceRender_1.GameSettingsDeviceRender.SetSequenceFrameRateLimit(),
+      Info_1.Info.IsPcOrGamepadPlatform() &&
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
           "r.Kuro.AutoExposure 0",
@@ -70,10 +69,8 @@ class RenderAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
         GlobalData_1.GlobalData.World,
         "r.Mobile.EnableKuroSpotlightsShadow " + this.dio,
       ),
-      GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-        .GetCurrentQualityInfo()
-        .CancleSequenceFrameRateLimit(),
-      GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform() &&
+      GameSettingsDeviceRender_1.GameSettingsDeviceRender.CancleSequenceFrameRateLimit(),
+      Info_1.Info.IsPcOrGamepadPlatform() &&
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
           "r.Kuro.AutoExposure 1",

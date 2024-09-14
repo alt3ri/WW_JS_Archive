@@ -68,13 +68,6 @@ class LevelGamePlayModel extends ModelBase_1.ModelBase {
         e && e();
       }
   }
-  ExecuteActions(e, t, i) {
-    return ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActions(
-      e,
-      t,
-      i,
-    );
-  }
   ExecuteActionsNew(e, t, i) {
     ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsNew(
       e,

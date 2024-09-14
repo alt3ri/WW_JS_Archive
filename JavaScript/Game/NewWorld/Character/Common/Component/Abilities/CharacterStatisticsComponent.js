@@ -61,8 +61,8 @@ class TargetDamageStatistics {
     (this.TargetId = t), (this.DQo = 0), (this.IsValid = !0);
     var t = EntitySystem_1.EntitySystem.Get(t).GetComponent(0),
       i = t.GetEntityType();
-    (this.JB = i === Protocol_1.Aki.Protocol.wks.Proto_Monster),
-      (this.Xjt = i === Protocol_1.Aki.Protocol.wks.Proto_Player),
+    (this.JB = i === Protocol_1.Aki.Protocol.kks.Proto_Monster),
+      (this.Xjt = i === Protocol_1.Aki.Protocol.kks.Proto_Player),
       (this.Mne = 0),
       (this.RQo = ""),
       this.JB
@@ -155,7 +155,7 @@ class CombatDataBase {
       var i,
         t = t.GetComponent(0),
         e = t?.GetEntityType();
-      if (e === Protocol_1.Aki.Protocol.wks.Proto_Player)
+      if (e === Protocol_1.Aki.Protocol.kks.Proto_Player)
         return (
           (i = t.Valid ? t.GetRoleId() : 0),
           (i = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(i))
@@ -163,7 +163,7 @@ class CombatDataBase {
               ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(i.Name))
             : void 0
         );
-      if (e === Protocol_1.Aki.Protocol.wks.Proto_Monster)
+      if (e === Protocol_1.Aki.Protocol.kks.Proto_Monster)
         return PublicUtil_1.PublicUtil.GetConfigTextByKey(
           t.GetBaseInfo()?.TidName ?? "",
         );
@@ -171,7 +171,7 @@ class CombatDataBase {
   }
   static GetSkillConfigName(t, i) {
     t = EntitySystem_1.EntitySystem.Get(t);
-    if (t) return t.GetComponent(33).GetSkillInfo(i).SkillName.toString();
+    if (t) return t.GetComponent(34).GetSkillInfo(i).SkillName.toString();
   }
   static GetEntityConfigNameAndSkillName(t, i, e) {
     t = EntitySystem_1.EntitySystem.Get(t);
@@ -180,7 +180,7 @@ class CombatDataBase {
     if (t) {
       var r = t.GetComponent(0),
         n = r?.GetEntityType();
-      if (n === Protocol_1.Aki.Protocol.wks.Proto_Player) {
+      if (n === Protocol_1.Aki.Protocol.kks.Proto_Player) {
         var o = r.Valid ? r.GetRoleId() : 0,
           o = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(o);
         if (!o) return [void 0, void 0];
@@ -204,12 +204,12 @@ class CombatDataBase {
           [a, s]
         );
       }
-      if (n === Protocol_1.Aki.Protocol.wks.Proto_Monster)
+      if (n === Protocol_1.Aki.Protocol.kks.Proto_Monster)
         return (
           (a = PublicUtil_1.PublicUtil.GetConfigTextByKey(
             r.GetBaseInfo()?.TidName ?? "",
           )),
-          (o = t.GetComponent(33).GetSkillInfo(e)),
+          (o = t.GetComponent(34).GetSkillInfo(e)),
           (s = o.SkillName.toString()),
           [a, s]
         );
@@ -233,8 +233,8 @@ class CombatDataDamage extends CombatDataBase {
       e = CombatDataBase.GetEntityConfigName(this.TargetId),
       a = 0,
       a = EntitySystem_1.EntitySystem.Get(this.TargetId)
-        .GetComponent(158)
-        .GetCurrentValue(Protocol_1.Aki.Protocol.Bks.Proto_Life);
+        .GetComponent(159)
+        .GetCurrentValue(Protocol_1.Aki.Protocol.Vks.Proto_Life);
     return StringUtils_1.StringUtils.Format(
       "<Date>[{0}]</><Atk>{1}</>施放了<Skill>{2}</>对<Victim>{3}</>造成<NumDmg>{4}</>点伤害<Change>{5}</>",
       this.DateCreate,
@@ -264,9 +264,9 @@ class CombatDataHeal extends CombatDataBase {
       ),
       e = CombatDataBase.GetEntityConfigName(this.TargetId),
       a = 0,
-      s = EntitySystem_1.EntitySystem.Get(this.TargetId).GetComponent(158),
-      a = s.GetCurrentValue(Protocol_1.Aki.Protocol.Bks.Proto_Life),
-      s = s.GetCurrentValue(Protocol_1.Aki.Protocol.Bks.e5n);
+      s = EntitySystem_1.EntitySystem.Get(this.TargetId).GetComponent(159),
+      a = s.GetCurrentValue(Protocol_1.Aki.Protocol.Vks.Proto_Life),
+      s = s.GetCurrentValue(Protocol_1.Aki.Protocol.Vks.l5n);
     return StringUtils_1.StringUtils.Format(
       "<Date>[{0}]</><Atk>{1}</>施放了<Skill>{2}</>使<Victim>{3}</>恢复<NumDmg>{4}</>点生命<Change>{5}</>",
       this.DateCreate,
@@ -439,7 +439,7 @@ let CharacterStatisticsComponent =
               )),
               (t = new CharacterOperationRecord(s, e, r.Id)),
               CharacterStatisticsComponent_1.ekr.set(e, t));
-            var s = this.Entity.GetComponent(33).GetSkillInfo(a).SkillGenre;
+            var s = this.Entity.GetComponent(34).GetSkillInfo(a).SkillGenre;
             let i = t.SkillOperationMap.get(s);
             i ||
               ((i = new SkillOperationRecord(
@@ -472,12 +472,12 @@ let CharacterStatisticsComponent =
               var n = this.Entity.GetComponent(0);
               t ||
                 ((o = n.GetEntityType()) ===
-                Protocol_1.Aki.Protocol.wks.Proto_Monster
+                Protocol_1.Aki.Protocol.kks.Proto_Monster
                   ? ((h = PublicUtil_1.PublicUtil.GetConfigTextByKey(
                       n.GetBaseInfo()?.TidName ?? "",
                     )),
                     (t = new CharacterOperationRecord(h, r, n.GetPbDataId())))
-                  : o === Protocol_1.Aki.Protocol.wks.Proto_Player &&
+                  : o === Protocol_1.Aki.Protocol.kks.Proto_Player &&
                     ((h = n.GetRoleConfig()),
                     (o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
                       h.Name,
@@ -608,7 +608,7 @@ let CharacterStatisticsComponent =
     }
     static ProcessRecordBySkillType(a, t, s, r, n, o, h) {
       t = t.GetComponent(0);
-      if (t.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player) {
+      if (t.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player) {
         var t = t.Valid ? t.GetRoleId() : 0,
           c = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(t);
         if (c) {
@@ -770,16 +770,16 @@ let CharacterStatisticsComponent =
             this.XOr,
           );
         var t,
-          i = this.Entity.GetComponent(160),
+          i = this.Entity.GetComponent(161),
           e =
             (i?.Valid && ((i = i.MoveState), this.JOr(i)),
-            this.Entity.CheckGetComponent(188));
+            this.Entity.CheckGetComponent(190));
         e?.Valid &&
           this.QOr.push(e.ListenForTagAddOrRemove(-2044964178, this.UWi));
         for ([t] of CharacterStatisticsComponent_1.ykr)
           e.HasTag(t) && this.WOr.set(t, Time_1.Time.NowSeconds);
       } else {
-        var a = this.Entity.CheckGetComponent(188);
+        var a = this.Entity.CheckGetComponent(190);
         if (a?.Valid) {
           CharacterStatisticsComponent_1.Skr.push(this.Entity.Id),
             this.QOr.push(a.ListenForTagAddOrRemove(-1112841587, this.UWi)),
@@ -864,15 +864,15 @@ let CharacterStatisticsComponent =
       }
     }
     static StageInfo(t) {
-      return t === Protocol_1.Aki.Protocol.wks.Proto_Monster
+      return t === Protocol_1.Aki.Protocol.kks.Proto_Monster
         ? CharacterStatisticsComponent_1.Ikr
-        : t === Protocol_1.Aki.Protocol.wks.Proto_Player
+        : t === Protocol_1.Aki.Protocol.kks.Proto_Player
           ? CharacterStatisticsComponent_1.ykr
           : void 0;
     }
     akr() {
       if (CharacterStatisticsComponent_1.$Or) {
-        var t = this.Entity.GetComponent(188);
+        var t = this.Entity.GetComponent(190);
         if (t) {
           var i,
             e = this.Entity.GetComponent(0).GetEntityType();
@@ -981,14 +981,14 @@ let CharacterStatisticsComponent =
       var i, e;
       if (t)
         return (i = (t = t.Entity.GetComponent(0))?.GetEntityType()) ===
-          Protocol_1.Aki.Protocol.wks.Proto_Player
+          Protocol_1.Aki.Protocol.kks.Proto_Player
           ? ((e = t.Valid ? t.GetRoleId() : 0),
             (e = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(e))
               ? ((e =
                   ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e)),
                 ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(e.Name))
               : void 0)
-          : i === Protocol_1.Aki.Protocol.wks.Proto_Monster
+          : i === Protocol_1.Aki.Protocol.kks.Proto_Monster
             ? PublicUtil_1.PublicUtil.GetConfigTextByKey(
                 t.GetBaseInfo()?.TidName ?? "",
               )

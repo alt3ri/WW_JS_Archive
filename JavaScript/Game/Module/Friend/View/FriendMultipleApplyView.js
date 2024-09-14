@@ -12,15 +12,15 @@ class FriendMultipleApplyView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
       (this.bNi = void 0),
-      (this.Rta = void 0),
+      (this.Xra = void 0),
       (this.oOi = () =>
         new FriendMultipleApplyItem_1.FriendMultipleApplyItem()),
       (this.rOi = () => {
-        this.Rta.length <= 0 &&
+        this.Xra.length <= 0 &&
           UiManager_1.UiManager.CloseView("FriendMultipleApplyView"),
-          this.bNi.RefreshByData(this.Rta);
+          this.bNi.RefreshByData(this.Xra);
       }),
-      (this.Xua = () => {
+      (this.zma = () => {
         this.CloseMe();
       });
   }
@@ -31,7 +31,7 @@ class FriendMultipleApplyView extends UiTickViewBase_1.UiTickViewBase {
     ];
   }
   OnStart() {
-    (this.Rta = this.OpenParam), this.nOi();
+    (this.Xra = this.OpenParam), this.nOi();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -40,7 +40,7 @@ class FriendMultipleApplyView extends UiTickViewBase_1.UiTickViewBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.FriendOnMultiItemAction,
-        this.Xua,
+        this.zma,
       );
   }
   OnRemoveEventListener() {
@@ -50,7 +50,7 @@ class FriendMultipleApplyView extends UiTickViewBase_1.UiTickViewBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.FriendOnMultiItemAction,
-        this.Xua,
+        this.zma,
       );
   }
   OnTick(e) {
@@ -64,7 +64,7 @@ class FriendMultipleApplyView extends UiTickViewBase_1.UiTickViewBase {
     this.bNi && this.bNi.ClearGridProxies(), (this.bNi = void 0);
   }
   RefreshLoopScrollView() {
-    this.bNi.RefreshByData(this.Rta);
+    this.bNi.RefreshByData(this.Xra);
   }
   nOi() {
     var e = this.GetLoopScrollViewComponent(0),

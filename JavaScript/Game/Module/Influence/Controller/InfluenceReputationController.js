@@ -25,25 +25,25 @@ class InfluenceReputationController extends UiControllerBase_1.UiControllerBase 
     );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(3474, InfluenceReputationController.jni);
+    Net_1.Net.Register(28707, InfluenceReputationController.jni);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(3474);
+    Net_1.Net.UnRegister(28707);
   }
   static RequestInfluenceReward(e) {
-    var t = Protocol_1.Aki.Protocol.Ios.create();
-    (t.d9n = e),
-      Net_1.Net.Call(26646, t, (e) => {
-        e.hvs !== Protocol_1.Aki.Protocol.O4n.NRs
+    var t = Protocol_1.Aki.Protocol.wos.create();
+    (t.y9n = e),
+      Net_1.Net.Call(27257, t, (e) => {
+        e.Cvs !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.hvs,
-              8920,
+              e.Cvs,
+              22376,
             )
           : ModelManager_1.ModelManager.InfluenceReputationModel.UpdateInfluenceRewardIndex(
-              e.d9n,
-              e.C9n,
+              e.y9n,
+              e.I9n,
             ) &&
-            (InfluenceReputationController.Wni(e.lws),
+            (InfluenceReputationController.Wni(e.gws),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ReceiveReputationReward,
             ));
@@ -76,13 +76,13 @@ class InfluenceReputationController extends UiControllerBase_1.UiControllerBase 
 ((exports.InfluenceReputationController = InfluenceReputationController).jni = (
   e,
 ) => {
-  e = e.aws;
+  e = e.mws;
   ModelManager_1.ModelManager.InfluenceReputationModel.SetInfluenceInfoList(e);
 }),
   (InfluenceReputationController.RequestInfluenceInfo = () => {
-    var e = Protocol_1.Aki.Protocol.Sos.create();
-    Net_1.Net.Call(5566, e, (e) => {
-      e = e.aws;
+    var e = Protocol_1.Aki.Protocol.Dos.create();
+    Net_1.Net.Call(20434, e, (e) => {
+      e = e.mws;
       ModelManager_1.ModelManager.InfluenceReputationModel.SetInfluenceInfoList(
         e,
       );

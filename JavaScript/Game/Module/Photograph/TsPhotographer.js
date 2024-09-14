@@ -294,7 +294,8 @@ class TsPhotographer extends UE.Actor {
       this.K2_SetActorTransform(t, !0, void 0, !1),
       this.K2_SetActorLocation(this.PlayerSourceLocation, !0, void 0, !1),
       this.K2_AddActorWorldRotation(new UE.Rotator(0, 180, 0), !0, void 0, !1),
-      this.SetFov(PhotographDefine_1.DEFAULT_FOV);
+      this.SetFov(PhotographDefine_1.DEFAULT_FOV),
+      (this.SourceTotalYaw = 0);
   }
 }
 (exports.TsPhotographer = TsPhotographer), (exports.default = TsPhotographer);

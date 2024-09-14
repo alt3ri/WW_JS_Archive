@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRoleGiveController = void 0);
 const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../../../Core/Net/Net"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   ActivityControllerBase_1 = require("../../ActivityControllerBase"),
@@ -20,7 +22,7 @@ class ActivityRoleGiveController extends ActivityControllerBase_1.ActivityContro
   }
   OnCreateActivityData(e) {
     return (
-      (ActivityRoleGiveController.CurrentActivityId = e.J4n),
+      (ActivityRoleGiveController.CurrentActivityId = e.s5n),
       new ActivityRoleGiveData_1.ActivityRoleGiveData()
     );
   }
@@ -28,16 +30,21 @@ class ActivityRoleGiveController extends ActivityControllerBase_1.ActivityContro
     return !1;
   }
   static TrackMoonActivityRewardRequest() {
-    var e = new Protocol_1.Aki.Protocol.uLa();
-    (e.T6n = ActivityRoleGiveController.CurrentActivityId),
-      Net_1.Net.Call(17057, e, (e) => {
-        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+    var e = new Protocol_1.Aki.Protocol.peh();
+    (e.w6n = ActivityRoleGiveController.CurrentActivityId),
+      Net_1.Net.Call(21232, e, (e) => {
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.O4n,
-            19154,
+            e.Q4n,
+            21417,
           );
         e = ActivityRoleGiveController.GetCurrentActivityData();
-        e && (e.IsGetReward = !0);
+        e &&
+          ((e.IsGetReward = !0),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+            ActivityRoleGiveController.CurrentActivityId,
+          ));
       });
   }
   static GetCurrentActivityData() {

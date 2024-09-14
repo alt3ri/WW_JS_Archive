@@ -110,7 +110,7 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
         TimeOfDayController_1.TimeOfDayController.SetUiAnimFlag(!0),
           TimeOfDayController_1.TimeOfDayController.AdjustTime(
             i,
-            Protocol_1.Aki.Protocol.h4s.Proto_PlayerOperate,
+            Protocol_1.Aki.Protocol.C4s.Proto_PlayerOperate,
             t,
           ),
           (this.TTn = TimerSystem_1.TimerSystem.Delay(() => {

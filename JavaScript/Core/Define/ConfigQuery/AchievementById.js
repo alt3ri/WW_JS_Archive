@@ -17,25 +17,37 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configAchievementById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configAchievementById.GetConfig"),
   CONFIG_STAT_PREFIX = "configAchievementById.GetConfig(";
 exports.configAchievementById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (e, o = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (o) {
-        var n = KEY_PREFIX + `#${e})`;
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (t) return t;
+  GetConfig: (e, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var o = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${e})`),
+      i =
+        (o.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
+      if (n) {
+        var t = KEY_PREFIX + `#${e})`;
+        const C = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (C)
+          return (
+            o.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
+          );
       }
       if (
         (i =
@@ -46,10 +58,9 @@ exports.configAchievementById = {
               e,
             ]))
       ) {
-        var i,
-          n = void 0;
+        t = void 0;
         if (
-          (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -57,20 +68,26 @@ exports.configAchievementById = {
           )),
           i)
         ) {
-          const t = Achievement_1.Achievement.getRootAsAchievement(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+          const C = Achievement_1.Achievement.getRootAsAchievement(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
-            o &&
+            n &&
               ((i = KEY_PREFIX + `#${e})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(i, t)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t
+            o.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    o.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=AchievementById.js.map

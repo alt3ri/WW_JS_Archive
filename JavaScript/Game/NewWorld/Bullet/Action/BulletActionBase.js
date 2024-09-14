@@ -13,14 +13,15 @@ class BulletActionBase {
       (this.ActionInfo = void 0),
       (this.gW = void 0),
       (this.Type = t),
-      BulletConstant_1.BulletConstant.OpenAllActionStat && (this.gW = void 0);
+      BulletConstant_1.BulletConstant.OpenAllActionStat &&
+        (this.gW = Stats_1.Stat.Create("BulletActionTick" + t));
   }
   Execute(t, e) {
     (this.BulletInfo = t), (this.ActionInfo = e), this.OnExecute();
   }
   OnExecute() {}
   Tick(t) {
-    this.OnTick(t);
+    this.gW?.Start(), this.OnTick(t), this.gW?.Stop();
   }
   OnTick(t) {}
   AfterTick(t) {}

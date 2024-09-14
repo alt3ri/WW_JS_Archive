@@ -6,81 +6,85 @@ const Log_1 = require("../Common/Log"),
   TickSystem_1 = require("../Tick/TickSystem");
 class ControllerManagerBase {
   constructor() {}
-  static Add(o) {
-    this.Controllers.set(o.name, o), o.SetControllerManager(this);
+  static Add(r) {
+    this.Controllers.set(r.name, r), r.SetControllerManager(this);
   }
   static Init() {
-    for (const r of this.Controllers)
+    for (const o of this.Controllers)
       try {
-        r[1].Init() ||
+        o[1].Init() ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
               1,
               "控制器初始化失败，请往上查看具体出错模块日志解决问题",
-              ["controller", r[0]],
+              ["controller", o[0]],
             ));
-      } catch (o) {
-        o instanceof Error
+      } catch (r) {
+        r instanceof Error
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "UiCore",
               1,
               "控制器初始化执行异常",
-              o,
-              ["error", o.message],
-              ["controller", r[0]],
+              r,
+              ["error", r.message],
+              ["controller", o[0]],
             )
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
               1,
               "控制器初始化执行异常",
-              ["error", o],
-              ["controller", r[0]],
+              ["error", r],
+              ["controller", o[0]],
             );
       }
   }
-  static Tick(o) {
-    for (const r of this.TickControllers)
-      (TickSystem_1.TickSystem.IsPaused && !r.IsTickEvenPaused) ||
-        (r.GetPerformanceStateObject(), r.Tick(o));
+  static Tick(r) {
+    for (const t of this.TickControllers) {
+      var o;
+      (TickSystem_1.TickSystem.IsPaused && !t.IsTickEvenPaused) ||
+        ((o = t.GetPerformanceStateObject()) && o.Start(),
+        t.Tick(r),
+        o && o.Stop());
+    }
   }
-  static AddTickController(o) {
-    var r;
-    this.TickControllers.push(o),
+  static AddTickController(r) {
+    var o;
+    this.TickControllers.push(r),
       Stats_1.Stat.Enable &&
-        ((r = o.prototype.constructor.name), o.SetPerformanceStateObject(r));
+        ((o = r.prototype.constructor.name), r.SetPerformanceStateObject(o));
   }
   static Clear() {
-    for (const r of this.Controllers)
+    for (const o of this.Controllers)
       try {
-        r[1].Clear() ||
+        o[1].Clear() ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
               1,
               "控制器清理失败，请往上查看具体出错模块日志解决问题",
-              ["controller", r[0]],
+              ["controller", o[0]],
             ));
-      } catch (o) {
-        o instanceof Error
+      } catch (r) {
+        r instanceof Error
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "UiCore",
               1,
               "控制器清理执行异常",
-              o,
-              ["error", o.message],
-              ["controller", r[0]],
+              r,
+              ["error", r.message],
+              ["controller", o[0]],
             )
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
               1,
               "控制器清理执行异常",
-              ["error", o],
-              ["controller", r[0]],
+              ["error", r],
+              ["controller", o[0]],
             );
       }
     this.OnClear() ||
@@ -94,42 +98,42 @@ class ControllerManagerBase {
       this.TickControllers.splice(0, this.TickControllers.length);
   }
   static Preload() {
-    var o = new Array();
+    var r = new Array();
     for (const t of this.Controllers) {
-      var r = t[1].Preload();
-      r && o.push(r);
+      var o = t[1].Preload();
+      o && r.push(o);
     }
-    return o;
+    return r;
   }
   static LeaveLevel() {
-    for (const r of this.Controllers)
+    for (const o of this.Controllers)
       try {
-        r[1].LeaveLevel() ||
+        o[1].LeaveLevel() ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
               1,
               "控制器退出关卡失败，请往上查看具体出错模块日志解决问题",
-              ["controller", r[0]],
+              ["controller", o[0]],
             ));
-      } catch (o) {
-        o instanceof Error
+      } catch (r) {
+        r instanceof Error
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "UiCore",
               1,
               "控制器退出关卡执行异常",
-              o,
-              ["error", o.message],
-              ["controller", r[0]],
+              r,
+              ["error", r.message],
+              ["controller", o[0]],
             )
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
               1,
               "控制器退出关卡执行异常",
-              ["error", o],
-              ["controller", r[0]],
+              ["error", r],
+              ["controller", o[0]],
             );
       }
     this.OnLeaveLevel() ||
@@ -141,34 +145,34 @@ class ControllerManagerBase {
         ));
   }
   static ChangeMode() {
-    for (const r of this.Controllers)
+    for (const o of this.Controllers)
       try {
-        r[1].ChangeMode() ||
+        o[1].ChangeMode() ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
               3,
               "控制器退出模式失败，请往上查看具体出错模块日志解决问题",
-              ["controller", r[0]],
+              ["controller", o[0]],
             ));
-      } catch (o) {
-        o instanceof Error
+      } catch (r) {
+        r instanceof Error
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "UiCore",
               1,
               "控制器退出模式执行异常",
-              o,
-              ["error", o.message],
-              ["controller", r[0]],
+              r,
+              ["error", r.message],
+              ["controller", o[0]],
             )
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
               1,
               "控制器退出模式执行异常",
-              ["error", o],
-              ["controller", r[0]],
+              ["error", r],
+              ["controller", o[0]],
             );
       }
     this.OnChangeMode() ||
@@ -179,8 +183,8 @@ class ControllerManagerBase {
           "控制器退出模式失败，请往上查看具体出错模块日志解决问题",
         ));
   }
-  static GetControllerByName(o) {
-    return this.Controllers.get(o);
+  static GetControllerByName(r) {
+    return this.Controllers.get(r);
   }
   static OnClear() {
     return !0;

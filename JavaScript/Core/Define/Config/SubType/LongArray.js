@@ -7,8 +7,10 @@ class LongArray {
     (this.J7 = null), (this.z7 = 0);
   }
   get ArrayLong() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.arraylongLength(), (t) =>
-      this.arraylong(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.arraylongLength(),
+      this.arraylong,
+      this,
     );
   }
   __init(t, r) {

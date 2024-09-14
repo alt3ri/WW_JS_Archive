@@ -18,29 +18,45 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configRoleBreachByBreachGroupIdAndBreachLevel.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configRoleBreachByBreachGroupIdAndBreachLevel.GetConfig",
+  ),
   CONFIG_STAT_PREFIX =
     "configRoleBreachByBreachGroupIdAndBreachLevel.GetConfig(";
 exports.configRoleBreachByBreachGroupIdAndBreachLevel = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (e, o, r = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (r) {
-        var n = KEY_PREFIX + `#${e}#${o})`;
-        const a = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (a) return a;
+  GetConfig: (e, o, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var r = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${e}#${o})`),
+      a =
+        (r.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (a) {
+      if (n) {
+        var i = KEY_PREFIX + `#${e}#${o})`;
+        const t = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (t)
+          return (
+            r.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            t
+          );
       }
       if (
-        (i =
+        (a =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, o, ...logPair) &&
           0 <
@@ -52,32 +68,37 @@ exports.configRoleBreachByBreachGroupIdAndBreachLevel = {
               ["BreachLevel", o],
             ))
       ) {
-        var i,
-          n = void 0;
+        i = void 0;
         if (
-          (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([a, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["BreachGroupId", e],
             ["BreachLevel", o],
           )),
-          i)
+          a)
         ) {
-          const a = RoleBreach_1.RoleBreach.getRootAsRoleBreach(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+          const t = RoleBreach_1.RoleBreach.getRootAsRoleBreach(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
           );
           return (
-            r &&
-              ((i = KEY_PREFIX + `#${e}#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(i, a)),
+            n &&
+              ((a = KEY_PREFIX + `#${e}#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(a, t)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            a
+            r.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            t
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    r.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=RoleBreachByBreachGroupIdAndBreachLevel.js.map

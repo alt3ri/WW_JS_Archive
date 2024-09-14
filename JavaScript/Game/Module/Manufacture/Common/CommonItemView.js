@@ -28,9 +28,9 @@ class MaterialItem extends UiPanelBase_1.UiPanelBase {
   }
   Update(i) {
     (this.ItemData = i),
-      0 !== this.ItemData.f8n
+      0 !== this.ItemData.L8n
         ? (this.ItemInfo = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
-            this.ItemData.f8n,
+            this.ItemData.L8n,
           ))
         : (this.ItemInfo = void 0),
       this.RefreshNeed(),
@@ -39,29 +39,29 @@ class MaterialItem extends UiPanelBase_1.UiPanelBase {
       this.BGt();
   }
   RefreshNeed(i = 1) {
-    let e = this.ItemData.MVn;
+    let e = this.ItemData.UVn;
     1 !== i && (e *= i), this.GetText(2).SetText(e.toString());
   }
   RefreshHave() {
     var i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-      this.ItemData.f8n,
+      this.ItemData.L8n,
     );
     let e = void 0;
-    (e = this.ItemData.G6n
-      ? i < this.ItemData.MVn
+    (e = this.ItemData.K6n
+      ? i < this.ItemData.UVn
         ? `<color=#dc0300>${i}</color>`
         : `<color=#ffffff>${i}</color>`
       : "<color=#ffffff>--</color>"),
       this.GetText(1).SetText(e);
   }
   Kbe() {
-    this.ItemData.G6n
+    this.ItemData.K6n
       ? (this.GetTexture(3).SetUIActive(!0),
         this.SetTextureByPath(this.ItemInfo.Icon, this.GetTexture(3)))
       : this.GetTexture(3).SetUIActive(!1);
   }
   BGt() {
-    this.ItemData.G6n
+    this.ItemData.K6n
       ? (this.GetSprite(4).SetUIActive(!0),
         this.SetItemQualityIcon(this.GetSprite(4), this.ItemInfo.Id))
       : this.GetSprite(4).SetUIActive(!1);

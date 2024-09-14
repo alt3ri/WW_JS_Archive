@@ -22,8 +22,10 @@ class GachaTextureInfo {
     return this.bindpoint();
   }
   get IdArray() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.idarrayLength(), (t) =>
-      this.idarray(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.idarrayLength(),
+      this.idarray,
+      this,
     );
   }
   get TrialId() {

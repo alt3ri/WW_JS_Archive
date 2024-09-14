@@ -18,19 +18,21 @@ class FlowActionSwitchSubLevels extends FlowActionServerAction_1.FlowActionServe
   OnExecute() {
     var e = this.ActionInfo.Params;
     if (e)
-      switch (e.Type) {
-        case IAction_1.ESwitchSubLevelsType.Directly:
-          this.KRe(e);
-          break;
-        case IAction_1.ESwitchSubLevelsType.Preload:
-          this.QRe(e);
-      }
+      if (ModelManager_1.ModelManager.AutoRunModel.IsInLogicTreeGmMode())
+        this.FinishExecute(!0);
+      else
+        switch (e.Type) {
+          case IAction_1.ESwitchSubLevelsType.Directly:
+            this.KRe(e);
+            break;
+          case IAction_1.ESwitchSubLevelsType.Preload:
+            this.QRe(e);
+        }
   }
   QRe(e) {
-    ModelManager_1.ModelManager.AutoRunModel.IsInLogicTreeGmMode() ||
-      ControllerHolder_1.ControllerHolder.GameModeController.PreloadSubLevel(
-        e.PreloadLevels,
-      ),
+    ControllerHolder_1.ControllerHolder.GameModeController.PreloadSubLevel(
+      e.PreloadLevels,
+    ),
       this.FinishExecute(!0);
   }
   KRe(e) {
@@ -55,11 +57,6 @@ class FlowActionSwitchSubLevels extends FlowActionServerAction_1.FlowActionServe
           (i && (r = Vector_1.Vector.Create(i.X ?? 0, i.Y ?? 0, i.Z ?? 0)),
           t.Transform.Rot);
       i && (o = Rotator_1.Rotator.Create(i.Y ?? 0, i.Z ?? 0, i.X ?? 0));
-    }
-    if (ModelManager_1.ModelManager.AutoRunModel.IsInLogicTreeGmMode()) {
-      if (ModelManager_1.ModelManager.AutoRunModel.ShouldFastSkip)
-        return void this.WRe(!0);
-      (r = void 0), (o = void 0);
     }
     ControllerHolder_1.ControllerHolder.GameModeController.ChangeSubLevel(
       e.UnloadLevels,

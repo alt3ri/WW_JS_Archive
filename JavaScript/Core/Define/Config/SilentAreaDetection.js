@@ -19,7 +19,8 @@ class SilentAreaDetection {
   get LevelPlayList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.levelplaylistLength(),
-      (t) => this.levelplaylist(t),
+      this.levelplaylist,
+      this,
     );
   }
   get InstanceSubTypeDescription() {
@@ -64,9 +65,16 @@ class SilentAreaDetection {
   get ShowRewardMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.showrewardmapLength(),
-      (t) => this.showrewardmap(t)?.key(),
-      (t) => this.showrewardmap(t)?.value(),
+      this.showrewardmapKey,
+      this.showrewardmapValue,
+      this,
     );
+  }
+  showrewardmapKey(t) {
+    return this.showrewardmap(t)?.key();
+  }
+  showrewardmapValue(t) {
+    return this.showrewardmap(t)?.value();
   }
   get BeginTimeStamp() {
     return this.begintimestamp();
@@ -78,8 +86,10 @@ class SilentAreaDetection {
     return this.lockcon();
   }
   get PhantomId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.phantomidLength(), (t) =>
-      this.phantomid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.phantomidLength(),
+      this.phantomid,
+      this,
     );
   }
   get FirstDropId() {
@@ -186,10 +196,10 @@ class SilentAreaDetection {
     return this.showrewardmap(t);
   }
   showrewardmap(t, i) {
-    var s = this.J7.__offset(this.z7, 38);
-    return s
+    var r = this.J7.__offset(this.z7, 38);
+    return r
       ? (i || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
           this.J7,
         )
       : null;

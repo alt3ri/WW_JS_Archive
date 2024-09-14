@@ -50,8 +50,8 @@ class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
         (this.PatrolConfig = this.PatrolLogic.GetConfig()),
         this.PatrolConfig &&
         ((this.Entity = e.CharAiDesignComp.Entity),
-        (this.MoveComp = this.Entity.GetComponent(37)),
-        (this.StateComp = this.Entity.GetComponent(91)),
+        (this.MoveComp = this.Entity.GetComponent(38)),
+        (this.StateComp = this.Entity.GetComponent(92)),
         (this.ActorComp = e.CharActorComp),
         this.PatrolConfig.ContainZ &&
           this.MoveComp &&
@@ -62,12 +62,12 @@ class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
           }),
         this.InitPatrolInfo(),
         this.PatrolLogic?.PatrolPoint)
-          ? (((s = Protocol_1.Aki.Protocol.Nes.create()).P4n =
+          ? (((s = Protocol_1.Aki.Protocol.Kes.create()).F4n =
               MathUtils_1.MathUtils.NumberToLong(
                 e.CharActorComp.CreatureData.GetCreatureDataId(),
               )),
-            (s.B4n = !this.PatrolLogic.StartWithInversePath),
-            Net_1.Net.Call(14537, s, () => {}),
+            (s.V4n = !this.PatrolLogic.StartWithInversePath),
+            Net_1.Net.Call(21744, s, () => {}),
             this.MoveToPatrolPoint(),
             void 0 !== e.AiPatrol.StartWithInversePath &&
               (e.AiPatrol.StartWithInversePath = void 0))
@@ -181,11 +181,11 @@ class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
     var t;
     this.AIOwner instanceof TsAiController_1.default &&
       (EntitySystem_1.EntitySystem.Get(this.Entity.Id) &&
-        (((t = Protocol_1.Aki.Protocol.Ves.create()).P4n =
+        (((t = Protocol_1.Aki.Protocol.Xes.create()).F4n =
           MathUtils_1.MathUtils.NumberToLong(
             this.ActorComp.CreatureData.GetCreatureDataId(),
           )),
-        Net_1.Net.Call(10803, t, () => {})),
+        Net_1.Net.Call(15110, t, () => {})),
       this.MoveComp &&
         (this.TsMoveOnePath &&
           this.MoveComp.SetForceSpeed(Vector_1.Vector.ZeroVectorProxy),

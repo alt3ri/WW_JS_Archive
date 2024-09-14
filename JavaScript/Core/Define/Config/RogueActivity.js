@@ -15,7 +15,8 @@ class RogueActivity {
   get FunctionParams() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.functionparamsLength(),
-      (t) => this.functionparams(t),
+      this.functionparams,
+      this,
     );
   }
   get ActivityResource() {

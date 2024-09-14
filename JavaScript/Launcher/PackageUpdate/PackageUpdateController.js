@@ -2,10 +2,12 @@
 var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PackageUpdateController = void 0);
-const puerts_1 = require("puerts"),
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
   UE = require("ue"),
   BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
   HotPatchKuroSdk_1 = require("../HotPatchKuroSdk/HotPatchKuroSdk"),
+  Platform_1 = require("../Platform/Platform"),
   AppUtil_1 = require("../Update/AppUtil"),
   LauncherLog_1 = require("../Util/LauncherLog"),
   TAPPACKAGEID = "A1425",
@@ -24,7 +26,7 @@ class PackageUpdateController {
           BaseConfigController_1.BaseConfigController.GetPackageConfigOrDefault(
             "PatchVersion",
           ),
-        r = UE.GameplayStatics.GetPlatformName(),
+        r = cpp_1.KuroApplication.IniPlatformName(),
         o = UE.KuroLauncherLibrary.GetAppVersion(),
         i =
           BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea");
@@ -46,7 +48,7 @@ class PackageUpdateController {
             e,
           ]);
     } finally {
-      AppUtil_1.AppUtil.QuitGame();
+      AppUtil_1.AppUtil.QuitGame("整包更新");
     }
   }
   static bTn(e, a, t) {
@@ -81,16 +83,16 @@ class PackageUpdateController {
         var e;
         a
           ? UE.TapUpdateStaticLibrary.UpdateGame(void 0)
-          : this.Rkn.has(this.UTn)
-            ? ((e = this.Rkn.get(this.UTn)),
+          : this.Nkn.has(this.UTn)
+            ? ((e = this.Nkn.get(this.UTn)),
               LauncherLog_1.LauncherLog.Info("打开链接", ["finalUrl", e]),
               UE.KismetSystemLibrary.LaunchURL(e))
-            : ("Windows" !== UE.GameplayStatics.GetPlatformName() &&
-                ((e =
+            : Platform_1.Platform.IsWindowsPlatform()
+              ? (t = !1)
+              : ((e =
                   BaseConfigController_1.BaseConfigController.GetCdnReturnConfigInfo()
                     .PackageUpdateUrl),
-                this.bTn(e, this.ATn, this.PTn)),
-              "Windows" === UE.GameplayStatics.GetPlatformName() && (t = !1));
+                this.bTn(e, this.ATn, this.PTn));
       };
     for (
       a &&
@@ -129,7 +131,7 @@ class PackageUpdateController {
   (PackageUpdateController.wTn = void 0),
   (PackageUpdateController.ATn = ""),
   (PackageUpdateController.UTn = ""),
-  (PackageUpdateController.Rkn = new Map([
+  (PackageUpdateController.Nkn = new Map([
     [CNIOS, "https://apps.apple.com/cn/app/%E9%B8%A3%E6%BD%AE/id6450693428"],
     [GLOBALIOS, "https://apps.apple.com/us/app/wuthering-waves/id6475033368"],
     [

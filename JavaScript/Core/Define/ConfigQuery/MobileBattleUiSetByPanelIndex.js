@@ -17,67 +17,93 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configMobileBattleUiSetByPanelIndex.Init",
+  ),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configMobileBattleUiSetByPanelIndex.GetConfigList",
+  ),
   CONFIG_LIST_STAT_PREFIX =
     "configMobileBattleUiSetByPanelIndex.GetConfigList(";
 exports.configMobileBattleUiSetByPanelIndex = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfigList: (e, o = !0) => {
-    var i;
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (o) {
-        var n = KEY_PREFIX + `#${e})`;
-        const a = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (a) return a;
+  GetConfigList: (t, e = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start();
+    var o = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${t})`),
+      i =
+        (o.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
+      if (e) {
+        var n = KEY_PREFIX + `#${t})`;
+        const l = ConfigCommon_1.ConfigCommon.GetConfig(n);
+        if (l)
+          return (
+            o.Stop(),
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            l
+          );
       }
       if (
-        (i = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair))
+        (i = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, t, ...logPair))
       ) {
-        const a = new Array();
+        const l = new Array();
         for (;;) {
           if (
             1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "PanelIndex",
-              e,
+              t,
             ])
           )
             break;
-          var t = void 0;
+          var a = void 0;
           if (
-            (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
+            (([i, a] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
               0,
               ...logPair,
-              ["PanelIndex", e],
+              ["PanelIndex", t],
             )),
             !i)
           )
-            return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
-          t = MobileBattleUiSet_1.MobileBattleUiSet.getRootAsMobileBattleUiSet(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
+            return (
+              ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+              o.Stop(),
+              getConfigListStat.Stop(),
+              void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+            );
+          a = MobileBattleUiSet_1.MobileBattleUiSet.getRootAsMobileBattleUiSet(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
           );
-          a.push(t);
+          l.push(a);
         }
         return (
-          o &&
-            ((n = KEY_PREFIX + `#${e})`),
-            ConfigCommon_1.ConfigCommon.SaveConfig(n, a, a.length)),
+          e &&
+            ((n = KEY_PREFIX + `#${t})`),
+            ConfigCommon_1.ConfigCommon.SaveConfig(n, l, l.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          a
+          o.Stop(),
+          getConfigListStat.Stop(),
+          ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+          l
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    o.Stop(),
+      getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=MobileBattleUiSetByPanelIndex.js.map

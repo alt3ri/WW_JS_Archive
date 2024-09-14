@@ -5,15 +5,15 @@ const UE = require("ue"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
-  GameQualitySettingsManager_1 = require("../../../GameQualitySettings/GameQualitySettingsManager"),
+  GameSettingsDeviceRender_1 = require("../../../GameSettings/GameSettingsDeviceRender"),
   UiManager_1 = require("../../../Ui/UiManager"),
   ChannelController_1 = require("../../Channel/ChannelController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
   MenuController_1 = require("../MenuController"),
   MenuScrollSettingBaseItem_1 = require("./MenuScrollSettingBaseItem");
 class MenuScrollSettingButtonItem extends MenuScrollSettingBaseItem_1.MenuScrollSettingBaseItem {
   constructor() {
     super(...arguments),
-      (this.Pe = void 0),
       (this.HBi = "{0}x{1}"),
       (this.jBi = "Account,"),
       (this.WBi = () => {
@@ -22,21 +22,21 @@ class MenuScrollSettingButtonItem extends MenuScrollSettingBaseItem_1.MenuScroll
       (this.KBi = () => {
         var t, e;
         this.GetItemClickLimit(this.GetButton(1)) ||
-          ((t = this.Pe.MenuDataButtonViewName).includes(this.jBi)
+          ((t = this.Data.ButtonViewName).includes(this.jBi)
             ? void 0 !== (e = Number(t.substring(this.jBi.length))) &&
               ChannelController_1.ChannelController.ProcessAccountSetting(e)
             : (e = MenuController_1.MenuController.OpenViewFuncMap.get(t))
               ? e()
-              : UiManager_1.UiManager.OpenView(t, [this.Pe, this.QBi]));
+              : UiManager_1.UiManager.OpenView(t, [this.Data, this.QBi]));
       }),
       (this.QBi = (t, e) => {
-        void 0 !== this.Pe &&
-          t === this.Pe.MenuDataFunctionId &&
+        void 0 !== this.Data &&
+          t === this.Data.FunctionId &&
           (6 === t
             ? this.XBi(e, !0)
             : 7 === t
               ? this.FireSaveMenuChange(e)
-              : this.SetButtonText(this.Pe.MenuDataOptionsNameList[e], e, !0));
+              : this.SetButtonText(this.Data.OptionsNameList[e], e, !0));
       });
   }
   OnRegisterComponent() {
@@ -44,6 +44,9 @@ class MenuScrollSettingButtonItem extends MenuScrollSettingBaseItem_1.MenuScroll
       [0, UE.UIText],
       [1, UE.UIButtonComponent],
       [2, UE.UIText],
+      [3, UE.UIItem],
+      [4, UE.UIText],
+      [5, UE.UISprite],
     ]),
       (this.BtnBindInfo = [[1, this.KBi]]);
   }
@@ -51,7 +54,7 @@ class MenuScrollSettingButtonItem extends MenuScrollSettingBaseItem_1.MenuScroll
     this.GetButton(1).SetCanClickWhenDisable(!0), this.Ore();
   }
   OnBeforeDestroy() {
-    this.Pe && (this.Pe = void 0), this.kre();
+    this.Data && (this.Data = void 0), this.kre();
   }
   Ore() {
     EventSystem_1.EventSystem.Add(
@@ -69,45 +72,56 @@ class MenuScrollSettingButtonItem extends MenuScrollSettingBaseItem_1.MenuScroll
     this.GetButton(1)?.OnClickCallBack.Unbind();
   }
   Update(t) {
-    (this.Pe = t), this.RefreshTitle(), this.ZGe();
+    (this.Data = t),
+      this.RefreshTitle(),
+      this.ZGe(),
+      this.sxi(),
+      this.pVa(),
+      this.SetInteractionActive(t.GetEnable());
   }
   RefreshTitle() {
-    this.GetText(0).ShowTextNew(this.Pe.MenuDataFunctionName ?? "");
+    this.GetText(0).ShowTextNew(this.Data.FunctionName ?? "");
   }
   ZGe() {
     this.GetRootItem().SetUIActive(!0);
     var t = MenuController_1.MenuController.GetTargetConfig(
-      this.Pe.MenuDataFunctionId,
+      this.Data.FunctionId,
     );
-    6 === this.Pe.MenuDataFunctionId
+    6 === this.Data.FunctionId
       ? this.XBi(t)
-      : this.SetButtonText(this.Pe.MenuDataOptionsNameList[t], t);
+      : this.SetButtonText(this.Data.OptionsNameList[t], t);
+  }
+  sxi() {
+    var t, e;
+    this.Data &&
+      this.Data.HasDetailText() &&
+      ((t = this.GetText(4)),
+      (e = this.Data.GetDetailTextId()),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(t, e));
+  }
+  pVa() {
+    this.Data && this.GetSprite(5)?.SetUIActive(this.Data.HasDetailText());
   }
   XBi(t, e = !1) {
     var i =
-      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetResolutionByList(
+      GameSettingsDeviceRender_1.GameSettingsDeviceRender.GetResolutionByList(
         t,
       );
     this.GetText(2).SetText(
       StringUtils_1.StringUtils.FormatStaticBuilder(this.HBi, i.X, i.Y),
-    );
-    for (
-      let t = 0;
-      t <
-      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetResolutionList()
-        .length;
-      t++
-    )
-      this.Pe.MenuDataOptionsValueList.push(t);
-    e && this.FireSaveMenuChange(t);
+    ),
+      e && this.FireSaveMenuChange(t);
   }
   SetButtonText(t, e, i = !1) {
-    var s = this.Pe.MenuDataButtonTextId,
-      n = this.GetText(2);
-    s ? n.ShowTextNew(s) : n.ShowTextNew(t), i && this.FireSaveMenuChange(e);
+    var s = this.Data.ButtonTextId,
+      r = this.GetText(2);
+    s ? r.ShowTextNew(s) : r.ShowTextNew(t), i && this.FireSaveMenuChange(e);
   }
   SetInteractionActive(t) {
     this.GetButton(1).SetSelfInteractive(t);
+  }
+  OnSetDetailVisible(t) {
+    this.GetItem(3)?.SetUIActive(t);
   }
 }
 exports.MenuScrollSettingButtonItem = MenuScrollSettingButtonItem;

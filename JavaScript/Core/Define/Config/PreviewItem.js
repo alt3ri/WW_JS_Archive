@@ -13,8 +13,10 @@ class PreviewItem {
     return this.name();
   }
   get ShowTypes() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.showtypesLength(), (t) =>
-      this.showtypes(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.showtypesLength(),
+      this.showtypes,
+      this,
     );
   }
   get AttributesDescription() {
@@ -41,7 +43,8 @@ class PreviewItem {
   get PreviewItemAccess() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.previewitemaccessLength(),
-      (t) => this.previewitemaccess(t),
+      this.previewitemaccess,
+      this,
     );
   }
   __init(t, i) {

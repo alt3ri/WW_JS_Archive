@@ -10,8 +10,10 @@ class AiBattleWander {
     return this.id();
   }
   get GroupIds() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.groupidsLength(), (t) =>
-      this.groupids(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.groupidsLength(),
+      this.groupids,
+      this,
     );
   }
   __init(t, s) {

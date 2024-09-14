@@ -18,7 +18,7 @@ class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.UFe = () => {
         1 === this.Pe?.RewardState && this.OnClickToGet?.(this.Pe.Id);
       }),
-      (this.CXs = () => {
+      (this.hJs = () => {
         1 === this.Pe?.RewardState
           ? this.OnClickToGet?.(this.Pe.Id)
           : this.qsi &&
@@ -42,7 +42,7 @@ class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
     (this.gOe = new SmallItemGrid_1.SmallItemGrid()),
       this.gOe.Initialize(this.GetItem(1).GetOwner()),
       this.gOe.BindOnCanExecuteChange(() => !1),
-      this.gOe.BindOnExtendToggleClicked(this.CXs);
+      this.gOe.BindOnExtendToggleClicked(this.hJs);
   }
   Refresh(i, t, e) {
     this.Pe = i;
@@ -65,19 +65,19 @@ class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
         case 0:
           n.SetUIActive(!1),
             d.ShowTextNew("TimePointRewardActivity_RewardDesc01"),
-            this.gXs(!1);
+            this.lJs(!1);
           break;
         case 1:
           n.SetUIActive(!0),
             d.ShowTextNew("TimePointRewardActivity_RewardDesc02"),
-            this.gXs(!1);
+            this.lJs(!1);
           break;
         case 2:
           n.SetUIActive(!1),
             d.ShowTextNew("TimePointRewardActivity_RewardDesc03"),
-            this.gXs(!0);
+            this.lJs(!0);
       }
-      this.fXs(e + 1), this.pXs(this.Pe.RewardTime), this.cNe();
+      this._Js(e + 1), this.uJs(this.Pe.RewardTime), this.cNe();
     }
   }
   cNe() {
@@ -92,7 +92,7 @@ class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.gOe.SetLockVisible(0 === this.Pe?.RewardState),
       this.gOe.SetReceivedVisible(2 === this.Pe?.RewardState);
   }
-  pXs(i) {
+  uJs(i) {
     i = TimeUtil_1.TimeUtil.GetDataFromTimeStamp(
       i * TimeUtil_1.TimeUtil.Millisecond,
     );
@@ -103,7 +103,7 @@ class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
       i.Day,
     );
   }
-  fXs(i) {
+  _Js(i) {
     const t = this.GetSprite(5);
     t.SetUIActive(!1);
     (i = "SP_TimePointReward_Index0" + i),
@@ -112,7 +112,7 @@ class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
       t.SetUIActive(!0);
     });
   }
-  gXs(i) {
+  lJs(i) {
     this.GetText(4).SetChangeColor(i, this.GetText(4).changeColor);
   }
 }

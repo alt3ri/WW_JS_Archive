@@ -87,10 +87,10 @@ class ItemExchangeController extends UiControllerBase_1.UiControllerBase {
   (ItemExchangeController.Igi = () => {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("ItemExchange", 9, "请求物品兑换数据");
-    var e = Protocol_1.Aki.Protocol.bns.create();
-    Net_1.Net.Call(26043, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.Fns.create();
+    Net_1.Net.Call(28765, e, (e) => {
       ModelManager_1.ModelManager.ItemExchangeModel.InitItemExchangeTimeInfo(
-        e.fxs,
+        e.Ixs,
       );
     });
   }),
@@ -98,15 +98,15 @@ class ItemExchangeController extends UiControllerBase_1.UiControllerBase {
   (ItemExchangeController.ItemExchangeRequest = (n, t, e = !0, o = void 0) => {
     0 !== t &&
       ((_a.Lgi = e),
-      ((e = Protocol_1.Aki.Protocol.qns.create()).f8n = n),
-      (e.b9n = t),
-      Net_1.Net.Call(10533, e, (e) => {
+      ((e = Protocol_1.Aki.Protocol.$ns.create()).L8n = n),
+      (e.j9n = t),
+      Net_1.Net.Call(29011, e, (e) => {
         (_a.Lgi = !0),
           e &&
-            (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+            (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
               ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.O4n,
-                  6955,
+                  e.Q4n,
+                  20145,
                 )
               : (ModelManager_1.ModelManager.ItemExchangeModel.AddExchangeTime(
                   n,
@@ -114,10 +114,10 @@ class ItemExchangeController extends UiControllerBase_1.UiControllerBase {
                 ),
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.ItemExChangeResponse,
-                  e.f8n,
-                  e.YVn,
+                  e.L8n,
+                  e.n9n,
                 ),
-                o && o(e.f8n, e.YVn)));
+                o && o(e.L8n, e.n9n)));
       }));
   });
 //# sourceMappingURL=ItemExchangeController.js.map

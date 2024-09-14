@@ -16,8 +16,10 @@ class GASkill {
     return this.skillid();
   }
   get MontageId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.montageidLength(), (t) =>
-      this.montageid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.montageidLength(),
+      this.montageid,
+      this,
     );
   }
   __init(t, i) {

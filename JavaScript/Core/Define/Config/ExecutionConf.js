@@ -18,7 +18,8 @@ class ExecutionConf {
   get LimitExecutionTags() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.limitexecutiontagsLength(),
-      (t) => this.limitexecutiontags(t),
+      this.limitexecutiontags,
+      this,
     );
   }
   __init(t, i) {

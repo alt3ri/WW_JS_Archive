@@ -13,8 +13,10 @@ class GmOrderList {
     return this.name();
   }
   get OrderList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.orderlistLength(), (t) =>
-      this.orderlist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.orderlistLength(),
+      this.orderlist,
+      this,
     );
   }
   __init(t, s) {

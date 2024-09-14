@@ -126,9 +126,9 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   }
   static OnStartPlotNetwork(e) {
     PerfSightController_1.PerfSightController.IsEnable &&
-      (ue_1.PerfSightHelper.BeginExtTag("Plot"),
-      (this.PTa = `Plot_${e.FlowListName}_` + e.FlowId),
-      cpp_1.FPerfSightHelper.BeginExtTagUtf8(this.PTa)),
+      (cpp_1.FKuroPerfSightHelper.BeginExtTag("Plot"),
+      (this.Mwa = `Plot_${e.FlowListName}_` + e.FlowId),
+      cpp_1.FKuroPerfSightHelper.BeginExtTag(this.Mwa)),
       (ModelManager_1.ModelManager.PlotModel.IsInPlot = !0),
       (ModelManager_1.ModelManager.PlotModel.PlotStartFrame =
         Time_1.Time.Frame),
@@ -158,9 +158,9 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   }
   static OnEndPlotNetwork() {
     PerfSightController_1.PerfSightController.IsEnable &&
-      (ue_1.PerfSightHelper.EndExtTag("Plot"),
-      cpp_1.FPerfSightHelper.EndExtTagUtf8(this.PTa),
-      (this.PTa = "")),
+      (cpp_1.FKuroPerfSightHelper.EndExtTag("Plot"),
+      cpp_1.FKuroPerfSightHelper.EndExtTag(this.Mwa),
+      (this.Mwa = "")),
       (ModelManager_1.ModelManager.PlotModel.KeepBgAudio = !1),
       ModelManager_1.ModelManager.PlotModel.ResetAudioState(),
       (ModelManager_1.ModelManager.PlotModel.IsInPlot = !1),
@@ -180,7 +180,8 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
       (Global_1.Global.CharacterCameraManager.FadeAmount = 0),
       CameraController_1.CameraController.ExitDialogMode(),
       InputDistributeController_1.InputDistributeController.RefreshInputTag(),
-      this.TogglePlotProtect(!1);
+      this.TogglePlotProtect(!1),
+      this.EnableViewControl(!1);
     var e = ModelManager_1.ModelManager.PlotModel.PlotResult;
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.PlotNetworkEnd, e),
       e.Reset(),
@@ -259,6 +260,18 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
       !0)
     );
   }
+  static ShowSystemOption(e, t) {
+    if ("RogueRandomEvent" === e.OptionConfig.Type) {
+      const o = e.OptionConfig;
+      e = {
+        BindId: o.EventId,
+        SelectCallback: (e) => {
+          t(e, o.SystemOptions[e].Actions);
+        },
+      };
+      UiManager_1.UiManager.OpenView("RoguelikeRandomEventView", e);
+    }
+  }
   static HandleSeqPlayerInput(e, t) {
     var o, r;
     GlobalData_1.GlobalData.GameInstance &&
@@ -286,8 +299,8 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
     t &&
       !this.TYi.has(t.Id) &&
       (this.TYi.add(t.Id),
-      (e = t?.Entity?.GetComponent(159)),
-      (t = t?.Entity?.GetComponent(188)) &&
+      (e = t?.Entity?.GetComponent(160)),
+      (t = t?.Entity?.GetComponent(190)) &&
         (t.HasTag(this.LYi) || t.AddTag(this.LYi),
         t.HasTag(this.DYi) || t.AddTag(this.DYi)),
       e?.AddBuff(CharacterBuffIds_1.buffId.StoryInvincibleCommon, {
@@ -303,8 +316,8 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
     this.TYi.clear();
   }
   static RYi(e, t) {
-    var o = e?.GetComponent(159),
-      e = e?.GetComponent(188);
+    var o = e?.GetComponent(160),
+      e = e?.GetComponent(190);
     t && (e?.RemoveTag(this.LYi), e?.RemoveTag(this.DYi)),
       o?.RemoveBuff(
         CharacterBuffIds_1.buffId.StoryInvincibleCommon,
@@ -349,10 +362,10 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
       ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId;
     if (e) {
       var o = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e);
-      if (!o) return !1;
-      var r = o.Entity.GetComponent(181);
-      if (!r) return !1;
-      if (!r.IsPawnInteractive()) return !1;
+      if (!o) return this.EndInteraction(), !1;
+      var r = o.Entity.GetComponent(182);
+      if (!r) return this.EndInteraction(), !1;
+      if (!r.IsPawnInteractive()) return this.EndInteraction(), !1;
       (ModelManager_1.ModelManager.PlotModel.CurrentInteractEntity = o),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Interaction", 37, "设置当前交互目标", [
@@ -374,10 +387,11 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
               EventDefine_1.EEventName.TriggerPlotInteraction,
               l,
             ),
-            e &&
-              EventSystem_1.EventSystem.Emit(
-                EventDefine_1.EEventName.PlotInteractViewOpen,
-              );
+            e
+              ? EventSystem_1.EventSystem.Emit(
+                  EventDefine_1.EEventName.PlotInteractViewOpen,
+                )
+              : this.EndInteraction();
         });
     } else
       this.EndInteraction(),
@@ -532,6 +546,19 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
         r,
       );
   }
+  static EnableViewControl(e) {
+    (ModelManager_1.ModelManager.PlotModel.CanControlView = e),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.PlotEnableControlView,
+        e,
+      );
+  }
+  static TestOpenTick(e) {
+    this.TestId = this.AddTick(e);
+  }
+  static TestCloseTick() {
+    this.RemoveTick(this.TestId);
+  }
   static AddTick(e) {
     return this.UYi++, this.AYi++, this.PYi.set(this.UYi, e), this.UYi;
   }
@@ -566,7 +593,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   (PlotController.UYi = 0),
   (PlotController.PYi = new Map()),
   (PlotController.AYi = 0),
-  (PlotController.PTa = ""),
+  (PlotController.Mwa = ""),
   (PlotController.SYi = () => {
     ModelManager_1.ModelManager.PlotModel.IsInPlot &&
       ((ModelManager_1.ModelManager.PlotModel.PlotResult.ResultCode = 1),
@@ -608,5 +635,6 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   (PlotController.dLe = () => {
     3 === ModelManager_1.ModelManager.SceneTeamModel.CurrentGroupType &&
       PlotController.ProtectCurrentRole();
-  });
+  }),
+  (PlotController.TestId = 0);
 //# sourceMappingURL=PlotController.js.map

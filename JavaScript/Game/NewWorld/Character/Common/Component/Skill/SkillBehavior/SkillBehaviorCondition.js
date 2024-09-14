@@ -8,71 +8,65 @@ const Log_1 = require("../../../../../../../Core/Common/Log"),
   SkillBehaviorMisc_1 = require("./SkillBehaviorMisc"),
   SkillConditionParser_1 = require("./SkillConditionParser");
 class SkillBehaviorCondition {
-  static Satisfy(r, t, e) {
-    var a = [];
-    let o = !1;
-    for (let i = 0; i < r.Num(); i++) {
-      var l = r.Get(i);
-      switch (l.ConditionType) {
-        case 0:
-          o = this.uZo(l, e);
-          break;
-        case 1:
-          o = this.cZo(l, e);
-          break;
-        case 2:
-          o = this.mZo(l, e);
-          break;
-        case 3:
-          o = this.dZo(l, e);
-          break;
-        case 4:
-          o = this.CZo(l, e);
-          break;
-        case 5:
-          o = this.gZo(l, e);
-          break;
-        default:
-          return !1;
-      }
-      if (t) a.push(o);
-      else if (!o) return !1;
-    }
-    if (a.length)
+  static SatisfyGroup(r, i, e) {
+    var a,
+      o = [];
+    for (let t = 0; t < r.Num(); t++)
+      if (((a = this.Satisfy(r.Get(t), e)), i)) o.push(a);
+      else if (!a) return !1;
+    if (o.length)
       try {
-        var i = new SkillConditionParser_1.Parser(t).Parse();
-        return new SkillConditionParser_1.ConditionArray(a, i).Evaluate();
-      } catch (i) {
+        var t = new SkillConditionParser_1.Parser(i).Parse();
+        return new SkillConditionParser_1.ConditionArray(o, t).Evaluate();
+      } catch (t) {
         return (
-          i instanceof Error
+          t instanceof Error
             ? Log_1.Log.CheckError() &&
               Log_1.Log.ErrorWithStack(
                 "Battle",
                 29,
                 "条件公式解析异常",
-                i,
-                ["formula", t],
-                ["error", i.message],
+                t,
+                ["formula", i],
+                ["error", t.message],
               )
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Battle",
                 29,
                 "条件公式解析异常",
-                ["formula", t],
-                ["error", i],
+                ["formula", i],
+                ["error", t],
               ),
           !1
         );
       }
     return !0;
   }
-  static uZo(i, r) {
-    let t = !1;
-    return r.SkillComponent.SkillTarget && (t = !0), i.Reverse ? !t : t;
+  static Satisfy(t, r) {
+    switch (t.ConditionType) {
+      case 0:
+        return this.uZo(t, r);
+      case 1:
+        return this.cZo(t, r);
+      case 2:
+        return this.mZo(t, r);
+      case 3:
+        return this.dZo(t, r);
+      case 4:
+        return this.CZo(t, r);
+      case 5:
+        return this.gZo(t, r);
+      default:
+        return !1;
+    }
   }
-  static cZo(i, r) {
-    let t = !1;
+  static uZo(t, r) {
+    let i = !1;
+    return r.SkillComponent.SkillTarget && (i = !0), t.Reverse ? !i : i;
+  }
+  static cZo(t, r) {
+    let i = !1;
     var e;
     return (
       r.SkillComponent.SkillTarget &&
@@ -81,21 +75,21 @@ class SkillBehaviorCondition {
           r.SkillComponent.SkillTarget.Entity.GetComponent(
             1,
           ).ActorLocationProxy),
-        (e = i.IgnoreZ
+        (e = t.IgnoreZ
           ? Vector_1.Vector.Dist2D(e, r)
           : Vector_1.Vector.Distance(e, r)),
-        (t = (0, SkillBehaviorMisc_1.compare)(
-          i.ComparisonLogic,
+        (i = (0, SkillBehaviorMisc_1.compare)(
+          t.ComparisonLogic,
           e,
-          i.Value,
-          i.RangeL,
-          i.RangeR,
+          t.Value,
+          t.RangeL,
+          t.RangeR,
         ))),
-      i.Reverse ? !t : t
+      t.Reverse ? !i : i
     );
   }
-  static mZo(i, r) {
-    let t = !1;
+  static mZo(t, r) {
+    let i = !1;
     var e, a, o;
     return (
       r.SkillComponent.SkillTarget &&
@@ -106,57 +100,57 @@ class SkillBehaviorCondition {
           ).ActorLocationProxy),
         (o = Vector_1.Vector.Create()),
         r.Subtraction(a, o),
-        i.IgnoreZ && (o.Z = 0),
+        t.IgnoreZ && (o.Z = 0),
         o.Normalize(),
         (r = MathUtils_1.MathUtils.GetAngleByVectorDot(o, e.ActorForwardProxy)),
-        (t = (0, SkillBehaviorMisc_1.compare)(
-          i.ComparisonLogic,
+        (i = (0, SkillBehaviorMisc_1.compare)(
+          t.ComparisonLogic,
           r,
-          i.Value,
-          i.RangeL,
-          i.RangeR,
+          t.Value,
+          t.RangeL,
+          t.RangeR,
         ))),
-      i.Reverse ? !t : t
+      t.Reverse ? !i : i
     );
   }
-  static dZo(i, r) {
-    (r = r.Entity.GetComponent(188)),
-      (r = i.AnyTag
+  static dZo(t, r) {
+    (r = r.Entity.GetComponent(190)),
+      (r = t.AnyTag
         ? r.HasAnyTag(
             GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
-              i.TagToCheck,
+              t.TagToCheck,
             ),
           )
         : r.HasAllTag(
             GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
-              i.TagToCheck,
+              t.TagToCheck,
             ),
           ));
-    return i.Reverse ? !r : r;
+    return t.Reverse ? !r : r;
   }
-  static CZo(i, r) {
-    var r = r.Entity.GetComponent(158),
-      t = r.GetCurrentValue(i.AttributeId1),
-      r = 0 < i.AttributeId2 ? r.GetCurrentValue(i.AttributeId2) : 0,
-      t = (0, SkillBehaviorMisc_1.compare)(
-        i.ComparisonLogic,
-        t,
-        i.Value + r * i.AttributeRate,
-        i.RangeL,
-        i.RangeR,
+  static CZo(t, r) {
+    var r = r.Entity.GetComponent(159),
+      i = r.GetCurrentValue(t.AttributeId1),
+      r = 0 < t.AttributeId2 ? r.GetCurrentValue(t.AttributeId2) : 0,
+      i = (0, SkillBehaviorMisc_1.compare)(
+        t.ComparisonLogic,
+        i,
+        t.Value + r * t.AttributeRate,
+        t.RangeL,
+        t.RangeR,
       );
-    return i.Reverse ? !t : t;
+    return t.Reverse ? !i : i;
   }
-  static gZo(i, r) {
-    (r = r.Entity.GetComponent(163).GetHeightAboveGround()),
+  static gZo(t, r) {
+    (r = r.Entity.GetComponent(164).GetHeightAboveGround()),
       (r = (0, SkillBehaviorMisc_1.compare)(
-        i.ComparisonLogic,
+        t.ComparisonLogic,
         r,
-        i.Value,
-        i.RangeL,
-        i.RangeR,
+        t.Value,
+        t.RangeL,
+        t.RangeR,
       ));
-    return i.Reverse ? !r : r;
+    return t.Reverse ? !r : r;
   }
 }
 exports.SkillBehaviorCondition = SkillBehaviorCondition;

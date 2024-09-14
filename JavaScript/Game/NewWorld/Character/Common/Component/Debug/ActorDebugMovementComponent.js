@@ -34,11 +34,11 @@ let ActorDebugMovementComponent = class ActorDebugMovementComponent extends Enti
       (this.UeDebugComp = void 0),
       (this.IsDebug = !1),
       (this.LastRecordLocation = Vector_1.Vector.Create()),
-      (this.Cya = !1),
-      (this.gya = [
-        Protocol_1.Aki.Protocol.wks.Proto_Monster,
-        Protocol_1.Aki.Protocol.wks.Proto_Player,
-        Protocol_1.Aki.Protocol.wks.Proto_Npc,
+      (this.FLa = !1),
+      (this.VLa = [
+        Protocol_1.Aki.Protocol.kks.Proto_Monster,
+        Protocol_1.Aki.Protocol.kks.Proto_Player,
+        Protocol_1.Aki.Protocol.kks.Proto_Npc,
       ]);
   }
   OnStart() {
@@ -46,7 +46,7 @@ let ActorDebugMovementComponent = class ActorDebugMovementComponent extends Enti
       (this.ActorComp = this.Entity.GetComponent(1)),
       (this.IsDebug = !1),
       this.ActorComp &&
-        ((this.Cya = this.gya.includes(
+        ((this.FLa = this.VLa.includes(
           this.ActorComp.CreatureData.GetEntityType(),
         )),
         this.LastRecordLocation.DeepCopy(this.ActorComp.ActorLocationProxy)),
@@ -66,7 +66,7 @@ let ActorDebugMovementComponent = class ActorDebugMovementComponent extends Enti
       this.UeDebugComp.Resigter());
   }
   MarkDebugRecord(t, e = 15, o = !1) {
-    this.Cya &&
+    this.FLa &&
       this.ActorComp &&
       (!o &&
         Vector_1.Vector.DistSquared(

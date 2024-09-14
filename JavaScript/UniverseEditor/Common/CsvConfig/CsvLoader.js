@@ -12,18 +12,18 @@ const BranchDefine_1 = require("../BranchDefine"),
   File_1 = require("../Misc/File"),
   Log_1 = require("../Misc/Log"),
   Util_1 = require("../Misc/Util");
-function parseCsvValue(e, r) {
-  return exports.csvCellTypeConfig[r].Parse(e);
+function parseCsvValue(r, e) {
+  return exports.csvCellTypeConfig[e].Parse(r);
 }
 (exports.csvCellTypeConfig = {
-  Int: { Default: 0, Parse: (e) => parseInt(e, 10), Desc: "整形" },
-  String: { Default: "", Parse: (e) => e, Desc: "字符串" },
-  Boolean: { Default: !1, Parse: (e) => Boolean(e), Desc: "布尔型" },
-  Float: { Default: 0, Parse: (e) => parseFloat(e), Desc: "浮点型" },
-  UiResource: { Default: "", Parse: (e) => e, Desc: "UI资源" },
+  Int: { Default: 0, Parse: (r) => parseInt(r, 10), Desc: "整形" },
+  String: { Default: "", Parse: (r) => r, Desc: "字符串" },
+  Boolean: { Default: !1, Parse: (r) => Boolean(r), Desc: "布尔型" },
+  Float: { Default: 0, Parse: (r) => parseFloat(r), Desc: "浮点型" },
+  UiResource: { Default: "", Parse: (r) => r, Desc: "UI资源" },
 }),
   (exports.parseCsvValue = parseCsvValue);
-const customExportType = ["C", "S", "CS", "", "@Tag"],
+const customExportType = ["C", "S", "CS", "", "@Tag", "@Version"],
   customValueType = [
     "Int",
     "String",
@@ -32,6 +32,9 @@ const customExportType = ["C", "S", "CS", "", "@Tag"],
     "Float",
     "Array<Int>",
     "Array<String>",
+    "Array<Float>",
+    "Array<Long>",
+    "Array<IntArray>",
     "",
   ],
   customBoolType = ["1", "0", ""],
@@ -64,38 +67,42 @@ const customExportType = ["C", "S", "CS", "", "@Tag"],
     26: "String",
     27: "String",
     28: "String",
-    30: "String",
-    31: "Int",
-    32: "String",
+    29: "String",
+    31: "String",
+    32: "Int",
     33: "String",
-    34: "Array<Int>",
-    35: "Array<String>",
-    36: "String",
+    34: "String",
+    35: "Array<Int>",
+    36: "Array<String>",
     37: "String",
-    38: "Int",
-    39: "String",
-    40: "Int",
+    38: "String",
+    39: "Int",
+    40: "String",
     41: "Int",
     42: "Int",
-    43: "String",
-    44: "Int",
-    45: "String",
-    46: "Int",
+    43: "Int",
+    44: "String",
+    45: "Int",
+    46: "String",
     47: "Int",
-    29: "String",
     48: "Int",
+    30: "String",
     49: "Int",
-    50: "String",
+    50: "Int",
     51: "String",
+    52: "String",
     7: "String",
-    52: "Int",
-    53: "Array<String>",
+    53: "Int",
     54: "Array<String>",
-    55: "String",
+    55: "Array<String>",
     56: "String",
     57: "String",
     58: "String",
-    59: "Array<Int>",
+    59: "String",
+    60: "Array<Int>",
+    61: "String",
+    62: "Int",
+    63: "Array<Int>",
   },
   csvFieldValidValues = {
     ExportType: { CnName: "客户端/服务端 使用", Range: customExportType },
@@ -108,6 +115,7 @@ const customExportType = ["C", "S", "CS", "", "@Tag"],
     CnName: { CnName: "#" },
     RenderType: { CnName: "", IgnoreSerialize: !0 },
   },
+  MAX_HEADER_COUNT = 10,
   depotCsvCache = new Map();
 function createDefaultCsvFiledEx() {
   return {
@@ -124,9 +132,9 @@ function createDefaultCsvFiledEx() {
     CreateType: "prevRow",
   };
 }
-function createCsvField(e) {
-  var r = createDefaultCsvFiledEx();
-  return Object.assign(r, e), r;
+function createCsvField(r) {
+  var e = createDefaultCsvFiledEx();
+  return Object.assign(e, r), e;
 }
 exports.createCsvField = createCsvField;
 class GlobalCsv {
@@ -136,287 +144,325 @@ class GlobalCsv {
       (this.Rows = []),
       (this.Tables = []),
       (this.Branch = "development"),
+      (this.Segment = [0, 0]),
       (this.OtherBranchCsv = []);
   }
-  Bind(e) {
-    Object.assign(this, e);
+  Bind(r) {
+    Object.assign(this, r);
   }
-  Check(e) {
+  Check(r) {
     return 0;
   }
-  CreateDefault(e) {
-    return e;
+  CreateDefault(r) {
+    return r;
+  }
+  GetAllRowsData() {
+    var r = [];
+    r.push({ Branch: this.Branch, Rows: this.Rows });
+    for (const e of this.OtherBranchCsv)
+      (0, BranchDefine_1.isReachBranch)(e.Branch) &&
+        r.push({ Branch: e.Branch, Rows: e.Rows });
+    return r;
   }
 }
 exports.GlobalCsv = GlobalCsv;
 class CsvLoader {
-  constructor(e, r) {
-    (this.Lkn = []),
+  constructor(r, e) {
+    (this.bkn = []),
       (this.T = new Map()),
-      (this.FiledTypes = r.slice()),
-      (this.Name = e),
-      r.forEach((e) => {
-        this.T.set(e.Name, e);
+      (this.FieldTypes = e.slice()),
+      (this.Name = r),
+      e.forEach((r) => {
+        this.T.set(r.Name, r);
       }),
       this.v(),
       this.g();
   }
   v() {
-    let r = 0;
+    let e = 0;
     if (
-      (this.FiledTypes.forEach((e) => {
-        "1" === e.Filter && r++;
+      (this.FieldTypes.forEach((r) => {
+        "1" === r.Filter && e++;
       }),
-      r <= 0)
+      e <= 0)
     )
       throw new Error(`[${this.Name}]: No index key (field [filter] = 1)`);
   }
   g() {
-    this.FiledTypes.forEach((e) => {
-      var r = valueTypeByRenderType[e.RenderType];
-      if (r !== e.Type)
+    this.FieldTypes.forEach((r) => {
+      var e = valueTypeByRenderType[r.RenderType];
+      if (e !== r.Type)
         throw new Error(
-          `[${this.Name}]: [${e.Name}] Type [${e.Type}] not match renderType [${e.RenderType}][${r}]`,
+          `[${this.Name}]: [${r.Name}] Type [${r.Type}] not match renderType [${r.RenderType}][${e}]`,
         );
     });
   }
-  I(r, e) {
-    var t = csvFieldValidValues[e];
-    if (r[0] !== t.CnName)
-      throw new Error(
-        `CSV file [${this.Name}] first column invalid, expect[${t.CnName}] actual:[${r[0]}]`,
-      );
-    "Name" === e && (this.Lkn = r);
-    for (let e = 1; e < r.length; e++)
+  I(e, r) {
+    var t = csvFieldValidValues[r];
+    for (let r = 1; r < e.length; r++)
       if (t.Range) {
-        var i = r[e];
+        var i = e[r];
         if (!t.Range.includes(i))
           throw new Error(
             `CSV file [${this.Name}] head field invalid, [${t.CnName}], expect of [${t.Range.join(",")}], actual[${i}]`,
           );
       }
   }
-  L(e, r) {
+  L(r, e) {
     const t = [];
-    var i = csvFieldValidValues[r];
+    var i = csvFieldValidValues[e];
     t.push(i.CnName),
-      this.FiledTypes.forEach((e) => {
-        t.push(e[r]);
+      this.FieldTypes.forEach((r) => {
+        t.push(r[e]);
       }),
-      e.Write(t);
+      r.Write(t);
   }
   M(e) {
-    for (const t in csvFieldValidValues) {
-      var r = csvFieldValidValues[t];
-      if (!r.IgnoreSerialize) {
-        r = e.ReadNext();
-        if (!r)
-          throw new Error(
-            `CSV [${this.Name}] header row count [${e.TotalLine}] not enough`,
-          );
-        this.I(r, t);
-      }
+    for (let r = 0; r < MAX_HEADER_COUNT; r++) {
+      var t,
+        i = e.ReadNext();
+      if (!i)
+        throw new Error(
+          `CSV [${this.Name}] header row count [${e.TotalLine}] not enough`,
+        );
+      if ("#" === i[0]) return;
+      1 === r && (this.bkn = i);
+      for (const a in csvFieldValidValues)
+        csvFieldValidValues[a].IgnoreSerialize ||
+          ((t = csvFieldValidValues[a]), i[0] === t.CnName && this.I(i, a));
     }
   }
-  GetCsvFieldConfig(e) {
-    return this.T.get(e);
+  GetCsvFieldConfig(r) {
+    return this.T.get(r);
   }
-  F(e) {
-    var r = e.ReadNext();
-    if (!r)
+  F(r) {
+    var e = r.ReadNext();
+    if (!e)
       throw new Error(
-        `CSV [${this.Name}] row count [${e.TotalLine}] not enough`,
+        `CSV [${this.Name}] row count [${r.TotalLine}] not enough`,
       );
-    if ("" !== r.toString() && r.length < this.Lkn.length)
+    if ("" !== e.toString() && e.length < this.bkn.length)
       throw new Error(
-        `CSV [${this.Name}] 行解析失败，行内容 【${r.toString()}】`,
+        `CSV [${this.Name}] 行解析失败，行内容 【${e.toString()}】`,
       );
-    var t = {};
-    for (let e = 1; e < r.length; e++) {
-      var i = this.Lkn[e],
-        n = this.T.get(i);
-      if (n) {
-        var a = r[e];
-        switch (n.Type) {
-          case "Int":
-            "" === r[e] ? (t[n.Name] = void 0) : (t[n.Name] = parseInt(a, 10));
-            break;
-          case "Long":
-            t[n.Name] = BigInt(a);
-            break;
-          case "String":
-            t[n.Name] = a;
-            break;
-          case "Bool":
-            t[n.Name] = (0, Util_1.parseBool)(a);
-            break;
-          case "Float":
-            t[n.Name] = parseFloat(a);
-            break;
-          case "Array<Int>":
-            t[n.Name] = (0, Util_1.parseCsvIntArray)(a);
-            break;
-          case "Array<String>":
-            t[n.Name] = (0, Util_1.parseCsvStringArray)(a);
+    if (!e[0]?.startsWith("#")) {
+      var t = {};
+      for (let r = 1; r < e.length; r++) {
+        var i = this.bkn[r],
+          a = this.T.get(i);
+        if (a) {
+          var n = e[r];
+          switch (a.Type) {
+            case "Int":
+              "" === e[r]
+                ? (t[a.Name] = void 0)
+                : (t[a.Name] = parseInt(n, 10));
+              break;
+            case "Long":
+              t[a.Name] = BigInt(n);
+              break;
+            case "String":
+              t[a.Name] = n;
+              break;
+            case "Bool":
+              t[a.Name] = (0, Util_1.parseBool)(n);
+              break;
+            case "Float":
+              t[a.Name] = parseFloat(n);
+              break;
+            case "Array<Int>":
+              t[a.Name] = (0, Util_1.parseCsvIntArray)(n);
+              break;
+            case "Array<String>":
+              t[a.Name] = (0, Util_1.parseCsvStringArray)(n);
+              break;
+            case "Array<Float>":
+              t[a.Name] = (0, Util_1.parseCsvFloatArray)(n);
+              break;
+            case "Array<Long>":
+              t[a.Name] = (0, Util_1.parseCsvIntArray)(n);
+              break;
+            case "Array<IntArray>":
+              t[a.Name] = (0, Util_1.parseCsvInt2Array)(n);
+          }
         }
       }
+      return t;
     }
-    return t;
   }
-  P(e) {
-    for (var r = []; !e.IsEnd; ) r.push(this.F(e));
-    return r;
+  P(r) {
+    for (var e = []; !r.IsEnd; ) {
+      var t = this.F(r);
+      t && e.push(t);
+    }
+    return e;
   }
-  O(e) {
-    for (const r in csvFieldValidValues)
-      csvFieldValidValues[r].IgnoreSerialize || this.L(e, r);
+  O(r) {
+    for (const e in csvFieldValidValues)
+      csvFieldValidValues[e].IgnoreSerialize || this.L(r, e);
   }
-  k(e, t) {
+  k(r, t) {
     const i = [];
     i.push(""),
-      this.FiledTypes.forEach((e) => {
-        var r = t[e.Name];
-        void 0 === r
+      this.FieldTypes.forEach((r) => {
+        var e = t[r.Name];
+        void 0 === e
           ? i.push("")
-          : "Array<String>" === e.Type || "Array<Int>" === e.Type
-            ? i.push(`[${r}]`)
-            : "string" == typeof r
-              ? i.push(r)
-              : i.push(r.toString());
+          : "Array<String>" === r.Type ||
+              "Array<Int>" === r.Type ||
+              "Array<Float>" === r.Type ||
+              "Array<Long>" === r.Type ||
+              "Array<IntArray>" === r.Type
+            ? i.push(`[${e}]`)
+            : "string" == typeof e
+              ? i.push(e)
+              : i.push(e.toString());
       }),
-      e.Write(i);
+      r.Write(i);
   }
-  q(r, e) {
-    e.forEach((e) => {
-      this.k(r, e);
+  q(e, r) {
+    r.forEach((r) => {
+      this.k(e, r);
     });
   }
-  Parse(e) {
-    e = new CsvParser_1.LineReader(e);
-    return e.IsValid ? (this.M(e), this.P(e)) : [];
+  Parse(r) {
+    r = new CsvParser_1.LineReader(r);
+    return r.IsValid ? (this.M(r), this.P(r)) : [];
   }
-  ParseOne(e) {
-    e = new CsvParser_1.LineReader(e);
-    if (e.IsValid) return this.M(e), this.F(e);
+  ParseOne(r) {
+    r = new CsvParser_1.LineReader(r);
+    if (r.IsValid) return this.M(r), this.F(r);
   }
-  Stringify(e) {
-    var r = new CsvParser_1.LineWriter();
-    return this.O(r), this.q(r, e), r.Gen();
+  Stringify(r) {
+    var e = new CsvParser_1.LineWriter();
+    return this.O(e), this.q(e, r), e.Gen();
   }
-  StringifyOne(e) {
-    var r = new CsvParser_1.LineWriter();
-    return this.O(r), this.k(r, e), r.Gen();
+  StringifyOne(r) {
+    var e = new CsvParser_1.LineWriter();
+    return this.O(e), this.k(e, r), e.Gen();
   }
-  Load(r) {
-    var e = (0, File_1.readFile)(r);
-    if (e)
+  Load(e) {
+    var r = (0, File_1.readFile)(e);
+    if (r)
       try {
-        return (0, Log_1.log)(`Load csv: [${r}]`), this.Parse(e);
-      } catch (e) {
-        if (e instanceof Error)
+        return (0, Log_1.log)(`Load csv: [${e}]`), this.Parse(r);
+      } catch (r) {
+        if (r instanceof Error)
           throw new Error(
-            `CSV [${r}] 解析失败，错误如下:
-` + e.message,
+            `CSV [${e}] 解析失败，错误如下:
+` + r.message,
           );
       }
     return [];
   }
-  TryLoad(r) {
+  TryLoad(e) {
     try {
-      var e = (0, File_1.readFile)(r);
-      return e ? this.Parse(e) : [];
-    } catch (e) {
-      if (e instanceof Error)
+      var r = (0, File_1.readFile)(e);
+      return r ? this.Parse(r) : [];
+    } catch (r) {
+      if (r instanceof Error)
         throw new Error(
-          `CSV [${r}] 解析失败，错误如下:
-` + e.message,
+          `CSV [${e}] 解析失败，错误如下:
+` + r.message,
         );
     }
     return [];
   }
-  LoadOne(e) {
-    e = (0, File_1.readFile)(e);
-    if (e) return this.ParseOne(e);
+  LoadOne(r) {
+    r = (0, File_1.readFile)(r);
+    if (r) return this.ParseOne(r);
   }
-  Save(e, r) {
-    (0, File_1.writeFile)(r, this.Stringify(e));
+  Save(r, e) {
+    (0, File_1.writeFile)(e, this.Stringify(r));
   }
-  SaveOne(e, r) {
-    (0, File_1.writeFile)(r, this.StringifyOne(e));
+  SaveOne(r, e) {
+    (0, File_1.writeFile)(e, this.StringifyOne(r));
   }
-  GetOtherBranchCsvPath(e, r) {
-    return (0, File_1.getSavePath)(`Editor/c.Csv/${e}/${r}.csv`).replace(
+  GetOtherBranchCsvPath(r, e) {
+    return (0, File_1.getSavePath)(`Editor/c.Csv/${r}/${e}.csv`).replace(
       "\\",
       "/",
     );
   }
-  RequestDepotCsv(e, r) {
+  RequestDepotCsv(r, e) {
     if (!(0, Util_1.isUePlatform)()) return "";
-    r = (0, File_1.getDirName)((0, File_1.getDir)(r));
-    let t = e;
-    var i = `//aki/${(t = (0, BranchDefine_1.isPlannedBranch)(e) ? "development" : t)}/Source/Config/Raw/Tables/k.可视化编辑/c.Csv/${r}/${e}.csv`;
+    e = (0, File_1.getDirName)((0, File_1.getDir)(e));
+    let t = r;
+    var i = `//aki/${(t = (0, BranchDefine_1.isPlannedBranch)(r) ? "development" : t)}/Source/Config/Raw/Tables/k.可视化编辑/c.Csv/${e}/${r}.csv`;
     return depotCsvCache.has(i)
       ? depotCsvCache.get(i)
-      : ((e = `p4 print -q -o ${(r = this.GetOtherBranchCsvPath(r, e))} ` + i),
-        (0, Util_1.exec)(e),
-        depotCsvCache.set(i, r),
-        r);
+      : ((r = `p4 print -q -o ${(e = this.GetOtherBranchCsvPath(e, r))} ` + i),
+        (0, Util_1.exec)(r),
+        depotCsvCache.set(i, e),
+        e);
   }
-  V(e) {
-    return e.replace(/\\/g, "/").split("/").pop().replace(".csv", "");
+  V(r) {
+    return r.replace(/\\/g, "/").split("/").pop().replace(".csv", "");
   }
-  Dkn(e, r) {
-    e.forEach((e) => {
-      e.Branch = r;
+  qkn(r, e) {
+    r.forEach((r) => {
+      r.Branch = e;
     });
   }
-  j(e) {
-    var r = this.V(e),
-      t = (0, File_1.getDir)(e),
-      e = (0, BranchDefine_1.getAllBranches)();
-    if (!e) return [];
+  IDa(r) {
+    var e = (
+      (0, BranchDefine_1.isPlannedBranch)(r)
+        ? (0, BranchDefine_1.getPlannedBranchSegment)
+        : (0, BranchDefine_1.getBranchSegment)
+    )(r);
+    if (e) return e;
+    throw new Error(`[${r}] id segment not found`);
+  }
+  j(r) {
+    var e = this.V(r),
+      t = (0, File_1.getDir)(r),
+      r = (0, BranchDefine_1.getAllBranches)();
+    if (!r) return [];
     var i = [];
-    for (const a of e)
-      if (a !== r) {
-        var n = `${t}/${a}.csv`;
-        let e = n;
+    for (const n of r)
+      if (n !== e) {
+        var a = `${t}/${n}.csv`;
+        let r = a;
         Config_1.Config.IsStartWithCliServer ||
           (0, Util_1.isPipelineEnv)() ||
-          (0, File_1.existFile)(n) ||
-          (0, BranchDefine_1.isReachBranch)(a) ||
-          ((n = this.RequestDepotCsv(a, n)),
-          (0, File_1.existFile)(n) && (e = n));
-        n = this.TryLoad(e);
-        this.Dkn(n, a),
+          (0, File_1.existFile)(a) ||
+          (0, BranchDefine_1.isReachBranch)(n) ||
+          ((a = this.RequestDepotCsv(n, a)),
+          (0, File_1.existFile)(a) && (r = a));
+        a = this.TryLoad(r);
+        this.qkn(a, n),
           i.push({
-            Name: a,
-            FieldTypes: this.FiledTypes,
-            Rows: n,
+            Name: n,
+            FieldTypes: this.FieldTypes,
+            Rows: a,
             Tables: [],
-            Branch: a,
+            Branch: n,
+            Segment: this.IDa(n),
             OtherBranchCsv: [],
           });
       }
     return i;
   }
-  LoadCsv(e) {
-    var r = this.V(e),
-      t = this.Load(e);
+  LoadCsv(r) {
+    var e = this.V(r),
+      t = this.Load(r);
     return (
-      this.Dkn(t, r),
+      this.qkn(t, e),
       {
         Name: this.Name,
-        FieldTypes: this.FiledTypes,
+        FieldTypes: this.FieldTypes,
         Rows: t,
         Tables: [],
-        Branch: r,
-        OtherBranchCsv: this.j(e),
+        Branch: e,
+        Segment: this.IDa(e),
+        OtherBranchCsv: this.j(r),
       }
     );
   }
-  SaveCsv(e, r) {
-    this.Save(e.Rows, r);
+  SaveCsv(r, e) {
+    this.Save(r.Rows, e);
   }
+  OnModifyRow(r, e) {}
 }
 exports.CsvLoader = CsvLoader;
 //# sourceMappingURL=CsvLoader.js.map

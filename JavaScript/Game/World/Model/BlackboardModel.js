@@ -36,7 +36,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetIntValue(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Int,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Int,
         )).SetIntValue(o),
         this.aMr.SetValue(t, e));
   }
@@ -49,7 +49,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetIntValues(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_IntArray,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_IntArray,
         )).SetIntValues(o),
         this.aMr.SetValue(t, e));
   }
@@ -61,7 +61,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetLongValue(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Long,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Long,
         )).SetLongValue(o),
         this.aMr.SetValue(t, e));
   }
@@ -74,7 +74,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetLongValues(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_LongArray,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_LongArray,
         )).SetLongValues(o),
         this.aMr.SetValue(t, e));
   }
@@ -86,7 +86,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetBooleanValue(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Boolean,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Boolean,
         )).SetBooleanValue(o),
         this.aMr.SetValue(t, e));
   }
@@ -98,7 +98,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetFloatValue(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Float,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Float,
         )).SetFloatValue(o),
         this.aMr.SetValue(t, e));
   }
@@ -111,7 +111,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetFloatValues(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_FloatArray,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_FloatArray,
         )).SetFloatValues(o),
         this.aMr.SetValue(t, e));
   }
@@ -124,7 +124,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetStringValue(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_String,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_String,
         )).SetStringValue(o),
         this.aMr.SetValue(t, e));
   }
@@ -137,7 +137,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetStringValues(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_StringArray,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_StringArray,
         )).SetStringValues(o),
         this.aMr.SetValue(t, e));
   }
@@ -156,7 +156,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetIntValue(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Int,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Int,
         )).SetIntValue(o),
         this.hMr.SetValue(t, e));
   }
@@ -169,7 +169,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetIntValues(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_IntArray,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_IntArray,
         )).SetIntValues(o),
         this.hMr.SetValue(t, e));
   }
@@ -181,7 +181,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetLongValue(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Long,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Long,
         )).SetLongValue(o),
         this.hMr.SetValue(t, e));
   }
@@ -194,7 +194,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetLongValues(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_LongArray,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_LongArray,
         )).SetLongValues(o),
         this.hMr.SetValue(t, e));
   }
@@ -206,7 +206,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetBooleanValue(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Boolean,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Boolean,
         )).SetBooleanValue(o),
         this.hMr.SetValue(t, e));
   }
@@ -218,7 +218,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetFloatValue(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Float,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Float,
         )).SetFloatValue(o),
         this.hMr.SetValue(t, e));
   }
@@ -231,7 +231,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetFloatValues(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_FloatArray,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_FloatArray,
         )).SetFloatValues(o),
         this.hMr.SetValue(t, e));
   }
@@ -244,7 +244,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetStringValue(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_String,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_String,
         )).SetStringValue(o),
         this.hMr.SetValue(t, e));
   }
@@ -257,7 +257,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     e
       ? e.SetStringValues(o)
       : ((e = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_StringArray,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_StringArray,
         )).SetStringValues(o),
         this.hMr.SetValue(t, e));
   }
@@ -272,7 +272,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
     a
       ? a.SetVectorValue(o, e, l)
       : ((a = new BlackboardMap_1.BlackboardParam(
-          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Vector,
+          Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Vector,
         )).SetVectorValue(o, e, l),
         this.hMr.SetValue(t, a));
   }
@@ -292,11 +292,11 @@ class BlackboardModel extends ModelBase_1.ModelBase {
         ? (BlackboardMap_1.BlackboardMap.CheckValueType(
             e,
             t,
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Int,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Int,
           ),
           t.SetIntValue(l))
         : ((t = new BlackboardMap_1.BlackboardParam(
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Int,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Int,
           )).SetIntValue(l),
           o.SetValue(e, t));
     }
@@ -314,11 +314,11 @@ class BlackboardModel extends ModelBase_1.ModelBase {
         ? (BlackboardMap_1.BlackboardMap.CheckValueType(
             e,
             t,
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_IntArray,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_IntArray,
           ),
           t.SetIntValues(l))
         : ((t = new BlackboardMap_1.BlackboardParam(
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_IntArray,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_IntArray,
           )).SetIntValues(l),
           o.SetValue(e, t));
     }
@@ -336,11 +336,11 @@ class BlackboardModel extends ModelBase_1.ModelBase {
         ? (BlackboardMap_1.BlackboardMap.CheckValueType(
             e,
             t,
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Long,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Long,
           ),
           t.SetLongValue(l))
         : ((t = new BlackboardMap_1.BlackboardParam(
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Long,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Long,
           )).SetLongValue(l),
           o.SetValue(e, t));
     }
@@ -358,11 +358,11 @@ class BlackboardModel extends ModelBase_1.ModelBase {
         ? (BlackboardMap_1.BlackboardMap.CheckValueType(
             e,
             t,
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_LongArray,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_LongArray,
           ),
           t.SetLongValues(l))
         : ((t = new BlackboardMap_1.BlackboardParam(
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_LongArray,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_LongArray,
           )).SetLongValues(l),
           o.SetValue(e, t));
     }
@@ -380,11 +380,11 @@ class BlackboardModel extends ModelBase_1.ModelBase {
         ? (BlackboardMap_1.BlackboardMap.CheckValueType(
             e,
             t,
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Boolean,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Boolean,
           ),
           t.SetBooleanValue(l))
         : ((t = new BlackboardMap_1.BlackboardParam(
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Boolean,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Boolean,
           )).SetBooleanValue(l),
           o.SetValue(e, t));
     }
@@ -402,11 +402,11 @@ class BlackboardModel extends ModelBase_1.ModelBase {
         ? (BlackboardMap_1.BlackboardMap.CheckValueType(
             e,
             t,
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Float,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Float,
           ),
           t.SetFloatValue(l))
         : ((t = new BlackboardMap_1.BlackboardParam(
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Float,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Float,
           )).SetFloatValue(l),
           o.SetValue(e, t));
     }
@@ -424,11 +424,11 @@ class BlackboardModel extends ModelBase_1.ModelBase {
         ? (BlackboardMap_1.BlackboardMap.CheckValueType(
             e,
             t,
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_FloatArray,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_FloatArray,
           ),
           t.SetFloatValues(l))
         : ((t = new BlackboardMap_1.BlackboardParam(
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_FloatArray,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_FloatArray,
           )).SetFloatValues(l),
           o.SetValue(e, t));
     }
@@ -446,11 +446,11 @@ class BlackboardModel extends ModelBase_1.ModelBase {
         ? (BlackboardMap_1.BlackboardMap.CheckValueType(
             e,
             t,
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_String,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_String,
           ),
           t.SetStringValue(l))
         : ((t = new BlackboardMap_1.BlackboardParam(
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_String,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_String,
           )).SetStringValue(l),
           o.SetValue(e, t));
     }
@@ -468,11 +468,11 @@ class BlackboardModel extends ModelBase_1.ModelBase {
         ? (BlackboardMap_1.BlackboardMap.CheckValueType(
             e,
             t,
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_StringArray,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_StringArray,
           ),
           t.SetStringValues(l))
         : ((t = new BlackboardMap_1.BlackboardParam(
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_StringArray,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_StringArray,
           )).SetStringValues(l),
           o.SetValue(e, t));
     }
@@ -492,11 +492,11 @@ class BlackboardModel extends ModelBase_1.ModelBase {
         ? (BlackboardMap_1.BlackboardMap.CheckValueType(
             e,
             t,
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Vector,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Vector,
           ),
           t.SetVectorValue(l, a, r))
         : ((t = new BlackboardMap_1.BlackboardParam(
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Vector,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Vector,
           )).SetVectorValue(l, a, r),
           o.SetValue(e, t));
     }
@@ -514,11 +514,11 @@ class BlackboardModel extends ModelBase_1.ModelBase {
         ? (BlackboardMap_1.BlackboardMap.CheckValueType(
             e,
             t,
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_VectorArray,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_VectorArray,
           ),
           t.SetVectorValues(l))
         : ((t = new BlackboardMap_1.BlackboardParam(
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_VectorArray,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_VectorArray,
           )).SetVectorValues(l),
           o.SetValue(e, t));
     }
@@ -536,11 +536,11 @@ class BlackboardModel extends ModelBase_1.ModelBase {
         ? (BlackboardMap_1.BlackboardMap.CheckValueType(
             e,
             t,
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Rotator,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Rotator,
           ),
           t.SetRotatorValue(l, a, r))
         : ((t = new BlackboardMap_1.BlackboardParam(
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Rotator,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Rotator,
           )).SetRotatorValue(l, a, r),
           o.SetValue(e, t));
     }
@@ -558,11 +558,11 @@ class BlackboardModel extends ModelBase_1.ModelBase {
         ? (BlackboardMap_1.BlackboardMap.CheckValueType(
             e,
             t,
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_RotatorArray,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_RotatorArray,
           ),
           t.SetRotatorValues(l))
         : ((t = new BlackboardMap_1.BlackboardParam(
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_RotatorArray,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_RotatorArray,
           )).SetRotatorValues(l),
           o.SetValue(e, t));
     }
@@ -580,11 +580,11 @@ class BlackboardModel extends ModelBase_1.ModelBase {
         ? (BlackboardMap_1.BlackboardMap.CheckValueType(
             e,
             t,
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Entity,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Entity,
           ),
           t.SetIntValue(l))
         : ((t = new BlackboardMap_1.BlackboardParam(
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Entity,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_Entity,
           )).SetIntValue(l),
           o.SetValue(e, t));
     }
@@ -602,11 +602,11 @@ class BlackboardModel extends ModelBase_1.ModelBase {
         ? (BlackboardMap_1.BlackboardMap.CheckValueType(
             e,
             t,
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_EntityArray,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_EntityArray,
           ),
           t.SetIntValues(l))
         : ((t = new BlackboardMap_1.BlackboardParam(
-            Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_EntityArray,
+            Protocol_1.Aki.Protocol.sNs.Proto_BlackboardParamType_EntityArray,
           )).SetIntValues(l),
           o.SetValue(e, t));
     }

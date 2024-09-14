@@ -39,6 +39,9 @@ class FragmentMemoryCollectData {
   GetTraceMarkId() {
     return this.GetConfig().TraceMarkId;
   }
+  GetQuestList() {
+    return this.GetConfig().QuestIdList;
+  }
   GetFinishTime() {
     return this._be;
   }
@@ -49,9 +52,9 @@ class FragmentMemoryCollectData {
     return this.GetConfig().Rank;
   }
   Phrase(e) {
-    (this.xe = e.J4n),
-      (this.ige = e.$4n),
-      (this._be = Number(MathUtils_1.MathUtils.LongToBigInt(e.wBs)) / 1e3),
+    (this.xe = e.s5n),
+      (this.ige = e.o5n),
+      (this._be = Number(MathUtils_1.MathUtils.LongToBigInt(e.kBs)) / 1e3),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.FragmentRewardRedDot,
         this.xe,
@@ -128,13 +131,13 @@ class FragmentMemoryTopicData {
     return this.xe;
   }
   Phrase(t) {
-    (this.xe = t.J4n), (this.nwn = []);
-    for (const i of t.xBs) {
+    (this.xe = t.s5n), (this.nwn = []);
+    for (const i of t.NBs) {
       var e = new FragmentMemoryCollectData(),
         r =
           (e.Phrase(i),
           ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryCollectById(
-            i.J4n,
+            i.s5n,
           ));
       e.PhraseFromConfig(r), e.BindSourceTopic(this), this.nwn.push(e);
     }
@@ -152,8 +155,21 @@ class FragmentMemoryTopicData {
         this.xe,
       );
   }
+  GetFirstOpen() {
+    return ModelManager_1.ModelManager.FragmentMemoryModel.GetTopicFirstOpenRedDotState(
+      this.xe,
+    );
+  }
   GetRedDotState() {
-    for (const e of this.nwn) if (e.GetIfCanGetReward()) return !0;
+    if (!this.GetAllCollectState()) {
+      if (this.GetFirstOpen()) return !0;
+      for (const e of this.nwn) if (e.GetIfCanGetReward()) return !0;
+    }
+    return !1;
+  }
+  GetCollectRedDotState() {
+    if (!this.GetAllCollectState())
+      for (const e of this.nwn) if (e.GetIfCanGetReward()) return !0;
     return !1;
   }
   GetClueEntrance() {

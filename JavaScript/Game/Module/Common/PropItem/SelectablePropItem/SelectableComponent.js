@@ -130,6 +130,9 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
     this.gBt(e),
       i && ((this.ExpData = i), this.SetExpData(i), this.UpdateExp());
   }
+  RefreshPartByIndex(t) {
+    this.LoopScrollView.RefreshGridProxy(t);
+  }
   gBt(t) {
     (this.SelectedDataList = t || []),
       this.Data.IsSingleSelected && 0 < t.length && this.mBt(t[0]);
@@ -146,6 +149,12 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
       ),
       0 < this.ItemDataList.length &&
         this.LoopScrollView.ScrollToGridIndex(this.LastSelectedIndex);
+  }
+  UpdateChangeItemSelectList() {
+    this.Data.OnChangeSelectedFunction?.(
+      this.SelectedDataList,
+      this.SelectableExpData,
+    );
   }
   GetFirstOperationItem() {
     return this.FirstOperationData;
@@ -287,10 +296,7 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
     }
   }
   dBt() {
-    this.Data.OnChangeSelectedFunction?.(
-      this.SelectedDataList,
-      this.SelectableExpData,
-    );
+    this.UpdateChangeItemSelectList();
   }
 }
 exports.SelectableComponent = SelectableComponent;

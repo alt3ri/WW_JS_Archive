@@ -42,12 +42,12 @@ class PlotViewHud extends UiViewBase_1.UiViewBase {
           (!e && this.IsHideOrHiding) ||
           ((this.vto = e)
             ? (t && this.SetUiActive(!1),
-              this.pbn(),
+              this.Abn(),
               ControllerHolder_1.ControllerHolder.FlowController.CountDownSkip(
                 !0,
               ))
             : (t && this.SetUiActive(!0),
-              this.V2n(),
+              this.J2n(),
               ControllerHolder_1.ControllerHolder.FlowController.CountDownSkip(
                 !1,
               )));
@@ -218,12 +218,12 @@ class PlotViewHud extends UiViewBase_1.UiViewBase {
             ),
           this.CloseMe()));
   }
-  pbn() {
+  Abn() {
     ModelManager_1.ModelManager.PlotModel.CurTalkItem &&
       (this.geo.PauseSubtitle(), this.xOi) &&
       this.xOi.Pause();
   }
-  V2n() {
+  J2n() {
     ModelManager_1.ModelManager.PlotModel.CurTalkItem &&
       (this.geo.ResumeSubtitle(
         ModelManager_1.ModelManager.PlotModel.CurTalkItem,

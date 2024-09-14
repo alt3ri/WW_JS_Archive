@@ -18,7 +18,7 @@ const UE = require("ue"),
   VisibleAnimMachine_1 = require("../State/VisibleAnimMachine"),
   BossStateViewBase_1 = require("./BossStateViewBase"),
   FallDownPercentMachine_1 = require("./FallDownPercentMachine");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 const rgbSplitProgress = new UE.FName("RGBSplit_Progress"),
   FALL_DOWN_DISAPPEAR_PERCENT = 0.9,
   FALL_DOWN_DISAPPEAR_TAIL_COUNT_FACTOR = 10,
@@ -38,7 +38,7 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       (this.snt = 1),
       (this.ant = 1),
       (this.hnt = !1),
-      (this.okn = new BuffItemContainer_1.BuffItemContainer()),
+      (this.mkn = new BuffItemContainer_1.BuffItemContainer()),
       (this.cnt = new HpBufferStateMachine_1.HpBufferStateMachine()),
       (this.mnt = new FallDownPercentMachine_1.FallDownPercentMachine()),
       (this.dnt = new RageBufferStateMachine_1.RageBufferStateMachine()),
@@ -179,7 +179,7 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       this.ont.InitVisible(!1),
       (this.rnt = new VisibleAnimMachine_1.VisibleAnimMachine()),
       this.rnt.InitCallback(this.wnt, this.Bnt, this.qnt),
-      this.okn.Init(this.GetItem(13));
+      this.mkn.Init(this.GetItem(13));
   }
   OnBeforeDestroy() {
     this.SPe.Clear(),
@@ -216,7 +216,7 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       this.Fnt(),
       this.dnt.Reset(),
       this.ost(),
-      this.okn.ClearAll(),
+      this.mkn.ClearAll(),
       (this.Ent = !1),
       this.rnt?.Reset();
   }
@@ -269,11 +269,11 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       this.nst(t),
       this.gnt > this.fnt && (this.hst(0), (this.gnt = -1)),
       0 <= this.gnt && (this.gnt += t),
-      this.okn.Tick(t),
+      this.mkn.Tick(t),
       super.Tick(t);
   }
   ChangeBuff(t, i, s) {
-    i ? this.okn.AddBuffByCue(t, s, !0) : this.okn.RemoveBuffByCue(t, s, !0);
+    i ? this.mkn.AddBuffByCue(t, s, !0) : this.mkn.RemoveBuffByCue(t, s, !0);
   }
   Pnt(t = !1) {
     var [i, s] = this.GetHpAndShieldPercent();
@@ -324,9 +324,9 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
   tst() {
     var t = this.GetEntityId();
     void 0 === t
-      ? this.okn.ClearAll()
+      ? this.mkn.ClearAll()
       : ((t = ModelManager_1.ModelManager.CharacterModel?.GetHandle(t)),
-        this.okn.RefreshBuff(t));
+        this.mkn.RefreshBuff(t));
   }
   xnt() {
     var t, i;

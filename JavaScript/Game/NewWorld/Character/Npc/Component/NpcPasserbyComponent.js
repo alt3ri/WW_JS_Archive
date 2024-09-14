@@ -30,7 +30,7 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   GameSplineComponent_1 = require("../../../../LevelGamePlay/Common/GameSplineComponent"),
   ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  NPC_PB = "Pys",
+  NPC_PB = "Gys",
   END_DISTANCE = 30,
   ENTITY_REMOVE_DELAY = 3,
   DEFUALT_MOVE_SPEED = 100;
@@ -52,13 +52,13 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
     return (
       (this.Wtn = !1),
       (this.Hte = this.Entity.CheckGetComponent(2)),
-      (this.Gce = this.Entity.GetComponent(37)),
+      (this.Gce = this.Entity.GetComponent(38)),
       !(!this.Hte || !this.Gce)
     );
   }
   OnStart() {
     var t = this.Hte.CreatureData,
-      e = t.ComponentDataMap.get(NPC_PB)?.Pys;
+      e = t.ComponentDataMap.get(NPC_PB)?.Gys;
     if (!e)
       return (
         Log_1.Log.CheckError() &&
@@ -68,7 +68,7 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
           ]),
         !1
       );
-    (this.Htn = e.sTs), (this.jtn = e.mjn);
+    (this.Htn = e.dTs), (this.jtn = e.Ejn);
     e = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
       this.jtn,
     );
@@ -196,22 +196,22 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
   }
   Qtn() {
     this.Wtn = !1;
-    var t = Protocol_1.Aki.Protocol.Wes.create();
-    (t.P4n = MathUtils_1.MathUtils.NumberToLong(
+    var t = Protocol_1.Aki.Protocol.Zes.create();
+    (t.F4n = MathUtils_1.MathUtils.NumberToLong(
       this.Hte.CreatureData.GetCreatureDataId(),
     )),
-      Net_1.Net.Call(2717, t, (t) => {
+      Net_1.Net.Call(15661, t, (t) => {
         t &&
-          t.hvs !== Protocol_1.Aki.Protocol.O4n.NRs &&
+          t.Cvs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            t.hvs,
-            9341,
+            t.Cvs,
+            27078,
           );
       });
   }
 };
 (NpcPasserbyComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(80)],
+  [(0, RegisterComponent_1.RegisterComponent)(81)],
   NpcPasserbyComponent,
 )),
   (exports.NpcPasserbyComponent = NpcPasserbyComponent);

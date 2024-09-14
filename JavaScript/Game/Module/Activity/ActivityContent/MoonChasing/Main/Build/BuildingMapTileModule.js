@@ -17,7 +17,7 @@ class TileItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UITexture]];
   }
-  Refresh(i, t, e) {
+  Refresh(i, e, t) {
     this.n8 = i;
   }
   async RefreshAsync() {
@@ -25,15 +25,15 @@ class TileItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 class BuildingMapTileModule extends UiPanelBase_1.UiPanelBase {
-  constructor(i, t) {
+  constructor(i, e) {
     super(),
       (this.NeedLoadingFixRole = i),
-      (this.NeedLoadingShowRoleItem = t),
+      (this.NeedLoadingShowRoleItem = e),
       (this.lRn = new BuildingMapTileMgr_1.BuildingMapTileMgr()),
       (this.MapLayout = void 0),
       (this._Rn = new Map()),
-      (this.GWs = []),
-      (this.TSa = void 0),
+      (this.qKs = []),
+      (this.KIa = void 0),
       (this.uRn = () => new TileItem(this.lRn));
   }
   OnRegisterComponent() {
@@ -54,11 +54,16 @@ class BuildingMapTileModule extends UiPanelBase_1.UiPanelBase {
       [13, UE.UIItem],
     ];
   }
-  GetGuideUiItemAndUiItemForShowEx(i) {
-    if (!(i.length < 2)) {
-      var t = parseInt(i[1]),
-        t = this._Rn.get(t);
-      if (void 0 !== t) return t.GetGuideUiItemAndUiItemForShowEx(i);
+  GetGuideUiItemAndUiItemForShowEx(e) {
+    if (!(e.length < 2)) {
+      let i = 0;
+      i =
+        "CanLevelUp" === e[1]
+          ? (ModelManager_1.ModelManager.MoonChasingBuildingModel.GetFirstCanLevelUpBuildingId() ??
+            0)
+          : parseInt(e[1]);
+      var t = this._Rn.get(i);
+      if (void 0 !== t) return t.GetGuideUiItemAndUiItemForShowEx(e);
     }
   }
   async cRn() {
@@ -68,15 +73,15 @@ class BuildingMapTileModule extends UiPanelBase_1.UiPanelBase {
       this.GetItem(1).GetOwner(),
     );
     var i = this.lRn.CreateTilesPathList();
-    await this.MapLayout.RefreshByDataAsync(i), await this.Hca();
+    await this.MapLayout.RefreshByDataAsync(i), await this.jCa();
   }
-  async Hca() {
+  async jCa() {
     var i = [];
-    for (const t of this.MapLayout.GetLayoutItemList())
-      i.push(t.RefreshAsync());
+    for (const e of this.MapLayout.GetLayoutItemList())
+      i.push(e.RefreshAsync());
     await Promise.all(i);
   }
-  Pda() {
+  Sga() {
     var i = [];
     return (
       i.push(this.GetItem(3)),
@@ -93,95 +98,93 @@ class BuildingMapTileModule extends UiPanelBase_1.UiPanelBase {
     );
   }
   async mRn() {
-    var e = this.Pda(),
+    var t = this.Sga(),
       s = [],
-      r =
+      a =
         ModelManager_1.ModelManager.MoonChasingBuildingModel.GetBuildingConfigListBySort();
-    for (let i = 0, t = r.length; i < t; i++) {
-      var a = e[i],
-        h = r[i].Id,
-        o = new BuildingItem_1.BuildingItem(h);
-      this._Rn.set(h, o),
-        s.push(o.CreateThenShowByResourceIdAsync("UiItem_BuildItem", a));
+    for (let i = 0, e = a.length; i < e; i++) {
+      var r = t[i],
+        o = a[i].Id,
+        n = new BuildingItem_1.BuildingItem(o);
+      this._Rn.set(o, n),
+        s.push(n.CreateThenShowByResourceIdAsync("UiItem_BuildItem", r));
     }
     await Promise.all(s);
   }
-  async uyi(i, t) {
-    var e = new BuildingRoleItem_1.BuildingRoleItem();
-    this.GWs.push(e),
-      await e.CreateThenShowByResourceIdAsync("UiItem_RoleTalk", i),
-      await e.RefreshSpine(t);
+  async uyi(i, e) {
+    var t = new BuildingRoleItem_1.BuildingRoleItem();
+    this.qKs.push(t),
+      await t.CreateThenShowByResourceIdAsync("UiItem_RoleTalk", i),
+      await t.RefreshSpine(e);
   }
-  OWs(t, e) {
+  GKs(e, t) {
     var s = new Set(),
-      r = [];
-    for (let i = 1; i <= t; i++) {
-      let i = Math.floor(Math.random() * e);
-      for (; s.has(i); ) i = Math.floor(Math.random() * e);
-      s.add(i), r.push(i);
+      a = [];
+    for (let i = 1; i <= e; i++) {
+      let i = Math.floor(Math.random() * t);
+      for (; s.has(i); ) i = Math.floor(Math.random() * t);
+      s.add(i), a.push(i);
     }
-    return r;
+    return a;
   }
-  async NWs() {
+  async OKs() {
     if (this.NeedLoadingFixRole) {
       var i =
         ModelManager_1.ModelManager.MoonChasingBusinessModel.GetLastPopularityConfig();
       if (i && 0 !== i.NpcCount) {
-        var t = this.GetItem(2);
-        t.SetUIActive(!1);
-        for (const c of this.GWs) c.Destroy();
-        this.GWs.length = 0;
-        var e = t.AttachChildren,
-          s = e.Num(),
-          r = [],
-          a =
+        var e = this.GetItem(2);
+        e.SetUIActive(!1);
+        for (const _ of this.qKs) _.Destroy();
+        this.qKs.length = 0;
+        var t = e.AttachChildren,
+          s = t.Num(),
+          a = [],
+          r =
             ModelManager_1.ModelManager.MoonChasingBusinessModel.GetUnlockHelpEditTeamDataList(
               !0,
             ),
-          h = Math.min(i.NpcCount, a.length);
-        if (s <= h) {
-          var o = this.OWs(s, a.length);
+          i = Math.min(i.NpcCount, r.length);
+        if (s <= i) {
+          var o = this.GKs(s, r.length);
           for (let i = 0; i < s; i++) {
-            var n = e.Get(i),
-              l = a[o[i]].Id;
-            r.push(this.uyi(n, l));
+            var n = t.Get(i),
+              h = r[o[i]].Id;
+            a.push(this.uyi(n, h));
           }
         } else {
-          var u = this.OWs(h, s),
-            d = this.OWs(h, a.length);
-          for (let i = 0; i < u.length; ++i) {
-            var _ = e.Get(u[i]),
-              M = a[d[i]].Id;
-            r.push(this.uyi(_, M));
+          var l = this.GKs(i, s),
+            u = this.GKs(i, r.length);
+          for (let i = 0; i < l.length; ++i) {
+            var d = t.Get(l[i]),
+              M = r[u[i]].Id;
+            a.push(this.uyi(d, M));
           }
         }
-        await Promise.all(r), t.SetUIActive(!0);
-        h = this.OWs(1, this.GWs.length);
-        this.GWs[h[0]].ShowDialog(i.NpcDialog);
+        await Promise.all(a), e.SetUIActive(!0);
       }
     }
   }
-  async LSa() {
+  async $Ia() {
     var i = this.GetItem(13);
     i.SetUIActive(!1),
       this.NeedLoadingShowRoleItem &&
-        ((this.TSa =
+        ((this.KIa =
           new BuildingMapShowRoleModule_1.BuildingMapShowRoleModule()),
-        await this.TSa.CreateByActorAsync(i.GetOwner()),
-        this.TSa.SetActive(!0));
+        await this.KIa.CreateByActorAsync(i.GetOwner()),
+        this.KIa.SetActive(!0));
   }
   async OnBeforeStartAsync() {
-    await Promise.all([this.cRn(), this.mRn(), this.LSa()]);
+    await Promise.all([this.cRn(), this.mRn(), this.$Ia()]);
   }
   RefreshRole() {
-    this.NWs();
+    this.OKs();
   }
   SetAllBuildingExhibitionMode(i) {
-    for (const t of this._Rn.values())
-      t.SetExhibitionMode(i), t.SetInteractive(!i);
+    for (const e of this._Rn.values())
+      e.SetExhibitionMode(i), e.SetInteractive(!i);
   }
   SetBuildingItemActive(i) {
-    for (const t of this._Rn.values()) t.SetBuildingItemActive(i);
+    for (const e of this._Rn.values()) e.SetBuildingItemActive(i);
   }
   RefreshBuildingItem(i) {
     this._Rn.get(i).Refresh();

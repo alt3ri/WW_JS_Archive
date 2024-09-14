@@ -17,84 +17,104 @@ const LanguageSystem_1 = require("../../Common/LanguageSystem"),
     ["语句", COMMAND],
   ],
   langCache = new Map(),
-  initStat = void 0,
-  getLocalTextStat = void 0,
+  initStat = Stats_1.Stat.Create("configSubtitleTextLang.Init"),
+  getLocalTextStat = Stats_1.Stat.Create("configSubtitleTextLang.GetLocalText"),
   LOCAL_TEXT_STAT_PREFIX = "configSubtitleTextLang.GetLocalText(";
 exports.configSubtitleTextLang = {
   Init: () => {
-    ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND);
+    initStat.Start(),
+      ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND),
+      initStat.Stop();
   },
-  GetLocalText: (e, o = void 0) => {
-    if (LanguageSystem_1.LanguageSystem.GmShowLanguageKey)
+  GetLocalText: (t, e = void 0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getLocalTextStat.Start();
+    var o = Stats_1.Stat.Create("" + LOCAL_TEXT_STAT_PREFIX + t + `, ${e})`);
+    if ((o.Start(), LanguageSystem_1.LanguageSystem.GmShowLanguageKey))
       return (
-        (n = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(o)),
-        TABLE + `|${e}|` + n
+        (i = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(e)),
+        o.Stop(),
+        getLocalTextStat.Stop(),
+        ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+        TABLE + `|${t}|` + i
       );
-    let i = langCache.get(e);
-    i || ((i = new Map()), langCache.set(e, i));
-    var n = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(o);
-    let t = i.get(n);
-    if (t) return t;
+    let n = langCache.get(t);
+    n || ((n = new Map()), langCache.set(t, n));
+    var i = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(e);
+    let a = n.get(i);
+    if (a)
+      return (
+        o.Stop(),
+        getLocalTextStat.Stop(),
+        ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+        a
+      );
     var g = ConfigCommon_1.ConfigCommon.GetLangStatementId(
       TABLE,
       DB,
       COMMAND,
-      n,
+      i,
     );
     if (
-      (a =
+      (m =
         ConfigCommon_1.ConfigCommon.CheckStatement(g) &&
-        ConfigCommon_1.ConfigCommon.BindInt(g, 1, e, ...logPair, ["Id", e]) &&
+        ConfigCommon_1.ConfigCommon.BindInt(g, 1, t, ...logPair, ["Id", t]) &&
         0 <
           ConfigCommon_1.ConfigCommon.Step(
             g,
             !0,
             ...logPair,
-            ["传入语言", o],
-            ["查询语言", n],
-            ["文本Id", e],
+            ["传入语言", e],
+            ["查询语言", i],
+            ["文本Id", t],
           ))
     ) {
-      var r = void 0;
+      var C = void 0;
       if (
-        (([a, r] = ConfigCommon_1.ConfigCommon.GetValue(
+        (([m, C] = ConfigCommon_1.ConfigCommon.GetValue(
           g,
           0,
           ...logPair,
-          ["传入语言", o],
-          ["查询语言", n],
-          ["文本Id", e],
+          ["传入语言", e],
+          ["查询语言", i],
+          ["文本Id", t],
         )),
-        a)
+        m)
       ) {
-        var a = DeserializeConfig_1.DeserializeConfig.ParseStringRange(
-          r,
+        var m = DeserializeConfig_1.DeserializeConfig.ParseStringRange(
+          C,
           0,
-          r.byteLength,
+          C.byteLength,
           ...logPair,
-          ["传入语言", o],
-          ["查询语言", n],
-          ["文本Id", e],
+          ["传入语言", e],
+          ["查询语言", i],
+          ["文本Id", t],
         );
-        if (a.Success)
+        if (m.Success)
           return (
-            (t = a.Value),
+            (a = m.Value),
             ConfigCommon_1.ConfigCommon.Reset(g),
-            StringUtils_1.StringUtils.IsEmpty(t) &&
-              o !== CommonDefine_1.CHS &&
-              ((r = exports.configSubtitleTextLang.GetLocalText(
-                e,
+            o.Stop(),
+            getLocalTextStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            StringUtils_1.StringUtils.IsEmpty(a) &&
+              e !== CommonDefine_1.CHS &&
+              ((C = exports.configSubtitleTextLang.GetLocalText(
+                t,
                 CommonDefine_1.CHS,
               )),
-              StringUtils_1.StringUtils.IsEmpty(r) ||
-                ((a = void 0 === o ? "" : "|" + o),
-                (t = TEXTNOTFOUNT + "|" + e + a))),
-            i.set(n, t),
-            t
+              StringUtils_1.StringUtils.IsEmpty(C) ||
+                ((m = void 0 === e ? "" : "|" + e),
+                (a = TEXTNOTFOUNT + "|" + t + m))),
+            n.set(i, a),
+            a
           );
       }
     }
-    ConfigCommon_1.ConfigCommon.Reset(g);
+    ConfigCommon_1.ConfigCommon.Reset(g),
+      o.Stop(),
+      getLocalTextStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=SubtitleTextLang.js.map

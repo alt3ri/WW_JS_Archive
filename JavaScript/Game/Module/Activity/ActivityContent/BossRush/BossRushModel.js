@@ -20,7 +20,7 @@ class BossRushBuffInfo {
     (this.BuffId = 0),
       (this.Slot = 0),
       (this.ChangeAble = !0),
-      (this.State = Protocol_1.Aki.Protocol.fks.Proto_Empty);
+      (this.State = Protocol_1.Aki.Protocol.Iks.Proto_Empty);
   }
 }
 exports.BossRushBuffInfo = BossRushBuffInfo;
@@ -69,7 +69,7 @@ class BossRushTeamInfo {
   GetOptionBuff() {
     var e = [];
     for (const t of this.cyn)
-      ((0 < t.BuffId && t.State === Protocol_1.Aki.Protocol.fks.cBs) ||
+      ((0 < t.BuffId && t.State === Protocol_1.Aki.Protocol.Iks.pBs) ||
         t.Slot < 0) &&
         -1 === e.findIndex((e) => e.BuffId === t.BuffId) &&
         e.push(t);

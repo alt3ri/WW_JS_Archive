@@ -64,7 +64,7 @@ class TowerFloorItem extends GridProxyAbstract_1.GridProxyAbstract {
     for (let e = 1; e <= TowerModel_1.FLOOR_STAR; e++) s.push(this.BDo >= e);
     this.$be.RefreshByData(s);
     var h = [];
-    if (o) for (const a of o.Formation) h.push(a.O6n);
+    if (o) for (const a of o.Formation) h.push(a.Q6n);
     for (; h.length < TowerData_1.TOWER_TEAM_MAX_NUMBER; ) h.push(0);
     this.tFe.RefreshByData(h),
       this.SetTextureByPath(r.ItemBgPath, this.GetTexture(1)),

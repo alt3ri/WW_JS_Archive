@@ -18,29 +18,45 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configEntitySkillPreloadByActorBlueprintAndSkillId.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configEntitySkillPreloadByActorBlueprintAndSkillId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX =
     "configEntitySkillPreloadByActorBlueprintAndSkillId.GetConfig(";
 exports.configEntitySkillPreloadByActorBlueprintAndSkillId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, i, n = !0) => {
-    if (
-      (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (n) {
-        var l = KEY_PREFIX + `#${o}#${i})`;
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(l);
-        if (t) return t;
+  GetConfig: (o, i, t = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${i})`),
+      l =
+        (n.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (l) {
+      if (t) {
+        var e = KEY_PREFIX + `#${o}#${i})`;
+        const r = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (r)
+          return (
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            r
+          );
       }
       if (
-        (e =
+        (l =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, i, ...logPair) &&
           0 <
@@ -52,33 +68,38 @@ exports.configEntitySkillPreloadByActorBlueprintAndSkillId = {
               ["SkillId", i],
             ))
       ) {
-        var e,
-          l = void 0;
+        e = void 0;
         if (
-          (([e, l] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([l, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["ActorBlueprint", o],
             ["SkillId", i],
           )),
-          e)
+          l)
         ) {
-          const t =
+          const r =
             EntitySkillPreload_1.EntitySkillPreload.getRootAsEntitySkillPreload(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(l.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
             );
           return (
-            n &&
-              ((e = KEY_PREFIX + `#${o}#${i})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(e, t)),
+            t &&
+              ((l = KEY_PREFIX + `#${o}#${i})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(l, r)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            r
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    n.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=EntitySkillPreloadByActorBlueprintAndSkillId.js.map

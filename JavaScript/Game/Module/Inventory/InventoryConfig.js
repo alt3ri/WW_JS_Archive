@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InventoryConfig = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
   Stats_1 = require("../../../Core/Common/Stats"),
+  Lru_1 = require("../../../Core/Container/Lru"),
   AccessPathById_1 = require("../../../Core/Define/ConfigQuery/AccessPathById"),
   BackgroundCardById_1 = require("../../../Core/Define/ConfigQuery/BackgroundCardById"),
   ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById"),
@@ -22,14 +23,15 @@ const Log_1 = require("../../../Core/Common/Log"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   InventoryDefine_1 = require("./InventoryDefine"),
-  ItemConfig_1 = require("./ItemConfig");
+  ItemConfig_1 = require("./ItemConfig"),
+  ITEM_LRU_SIZE = 20;
 class InventoryConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
       (this.Eci = new Map()),
       (this.Sci = new Map()),
       (this.yci = new Map()),
-      (this.apt = new ItemConfig_1.ItemConfig());
+      (this.G9 = new Lru_1.Lru(ITEM_LRU_SIZE, (e) => this.ABa(e)));
   }
   GetAllMainTypeConfig() {
     return ItemMainTypeAll_1.configItemMainTypeAll.GetConfigList();
@@ -47,44 +49,48 @@ class InventoryConfig extends ConfigBase_1.ConfigBase {
   GetItemQualityConfig(e) {
     return QualityInfoById_1.configQualityInfoById.GetConfig(e);
   }
-  GetItemConfigData(e, n = !1) {
-    return n
-      ? ((n = new ItemConfig_1.ItemConfig()),
-        this.GetItemConfigDataRef(e, n),
-        n)
-      : (this.GetItemConfigDataRef(e, this.apt), this.apt);
+  GetItemConfigData(e) {
+    InventoryConfig.Ici.Start();
+    var n = this.G9.Get(e);
+    return (
+      n
+        ? (this.G9.Put(n), InventoryConfig.Ici.Stop())
+        : ((n = this.G9.Create(e)), this.G9.Put(n), InventoryConfig.Ici.Stop()),
+      n
+    );
   }
-  GetItemConfigDataRef(e, n) {
-    if (!n) return !1;
-    let r = void 0;
-    switch (this.GetItemDataTypeByConfigId(e)) {
+  ABa(e) {
+    let n = void 0;
+    var r,
+      t = this.GetItemDataTypeByConfigId(e);
+    switch (t) {
       case 2:
-        r = this.GetWeaponItemConfig(e);
+        n = this.GetWeaponItemConfig(e);
         break;
       case 3:
-        r = this.GetPhantomItemConfig(e);
+        n = this.GetPhantomItemConfig(e);
         break;
       case 4:
-        var t = this.GetPhantomCustomizeItemConfig(e);
-        t && (r = this.GetPhantomItemConfig(t.PhantomId));
+        var i = this.GetPhantomCustomizeItemConfig(e);
+        i && (n = this.GetPhantomItemConfig(i.PhantomId));
         break;
       case 0:
       case 5:
-        r = this.GetItemConfig(e);
+        n = this.GetItemConfig(e);
         break;
       case 1:
-        r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e);
+        n = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e);
         break;
       case 6:
-        r = BackgroundCardById_1.configBackgroundCardById.GetConfig(e);
+        n = BackgroundCardById_1.configBackgroundCardById.GetConfig(e);
         break;
       case 7:
-        r = this.GetPreviewItemConfig(e);
+        n = this.GetPreviewItemConfig(e);
         break;
       case 8:
-        r = RogueCurrencyById_1.configRogueCurrencyById.GetConfig(e);
+        n = RogueCurrencyById_1.configRogueCurrencyById.GetConfig(e);
     }
-    return !!r && (n?.Refresh(r), !0);
+    if (n) return (r = new ItemConfig_1.ItemConfig()).Refresh(n, t), r;
   }
   GetItemDataTypeByConfigId(e) {
     return e >= InventoryDefine_1.weaponIdRange[0] &&
@@ -158,8 +164,11 @@ class InventoryConfig extends ConfigBase_1.ConfigBase {
     return ItemShowTypeById_1.configItemShowTypeById.GetConfig(e);
   }
   OnClear() {
-    return this.Eci.clear(), this.Sci.clear(), this.yci.clear(), !0;
+    return (
+      this.Eci.clear(), this.Sci.clear(), this.yci.clear(), this.G9.Clear(), !0
+    );
   }
 }
-(exports.InventoryConfig = InventoryConfig).Ici = void 0;
+(exports.InventoryConfig = InventoryConfig).Ici =
+  Stats_1.Stat.Create("GetItemConfigData");
 //# sourceMappingURL=InventoryConfig.js.map

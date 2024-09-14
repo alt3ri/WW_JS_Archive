@@ -3,12 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PreloadSetting =
     exports.EntityAssetElement =
     exports.FightAssetManager =
-    exports.StateMachineAssetManager =
+    exports.TemplateDataAssetManager =
+    exports.PbDataAssetManager =
     exports.BulletAssetManager =
     exports.SkillAssetManager =
     exports.CommonAssetElement =
     exports.AssetElement =
     exports.EntityMainAssetRecord =
+    exports.PbDataAssetRecord =
+    exports.TemplateDataAssetRecord =
     exports.StateMachineAssetRecord =
     exports.BulletAssetRecord =
     exports.SkillAssetRecord =
@@ -17,6 +20,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0);
 const UE = require("ue"),
   Log_1 = require("../../Core/Common/Log"),
+  EntitySkillPreloadByActorBlueprint_1 = require("../../Core/Define/ConfigQuery/EntitySkillPreloadByActorBlueprint"),
   GlobalData_1 = require("../GlobalData"),
   ModelManager_1 = require("../Manager/ModelManager"),
   FORBID_PATH = ((exports.USE_DB = !1), "/Game/Aki/Scene/Assets/Temp");
@@ -106,6 +110,18 @@ class StateMachineAssetRecord {
   }
 }
 exports.StateMachineAssetRecord = StateMachineAssetRecord;
+class TemplateDataAssetRecord {
+  constructor() {
+    (this.TemplateDataId = 0), (this.AssetRecord = new AssetRecord());
+  }
+}
+exports.TemplateDataAssetRecord = TemplateDataAssetRecord;
+class PbDataAssetRecord {
+  constructor() {
+    (this.PbDataId = 0), (this.AssetRecord = new AssetRecord());
+  }
+}
+exports.PbDataAssetRecord = PbDataAssetRecord;
 class EntityMainAssetRecord {
   constructor() {
     (this.ModelId = 0),
@@ -115,16 +131,22 @@ class EntityMainAssetRecord {
 }
 exports.EntityMainAssetRecord = EntityMainAssetRecord;
 class AssetElement {
-  constructor() {
-    (this.AssetForIndexMap = new Map()),
+  constructor(t) {
+    (this.XJr = void 0),
+      (this.AssetForIndexMap = new Map()),
       (this.HasError = !1),
       (this.AssetPathSet = new Set()),
       (this.NeedLoadAssets = new Array()),
+      (this.NeedLoadAssetTypes = new Array()),
       (this.LoadingSet = new Set()),
       (this.LoadedSet = new Set()),
       (this.AddObjectCallback = void 0),
       (this.LoadPriority = 100),
-      (this.B7 = void 0);
+      (this.B7 = void 0),
+      (this.XJr = t);
+  }
+  GetEntityAssetElement() {
+    return this.XJr;
   }
   SetCallback(t) {
     this.B7 = t;
@@ -149,62 +171,65 @@ class AssetElement {
     return !this.AssetPathSet.has(t) && (this.AssetPathSet.add(t), !0);
   }
   AddObject(t, s) {
-    this.LoadedSet.has(t) || this.AddObjectCallback?.(s, t);
+    return (
+      !this.LoadedSet.has(t) &&
+      (this.LoadedSet.add(t), this.AddObjectCallback?.(s, t), !0)
+    );
   }
   AddActorClass(t) {
     return (
       !!this.CheckPath(t) &&
       !!this.AddPath(t) &&
-      (this.NeedLoadAssets.push([0, t]), !0)
+      (this.NeedLoadAssets.push(t), this.NeedLoadAssetTypes.push(0), !0)
     );
   }
   AddAnimation(t) {
     return (
       !!this.CheckPath(t) &&
       !!this.AddPath(t) &&
-      (this.NeedLoadAssets.push([1, t]), !0)
+      (this.NeedLoadAssets.push(t), this.NeedLoadAssetTypes.push(1), !0)
     );
   }
   AddEffect(t) {
     return (
       !!this.CheckPath(t) &&
       !!this.AddPath(t) &&
-      (this.NeedLoadAssets.push([2, t]), !0)
+      (this.NeedLoadAssets.push(t), this.NeedLoadAssetTypes.push(2), !0)
     );
   }
   AddAudio(t) {
     return (
       !!this.CheckPath(t) &&
       !!this.AddPath(t) &&
-      (this.NeedLoadAssets.push([3, t]), !0)
+      (this.NeedLoadAssets.push(t), this.NeedLoadAssetTypes.push(3), !0)
     );
   }
   AddMesh(t) {
     return (
       !!this.CheckPath(t) &&
       !!this.AddPath(t) &&
-      (this.NeedLoadAssets.push([4, t]), !0)
+      (this.NeedLoadAssets.push(t), this.NeedLoadAssetTypes.push(4), !0)
     );
   }
   AddMaterial(t) {
     return (
       !!this.CheckPath(t) &&
       !!this.AddPath(t) &&
-      (this.NeedLoadAssets.push([5, t]), !0)
+      (this.NeedLoadAssets.push(t), this.NeedLoadAssetTypes.push(5), !0)
     );
   }
   AddOther(t) {
     return (
       !!this.CheckPath(t) &&
       !!this.AddPath(t) &&
-      (this.NeedLoadAssets.push([7, t]), !0)
+      (this.NeedLoadAssets.push(t), this.NeedLoadAssetTypes.push(7), !0)
     );
   }
   AddAnimationBlueprint(t) {
     return (
       !!this.CheckPath(t) &&
       !!this.AddPath(t) &&
-      (this.NeedLoadAssets.push([6, t]), !0)
+      (this.NeedLoadAssets.push(t), this.NeedLoadAssetTypes.push(6), !0)
     );
   }
   AddAsset(t, s) {
@@ -241,9 +266,6 @@ class AssetElement {
   RemoveLoading(t) {
     return this.LoadingSet.delete(t);
   }
-  AddLoaded(t) {
-    return !this.LoadedSet.has(t) && (this.LoadedSet.add(t), !0);
-  }
   RemoveLoaded(t) {
     return this.LoadedSet.delete(t);
   }
@@ -260,17 +282,22 @@ class AssetElement {
 }
 class CommonAssetElement extends (exports.AssetElement = AssetElement) {
   AddObject(t, s) {
-    this.AssetForIndexMap.set(
-      t,
-      ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.CommonAssets.Num(),
-    ),
-      ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.AddCommonAsset(
+    return (
+      !!super.AddObject(t, s) &&
+      (this.AssetForIndexMap.set(
+        t,
+        ModelManager_1.ModelManager.PreloadModelNew.HoldPreloadObject.CommonAssets.Num(),
+      ),
+      ModelManager_1.ModelManager.PreloadModelNew.HoldPreloadObject.AddCommonAsset(
         s,
-      );
+      ),
+      !0)
+    );
   }
   PrintDebugInfo() {
     var s =
-      ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.CommonAssets;
+      ModelManager_1.ModelManager.PreloadModelNew.HoldPreloadObject
+        .CommonAssets;
     let e = `
 预加载的公共资源列表如下(数量:${s.Num()}):
 `;
@@ -287,7 +314,7 @@ class CommonAssetElement extends (exports.AssetElement = AssetElement) {
     Log_1.Log.CheckDebug() && Log_1.Log.Debug("Preload", 3, e);
   }
   Clear() {
-    ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.ClearCommonAsset(),
+    ModelManager_1.ModelManager.PreloadModelNew.HoldPreloadObject.ClearCommonAsset(),
       super.Clear();
   }
 }
@@ -295,8 +322,24 @@ exports.CommonAssetElement = CommonAssetElement;
 class SkillAssetManager {
   constructor(t) {
     (this.FightAssetManager = t),
+      (this.IWa = void 0),
       (this.SkillAssetMap = new Map()),
       (this._ar = void 0);
+  }
+  GetEntitySkillPreload(t) {
+    var s;
+    return (
+      this.IWa ||
+        ((this.IWa = new Map()),
+        (s = this.FightAssetManager.EntityAssetElement.BlueprintClassPath)
+          ?.length &&
+          EntitySkillPreloadByActorBlueprint_1.configEntitySkillPreloadByActorBlueprint
+            .GetConfigList(s)
+            ?.forEach((t) => {
+              this.IWa.set(t.SkillId, t);
+            })),
+      this.IWa.get(t)
+    );
   }
   AddSkill(e, t) {
     return (
@@ -305,28 +348,24 @@ class SkillAssetManager {
           UE.HoldPreloadObject.StaticClass(),
           GlobalData_1.GlobalData.GameInstance,
         )),
-      this.SkillAssetMap.has(e)
-        ? (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("World", 3, "[预加载] 重复添加技能", [
-              "SkillId",
-              e,
-            ]),
+      this.SkillAssetMap.has(e) &&
+        Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("World", 3, "[预加载] 覆盖添加技能", ["SkillId", e]),
+      t
+        ? (this.SkillAssetMap.set(e, t),
+          (t.AddObjectCallback = (t, s) => {
+            4 !== this.FightAssetManager.EntityAssetElement.LoadState &&
+              this._ar.AddEntityAsset(e, t);
+          }),
+          !0)
+        : (Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "World",
+              3,
+              "[预加载] assetElement无效，添加技能失败",
+              ["SkillId", e],
+            ),
           !1)
-        : t
-          ? (this.SkillAssetMap.set(e, t),
-            (t.AddObjectCallback = (t, s) => {
-              3 !== this.FightAssetManager.EntityAssetElement.LoadState &&
-                this._ar.AddEntityAsset(e, t);
-            }),
-            !0)
-          : (Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "World",
-                3,
-                "[预加载] assetElement无效，添加技能失败",
-                ["SkillId", e],
-              ),
-            !1)
     );
   }
   RemoveSkill(t) {
@@ -351,11 +390,7 @@ class BulletAssetManager {
       (this.IndexMapping = new Map()),
       (this.BulletAssetMap = new Map()),
       (this._ar = void 0),
-      (this.jEe = -1),
-      (this._ar = UE.NewObject(
-        UE.HoldPreloadObject.StaticClass(),
-        GlobalData_1.GlobalData.GameInstance,
-      ));
+      (this.jEe = -1);
   }
   AddBullet(t, s) {
     if (
@@ -388,7 +423,7 @@ class BulletAssetManager {
       this.IndexMapping.set(e, t),
       this.BulletAssetMap.set(e, s),
       (s.AddObjectCallback = (t, s) => {
-        3 !== this.FightAssetManager.EntityAssetElement.LoadState &&
+        4 !== this.FightAssetManager.EntityAssetElement.LoadState &&
           this._ar.AddEntityAsset(e, t);
       }),
       !0
@@ -418,98 +453,80 @@ class BulletAssetManager {
   }
 }
 exports.BulletAssetManager = BulletAssetManager;
-class StateMachineAssetManager {
+class PbDataAssetManager {
   constructor(t) {
-    (this.FightAssetManager = t),
-      (this.StateMachineMapping = new Map()),
-      (this.IndexMapping = new Map()),
-      (this.StateMachineAssetMap = new Map()),
-      (this._ar = void 0),
-      (this.jEe = -1),
-      (this._ar = UE.NewObject(
-        UE.HoldPreloadObject.StaticClass(),
-        GlobalData_1.GlobalData.GameInstance,
-      ));
+    (this.FightAssetManager = t), (this._ar = void 0), (this._Gt = 1);
   }
-  AddStateMachine(t, s) {
-    if (
-      (void 0 === this._ar &&
+  InitPbData(t) {
+    return (
+      void 0 === this._ar &&
         (this._ar = UE.NewObject(
           UE.HoldPreloadObject.StaticClass(),
           GlobalData_1.GlobalData.GameInstance,
         )),
-      this.StateMachineMapping.has(t))
-    )
-      return (
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error("World", 3, "[预加载] 重复添加状态机", ["fsmKey", t]),
-        !1
-      );
-    if (!s)
-      return (
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "World",
-            3,
-            "[预加载] assetElement无效，添加状态机失败",
-            ["FsmKey", t],
-          ),
-        !1
-      );
-    const e = ++this.jEe;
-    return (
-      this.StateMachineMapping.set(t, e),
-      this.IndexMapping.set(e, t),
-      this.StateMachineAssetMap.set(e, s),
-      (s.AddObjectCallback = (t, s) => {
-        3 !== this.FightAssetManager.EntityAssetElement.LoadState &&
-          this._ar.AddEntityAsset(e, t);
-      }),
-      !0
-    );
-  }
-  GetStateMachine(t) {
-    t = this.StateMachineMapping.get(t);
-    if (void 0 !== t) return this.StateMachineAssetMap.get(t);
-  }
-  RemoveStateMachine(t) {
-    var s = this.StateMachineMapping.get(t);
-    return (
-      void 0 !== s &&
-      (this.IndexMapping.delete(s),
-      this.StateMachineMapping.delete(t),
-      this.StateMachineAssetMap.delete(s),
-      this._ar?.RemoveEntityAssets(s),
-      !0)
+      t
+        ? ((t.AddObjectCallback = (t, s) => {
+            4 !== this.FightAssetManager.EntityAssetElement.LoadState &&
+              this._ar.AddEntityAsset(this._Gt, t);
+          }),
+          !0)
+        : (Log_1.Log.CheckError() &&
+            Log_1.Log.Error("World", 3, "[预加载] assetElement无效"),
+          !1)
     );
   }
   Clear() {
-    (this.jEe = -1),
-      this.StateMachineMapping.clear(),
-      this.IndexMapping.clear(),
-      this.StateMachineAssetMap.clear(),
-      this._ar?.Clear();
+    this._ar?.Clear();
   }
 }
-exports.StateMachineAssetManager = StateMachineAssetManager;
+exports.PbDataAssetManager = PbDataAssetManager;
+class TemplateDataAssetManager {
+  constructor(t) {
+    (this.FightAssetManager = t), (this._ar = void 0), (this._Gt = 1);
+  }
+  InitTemplateData(t) {
+    return (
+      void 0 === this._ar &&
+        (this._ar = UE.NewObject(
+          UE.HoldPreloadObject.StaticClass(),
+          GlobalData_1.GlobalData.GameInstance,
+        )),
+      t
+        ? ((t.AddObjectCallback = (t, s) => {
+            4 !== this.FightAssetManager.EntityAssetElement.LoadState &&
+              this._ar.AddEntityAsset(this._Gt, t);
+          }),
+          !0)
+        : (Log_1.Log.CheckError() &&
+            Log_1.Log.Error("World", 3, "[预加载] assetElement无效"),
+          !1)
+    );
+  }
+  Clear() {
+    this._ar?.Clear();
+  }
+}
+exports.TemplateDataAssetManager = TemplateDataAssetManager;
 class FightAssetManager {
   constructor(t) {
     (this.EntityAssetElement = t),
       (this.SkillAssetManager = new SkillAssetManager(this)),
       (this.BulletAssetManager = new BulletAssetManager(this)),
-      (this.StateMachineAssetManager = new StateMachineAssetManager(this));
+      (this.PbDataAssetManager = new PbDataAssetManager(this)),
+      (this.TemplateDataAssetManager = new TemplateDataAssetManager(this));
   }
   Clear() {
     this.SkillAssetManager.Clear(),
       this.BulletAssetManager.Clear(),
-      this.StateMachineAssetManager.Clear();
+      this.PbDataAssetManager.Clear(),
+      this.TemplateDataAssetManager.Clear();
   }
 }
 exports.FightAssetManager = FightAssetManager;
 class EntityAssetElement {
   constructor(t) {
     (this.Promise = void 0),
-      (this.MainAsset = new AssetElement()),
+      (this.MainAsset = new AssetElement(this)),
       (this.FightAssetManager = new FightAssetManager(this)),
       (this.EntityHandle = void 0),
       (this.CreatureDataComponent = void 0),
@@ -521,7 +538,7 @@ class EntityAssetElement {
       (this.IsDestroy = !1),
       (this.EntityHandle = t),
       (this.CreatureDataComponent = t.Entity.GetComponent(0)),
-      (ModelManager_1.ModelManager.PreloadModel.LoadingNeedWaitEntitySet.has(
+      (ModelManager_1.ModelManager.PreloadModelNew.LoadingNeedWaitEntitySet.has(
         t.Id,
       ) ||
         (this.CreatureDataComponent.IsRole() &&
@@ -565,14 +582,16 @@ class EntityAssetElement {
     this.Callbacks = void 0;
   }
   Clear() {
-    ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.RemoveEntityAssets(
-      this.Entity.Id,
+    var t = this.Entity?.GetComponent(0)?.GetCreatureDataId();
+    ModelManager_1.ModelManager.PreloadModelNew.HoldPreloadObject.RemoveEntityAssets(
+      t,
     ),
       this.FightAssetManager.Clear(),
       (this.mar = void 0),
       (this.EntityHandle = void 0),
       (this.CreatureDataComponent = void 0),
       (this.car = !1),
+      this.Callbacks && this.DoCallback(4),
       (this.Callbacks = void 0),
       (this.uar = 0),
       (this.IsDestroy = !0);
@@ -589,5 +608,5 @@ class PreloadSetting {
   }
 }
 ((exports.PreloadSetting = PreloadSetting).Default = new PreloadSetting()),
-  (PreloadSetting.dar = !1);
+  (PreloadSetting.dar = !0);
 //# sourceMappingURL=PreloadDefine.js.map

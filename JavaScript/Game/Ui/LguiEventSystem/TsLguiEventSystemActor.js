@@ -4,10 +4,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
   Global_1 = require("../../../Game/Global"),
   CursorController_1 = require("../../../Game/Module/Cursor/CursorController"),
+  Platform_1 = require("../../../Launcher/Platform/Platform"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../Common/Event/EventSystem");
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  UiNavigationDefine_1 = require("../../Module/UiNavigation/New/UiNavigationDefine");
 class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
   constructor() {
     super(...arguments),
@@ -16,7 +19,8 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
       (this.CurrentInputModule = void 0),
       (this.NavigationEnable = !1),
       (this.HandleWrapper = void 0),
-      (this.ShowTypeChange = (t, e) => {});
+      (this.ShowTypeChange = (t, e) => {}),
+      (this.ControllerConnectChange = (t, e, i) => {});
   }
   InitializeLguiEventSystemActor() {
     this.RefreshCurrentInputModule();
@@ -26,6 +30,7 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
     (this.HandleWrapper =
       this.StandaloneInputModule.RegisterInputChangeEvent(t)),
       this.AddEvents(),
+      this.RegisterControllerChange(),
       CursorController_1.CursorController.SetWindowCursorStyle(),
       this.RegisterPointEnterExitEvent(),
       this.BroadCastInputType();
@@ -36,6 +41,7 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
         TsLguiEventSystemActor.ChangeController,
       ),
       (this.HandleWrapper = void 0),
+      this.UnRegisterControllerChange(),
       this.RemoveEvents(),
       this.UnRegisterPointEnterExitEvent();
   }
@@ -54,15 +60,44 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
       this.ShowTypeChange,
     );
   }
+  RegisterControllerChange() {
+    (this.ControllerConnectChange = (t, e, i) => {
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("MobileInputSwitch", 11, "广播了连接通知"),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.ControllerConnectChange,
+          t,
+          e,
+          i,
+        );
+    }),
+      this.EventSystem.OnConnectionChanged.Add(this.ControllerConnectChange),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "MobileInputSwitch",
+          11,
+          "注册了连接通知",
+          ["this.EventSystem", void 0 !== this.EventSystem],
+          [
+            "this.ControllerConnectChange",
+            void 0 !== this.ControllerConnectChange,
+          ],
+        );
+  }
+  UnRegisterControllerChange() {
+    this.EventSystem.OnConnectionChanged.Remove(this.ControllerConnectChange),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("MobileInputSwitch", 11, "注销了连接通知");
+  }
   InputTrigger(t, e) {
-    var s;
+    var i;
     Info_1.Info.IsInTouch() ||
-      ((s = Global_1.Global.CharacterController) &&
-        s.bShowMouseCursor &&
+      ((i = Global_1.Global.CharacterController) &&
+        i.bShowMouseCursor &&
         this.StandaloneInputModule.InputTrigger(t, e));
   }
-  InputNavigation(t, e, s = !1) {
-    (this.NavigationEnable || s) &&
+  InputNavigation(t, e, i = !1) {
+    (this.NavigationEnable || i) &&
       this.CurrentInputModule &&
       ((TsLguiEventSystemActor.InputType = 1),
       this.CurrentInputModule.InputNavigation(t, e));
@@ -86,11 +121,19 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
           ((t.inputType = 0),
           TsLguiEventSystemActor.ChangeController(t.inputType)));
   }
-  InputTouchTrigger(t, e, s) {
-    this.TouchInputModule.InputTouchTrigger(t, e, s);
+  InputTouchTrigger(t, e, i) {
+    let s = e;
+    Platform_1.Platform.IsMobilePlatform() &&
+      Info_1.Info.IsInGamepad() &&
+      (s = e + UiNavigationDefine_1.MOBILE_TOUCHID_ADD_INGAMEPAD),
+      this.TouchInputModule.InputTouchTrigger(t, s, i);
   }
   InputTouchMove(t, e) {
-    this.TouchInputModule.InputTouchMoved(t, e);
+    let i = t;
+    Platform_1.Platform.IsMobilePlatform() &&
+      Info_1.Info.IsInGamepad() &&
+      (i = t + UiNavigationDefine_1.MOBILE_TOUCHID_ADD_INGAMEPAD),
+      this.TouchInputModule.InputTouchMoved(i, e);
   }
   RefreshCurrentInputModule() {
     Info_1.Info.IsInTouch()
@@ -112,11 +155,11 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
       this.CurrentInputModule.IsPointerEventDataLineTrace(t)
     );
   }
-  SimulateClickButton(t, e, s = new UE.Vector2D(0.5, 0.5)) {
-    return this.StandaloneInputModule.SimulationLineTrace(t, e, s);
+  SimulateClickButton(t, e, i = new UE.Vector2D(0.5, 0.5)) {
+    return this.StandaloneInputModule.SimulationLineTrace(t, e, i);
   }
-  SimulationPointerDownUp(t, e, s) {
-    return this.StandaloneInputModule.SimulationPointerDownUp(t, e, s);
+  SimulationPointerDownUp(t, e, i) {
+    return this.StandaloneInputModule.SimulationPointerDownUp(t, e, i);
   }
   SimulationPointerTrigger(t, e) {
     this.StandaloneInputModule.SimulationPointerTrigger(t, e);
@@ -134,8 +177,8 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
     this.StandaloneInputModule.SetIsForceChange(t);
   }
   SetPrevMousePosition(t, e) {
-    var s = this.GetPointerEventData(0, !0);
-    s && (s.prevMousePos = new UE.Vector2D(t, e));
+    var i = this.GetPointerEventData(0, !0);
+    i && (i.prevMousePos = new UE.Vector2D(t, e));
   }
   SetCurrentInputKeyType(t) {
     this.StandaloneInputModule &&

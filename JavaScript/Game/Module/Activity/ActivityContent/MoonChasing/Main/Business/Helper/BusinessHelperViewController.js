@@ -9,16 +9,16 @@ const UiManager_1 = require("../../../../../../../Ui/UiManager"),
 class BusinessHelperViewController {
   constructor() {
     (this.Yzt = void 0),
-      (this.Aaa = !1),
+      (this.R1a = !1),
       (this.SelectedRoleId = 0),
       (this.RefreshInteractivePanel = () => {
-        this.Aaa && this.Yzt.RefreshInteractivePanel();
+        this.R1a && this.Yzt.RefreshInteractivePanel();
       }),
       (this.BackToLastState = () => {
-        this.Aaa ? this.SkipToHelpPanel() : this.Yzt.CloseMe();
+        this.R1a ? this.SkipToHelpPanel() : this.Yzt.CloseMe();
       }),
       (this.OpenHelpView = () => {
-        this.Aaa
+        this.R1a
           ? HelpController_1.HelpController.OpenHelpById(INTERACTIVE_HELPID)
           : HelpController_1.HelpController.OpenHelpById(HELP_HELPID);
       });
@@ -27,16 +27,16 @@ class BusinessHelperViewController {
     this.Yzt = i;
   }
   Show() {
-    this.Yzt.ShowView(this.Aaa);
+    this.Yzt.ShowView(this.R1a);
   }
   async RefreshSpine(i) {
     (this.SelectedRoleId = i), await this.Yzt.RefreshSpine(i);
   }
   SkipToHelpPanel() {
-    (this.Aaa = !1), this.Yzt.SkipToHelpPanel();
+    (this.R1a = !1), this.Yzt.SkipToHelpPanel();
   }
   SkipToInteractivePanel() {
-    (this.Aaa = !0), this.Yzt.SkipToInteractivePanel();
+    (this.R1a = !0), this.Yzt.SkipToInteractivePanel();
   }
   SkipToTaskView(i, e) {
     MoonChasingController_1.MoonChasingController.OpenTaskView(i, e);

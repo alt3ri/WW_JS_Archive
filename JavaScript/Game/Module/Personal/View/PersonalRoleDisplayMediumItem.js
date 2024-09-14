@@ -10,10 +10,10 @@ class PersonalRoleDisplayMediumItem extends GridProxyAbstract_1.GridProxyAbstrac
   constructor() {
     super(...arguments),
       (this.dFe = 0),
-      (this.osa = void 0),
-      (this.nsa = void 0),
-      (this.ssa = () => {
-        this.nsa && this.nsa(this.dFe);
+      (this.Nha = void 0),
+      (this.kha = void 0),
+      (this.Fha = () => {
+        this.kha && this.kha(this.dFe);
       });
   }
   OnRegisterComponent() {
@@ -23,31 +23,31 @@ class PersonalRoleDisplayMediumItem extends GridProxyAbstract_1.GridProxyAbstrac
     ];
   }
   OnStart() {
-    (this.osa = new MediumItemGrid_1.MediumItemGrid()),
-      this.osa.Initialize(this.GetItem(1).GetOwner()),
-      this.osa.BindOnCanExecuteChange(() => !1),
-      this.osa.BindOnExtendToggleRelease(this.ssa);
+    (this.Nha = new MediumItemGrid_1.MediumItemGrid()),
+      this.Nha.Initialize(this.GetItem(1).GetOwner()),
+      this.Nha.BindOnCanExecuteChange(() => !1),
+      this.Nha.BindOnExtendToggleRelease(this.Fha);
   }
   Refresh(e, t, i) {
     (this.GridIndex = i),
       (this.dFe = e) < 0
-        ? (this.GetItem(0).SetUIActive(!0), this.osa.SetUiActive(!1))
+        ? (this.GetItem(0).SetUIActive(!0), this.Nha.SetUiActive(!1))
         : (this.GetItem(0).SetUIActive(!1),
-          this.osa.SetUiActive(!0),
+          this.Nha.SetUiActive(!0),
           (i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e)),
           (i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.Name)),
-          this.osa.Apply({ Type: 2, Data: e, ItemConfigId: e, BottomText: i }),
+          this.Nha.Apply({ Type: 2, Data: e, ItemConfigId: e, BottomText: i }),
           (e = t ? 1 : 0),
-          this.osa.GetItemGridExtendToggle().SetToggleStateForce(e));
+          this.Nha.GetItemGridExtendToggle().SetToggleStateForce(e));
   }
   BindClickItemCallBack(e) {
-    this.nsa = e;
+    this.kha = e;
   }
   OnSelected(e) {
-    this.osa.GetItemGridExtendToggle().SetToggleStateForce(1);
+    this.Nha.GetItemGridExtendToggle().SetToggleStateForce(1);
   }
   OnDeselected(e) {
-    this.osa.GetItemGridExtendToggle().SetToggleStateForce(0);
+    this.Nha.GetItemGridExtendToggle().SetToggleStateForce(0);
   }
 }
 exports.PersonalRoleDisplayMediumItem = PersonalRoleDisplayMediumItem;

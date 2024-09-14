@@ -22,32 +22,32 @@ class RogueGainEntry {
       (this.RestCount = 0),
       (this.IsValid = !1),
       (this.BindId = t),
-      (this.RoguelikeGainDataType = i.Z4n),
-      (this.ConfigId = i._9n ?? void 0),
-      (this.Index = i.r5n ?? void 0),
-      (this.IsSell = i.U2s ?? void 0),
+      (this.RoguelikeGainDataType = i.h5n),
+      (this.ConfigId = i.v9n ?? void 0),
+      (this.Index = i.c5n ?? void 0),
+      (this.IsSell = i.O2s ?? void 0),
       (this.ElementDict = new Map()),
-      (this.IsSelect = i.w2s),
-      (this.IsNew = i.sws),
-      (this.Cost = i.x2s),
-      (this.RestCount = i.b2s),
-      (this.IsValid = i.vTs);
-    for (const e of Object.keys(i.L2s ?? {})) {
-      var s = i.L2s[e] ?? 0;
+      (this.IsSelect = i.k2s),
+      (this.IsNew = i.dws),
+      (this.Cost = i.N2s),
+      (this.RestCount = i.F2s),
+      (this.IsValid = i.TTs);
+    for (const e of Object.keys(i.x2s ?? {})) {
+      var s = i.x2s[e] ?? 0;
       s && this.ElementDict.set(Number(e), s);
     }
-    if (i.A2s) {
+    if (i.q2s) {
       this.AffixEntryList = new Array();
-      for (const h of i.A2s)
+      for (const h of i.q2s)
         this.AffixEntryList.push(new AffixEntry_1.AffixEntry(h));
-      if (i.P2s) {
-        for (const o of Object.keys(i.P2s.R2s ?? {}))
+      if (i.G2s) {
+        for (const o of Object.keys(i.G2s.b2s ?? {}))
           (this.ShopItemCoinId = Number(o)),
-            (this.OriginalPrice = i.P2s.R2s[o]);
+            (this.OriginalPrice = i.G2s.b2s[o]);
         (this.CurrentPrice =
           this.OriginalPrice -
-          Math.floor(this.OriginalPrice * i.P2s.D2s * 0.01)),
-          (this.Discounted = i.P2s.D2s);
+          Math.floor(this.OriginalPrice * i.G2s.B2s * 0.01)),
+          (this.Discounted = i.G2s.B2s);
       }
     }
   }

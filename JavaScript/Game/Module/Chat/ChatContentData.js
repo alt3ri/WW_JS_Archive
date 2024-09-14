@@ -3,18 +3,20 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChatContentData = void 0);
 const ModelManager_1 = require("../../Manager/ModelManager");
 class ChatContentData {
-  constructor(t, s, e, a, i, h, r, n, o, M, c) {
+  constructor(t, s, e, i, a, h, r, n, o, M, c, d, l) {
     (this.ContentUniqueId = t),
       (this.SenderPlayerId = s),
       (this.Content = e),
-      (this.ContentType = a),
-      (this.NoticeType = i),
+      (this.ContentType = i),
+      (this.NoticeType = a),
       (this.IsOfflineMassage = h),
       (this.TimeStamp = r),
       (this.LastTimeStamp = n),
       (this.ChatRoomType = o),
       (this.SenderPlayerName = M),
-      (this.SenderPlayerIcon = c);
+      (this.SenderPlayerIcon = c),
+      (this.PsOnlineId = d),
+      (this.PsAccountId = l);
   }
   IsOwnSend() {
     return (

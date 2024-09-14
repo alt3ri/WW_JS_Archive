@@ -176,7 +176,7 @@ exports.PlotContext = PlotContext;
 class GeneralLogicTreeContext extends GeneralContext {
   constructor() {
     super(),
-      (this.TreeIncId = void 0),
+      (this.TreeIncId = BigInt(0)),
       (this.TreeConfigId = 0),
       (this.NodeId = 0),
       (this.BtType = 0),

@@ -343,7 +343,7 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
                 ModelManager_1.ModelManager.LoginModel.SetMultiMapId(9),
                 (ModelManager_1.ModelManager.LoginModel.BornMode =
                   UiBlueprintFunctionLibrary.TestSceneLoadNetMode() ? 0 : 1),
-                new Protocol_1.Aki.Protocol.Pks()),
+                new Protocol_1.Aki.Protocol.Gks()),
               i =
                 ((i.X = UiBlueprintFunctionLibrary.TempLocation.X),
                 (i.Y = UiBlueprintFunctionLibrary.TempLocation.Y),
@@ -360,7 +360,7 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
                 (ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
                   i,
                 )?.InstType ===
-                  Protocol_1.Aki.Protocol.XFs.Proto_NormalInstance &&
+                  Protocol_1.Aki.Protocol.i4s.Proto_NormalInstance &&
                   UiBlueprintFunctionLibrary.TestLoadSceneData()
                     .IsDisableTeleportDungeon &&
                   ModelManager_1.ModelManager.SundryModel.BlockTpDungeonCount++,
@@ -538,6 +538,10 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static GetUiWeaponBreachLevel() {
     return ModelManager_1.ModelManager.WeaponModel.BlueprintWeaponBreachLevel;
+  }
+  static GetUiWeaponEquippedRoleId() {
+    return ModelManager_1.ModelManager.WeaponModel
+      .BlueprintWeaponEquippedRoleId;
   }
   static GetWeaponViewName() {
     return ModelManager_1.ModelManager.WeaponModel.GetCurSelectViewName();

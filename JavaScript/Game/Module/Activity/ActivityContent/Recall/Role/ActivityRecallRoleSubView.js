@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRecallRoleSubView = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log"),
+const CustomPromise_1 = require("../../../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
   GachaDefine_1 = require("../../../../Gacha/GachaDefine"),
   UpRoleGachaPoolItem_1 = require("../../../../Gacha/GachaMainView/UpRoleGachaPoolItem"),
@@ -14,122 +15,127 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
 class ActivityRecallRoleSubView extends ActivityRecallDefine_1.ActivityMainSubViewBase {
   constructor() {
     super(...arguments),
-      (this.R_a = void 0),
-      (this.u_a = void 0),
-      (this.U_a = void 0),
-      (this.m_a = void 0),
-      (this.y_a = void 0),
-      (this.n_a = void 0),
-      (this.tca = void 0),
-      (this.Wwn = (i) => {
-        var e,
+      (this.Nda = void 0),
+      (this.Eda = void 0),
+      (this.Fda = void 0),
+      (this.Ida = void 0),
+      (this.bda = void 0),
+      (this.gda = void 0),
+      (this.rCa = void 0),
+      (this.Wwn = (e) => {
+        var i,
           t,
-          i = this.m_a[i].Config,
+          e = this.Ida[e].Config,
           l =
-            (this.U_a.RefreshByData(i),
-            ModelManager_1.ModelManager.GachaModel.GetGachaInfo(i.GachaId));
+            (this.Fda.RefreshByData(e),
+            ModelManager_1.ModelManager.GachaModel.GetGachaInfo(e.GachaId));
         void 0 === l
           ? Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "ActivityRecall",
               64,
               "[回流活动]ActivityRecallRoleSubView->TabCallBack 不存在该抽卡数据",
-              ["GachaId: ", i.GachaId],
+              ["GachaId: ", e.GachaId],
             )
           : void 0 ===
-              (e =
-                0 < (t = l.UsePoolId)
-                  ? l.GetPoolInfo(t)
+              (t =
+                0 < (i = l.UsePoolId)
+                  ? l.GetPoolInfo(i)
                   : l.GetFirstValidPool())
             ? Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "ActivityRecall",
                 64,
                 "[回流活动]ActivityRecallRoleSubView->TabCallBack 不存在该卡池数据",
-                ["GachaId: ", i.GachaId],
-                ["usePoolId: ", t],
+                ["GachaId: ", e.GachaId],
+                ["usePoolId: ", i],
               )
-            : ((t = new GachaDefine_1.GachaPoolData(l, e)),
-              this.tca.Update(t),
-              this.tca.PlayStartSeqAsync(),
-              (this.n_a = i),
+            : ((i = new GachaDefine_1.GachaPoolData(l, t)),
+              this.rCa.Update(i),
+              this.rCa.PlayStartSeqAsync(),
+              (this.gda = e),
               (l = ActivityRecallHelper_1.ActivityRecallHelper.GetGachaRoleId(
-                i.GachaId,
+                e.GachaId,
               )),
-              this.R_a.Update(l),
-              this.InvokePassRecallBaseCallBack(i, 2),
-              this.SequencePlayer.PlaySequence("Start"));
+              this.Nda.Update(l),
+              this.InvokePassRecallBaseCallBack(e, 2),
+              this.SequencePlayer.StopSequenceByKey("Start"),
+              (t = new CustomPromise_1.CustomPromise()),
+              this.SequencePlayer.PlaySequenceAsync("Start", t));
       }),
-      (this.x_a = () => {
-        var i = ActivityRecallHelper_1.ActivityRecallHelper.GetGachaTrialRoleId(
-          this.n_a.GachaId,
+      (this.Vda = () => {
+        var e = ActivityRecallHelper_1.ActivityRecallHelper.GetGachaTrialRoleId(
+          this.gda.GachaId,
         );
-        RoleController_1.RoleController.OpenRoleMainView(1, 0, [i]);
+        RoleController_1.RoleController.OpenRoleMainView(1, 0, [e]);
       });
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos =
       ActivityRecallDefine_1.activityRecallMainViewComponentsInfo),
-      (this.BtnBindInfo = [[2, this.x_a]]);
+      (this.BtnBindInfo = [[2, this.Vda]]);
   }
   async OnBeforeStartAsync() {
-    (this.y_a = this.OpenParam),
-      (this.tca = new UpRoleGachaPoolItem_1.UpRoleGachaPoolItem(2));
-    var i = this.GetItem(4);
-    await this.tca.CreateThenShowByResourceIdAsync("UiItem_LuckdrawPixF", i),
-      this.tca.SetDescUiActive(!1);
-    i = this.GetItem(1).GetOwner();
-    (this.R_a =
+    (this.bda = this.OpenParam),
+      (this.rCa = new UpRoleGachaPoolItem_1.UpRoleGachaPoolItem(2));
+    var e = this.GetItem(4);
+    await this.rCa.CreateThenShowByResourceIdAsync("UiItem_LuckdrawPixF", e),
+      this.rCa.SetDescUiActive(!1);
+    e = this.GetItem(1).GetOwner();
+    (this.Nda =
       new ActivityRoleDescribeComponent_1.ActivityRoleDescribeComponent()),
-      await this.R_a.CreateThenShowByActorAsync(i, void 0, !0);
-    i = this.GetItem(6).GetOwner();
-    (this.U_a =
+      await this.Nda.CreateThenShowByActorAsync(e, void 0, !0);
+    e = this.GetItem(6).GetOwner();
+    (this.Fda =
       new ActivityRecallRoleActivityInfoPanel_1.ActivityRecallRoleActivityInfoPanel()),
-      await this.U_a.CreateThenShowByActorAsync(i);
+      await this.Fda.CreateThenShowByActorAsync(e);
   }
   OnStart() {
     super.OnStart();
-    var i = this.GetHorizontalLayout(0),
-      e = this.GetItem(5);
-    (this.u_a = new ActivityRecallTabGroupPanel_1.ActivityRecallTabGroupPanel(
-      i,
+    var e = this.GetHorizontalLayout(0),
+      i = this.GetItem(5);
+    (this.Eda = new ActivityRecallTabGroupPanel_1.ActivityRecallTabGroupPanel(
       e,
+      i,
       this.Wwn,
     )),
-      this.u_a.Init(),
+      this.Eda.Init(),
       this.GetItem(3).SetUIActive(!0);
   }
   OnBeforeDestroy() {
-    this.u_a.Destroy(), (this.u_a = void 0);
+    this.Eda.Destroy(), (this.Eda = void 0);
   }
-  OnRefreshByData(i, e) {
+  OnRefreshByData(e, i) {
     var t =
         ActivityRecallHelper_1.ActivityRecallHelper.GetSortedOpenRecallBaseConfigList(),
       l = t[0],
       t = t[1],
       a =
-        ((this.m_a = []),
+        ((this.Ida = []),
         new ActivityRecallDefine_1.ActivityRecallTabSwitchItemCommonData()),
       l =
-        ((a.RecallEntryType = this.y_a),
+        ((a.RecallEntryType = this.bda),
         (a.Config = l),
         ActivityRecallHelper_1.ActivityRecallHelper.GetRoleConfigByGachaId(
           l.GachaId,
         ));
     (a.Title = l.Name),
-      this.m_a.push(a),
+      this.Ida.push(a),
       void 0 !== t &&
         (((l =
           new ActivityRecallDefine_1.ActivityRecallTabSwitchItemCommonData()).RecallEntryType =
-          this.y_a),
+          this.bda),
         (l.Config = t),
         (a = ActivityRecallHelper_1.ActivityRecallHelper.GetRoleConfigByGachaId(
           t.GachaId,
         )),
         (l.Title = a.Name),
-        this.m_a.push(l)),
-      this.GetItem(7).SetUIActive(1 < this.m_a.length),
-      this.u_a.RefreshByData(this.m_a, e);
+        this.Ida.push(l)),
+      this.GetItem(7).SetUIActive(1 < this.Ida.length),
+      this.Eda.RefreshByData(this.Ida, i);
+  }
+  OnParentShow() {
+    super.OnParentShow(), this.rCa?.PlayStartSeqAsync();
   }
 }
 exports.ActivityRecallRoleSubView = ActivityRecallRoleSubView;

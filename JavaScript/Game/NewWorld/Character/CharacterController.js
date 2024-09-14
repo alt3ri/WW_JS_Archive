@@ -1,22 +1,4 @@
 "use strict";
-var __decorate =
-  (this && this.__decorate) ||
-  function (t, e, r, a) {
-    var o,
-      i = arguments.length,
-      n =
-        i < 3
-          ? e
-          : null === a
-            ? (a = Object.getOwnPropertyDescriptor(e, r))
-            : a;
-    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      n = Reflect.decorate(t, e, r, a);
-    else
-      for (var s = t.length - 1; 0 <= s; s--)
-        (o = t[s]) && (n = (i < 3 ? o(n) : 3 < i ? o(e, r, n) : o(e, r)) || n);
-    return 3 < i && n && Object.defineProperty(e, r, n), n;
-  };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterController = void 0);
 const cpp_1 = require("cpp"),
@@ -35,24 +17,24 @@ const cpp_1 = require("cpp"),
   SIN_COS_45 = Math.cos(Math.PI / 4);
 class CharacterController extends ControllerBase_1.ControllerBase {
   static OnInit() {
-    return (this.Mqn = new Date()), !0;
+    return (this.Uqn = new Date()), !0;
   }
   static OnTick(t) {
     CharacterController.dKo() || CharacterController.CKo(),
-      Net_1.Net.IsFinishLogin() && this.Sqn();
+      Net_1.Net.IsFinishLogin() && this.Rqn();
   }
-  static async Sqn() {
+  static async Rqn() {
     var t,
       e = new Date();
-    3 <= (e.getTime() - this.Mqn.getTime()) / 1e3 / 60 &&
-      ((this.Mqn = e),
+    3 <= (e.getTime() - this.Uqn.getTime()) / 1e3 / 60 &&
+      ((this.Uqn = e),
       0 < (e = cpp_1.FuncOpenLibrary.GetEBuffer()).byteLength) &&
       ((t = new Uint8Array(e)),
       (t = new Uint8Array(t)),
       cpp_1.FuncOpenLibrary.FreeArrayBuffer(e),
-      ((e = new Protocol_1.Aki.Protocol.CombatMessage.Gfs()).Mjn = t),
-      (t = await Net_1.Net.CallAsync(18153, e)),
-      cpp_1.FuncOpenLibrary.SetIsCheckEncrypt(t?.HLs ?? ""));
+      ((e = new Protocol_1.Aki.Protocol.CombatMessage.Hfs()).Ujn = t),
+      (t = await Net_1.Net.CallAsync(18767, e)),
+      cpp_1.FuncOpenLibrary.SetIsCheckEncrypt(t?.JLs ?? ""));
   }
   static InitData(t, e, r) {
     return ModelManager_1.ModelManager.CharacterModel.InitData(t, e, r);
@@ -62,6 +44,12 @@ class CharacterController extends ControllerBase_1.ControllerBase {
   }
   static AddEntityToAwakeQueue(t, e) {
     ModelManager_1.ModelManager.CharacterModel.AddEntityToAwakeQueue(t, e);
+  }
+  static InitEntity(t) {
+    ModelManager_1.ModelManager.CharacterModel.InitEntity(t);
+  }
+  static StartEntity(t) {
+    ModelManager_1.ModelManager.CharacterModel.StartEntity(t);
   }
   static ActivateEntity(t) {
     ModelManager_1.ModelManager.CharacterModel.ActivateEntity(t);
@@ -103,7 +91,7 @@ class CharacterController extends ControllerBase_1.ControllerBase {
     return t?.Valid && (t = t.GetComponent(1)) ? t.Owner : void 0;
   }
   static GetActorComponent(t) {
-    let e = t.Entity.GetComponent(185);
+    let e = t.Entity.GetComponent(187);
     return (e = e || t.Entity.GetComponent(2));
   }
   static GetTsBaseCharacterByEntity(t) {
@@ -147,10 +135,10 @@ class CharacterController extends ControllerBase_1.ControllerBase {
   static OnChangeMode() {
     if (!ModelManager_1.ModelManager.GameModeModel.IsMulti)
       for (const t of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
-        t.Entity.GetComponent(39)?.SwitchControl(!0);
+        t.Entity.GetComponent(40)?.SwitchControl(!0);
     return !0;
   }
-  static Cna(t, e, r, a, o) {
+  static Yaa(t, e, r, a, o) {
     return (
       TraceElementCommon_1.TraceElementCommon.SetStartLocation(e, a),
       TraceElementCommon_1.TraceElementCommon.ShapeTrace(
@@ -162,7 +150,7 @@ class CharacterController extends ControllerBase_1.ControllerBase {
         ? e.HitResult.bStartPenetrating ||
           e.HitResult.TimeArray.Get(0) <= MathUtils_1.MathUtils.SmallNumber
           ? 1
-          : (TraceElementCommon_1.TraceElementCommon.SetStartLocation(r, a),
+          : (TraceElementCommon_1.TraceElementCommon.SetEndLocation(r, a),
             TraceElementCommon_1.TraceElementCommon.ShapeTrace(
               t,
               r,
@@ -204,73 +192,80 @@ class CharacterController extends ControllerBase_1.ControllerBase {
     var i,
       n,
       s = t.Actor.CapsuleComponent;
-    return (
-      !!s &&
-      (((i =
-        ModelManager_1.ModelManager.TraceElementModel.GetCapsuleTrace()).WorldContextObject =
-        t.Actor),
-      (i.Radius = r),
-      (i.HalfHeight = e),
-      t.ActorUpProxy.Multiply(1, this.Lz),
-      this.Lz.AdditionEqual(t.ActorLocationProxy),
-      TraceElementCommon_1.TraceElementCommon.SetStartLocation(i, this.Lz),
-      TraceElementCommon_1.TraceElementCommon.SetEndLocation(
-        i,
-        t.ActorLocationProxy,
-      ),
-      i.ActorsToIgnore.Empty(),
-      TraceElementCommon_1.TraceElementCommon.ShapeTrace(
-        s,
-        i,
-        PROFILE_KEY,
-        PROFILE_KEY,
-      ) && i.HitResult
-        ? !i.HitResult.bStartPenetrating &&
-          i.HitResult.TimeArray.Get(0) > MathUtils_1.MathUtils.SmallNumber
-          ? (TraceElementCommon_1.TraceElementCommon.GetHitLocation(
-              i.HitResult,
-              0,
-              o,
-            ),
-            Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug(
-                "Movement",
-                6,
-                "FindSpaceForExitClimb No Start Penetrate",
-                ["Out", o],
+    return s
+      ? (((i =
+          ModelManager_1.ModelManager.TraceElementModel.GetCapsuleTrace()).WorldContextObject =
+          t.Actor),
+        (i.Radius = r),
+        (i.HalfHeight = e),
+        t.ActorUpProxy.Multiply(1, this.Lz),
+        this.Lz.AdditionEqual(t.ActorLocationProxy),
+        TraceElementCommon_1.TraceElementCommon.SetStartLocation(i, this.Lz),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(
+          i,
+          t.ActorLocationProxy,
+        ),
+        i.ActorsToIgnore.Empty(),
+        TraceElementCommon_1.TraceElementCommon.ShapeTrace(
+          s,
+          i,
+          PROFILE_KEY,
+          PROFILE_KEY,
+        ) && i.HitResult
+          ? !i.HitResult.bStartPenetrating &&
+            i.HitResult.TimeArray.Get(0) > MathUtils_1.MathUtils.SmallNumber
+            ? (TraceElementCommon_1.TraceElementCommon.GetHitLocation(
+                i.HitResult,
+                0,
+                o,
               ),
-            !0)
-          : (((n =
-              ModelManager_1.ModelManager.TraceElementModel.GetActorTrace()).WorldContextObject =
-              t.Actor),
-            (n.Radius = a),
-            TraceElementCommon_1.TraceElementCommon.SetEndLocation(
-              n,
-              t.ActorLocationProxy,
-            ),
-            t.ActorUpProxy.Multiply(e / 2, this.Tz),
-            t.ActorLocationProxy.Addition(this.Tz, this.Lz),
-            2 === (a = this.Cna(s, i, n, this.Lz, o)) ||
+              Log_1.Log.CheckDebug() &&
+                Log_1.Log.Debug(
+                  "Movement",
+                  6,
+                  "FindSpaceForExitClimb No Start Penetrate",
+                  ["Out", o],
+                ),
+              2)
+            : (((n =
+                ModelManager_1.ModelManager.TraceElementModel.GetActorTrace()).WorldContextObject =
+                t.Actor),
+              (n.Radius = a),
+              TraceElementCommon_1.TraceElementCommon.SetStartLocation(
+                n,
+                t.ActorLocationProxy,
+              ),
+              t.ActorUpProxy.Multiply(e / 2, this.Tz),
+              t.ActorLocationProxy.Addition(this.Tz, this.Lz),
+              2 === (a = this.Yaa(s, i, n, this.Lz, o)) ||
               (1 === a &&
                 (this.Lz.AdditionEqual(this.Tz),
-                2 === this.Cna(s, i, n, this.Lz, o))) ||
+                2 === this.Yaa(s, i, n, this.Lz, o))) ||
               (t.ActorForwardProxy.Multiply(-r, this.Tz),
               t.ActorLocationProxy.Addition(this.Tz, this.Lz),
-              2 === (a = this.Cna(s, i, n, this.Lz, o))) ||
+              2 === (a = this.Yaa(s, i, n, this.Lz, o))) ||
               (1 === a &&
                 (this.Lz.AdditionEqual(this.Tz),
-                2 === this.Cna(s, i, n, this.Lz, o))) ||
+                2 === this.Yaa(s, i, n, this.Lz, o))) ||
               (t.ActorUpProxy.Multiply(e, this.Lz),
               this.Tz.AdditionEqual(this.Lz),
               t.ActorLocationProxy.Addition(this.Tz, this.Lz),
-              2 === (a = this.Cna(s, i, n, this.Lz, o))) ||
+              2 === (a = this.Yaa(s, i, n, this.Lz, o))) ||
               (1 === a &&
                 (this.Lz.AdditionEqual(this.Tz),
-                2 === this.Cna(s, i, n, this.Lz, o))))
-        : (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Movement", 6, "FindSpaceForExitClimb No Hit"),
-          !1))
-    );
+                2 === this.Yaa(s, i, n, this.Lz, o)))
+                ? 2
+                : (Log_1.Log.CheckDebug() &&
+                    Log_1.Log.Debug(
+                      "Movement",
+                      6,
+                      "FindSpaceForExitClimb NoSafety",
+                    ),
+                  1))
+          : (Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug("Movement", 6, "FindSpaceForExitClimb No Hit"),
+            0))
+      : 0;
   }
   static FindSpaceForSafety(t, e, r, a) {
     Log_1.Log.CheckDebug() &&
@@ -298,7 +293,7 @@ class CharacterController extends ControllerBase_1.ControllerBase {
         r =
           ((n.WorldContextObject = t.Actor),
           (n.Radius = 1),
-          TraceElementCommon_1.TraceElementCommon.SetEndLocation(
+          TraceElementCommon_1.TraceElementCommon.SetStartLocation(
             n,
             t.ActorLocationProxy,
           ),
@@ -332,11 +327,11 @@ class CharacterController extends ControllerBase_1.ControllerBase {
       for (const c of r) {
         t.ActorQuatProxy.RotateVector(c, this.Tz),
           t.ActorLocationProxy.Addition(this.Tz, this.Lz);
-        var s = this.Cna(o, i, n, this.Lz, a);
+        var s = this.Yaa(o, i, n, this.Lz, a);
         if (2 === s) return !0;
         if (
           1 === s &&
-          (this.Lz.AdditionEqual(this.Tz), 2 === this.Cna(o, i, n, this.Lz, a))
+          (this.Lz.AdditionEqual(this.Tz), 2 === this.Yaa(o, i, n, this.Lz, a))
         )
           return !0;
       }
@@ -344,20 +339,14 @@ class CharacterController extends ControllerBase_1.ControllerBase {
     return !1;
   }
 }
-(CharacterController.IsTickEvenPausedInternal = !0),
+((exports.CharacterController = CharacterController).IsTickEvenPausedInternal =
+  !0),
   (CharacterController.gKo = void 0),
-  (CharacterController.Mqn = void 0),
+  (CharacterController.Uqn = void 0),
   (CharacterController.dKo = () => CharacterController.CN()),
   (CharacterController.CKo = () => {
     CharacterController.AwakeEntity();
   }),
   (CharacterController.Lz = Vector_1.Vector.Create()),
-  (CharacterController.Tz = Vector_1.Vector.Create()),
-  __decorate(
-    [(0, Stats_1.statDecorator)("CharacterController.AwakeEntity")],
-    CharacterController,
-    "AwakeEntity",
-    null,
-  ),
-  (exports.CharacterController = CharacterController);
+  (CharacterController.Tz = Vector_1.Vector.Create());
 //# sourceMappingURL=CharacterController.js.map

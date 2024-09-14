@@ -38,7 +38,7 @@ class TsInteractionUtils {
         t.CreatureData.GetCreatureDataId(),
         r,
         (e) => {
-          t?.HandleInteractResponse(e.O4n, e.IIs);
+          t?.HandleInteractResponse(e.Q4n, e.UIs);
         },
         i.GetCreatureDataId(),
       ));
@@ -60,7 +60,7 @@ class TsInteractionUtils {
         ),
         3 !== t.OptionType &&
           Global_1.Global.BaseCharacter.CharacterActorComponent?.Entity?.GetComponent(
-            59,
+            60,
           )?.CollectSampleAndSend(!0),
         t.DelayRemove ? 3 : t.OptionType)
       ) {
@@ -71,7 +71,7 @@ class TsInteractionUtils {
             n.CreatureData.GetCreatureDataId(),
             e,
             (e) => {
-              (this.q_i = !1), n?.HandleInteractResponse(e.O4n, e.IIs);
+              (this.q_i = !1), n?.HandleInteractResponse(e.Q4n, e.UIs);
             },
           );
           break;
@@ -83,7 +83,7 @@ class TsInteractionUtils {
               t.Guid,
               (e) => {
                 (this.q_i = !1),
-                  n?.HandleInteractResponse(e.O4n, e.IIs),
+                  n?.HandleInteractResponse(e.Q4n, e.UIs),
                   t &&
                     EventSystem_1.EventSystem.Emit(
                       EventDefine_1.EEventName.DynamicInteractServerResponse,
@@ -99,7 +99,7 @@ class TsInteractionUtils {
               n.CreatureData.GetCreatureDataId(),
               t.RandomOptionIndex,
               (e) => {
-                (this.q_i = !1), n?.HandleInteractResponse(e.O4n, e.IIs);
+                (this.q_i = !1), n?.HandleInteractResponse(e.Q4n, e.UIs);
               },
             );
           break;
@@ -305,7 +305,7 @@ class TsInteractionUtils {
         if (t) {
           t = ModelManager_1.ModelManager.CreatureModel.GetEntity(a);
           if (t) {
-            t = t.Entity.GetComponent(181);
+            t = t.Entity.GetComponent(182);
             if (t) {
               t = t.GetInteractController();
               if (t) {
@@ -340,10 +340,10 @@ class TsInteractionUtils {
                     ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByServerNotify(
                       i.Actions,
                       e,
-                      r.q5n,
-                      r.T5n,
-                      r.G5n,
-                      r.avs,
+                      r.W5n,
+                      r.w5n,
+                      r.K5n,
+                      r.mvs,
                     );
                   }
                 else
@@ -382,7 +382,6 @@ class TsInteractionUtils {
               "[基础交互选项继续执行]等待实体超时",
             );
       },
-      !1,
       LevelGeneralNetworks_1.WAIT_ENTITY_ERROR_TIME,
       !0,
       !0,
@@ -394,7 +393,7 @@ class TsInteractionUtils {
       r,
       a =
         LevelGeneralContextUtil_1.LevelGeneralContextUtil.CreateByServerContext(
-          e?.nvs,
+          e?.cvs,
         );
     a
       ? (t = (n =
@@ -417,10 +416,10 @@ class TsInteractionUtils {
             ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByServerNotify(
               t.Type.Actions,
               a,
-              e.q5n,
-              e.T5n,
-              e.G5n,
-              e.avs,
+              e.W5n,
+              e.w5n,
+              e.K5n,
+              e.mvs,
             ))
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(

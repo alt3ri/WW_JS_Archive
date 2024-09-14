@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   BaseConfigController_1 = require("../../BaseConfig/BaseConfigController"),
+  HotPatchEventSystem_1 = require("../../PlayerInput/HotPatchEventSystem"),
+  HotPatchInputManager_1 = require("../../PlayerInput/HotPatchInputManager"),
   LauncherLanguageLib_1 = require("../../Util/LauncherLanguageLib"),
   LauncherResourceLib_1 = require("../../Util/LauncherResourceLib"),
   LaunchComponentsAction_1 = require("../LaunchComponentsAction"),
@@ -22,12 +24,7 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       (this.Iyr = void 0),
       (this.Tyr = void 0),
       (this.Cve = void 0),
-      (this.Lyr = void 0),
-      (this.Dyr = void 0),
-      (this.Ryr = void 0),
-      (this.Uyr = void 0),
-      (this.Ayr = void 0),
-      (this.Pyr = void 0),
+      (this.ZOa = void 0),
       (this.xyr = "WutheringWave_"),
       (this.wyr = (t) => {
         this.UiRoot = t;
@@ -35,45 +32,22 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       (this.Byr = (t) => {
         this.SetRootActorLaunchComponentsAction(t),
           this.SetContainerItemActive(!1);
-      }),
-      (this.OnPressActionCallback = () => {
-        this.Ryr.InputTrigger(this.Ayr.bPress, 0);
-      }),
-      (this.OnTouchActionCallback = () => {
-        this.Uyr.InputTouchTrigger(
-          this.Ayr.bPress,
-          this.Ayr.TouchIndex,
-          this.Ayr.TouchPosition,
-        );
-      }),
-      (this.OnTouchMovedActionCallback = () => {
-        this.Uyr.InputTouchMoved(this.Ayr.TouchIndex, this.Ayr.TouchPosition);
-      }),
-      (this.byr = (t) => {
-        (this.Pyr = UE.GameplayStatics.GetPlayerController(
-          this.WorldContext,
-          0,
-        )),
-          (this.Lyr = t),
-          (this.Ryr = this.Lyr.GetComponentByClass(
-            UE.LGUI_StandaloneInputModule.StaticClass(),
-          )),
-          (this.Uyr = this.Lyr.GetComponentByClass(
-            UE.LGUI_TouchInputModule.StaticClass(),
-          )),
-          this.InitActionHandle();
       });
   }
   async InitAsync(t) {
     (this.WorldContext = t),
-      this.InitInputSettings(),
-      await this.InitRuntimeEventSystemActor(),
-      await LaunchUtil_1.LaunchUtil.LoadResourceAsync(
-        LaunchUtil_1.LaunchUtil.UiRootPath,
-        this.WorldContext,
-        void 0,
-        this.wyr,
-      ),
+      await Promise.all([
+        HotPatchEventSystem_1.HotPatchEventSystem.InitRuntimeEventSystemActor(
+          t,
+        ),
+        HotPatchInputManager_1.HotPatchInputManager.Init(t),
+        LaunchUtil_1.LaunchUtil.LoadResourceAsync(
+          LaunchUtil_1.LaunchUtil.UiRootPath,
+          this.WorldContext,
+          void 0,
+          this.wyr,
+        ),
+      ]),
       await LaunchUtil_1.LaunchUtil.LoadResourceAsync(
         "/Game/Aki/UI/Module/HotFix/Prefab/UiView_HotFix.UiView_HotFix",
         this.WorldContext,
@@ -87,49 +61,13 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       )),
       this.OnShow();
   }
+  SetProtocolViewViewState(t) {
+    this.ZOa?.SetActive(t);
+  }
   async ShowProtocolView(t) {
-    var i = new SdkProtocolView_1.SdkProtocolView();
-    i.SetViewData(t),
-      await i.Init(this.WorldContext, this.UiRoot.RootComponent);
-  }
-  async InitRuntimeEventSystemActor() {
-    const e = new UE.Transform();
-    await new Promise((i) => {
-      LauncherResourceLib_1.LauncherResourceLib.LoadAsync(
-        "/Game/Aki/UI/Module/HotFix/HotFixLGUIEventSystemActor.HotFixLGUIEventSystemActor_C",
-        UE.Class,
-        (t) => {
-          t = UE.GameplayStatics.BeginSpawningActorFromClass(
-            this.WorldContext,
-            t,
-            e,
-          );
-          UE.GameplayStatics.FinishSpawningActor(t, e),
-            t.AddComponentByClass(
-              UE.LGUI_StandaloneInputModule.StaticClass(),
-              !1,
-              e,
-              !1,
-            ),
-            t.AddComponentByClass(
-              UE.LGUI_TouchInputModule.StaticClass(),
-              !1,
-              e,
-              !1,
-            ),
-            this.byr(t),
-            i();
-        },
-      );
-    });
-  }
-  InitInputSettings() {
-    var t = UE.InputSettings.GetInputSettings(),
-      i = new UE.FName("UI左键点击"),
-      e = new UE.FName("LeftMouseButton"),
-      e = new UE.Key(e),
-      i = new UE.InputActionKeyMapping(i, !1, !1, !1, !1, e);
-    t.AddActionMapping(i);
+    (this.ZOa = new SdkProtocolView_1.SdkProtocolView()),
+      this.ZOa.SetViewData(t),
+      await this.ZOa.Init(this.WorldContext, this.UiRoot.RootComponent);
   }
   async LoadResourceAsync() {
     await this.AttachElementAsyncFromPath(
@@ -180,60 +118,6 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       this.yyr && (this.yyr = void 0),
       this.Iyr && (this.Iyr = void 0),
       this.Tyr && (this.Tyr = void 0);
-  }
-  SetWindowCursorStyle() {
-    var t = new UE.Vector2D(0, 0),
-      i = this.WorldContext;
-    let e = void 0,
-      s = void 0,
-      o = void 0;
-    (o = UE.KuroStaticLibrary.IsEditor(i)
-      ? ((e = new UE.FName("Aki/UI/Module/Cursor/SourceResource/CursorNor")),
-        (s = new UE.FName("Aki/UI/Module/Cursor/SourceResource/CursorHi")),
-        new UE.FName("Aki/UI/Module/Cursor/SourceResource/CursorPre"))
-      : ((e = new UE.FName("Aki/Cursor/CursorNor")),
-        (s = new UE.FName("Aki/Cursor/CursorHi")),
-        new UE.FName("Aki/Cursor/CursorPre"))),
-      UE.WidgetBlueprintLibrary.SetHardwareCursor(i, 1, e, t),
-      UE.WidgetBlueprintLibrary.SetHardwareCursor(i, 16, s, t),
-      UE.WidgetBlueprintLibrary.SetHardwareCursor(i, 15, o, t);
-  }
-  InitActionHandle() {
-    LauncherResourceLib_1.LauncherResourceLib.LoadAsync(
-      "/Game/Aki/HotPatch/TsHotFixActionHandle.TsHotFixActionHandle_C",
-      UE.Class,
-      (t) => {
-        switch (
-          ((this.Ayr = UE.NewObject(
-            UE.TsHotFixActionHandle_C.StaticClass(),
-            this.WorldContext,
-          )),
-          UE.GameplayStatics.GetPlatformName())
-        ) {
-          case "IOS":
-          case "Android":
-            (this.Dyr = this.Uyr), this.RegisterMobileInput();
-            break;
-          default:
-            (this.Dyr = this.Ryr),
-              this.SetWindowCursorStyle(),
-              this.RegisterPcInput();
-        }
-        this.Dyr.Activate(!1);
-      },
-    );
-  }
-  RegisterPcInput() {
-    this.Ayr.OnPressActionCallback.Add(this.OnPressActionCallback),
-      this.Ayr.AddPressBinding("UI左键点击", this.Pyr),
-      this.Ayr.AddReleaseBinding("UI左键点击", this.Pyr);
-  }
-  RegisterMobileInput() {
-    this.Ayr.OnTouchActionCallback.Add(this.OnTouchActionCallback),
-      this.Ayr.OnTouchMovedActionCallback.Add(this.OnTouchMovedActionCallback),
-      this.Ayr.AddTouchPressBinding(this.Pyr),
-      this.Ayr.AddTouchReleaseBinding(this.Pyr),
-      this.Ayr.AddTouchMoveBinding(this.Pyr);
   }
   OnShow() {
     (this.xvi = this.GetText(4)),
@@ -366,19 +250,8 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       this.UiRoot &&
         (UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.UiRoot, !0),
         (this.UiRoot = void 0)),
-      this.Pyr && (this.Ayr.ClearActionBinding(this.Pyr), (this.Pyr = void 0)),
-      this.Lyr &&
-        (this.Lyr.PreDestroy(),
-        UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.Lyr, !0),
-        UE.KismetSystemLibrary.CollectGarbage(),
-        (this.Lyr = void 0),
-        (this.Dyr = void 0),
-        (this.Ryr = void 0),
-        (this.Uyr = void 0)),
-      this.Ayr &&
-        (this.Ayr.OnPressActionCallback.Clear(),
-        this.Ayr.OnTouchActionCallback.Clear(),
-        (this.Ayr = void 0)),
+      HotPatchInputManager_1.HotPatchInputManager.Destroy(),
+      HotPatchEventSystem_1.HotPatchEventSystem.Destroy(),
       this.WorldContext && (this.WorldContext = void 0);
   }
 }

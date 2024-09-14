@@ -40,8 +40,10 @@ class MonsterInfo {
     return this.discovereddes();
   }
   get PerchId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.perchidLength(), (t) =>
-      this.perchid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.perchidLength(),
+      this.perchid,
+      this,
     );
   }
   __init(t, s) {

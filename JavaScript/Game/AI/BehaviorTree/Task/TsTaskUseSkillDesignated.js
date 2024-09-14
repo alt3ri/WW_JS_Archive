@@ -10,48 +10,72 @@ class TsTaskUseSkillDesignated extends TsTaskAbortImmediatelyBase_1.default {
     super(...arguments),
       (this.BlackboardKeyTarget = ""),
       (this.SkillInfoId = 0),
+      (this.DebugLog = !1),
       (this.IsInitTsVariables = !1),
       (this.TsBlackboardKeyTarget = ""),
-      (this.TsSkillInfoId = 0);
+      (this.TsSkillInfoId = 0),
+      (this.TsDebugLog = !1);
   }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
       (this.TsBlackboardKeyTarget = this.BlackboardKeyTarget),
-      (this.TsSkillInfoId = this.SkillInfoId));
+      (this.TsSkillInfoId = this.SkillInfoId),
+      (this.TsDebugLog = this.DebugLog));
   }
-  ReceiveTickAI(e, s, t) {
-    var i = e.AiController;
-    if (i)
-      if (i.AiSkill) {
-        this.InitTsVariables();
-        var a = i.AiSkill.SkillInfos.get(this.TsSkillInfoId);
-        if (a) {
-          let e = i.AiHateList.GetCurrentTarget();
+  ReceiveTickAI(e, s, i) {
+    var t = e.AiController;
+    if (t)
+      if (t.AiSkill) {
+        this.InitTsVariables(),
+          this.TsDebugLog &&
+            Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("BehaviorTree", 6, "UseSkillDesignated", [
+              "controller",
+              e?.GetName(),
+            ]);
+        var o = t.AiSkill.SkillInfos.get(this.TsSkillInfoId);
+        if (o) {
+          let e = t.AiHateList.GetCurrentTarget();
           this.TsBlackboardKeyTarget &&
             ((r =
               BlackboardController_1.BlackboardController.GetEntityIdByEntity(
-                i.CharAiDesignComp.Entity.Id,
+                t.CharAiDesignComp.Entity.Id,
                 this.TsBlackboardKeyTarget,
               )),
             (r = ModelManager_1.ModelManager.CreatureModel.GetEntityById(r))) &&
             (e = r);
-          var r = i.CharAiDesignComp.Entity.GetComponent(33);
+          var r = t.CharAiDesignComp.Entity.GetComponent(34);
           r.Valid
-            ? ((r = r.BeginSkill(Number(a.SkillId), {
+            ? (this.TsDebugLog &&
+                Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info(
+                  "BehaviorTree",
+                  6,
+                  "UseSkillDesignated TrySkill",
+                  ["skill", o.SkillId],
+                ),
+              (r = r.BeginSkill(Number(o.SkillId), {
                 Target: e?.Entity,
                 Context: "TsTaskUseSkillDesignated.ReceiveTickAI",
               })),
               this.FinishExecute(r),
-              r && i.AiSkill && i.AiSkill.SetSkillCdFromNow(this.TsSkillInfoId))
-            : this.FinishExecute(!1);
+              r && t.AiSkill && t.AiSkill.SetSkillCdFromNow(this.TsSkillInfoId))
+            : (this.TsDebugLog &&
+                Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info(
+                  "BehaviorTree",
+                  6,
+                  "UseSkillDesignated No SkillComponent",
+                ),
+              this.FinishExecute(!1));
         } else
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "BehaviorTree",
               6,
               "当前AI没有对应的技能ID",
-              ["AiBaseId", i.AiBase.Id],
+              ["AiBaseId", t.AiBase.Id],
               ["SkillInfoId", this.TsSkillInfoId],
             ),
             this.FinishExecute(!1);
@@ -59,7 +83,7 @@ class TsTaskUseSkillDesignated extends TsTaskAbortImmediatelyBase_1.default {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("BehaviorTree", 6, "没有技能信息", [
             "AiBaseId",
-            i.AiBase.Id,
+            t.AiBase.Id,
           ]),
           this.FinishExecute(!1);
     else

@@ -8,14 +8,14 @@ class RoleFavorConditionModel extends ModelBase_1.ModelBase {
   }
   UpdateRoleFavorCondtion(e, o) {
     var r = this.Cqi.get(e) ?? new Map(),
-      t = o.JPs;
+      t = o.oUs;
     for (const f of Object.keys(t)) {
       var s = Number(f),
-        a = t[s].YPs,
+        a = t[s].rUs,
         i = r.get(s) ?? new Map();
       for (const u of Object.keys(a)) {
         var n = Number(u),
-          d = a[n].XPs,
+          d = a[n].iUs,
           l = i.get(n) ?? [],
           v = d.length;
         for (let e = 0; e < v; e++) {

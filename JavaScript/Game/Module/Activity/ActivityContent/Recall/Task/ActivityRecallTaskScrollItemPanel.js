@@ -19,21 +19,7 @@ class ActivityRecallTaskScrollItemPanel extends UiPanelBase_1.UiPanelBase {
       (this.sft = void 0),
       (this.Pe = void 0),
       (this.p4e = void 0),
-      (this.VIa = void 0),
-      (this.j_a = () => {
-        var e = this.Pe.Config;
-        1 ===
-          ActivityRecallHelper_1.ActivityRecallHelper.ActivityRecallData.GetTaskRewardState(
-            e.Id,
-          ) &&
-          (ActivityRecallHelper_1.ActivityRecallHelper.ActivityRecallData.IsRecallTaskScoreOverExp() &&
-            ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-              "RecallActivity_Task_Max",
-            ),
-          ActivityRecallHelper_1.ActivityRecallHelper.ActivityRecallController.RequestClaimTaskReward(
-            e.Id,
-          ));
-      }),
+      (this.aPa = void 0),
       (this.tWt = () => {
         var e = this.Pe.Config,
           i =
@@ -46,7 +32,7 @@ class ActivityRecallTaskScrollItemPanel extends UiPanelBase_1.UiPanelBase {
             )
           : 1 === i &&
             (ActivityRecallHelper_1.ActivityRecallHelper.ActivityRecallData.IsRecallTaskScoreOverExp() &&
-              ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+              ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
                 "RecallActivity_Task_Max",
               ),
             ActivityRecallHelper_1.ActivityRecallHelper.ActivityRecallController.RequestClaimTaskReward(
@@ -66,7 +52,7 @@ class ActivityRecallTaskScrollItemPanel extends UiPanelBase_1.UiPanelBase {
       });
   }
   OnRegisterComponent() {
-    (this.ComponentRegisterInfos = [
+    this.ComponentRegisterInfos = [
       [0, UE.UIButtonComponent],
       [1, UE.UIText],
       [2, UE.UIItem],
@@ -78,8 +64,7 @@ class ActivityRecallTaskScrollItemPanel extends UiPanelBase_1.UiPanelBase {
       [8, UE.UIText],
       [9, UE.UIItem],
       [10, UE.UIItem],
-    ]),
-      (this.BtnBindInfo = [[0, this.j_a]]);
+    ];
   }
   OnStart() {
     (this.sft = new SmallItemGrid_1.SmallItemGrid()),
@@ -92,98 +77,110 @@ class ActivityRecallTaskScrollItemPanel extends UiPanelBase_1.UiPanelBase {
         this.p4e.SetFunction(this.tWt),
         this.p4e.SetShowText("RecallActivity_Go"),
         this.GetItem(10));
-    (this.VIa = new ButtonItem_1.ButtonItem(e)), this.VIa.SetFunction(this.tWt);
+    (this.aPa = new ButtonItem_1.ButtonItem(e)), this.aPa.SetFunction(this.tWt);
   }
   RefreshByData(e) {
     var i = (this.Pe = e).Config,
       [t, l] =
         ActivityRecallHelper_1.ActivityRecallHelper.ActivityRecallData.GetTaskProgressTuple(
           i.Id,
-        ),
-      r = this.GetText(3);
-    r.text = t + "/" + l;
-    let a =
+        );
+    let r =
       ActivityRecallHelper_1.ActivityRecallHelper.ActivityRecallData.GetTaskRewardState(
         i.Id,
       );
-    var t = this.GetText(1),
-      l =
-        (LguiUtil_1.LguiUtil.SetLocalTextNew(t, i.TargetName), this.GetText(8)),
-      c = this.GetItem(2),
-      o = (c.SetUIActive(!0), e.Config.TaskType),
-      e = e.Config.TaskSubType,
-      [s, e] =
-        (o === ActivityRecallDefine_1.EActivityRecallTaskType.Constant &&
-          (1 === e &&
+    var a = this.GetText(1),
+      c =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(a, i.TargetName), this.GetText(8)),
+      o = this.GetItem(2),
+      s = (o.SetUIActive(!0), e.Config.TaskType),
+      _ = this.GetText(3),
+      e =
+        (_.SetUIActive(!0),
+        s === ActivityRecallDefine_1.EActivityRecallTaskType.DailyA ||
+        s === ActivityRecallDefine_1.EActivityRecallTaskType.DailyB
+          ? _.SetText(`(${t}/${l})`)
+          : _.SetText(t + "/" + l),
+        e.Config.TaskSubType),
+      [a, t] =
+        (s === ActivityRecallDefine_1.EActivityRecallTaskType.Constant &&
+          (LguiUtil_1.LguiUtil.SetLocalTextNew(
+            _,
+            "RecallActivity_Task_Tips",
+            t,
+            l,
+          ),
+          1 === e &&
             (void 0 ===
               ActivityRecallHelper_1.ActivityRecallHelper.GetFirstMainLineUnFinishTaskId() &&
-              1 !== a &&
-              ((a = 2),
-              c.SetUIActive(!1),
-              r.SetUIActive(!1),
+              1 !== r &&
+              ((r = 2),
+              o.SetUIActive(!1),
+              _.SetUIActive(!1),
               LguiUtil_1.LguiUtil.SetLocalTextNew(
-                t,
+                a,
                 "RecallActivity_Task_Story_Empty",
               )),
-            (l.text = "")),
+            c.SetText("")),
           2 === e) &&
-          ((o =
+          ((s =
             ActivityRecallHelper_1.ActivityRecallHelper.GetFirstMainLineUnFinishTaskId()),
-          (s =
+          (t =
             ActivityRecallHelper_1.ActivityRecallHelper.GetFirstShowRoleQuest()),
-          void 0 === o && void 0 === s && 1 !== a
-            ? ((a = 2),
-              c.SetUIActive(!1),
-              r.SetUIActive(!1),
+          void 0 === s && void 0 === t && 1 !== r
+            ? ((r = 2),
+              o.SetUIActive(!1),
+              _.SetUIActive(!1),
               LguiUtil_1.LguiUtil.SetLocalTextNew(
-                t,
+                a,
                 "RecallActivity_Task_Role_Empty",
               ),
-              (l.text = ""))
-            : void 0 !== s
+              c.SetText(""))
+            : void 0 !== t
               ? LguiUtil_1.LguiUtil.SetLocalTextNew(
-                  l,
+                  c,
                   "RecallActivity_Recommended_Role",
-                  s.Name,
+                  t.Name,
                 )
               : LguiUtil_1.LguiUtil.SetLocalTextNew(
-                  l,
+                  c,
                   "RecallActivity_Recommended_Role_Lock",
                 )),
         4 === e &&
           LguiUtil_1.LguiUtil.SetLocalTextNew(
-            l,
+            c,
             "RecallActivity_Recommended_Energy",
           ),
         3 === e &&
           (void 0 !==
-          (o =
+          (l =
             ActivityRecallHelper_1.ActivityRecallHelper.GetMinExploreAreaInfo())
-            ? ((c = o.DeliveryMarkId),
-              (r = MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(c)),
-              (t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-                r.MarkTitle,
+            ? ((s = l.DeliveryMarkId),
+              (o = MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(s)),
+              (_ = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+                o.MarkTitle,
               )),
               LguiUtil_1.LguiUtil.SetLocalTextNew(
-                l,
+                c,
                 "RecallActivity_Recommended_Area",
-                t,
+                _,
               ))
-            : (l.text = "")),
+            : c.SetText("")),
+        2 === r && c.SetText(""),
         ModelManager_1.ModelManager.ActivityRecallModel.GetRecallTaskScoreItemInfo(
           i,
         ));
     ActivityRecallHelper_1.ActivityRecallHelper.RefreshItemGrid(
       this.sft,
-      s,
-      e,
-      [0 === a, 1 === a, 2 === a],
+      a,
+      t,
+      [0 === r, 1 === r, 2 === r],
     ),
-      this.p4e.SetUiActive(0 === a),
-      this.VIa.SetUiActive(1 === a),
+      this.p4e.SetUiActive(0 === r),
+      this.aPa.SetUiActive(1 === r),
       this.GetText(6).SetUIActive(!1),
-      this.GetItem(5).SetUIActive(2 === a),
-      this.GetItem(9).SetUIActive(2 === a);
+      this.GetItem(5).SetUIActive(2 === r),
+      this.GetItem(9).SetUIActive(2 === r);
   }
 }
 exports.ActivityRecallTaskScrollItemPanel = ActivityRecallTaskScrollItemPanel;

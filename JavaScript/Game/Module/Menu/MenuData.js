@@ -1,137 +1,83 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MenuData = void 0);
-const GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+const StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
-  FeatureRestrictionTemplate_1 = require("../Common/FeatureRestrictionTemplate");
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  FeatureRestrictionTemplate_1 = require("../Common/FeatureRestrictionTemplate"),
+  MenuTool_1 = require("./MenuTool");
 class MenuData {
-  constructor(t) {
-    (this.iwi = 0),
-      (this.owi = void 0),
-      (this.he = void 0),
-      (this.rwi = 0),
-      (this.nwi = 0),
-      (this.swi = 0),
-      (this.awi = 0),
-      (this.hwi = 0),
-      (this.lwi = []),
-      (this._wi = 0),
-      (this.uwi = 0),
-      (this.cwi = 0),
-      (this.mwi = []),
-      (this.dwi = []),
-      (this.Cwi = void 0),
-      (this.gwi = void 0),
-      (this.uEe = void 0),
-      (this.fwi = void 0),
-      (this.pwi = void 0),
-      (this.vwi = []),
+  constructor() {
+    (this.ConfigId = 0),
+      (this.SubType = 0),
+      (this.SubName = void 0),
+      (this.FunctionName = void 0),
+      (this.Platform = 0),
+      (this.FunctionSort = 0),
+      (this.SubSort = 0),
+      (this.FunctionId = 0),
+      (this.SetType = 0),
+      (this.SliderRange = []),
+      (this.SliderDefault = 0),
+      (this.SliderDigits = 0),
+      (this.OptionsDefault = 0),
+      (this.OptionsNameListInternal = []),
+      (this.OptionsValueListInternal = []),
+      (this.SubImage = void 0),
+      (this.FunctionImage = void 0),
+      (this.ButtonTextId = void 0),
+      (this.ButtonViewName = void 0),
+      (this.RelationFuncIds = []),
       (this.YO = 0),
       (this.AffectedValueSet = new Set()),
       (this.AffectedFunction = new Map()),
       (this.DisableValueSet = new Set()),
       (this.DisableFunction = []),
-      (this.IsEnable = !0),
+      (this.vq = !0),
       (this.ValueTipsMap = new Map()),
       (this.ClickedTipsMap = new Map()),
       (this.ClickedTips = void 0),
-      (this.iwi = t.SubType),
-      (this.owi = t.SubName),
-      (this.he = t.Name),
-      (this.rwi = t.Platform),
-      (this.nwi = t.FunctionSort),
-      (this.swi = t.SubSort),
-      (this.awi = t.FunctionId),
-      (this.hwi = t.SetType),
-      (this.lwi = t.SliderRange),
-      (this._wi = t.SliderDefault),
-      (this.uwi = t.Digits),
-      (this.cwi = t.OptionsDefault),
-      (this.mwi = t.OptionsName),
-      (this.dwi = t.OptionsValue),
-      (this.Cwi = t.SubImage),
-      (this.gwi = t.FunctionImage),
-      (this.uEe = t.KeyMap),
-      (this.fwi = t.ButtonText),
-      (this.pwi = t.OpenView),
+      (this.mVa = !1),
+      (this.dVa = void 0);
+  }
+  Initialize(t) {
+    (this.ConfigId = t.Id),
+      (this.SubType = t.SubType),
+      (this.SubName = t.SubName),
+      (this.FunctionName = t.Name),
+      (this.Platform = t.Platform),
+      (this.FunctionSort = t.FunctionSort),
+      (this.SubSort = t.SubSort),
+      (this.FunctionId = t.FunctionId),
+      (this.SetType = t.SetType),
+      (this.SliderRange = t.SliderRange),
+      (this.SliderDefault = t.SliderDefault),
+      (this.SliderDigits = t.Digits),
+      (this.OptionsDefault = t.OptionsDefault),
+      (this.OptionsNameListInternal = t.OptionsName),
+      (this.OptionsValueListInternal = t.OptionsValue),
+      (this.SubImage = t.SubImage),
+      (this.FunctionImage = t.FunctionImage),
+      (this.ButtonTextId = t.ButtonText),
+      (this.ButtonViewName = t.OpenView),
       (this.YO = t.ConditionGroup),
       (this.AffectedFunction = t.AffectedFunction),
       (this.DisableFunction = t.DisableFunction),
       (this.ValueTipsMap = t.ValueTipsMap),
       (this.ClickedTipsMap = t.ClickedTipsMap),
-      (this.ClickedTips = t.ClickedTips);
-    for (const e of t.AffectedValue) this.AffectedValueSet.add(e);
-    for (const i of t.DisableValue) this.DisableValueSet.add(i);
-    6 === this.MenuDataFunctionId
-      ? (this.vwi = MenuData.Mwi)
-      : (this.vwi = t.RelationFunction),
-      11 !== this.MenuDataFunctionId ||
-        "MenuConfig_6_OptionsName_4" !== this.mwi[this.mwi.length - 1] ||
-        GameQualitySettingsManager_1.GameQualitySettingsManager.IsFrameRate120Device() ||
-        (this.mwi.pop(), this.dwi.pop());
+      (this.ClickedTips = t.ClickedTips),
+      (this.RelationFuncIds = t.RelationFunction),
+      (this.dVa = t.DetailText);
+    for (const i of t.AffectedValue) this.AffectedValueSet.add(i);
+    for (const e of t.DisableValue) this.DisableValueSet.add(e);
+    this.OnInitialize(t);
   }
-  get MenuDataRelationFuncIds() {
-    return this.vwi;
+  OnInitialize(t) {}
+  SetEnable(t) {
+    this.vq = t;
   }
-  get MenuDataSubType() {
-    return this.iwi;
-  }
-  get MenuDataSubName() {
-    return this.owi;
-  }
-  get MenuDataFunctionName() {
-    return this.he;
-  }
-  get MenuDataPlatform() {
-    return this.rwi;
-  }
-  get MenuDataFunctionSort() {
-    return this.nwi;
-  }
-  get MenuDataSubSort() {
-    return this.swi;
-  }
-  get MenuDataFunctionId() {
-    return this.awi;
-  }
-  get MenuDataSetType() {
-    return this.hwi;
-  }
-  get MenuDataSliderRange() {
-    return this.lwi;
-  }
-  get MenuDataSliderDefault() {
-    return this._wi;
-  }
-  get MenuDataSliderDigits() {
-    return this.uwi;
-  }
-  get MenuDataOptionsDefault() {
-    return this.cwi;
-  }
-  get MenuDataOptionsNameList() {
-    return this.mwi;
-  }
-  get MenuDataOptionsValueList() {
-    return this.dwi;
-  }
-  get MenuDataSubImage() {
-    return this.Cwi;
-  }
-  get MenuDataFunctionImage() {
-    return this.gwi;
-  }
-  get MenuDataFunctionKeyMap() {
-    return this.uEe;
-  }
-  get MenuDataButtonTextId() {
-    return this.fwi;
-  }
-  get MenuDataButtonViewName() {
-    return this.pwi;
-  }
-  GetConditionGroup() {
-    return this.YO;
+  GetEnable() {
+    return this.vq;
   }
   CheckCondition() {
     var t;
@@ -141,7 +87,7 @@ class MenuData {
           this.YO.toString(),
           void 0,
         )) ||
-      ((t = MenuData.lNn.get(this.MenuDataFunctionId)) && t.Check())
+      ((t = MenuData.pNn.get(this.FunctionId)) && t.Check())
     );
   }
   CanAffectedFunction(t) {
@@ -153,14 +99,46 @@ class MenuData {
   HasDisableFunction() {
     return 0 < this.DisableFunction.length;
   }
+  OnSet(t) {}
+  OnApply() {}
+  OnSave() {}
+  CheckPlatform() {
+    return MenuTool_1.MenuTool.CheckPlatform(this.Platform);
+  }
+  CheckDeviceHardware() {
+    return (
+      !ModelManager_1.ModelManager.MenuModel.IsCheckDeviceVendor ||
+      MenuTool_1.MenuTool.CheckDeviceVendor(this.FunctionId)
+    );
+  }
+  CheckIosReviewShield() {
+    return MenuTool_1.MenuTool.CheckIosReviewShield(this.ConfigId);
+  }
+  get OptionsNameList() {
+    return this.OptionsNameListInternal;
+  }
+  get OptionsValueList() {
+    return this.OptionsValueListInternal;
+  }
+  HasDetailText() {
+    var t = this.dVa;
+    return !!t && !StringUtils_1.StringUtils.IsBlank(t);
+  }
+  GetDetailTextId() {
+    return this.dVa;
+  }
+  SetDetailTextVisible(t) {
+    this.mVa = t;
+  }
+  GetIsDetailTextVisible() {
+    return this.mVa;
+  }
 }
-((exports.MenuData = MenuData).Mwi = [5]),
-  (MenuData.KeySettingInputControllerType = 0),
-  (MenuData.lNn = new Map([
-    [
-      112,
-      FeatureRestrictionTemplate_1.FeatureRestrictionTemplate
-        .TemplateForPioneerClient,
-    ],
-  ]));
+(exports.MenuData = MenuData).pNn = new Map([
+  [
+    112,
+    FeatureRestrictionTemplate_1.FeatureRestrictionTemplate
+      .TemplateForPioneerClient,
+  ],
+]);
 //# sourceMappingURL=MenuData.js.map

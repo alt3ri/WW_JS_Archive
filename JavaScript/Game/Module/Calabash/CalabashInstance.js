@@ -13,17 +13,17 @@ class CalabashInstance {
       (this.Yft = new Set());
   }
   SetBaseInfo(e) {
-    (this.CalabashCurrentLevel = e.P6n),
-      (this.CalabashCurrentExp = e.M8n),
+    (this.CalabashCurrentLevel = e.F6n),
+      (this.CalabashCurrentExp = e.U8n),
       (this.CalabashMaxLevel =
         ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashMaxLevel()),
-      (this.IdentifyGuaranteeCount = e.uLs),
-      this.SetUnlockCalabashDevelopRewards(e._Ls);
+      (this.IdentifyGuaranteeCount = e.vLs),
+      this.SetUnlockCalabashDevelopRewards(e.fLs);
   }
   SetConfigInfo(e) {
-    for (const s of Object.keys(e.mLs)) {
+    for (const s of Object.keys(e.SLs)) {
       var t = Number.parseInt(s);
-      this.Xft.set(t, e.mLs[s]);
+      this.Xft.set(t, e.SLs[s]);
     }
   }
   set CalabashCurrentLevel(e) {
@@ -52,10 +52,10 @@ class CalabashInstance {
   }
   SetUnlockCalabashDevelopRewards(e) {
     this.$ft.clear();
-    for (const t of e.values()) this.$ft.set(t.vIs, t.hLs);
+    for (const t of e.values()) this.$ft.set(t.TIs, t.CLs);
   }
   SetUnlockCalabashDevelopReward(e) {
-    this.$ft.set(e.vIs, e.hLs);
+    this.$ft.set(e.TIs, e.CLs);
   }
   GetUnlockCalabashDevelopRewards() {
     return this.$ft;

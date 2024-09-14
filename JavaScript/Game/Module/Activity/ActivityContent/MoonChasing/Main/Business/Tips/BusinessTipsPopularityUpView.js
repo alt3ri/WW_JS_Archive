@@ -17,26 +17,26 @@ class BusinessTipsPopularityUpView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.ExpTweener = void 0),
       (this.Delegate = void 0),
-      (this.pCa = void 0),
+      (this.ofa = void 0),
       (this.PopularityValue = 0),
-      (this.xaa = 0),
+      (this.P1a = 0),
       (this.Oko = 0),
-      (this.Paa = void 0),
-      (this.waa = void 0),
-      (this.Baa = void 0),
+      (this.w1a = void 0),
+      (this.B1a = void 0),
+      (this.b1a = void 0),
       (this.Mke = () => {
         this.CloseMe();
       }),
       (this.OAn = (i) => {
-        this.Baa.SetFillAmount(i / this.PopularityValue),
-          this.waa.SetText(
+        this.b1a.SetFillAmount(i / this.PopularityValue),
+          this.B1a.SetText(
             "<color=#ffd52b>" + i + "</color>/" + this.PopularityValue,
           );
       }),
-      (this.baa = (i, t) => {
+      (this.q1a = (i, t) => {
         this.gzi(),
-          t >= this.xaa ||
-            (this.qaa(i, t + 1),
+          t >= this.P1a ||
+            (this.G1a(i, t + 1),
             AudioSystem_1.AudioSystem.PostEvent("play_ui_zhuiyuejie_levelup"));
       });
   }
@@ -59,63 +59,64 @@ class BusinessTipsPopularityUpView extends UiViewBase_1.UiViewBase {
     ]),
       (this.BtnBindInfo = [[4, this.Mke]]);
   }
-  Jga() {
+  Wpa() {
     var i;
-    this.pCa.LastPopularity >= this.pCa.CurrentPopularity &&
+    this.ofa.LastPopularity >= this.ofa.CurrentPopularity &&
       (((i = new UiViewData_1.UiViewData()).StartSequenceName = "Start01"),
       this.UiViewSequence?.SetSequenceName(i));
   }
   async OnBeforeStartAsync() {
     var i, t;
-    (this.pCa = this.OpenParam),
-      void 0 === this.pCa
+    (this.ofa = this.OpenParam),
+      void 0 === this.ofa
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "MoonChasing",
             59,
             "BusinessTipsPopularityUpView无效输入",
           )
-        : (this.Jga(),
-          (this.Baa = this.GetSprite(8)),
-          (this.Paa = this.GetSprite(7)),
-          (this.waa = this.GetText(6)),
+        : (this.Wpa(),
+          (this.b1a = this.GetSprite(8)),
+          (this.w1a = this.GetSprite(7)),
+          (this.B1a = this.GetText(6)),
           (this.Delegate = (0, puerts_1.toManualReleaseDelegate)(this.OAn)),
           (i =
             ModelManager_1.ModelManager.MoonChasingBusinessModel.GetPopularityConfigByValue(
-              this.pCa.CurrentPopularity,
+              this.ofa.CurrentPopularity,
             )),
           (t =
             ModelManager_1.ModelManager.MoonChasingBusinessModel.GetPopularityConfigByValue(
-              this.pCa.LastPopularity,
+              this.ofa.LastPopularity,
             )),
           (this.PopularityValue = t.PopularityValue),
-          (this.xaa = i.Id - t.Id + 1),
-          await Promise.all([this.Nta(1 < this.xaa), this.kta(1 < this.xaa)]),
-          this.Fta(),
-          this.Vta(1 < this.xaa),
+          (this.P1a = i.Id - t.Id + 1),
+          await Promise.all([this.ooa(1 < this.P1a), this.noa(1 < this.P1a)]),
+          this.soa(),
+          this.aoa(1 < this.P1a),
           this.XNi(),
-          this.Hta(),
+          this.hoa(),
           this.GetButton(4)?.RootUIComp.SetUIActive(!1));
   }
   OnAfterPlayStartSequence() {
     this.UiViewSequence?.PlaySequencePurely("PopStart");
-    var i = this.pCa.CurrentPopularity,
-      t = this.pCa.LastPopularity,
+    var i = this.ofa.CurrentPopularity,
+      t = this.ofa.LastPopularity,
       i = i - t;
-    this.zga(), 0 < i && this.Gaa(t);
+    this.Qpa(), 0 < i && this.O1a(t);
   }
   OnBeforeDestroy() {
     this.Delegate &&
       ((0, puerts_1.releaseManualReleaseDelegate)(this.OAn),
       (this.Delegate = void 0)),
-      this.gzi();
+      this.gzi(),
+      AudioSystem_1.AudioSystem.ExecuteAction("play_ui_figure_up_2s", 0);
   }
   OnAfterDestroy() {
     ModelManager_1.ModelManager.MoonChasingBusinessModel.SetIsInDelegate(!1);
   }
-  async Nta(i) {
+  async ooa(i) {
     var t = ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustRoleById(
-        this.pCa.RoleId,
+        this.ofa.RoleId,
       ),
       t =
         (await this.SetSpineAssetByPath(
@@ -126,23 +127,23 @@ class BusinessTipsPopularityUpView extends UiViewBase_1.UiViewBase {
         i ? "happy" : "idle");
     this.GetSpine(11).SetAnimation(0, t, !0);
   }
-  async kta(i) {
+  async noa(i) {
     (i = i ? "EntrustTipsBgBigSuccess" : "EntrustTipsBgNoPromotion"),
       (i = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i));
     await this.SetTextureAsync(i, this.GetTexture(13));
   }
-  Fta() {
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), this.pCa.DialogName);
+  soa() {
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), this.ofa.DialogName);
   }
-  Vta(i) {
+  aoa(i) {
     this.GetItem(9)?.SetUIActive(i),
       this.GetItem(10)?.SetUIActive(!i),
       this.GetItem(12)?.SetUIActive(i);
   }
   XNi() {
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), this.pCa.Title);
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), this.ofa.Title);
   }
-  Hta() {
+  hoa() {
     var i =
         ModelManager_1.ModelManager.MoonChasingBusinessModel.GetCurrentPopularityConfig(),
       i =
@@ -150,29 +151,29 @@ class BusinessTipsPopularityUpView extends UiViewBase_1.UiViewBase {
           this.GetText(1),
           i.PopularityRating,
         ),
-        this.pCa.CurrentPopularity),
-      t = this.pCa.LastPopularity,
+        this.ofa.CurrentPopularity),
+      t = this.ofa.LastPopularity,
       i = i - t;
     this.GetText(5)?.SetUIActive(0 < i),
       0 < i && this.GetText(5)?.SetText("+" + i),
       this.GetSprite(8)?.SetFillAmount(t / this.PopularityValue),
-      this.Paa.SetFillAmount(t / this.PopularityValue),
-      this.waa.SetText(
+      this.w1a.SetFillAmount(t / this.PopularityValue),
+      this.B1a.SetText(
         "<color=#ffd52b>" + t + "</color>/" + this.PopularityValue,
       );
   }
-  Gaa(i) {
+  O1a(i) {
     AudioSystem_1.AudioSystem.PostEvent("play_ui_figure_up_2s"),
-      (this.Oko = TWEEN_TIME / this.xaa),
-      this.qaa(i, 1);
+      (this.Oko = TWEEN_TIME / this.P1a),
+      this.G1a(i, 1);
   }
-  qaa(i, t) {
+  G1a(i, t) {
     var s =
       ModelManager_1.ModelManager.MoonChasingBusinessModel.GetPopularityConfigByValue(
         i,
       );
-    if (((this.PopularityValue = s.PopularityValue), this.xaa > t))
-      this.Paa.SetFillAmount(1),
+    if (((this.PopularityValue = s.PopularityValue), this.P1a > t))
+      this.w1a.SetFillAmount(1),
         (this.ExpTweener = UE.LTweenBPLibrary.IntTo(
           GlobalData_1.GlobalData.World,
           this.Delegate,
@@ -181,12 +182,12 @@ class BusinessTipsPopularityUpView extends UiViewBase_1.UiViewBase {
           this.Oko,
         )),
         this.ExpTweener?.OnCompleteCallBack.Bind(() => {
-          this.baa(this.PopularityValue, t);
+          this.q1a(this.PopularityValue, t);
         });
     else {
       const e =
         ModelManager_1.ModelManager.MoonChasingModel.GetPopularityValue();
-      this.Paa.SetFillAmount(e / this.PopularityValue),
+      this.w1a.SetFillAmount(e / this.PopularityValue),
         (this.ExpTweener = UE.LTweenBPLibrary.IntTo(
           GlobalData_1.GlobalData.World,
           this.Delegate,
@@ -195,14 +196,14 @@ class BusinessTipsPopularityUpView extends UiViewBase_1.UiViewBase {
           this.Oko,
         )),
         this.ExpTweener?.OnCompleteCallBack.Bind(() => {
-          this.baa(e, t);
+          this.q1a(e, t);
         });
     }
   }
   gzi() {
     this.ExpTweener && (this.ExpTweener.Kill(), (this.ExpTweener = void 0));
   }
-  zga() {
+  Qpa() {
     this.GetButton(4)?.RootUIComp.SetUIActive(!0),
       this.UiViewSequence?.PlaySequencePurely("BtnStart");
   }

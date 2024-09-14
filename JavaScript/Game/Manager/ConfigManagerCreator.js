@@ -4,13 +4,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const AiConfig_1 = require("../AI/Common/AiConfig"),
   ConditionConfig_1 = require("../Common/Config/ConditionConfig"),
   TextConfig_1 = require("../Common/Config/TextConfig"),
+  GameSettingsConfig_1 = require("../GameSettings/GameSettingsConfig"),
   InputSettingsConfig_1 = require("../InputSettings/InputSettingsConfig"),
   LevelGamePlayConfig_1 = require("../LevelGamePlay/Common/LevelGamePlayConfig"),
   AchievementConfig_1 = require("../Module/Achievement/AchievementConfig"),
   ActivityConfig_1 = require("../Module/Activity/ActivityConfig"),
   ActivityBeginnerBookConfig_1 = require("../Module/Activity/ActivityContent/BeginnerBook/ActivityBeginnerBookConfig"),
+  ActivityBlackCoastConfig_1 = require("../Module/Activity/ActivityContent/BlackCoast/ActivityBlackCoastConfig"),
   BossRushConfig_1 = require("../Module/Activity/ActivityContent/BossRush/BossRushConfig"),
   ActivityCollectionConfig_1 = require("../Module/Activity/ActivityContent/Collection/ActivityCollectionConfig"),
+  ActivityCorniceMeetingConfig_1 = require("../Module/Activity/ActivityContent/CorniceMeeting/ActivityCorniceMeetingConfig"),
   ActivityDailyAdventureConfig_1 = require("../Module/Activity/ActivityContent/DailyAdventure/ActivityDailyAdventureConfig"),
   ActivityMoonChasingConfig_1 = require("../Module/Activity/ActivityContent/MoonChasing/Activity/ActivityMoonChasingConfig"),
   BuildingConfig_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Build/BuildingConfig"),
@@ -892,6 +895,11 @@ class ConfigManagerCreator {
       ConfigManager_1.ConfigManager.Add(
         ConfigManager_1.ConfigManager.ActivityRecallConfig,
       ),
+      (ConfigManager_1.ConfigManager.ActivityBlackCoastConfig =
+        new ActivityBlackCoastConfig_1.ActivityBlackCoastConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.ActivityBlackCoastConfig,
+      ),
       (ConfigManager_1.ConfigManager.ViewHotKeyConfig =
         new ViewHotKeyConfig_1.ViewHotKeyConfig()),
       ConfigManager_1.ConfigManager.Add(
@@ -901,6 +909,16 @@ class ConfigManagerCreator {
         new ActivityRoleGiveConfig_1.ActivityRoleGiveConfig()),
       ConfigManager_1.ConfigManager.Add(
         ConfigManager_1.ConfigManager.ActivityRoleGiveConfig,
+      ),
+      (ConfigManager_1.ConfigManager.GameSettingsConfig =
+        new GameSettingsConfig_1.GameSettingsConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.GameSettingsConfig,
+      ),
+      (ConfigManager_1.ConfigManager.ActivityCorniceMeetingConfig =
+        new ActivityCorniceMeetingConfig_1.ActivityCorniceMeetingConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.ActivityCorniceMeetingConfig,
       ),
       ConfigManager_1.ConfigManager.Init())
     );
@@ -1016,7 +1034,8 @@ class ConfigManagerCreator {
       (ConfigManager_1.ConfigManager.CollectItemConfig = void 0),
       (ConfigManager_1.ConfigManager.BossRushConfig = void 0),
       (ConfigManager_1.ConfigManager.ActivityRecallConfig = void 0),
-      !(ConfigManager_1.ConfigManager.ViewHotKeyConfig = void 0)
+      (ConfigManager_1.ConfigManager.ViewHotKeyConfig = void 0),
+      !(ConfigManager_1.ConfigManager.GameSettingsConfig = void 0)
     );
   }
 }

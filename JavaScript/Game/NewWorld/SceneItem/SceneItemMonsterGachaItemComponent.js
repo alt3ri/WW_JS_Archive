@@ -65,7 +65,7 @@ let SceneItemMonsterGachaItemComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(185)),
+        (this.Hte = this.Entity.GetComponent(187)),
         EventSystem_1.EventSystem.OnceWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
@@ -77,7 +77,7 @@ let SceneItemMonsterGachaItemComponent =
   });
 (SceneItemMonsterGachaItemComponent = SceneItemMonsterGachaItemComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(143)],
+    [(0, RegisterComponent_1.RegisterComponent)(144)],
     SceneItemMonsterGachaItemComponent,
   )),
   (exports.SceneItemMonsterGachaItemComponent =

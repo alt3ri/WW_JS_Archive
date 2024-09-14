@@ -41,6 +41,9 @@ class PhotoSaveMarkItem extends UiPanelBase_1.UiPanelBase {
       LocalStorageDefine_1.ELocalStorageGlobalKey.PhotoAndShareShowPlayerName,
       !0,
     );
+    this.SetNameVisible(e);
+  }
+  SetNameVisible(e) {
     this.GetText(1)?.SetUIActive(e), this.GetText(2)?.SetUIActive(e);
   }
 }

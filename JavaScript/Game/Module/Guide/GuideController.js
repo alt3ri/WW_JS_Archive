@@ -15,10 +15,10 @@ const Log_1 = require("../../../Core/Common/Log"),
   GuidePrefabDefine_1 = require("./Views/GuidePrefabDefine");
 class GuideController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(10149, this.vJt);
+    Net_1.Net.Register(18193, this.vJt);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(10149);
+    Net_1.Net.UnRegister(18193);
   }
   static MJt() {
     for (const i of ConfigManager_1.ConfigManager.GuideConfig.GetAllGroup()) {
@@ -160,15 +160,16 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
             e,
           ]);
   }
-  static FinishGuide(o) {
-    var e = Protocol_1.Aki.Protocol.oos.create();
-    (e.c9n = o),
-      Net_1.Net.Call(11984, e, (e) => {
-        e?.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
-          Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Guide", 17, "引导请求服务端完成失败", ["组Id", o]),
-          GuideController.RJt(o);
-      });
+  static FinishGuide(o, e) {
+    e
+      ? GuideController.RJt(o)
+      : (((e = Protocol_1.Aki.Protocol.uos.create()).S9n = o),
+        Net_1.Net.Call(25607, e, (e) => {
+          e?.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
+            Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Guide", 17, "引导请求服务端完成失败", ["组Id", o]),
+            GuideController.RJt(o);
+        }));
   }
   static GmCleanGuideData() {
     ModelManager_1.ModelManager.GuideModel.GmResetAllGuideGroup(),
@@ -263,7 +264,11 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
     return !1;
   }
   static CheckHasNewTagInHookNameForShow(e) {
-    return e.HookNameForShow.includes(GuidePrefabDefine_1.NEW_TAG);
+    return (
+      e.HookNameForShow.includes(GuidePrefabDefine_1.NEW_TAG) ||
+      (0 < e.ExtraParam.length &&
+        e.ExtraParam[0].includes(GuidePrefabDefine_1.NEW_TAG))
+    );
   }
 }
 ((exports.GuideController = GuideController).vJt = (e) => {
@@ -273,9 +278,9 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
           "Guide",
           17,
           "初始化GuideTriggerNotify发来的数据, 服务端监听的打开条件通过，主动发一个引导组下来",
-          ["groupId", e.c9n],
+          ["groupId", e.S9n],
         ),
-      (e = e.c9n),
+      (e = e.S9n),
       GuideController.TryStartGuide(e))
     : Log_1.Log.CheckError() &&
       Log_1.Log.Error("Guide", 17, "服务端发来的GuideTriggerNotify为空");
@@ -287,15 +292,15 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
   (GuideController.DJt = () =>
     !ModelManager_1.ModelManager.BattleUiModel.IsInBattleSettlement),
   (GuideController.IJt = (o, t) => {
-    var e = Protocol_1.Aki.Protocol.ios.create();
-    (e.c9n = o),
-      Net_1.Net.Call(29377, e, (e) => {
-        e?.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+    var e = Protocol_1.Aki.Protocol.los.create();
+    (e.S9n = o),
+      Net_1.Net.Call(16281, e, (e) => {
+        e?.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? (ModelManager_1.ModelManager.GuideModel.SwitchGroupState(o, 0),
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              4234,
-              e.ivs,
+              e.Q4n,
+              26820,
+              e.lvs,
             ))
           : t || ModelManager_1.ModelManager.GuideModel.SwitchGroupState(o, 2);
       });
@@ -306,11 +311,11 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
   (GuideController.nye = () => {
     ModelManager_1.ModelManager.GuideModel.EnsureCurrentDungeonId();
   }),
-  (GuideController.$Js = [20013]),
+  (GuideController.jZs = [20013]),
   (GuideController.FWe = () => {
     var e = ModelManager_1.ModelManager.GuideModel.CurrentGroupMap;
     if (e)
-      for (const t of GuideController.$Js) {
+      for (const t of GuideController.jZs) {
         var o = e.get(t);
         o &&
           (Log_1.Log.CheckInfo() &&
@@ -325,15 +330,15 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
       }
   }),
   (GuideController.TJt = () => {
-    var e = Protocol_1.Aki.Protocol.eos.create();
-    Net_1.Net.Call(28789, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.aos.create();
+    Net_1.Net.Call(21091, e, (e) => {
       if (e) {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Guide", 17, "初始化GuideInfoNotify发来的数据", [
             "FinishedList",
-            e.ZUs,
+            e.sws,
           ]);
-        for (const o of e.ZUs)
+        for (const o of e.sws)
           ModelManager_1.ModelManager.GuideModel.FinishGroup(o);
         GuideController.MJt();
       } else

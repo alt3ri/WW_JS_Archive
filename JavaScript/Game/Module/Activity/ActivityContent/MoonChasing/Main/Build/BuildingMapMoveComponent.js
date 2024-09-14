@@ -5,7 +5,6 @@ const puerts_1 = require("puerts"),
   UE = require("ue"),
   Log_1 = require("../../../../../../../Core/Common/Log"),
   Time_1 = require("../../../../../../../Core/Common/Time"),
-  CommonParamById_1 = require("../../../../../../../Core/Define/ConfigCommon/CommonParamById"),
   MathCommon_1 = require("../../../../../../../Core/Utils/Math/MathCommon"),
   Vector_1 = require("../../../../../../../Core/Utils/Math/Vector"),
   Vector2D_1 = require("../../../../../../../Core/Utils/Math/Vector2D"),
@@ -22,55 +21,54 @@ const puerts_1 = require("puerts"),
   TWEEN_TIME = 2,
   DRAG_TWEEN_TIME = 0.8;
 class BuildingMapMoveComponent {
-  constructor(t) {
+  constructor(t, i = !0, s = !0) {
     (this.xFo = 0),
       (this.IsDragging = !1),
       (this.IsTweening = !1),
-      (this.yca = void 0),
+      (this.ICa = void 0),
       (this.uGo = void 0),
-      (this.Ica = Vector2D_1.Vector2D.Create()),
-      (this.Tca = Vector2D_1.Vector2D.Create()),
+      (this.TCa = Vector2D_1.Vector2D.Create()),
+      (this.LCa = Vector2D_1.Vector2D.Create()),
       (this.ScaleStep = 0.05),
       (this.MapScaleSafeArea = { Min: 0, Max: 0 }),
-      (this.Fca = 1),
+      (this.VCa = 1),
       (this.PYe = Vector2D_1.Vector2D.Create()),
-      (this.Lca = Vector2D_1.Vector2D.Create()),
-      (this.Dca = { MinX: 0, MaxX: 0, MinY: 0, MaxY: 0 }),
-      (this.Aca = { MinX: 0, MaxX: 0, MinY: 0, MaxY: 0 }),
-      (this.Ajs = Vector2D_1.Vector2D.Create()),
-      (this.w9s = 1),
-      (this.Ujs = void 0),
+      (this.DCa = Vector2D_1.Vector2D.Create()),
+      (this.ACa = { MinX: 0, MaxX: 0, MinY: 0, MaxY: 0 }),
+      (this.RCa = { MinX: 0, MaxX: 0, MinY: 0, MaxY: 0 }),
+      (this.Yjs = Vector2D_1.Vector2D.Create()),
+      (this.Jjs = void 0),
       (this.Q_t = Vector2D_1.Vector2D.Create()),
       (this.cz = Vector_1.Vector.Create()),
-      (this.Vca = 1),
-      (this.Rjs = void 0),
+      (this.HCa = 1),
+      (this.zjs = void 0),
       (this.w8i = (t) => {
         this.IsInMultiTouch ||
-          (this.Rca(),
+          (this.UCa(),
           (t = t.pointerPosition),
-          (t = this.Uca(t.X, t.Y)),
-          this.Ica.DeepCopy(t));
+          (t = this.xCa(t.X, t.Y)),
+          this.TCa.DeepCopy(t));
       }),
       (this.B8i = (t) => {
-        var i, s, e;
+        var i, s, h;
         this.IsInMultiTouch
-          ? ((this.IsDragging = !1), this.Tca.Reset())
+          ? ((this.IsDragging = !1), this.LCa.Reset())
           : ((this.IsDragging = !0),
             (t = t.pointerPosition),
-            (t = this.Uca(t.X, t.Y)),
+            (t = this.xCa(t.X, t.Y)),
             (0 ===
               (i = Vector2D_1.Vector2D.Create(t.X, t.Y).SubtractionEqual(
-                this.Ica,
+                this.TCa,
               )).X &&
               0 === i.Y) ||
-              ((s = t.X - this.Ica.X),
-              (e = t.Y - this.Ica.Y),
-              this.Tca.DeepCopy(i),
-              this.Ica.DeepCopy(t),
-              this.Q_t.FromUeVector2D(this.Ujs.GetAnchorOffset()),
+              ((s = t.X - this.TCa.X),
+              (h = t.Y - this.TCa.Y),
+              this.LCa.DeepCopy(i),
+              this.TCa.DeepCopy(t),
+              this.Q_t.FromUeVector2D(this.Jjs.GetAnchorOffset()),
               (this.Q_t.X = this.Q_t.X + s),
-              (this.Q_t.Y = this.Q_t.Y + e),
-              this.xca(this.Q_t, 1)));
+              (this.Q_t.Y = this.Q_t.Y + h),
+              this.PCa(this.Q_t, 1)));
       }),
       (this.Ngo = (t) => {
         t &&
@@ -80,51 +78,52 @@ class BuildingMapMoveComponent {
       }),
       (this.GFo = (t) => {
         this.IsInMultiTouch ||
-          ((this.IsDragging = !1), 0 === this.Tca.X && 0 === this.Tca.Y) ||
-          (this.bFo(t.pointerPosition) && this.Pca());
+          ((this.IsDragging = !1), 0 === this.LCa.X && 0 === this.LCa.Y) ||
+          (this.bFo(t.pointerPosition) && this.wCa());
       }),
       (this.jDn = (t) => {
         var t = t.scrollAxisValue;
         0 !== t &&
-          (this.Ajs.Reset(),
-          this.Ajs.AdditionEqual(this.xjs()),
+          (this.Yjs.Reset(),
+          this.Yjs.AdditionEqual(this.Zjs()),
           (t = t * this.ScaleStep),
-          this.Gd(this.Fca + t, 0));
+          this.SetScale(this.VCa + t, 0));
       }),
       (this.YFo = (t) => {
-        this.Ujs.SetAnchorOffset(t);
+        this.Jjs.SetAnchorOffset(t);
       }),
-      (this.TIa = (t, i) => {
-        this.Q_t.FromUeVector2D(this.Ujs.GetAnchorOffset()),
+      (this._Ua = (t, i) => {
+        this.Q_t.FromUeVector2D(this.Jjs.GetAnchorOffset()),
           (this.Q_t.X = this.Q_t.X - t),
           (this.Q_t.Y = this.Q_t.Y - i),
-          this.xca(this.Q_t, 1);
+          this.PCa(this.Q_t, 1);
       }),
-      (this.Pjs = Vector2D_1.Vector2D.Create()),
+      (this.eWs = Vector2D_1.Vector2D.Create()),
       (this.wFo = new Map()),
       (this.Eqt = (t, i) => {
         var s = i.TouchType;
-        2 === s ? this.Bjs() : 0 === s ? this.Mgt(!0, i) : this.Mgt(!1, i);
+        2 === s ? this.tWs() : 0 === s ? this.Mgt(!0, i) : this.Mgt(!1, i);
       }),
-      (this.Ujs = t.GetRootComponent()),
-      t.OnPointerBeginDragCallBack.Bind(this.w8i),
-      t.OnPointerDragCallBack.Bind(this.B8i),
-      t.OnPointerDownCallBack.Bind(this.Ngo),
-      t.OnPointerCancelCallBack.Bind(this.GFo),
-      t.OnPointerUpCallBack.Bind(this.GFo),
-      t.OnPointerScrollCallBack.Bind(this.jDn),
+      (this.Jjs = t.GetRootComponent()),
+      i &&
+        (t.OnPointerBeginDragCallBack.Bind(this.w8i),
+        t.OnPointerDragCallBack.Bind(this.B8i),
+        t.OnPointerDownCallBack.Bind(this.Ngo),
+        t.OnPointerCancelCallBack.Bind(this.GFo),
+        t.OnPointerUpCallBack.Bind(this.GFo)),
+      s && t.OnPointerScrollCallBack.Bind(this.jDn),
       this.Fq();
   }
   get MapScale() {
-    return this.Fca;
+    return this.VCa;
   }
   set MapScale(t) {
-    this.Fca = t;
+    this.VCa = t;
   }
   Fq() {
-    this.wca(), this.oRn(), this.nRn(), this.b9s(), this.Bca(), this.rRn();
+    this.BCa(), this.oRn(), this.nRn(), this.bCa(), this.rRn();
   }
-  wca() {
+  BCa() {
     this.uGo = (0, puerts_1.toManualReleaseDelegate)(this.YFo);
   }
   oRn() {
@@ -133,8 +132,8 @@ class BuildingMapMoveComponent {
     var t = UiLayer_1.UiLayer.UiRootItem.GetCanvasScaler(),
       i = t.ReferenceResolution.X / t.ReferenceResolution.Y,
       s = this.PYe.X / this.PYe.Y,
-      e = s / i;
-    (this.Vca = 1 < e ? e : i / s),
+      h = s / i;
+    (this.HCa = 1 < h ? h : i / s),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "MoonChasing",
@@ -142,85 +141,80 @@ class BuildingMapMoveComponent {
           "[MapMoveComponent]初始化Viewport",
           ["Viewport大小", this.PYe.Tuple],
           ["ReferenceResolution大小", t.ReferenceResolution],
-          ["Viewport与ReferenceResolution比值", e],
-          ["实际应用的比值", this.Vca],
+          ["Viewport与ReferenceResolution比值", h],
+          ["实际应用的比值", this.HCa],
         );
   }
-  Bca() {
-    var t = this.Ujs.GetWidth() * this.Fca,
-      i = this.Ujs.GetHeight() * this.Fca,
+  bCa() {
+    var t = this.Jjs.GetWidth() * this.VCa,
+      i = this.Jjs.GetHeight() * this.VCa,
       t = t < this.PYe.X ? this.PYe.X : t,
       i = i < this.PYe.Y ? this.PYe.Y : i,
       t = Math.abs(t - this.PYe.X) / 2,
       i = Math.abs(i - this.PYe.Y) / 2;
-    (this.Aca.MinX = -t),
-      (this.Aca.MaxX = t),
-      (this.Aca.MinY = -i),
-      (this.Aca.MaxY = i);
+    (this.RCa.MinX = -t),
+      (this.RCa.MaxX = t),
+      (this.RCa.MinY = -i),
+      (this.RCa.MaxY = i);
   }
   rRn() {
-    var t = (this.Ujs.GetWidth() - 2 * this.Lca.X) * this.Fca,
-      i = (this.Ujs.GetHeight() - 2 * this.Lca.Y) * this.Fca,
+    var t = (this.Jjs.GetWidth() - 2 * this.DCa.X) * this.VCa,
+      i = (this.Jjs.GetHeight() - 2 * this.DCa.Y) * this.VCa,
       t = t < this.PYe.X ? this.PYe.X : t,
       i = i < this.PYe.Y ? this.PYe.Y : i,
       t = Math.abs(t - this.PYe.X) / 2,
       i = Math.abs(i - this.PYe.Y) / 2;
-    (this.Dca.MinX = -t),
-      (this.Dca.MaxX = t),
-      (this.Dca.MinY = -i),
-      (this.Dca.MaxY = i);
+    (this.ACa.MinX = -t),
+      (this.ACa.MaxX = t),
+      (this.ACa.MinY = -i),
+      (this.ACa.MaxY = i);
   }
   nRn() {
-    this.SetScaleSafeArea(0.5, 2), (this.Lca.X = 400), (this.Lca.Y = 300);
-  }
-  b9s() {
-    this.w9s = CommonParamById_1.configCommonParamById.GetFloatConfig(
-      "MoonFiestaMapSizeParam",
-    );
+    this.SetScaleSafeArea(0.5, 2), (this.DCa.X = 400), (this.DCa.Y = 300);
   }
   sRn(t) {
-    (t.X = MathUtils_1.MathUtils.Clamp(t.X, this.Dca.MinX, this.Dca.MaxX)),
-      (t.Y = MathUtils_1.MathUtils.Clamp(t.Y, this.Dca.MinY, this.Dca.MaxY));
+    (t.X = MathUtils_1.MathUtils.Clamp(t.X, this.ACa.MinX, this.ACa.MaxX)),
+      (t.Y = MathUtils_1.MathUtils.Clamp(t.Y, this.ACa.MinY, this.ACa.MaxY));
   }
-  bca(t) {
-    (t.X = MathUtils_1.MathUtils.Clamp(t.X, this.Aca.MinX, this.Aca.MaxX)),
-      (t.Y = MathUtils_1.MathUtils.Clamp(t.Y, this.Aca.MinY, this.Aca.MaxY));
+  qCa(t) {
+    (t.X = MathUtils_1.MathUtils.Clamp(t.X, this.RCa.MinX, this.RCa.MaxX)),
+      (t.Y = MathUtils_1.MathUtils.Clamp(t.Y, this.RCa.MinY, this.RCa.MaxY));
   }
-  Gd(t, i) {
+  SetScale(t, i) {
     var s,
       t = MathUtils_1.MathUtils.Clamp(
         t,
         this.MapScaleSafeArea.Min,
         this.MapScaleSafeArea.Max,
       );
-    t !== this.Fca &&
-      (this.Rca(),
-      (s = this.Fca),
-      (this.Fca = t),
-      this.Bca(),
+    t !== this.VCa &&
+      (this.UCa(),
+      (s = this.VCa),
+      (this.VCa = t),
+      this.bCa(),
       this.rRn(),
       this.cz.Set(t, t, t),
-      this.Ujs.SetUIRelativeScale3D(this.cz.ToUeVector()),
-      (t = this.wjs(t, s, i)),
+      this.Jjs.SetUIRelativeScale3D(this.cz.ToUeVector()),
+      (t = this.iWs(t, s, i)),
       this.Q_t.Reset(),
       this.Q_t.AdditionEqual(t),
-      this.xca(this.Q_t),
-      this.Rjs?.(i));
+      this.PCa(this.Q_t),
+      this.zjs?.(i));
   }
-  wjs(t, i, s) {
-    var e = Vector2D_1.Vector2D.Create(this.Ujs.GetAnchorOffset());
+  iWs(t, i, s) {
+    var h = Vector2D_1.Vector2D.Create(this.Jjs.GetAnchorOffset());
     return 0 === s || 1 === s
-      ? ((s = this.Uca(this.Ajs.X, this.Ajs.Y)).Set(
+      ? ((s = this.xCa(this.Yjs.X, this.Yjs.Y)).Set(
           s.X - this.PYe.X / 2,
           s.Y - this.PYe.Y / 2,
         ),
-        e
+        h
           .SubtractionEqual(s)
           .MultiplyEqual(t / i)
           .AdditionEqual(s))
-      : e.MultiplyEqual(t / i);
+      : h.MultiplyEqual(t / i);
   }
-  Uca(t, i) {
+  xCa(t, i) {
     var s = UiLayer_1.UiLayer.UiRootItem.GetCanvasScaler();
     return s
       ? ((t = Vector2D_1.Vector2D.Create(t, i)),
@@ -232,73 +226,69 @@ class BuildingMapMoveComponent {
       : Vector2D_1.Vector2D.Create();
   }
   bFo(t) {
-    t = this.Uca(t.X, t.Y);
+    t = this.xCa(t.X, t.Y);
     return !(t.X < 0 || t.X > this.PYe.X || t.Y < 0 || t.Y > this.PYe.Y);
   }
-  Pca() {
+  wCa() {
     var t,
       i = Time_1.Time.NowSeconds - this.xFo;
-    let s = this.Tca.Size() / i;
+    let s = this.LCa.Size() / i;
     this.PYe.IsNearlyZero() ||
       (s = MathCommon_1.MathCommon.Clamp(s, 0, this.PYe.Size())),
-      this.Tca.Normalize(0)
+      this.LCa.Normalize(0)
         ? ((i = Vector2D_1.Vector2D.Create()),
-          this.Tca.Multiply(s, i),
+          this.LCa.Multiply(s, i),
           (t = Vector2D_1.Vector2D.Create()),
           i.Multiply(TWEEN_TIME, t),
           (i = Vector2D_1.Vector2D.Create(
-            this.Ujs.GetAnchorOffset(),
+            this.Jjs.GetAnchorOffset(),
           ).AdditionEqual(t)),
-          this.qca(i, 2, DRAG_TWEEN_TIME))
-        : this.Tca.Reset();
+          this.GCa(i, 2, DRAG_TWEEN_TIME))
+        : this.LCa.Reset();
   }
-  Rca() {
-    this.yca && (this.yca.Kill(), (this.yca = void 0));
+  UCa() {
+    this.ICa && (this.ICa.Kill(), (this.ICa = void 0));
   }
-  qca(t, i = 0, s = TWEEN_TIME) {
+  GCa(t, i = 0, s = TWEEN_TIME) {
     this.sRn(t),
       (this.IsTweening = !0),
-      this.Rca(),
-      (this.yca = UE.LTweenBPLibrary.Vector2To(
+      this.UCa(),
+      (this.ICa = UE.LTweenBPLibrary.Vector2To(
         GlobalData_1.GlobalData.World,
         this.uGo,
-        this.Ujs.GetAnchorOffset(),
+        this.Jjs.GetAnchorOffset(),
         t.ToUeVector2D(!0),
         s,
         0,
         i,
       )),
-      this.yca.OnCompleteCallBack.Bind(() => {
+      this.ICa.OnCompleteCallBack.Bind(() => {
         this.IsTweening = !1;
       });
   }
-  xca(t, i = 0) {
-    0 === i ? this.sRn(t) : 1 === i && this.bca(t),
-      this.Ujs.SetAnchorOffset(t.ToUeVector2D());
+  PCa(t, i = 0) {
+    0 === i ? this.sRn(t) : 1 === i && this.qCa(t),
+      this.Jjs.SetAnchorOffset(t.ToUeVector2D());
   }
-  xjs() {
+  Zjs() {
     var t = Global_1.Global.CharacterController;
     return t
       ? (this.Q_t.Reset(), this.Q_t.AdditionEqual(t.GetCursorPosition()))
       : (this.Q_t.Reset(), this.Q_t);
   }
   LongPressScroll(t) {
-    this.Ajs.Reset(), this.Gd(this.Fca + t, 2);
+    this.Yjs.Reset(), this.SetScale(this.VCa + t, 2);
   }
   SliderScroll(t) {
-    this.Gd(t, 3);
-  }
-  SetScaleAdaptHeight() {
-    var t = (this.PYe.Y / this.Ujs.GetHeight()) * this.w9s;
-    this.Gd(t, 4);
+    this.SetScale(t, 3);
   }
   SetChangeScaleCallback(t) {
-    this.Rjs = t;
+    this.zjs = t;
   }
   SetScaleSafeArea(t, i) {
     i < t
-      ? ((this.MapScaleSafeArea.Min = i * this.Vca),
-        (this.MapScaleSafeArea.Max = t * this.Vca),
+      ? ((this.MapScaleSafeArea.Min = i * this.HCa),
+        (this.MapScaleSafeArea.Max = t * this.HCa),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "MoonChasing",
@@ -309,8 +299,8 @@ class BuildingMapMoveComponent {
             ["真实最小", this.MapScaleSafeArea.Min],
             ["真实最大", this.MapScaleSafeArea.Max],
           ))
-      : ((this.MapScaleSafeArea.Min = t * this.Vca),
-        (this.MapScaleSafeArea.Max = i * this.Vca),
+      : ((this.MapScaleSafeArea.Min = t * this.HCa),
+        (this.MapScaleSafeArea.Max = i * this.HCa),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "MoonChasing",
@@ -323,21 +313,21 @@ class BuildingMapMoveComponent {
           ));
   }
   SetMapMoveRebound(t, i) {
-    (this.Lca.X = t), (this.Lca.Y = i);
+    (this.DCa.X = t), (this.DCa.Y = i);
   }
   Destroy() {
-    this.Rca(), (0, puerts_1.releaseManualReleaseDelegate)(this.YFo);
+    this.UCa(), (0, puerts_1.releaseManualReleaseDelegate)(this.YFo);
   }
   AddGamepadEvent() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.GamepadMoveOverScreen,
-      this.TIa,
+      this._Ua,
     );
   }
   RemoveGamepadEvent() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.GamepadMoveOverScreen,
-      this.TIa,
+      this._Ua,
     );
   }
   get IsInTouch() {
@@ -353,14 +343,14 @@ class BuildingMapMoveComponent {
           s,
         ) && this.wFo.set(s, i)
       : this.wFo.delete(s),
-      this.Ajs.Reset(),
+      this.Yjs.Reset(),
       this.wFo.forEach((t) => {
-        this.Pjs.Set(t.TouchPosition.X, t.TouchPosition.Y),
-          this.Ajs.AdditionEqual(this.Pjs);
+        this.eWs.Set(t.TouchPosition.X, t.TouchPosition.Y),
+          this.Yjs.AdditionEqual(this.eWs);
       }),
-      0 < this.wFo.size && this.Ajs.DivisionEqual(this.wFo.size);
+      0 < this.wFo.size && this.Yjs.DivisionEqual(this.wFo.size);
   }
-  Bjs() {
+  tWs() {
     var t, i;
     this.IsInMultiTouch &&
       (({ State: t, ChangeRate: i } =
@@ -369,7 +359,7 @@ class BuildingMapMoveComponent {
           TouchFingerDefine_1.EFingerIndex.Two,
         )),
       t !== TouchFingerDefine_1.EFingerExpandCloseType.None) &&
-      this.Gd(this.Fca + i, 1);
+      this.SetScale(this.VCa + i, 1);
   }
   BindTouch() {
     InputDistributeController_1.InputDistributeController.BindTouches(
@@ -381,7 +371,7 @@ class BuildingMapMoveComponent {
     );
   }
   UnbindTouch() {
-    InputDistributeController_1.InputDistributeController.BindTouches(
+    InputDistributeController_1.InputDistributeController.UnBindTouches(
       [
         TouchFingerDefine_1.EFingerIndex.One,
         TouchFingerDefine_1.EFingerIndex.Two,
@@ -390,7 +380,7 @@ class BuildingMapMoveComponent {
     );
   }
   GetMapItem() {
-    return this.Ujs;
+    return this.Jjs;
   }
 }
 exports.BuildingMapMoveComponent = BuildingMapMoveComponent;

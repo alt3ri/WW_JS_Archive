@@ -29,13 +29,13 @@ class CommonCurrencyItem extends UiPanelBase_1.UiPanelBase {
       }),
       (this.TTt = (e) => {
         for (const t of e)
-          if (this.ETt === t.J4n) return void this.RefreshCountText();
+          if (this.ETt === t.s5n) return void this.RefreshCountText();
       }),
       (this.LTt = (e) => {
         e.includes(this.ETt) && this.RefreshCountText();
       }),
       (this.DTt = (e, t, i) => {
-        this.ETt === e.J4n && this.RefreshCountText();
+        this.ETt === e.s5n && this.RefreshCountText();
       }),
       (this.RTt = (e) => {
         e === ConfigManager_1.ConfigManager.GachaConfig.PrimaryCurrency()

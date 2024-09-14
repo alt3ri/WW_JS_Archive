@@ -100,7 +100,7 @@ class AlterTipMark extends UiPanelBase_1.UiPanelBase {
   N$e() {
     var t = ActorUtils_1.ActorUtils.GetEntityByActor(
       this.E$e,
-    ).Entity.GetComponent(39).AiController.AiAlert.AlertValue;
+    ).Entity.GetComponent(40).AiController.AiAlert.AlertValue;
     if (0 < t) {
       if (0 < this.B$e) return;
       this.wYe.SetUIActive(!0);

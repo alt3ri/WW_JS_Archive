@@ -6,26 +6,26 @@ const Protocol_1 = require("../../../../../../../../Core/Define/Net/Protocol"),
   ControllerHolder_1 = require("../../../../../../../Manager/ControllerHolder"),
   TaskData_1 = require("../../../../Common/TaskItem/TaskData"),
   taskStateResolver = {
-    [Protocol_1.Aki.Protocol.G8s.Proto_TrackMoonTargetRunning]: 1,
-    [Protocol_1.Aki.Protocol.G8s.Proto_TrackMoonTargetFinish]: 0,
-    [Protocol_1.Aki.Protocol.G8s.Proto_TrackMoonTargetTaken]: 2,
+    [Protocol_1.Aki.Protocol.H8s.Proto_TrackMoonTargetRunning]: 1,
+    [Protocol_1.Aki.Protocol.H8s.Proto_TrackMoonTargetFinish]: 0,
+    [Protocol_1.Aki.Protocol.H8s.Proto_TrackMoonTargetTaken]: 2,
   };
 class RewardTargetData {
   constructor(t) {
     (this.Id = t),
-      (this.Status = Protocol_1.Aki.Protocol.G8s.Proto_TrackMoonTargetRunning),
-      (this.JGn = new TaskData_1.TaskData()),
+      (this.Status = Protocol_1.Aki.Protocol.H8s.Proto_TrackMoonTargetRunning),
+      (this.sOn = new TaskData_1.TaskData()),
       (this.Current = 0),
       (this.Target = 1);
   }
   IsFinished() {
     return (
-      this.Status === Protocol_1.Aki.Protocol.G8s.Proto_TrackMoonTargetFinish
+      this.Status === Protocol_1.Aki.Protocol.H8s.Proto_TrackMoonTargetFinish
     );
   }
   IsTaken() {
     return (
-      this.Status === Protocol_1.Aki.Protocol.G8s.Proto_TrackMoonTargetTaken
+      this.Status === Protocol_1.Aki.Protocol.H8s.Proto_TrackMoonTargetTaken
     );
   }
   GetRewardList() {
@@ -48,18 +48,18 @@ class RewardTargetData {
         this.Id,
       );
     return (
-      (this.JGn.TaskId = this.Id),
-      (this.JGn.IsFinished = this.IsFinished()),
-      (this.JGn.IsTaken = this.IsTaken()),
-      (this.JGn.Status = taskStateResolver[this.Status]),
-      (this.JGn.RewardList = this.GetRewardList()),
-      (this.JGn.Current = this.Current),
-      (this.JGn.Target = this.Target),
-      (this.JGn.JumpId = t.TargetFunc),
-      (this.JGn.TitleTextId = t.TargetName),
-      (this.JGn.ReceiveDelegate =
+      (this.sOn.TaskId = this.Id),
+      (this.sOn.IsFinished = this.IsFinished()),
+      (this.sOn.IsTaken = this.IsTaken()),
+      (this.sOn.Status = taskStateResolver[this.Status]),
+      (this.sOn.RewardList = this.GetRewardList()),
+      (this.sOn.Current = this.Current),
+      (this.sOn.Target = this.Target),
+      (this.sOn.JumpId = t.TargetFunc),
+      (this.sOn.TitleTextId = t.TargetName),
+      (this.sOn.ReceiveDelegate =
         ControllerHolder_1.ControllerHolder.MoonChasingController.TrackMoonTargetRewardRequest),
-      this.JGn
+      this.sOn
     );
   }
 }

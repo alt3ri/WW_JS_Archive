@@ -17,8 +17,8 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   constructor() {
     super(...arguments),
       (this.aio = !1),
-      (this.YQs = void 0),
-      (this.JQs = void 0);
+      (this.dYs = void 0),
+      (this.CYs = void 0);
   }
   PreAllPlay() {
     var e;
@@ -27,14 +27,14 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       CameraController_1.CameraController.EnterCameraMode(1, e),
       (this.aio = !0),
       ModelManager_1.ModelManager.PlotModel.PlotConfig.IsPreStreaming) &&
-      (this.YQs ||
-        (this.YQs = ActorSystem_1.ActorSystem.Spawn(
+      (this.dYs ||
+        (this.dYs = ActorSystem_1.ActorSystem.Spawn(
           UE.BP_StreamingSourceActor_C.StaticClass(),
           new UE.Transform(),
           void 0,
         )),
-      this.JQs ||
-        ((this.JQs = ActorSystem_1.ActorSystem.Spawn(
+      this.CYs ||
+        ((this.CYs = ActorSystem_1.ActorSystem.Spawn(
           UE.BP_StreamingSourceActor_C.StaticClass(),
           new UE.Transform(),
           void 0,
@@ -42,7 +42,7 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
         (e =
           ModelManager_1.ModelManager.CameraModel.SequenceCamera
             .DisplayComponent.CineCamera),
-        this.JQs.K2_AttachToActor(e, void 0, 2, 1, 1, !1)));
+        this.CYs.K2_AttachToActor(e, void 0, 2, 1, 1, !1)));
   }
   PreEachPlay() {
     var e = UE.NewArray(UE.Actor),
@@ -65,71 +65,66 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       );
   }
   EachStop() {
-    ModelManager_1.ModelManager.CameraModel.SequenceCamera.DisplayComponent.CineCamera.ResetSeqCineCamSetting();
+    var e,
+      r,
+      a,
+      t =
+        ModelManager_1.ModelManager.CameraModel.SequenceCamera.DisplayComponent
+          .CineCamera;
+    this.Model.Config.KeepCamera &&
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Plot", 27, "剧情Seq结束时相机状态: KeepCamera"),
+      (this.aio = !1),
+      (e = ModelManager_1.ModelManager.CameraModel).SaveSeqCamera(),
+      (e = e.GetSavedSeqCameraThings()) ||
+        (Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Camera", 8, "读取Sequence相机信息时，信息不存在")),
+      (r = UiCameraManager_1.UiCameraManager.Get()).SetWorldLocation(
+        e.CameraLocation,
+      ),
+      r.SetWorldRotation(e.CameraRotation),
+      (a = r.GetUiCameraComponent(
+        UiCameraPostEffectComponent_1.UiCameraPostEffectComponent,
+      )).SetCameraAperture(e.CurrentAperture),
+      a.SetCameraFocalDistance(e.FocusSettings.ManualFocusDistance),
+      a.SetCameraFieldOfView(e.FieldOfView),
+      CameraController_1.CameraController.ExitCameraMode(1),
+      r.Enter()),
+      t.ResetSeqCineCamSetting();
   }
   AllStop() {
-    var e, r, a;
+    var e;
     this.Model.IsViewTargetControl &&
-      (this.Model.Config.KeepCamera
+      !this.Model.Config.KeepCamera &&
+      (this.Model.Config.ResetCamera
         ? (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Plot", 27, "剧情Seq结束时相机状态: KeepCamera"),
-          (this.aio = !1),
-          (a = ModelManager_1.ModelManager.CameraModel).SaveSeqCamera(),
-          (a = a.GetSavedSeqCameraThings()) ||
-            (Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "Camera",
-                8,
-                "读取Sequence相机信息时，信息不存在",
-              )),
-          (e = UiCameraManager_1.UiCameraManager.Get()).SetWorldLocation(
-            a.CameraLocation,
-          ),
-          e.SetWorldRotation(a.CameraRotation),
-          (r = e.GetUiCameraComponent(
-            UiCameraPostEffectComponent_1.UiCameraPostEffectComponent,
-          )).SetCameraAperture(a.CurrentAperture),
-          r.SetCameraFocalDistance(a.FocusSettings.ManualFocusDistance),
-          r.SetCameraFieldOfView(a.FieldOfView),
-          CameraController_1.CameraController.ExitCameraMode(1),
-          e.Enter())
-        : (this.Model.Config.ResetCamera
-            ? (Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug(
-                  "Plot",
-                  27,
-                  "剧情Seq结束时相机状态: ResetCamera",
-                ),
-              CameraBlueprintFunctionLibrary_1.default.ResetFightCameraPitchAndArmLength())
-            : (Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug(
-                  "Plot",
-                  27,
-                  "剧情Seq结束时相机状态: 继承seq相机",
-                ),
-              ((r =
-                CameraController_1.CameraController.SequenceCamera.DisplayComponent.CineCamera.K2_GetActorRotation()).Roll =
-                0),
-              CameraController_1.CameraController.FightCamera.LogicComponent.SetRotation(
-                r,
-              )),
-          (a = this.Model.SequenceData.CameraBlendOutTime),
-          (this.aio = !1),
-          0 === a &&
-            ControllerHolder_1.ControllerHolder.SequenceController.DisableMotionBlurAwhile(),
-          CameraController_1.CameraController.ExitCameraMode(1, a, 0, 0)));
+            Log_1.Log.Debug("Plot", 27, "剧情Seq结束时相机状态: ResetCamera"),
+          CameraBlueprintFunctionLibrary_1.default.ResetFightCameraPitchAndArmLength())
+        : (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("Plot", 27, "剧情Seq结束时相机状态: 继承seq相机"),
+          ((e =
+            CameraController_1.CameraController.SequenceCamera.DisplayComponent.CineCamera.K2_GetActorRotation()).Roll =
+            0),
+          CameraController_1.CameraController.FightCamera.LogicComponent.SetRotation(
+            e,
+          )),
+      (e = this.Model.SequenceData.CameraBlendOutTime),
+      (this.aio = !1),
+      0 === e &&
+        ControllerHolder_1.ControllerHolder.SequenceController.DisableMotionBlurAwhile(),
+      CameraController_1.CameraController.ExitCameraMode(1, e, 0, 0));
   }
   End() {
     this.aio && CameraController_1.CameraController.ExitCameraMode(1),
       ModelManager_1.ModelManager.CameraModel.SequenceCamera.DisplayComponent.CineCamera.ResetSeqCineCamSetting(),
-      this.YQs &&
-        this.YQs.WorldPartitionStreamingSource?.DisableStreamingSource(),
-      this.JQs &&
-        this.JQs.WorldPartitionStreamingSource?.DisableStreamingSource();
+      this.dYs &&
+        this.dYs.WorldPartitionStreamingSource?.DisableStreamingSource(),
+      this.CYs &&
+        this.CYs.WorldPartitionStreamingSource?.DisableStreamingSource();
   }
   CalcPreloadLocation() {
     if (ModelManager_1.ModelManager.PlotModel.PlotConfig.IsPreStreaming) {
-      this.JQs?.WorldPartitionStreamingSource?.EnableStreamingSource();
+      this.CYs?.WorldPartitionStreamingSource?.EnableStreamingSource();
       var a =
         this.Model.CurLevelSeqActor.SequencePlayer.GetCurrentTime().Time
           .FrameNumber.Value;
@@ -140,22 +135,22 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
           (e = i + 1), (r = !0);
           break;
         }
-      var o = this.Model.CurLevelSeqActor?.GetSequence(),
-        t = (0, puerts_1.$ref)(void 0);
+      var t = this.Model.CurLevelSeqActor?.GetSequence(),
+        o = (0, puerts_1.$ref)(void 0);
       r &&
       UE.KuroSequenceRuntimeFunctionLibrary.GetFrameTransformByTag(
-        o,
+        t,
         SequenceDefine_1.CAMERA_TAG,
         e,
-        t,
+        o,
       )
-        ? (this.YQs?.K2_SetActorTransform(
-            (0, puerts_1.$unref)(t),
+        ? (this.dYs?.K2_SetActorTransform(
+            (0, puerts_1.$unref)(o),
             !1,
             void 0,
             !0,
           ),
-          this.YQs?.WorldPartitionStreamingSource?.EnableStreamingSource(),
+          this.dYs?.WorldPartitionStreamingSource?.EnableStreamingSource(),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Plot",
@@ -167,9 +162,9 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
                 "curPos",
                 ModelManager_1.ModelManager.CameraModel.SequenceCamera.DisplayComponent.CineCamera.K2_GetActorLocation(),
               ],
-              ["tarPos", this.YQs?.K2_GetActorLocation()],
+              ["tarPos", this.dYs?.K2_GetActorLocation()],
             ))
-        : this.YQs?.WorldPartitionStreamingSource?.DisableStreamingSource();
+        : this.dYs?.WorldPartitionStreamingSource?.DisableStreamingSource();
     }
   }
 }

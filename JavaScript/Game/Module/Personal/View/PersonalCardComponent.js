@@ -16,26 +16,26 @@ class PersonalCardComponent extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.xqe = void 0),
       (this.L0 = !1),
-      (this.esa = void 0),
+      (this.bha = void 0),
       (this.uHt = () => {
-        this.L0 || this.P7e(this.esa);
+        this.L0 || this.P7e(this.bha);
       }),
       (this.p5t = () => {
         PersonalController_1.PersonalController.SendChangeCardRequest(
-          this.esa.CardId,
+          this.bha.CardId,
         ),
           UiManager_1.UiManager.CloseView("PersonalEditView"),
           UiManager_1.UiManager.CloseView("PersonalOptionView");
       }),
-      (this.tsa = () => {
-        UiManager_1.UiManager.OpenView("PersonalCardPreviewView", this.esa);
+      (this.qha = () => {
+        UiManager_1.UiManager.OpenView("PersonalCardPreviewView", this.bha);
       }),
       (this.Y5i = () => {
         var e = new PersonalCardItem_1.PersonalCardItem();
         return e.SetToggleCallBack(this.J5i), e;
       }),
       (this.J5i = (e, t) => {
-        this.esa = t;
+        this.bha = t;
         var i = this.p5i.CardDataList,
           s = i.length;
         for (let e = 0; e < s; e++) {
@@ -66,6 +66,7 @@ class PersonalCardComponent extends UiPanelBase_1.UiPanelBase {
       [6, UE.UIItem],
       [9, UE.UIButtonComponent],
       [10, UE.UIText],
+      [11, UE.UIInteractionGroup],
     ]),
       this.L0 ||
         (this.ComponentRegisterInfos.push(
@@ -74,7 +75,7 @@ class PersonalCardComponent extends UiPanelBase_1.UiPanelBase {
         ),
         (this.BtnBindInfo = [
           [7, this.p5t],
-          [9, this.tsa],
+          [9, this.qha],
         ]));
   }
   OnStart() {
@@ -93,11 +94,11 @@ class PersonalCardComponent extends UiPanelBase_1.UiPanelBase {
     ) {
       const i = this.p5i.CurCardId;
       var t = e.findIndex((e) => e.CardId === i);
-      (this.esa = e[(t = t < 0 ? 0 : t)]),
+      (this.bha = e[(t = t < 0 ? 0 : t)]),
         this.xqe.SelectGridProxy(t),
         this.xqe.ScrollToGridIndex(t),
-        this.RefreshCardInfo(this.esa),
-        this.P7e(this.esa);
+        this.RefreshCardInfo(this.bha),
+        this.P7e(this.bha);
     }
     this.GetItem(6).SetUIActive(0 < e.length),
       this.L0 ||
@@ -129,7 +130,7 @@ class PersonalCardComponent extends UiPanelBase_1.UiPanelBase {
       i = e.IsUnLock,
       i = t !== e.CardId && i,
       i =
-        (this.GetButton(7).SetSelfInteractive(i),
+        (this.GetInteractionGroup(11).SetInteractable(i),
         t === e.CardId ? "Text_InUse_Text" : "ConfirmBox_173_ButtonText_1");
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(10), i);
   }

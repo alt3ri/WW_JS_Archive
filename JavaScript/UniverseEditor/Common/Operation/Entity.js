@@ -3,8 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.foldAllComponents =
     exports.checkIsAllComponentsFolded =
     exports.getEntityAoiDistZ =
+    exports.getEntityAoiDistZByBaseInfo =
     exports.checkPosInEntityAoi =
     exports.getEntityAoiDistXy =
+    exports.getEntityAoiDistXyByBaseInfo =
     exports.AOI_METRIC_SCALE =
     exports.getLevelIdAndEntityIdByJsonPath =
     exports.getLevelIdByEntityUid =
@@ -68,6 +70,7 @@ function formatEntityData(t) {
     Id: t.Id,
     InSleep: t.InSleep,
     IsHidden: t.IsHidden,
+    IsClientHidden: t.IsClientHidden,
     IsAlwaysLoad: t.IsAlwaysLoad,
     Transform: t.Transform,
     EdWpPath: t.EdWpPath,
@@ -93,6 +96,7 @@ function compressEntityData(t, e) {
         Id: t.Id,
         InSleep: t.InSleep,
         IsHidden: t.IsHidden,
+        IsClientHidden: t.IsClientHidden,
         IsAlwaysLoad: t.IsAlwaysLoad,
         Transform: t.Transform,
         EdWpPath: t.EdWpPath,
@@ -118,6 +122,7 @@ function decompressEntityData(t, e) {
         Id: t.Id,
         InSleep: t.InSleep,
         IsHidden: t.IsHidden,
+        IsClientHidden: t.IsClientHidden,
         IsAlwaysLoad: t.IsAlwaysLoad,
         Transform: t.Transform,
         EdWpPath: t.EdWpPath,
@@ -167,13 +172,16 @@ function getLevelIdAndEntityIdByJsonPath(t) {
       ]
     : [-1, -1];
 }
-function getEntityAoiDistXy(t) {
-  let e =
-    (0, IComponent_1.getComponent)(t.ComponentsData, "BaseInfoComponent")
-      ?.AoiLayer ?? 0;
+function getEntityAoiDistXyByBaseInfo(t) {
+  let e = t?.AoiLayer ?? 0;
   return (
     4 === e && (e = 0),
     IComponent_1.aoiXyLayerValues[e] / exports.AOI_METRIC_SCALE
+  );
+}
+function getEntityAoiDistXy(t) {
+  return getEntityAoiDistXyByBaseInfo(
+    (0, IComponent_1.getComponent)(t.ComponentsData, "BaseInfoComponent"),
   );
 }
 function checkPosInEntityAoi(t, e) {
@@ -181,50 +189,53 @@ function checkPosInEntityAoi(t, e) {
   if (!n) return !1;
   var o = n.AoiLayer ?? 0,
     o = IComponent_1.aoiXyLayerValues[o],
-    r = n.AoiZRadius ?? 0;
-  let i = IComponent_1.aoizLayerValues[r],
-    p = i;
+    i = n.AoiZRadius ?? 0;
+  let r = IComponent_1.aoizLayerValues[i],
+    s = r;
   n.CustomAoiZRadius &&
-    ((i = n.CustomAoiZRadius.Up ?? 0), (p = n.CustomAoiZRadius.Down ?? 0));
-  var r = e.Transform.Pos.X ?? 0,
+    ((r = n.CustomAoiZRadius.Up ?? 0), (s = n.CustomAoiZRadius.Down ?? 0));
+  var i = e.Transform.Pos.X ?? 0,
     n = e.Transform.Pos.Y ?? 0,
     e = e.Transform.Pos.Z ?? 0,
-    s = t.Pos.X ?? 0,
+    p = t.Pos.X ?? 0,
     a = t.Pos.Y ?? 0,
     t = t.Pos.Z ?? 0,
-    r = Math.sqrt(Math.pow(r - s, 2) + Math.pow(n - a, 2)),
-    s = Math.abs(e - t),
-    n = !(-1 !== i) || (e <= t && s <= i) || (t < e && s <= p);
-  return r <= o && n;
+    i = Math.sqrt(Math.pow(i - p, 2) + Math.pow(n - a, 2)),
+    p = Math.abs(e - t),
+    n = !(-1 !== r) || (e <= t && p <= r) || (t < e && p <= s);
+  return i <= o && n;
 }
-function getEntityAoiDistZ(t) {
-  var e,
-    n = (0, IComponent_1.getComponent)(t.ComponentsData, "BaseInfoComponent");
-  return n && void 0 !== t.EdWpPath
-    ? n.CustomAoiZRadius
+function getEntityAoiDistZByBaseInfo(t) {
+  var e, n;
+  return t
+    ? t.CustomAoiZRadius
       ? [
-          n.CustomAoiZRadius.Up
-            ? n.CustomAoiZRadius.Up / exports.AOI_METRIC_SCALE
+          t.CustomAoiZRadius.Up
+            ? t.CustomAoiZRadius.Up / exports.AOI_METRIC_SCALE
             : -1,
-          n.CustomAoiZRadius.Down
-            ? n.CustomAoiZRadius.Down / exports.AOI_METRIC_SCALE
+          t.CustomAoiZRadius.Down
+            ? t.CustomAoiZRadius.Down / exports.AOI_METRIC_SCALE
             : -1,
         ]
-      : 0 !== (n = n?.AoiZRadius || 0)
-        ? [(e = IComponent_1.aoizLayerValues[n] / exports.AOI_METRIC_SCALE), e]
-        : 0 === n
-          ? [(e = getEntityAoiDistXy(t)), e / 2]
-          : [-1, -1]
-    : [-1, -1];
+      : 0 !== (e = t?.AoiZRadius || 0)
+        ? [(n = IComponent_1.aoizLayerValues[e] / exports.AOI_METRIC_SCALE), n]
+        : 0 === e
+          ? [(n = getEntityAoiDistXyByBaseInfo(t)), n / 2]
+          : [0, 0]
+    : [0, 0];
+}
+function getEntityAoiDistZ(t) {
+  var e = (0, IComponent_1.getComponent)(t.ComponentsData, "BaseInfoComponent");
+  return void 0 === t.EdWpPath ? [-1, -1] : getEntityAoiDistZByBaseInfo(e);
 }
 function checkIsAllComponentsFolded(t, e, n) {
   let o = !1;
-  for (const i of e) {
-    var r = t.ComponentsData[i];
-    if (r && (!n || !r.EdIsLocked)) {
-      r = r._folded;
-      if (void 0 !== r) {
-        if (!r) {
+  for (const r of e) {
+    var i = t.ComponentsData[r];
+    if (i && (!n || !i.EdIsLocked)) {
+      i = i._folded;
+      if (void 0 !== i) {
+        if (!i) {
           o = !1;
           break;
         }
@@ -247,8 +258,10 @@ function foldAllComponents(t, e, n) {
 (exports.getLevelIdByEntityUid = getLevelIdByEntityUid),
   (exports.getLevelIdAndEntityIdByJsonPath = getLevelIdAndEntityIdByJsonPath),
   (exports.AOI_METRIC_SCALE = 100),
+  (exports.getEntityAoiDistXyByBaseInfo = getEntityAoiDistXyByBaseInfo),
   (exports.getEntityAoiDistXy = getEntityAoiDistXy),
   (exports.checkPosInEntityAoi = checkPosInEntityAoi),
+  (exports.getEntityAoiDistZByBaseInfo = getEntityAoiDistZByBaseInfo),
   (exports.getEntityAoiDistZ = getEntityAoiDistZ),
   (exports.checkIsAllComponentsFolded = checkIsAllComponentsFolded),
   (exports.foldAllComponents = foldAllComponents);

@@ -24,58 +24,50 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ShowTypeChange,
-      this.N0a,
+      this.aEa,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnLoadingNetDataDone,
         this.Q5e,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnLoadedNewFlagConfig,
-        this.Yua,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.ShowTypeChange,
-      this.N0a,
+      this.aEa,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnLoadingNetDataDone,
         this.Q5e,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnLoadedNewFlagConfig,
-        this.Yua,
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(9180, InventoryController.Tci),
-      Net_1.Net.Register(4388, InventoryController.Lci),
-      Net_1.Net.Register(20992, InventoryController.Dci),
-      Net_1.Net.Register(1252, InventoryController.Rci),
-      Net_1.Net.Register(18433, InventoryController.Uci),
-      Net_1.Net.Register(27494, InventoryController.Aci),
-      Net_1.Net.Register(16643, InventoryController.Pci),
-      Net_1.Net.Register(15507, InventoryController.xci),
-      Net_1.Net.Register(25005, InventoryController.wci),
-      Net_1.Net.Register(27148, InventoryController.Bci),
-      Net_1.Net.Register(2287, InventoryController.bci),
-      Net_1.Net.Register(20087, InventoryController.qci);
+    Net_1.Net.Register(21397, InventoryController.Tci),
+      Net_1.Net.Register(22716, InventoryController.Lci),
+      Net_1.Net.Register(28027, InventoryController.Dci),
+      Net_1.Net.Register(19742, InventoryController.Rci),
+      Net_1.Net.Register(15773, InventoryController.Uci),
+      Net_1.Net.Register(24889, InventoryController.Aci),
+      Net_1.Net.Register(17740, InventoryController.Pci),
+      Net_1.Net.Register(21270, InventoryController.xci),
+      Net_1.Net.Register(25782, InventoryController.wci),
+      Net_1.Net.Register(21295, InventoryController.Bci),
+      Net_1.Net.Register(15219, InventoryController.bci),
+      Net_1.Net.Register(21698, InventoryController.qci);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(9180),
-      Net_1.Net.UnRegister(4388),
-      Net_1.Net.UnRegister(20992),
-      Net_1.Net.UnRegister(1252),
-      Net_1.Net.UnRegister(18433),
-      Net_1.Net.UnRegister(27494),
-      Net_1.Net.UnRegister(16643),
-      Net_1.Net.UnRegister(15507),
-      Net_1.Net.UnRegister(25005),
-      Net_1.Net.UnRegister(27148),
-      Net_1.Net.UnRegister(2287),
-      Net_1.Net.UnRegister(20087);
+    Net_1.Net.UnRegister(21397),
+      Net_1.Net.UnRegister(22716),
+      Net_1.Net.UnRegister(28027),
+      Net_1.Net.UnRegister(19742),
+      Net_1.Net.UnRegister(15773),
+      Net_1.Net.UnRegister(24889),
+      Net_1.Net.UnRegister(17740),
+      Net_1.Net.UnRegister(21270),
+      Net_1.Net.UnRegister(25782),
+      Net_1.Net.UnRegister(21295),
+      Net_1.Net.UnRegister(15219),
+      Net_1.Net.UnRegister(21698);
   }
   static OnAddOpenViewCheckFunction() {
     UiManager_1.UiManager.AddOpenViewCheckFunction(
@@ -91,35 +83,71 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static ItemLockRequest(t, n) {
-    var e, o;
-    t <= 0 ||
-      ((e =
-        ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(t)) &&
-        e.CanLock() &&
-        (((o = new Protocol_1.Aki.Protocol.tns()).L9n = e.GetUniqueId()),
-        (o.D9n = n ? 1 : 2),
-        ModelManager_1.ModelManager.InventoryModel.SetCurrentLockItemUniqueId(
-          t,
-        ),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "Inventory",
-            8,
-            "RequestItemLock 客户端请求物品上锁:massage",
-            ["massage", o],
-          ),
-        Net_1.Net.Call(6864, o, (e) => {
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Inventory", 8, "5206_服务端返回上锁结果:massage", [
-              "massage",
-              e,
-            ]),
-            EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.OnItemLock,
-              t,
-              n,
-            );
-        })));
+    if (!(t <= 0)) {
+      var e =
+        ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(t);
+      if (e && e.CanLock()) {
+        var o = new Protocol_1.Aki.Protocol.hns();
+        (o.b9n = e.GetUniqueId()),
+          (o.q9n = n ? 1 : 2),
+          ModelManager_1.ModelManager.InventoryModel.SetCurrentLockItemUniqueId(
+            t,
+          );
+        const r = e.GetIsDeprecated();
+        Net_1.Net.Call(24444, o, (e) => {
+          e.G9n !== Protocol_1.Aki.Protocol.Q4n.KRs
+            ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+                e.G9n,
+                15148,
+              )
+            : (n
+                ? r
+                  ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                      "EchoAbandonToLock",
+                    )
+                  : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                      "ItemLockSuccess",
+                    )
+                : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                    "ItemUnlockSuccess",
+                  ),
+              EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName.OnItemLock,
+                t,
+                n,
+              ));
+        });
+      }
+    }
+  }
+  static ItemDeprecateRequest(e, t) {
+    if (!(e <= 0)) {
+      var n =
+        ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(e);
+      if (n && n.CanDeprecate()) {
+        var o = new Protocol_1.Aki.Protocol.keh();
+        (o.b9n = e), (o.q9n = t ? 1 : 2);
+        const r = n.GetIsLock();
+        Net_1.Net.Call(16867, o, (e) => {
+          e.G9n !== Protocol_1.Aki.Protocol.Q4n.KRs
+            ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+                e.G9n,
+                26415,
+              )
+            : t
+              ? r
+                ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                    "EchoLockToAbandon",
+                  )
+                : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                    "EchoAbandonSuccess",
+                  )
+              : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                  "EchoAbandonRelease",
+                );
+        });
+      }
+    }
   }
   static RequestItemUse(t, n) {
     const o = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(t);
@@ -128,7 +156,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       if (e)
         if (
           ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity.GetComponent(
-            33,
+            34,
           )?.IsSkillInCd(e)
         )
           return void (
@@ -152,25 +180,25 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnSpecialItemNotAllow,
         ))
-      : (((e = new Protocol_1.Aki.Protocol.rns()).f8n = t),
-        (e.o9n = n),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Inventory", 8, "5207_客户端请求使用物品:massage", [
+      : (((e = new Protocol_1.Aki.Protocol._ns()).L8n = t),
+        (e.m9n = n),
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Inventory", 8, "5207_客户端请求使用物品:massage", [
             "massage",
             e,
           ]),
-        Net_1.Net.Call(29255, e, (e) => {
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
+        Net_1.Net.Call(27909, e, (e) => {
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
               "Inventory",
               8,
               "5208_服务端返回使用道具结果:massage",
               ["massage", e],
             ),
-            e.A9n !== Protocol_1.Aki.Protocol.O4n.NRs
+            e.G9n !== Protocol_1.Aki.Protocol.Q4n.KRs
               ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.A9n,
-                  14128,
+                  e.G9n,
+                  18061,
                 )
               : o.SpecialItem && o && 0 === o.Parameters.size
                 ? EventSystem_1.EventSystem.Emit(
@@ -186,52 +214,56 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         }));
   }
   static NormalItemRequest() {
-    var e = new Protocol_1.Aki.Protocol.lns();
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Inventory", 8, "NormalItemRequest 获取所有普通道具请求"),
-      Net_1.Net.Call(23759, Protocol_1.Aki.Protocol.lns.create(e), this.Gci);
+    var e = new Protocol_1.Aki.Protocol.gns();
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("Inventory", 8, "NormalItemRequest 获取所有普通道具请求"),
+      Net_1.Net.Call(18763, Protocol_1.Aki.Protocol.gns.create(e), this.Gci);
   }
   static ValidTimeItemRequest() {
-    var e = new Protocol_1.Aki.Protocol.Ans();
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    var e = new Protocol_1.Aki.Protocol.qns();
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "Inventory",
         38,
         "ValidTimeItemRequest 获取所有特殊限时道具请求",
       ),
-      Net_1.Net.Call(12023, Protocol_1.Aki.Protocol.lns.create(e), this.Nci);
+      Net_1.Net.Call(23703, Protocol_1.Aki.Protocol.gns.create(e), this.Nci);
   }
   static WeaponItemRequest() {
-    var e = new Protocol_1.Aki.Protocol.mns();
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Inventory", 8, "WeaponItemRequest 获取所有武器道具请求"),
-      Net_1.Net.Call(2598, Protocol_1.Aki.Protocol.mns.create(e), this.Oci);
+    var e = new Protocol_1.Aki.Protocol.Sns();
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("Inventory", 8, "WeaponItemRequest 获取所有武器道具请求"),
+      Net_1.Net.Call(18172, Protocol_1.Aki.Protocol.Sns.create(e), this.Oci);
   }
   static PhantomItemRequest() {
-    var e = new Protocol_1.Aki.Protocol.vns();
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Inventory", 8, "PhantomItemRequest 获取所有幻象道具请求"),
-      Net_1.Net.Call(24285, Protocol_1.Aki.Protocol.vns.create(e), this.kci);
+    var e = new Protocol_1.Aki.Protocol.Tns();
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
+        "Inventory",
+        8,
+        "PhantomItemRequest 获取所有幻象道具请求",
+      ),
+      Net_1.Net.Call(27123, Protocol_1.Aki.Protocol.Tns.create(e), this.kci);
   }
-  static ItemDestructPreviewRequest(a) {
-    var e = new Protocol_1.Aki.Protocol.Zos();
-    (e.U9n = a),
-      Net_1.Net.Call(2283, e, (e) => {
+  static ItemDestructPreviewRequest(v) {
+    var e = new Protocol_1.Aki.Protocol.sns();
+    (e.O9n = v),
+      Net_1.Net.Call(22828, e, (e) => {
         if (e)
-          if (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs)
+          if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs)
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              15682,
+              e.Q4n,
+              16776,
             );
           else {
             var t = [];
-            for (const i of a) {
-              var n = [{ IncId: i.L9n, ItemId: i.f8n }, i.o9n];
+            for (const i of v) {
+              var n = [{ IncId: i.b9n, ItemId: i.L8n }, i.m9n];
               t.push(n);
             }
             var o = [];
-            for (const v of Object.keys(e.rvs)) {
-              var r = [{ IncId: 0, ItemId: Number.parseInt(v) }, e.rvs[v]];
+            for (const l of Object.keys(e._vs)) {
+              var r = [{ IncId: 0, ItemId: Number.parseInt(l) }, e._vs[l]];
               o.push(r);
             }
             o.sort((e, t) => e[0].ItemId - t[0].ItemId);
@@ -241,17 +273,17 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static ItemDestructRequest(t) {
-    var e = new Protocol_1.Aki.Protocol.Jos();
-    (e.U9n = t),
-      Net_1.Net.Call(1079, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.ons();
+    (e.O9n = t),
+      Net_1.Net.Call(27718, e, (e) => {
         e &&
-          (e.A9n !== Protocol_1.Aki.Protocol.O4n.NRs
+          (e.G9n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.A9n,
-                5593,
+                e.G9n,
+                23593,
               )
-            : Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Inventory", 38, "执行道具销毁成功", [
+            : Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug("Inventory", 38, "执行道具销毁成功", [
                 "ItemList",
                 t,
               ]));
@@ -261,23 +293,23 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     var e;
     this.Fci ||
       ((this.Fci = !0),
-      (e = new Protocol_1.Aki.Protocol.Tns()),
-      Net_1.Net.Call(14065, e, (e) => {
+      (e = new Protocol_1.Aki.Protocol.wns()),
+      Net_1.Net.Call(29295, e, (e) => {
         (this.Fci = !1),
           e &&
-            e.jws &&
+            e.zws &&
             UiManager_1.UiManager.IsViewOpen("InventoryView") &&
             this.InvalidItemCheckRequest();
       }));
   }
   static InvalidItemCheckRequest() {
-    var e = new Protocol_1.Aki.Protocol.Rns();
-    Net_1.Net.Call(26889, e, (e) => {
-      if (e && 0 !== e.Wws.length) {
+    var e = new Protocol_1.Aki.Protocol.bns();
+    Net_1.Net.Call(15115, e, (e) => {
+      if (e && 0 !== e.Zws.length) {
         var t = new Map();
-        for (const a of e.Wws) {
-          var n = t.get(a.f8n) ?? 0;
-          t.set(a.f8n, n + a.o9n);
+        for (const v of e.Zws) {
+          var n = t.get(v.L8n) ?? 0;
+          t.set(v.L8n, n + v.m9n);
         }
         var o,
           r,
@@ -287,11 +319,11 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
           _.push(i);
         }
         _.sort((e, t) => e[0].ItemId - t[0].ItemId);
-        var v = new Map();
-        for (const l of _) v.set(l[0].ItemId, l[1]);
+        var l = new Map();
+        for (const a of _) l.set(a[0].ItemId, a[1]);
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.NotifyInvalidItem,
-          v,
+          l,
         );
       }
     });
@@ -307,74 +339,79 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     InventoryController.PhantomItemRequest(),
     InventoryController.ValidTimeItemRequest();
 }),
-  (InventoryController.Yua = () => {
-    ModelManager_1.ModelManager.InventoryModel.RefreshItemRedDotSet();
-  }),
-  (InventoryController.N0a = (e, t) => {
+  (InventoryController.aEa = (e, t) => {
     UiManager_1.UiManager.IsViewShow("InventoryView") &&
       (UiManager_1.UiManager.CloseView("InventoryView"),
       UiManager_1.UiManager.OpenView("InventoryView"));
   }),
   (InventoryController.Gci = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "Inventory",
         8,
         "NormalItemResponse 获取所有普通道具返回",
         ["response", e],
       );
     var t = ModelManager_1.ModelManager.InventoryModel,
-      e = (t.ClearCommonItemData(), e.Sws);
-    if (e && 0 !== e.length)
+      e = (t.ClearCommonItemData(), e.Dws);
+    if (e && 0 !== e.length) {
       for (const _ of e) {
-        var n = _.J4n,
-          o = _.o9n,
-          r = Number(MathUtils_1.MathUtils.LongToBigInt(_.Vws));
+        var n = _.s5n,
+          o = _.m9n,
+          r = Number(MathUtils_1.MathUtils.LongToBigInt(_.Xws));
         t.NewCommonItemData(n, o, 0, r),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnResponseCommonItem,
             _,
           );
       }
+      t.RefreshItemRedDotSet(),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.OnResponseCommonItemFinished,
+        );
+    }
   }),
   (InventoryController.Tci = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "Inventory",
         8,
         "NormalItemUpdateNotify 普通道具更新通知",
         ["notify", e],
       );
-    var t = e.Sws;
+    var t = e.Dws;
     if (t && 0 !== t.length) {
-      var n = ModelManager_1.ModelManager.InventoryModel;
+      var n = ModelManager_1.ModelManager.InventoryModel,
+        o = !e.Aws;
       for (const v of t) {
-        var o,
-          r = v.J4n,
-          _ = v.o9n,
-          i = n.GetCommonItemData(r);
-        i &&
-          ((o = i.GetCount()),
-          i.SetCount(_),
-          o < _ && n.TryAddRedDotCommonItem(r),
+        var r,
+          _ = v.s5n,
+          i = v.m9n,
+          l = n.GetCommonItemData(_);
+        l &&
+          ((r = l.GetCount()),
+          l.SetCount(i),
+          r < i && o
+            ? n.TryAddRedDotCommonItem(_)
+            : n.RemoveRedDotCommonItem(_),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnCommonItemCountRefresh,
             v,
-            _,
-            o,
+            i,
+            r,
           ),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnCommonItemCountAnyChange,
-            r,
             _,
+            i,
           ),
-          ModelManager_1.ModelManager.InventoryModel.IsNewCommonItem(r)) &&
+          n.IsNewCommonItem(_)) &&
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnGetNewItem,
-            r,
+            _,
           );
       }
-      e.Ews || ItemHintController_1.ItemHintController.AddCommonItemList(t),
+      o && ItemHintController_1.ItemHintController.AddCommonItemList(t),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnAddCommonItemList,
           t,
@@ -385,14 +422,14 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (InventoryController.Lci = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "Inventory",
         8,
         "NormalItemRemoveNotify 普通道具通知删除",
         ["notify", e],
       );
-    e = e.yws;
+    e = e.Pws;
     if (e && 0 !== e.length) {
       var t = [];
       for (const o of e) {
@@ -415,36 +452,36 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (InventoryController.Dci = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Inventory", 8, "NormalItemAddNotify 添加普通道具通知", [
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("Inventory", 8, "NormalItemAddNotify 添加普通道具通知", [
         "notify",
         e,
       ]);
-    var t = e.Sws;
+    var t = e.Dws;
     if (t && 0 !== t.length) {
       var n = ModelManager_1.ModelManager.InventoryModel,
-        o = e.E9n !== GACHA_REASON;
+        o = !e.Aws,
+        r = e.x9n !== GACHA_REASON;
       for (const v of t) {
-        var r = v.J4n,
-          _ = v.o9n,
-          i = Number(MathUtils_1.MathUtils.LongToBigInt(v.Vws));
-        n.NewCommonItemData(r, _, 0, i),
-          n.TryAddNewCommonItem(r),
-          n.TryAddRedDotCommonItem(r),
+        var _ = v.s5n,
+          i = v.m9n,
+          l = Number(MathUtils_1.MathUtils.LongToBigInt(v.Xws));
+        n.NewCommonItemData(_, i, 0, l),
+          o
+            ? (n.TryAddNewCommonItem(_), n.TryAddRedDotCommonItem(_))
+            : n.RemoveRedDotCommonItem(_),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnAddCommonItem,
             v,
-            o,
+            r,
           ),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnCommonItemCountAnyChange,
-            r,
             _,
+            i,
           );
       }
-      !e.Ews &&
-        o &&
-        ItemHintController_1.ItemHintController.AddCommonItemList(t),
+      o && r && ItemHintController_1.ItemHintController.AddCommonItemList(t),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnAddCommonItemList,
           t,
@@ -462,8 +499,8 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
   }),
   (InventoryController.Nci = (e) => {
     if (
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "Inventory",
           38,
           "ValidTimeItemRequest 获取所有特殊限时道具返回",
@@ -471,13 +508,13 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         ),
       e)
     ) {
-      e = e.U9n;
+      e = e.O9n;
       if (e && 0 !== e.length)
         for (const _ of e) {
-          var t = _.J4n,
-            n = _.o9n,
-            o = _.L9n,
-            r = Number(MathUtils_1.MathUtils.LongToBigInt(_.Vws));
+          var t = _.s5n,
+            n = _.m9n,
+            o = _.b9n,
+            r = Number(MathUtils_1.MathUtils.LongToBigInt(_.Xws));
           ModelManager_1.ModelManager.InventoryModel.NewCommonItemData(
             t,
             n,
@@ -492,21 +529,21 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (InventoryController.Rci = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "Inventory",
         38,
         "ValidTimeItemUpdateNotify 特殊限时道具更新通知",
         ["notify", e],
       );
-    e = e.U9n;
+    e = e.O9n;
     if (e && 0 !== e.length) {
       var t = ModelManager_1.ModelManager.InventoryModel;
       for (const i of e) {
-        var n = i.J4n,
-          o = i.o9n,
-          r = i.L9n,
-          _ = Number(MathUtils_1.MathUtils.LongToBigInt(i.Vws)),
+        var n = i.s5n,
+          o = i.m9n,
+          r = i.b9n,
+          _ = Number(MathUtils_1.MathUtils.LongToBigInt(i.Xws)),
           r = t.GetCommonItemData(n, r);
         r &&
           (r.SetCount(o),
@@ -533,20 +570,20 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (InventoryController.Uci = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "Inventory",
         38,
         "ValidTimeItemRemoveNotify 特殊限时道具通知删除",
         ["notify", e],
       );
-    e = e.U9n;
+    e = e.O9n;
     if (e && 0 !== e.length) {
       var t = [],
         n = [];
       for (const r of e) {
-        var o = { ItemId: r.f8n, IncId: r.L9n };
-        t.push(o), n.push(r.f8n);
+        var o = { ItemId: r.L8n, IncId: r.b9n };
+        t.push(o), n.push(r.L8n);
       }
       ModelManager_1.ModelManager.InventoryModel.RemoveCommonItemDataAndSaveNewList(
         t,
@@ -558,27 +595,27 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       for (const _ of e)
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnCommonItemCountAnyChange,
-          _.f8n,
+          _.L8n,
           0,
         );
     }
   }),
   (InventoryController.Aci = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "Inventory",
         38,
         "ValidTimeItemAddNotify 添加特殊限时道具通知",
         ["notify", e],
       );
-    e = e.U9n;
+    e = e.O9n;
     if (e && 0 !== e.length) {
       var t = ModelManager_1.ModelManager.InventoryModel;
       for (const i of e) {
-        var n = i.J4n,
-          o = i.o9n,
-          r = i.L9n,
-          _ = Number(MathUtils_1.MathUtils.LongToBigInt(i.Vws));
+        var n = i.s5n,
+          o = i.m9n,
+          r = i.b9n,
+          _ = Number(MathUtils_1.MathUtils.LongToBigInt(i.Xws));
         t.NewCommonItemData(n, o, r, _),
           t.TryAddNewCommonItem(n),
           t.TryAddRedDotCommonItem(n),
@@ -605,20 +642,20 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (InventoryController.Oci = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "Inventory",
         8,
         "WeaponItemResponse 获取所有武器道具返回",
         ["response", e],
       );
     var t = ModelManager_1.ModelManager.InventoryModel,
-      e = (t.ClearWeaponItemData(), e.Iws);
+      e = (t.ClearWeaponItemData(), e.Uws);
     if (e && 0 !== e.length) {
       for (const _ of e) {
-        var n = _.J4n,
-          o = _.L9n,
-          r = _.Bws;
+        var n = _.s5n,
+          o = _.b9n,
+          r = _.Vws;
         t.NewWeaponItemData(n, o, r),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnResponseWeaponItem,
@@ -631,33 +668,33 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (InventoryController.Pci = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Inventory", 8, "WeaponItemAddNotify 添加武器道具通知", [
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("Inventory", 8, "WeaponItemAddNotify 添加武器道具通知", [
         "notify",
         e,
       ]);
     var t = ModelManager_1.ModelManager.InventoryModel,
-      n = e.Iws;
+      n = e.Uws;
     if (n && 0 !== n.length) {
-      var o = e.E9n !== GACHA_REASON;
-      for (const v of n) {
-        var r = v.J4n,
-          _ = v.L9n,
-          i = v.Bws;
+      var o = e.x9n !== GACHA_REASON;
+      for (const l of n) {
+        var r = l.s5n,
+          _ = l.b9n,
+          i = l.Vws;
         t.NewWeaponItemData(r, _, i),
           t.TryAddNewAttributeItem(_),
           t.TryAddRedDotAttributeItem(_),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnAddWeaponItem,
-            v,
-            e.Tws,
+            l,
+            e.wws,
             o,
           );
       }
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnAddWeaponItemList,
         n,
-        e.Tws,
+        e.wws,
         o,
       ),
         t.SaveNewAttributeItemUniqueIdList(),
@@ -668,14 +705,14 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (InventoryController.xci = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "Inventory",
         8,
         "WeaponItemRemoveNotify 删除武器道具通知",
         ["notify", e],
       );
-    e = e.Lws;
+    e = e.xws;
     e &&
       0 !== e.length &&
       (ModelManager_1.ModelManager.InventoryModel.RemoveWeaponItemDataAndSaveNewList(
@@ -687,25 +724,25 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       ));
   }),
   (InventoryController.kci = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "Inventory",
         8,
         "PhantomItemResponse 获取所有幻象道具返回",
         ["response", e],
       ),
-      ModelManager_1.ModelManager.PhantomBattleModel.SetMaxCost(e.wws);
-    var t = e?.xws,
+      ModelManager_1.ModelManager.PhantomBattleModel.SetMaxCost(e.kws);
+    var t = e?.Nws,
       n =
         (t &&
           ModelManager_1.ModelManager.PhantomBattleModel.SetUnlockSkinList(t),
         ModelManager_1.ModelManager.InventoryModel),
-      t = (n.ClearPhantomItemData(), e.Aws);
+      t = (n.ClearPhantomItemData(), e.qws);
     if (t && 0 !== t.length) {
       for (const i of t) {
-        var o = i.J4n,
-          r = i.L9n,
-          _ = i.Bws;
+        var o = i.s5n,
+          r = i.b9n,
+          _ = i.Vws;
         n.NewPhantomItemData(o, r, _),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnResponsePhantomItem,
@@ -719,18 +756,18 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (InventoryController.wci = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Inventory", 8, "PhantomItemAddNotify 获取幻象道具通知", [
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("Inventory", 8, "PhantomItemAddNotify 获取幻象道具通知", [
         "notify",
         e,
       ]);
-    const t = e.Aws;
+    const t = e.qws;
     if (t && 0 !== t.length) {
       var n = ModelManager_1.ModelManager.InventoryModel;
       for (const i of t) {
-        var o = i.J4n,
-          r = i.L9n,
-          _ = i.Bws;
+        var o = i.s5n,
+          r = i.b9n,
+          _ = i.Vws;
         n.NewPhantomItemData(o, r, _),
           n.TryAddNewAttributeItem(r),
           n.TryAddRedDotAttributeItem(r),
@@ -739,7 +776,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
             i,
           );
       }
-      e.E9n === VISION_CATCH_REASON
+      e.x9n === VISION_CATCH_REASON
         ? TimerSystem_1.TimerSystem.Delay(() => {
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnAddPhantomItemList,
@@ -758,14 +795,14 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (InventoryController.Bci = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "Inventory",
         8,
         "PhantomItemRemoveNotify 删除幻象道具通知",
         ["notify", e],
       );
-    e = e.bws;
+    e = e.Fws;
     e &&
       0 !== e.length &&
       (ModelManager_1.ModelManager.InventoryModel.RemovePhantomItemDataAndSaveNewList(
@@ -777,25 +814,31 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       ));
   }),
   (InventoryController.bci = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "Inventory",
         8,
         "ItemFuncValueUpdateNotify 物品FunctionValue改变通知",
         ["notify", e],
       );
-    var t = e.L9n,
-      t = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(t);
-    t && ((e = e.Bws), t.SetFunctionValue(e));
+    var t = e.b9n,
+      n = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(t);
+    n &&
+      ((e = e.Vws),
+      n.SetFunctionValue(e),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnItemFuncValueChange,
+        t,
+      ));
   }),
   (InventoryController.qci = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Inventory", 38, "ItemPkgOpenNotify 背包开启列表通知", [
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("Inventory", 38, "ItemPkgOpenNotify 背包开启列表通知", [
         "notify",
         e,
       ]),
       ModelManager_1.ModelManager.InventoryModel.SetInventoryTabOpenIdList(
-        e.Hws,
+        e.Jws,
       );
   }),
   (InventoryController.iVe = (e) =>

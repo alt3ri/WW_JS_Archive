@@ -93,6 +93,7 @@ class CharRenderingComponent extends UE.ActorComponent {
     return this.SequenceHandleIds.push(t), t;
   }
   Init(e) {
+    RenderModuleConfig_1.RenderStats.StatCharRenderingComponentInit.Start();
     let t = !1;
     if (
       ((this.CachedOwner = this.GetOwner()),
@@ -161,6 +162,7 @@ class CharRenderingComponent extends UE.ActorComponent {
         (this.AllMaterialControlRuntimeDataGroupMap = new Map()),
         this.InvokeStart();
     }
+    RenderModuleConfig_1.RenderStats.StatCharRenderingComponentInit.Stop();
   }
   SetLogicOwner(e) {
     (this.LogicOwner = e),
@@ -226,9 +228,9 @@ class CharRenderingComponent extends UE.ActorComponent {
       var o = this.GetComponent(
           RenderConfig_1.RenderConfig.IdMaterialContainer,
         ),
-        s = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
+        n = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
       let e = !1;
-      s && s.RemoveSkeletalMeshMaterialControllerData(t),
+      n && n.RemoveSkeletalMeshMaterialControllerData(t),
         o &&
           (o.RemoveSkeletalComponent(t), (e = o.AddSkeletalComponent(i, t, r))),
         e ||
@@ -375,6 +377,7 @@ class CharRenderingComponent extends UE.ActorComponent {
     return this.CachedOwner;
   }
   AddMaterialControllerDataInner(e, t) {
+    RenderModuleConfig_1.RenderStats.StatCharRenderingComponentAddData.Start();
     var i = e;
     if (!i) return -1;
     var r = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
@@ -412,6 +415,7 @@ class CharRenderingComponent extends UE.ActorComponent {
           ["handle", r],
           ["CleanOriginEffect", e.CleanOriginEffect],
         ),
+      RenderModuleConfig_1.RenderStats.StatCharRenderingComponentAddData.Stop(),
       r
     );
   }
@@ -453,10 +457,20 @@ class CharRenderingComponent extends UE.ActorComponent {
       1 === i &&
         ((this.FightDitherRateCache = t),
         (e = this.DisableFightDither ? 1 : t)),
+        (e = CharRenderingComponent.GlobalDisableDitherEffect ? 1 : e);
+      try {
         r.SetDitherEffect(e, i),
-        this.SetBodyEffectOpacity(r.GetDitherRate()),
-        this.SetDecalShadowOpacity(r.GetDitherRate()),
-        this.SetRealtimeShadowOpacity(r.GetDitherRate());
+          this.SetBodyEffectOpacity(r.GetDitherRate()),
+          this.SetDecalShadowOpacity(r.GetDitherRate()),
+          this.SetRealtimeShadowOpacity(r.GetDitherRate());
+      } catch {
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Render",
+            26,
+            "CharacterRenderingComponent.SetDitherEffect执行异常",
+          );
+      }
     }
   }
   SetDisableFightDither(e) {
@@ -467,16 +481,26 @@ class CharRenderingComponent extends UE.ActorComponent {
     var t = this.GetComponent(RenderConfig_1.RenderConfig.IdBodyEffect);
     t && t.RegisterEffect(e);
   }
+  UnregisterBodyEffect(e) {
+    var t = this.GetComponent(RenderConfig_1.RenderConfig.IdBodyEffect);
+    t && t.UnregisterEffect(e);
+  }
   SetBodyEffectOpacity(e) {
     var t = this.GetComponent(RenderConfig_1.RenderConfig.IdBodyEffect);
     t && t.SetOpacity(e);
   }
   AddInteraction(e, t = 1) {
-    var i = this.GetComponent(RenderConfig_1.RenderConfig.IdSceneInteraction);
-    i &&
-      !i.GetIsPossed() &&
-      (i.PossCharacter(e, t),
-      !this.OnRoleGoDownFinishEventAdded && this.CachedOwnerEntity) &&
+    var i;
+    e &&
+      ((i = this.GetComponent(
+        RenderConfig_1.RenderConfig.IdSceneInteraction,
+      )) &&
+        !i.GetIsPossed() &&
+        i.PossCharacter(e, t),
+      (i = this.GetComponent(RenderConfig_1.RenderConfig.IdGrassInteraction)) &&
+        i.SetConfig(e),
+      !this.OnRoleGoDownFinishEventAdded) &&
+      this.CachedOwnerEntity &&
       ((this.RemoveInteractionOnRoleGoDownFinish = () => {
         this.RemoveInteraction();
       }),
@@ -488,18 +512,21 @@ class CharRenderingComponent extends UE.ActorComponent {
       (this.OnRoleGoDownFinishEventAdded = !0));
   }
   RemoveInteraction() {
-    var e = this.GetComponent(RenderConfig_1.RenderConfig.IdSceneInteraction);
-    e && e.UnpossCharacter();
+    var e = this.GetComponent(RenderConfig_1.RenderConfig.IdSceneInteraction),
+      e =
+        (e && e.UnpossCharacter(),
+        this.GetComponent(RenderConfig_1.RenderConfig.IdGrassInteraction));
+    e && e.SetEnabled(!1);
   }
   SetMaterialPropertyFloat(e, t, i, r, o) {
-    var s = this.GetComponent(RenderConfig_1.RenderConfig.IdPropertyModifier);
-    s &&
-      s.SetPropertyFloat(e, t, i, FNameUtil_1.FNameUtil.GetDynamicFName(r), o);
+    var n = this.GetComponent(RenderConfig_1.RenderConfig.IdPropertyModifier);
+    n &&
+      n.SetPropertyFloat(e, t, i, FNameUtil_1.FNameUtil.GetDynamicFName(r), o);
   }
   SetMaterialPropertyColor(e, t, i, r, o) {
-    var s = this.GetComponent(RenderConfig_1.RenderConfig.IdPropertyModifier);
-    s &&
-      s.SetPropertyColor(e, t, i, FNameUtil_1.FNameUtil.GetDynamicFName(r), o);
+    var n = this.GetComponent(RenderConfig_1.RenderConfig.IdPropertyModifier);
+    n &&
+      n.SetPropertyColor(e, t, i, FNameUtil_1.FNameUtil.GetDynamicFName(r), o);
   }
   SetStarScarEnergy(e) {
     var t = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialContainer);
@@ -541,6 +568,7 @@ class CharRenderingComponent extends UE.ActorComponent {
     if (
       (CharRenderingComponent.DisableForDebug &&
         this.ResetAllRenderingStateForDebug(),
+      RenderModuleConfig_1.RenderStats.StatCharRenderingComponentUpdate?.Start(),
       (this.TickCount += 1),
       30 < this.TickCount &&
         (this.CurrentLocation.FromUeVector(
@@ -553,6 +581,7 @@ class CharRenderingComponent extends UE.ActorComponent {
       this.ForceUpdateOnce ||
       this.IsInDebugMode ||
       5 === this.RenderType ||
+      6 === this.RenderType ||
       0 < this.IsUiUpdate ||
       !Info_1.Info.IsGameRunning() ||
       ModelManager_1.ModelManager.PlotModel?.IsInPlot
@@ -568,16 +597,28 @@ class CharRenderingComponent extends UE.ActorComponent {
               (this.MiddleDistance <= t && t < this.FarDistance)
             ? ((this.DeltaCount += 0.5), (this.DeltaTime += e))
             : this.FarDistance <= t &&
-              ((this.DeltaCount += 0.03), (this.DeltaTime += e));
+              ((this.DeltaCount += 0.03), (this.DeltaTime += e)),
+        RenderModuleConfig_1.RenderStats.StatCharRenderingComponentDataGroupBeforeUpdate?.Start();
       for (const i of this.AllMaterialControlRuntimeDataGroupMap.values())
         i.IsDead || i.BeforeUpdateState(e, this.GetTimeDilation());
-      if (1 <= this.DeltaCount) {
+      if (
+        (RenderModuleConfig_1.RenderStats.StatCharRenderingComponentDataGroupBeforeUpdate?.Stop(),
+        1 <= this.DeltaCount)
+      ) {
+        RenderModuleConfig_1.RenderStats.StatCharRenderingComponentUpdateInner?.Start();
         for (const r of this.AllRenderComps) r.GetIsInitSuc() && r.Update();
+        RenderModuleConfig_1.RenderStats.StatCharRenderingComponentUpdateInner?.Stop(),
+          RenderModuleConfig_1.RenderStats.StatCharRenderingComponentLateUpdate?.Start();
         for (const o of this.AllRenderComps) o.GetIsInitSuc() && o.LateUpdate();
-        (this.DeltaTime = 0), (this.DeltaCount = 0);
+        RenderModuleConfig_1.RenderStats.StatCharRenderingComponentLateUpdate?.Stop(),
+          (this.DeltaTime = 0),
+          (this.DeltaCount = 0);
       }
-      this.DataGroupAfterUpdate(e);
+      RenderModuleConfig_1.RenderStats.StatCharRenderingComponentDataGroupAfterUpdate?.Start(),
+        this.DataGroupAfterUpdate(e),
+        RenderModuleConfig_1.RenderStats.StatCharRenderingComponentDataGroupAfterUpdate?.Stop();
     }
+    RenderModuleConfig_1.RenderStats.StatCharRenderingComponentUpdate?.Stop();
   }
   DataGroupAfterUpdate(e) {
     for (const r of this.AllMaterialControlRuntimeDataGroupMap.keys()) {
@@ -662,7 +703,19 @@ class CharRenderingComponent extends UE.ActorComponent {
   InvokeStart() {
     if (!this.IsStartInvoke) {
       this.IsStartInvoke = !0;
-      for (const e of this.AllRenderComps) e.Start();
+      for (const e of this.AllRenderComps)
+        try {
+          e.Start();
+        } catch {
+          Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "RenderCharacter",
+              26,
+              "错误:组件初始化错误:",
+              ["Actor", this.GetOwner().GetName()],
+              ["组件ID", e.GetComponentId()],
+            );
+        }
       for (const t of this.AllRenderComps)
         t.GetIsInitSuc() ||
           (Log_1.Log.CheckError() &&
@@ -717,5 +770,6 @@ class CharRenderingComponent extends UE.ActorComponent {
   CharRenderingComponent).MotionVelocitySquared = [4e4, 25e4]),
   (CharRenderingComponent.MotionMeshShadingRate = [3, 6]),
   (CharRenderingComponent.DisableForDebug = !1),
+  (CharRenderingComponent.GlobalDisableDitherEffect = !1),
   (exports.default = CharRenderingComponent);
 //# sourceMappingURL=CharRenderingComponent.js.map

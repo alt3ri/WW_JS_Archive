@@ -31,8 +31,8 @@ class SpaceUtils {
       return (
         (this.Sz.Z = 0),
         (this.yz.Z = 0),
-        this.g9s.Set(t.X, t.Y, 0),
-        this.f9s(this.Sz, this.yz, this.g9s, s.X)
+        this.q9s.Set(t.X, t.Y, 0),
+        this.G9s(this.Sz, this.yz, this.q9s, s.X)
       );
     this.Iz.FromUeQuat(i.K2_GetComponentQuaternion()),
       this.Sz.Subtraction(t, this.Tz);
@@ -55,17 +55,17 @@ class SpaceUtils {
     }
     return !1;
   }
-  static f9s(t, s, i, h) {
-    i.Subtraction(t, this.p9s),
-      this.p9s.X < 0 && (this.p9s.X = -this.p9s.X),
-      this.p9s.Y < 0 && (this.p9s.Y = -this.p9s.Y),
-      this.p9s.SubtractionEqual(s);
+  static G9s(t, s, i, h) {
+    i.Subtraction(t, this.O9s),
+      this.O9s.X < 0 && (this.O9s.X = -this.O9s.X),
+      this.O9s.Y < 0 && (this.O9s.Y = -this.O9s.Y),
+      this.O9s.SubtractionEqual(s);
     let e = !1;
-    if ((this.p9s.X < 0 && ((this.p9s.X = 0), (e = !0)), this.p9s.Y < 0)) {
+    if ((this.O9s.X < 0 && ((this.O9s.X = 0), (e = !0)), this.O9s.Y < 0)) {
       if (e) return !0;
-      this.p9s.Y = 0;
+      this.O9s.Y = 0;
     }
-    return this.p9s.DotProduct(this.p9s) <= h * h;
+    return this.O9s.DotProduct(this.O9s) <= h * h;
   }
   static IsComponentInSectorArea(t, s, i, h) {
     var e = h.Bounds,
@@ -147,6 +147,6 @@ class SpaceUtils {
   (SpaceUtils.Mz = new Array()),
   (SpaceUtils.Uz = new Array()),
   (SpaceUtils.Rz = new Array()),
-  (SpaceUtils.g9s = Vector_1.Vector.Create()),
-  (SpaceUtils.p9s = Vector_1.Vector.Create());
+  (SpaceUtils.q9s = Vector_1.Vector.Create()),
+  (SpaceUtils.O9s = Vector_1.Vector.Create());
 //# sourceMappingURL=SpaceUtils.js.map

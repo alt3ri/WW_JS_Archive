@@ -132,6 +132,7 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
         if (
           (this.GetButton(9).RootUIComp.SetUIActive(s),
           this.GetLoopScrollViewComponent(1).RootUIComp.SetUIActive(i),
+          this.GetItem(24).SetUIActive(i),
           this.GetItem(10).SetUIActive(i),
           i)
         ) {
@@ -270,6 +271,7 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
       [18, UE.UIText],
       [22, UE.UIExtendToggle],
       [23, UE.UIItem],
+      [24, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
         [3, this.qAt],
@@ -348,8 +350,10 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
     this.RefreshTeamItem(this.Pe?.EditBattleRoleSlotDataList),
       this.Vlo.sort(
         (i, e) => e.GetRoleConfig().Priority - i.GetRoleConfig().Priority,
-      ),
-      this.adi?.UpdateData(this.Pe.UseWay, this.Vlo);
+      );
+  }
+  OnBeforeShow() {
+    this.adi?.UpdateData(this.Pe.UseWay, this.Vlo);
   }
   OnBeforeDestroy() {
     this.Pe?.OnHideFinishCallBack?.(),

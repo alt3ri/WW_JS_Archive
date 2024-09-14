@@ -29,7 +29,8 @@ const puerts_1 = require("puerts"),
   PlotSkipComponent_1 = require("./PlotSkipComponent"),
   PlotTextLogic_1 = require("./PlotTextLogic"),
   FADE_TIME = 1e3,
-  ROTATE_RATE = 0.1,
+  ROTATE_RATE_X = 0.06,
+  ROTATE_RATE_Y = 0.03,
   ZOOM_RATE = 1.2,
   DEFAULT_PATH =
     "/Game/Aki/UI/UIResources/Common/Image/T_CommonDefault_UI.T_CommonDefault_UI",
@@ -51,8 +52,8 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       (this.meo = !1),
       (this.deo = void 0),
       (this.geo = void 0),
-      (this.ubn = !1),
-      (this.cbn = !1),
+      (this.Mbn = !1),
+      (this.Sbn = !1),
       (this.veo = void 0),
       (this.Meo = void 0),
       (this.Eeo = void 0),
@@ -71,62 +72,85 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       (this.weo = void 0),
       (this.Beo = !1),
       (this.x8i = void 0),
-      (this.qfa = void 0),
-      (this._Ma = void 0),
+      (this.iSa = void 0),
+      (this.fya = void 0),
       (this.TRn = () => {
         this.meo || this.ceo?.SetActive(!1);
       }),
       (this.Dvo = (t) => {
         this.deo?.AddSummary(t.TalkOutline);
       }),
+      (this.p3a = (t) => {
+        InputController_1.InputController.InputAxis(
+          InputEnums_1.EInputAxis.LookUp,
+          t,
+        );
+      }),
+      (this.f3a = (t) => {
+        InputController_1.InputController.InputAxis(
+          InputEnums_1.EInputAxis.Turn,
+          t,
+        );
+      }),
+      (this.v3a = (t) => {
+        0 !== t &&
+          ((t = t * ZOOM_RATE),
+          InputController_1.InputController.InputAxis(
+            InputEnums_1.EInputAxis.Zoom,
+            -t,
+          ));
+      }),
       (this.beo = () => {
         var t = new PlotOptionItem_1.PlotOptionItem(this);
         return t.BindOnHover(this.qeo), t;
       }),
       (this.qeo = (t) => {
-        this.neo?.SetFollowItemActive(!1),
-          (this.neo = t).SetFollowItemActive(!0);
+        this.neo?.SetSelectedDisplay(!1), (this.neo = t).SetSelectedDisplay(!0);
       }),
       (this.w8i = (t) => {
-        this.x8i = t.GetLocalPointInPlane();
+        ModelManager_1.ModelManager.PlotModel.CanControlView &&
+          (this.x8i = t.GetLocalPointInPlane());
       }),
       (this.N8i = (t) => {
-        t = t.scrollAxisValue * ZOOM_RATE;
-        InputController_1.InputController.InputAxis(
-          InputEnums_1.EInputAxis.Zoom,
-          t,
-        );
+        ModelManager_1.ModelManager.PlotModel.CanControlView &&
+          ((t = t.scrollAxisValue * ZOOM_RATE),
+          InputController_1.InputController.InputAxis(
+            InputEnums_1.EInputAxis.Zoom,
+            t,
+          ));
       }),
       (this.B8i = (t) => {
         var i;
-        1 < TouchFingerManager_1.TouchFingerManager.GetTouchFingerCount()
-          ? (this.x8i = void 0)
-          : ((i = this.x8i),
-            (this.x8i = t.GetLocalPointInPlane()),
-            i &&
-              ((t = (this.x8i.Y - i.Y) * ROTATE_RATE),
-              (i = (this.x8i.X - i.X) * ROTATE_RATE),
-              InputController_1.InputController.InputAxis(
-                InputEnums_1.EInputAxis.Turn,
-                i,
-              ),
-              InputController_1.InputController.InputAxis(
-                InputEnums_1.EInputAxis.LookUp,
-                -t,
-              )));
+        ModelManager_1.ModelManager.PlotModel.CanControlView &&
+          (1 < TouchFingerManager_1.TouchFingerManager.GetTouchFingerCount()
+            ? (this.x8i = void 0)
+            : ((i = this.x8i),
+              (this.x8i = t.GetLocalPointInPlane()),
+              i &&
+                ((t = (this.x8i.Y - i.Y) * ROTATE_RATE_Y),
+                (i = (this.x8i.X - i.X) * ROTATE_RATE_X),
+                InputController_1.InputController.InputAxis(
+                  InputEnums_1.EInputAxis.Turn,
+                  i,
+                ),
+                InputController_1.InputController.InputAxis(
+                  InputEnums_1.EInputAxis.LookUp,
+                  -t,
+                ))));
       }),
       (this.b8i = (t) => {
-        this.x8i = void 0;
+        ModelManager_1.ModelManager.PlotModel.CanControlView &&
+          (this.x8i = void 0);
       }),
       (this.Geo = () => {
-        this.neo?.SetFollowItemActive(!1);
+        this.neo?.SetSelectedDisplay(!1);
         var i = this.ceo.GetDisplayGridEndIndex();
         for (let t = 0; t <= i; t++) {
           var s = this.ceo.GetLayoutItemByIndex(t);
           if (s?.GetActive() && !(t < i && s.CheckToggleGray()))
             return (
               (this.neo = s),
-              this.neo?.SetFollowItemActive(!0),
+              this.neo?.SetSelectedDisplay(!0),
               void UiNavigationNewController_1.UiNavigationNewController.SetNavigationFocusForView(
                 this.neo.GetToggleItem().GetRootComponent(),
                 !0,
@@ -150,19 +174,28 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
           this.GetSprite(9).SetUIActive(this.Beo);
       }),
       (this.keo = (t) => {
-        this.Feo(), (this.leo = !1), this._Ma?.Remove(), (this._Ma = void 0);
+        this.Feo(), (this.leo = !1), this.fya?.Remove(), (this.fya = void 0);
         var i =
           (t.CaptionParams?.StartTime ?? 0) *
           CommonDefine_1.MILLIONSECOND_PER_SECOND;
-        "LevelC" ===
-          ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel &&
-        i > TimerSystem_1.MIN_TIME
-          ? (this.gto(!1),
-            this.rto(),
-            (this._Ma = TimerSystem_1.TimerSystem.Delay(() => {
-              this.geo.UpdatePlotSubtitle(t), this.Veo(t);
-            }, i)))
-          : (this.geo.UpdatePlotSubtitle(t), this.Veo(t));
+        let s = !1;
+        "SystemOption" === t.Type && (s = t.OptionConfig.KeepPreTalkItem ?? !1),
+          "LevelC" ===
+            ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel &&
+          i > TimerSystem_1.MIN_TIME
+            ? (s || this.gto(!1),
+              this.ito(),
+              (this.fya = TimerSystem_1.TimerSystem.Delay(() => {
+                (this.fya = void 0),
+                  this.geo.UpdatePlotSubtitle(t),
+                  "Option" === t.Type || "SystemOption" === t.Type
+                    ? this.Jeo()
+                    : this.Veo(t);
+              }, i)))
+            : (this.geo.UpdatePlotSubtitle(t),
+              "Option" === t.Type || "SystemOption" === t.Type
+                ? (s || this.gto(!1), this.ito(), this.Jeo())
+                : this.Veo(t));
       }),
       (this.Heo = () => {
         this.HasOptions &&
@@ -237,13 +270,13 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
             !1),
           this.Feo(),
           this.Oeo(),
-          this.Nna();
+          this.fha();
       }),
-      (this.lca = () => {
-        this.kna();
+      (this.uCa = () => {
+        this.pha();
       }),
       (this.Zeo = () => {
-        this.Nna(), (this.Lrt = !1);
+        this.fha(), (this.Lrt = !1);
         var t = ModelManager_1.ModelManager.PlotModel.PlotConfig;
         (t.IsAutoPlay = !1), (t.IsAutoPlayCache = !1), this.Feo(), this.Oeo();
       }),
@@ -251,10 +284,10 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
         this.RootItem.SetUIActive(!t);
       }),
       (this.rAt = (t) => {
-        !t || this.Lrt || ((this.Lrt = !0), this.kna());
+        !t || this.Lrt || ((this.Lrt = !0), this.pha());
       }),
       (this.eto = (t, i) => {
-        0 !== i.TouchType || this.Lrt || ((this.Lrt = !0), this.kna());
+        0 !== i.TouchType || this.Lrt || ((this.Lrt = !0), this.pha());
       }),
       (this.tto = async (t, i, s, e) => {
         this.ito(),
@@ -427,7 +460,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
         this.t2e,
         this.zeo,
         void 0,
-        this.lca,
+        this.uCa,
       )),
       this.deo.EnableSkipButton(!1),
       (this._eo = this.GetItem(17)),
@@ -493,10 +526,10 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       this.geo.ClearPlotContent(),
       this.nto(),
       this.ceo.SetActive(!1),
-      this.qfa?.Remove(),
-      (this.qfa = void 0),
-      this._Ma?.Remove(),
-      (this._Ma = void 0),
+      this.iSa?.Remove(),
+      (this.iSa = void 0),
+      this.fya?.Remove(),
+      (this.fya = void 0),
       this.GetItem(30).SetUIActive(!1);
   }
   OnBeforeDestroy() {
@@ -553,6 +586,18 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PlotStartShowTalk,
         this.Dvo,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.NavigationTriggerPlotForward,
+        this.p3a,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.NavigationTriggerPlotRight,
+        this.f3a,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.NavigationTriggerPlotZoom,
+        this.v3a,
       ),
       InputDistributeController_1.InputDistributeController.BindTouch(
         InputMappingsDefine_1.touchIdMappings.Touch1,
@@ -613,6 +658,18 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
         EventDefine_1.EEventName.PlotStartShowTalk,
         this.Dvo,
       ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.NavigationTriggerPlotForward,
+        this.p3a,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.NavigationTriggerPlotRight,
+        this.f3a,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.NavigationTriggerPlotZoom,
+        this.v3a,
+      ),
       this.deo.RemoveEventListener(),
       InputDistributeController_1.InputDistributeController.UnBindTouch(
         InputMappingsDefine_1.touchIdMappings.Touch1,
@@ -628,7 +685,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       t.OnPointerScrollCallBack.Unbind());
   }
   OnTick(t) {
-    this.cbn && this.sto(t), this.ubn && this.uto(t);
+    this.Sbn && this.sto(t), this.Mbn && this.uto(t);
   }
   SimulateClickSubtitle() {
     Info_1.Info.IsBuildDevelopmentOrDebug && this.OnBtnSubtitleSkipClick();
@@ -640,10 +697,10 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
         i.CheckToggleGray() || i.OptionClick(!0);
       }
   }
-  Nna() {
+  fha() {
     this.GetItem(27)?.SetUIActive(!1), this.GetItem(28)?.SetUIActive(!1);
   }
-  kna() {
+  pha() {
     this.GetItem(27)?.SetUIActive(!0), this.GetItem(28)?.SetUIActive(!0);
   }
   Oeo() {
@@ -662,8 +719,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
     return i;
   }
   Veo(i) {
-    if ("Option" === i.Type) this.gto(!1), this.Jeo();
-    else if (
+    if (
       (this.ito(),
       this.gto(!0),
       this.geo.IsInteraction ||
@@ -722,13 +778,13 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       ));
   }
   Jeo() {
-    this.Feo(),
+    (this.leo = !1),
+      this.Feo(),
       this.geo.IsInteraction
         ? this.Qeo()
-        : ((this.leo = !1),
-          ControllerHolder_1.ControllerHolder.FlowController.FlowShowTalk.SubmitSubtitle(
+        : ControllerHolder_1.ControllerHolder.FlowController.FlowShowTalk.SubmitSubtitle(
             this.geo.CurrentContent,
-          ));
+          );
   }
   Xeo() {
     var t;
@@ -746,7 +802,12 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
         : this.heo === this.aeo.length && this.Xeo();
   }
   Yeo(t) {
-    this._eo?.SetUIActive(t);
+    (ModelManager_1.ModelManager.PlotModel.CanClick = t),
+      this._eo?.SetUIActive(t),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.NavigationRefreshPlotNextPage,
+        t,
+      );
   }
   Cto(t) {
     this.GetItem(18).SetUIActive(t);
@@ -778,15 +839,14 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       ((this.meo = t)
         ? (this.ceo.SetActive(!0),
           this.UiViewSequence.PlaySequence("ChoiceStart"),
-          this.geo.IsInteraction ||
-            (this.GetItem(30).SetUIActive(!0),
-            (this.qfa = TimerSystem_1.TimerSystem.Delay(() => {
-              this.GetItem(30).SetUIActive(!1), (this.qfa = void 0);
-            }, ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig.ProtectOptionTime))))
+          this.GetItem(30).SetUIActive(!0),
+          (this.iSa = TimerSystem_1.TimerSystem.Delay(() => {
+            this.GetItem(30).SetUIActive(!1), (this.iSa = void 0);
+          }, ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig.ProtectOptionTime)))
         : (this.UiViewSequence.PlaySequence("ChoiceClose"),
           this.GetItem(30).SetUIActive(!1),
-          this.qfa?.Remove(),
-          (this.qfa = void 0)));
+          this.iSa?.Remove(),
+          (this.iSa = void 0)));
   }
   AddScreenEffectPlotRoot() {
     var t = (0, puerts_1.$ref)(void 0),
@@ -806,10 +866,10 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       (this.ueo = void 0);
   }
   fto() {
-    this.cbn = !0;
+    this.Sbn = !0;
   }
   hto() {
-    this.cbn = !1;
+    this.Sbn = !1;
   }
   ato() {
     var t = MathUtils_1.MathUtils.GetRangePct(0, FADE_TIME, this.Reo);
@@ -877,10 +937,10 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       await this.Ieo.Promise;
   }
   pto() {
-    this.ubn = !0;
+    this.Mbn = !0;
   }
   mto() {
-    this.ubn = !1;
+    this.Mbn = !1;
   }
   cto() {
     var t = MathUtils_1.MathUtils.GetRangePct(0, FADE_TIME, this.Ueo);

@@ -16,7 +16,8 @@ class PanelQteContext {
       (this.SourceEntityHandle = void 0),
       (this.Config = void 0),
       (this.PreMessageId = void 0),
-      (this.Success = !1);
+      (this.Success = !1),
+      (this.BuffIndex = -1);
   }
   GetSourceEntity() {
     if (this.IsInitSourceEntity)

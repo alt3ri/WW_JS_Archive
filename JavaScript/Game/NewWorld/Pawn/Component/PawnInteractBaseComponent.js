@@ -31,7 +31,7 @@ let PawnInteractBaseComponent = class PawnInteractBaseComponent extends EntityCo
   get OwenActor() {}
 };
 (PawnInteractBaseComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(105)],
+  [(0, RegisterComponent_1.RegisterComponent)(106)],
   PawnInteractBaseComponent,
 )),
   (exports.PawnInteractBaseComponent = PawnInteractBaseComponent);

@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   GlobalData_1 = require("../../../GlobalData"),
   NavigationSelectableCreator_1 = require("./Selectable/NavigationSelectableCreator"),
@@ -338,17 +339,28 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
         : 0 === (0, puerts_1.$unref)(s))
     );
   }
-  IsInDynScrollDisplay(i) {
-    var t, s, e;
+  GetDynErrorTolerance(i) {
+    var t = this.RootUIComp.RelativeScale3D;
+    let s = MathUtils_1.MathUtils.KindaSmallNumber;
+    return (
+      i
+        ? ((i = t.Y - 1), (s += (i * this.RootUIComp.Height) / 2))
+        : ((i = t.X - 1), (s += (i * this.RootUIComp.Width) / 2)),
+      s
+    );
+  }
+  IsInDynScrollDisplay() {
+    var i, t, s, e;
     return (
       !this.HasDynamicScrollView() ||
-      ((t = this.ScrollView),
+      ((i = this.ScrollView),
+      (t = (0, puerts_1.$ref)(3)),
       (s = (0, puerts_1.$ref)(3)),
-      (e = (0, puerts_1.$ref)(3)),
-      t.GetOutOfBottomBoundsType(i.GetUIItem(), s, e),
-      t.Vertical
-        ? 0 === (0, puerts_1.$unref)(s)
-        : 0 === (0, puerts_1.$unref)(e))
+      (e = this.GetDynErrorTolerance(i.Vertical)),
+      i.GetOutOfBottomBoundsType(this.RootUIComp, t, s, e),
+      i.Vertical
+        ? 0 === (0, puerts_1.$unref)(t)
+        : 0 === (0, puerts_1.$unref)(s))
     );
   }
   IsInScrollOrLayoutCanFocus() {
@@ -405,10 +417,8 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
     return this.PanelConfig?.GetNavigationGroup(this.GroupName);
   }
   IsSelectedToggle() {
-    return (
-      "Toggle" === this.NavigationComponent.GetType() &&
-      1 === this.GetSelectableComponent().ToggleState
-    );
+    var i = this.GetSelectableComponent();
+    return !!i && 1 === i.ToggleState;
   }
   NotifyTextChangeByComponent(i) {
     this.PanelConfig &&

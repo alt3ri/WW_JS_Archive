@@ -5,15 +5,27 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ActivityFunctionalTypeA =
       void 0);
 const UE = require("ue"),
+  LevelGeneralCommons_1 = require("../../../../../LevelGamePlay/LevelGeneralCommons"),
+  ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
-  ButtonAndTextItem_1 = require("../../../../Common/Button/ButtonAndTextItem"),
-  LguiUtil_1 = require("../../../../Util/LguiUtil");
+  ButtonSpriteItem_1 = require("../../../../Common/Button/ButtonSpriteItem"),
+  LguiUtil_1 = require("../../../../Util/LguiUtil"),
+  ActivityButtonItem_1 = require("./ActivityButtonItem");
 class ActivityFunctionalTypeA extends UiPanelBase_1.UiPanelBase {
-  constructor() {
-    super(...arguments),
+  constructor(t) {
+    super(),
+      (this.Data = t),
       (this.FunctionButton = void 0),
+      (this.CircleButton = void 0),
       (this.PanelLock = void 0),
-      (this.PanelActivate = void 0);
+      (this.PanelActivate = void 0),
+      (this.X$a = () => {
+        this.Data &&
+          ModelManager_1.ModelManager.ActivityModel.SendActivityViewJumpClickLogData(
+            this.Data,
+          );
+      });
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -21,19 +33,30 @@ class ActivityFunctionalTypeA extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIItem],
       [2, UE.UIItem],
       [3, UE.UIItem],
+      [4, UE.UIItem],
+      [5, UE.UIItem],
     ];
   }
   async OnBeforeStartAsync() {
-    var t = this.GetItem(0),
-      t =
+    var t = [],
+      e = this.GetItem(0),
+      e =
         ((this.PanelLock = new FunctionalPanelConditionLock()),
-        await this.PanelLock.CreateByActorAsync(t.GetOwner()),
+        t.push(this.PanelLock.CreateByActorAsync(e.GetOwner())),
         this.GetItem(2)),
-      t =
+      e =
         ((this.PanelActivate = new FunctionalPanelConditionActivate()),
-        await this.PanelActivate.CreateByActorAsync(t.GetOwner()),
-        this.GetItem(1));
-    this.FunctionButton = new ButtonAndTextItem_1.ButtonAndTextItem(t);
+        t.push(this.PanelActivate.CreateByActorAsync(e.GetOwner())),
+        this.GetItem(1)),
+      e =
+        ((this.FunctionButton = new ActivityButtonItem_1.ActivityButtonItem()),
+        this.FunctionButton.SetExtraFunction(this.X$a),
+        t.push(this.FunctionButton.CreateThenShowByActorAsync(e.GetOwner())),
+        this.GetItem(5));
+    (this.CircleButton = new ButtonSpriteItem_1.ButtonSpriteItem()),
+      t.push(this.CircleButton.CreateByActorAsync(e.GetOwner())),
+      await Promise.all(t),
+      this.SetRewardButtonVisible(!1);
   }
   SetLockTextByTextId(t, ...e) {
     this.PanelLock.SetTextByTextId(t, ...e);
@@ -62,14 +85,31 @@ class ActivityFunctionalTypeA extends UiPanelBase_1.UiPanelBase {
   SetActivatePanelConditionVisible(t) {
     this.GetItem(2).SetUIActive(t);
   }
+  SetRewardButtonVisible(t) {
+    this.GetItem(4).SetUIActive(t);
+  }
   SetFunctionRedDotVisible(t) {
-    this.GetItem(3)?.SetUIActive(t);
+    this.FunctionButton.SetRedDotVisible(t);
   }
   SetPerformanceOpenTimeOver() {
     this.SetPanelConditionVisible(!0),
       this.SetLockTextByTextId("Activity_EndDesc01"),
       this.SetActivatePanelConditionVisible(!1),
+      this.SetLockConditionButtonVisible(!1),
+      this.SetRewardButtonVisible(!1),
       this.FunctionButton.SetUiActive(!1);
+  }
+  SetPerformanceConditionLock(t, e) {
+    this.SetPanelConditionVisible(!0),
+      this.SetActivatePanelConditionVisible(!1),
+      this.SetLockConditionButtonVisible(!0);
+    t = LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(t);
+    t && this.SetLockTextByTextId(t),
+      (this.PanelLock.ButtonCallBack = () => {
+        ControllerHolder_1.ControllerHolder.ActivityController.OpenActivityConditionView(
+          e,
+        );
+      });
   }
 }
 exports.ActivityFunctionalTypeA = ActivityFunctionalTypeA;

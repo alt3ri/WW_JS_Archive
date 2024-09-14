@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configAkiMapSourceByMapId.Init"),
+  getConfigStat = Stats_1.Stat.Create("configAkiMapSourceByMapId.GetConfig"),
   CONFIG_STAT_PREFIX = "configAkiMapSourceByMapId.GetConfig(";
 exports.configAkiMapSourceByMapId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, n = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      e =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
       if (n) {
-        var e = KEY_PREFIX + `#${o})`;
-        const a = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (a) return a;
+        var t = KEY_PREFIX + `#${o})`;
+        const a = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (a)
+          return (
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
-        (i =
+        (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,31 +58,36 @@ exports.configAkiMapSourceByMapId = {
               o,
             ]))
       ) {
-        var i,
-          e = void 0;
+        t = void 0;
         if (
-          (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["MapId", o],
           )),
-          i)
+          e)
         ) {
           const a = AkiMapSource_1.AkiMapSource.getRootAsAkiMapSource(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
             n &&
-              ((i = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(i, a)),
+              ((e = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(e, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=AkiMapSourceByMapId.js.map

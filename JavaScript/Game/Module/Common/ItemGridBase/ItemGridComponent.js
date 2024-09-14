@@ -24,7 +24,7 @@ class ItemGridComponent extends UiPanelBase_1.UiPanelBase {
   async Load() {
     return (
       (this.VPt = new CustomPromise_1.CustomPromise()),
-      await this.CreateByResourceIdAsync(this.NPt, this.sit),
+      await this.CreateThenShowByResourceIdAsync(this.NPt, this.sit),
       this.VPt.SetResult(this),
       this
     );

@@ -52,6 +52,7 @@ var EEntityVarMatchType,
   EToggleAirWall,
   EPlayerOperationType,
   EDisplayModeInPlayerOp,
+  EEnableFunctionType,
   EMoveOperationType,
   ESkillOperationType,
   EDisplayModeInSkillOp,
@@ -65,9 +66,11 @@ var EEntityVarMatchType,
   EJigsawShape,
   ESetJigsawItemType,
   ESetJigsawFoundationType;
+function isOptionItem(e) {
+  return "Option" === e || "SystemOption" === e;
+}
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.EUnlockCookSystemType =
-    exports.EUnlockSystemItemType =
+  (exports.EUnlockSystemItemType =
     exports.EDetectBattleTagType =
     exports.EDetectBattleConditionType =
     exports.EMoveEvent =
@@ -111,6 +114,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.cameraModeConfig =
     exports.actorStateConfig =
     exports.EShowTalkCameraMotionType =
+    exports.isOptionItem =
     exports.logLevelConfig =
     exports.EFlowListAction =
     exports.EEntityVarMatchType =
@@ -130,6 +134,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.EDisplayModeInSkillOp =
     exports.ESkillOperationType =
     exports.EMoveOperationType =
+    exports.EEnableFunctionType =
     exports.EDisplayModeInPlayerOp =
     exports.EPlayerOperationType =
     exports.EToggleAirWall =
@@ -158,6 +163,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ETraceSplineOptionType =
     exports.ECharacterMoveToPointType =
     exports.EUnlockAtlasSystemType =
+    exports.EUnlockCookSystemType =
       void 0),
   (exports.actionInterfaceMap = {
     Activate: void 0,
@@ -186,6 +192,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     DestroyEntity: void 0,
     DestroySelf: void 0,
     DoCalculate: void 0,
+    EnableFunction: void 0,
     FaceToPos: void 0,
     FinishDoInteract: void 0,
     FinishState: void 0,
@@ -205,6 +212,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     PlayCustomSequence: void 0,
     PlayerLookAt: void 0,
     EntityLookAt: void 0,
+    EntityTurnTo: void 0,
     PlayFlow: void 0,
     PlayMovie: void 0,
     PlayEffect: void 0,
@@ -220,6 +228,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     SetBehaviorIsPaused: void 0,
     SetCameraMode: void 0,
     SetEntityVisible: void 0,
+    SetEntityClientVisible: void 0,
     SetHeadIconVisible: void 0,
     SetMoveSpeed: void 0,
     SetNumberVar: void 0,
@@ -274,6 +283,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     ChangePhantom: void 0,
     RestorePhantom: void 0,
     TakePlotPhoto: void 0,
+    ExecVehicleAction: void 0,
+    OpenQte: void 0,
     TeleportDungeon: void 0,
     SettlementDungeon: void 0,
     ClaimDungeonReward: void 0,
@@ -339,6 +350,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     ModifyEntityPerformanceAttribute: void 0,
     ToggleMapMarkState: void 0,
     EnableTemporaryTeleport: void 0,
+    SetTeleControl: void 0,
     EnableActor: void 0,
     ModifyActorMaterial: void 0,
     ToggleAirWall: void 0,
@@ -367,6 +379,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     PerformerAiSplineMove: void 0,
     ExecResurrection: void 0,
     OpenSystemBoardWithReturn: void 0,
+    ExecRiskHarvestEffect: void 0,
   }),
   (exports.actionInterfaceRecordMap = exports.actionInterfaceMap),
   (function (e) {
@@ -382,6 +395,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       exports.EFlowListAction || (exports.EFlowListAction = {})),
   ),
   (exports.logLevelConfig = { Info: "提示", Warn: "警告", Error: "错误" }),
+  (exports.isOptionItem = isOptionItem),
   (function (e) {
     (e.Preset = "Preset"), (e.Tween = "Tween");
   })(
@@ -837,7 +851,9 @@ function isPerformanceTypeContainTag(e, t) {
     exports.EUnlockCookSystemType ||
     (exports.EUnlockCookSystemType = {})).UnlockCookBook = "UnlockCookBook"),
   (function (e) {
-    (e.GeographicalAtlas = "GeographicalAtlas"), (e.PlotPhoto = "PlotPhoto");
+    (e.GeographicalAtlas = "GeographicalAtlas"),
+      (e.PlotPhoto = "PlotPhoto"),
+      (e.Noun = "Noun");
   })(
     (EUnlockAtlasSystemType =
       exports.EUnlockAtlasSystemType || (exports.EUnlockAtlasSystemType = {})),
@@ -868,7 +884,8 @@ function isPerformanceTypeContainTag(e, t) {
       (e[(e.EnterInRange = 12)] = "EnterInRange"),
       (e[(e.FirstComplete = 13)] = "FirstComplete"),
       (e[(e.RemainStarWarning = 14)] = "RemainStarWarning"),
-      (e[(e.DreamlessWarning = 15)] = "DreamlessWarning");
+      (e[(e.DreamlessWarning = 15)] = "DreamlessWarning"),
+      (e[(e.PunishReport = 16)] = "PunishReport");
   })(
     (ECommonTipType = exports.ECommonTipType || (exports.ECommonTipType = {})),
   ),
@@ -927,7 +944,7 @@ function isPerformanceTypeContainTag(e, t) {
       exports.ELimitPlayOperation || (exports.ELimitPlayOperation = {})),
   ),
   (function (e) {
-    e[(e.Map = 10015)] = "Map";
+    (e[(e.Map = 10015)] = "Map"), (e[(e.Team = 10007)] = "Team");
   })((ESystem = exports.ESystem || (exports.ESystem = {}))),
   (function (e) {
     (e.SitDown = "SitDown"),
@@ -1028,6 +1045,9 @@ function isPerformanceTypeContainTag(e, t) {
     (EDisplayModeInPlayerOp =
       exports.EDisplayModeInPlayerOp || (exports.EDisplayModeInPlayerOp = {})),
   ),
+  ((EEnableFunctionType =
+    exports.EEnableFunctionType ||
+    (exports.EEnableFunctionType = {})).TeleportDungeon = "TeleportDungeon"),
   (function (e) {
     (e.Enable = "Enable"), (e.Disable = "Disable");
   })(

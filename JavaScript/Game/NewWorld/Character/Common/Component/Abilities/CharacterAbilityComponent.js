@@ -35,7 +35,7 @@ const UE = require("ue"),
   CharacterNameDefines_1 = require("../../CharacterNameDefines");
 (exports.DEFAULT_SOURCE_SKILL_LEVEL = 1),
   (exports.DEFAULT_SOURCE_SKILL_LEVEL_NOT_FOUND = -1),
-  (exports.EBuffApplyType = Protocol_1.Aki.Protocol.oFs);
+  (exports.EBuffApplyType = Protocol_1.Aki.Protocol.uFs);
 let CharacterAbilityComponent =
   (CharacterAbilityComponent_1 = class CharacterAbilityComponent extends (
     EntityComponent_1.EntityComponent
@@ -46,9 +46,9 @@ let CharacterAbilityComponent =
         (this.Pbr = void 0),
         (this.Xte = void 0),
         (this.xbr = ""),
-        (this.gVs = void 0),
+        (this.vVs = void 0),
         (this.GameplayEventCallbacks = new Map()),
-        (this.pVs = (t) => {
+        (this.SVs = (t) => {
           var e = t?.TagId;
           if (void 0 !== e) {
             t = this.GameplayEventCallbacks.get(e);
@@ -102,13 +102,13 @@ let CharacterAbilityComponent =
       return (
         this.n$t.Actor.Mesh.GetLinkedAnimGraphInstanceByTag(t) && this.wbr(t),
         this.InitClass(),
-        (this.Xte = this.Entity.CheckGetComponent(188)),
-        (this.gVs = this.CreateGameplayEventTask(this.pVs)),
+        (this.Xte = this.Entity.CheckGetComponent(190)),
+        (this.vVs = this.CreateGameplayEventTask(this.SVs)),
         !0
       );
     }
     OnEnd() {
-      return this.gVs && this.gVs.EndTask(), !0;
+      return this.vVs && this.vVs.EndTask(), !0;
     }
     OnClear() {
       return (

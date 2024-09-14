@@ -13,39 +13,39 @@ const Log_1 = require("../../../../../Core/Common/Log"),
 class ActivityRecallData extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments),
-      (this.A1a = void 0),
-      (this.R1a = new Map()),
-      (this.U1a = new Map()),
-      (this.x1a = new Map()),
-      (this.xCa = 0);
+      (this.Gca = void 0),
+      (this.Nca = new Map()),
+      (this.Fca = new Map()),
+      (this.Vca = new Map()),
+      (this.Rfa = 0);
   }
   PhraseEx(t) {
-    (this.A1a = t.Vua),
+    (this.Gca = t.Pca),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "ActivityRecall",
           64,
           "[回流活动]-ActivityRecallData.PhraseEx()->",
-          ["收到回流活动数据, data::", this.A1a],
+          ["收到回流活动数据, data::", this.Gca],
         ),
-      this.A1a
-        ? (this.A1a.kua ||
+      this.Gca
+        ? (this.Gca.Dca ||
             (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "ActivityRecall",
                 64,
                 "[回流活动]-ActivityRecallData.PhraseEx()->",
-                ["协议下发的回流活动数据没有签到数据, data:", this.A1a.kua],
+                ["协议下发的回流活动数据没有签到数据, data:", this.Gca.Dca],
               )),
-          this.A1a.h$s ||
+          this.Gca.E$s ||
             (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "ActivityRecall",
                 64,
                 "[回流活动]-ActivityRecallData.PhraseEx()->",
-                ["协议下发的回流活动数据没有任务数据, data:", this.A1a.h$s],
+                ["协议下发的回流活动数据没有任务数据, data:", this.Gca.E$s],
               )),
-          this.A1a.Gua ||
+          this.Gca.Aca ||
             (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "ActivityRecall",
@@ -53,27 +53,27 @@ class ActivityRecallData extends ActivityData_1.ActivityBaseData {
                 "[回流活动]-ActivityRecallData.PhraseEx()->",
                 [
                   "协议下发的回流活动数据没有已经领取的积分奖励, data:",
-                  this.A1a.Gua,
+                  this.Gca.Aca,
                 ],
               )),
           (this.EndOpenTimeInternal = MathUtils_1.MathUtils.LongToNumber(
-            this.A1a.sps,
+            this.Gca.dps,
           )),
           (this.EndShowTimeInternal = this.EndOpenTimeInternal),
-          (this.xCa = MathUtils_1.MathUtils.LongToNumber(this.A1a.gDs)),
-          this.R1a.clear(),
-          this.A1a.h$s.forEach((t) => {
-            this.R1a.set(t.J4n, t);
+          (this.Rfa = MathUtils_1.MathUtils.LongToNumber(this.Gca.yDs)),
+          this.Nca.clear(),
+          this.Gca.E$s.forEach((t) => {
+            this.Nca.set(t.s5n, t);
           }),
-          this.P1a(),
-          this.w1a(),
+          this.$ca(),
+          this.Hca(),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "ActivityRecall",
               64,
               "[回流活动]-ActivityRecallData.PhraseEx()->",
               ["开启状态, IsOpen:", this.IsActivityOpen()],
-              ["nowOpen，服务器下发标记:", this.A1a.Fua],
+              ["nowOpen，服务器下发标记:", this.Gca.wca],
               ["leftTime, 剩余开启时间:", this.GetActivityOpenTimeLeft()],
             ))
         : Log_1.Log.CheckError() &&
@@ -81,17 +81,17 @@ class ActivityRecallData extends ActivityData_1.ActivityBaseData {
             "ActivityRecall",
             64,
             "[回流活动]-ActivityRecallData.PhraseEx()->",
-            ["协议下发的活动数据没有回流活动相关的, data:", this.A1a],
+            ["协议下发的活动数据没有回流活动相关的, data:", this.Gca],
           );
   }
   GetActivityState() {
     var t = this.CheckIfInOpenTime();
-    if (t && this.A1a.Fua) return 1;
+    if (t && this.Gca.wca) return 1;
     return 0;
   }
   CheckIfInOpenTime() {
     return (
-      this.A1a.Fua &&
+      this.Gca.wca &&
       this.CheckIfInTimeInterval(this.BeginOpenTime, this.EndOpenTime)
     );
   }
@@ -103,12 +103,12 @@ class ActivityRecallData extends ActivityData_1.ActivityBaseData {
     return 1 === this.GetActivityState();
   }
   GetSignRewardState(t) {
-    switch (this.B1a(t).w6n) {
-      case Protocol_1.Aki.Protocol.d$s.Proto_ActivityTaskRunning:
+    switch (this.jca(t).H6n) {
+      case Protocol_1.Aki.Protocol.I$s.Proto_ActivityTaskRunning:
         return 0;
-      case Protocol_1.Aki.Protocol.d$s.Proto_ActivityTaskFinish:
+      case Protocol_1.Aki.Protocol.I$s.Proto_ActivityTaskFinish:
         return 1;
-      case Protocol_1.Aki.Protocol.d$s.Proto_ActivityTaskTaken:
+      case Protocol_1.Aki.Protocol.I$s.Proto_ActivityTaskTaken:
         return 2;
     }
     return 0;
@@ -117,19 +117,21 @@ class ActivityRecallData extends ActivityData_1.ActivityBaseData {
     return this.GetSignRewardState(t) === e;
   }
   CheckHaveSignRewardCanGet() {
-    for (const t of this.A1a.kua)
-      if (t.w6n === Protocol_1.Aki.Protocol.d$s.Proto_ActivityTaskFinish)
+    for (const t of this.Gca.Dca)
+      if (t.H6n === Protocol_1.Aki.Protocol.I$s.Proto_ActivityTaskFinish)
         return !0;
     return !1;
   }
   CheckHaveTaskRewardCanGet() {
-    for (const t of this.A1a.h$s)
-      if (t.w6n === Protocol_1.Aki.Protocol.d$s.Proto_ActivityTaskFinish)
-        return !0;
+    var t = this.GetRecallTaskProgressFloat01();
+    if (!(1 <= t))
+      for (const e of this.Gca.E$s)
+        if (e.H6n === Protocol_1.Aki.Protocol.I$s.Proto_ActivityTaskFinish)
+          return !0;
     return !1;
   }
-  B1a(t) {
-    var e = this.A1a.kua,
+  jca(t) {
+    var e = this.Gca.Dca,
       i = e[t - 1];
     return (
       void 0 === i &&
@@ -145,7 +147,7 @@ class ActivityRecallData extends ActivityData_1.ActivityBaseData {
     );
   }
   GetSignRewardEntityId(t) {
-    return this.B1a(t).J4n;
+    return this.jca(t).s5n;
   }
   GetRecallTaskProgressTuple() {
     var t = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(20),
@@ -184,11 +186,11 @@ class ActivityRecallData extends ActivityData_1.ActivityBaseData {
       [void 0, 0]
     );
   }
-  P1a() {
-    this.U1a.clear(),
+  $ca() {
+    this.Fca.clear(),
       ConfigManager_1.ConfigManager.ActivityRecallConfig.GetAllRecallScoreRewardConfigList().forEach(
         (t) => {
-          this.U1a.set(t.Id, t.NeedScore);
+          this.Fca.set(t.Id, t.NeedScore);
         },
       );
   }
@@ -200,9 +202,9 @@ class ActivityRecallData extends ActivityData_1.ActivityBaseData {
     var [t] = this.GetRecallTaskProgressTuple();
     return t;
   }
-  b1a(t) {
+  Wca(t) {
     return (
-      void 0 === this.R1a.get(t) &&
+      void 0 === this.Nca.get(t) &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "ActivityRecall",
@@ -210,11 +212,11 @@ class ActivityRecallData extends ActivityData_1.ActivityBaseData {
           "[回流活动]ActivityRecallData.GetRawTaskData->",
           ["获取回流任务数据失败, 服务器没下发该任务数据 taskId:", t],
         ),
-      this.R1a.get(t)
+      this.Nca.get(t)
     );
   }
   GetRecallTaskScoreRewardState(t) {
-    return this.q1a(t.Id)
+    return this.Qca(t.Id)
       ? 2
       : this.GetRecallTaskScore() >= t.NeedScore
         ? 1
@@ -223,25 +225,25 @@ class ActivityRecallData extends ActivityData_1.ActivityBaseData {
   IsRecallTaskScoreOverExp() {
     return 1 <= this.GetRecallTaskProgressFloat01();
   }
-  q1a(t) {
-    return this.A1a.Gua.includes(t);
+  Qca(t) {
+    return this.Gca.Aca.includes(t);
   }
   GetRecallTaskRelativeScore(t) {
     var e = this.GetRecallTaskScore(),
       i = t.Id - 1;
     let a = 0;
-    this.U1a.has(i) && (a = this.U1a.get(i) ?? 0);
-    (i = this.U1a.get(t.Id)), (t = i - a);
+    this.Fca.has(i) && (a = this.Fca.get(i) ?? 0);
+    (i = this.Fca.get(t.Id)), (t = i - a);
     let r = 0;
     return [(r = e > a ? (e < i ? e - a : t) : r), t];
   }
   GetRecallTaskConfigMap() {
-    return this.x1a;
+    return this.Vca;
   }
-  w1a() {
-    this.x1a.clear(),
-      this.A1a.h$s.forEach((t) => {
-        (t = t.J4n),
+  Hca() {
+    this.Vca.clear(),
+      this.Gca.E$s.forEach((t) => {
+        (t = t.s5n),
           (t =
             ConfigManager_1.ConfigManager.ActivityRecallConfig.GetRecallTaskConfigById(
               t,
@@ -253,34 +255,34 @@ class ActivityRecallData extends ActivityData_1.ActivityBaseData {
               t.TaskType !==
                 ActivityRecallDefine_1.EActivityRecallTaskType.DailyB) ||
               (e = ActivityRecallDefine_1.EActivityRecallTaskType.DailyA),
-            this.x1a.get(e));
-        void 0 === i && ((i = []), this.x1a.set(e, i)), i.push(t);
+            this.Vca.get(e));
+        void 0 === i && ((i = []), this.Vca.set(e, i)), i.push(t);
       });
   }
   GetTaskProgressTuple(t) {
-    var t = this.b1a(t),
-      [t, e] = [t.iMs, t.b6n];
+    var t = this.Wca(t),
+      [t, e] = [t.lMs, t.j6n];
     return [t, e];
   }
   GetTaskRewardState(t) {
-    switch (this.b1a(t).w6n) {
-      case Protocol_1.Aki.Protocol.d$s.Proto_ActivityTaskRunning:
+    switch (this.Wca(t).H6n) {
+      case Protocol_1.Aki.Protocol.I$s.Proto_ActivityTaskRunning:
         return 0;
-      case Protocol_1.Aki.Protocol.d$s.Proto_ActivityTaskFinish:
+      case Protocol_1.Aki.Protocol.I$s.Proto_ActivityTaskFinish:
         return 1;
-      case Protocol_1.Aki.Protocol.d$s.Proto_ActivityTaskTaken:
+      case Protocol_1.Aki.Protocol.I$s.Proto_ActivityTaskTaken:
         return 2;
       default:
         return 0;
     }
   }
   GetTaskRewardShowPriority(t) {
-    switch (this.b1a(t).w6n) {
-      case Protocol_1.Aki.Protocol.d$s.Proto_ActivityTaskRunning:
+    switch (this.Wca(t).H6n) {
+      case Protocol_1.Aki.Protocol.I$s.Proto_ActivityTaskRunning:
         return 1;
-      case Protocol_1.Aki.Protocol.d$s.Proto_ActivityTaskFinish:
+      case Protocol_1.Aki.Protocol.I$s.Proto_ActivityTaskFinish:
         return 0;
-      case Protocol_1.Aki.Protocol.d$s.Proto_ActivityTaskTaken:
+      case Protocol_1.Aki.Protocol.I$s.Proto_ActivityTaskTaken:
         return 2;
       default:
         return 1;
@@ -289,7 +291,7 @@ class ActivityRecallData extends ActivityData_1.ActivityBaseData {
   GetNextRefreshTime() {
     var t,
       e,
-      i = this.xCa ?? 0;
+      i = this.Rfa ?? 0;
     return 0 === i
       ? ""
       : ((t = TimeUtil_1.TimeUtil.GetServerTime()),

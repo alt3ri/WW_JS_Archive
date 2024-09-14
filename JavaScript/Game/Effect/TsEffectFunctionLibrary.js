@@ -7,18 +7,18 @@ const puerts_1 = require("puerts"),
   EffectParameterNiagara_1 = require("./EffectParameter/EffectParameterNiagara"),
   EffectSystem_1 = require("./EffectSystem");
 class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
-  static SpawnEffect(e, t, f, c, n, o) {
+  static SpawnEffect(e, t, f, c, n, a) {
     if (t?.IsValid())
       if (n) {
-        var a;
+        var o;
         if (!(n.length < EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT))
           return (
-            (a = `[蓝图:${t.GetName()}] ` + n),
+            (o = `[蓝图:${t.GetName()}] ` + n),
             EffectSystem_1.EffectSystem.SpawnEffect(
               e,
               c,
               f,
-              a,
+              o,
               new EffectContext_1.EffectContext(void 0, t),
             ) ?? 0
           );
@@ -53,15 +53,15 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static SpawnEffectUI(e, t, f, c, n) {
     if (t?.IsValid())
       if (n) {
-        var o;
+        var a;
         if (!(n.length < EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT))
           return (
-            (o = `[蓝图:${t.GetName()}] ` + n),
+            (a = `[蓝图:${t.GetName()}] ` + n),
             EffectSystem_1.EffectSystem.SpawnEffect(
               e,
               c,
               f,
-              o,
+              a,
               new EffectContext_1.EffectContext(void 0, t),
               1,
             ) ?? 0
@@ -94,7 +94,7 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
           ["Reason", n],
         );
   }
-  static SpawnEffectWithActor(e, t, f, c, n, o, a) {
+  static SpawnEffectWithActor(e, t, f, c, n, a, o) {
     var i = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(e);
     if (2 === i || 4 === i)
       if (f?.IsValid())
@@ -115,7 +115,7 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
                   void 0,
                   !1,
                   void 0,
-                  a.valueOf(),
+                  o.valueOf(),
                 )
               );
             Log_1.Log.CheckError() &&
@@ -170,7 +170,7 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return EffectSystem_1.EffectSystem.IsValid(e);
   }
   static StopEffect(e, t, f, c, n) {
-    var o;
+    var a;
     return t?.IsValid()
       ? f
         ? f.length < EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT
@@ -185,8 +185,8 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
               ),
             !1)
           : e
-            ? ((o = `[蓝图:${t.GetName()}] ` + f),
-              EffectSystem_1.EffectSystem.StopEffectById(e, o, c))
+            ? ((a = `[蓝图:${t.GetName()}] ` + f),
+              EffectSystem_1.EffectSystem.StopEffectById(e, a, c))
             : (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "RenderEffect",
@@ -262,55 +262,55 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
           ),
         !1);
   }
-  static SetEffectParameterNiagara(e, t, f, c, n, o) {
+  static SetEffectParameterNiagara(e, t, f, c, n, a) {
     if (e) {
-      var a = new EffectParameterNiagara_1.EffectParameterNiagara();
+      var o = new EffectParameterNiagara_1.EffectParameterNiagara();
       if (t) {
         var i = (0, puerts_1.$unref)(t),
           r = i.Num();
         if (0 < r) {
-          a.UserParameterFloat = [];
+          o.UserParameterFloat = [];
           for (let e = 0; e < r; ++e)
-            a.UserParameterFloat.push([i.Get(e).Name, i.Get(e).Value]);
+            o.UserParameterFloat.push([i.Get(e).Name, i.Get(e).Value]);
         }
       }
       if (f) {
         var s = (0, puerts_1.$unref)(f),
           E = s.Num();
         if (0 < E) {
-          a.UserParameterColor = [];
+          o.UserParameterColor = [];
           for (let e = 0; e < E; ++e)
-            a.UserParameterColor.push([s.Get(e).Name, s.Get(e).Value]);
+            o.UserParameterColor.push([s.Get(e).Name, s.Get(e).Value]);
         }
       }
       if (c) {
         var _ = (0, puerts_1.$unref)(c),
           y = _.Num();
         if (0 < y) {
-          a.UserParameterVector = [];
+          o.UserParameterVector = [];
           for (let e = 0; e < y; ++e)
-            a.UserParameterVector.push([_.Get(e).Name, _.Get(e).Value]);
+            o.UserParameterVector.push([_.Get(e).Name, _.Get(e).Value]);
         }
       }
       if (n) {
         var S = (0, puerts_1.$unref)(n),
           L = S.Num();
         if (0 < L) {
-          a.MaterialParameterFloat = [];
+          o.MaterialParameterFloat = [];
           for (let e = 0; e < L; ++e)
-            a.MaterialParameterFloat.push([S.Get(e).Name, S.Get(e).Value]);
+            o.MaterialParameterFloat.push([S.Get(e).Name, S.Get(e).Value]);
         }
       }
-      if (o) {
-        var g = (0, puerts_1.$unref)(o),
+      if (a) {
+        var g = (0, puerts_1.$unref)(a),
           l = g.Num();
         if (0 < l) {
-          a.MaterialParameterColor = [];
+          o.MaterialParameterColor = [];
           for (let e = 0; e < l; ++e)
-            a.MaterialParameterColor.push([g.Get(e).Name, g.Get(e).Value]);
+            o.MaterialParameterColor.push([g.Get(e).Name, g.Get(e).Value]);
         }
       }
-      EffectSystem_1.EffectSystem.SetEffectParameterNiagara(e, a);
+      EffectSystem_1.EffectSystem.SetEffectParameterNiagara(e, o);
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("RenderEffect", 26, "特效句柄无效");
@@ -331,7 +331,7 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
         return;
     }
   }
-  static AttachEffectActorToActor(e, t, f, c, n, o, a) {
+  static AttachEffectActorToActor(e, t, f, c, n, a, o) {
     EffectSystem_1.EffectSystem.IsValid(e) &&
       t &&
       EffectSystem_1.EffectSystem.GetEffectActor(e).K2_AttachToActor(
@@ -339,11 +339,11 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
         f,
         c,
         n,
-        o,
         a,
+        o,
       );
   }
-  static AttachEffectActorToComponent(e, t, f, c, n, o, a) {
+  static AttachEffectActorToComponent(e, t, f, c, n, a, o) {
     EffectSystem_1.EffectSystem.IsValid(e) &&
       t &&
       EffectSystem_1.EffectSystem.GetEffectActor(e).K2_AttachToComponent(
@@ -351,8 +351,8 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
         f,
         c,
         n,
-        o,
         a,
+        o,
       );
   }
   static SetEffectActorRelativeLocation(e, t, f, c) {
@@ -366,7 +366,11 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static SetEffectHiddenInGame(e, t) {
     EffectSystem_1.EffectSystem.IsValid(e)
-      ? EffectSystem_1.EffectSystem.GetEffectActor(e).SetActorHiddenInGame(t)
+      ? EffectSystem_1.EffectSystem.SetEffectHidden(
+          e,
+          t,
+          "TsEffectFunctionLibrary.SetEffectHiddenInGame",
+        )
       : Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "RenderEffect",

@@ -88,8 +88,8 @@ class Cursor {
       (this.Gxo = i?.RootUIComp),
       (this.kxo = 0),
       (this.jxo = 0),
-      (Cursor.s2n = 0),
-      (Cursor.a2n = 0),
+      (Cursor.C2n = 0),
+      (Cursor.g2n = 0),
       i
         ? ((this.Fxo = !0),
           (this.Vxo = i.Cursor.Switch),
@@ -108,7 +108,7 @@ class Cursor {
       r,
       e = this.Gxo.GetWidth(),
       h = this.Gxo.GetHeight();
-    (Cursor.s2n === e && Cursor.a2n === h) ||
+    (Cursor.C2n === e && Cursor.g2n === h) ||
       ((i = this.Gxo.GetPivot()),
       (r = this.Nxo.GetCursorOffset()),
       (t = this.Nxo.GetBoundOffset()),
@@ -116,8 +116,8 @@ class Cursor {
       (r = r.Y - MathUtils_1.MathUtils.Clamp(i.Y, 0, 1)),
       (Cursor.zxo = s * e + t.X),
       (Cursor.Zxo = r * h + t.Y),
-      (Cursor.s2n = e),
-      (Cursor.a2n = h));
+      (Cursor.C2n = e),
+      (Cursor.g2n = h));
   }
   SetIsUseMouse(i) {
     var t;
@@ -220,6 +220,6 @@ class Cursor {
   (Cursor.zxo = 0),
   (Cursor.Zxo = 0),
   (Cursor.ewo = Vector_1.Vector.Create()),
-  (Cursor.s2n = 0),
-  (Cursor.a2n = 0);
+  (Cursor.C2n = 0),
+  (Cursor.g2n = 0);
 //# sourceMappingURL=CursorData.js.map

@@ -146,6 +146,7 @@ class ItemMaterialActorController extends ItemMaterialControllerBase {
   CollectParameter() {
     if (
       (RenderModuleConfig_1.RenderStats.Init(),
+      RenderModuleConfig_1.RenderStats.StatItemMaterialControllerCollectParameter.Start(),
       (this.ModelParameters = new EffectMaterialParameter_1.default()),
       this.Data?.EnableBaseColorScale &&
         (this.ModelParameters.CollectFloatConst(
@@ -386,7 +387,8 @@ class ItemMaterialActorController extends ItemMaterialControllerBase {
         this.ModelParameters.CollectLinearColorCurve(
           RenderConfig_1.RenderConfig.E_Action_TransparentColorQuanXiFengSuo,
           this.Data.TransparentColorQuanXiFengSuo,
-        ));
+        )),
+      RenderModuleConfig_1.RenderStats.StatItemMaterialControllerCollectParameter.Stop();
   }
   UpdateParameters(i) {
     if (this.LifeTimeController) {
@@ -417,7 +419,7 @@ class ItemMaterialActorController extends ItemMaterialControllerBase {
     this.LifeTimeController = void 0;
   }
   Stop(i = !1) {
-    this.LifeTimeController.Stop(i);
+    this.LifeTimeController?.Stop(i);
   }
   ForEachComponent(i, t) {
     if (i?.IsValid()) {

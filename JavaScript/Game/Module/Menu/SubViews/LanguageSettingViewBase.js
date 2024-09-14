@@ -68,10 +68,7 @@ class LanguageSettingViewBase extends UiViewBase_1.UiViewBase {
       )),
       this.InitScrollViewData();
     var e = this.GetText(0);
-    LguiUtil_1.LguiUtil.SetLocalTextNew(
-      e,
-      this.MenuDataIns.MenuDataFunctionName ?? "",
-    ),
+    LguiUtil_1.LguiUtil.SetLocalTextNew(e, this.MenuDataIns.FunctionName ?? ""),
       this.ChildPopView?.PopItem.OverrideBackBtnCallBack(() => {
         this.eNt();
       });
@@ -84,18 +81,15 @@ class LanguageSettingViewBase extends UiViewBase_1.UiViewBase {
   }
   OnAfterHide() {
     var e = MenuController_1.MenuController.GetTargetConfig(
-      this.MenuDataIns.MenuDataFunctionId,
+      this.MenuDataIns.FunctionId,
     );
     this.IsConfirm &&
       this.SelectedToggle.GetIndex() !== e &&
-      (this.MenuDataIns.MenuDataOptionsValueList.length &&
+      (this.MenuDataIns.OptionsValueList.length &&
         MenuController_1.MenuController.NoticeChange(
-          this.MenuDataIns.MenuDataFunctionId,
+          this.MenuDataIns.FunctionId,
         ),
-      this.lBi[1](
-        this.lBi[0].MenuDataFunctionId,
-        this.SelectedToggle.GetIndex(),
-      )),
+      this.lBi[1](this.lBi[0].FunctionId, this.SelectedToggle.GetIndex())),
       (this.IsConfirm = !1);
   }
   OnBeforeDestroyImplement() {

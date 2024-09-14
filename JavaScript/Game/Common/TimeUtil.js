@@ -7,15 +7,16 @@ const Log_1 = require("../../Core/Common/Log"),
   MathUtils_1 = require("../../Core/Utils/MathUtils"),
   StringBuilder_1 = require("../../Core/Utils/StringBuilder"),
   StringUtils_1 = require("../../Core/Utils/StringUtils"),
-  ConfigManager_1 = require("../Manager/ConfigManager"),
-  EventDefine_1 = require("./Event/EventDefine"),
-  EventSystem_1 = require("./Event/EventSystem");
+  ConfigManager_1 = require("../Manager/ConfigManager");
 class TimeUtil {
   static Init(e) {
     this.Ode = e;
   }
   static GetServerTimeStamp() {
     return Time_1.Time.ServerTimeStamp;
+  }
+  static GetServerStopTimeStamp() {
+    return Time_1.Time.ServerFlowTimeStamp;
   }
   static GetServerTime() {
     return Time_1.Time.ServerTimeStamp * this.Millisecond;
@@ -29,8 +30,7 @@ class TimeUtil {
   static Tick(e) {
     this.kde &&
       Time_1.Time.ServerTimeStamp >= this.kde &&
-      (this.InitNextDayTimeStamp(),
-      EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.CrossDay));
+      this.InitNextDayTimeStamp();
   }
   static InitNextDayTimeStamp() {
     var e = new Date(Time_1.Time.ServerTimeStamp),
@@ -144,24 +144,24 @@ class TimeUtil {
   static CalculateDayGapBetweenNow(e, t) {
     var i = Time_1.Time.ServerTimeStamp / TimeUtil.InverseMillisecond,
       r = new Date(),
-      n = new Date(e * TimeUtil.InverseMillisecond),
+      a = new Date(e * TimeUtil.InverseMillisecond),
       i = t ? e - i : i - e,
       e =
         (i < 0 &&
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Mail", 28, "时间非法"),
         i / 86400);
-    let a = e;
+    let n = e;
     return (
       e < 2 &&
-        (a = t
-          ? r.getMonth() < n.getMonth()
+        (n = t
+          ? r.getMonth() < a.getMonth()
             ? 1
-            : n.getDate() - r.getDate()
-          : r.getMonth() > n.getMonth()
+            : a.getDate() - r.getDate()
+          : r.getMonth() > a.getMonth()
             ? 1
-            : r.getDate() - n.getDate()),
-      parseInt(a.toFixed(0))
+            : r.getDate() - a.getDate()),
+      parseInt(n.toFixed(0))
     );
   }
   static CalculateDayTimeStampGapBetweenNow(e, t) {
@@ -202,12 +202,12 @@ class TimeUtil {
         e >= i;
 
       ) {
-        var n = TimeUtil.Fde[e](t);
-        if (n)
+        var a = TimeUtil.Fde[e](t);
+        if (a)
           return (
-            (r.TimeValue = n[0]),
+            (r.TimeValue = a[0]),
             (r.TextId = CommonDefine_1.remainTimeTextId[e]),
-            (r.RemainingTime = n[1] + TimeUtil.TimeDeviation),
+            (r.RemainingTime = a[1] + TimeUtil.TimeDeviation),
             r
           );
         --e;
@@ -218,8 +218,8 @@ class TimeUtil {
   static Vde(e, t, i, r) {
     if (e <= 0)
       return { CountDownText: void 0, RemainingTime: TimeUtil.TimeDeviation };
-    var n = new StringBuilder_1.StringBuilder();
-    let a = e,
+    var a = new StringBuilder_1.StringBuilder();
+    let n = e,
       m = void 0;
     var o;
     (m = i ?? 3), (o = r ?? 1);
@@ -235,15 +235,15 @@ class TimeUtil {
         s = CommonDefine_1.remainTimeTextId;
     }
     for (; m >= o; ) {
-      var u = TimeUtil.Fde[m](a),
-        T = this.Ode.GetTextById(s[m]),
-        l = u ? u[0] : 0,
-        T = StringUtils_1.StringUtils.Format(T, l.toString());
-      (a = u ? u[1] : a), n.Append(T), --m;
+      var T = TimeUtil.Fde[m](n),
+        u = this.Ode.GetTextById(s[m]),
+        l = T ? T[0] : 0,
+        u = StringUtils_1.StringUtils.Format(u, l.toString());
+      (n = T ? T[1] : n), a.Append(u), --m;
     }
     return {
-      CountDownText: n.ToString(),
-      RemainingTime: a + TimeUtil.TimeDeviation,
+      CountDownText: a.ToString(),
+      RemainingTime: n + TimeUtil.TimeDeviation,
     };
   }
   static GetCountDownData(e, t, i) {

@@ -91,7 +91,7 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
       );
     var t =
         ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId,
-      t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(181);
+      t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(182);
     if (t && !t.GetClientCanInteraction())
       return (
         Log_1.Log.CheckInfo() &&
@@ -219,8 +219,8 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
             );
       }
     else
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "Input",
           8,
           "[InputDistribute]刷新交互列表输入Tag时,没有打开交互界面,也不存在战斗交互",

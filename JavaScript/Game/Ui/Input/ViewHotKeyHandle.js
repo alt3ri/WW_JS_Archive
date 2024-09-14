@@ -6,20 +6,16 @@ const Info_1 = require("../../../Core/Common/Info"),
   Time_1 = require("../../../Core/Common/Time"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
-  EventDefine_1 = require("../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../Common/Event/EventSystem"),
   LevelEventLockInputState_1 = require("../../LevelGamePlay/LevelEventLockInputState"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   InputDistributeController_1 = require("../InputDistribute/InputDistributeController"),
-  InputMappingsDefine_1 = require("../InputDistribute/InputMappingsDefine"),
-  UiManager_1 = require("../UiManager"),
-  InputManager_1 = require("./InputManager");
+  UiManager_1 = require("../UiManager");
 class ViewHotKeyHandle {
-  constructor(t) {
+  constructor(i) {
     (this.ActionName = void 0),
       (this.InputControllerType = 0),
       (this.ViewName = void 0),
+      (this.ViewParam = []),
       (this.IsPressTrigger = !0),
       (this.PressStartTime = 0),
       (this.PressTriggerTime = 0),
@@ -28,44 +24,54 @@ class ViewHotKeyHandle {
       (this.IsPressClose = !1),
       (this.IsReleaseClose = !1),
       (this.uti = void 0),
-      (this.xMa = void 0),
-      (this.PMa = void 0),
-      (this.wMa = 0),
-      (this.bMe = (t, e) => {
-        this.BMa() && (0 === e ? this.Press() : 1 === e && this.Release());
+      (this.Kya = void 0),
+      (this.Smr = void 0),
+      (this.P$a = void 0),
+      (this.$ya = void 0),
+      (this.Xya = 0),
+      (this.OnInputAction = (i, t) => {
+        this.Yya() && (0 === t ? this.Press() : 1 === t && this.Release());
       }),
-      (this.bMa = () => {
-        this.qMa(), this.xmr();
+      (this.Jya = () => {
+        this.zya(), this.xmr();
       }),
-      (this.ActionName = t.ActionName),
-      (this.InputControllerType = t.InputControllerType),
-      (this.ViewName = t.ViewName),
-      (this.IsPressTrigger = t.IsPressTrigger),
-      (this.PressStartTime = t.PressStartTime),
-      (this.PressTriggerTime = t.PressTriggerTime),
-      (this.IsReleaseTrigger = t.IsReleaseTrigger),
-      (this.ReleaseInvalidTime = t.ReleaseInvalidTime),
-      (this.IsPressClose = t.IsPressClose),
-      (this.IsReleaseClose = t.IsReleaseClose),
-      (this.uti = t.OpenViewCallback),
-      (this.xMa = t.CloseViewCallback);
+      (this.ActionName = i.ActionName),
+      (this.InputControllerType = i.InputControllerType),
+      (this.ViewName = i.ViewName),
+      (this.ViewParam = i.ViewParam),
+      (this.IsPressTrigger = i.IsPressTrigger),
+      (this.PressStartTime = i.PressStartTime),
+      (this.PressTriggerTime = i.PressTriggerTime),
+      (this.IsReleaseTrigger = i.IsReleaseTrigger),
+      (this.ReleaseInvalidTime = i.ReleaseInvalidTime),
+      (this.IsPressClose = i.IsPressClose),
+      (this.IsReleaseClose = i.IsReleaseClose),
+      (this.uti = i.OpenViewCallback),
+      (this.Kya = i.CloseViewCallback),
+      (this.Smr = i.IsAllowOpenViewByShortcutKey),
+      (this.P$a = i.IsAllowCloseViewByShortcutKey);
   }
   Destroy() {
-    InputDistributeController_1.InputDistributeController.UnBindAction(
-      this.ActionName,
-      this.bMe,
-    ),
-      this.qMa(),
+    this.UnBind(),
+      this.zya(),
       (this.uti = void 0),
-      (this.xMa = void 0);
+      (this.Kya = void 0),
+      (this.Smr = void 0),
+      (this.P$a = void 0);
   }
-  BindAction() {
+  Bind() {
     InputDistributeController_1.InputDistributeController.BindAction(
       this.ActionName,
-      this.bMe,
+      this.OnInputAction,
     );
   }
-  BMa() {
+  UnBind() {
+    InputDistributeController_1.InputDistributeController.UnBindAction(
+      this.ActionName,
+      this.OnInputAction,
+    );
+  }
+  Yya() {
     switch (this.InputControllerType) {
       case 0:
         return !0;
@@ -77,100 +83,93 @@ class ViewHotKeyHandle {
         return !1;
     }
   }
-  BindOpenViewCallback(t) {
-    this.uti = t;
+  BindOpenViewCallback(i) {
+    this.uti = i;
   }
-  BindCloseViewCallback(t) {
-    this.xMa = t;
+  BindCloseViewCallback(i) {
+    this.Kya = i;
   }
   Press() {
     !this.ViewName ||
       StringUtils_1.StringUtils.IsBlank(this.ViewName) ||
-      ((this.wMa = Time_1.Time.WorldTime),
-      this.IsPressTrigger && this.GMa(),
+      ((this.Xya = Time_1.Time.WorldTime),
+      this.IsPressTrigger && this.Zya(),
       this.IsPressClose && this.wmr());
   }
   Release() {
-    var t;
-    this.qMa(),
+    var i;
+    this.zya(),
       this.IsReleaseTrigger &&
-        ((t = Time_1.Time.WorldTime),
+        ((i = Time_1.Time.WorldTime),
         this.ReleaseInvalidTime <= 0 ||
-          t - this.wMa <= this.ReleaseInvalidTime) &&
+          i - this.Xya <= this.ReleaseInvalidTime) &&
         this.xmr(),
       this.IsReleaseClose && this.wmr();
   }
-  GMa() {
-    return this.cmr()
-      ? this.PressTriggerTime <= 0
-        ? this.xmr()
-        : (this.qMa(),
-          (this.PMa = TimerSystem_1.TimerSystem.Delay(
-            this.bMa,
-            this.PressTriggerTime,
-          )),
-          !1)
-      : (Log_1.Log.CheckInfo() &&
+  Zya() {
+    return this.PressTriggerTime <= 0
+      ? this.xmr()
+      : (this.zya(),
+        (this.$ya = TimerSystem_1.TimerSystem.Delay(
+          this.Jya,
+          this.PressTriggerTime,
+        )),
+        !1);
+  }
+  zya() {
+    this.$ya &&
+      TimerSystem_1.TimerSystem.Has(this.$ya) &&
+      TimerSystem_1.TimerSystem.Remove(this.$ya),
+      (this.$ya = void 0);
+  }
+  xmr() {
+    return !(
+      UiManager_1.UiManager.IsViewOpen(this.ViewName) ||
+      ModelManager_1.ModelManager.LoadingModel.IsLoading ||
+      this.CheckHasInputLimit() ||
+      (void 0 !== this.Smr && !this.Smr()) ||
+      (this.SpecialConditionCheck()
+        ? this.YHt()
+        : Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "InputManager",
             28,
             "特殊情况，不处理分发，在别的模块处理",
           ),
-        !0);
-  }
-  qMa() {
-    this.PMa &&
-      TimerSystem_1.TimerSystem.Has(this.PMa) &&
-      TimerSystem_1.TimerSystem.Remove(this.PMa),
-      (this.PMa = void 0);
-  }
-  xmr() {
-    return (
-      !UiManager_1.UiManager.IsViewOpen(this.ViewName) &&
-      !(
-        ModelManager_1.ModelManager.LoadingModel.IsLoading ||
-        LevelEventLockInputState_1.LevelEventLockInputState.InputLimitView.includes(
-          this.ViewName,
-        ) ||
-        !InputManager_1.InputManager.IsAllowOpenViewByShortcutKey() ||
-        (this.YHt(), 0)
-      )
+      0)
     );
   }
   wmr() {
-    return (
-      !!UiManager_1.UiManager.IsViewOpen(this.ViewName) &&
-      !(
-        !UiManager_1.UiManager.IsViewShow(this.ViewName) ||
-        ModelManager_1.ModelManager.LoadingModel.IsLoading ||
-        !InputManager_1.InputManager.IsAllowCloseViewByShortcutKey() ||
-        (this.$Oe(), 0)
-      )
+    return !(
+      !UiManager_1.UiManager.IsViewOpen(this.ViewName) ||
+      !UiManager_1.UiManager.IsViewShow(this.ViewName) ||
+      ModelManager_1.ModelManager.LoadingModel.IsLoading ||
+      (void 0 !== this.P$a && !this.P$a()) ||
+      (this.$Oe(), 0)
     );
   }
   YHt() {
     !this.ViewName ||
       StringUtils_1.StringUtils.IsBlank(this.ViewName) ||
-      (this.uti ? this.uti() : UiManager_1.UiManager.OpenView(this.ViewName));
+      (this.uti
+        ? this.uti()
+        : UiManager_1.UiManager.OpenView(
+            this.ViewName,
+            0 < this.ViewParam.length ? this.ViewParam : void 0,
+          ));
   }
   $Oe() {
     !this.ViewName ||
       StringUtils_1.StringUtils.IsBlank(this.ViewName) ||
-      (this.xMa ? this.xMa() : UiManager_1.UiManager.CloseView(this.ViewName));
+      (this.Kya ? this.Kya() : UiManager_1.UiManager.CloseView(this.ViewName));
   }
-  cmr() {
-    return !(
-      this.ActionName === InputMappingsDefine_1.actionMappings.功能菜单 &&
-      (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() ||
-        !ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
-          2,
-        )) &&
-      (EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.InputDistribute,
-        this.ActionName,
-      ),
-      1)
+  CheckHasInputLimit() {
+    return LevelEventLockInputState_1.LevelEventLockInputState.InputLimitView.includes(
+      this.ViewName,
     );
+  }
+  SpecialConditionCheck() {
+    return !0;
   }
 }
 exports.ViewHotKeyHandle = ViewHotKeyHandle;

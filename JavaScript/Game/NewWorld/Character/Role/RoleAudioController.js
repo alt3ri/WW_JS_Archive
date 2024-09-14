@@ -2,7 +2,9 @@
 var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleAudioController = void 0);
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+const ue_1 = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   Time_1 = require("../../../../Core/Common/Time"),
   CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
@@ -13,13 +15,16 @@ const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   FormationAttributeController_1 = require("../../../Module/Abilities/FormationAttributeController"),
   CharacterUnifiedStateTypes_1 = require("../Common/Component/Abilities/CharacterUnifiedStateTypes"),
   RoleSceneInteractComponent_1 = require("./Component/RoleSceneInteractComponent"),
   ROLE_CHANGE_FRONT_EVENT = "scene_role_switched_front",
   DEFAULT_INTERVAL_TIME = 1e4,
-  ENTER_FIGHT_DISTANCE = 1e3;
+  ENTER_FIGHT_DISTANCE = 1e3,
+  INTERVAL_TIME = 500,
+  MIN_INTERVAL_TIME = 50;
 class RoleAudioCoolDownTime {
   constructor(e) {
     (this.Type = 0),
@@ -73,7 +78,7 @@ class RoleAudioCoolDownTime {
       i++;
     }
     var r = Time_1.Time.Now - this.CurrentRoleTime[i],
-      a = r >= this.RoletervalTime;
+      s = r >= this.RoletervalTime;
     r < this.RoletervalTime &&
       o &&
       Log_1.Log.CheckDebug() &&
@@ -92,9 +97,9 @@ class RoleAudioCoolDownTime {
           this.RoletervalTime / CommonDefine_1.MILLIONSECOND_PER_SECOND,
         ],
       );
-    let s = 0;
+    let a = 0;
     return ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-      (s =
+      (a =
         (ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(n)
           ?.PlayerNumber ?? 1) - 1) < 0
       ? (Log_1.Log.CheckError() &&
@@ -104,8 +109,8 @@ class RoleAudioCoolDownTime {
             "[CheckAndUpdateCoolDownTime] GetCurrentTeamListById失败",
           ),
         !1)
-      : ((r = Time_1.Time.Now - this.CurrentTeamTime[s]),
-        (a = a && r >= this.TeamIntervalTime),
+      : ((r = Time_1.Time.Now - this.CurrentTeamTime[a]),
+        (s = s && r >= this.TeamIntervalTime),
         r < this.TeamIntervalTime &&
           o &&
           Log_1.Log.CheckDebug() &&
@@ -125,24 +130,24 @@ class RoleAudioCoolDownTime {
               this.TeamIntervalTime / CommonDefine_1.MILLIONSECOND_PER_SECOND,
             ],
           ),
-        a &&
+        s &&
           t &&
           ((this.CurrentRoleTime[i] = Time_1.Time.Now),
-          (this.CurrentTeamTime[s] = Time_1.Time.Now)),
-        a);
+          (this.CurrentTeamTime[a] = Time_1.Time.Now)),
+        s);
   }
 }
 class RoleAudioController extends ControllerBase_1.ControllerBase {
-  static i1a() {
+  static rca() {
     for (const e of [
       0, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 2001, 2002, 2004, 2005, 2006,
       2007, 2008,
     ])
-      this.r1a.set(e, new RoleAudioCoolDownTime(e));
+      this.oca.set(e, new RoleAudioCoolDownTime(e));
   }
   static OnInit() {
     return (
-      this.i1a(),
+      this.rca(),
       (this.Sir =
         (CommonParamById_1.configCommonParamById.GetIntConfig(
           "LowEndurancePercent",
@@ -163,6 +168,23 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
         1,
         this.Pni,
       ),
+      !0
+    );
+  }
+  static OnTick() {
+    return (
+      Global_1.Global.BaseCharacter &&
+        this.ActorComponent &&
+        ModelManager_1.ModelManager.GameModeModel.WorldDone &&
+        !ModelManager_1.ModelManager.GameModeModel.IsTeleport &&
+        (this.Mja
+          ? (this.Sja(), (this.Pln = Time_1.Time.Now))
+          : (this.ActorComponent?.MoveComp?.IsMoving
+              ? (this.Phn = MIN_INTERVAL_TIME)
+              : (this.Phn = INTERVAL_TIME),
+            Time_1.Time.Now - this.Pln < this.Phn ||
+              ((this.Pln = Time_1.Time.Now),
+              this.SetUpdateAudioDynamicTrace()))),
       !0
     );
   }
@@ -187,26 +209,45 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
       !0
     );
   }
+  static SetUpdateAudioDynamicTrace(e = !1) {
+    (this.yja = e), this.Mja || ((this.Mja = !0), (this.Eja = !1));
+  }
+  static Sja() {
+    var e = ue_1.KuroAudioStatics.GetAudioEnvironmentSubsystem(
+      Info_1.Info.World,
+    );
+    e
+      ? this.Eja
+        ? (e?.DynamicReverbApply(),
+          (this.Eja = !1),
+          (this.Mja = !1),
+          this.yja && this.SetUpdateAudioDynamicTrace(!0))
+        : (this.ActorComponent &&
+            (e?.DynamicReverbTrace(this.ActorComponent.ActorLocation, this.yja),
+            (this.yja = !1)),
+          (this.Eja = !0))
+      : ((this.Eja = !1), (this.Mja = !1));
+  }
   static PlayRoleAudio(e, t) {
     var o = e?.GetComponent(3),
-      r = e?.GetComponent(173),
+      r = e?.GetComponent(174),
       i = r?.GetAkComponent();
     e &&
       o &&
       r &&
       i &&
       r.Config &&
-      this.bYs(
+      this.xzs(
         o.CreatureData.GetPbDataId(),
         i,
         t,
         RoleAudioController.GetRoleAudioConfig(r.Config, t),
       );
   }
-  static bYs(e, t, o, r) {
+  static xzs(e, t, o, r) {
     var i;
-    this.r1a.get(0).CheckAndUpdateCoolDownTime(e, !0, !1) &&
-      ((i = this.r1a.get(o))
+    this.oca.get(0).CheckAndUpdateCoolDownTime(e, !0, !1) &&
+      ((i = this.oca.get(o))
         ? i.CheckAndUpdateCoolDownTime(e) &&
           (AudioSystem_1.AudioSystem.PostEvent(r, t), Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug(
@@ -327,7 +368,12 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
   ((_a = RoleAudioController).ActorComponent = void 0),
   (RoleAudioController.AudioComponent = void 0),
   (RoleAudioController.Sir = 0),
-  (RoleAudioController.r1a = new Map()),
+  (RoleAudioController.oca = new Map()),
+  (RoleAudioController.Phn = INTERVAL_TIME),
+  (RoleAudioController.Pln = 0),
+  (RoleAudioController.Eja = !1),
+  (RoleAudioController.Mja = !1),
+  (RoleAudioController.yja = !1),
   (RoleAudioController.yzo = (e, t, o) => {
     e = EntitySystem_1.EntitySystem.Get(e);
     e &&
@@ -336,7 +382,7 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
   }),
   (RoleAudioController.xie = (e, t) => {
     (_a.ActorComponent = e.Entity?.CheckGetComponent(3)),
-      (_a.AudioComponent = e.Entity?.CheckGetComponent(173)),
+      (_a.AudioComponent = e.Entity?.CheckGetComponent(174)),
       _a.AudioComponent?.Config &&
         AudioSystem_1.AudioSystem.SetState(
           "role_name",
@@ -376,6 +422,6 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
       _a.ActorComponent &&
         t &&
         o &&
-        _a.bYs(_a.ActorComponent.CreatureData.GetPbDataId(), t, 1004, o));
+        _a.xzs(_a.ActorComponent.CreatureData.GetPbDataId(), t, 1004, o));
   });
 //# sourceMappingURL=RoleAudioController.js.map

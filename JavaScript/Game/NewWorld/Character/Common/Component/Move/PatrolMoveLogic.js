@@ -6,7 +6,6 @@ const UE = require("ue"),
   CommonDefine_1 = require("../../../../../../Core/Define/CommonDefine"),
   QueryTypeDefine_1 = require("../../../../../../Core/Define/QueryTypeDefine"),
   Quat_1 = require("../../../../../../Core/Utils/Math/Quat"),
-  Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
   TraceElementCommon_1 = require("../../../../../../Core/Utils/TraceElementCommon"),
   AiContollerLibrary_1 = require("../../../../../AI/Controller/AiContollerLibrary"),
@@ -28,12 +27,12 @@ class PatrolMoveLogic {
       (this.sJo = !1),
       (this.lJo = 0),
       (this.nJo = 0),
-      (this.Gco = Rotator_1.Rotator.Create()),
       (this.jye = Vector_1.Vector.Create()),
       (this.RTe = Vector_1.Vector.Create()),
       (this.jJo = Quat_1.Quat.Create()),
       (this.nRi = -0),
       (this.WJo = Vector_1.Vector.Create()),
+      (this.w3a = Vector_1.Vector.Create()),
       (this.KJo = Vector_1.Vector.Create(0, 0, 0)),
       (this.XJo = 0),
       (this.NOe = 0),
@@ -44,8 +43,8 @@ class PatrolMoveLogic {
   Init(t) {
     (this.Entity = t),
       (this.Hte = t.CheckGetComponent(3)),
-      (this.oRe = t.CheckGetComponent(162)),
-      (this.mBe = t.GetComponent(91)),
+      (this.oRe = t.CheckGetComponent(163)),
+      (this.mBe = t.GetComponent(92)),
       this.zJo();
   }
   GetMovePoint(t) {
@@ -76,6 +75,7 @@ class PatrolMoveLogic {
       if (this.NOe === this.YJo.length - 1) return !1;
       this.ZJo(this.NOe + 1);
     }
+    var s;
     return (
       this.WJo.Normalize(),
       this.mBe &&
@@ -84,6 +84,9 @@ class PatrolMoveLogic {
         ? (this.jJo.DeepCopy(this.Hte.ActorQuatProxy),
           this.jJo.Inverse(this.jJo),
           this.jJo.RotateVector(this.WJo, this.WJo),
+          (s = this.WJo.X),
+          (this.WJo.X = this.WJo.Z),
+          (this.WJo.Z = s),
           this.Hte.SetInputDirect(this.WJo))
         : (this.Hte.SetOverrideTurnSpeed(this.lJo),
           this.sJo
@@ -115,10 +118,21 @@ class PatrolMoveLogic {
         );
   }
   ezo() {
+    var t;
     this.WJo.DeepCopy(this.$Jo),
       this.WJo.SubtractionEqual(this.Hte.ActorLocationProxy),
-      this.sJo || (this.WJo.Z = 0),
-      (this.nRi = this.WJo.Size());
+      this.w3a.DeepCopy(this.WJo),
+      this.mBe?.PositionState ===
+      CharacterUnifiedStateTypes_1.ECharPositionState.Climb
+        ? (this.jye.DeepCopy(this.WJo),
+          (t = this.jye.DotProduct(this.Hte.ActorForwardProxy)),
+          this.jye.DeepCopy(this.Hte.ActorForwardProxy),
+          this.jye.MultiplyEqual(t),
+          this.jye.UnaryNegation(this.jye),
+          this.jye.AdditionEqual(this.WJo),
+          this.WJo.DeepCopy(this.jye))
+        : this.sJo || (this.WJo.Z = 0),
+      (this.nRi = this.sJo ? this.w3a.Size() : this.w3a.Size2D());
   }
   tzo() {
     if (this.XJo === this.NOe || this.nRi <= this.nJo)
@@ -138,7 +152,7 @@ class PatrolMoveLogic {
       );
     this.$Jo.Subtraction(this.YJo[this.XJo], this.jye),
       (this.jye.Z = 0),
-      this.RTe.DeepCopy(this.WJo),
+      this.RTe.DeepCopy(this.w3a),
       (this.RTe.Z = 0);
     var t = this.RTe.DotProduct(this.jye);
     return (
@@ -180,10 +194,10 @@ class PatrolMoveLogic {
         (this.KJo.Set(0, 0, 0), 1))
     );
   }
-  ResetLastPatrolPoint(t, i) {
-    var s;
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+  ResetLastPatrolPoint(t) {
+    var i;
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "AI",
         43,
         "Reset目标位置",
@@ -199,16 +213,16 @@ class PatrolMoveLogic {
       ),
       this.oRe?.MainAnimInstance?.ConsumeExtractedRootMotion(1),
       this.Hte.ClearInput(),
-      this.oRe && this.Entity.GetTickInterval() <= 1
-        ? ((s = this.oRe.GetMeshTransform()),
-          this.rzo(i),
+      this.oRe && 1 < this.Entity.GetTickInterval()
+        ? ((i = this.oRe.GetMeshTransform()),
+          this.rzo(),
           this.oRe.SetModelBuffer(
-            s,
+            i,
             t * CommonDefine_1.MILLIONSECOND_PER_SECOND,
           ))
-        : this.rzo(i),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
+        : this.rzo(),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "AI",
           43,
           "Reset目标位置结束",
@@ -222,22 +236,13 @@ class PatrolMoveLogic {
         ),
       this.KJo.Set(0, 0, 0);
   }
-  rzo(t) {
+  rzo() {
     this.sJo || this.nzo(this.KJo, this.KJo),
-      t
-        ? (this.jye.DeepCopy(this.WJo),
-          this.jye.ToOrientationRotator(this.Gco),
-          this.Hte.SetActorLocationAndRotation(
-            this.KJo.ToUeVector(),
-            this.Gco.ToUeRotator(),
-            "拉回目标点设置坐标",
-            !1,
-          ))
-        : this.Hte.SetActorLocation(
-            this.KJo.ToUeVector(),
-            "拉回目标点设置坐标",
-            !1,
-          );
+      this.Hte.SetActorLocation(
+        this.KJo.ToUeVector(),
+        "拉回目标点设置坐标",
+        !1,
+      );
   }
   zJo() {
     var t = UE.NewObject(UE.TraceSphereElement.StaticClass());
@@ -254,7 +259,7 @@ class PatrolMoveLogic {
       ),
       (this.JJo = t);
   }
-  nzo(t, o) {
+  nzo(t, h) {
     this.jye.DeepCopy(t), (this.jye.Z += this.Hte.HalfHeight);
     var i = this.jye,
       t =
@@ -275,23 +280,23 @@ class PatrolMoveLogic {
         PROFILE_KEY,
         PROFILE_KEY,
       ),
-      h = s.HitResult;
-    if (i && h.bBlockingHit) {
+      o = s.HitResult;
+    if (i && o.bBlockingHit) {
       var r = ModelManager_1.ModelManager.TraceElementModel.CommonHitLocation;
       let i = "";
-      var a = h.Actors.Num();
+      var a = o.Actors.Num();
       let s = -1,
         e = "";
-      TraceElementCommon_1.TraceElementCommon.GetHitLocation(h, 0, r);
+      TraceElementCommon_1.TraceElementCommon.GetHitLocation(o, 0, r);
       for (let t = 0; t < a; ++t) {
-        var n = h.Actors.Get(t);
+        var n = o.Actors.Get(t);
         if (
           n?.IsValid() &&
           ((i += n.GetName() + ", "), !n.IsA(UE.Character.StaticClass()))
         ) {
           (s = t),
             (e = n.GetName()),
-            TraceElementCommon_1.TraceElementCommon.GetHitLocation(h, t, r);
+            TraceElementCommon_1.TraceElementCommon.GetHitLocation(o, t, r);
           break;
         }
       }
@@ -315,7 +320,7 @@ class PatrolMoveLogic {
         this.JJo &&
           ((this.JJo.WorldContextObject = void 0),
           this.JJo.ActorsToIgnore.Empty()),
-        o.DeepCopy(r),
+        h.DeepCopy(r),
         !0
       );
     }

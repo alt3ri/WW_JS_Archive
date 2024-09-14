@@ -13,10 +13,10 @@ class UiPanelFormationRolePhantomExtension extends UiPanelBase_1.UiPanelBase {
       (this.PlayerId = TowerDefenceDefine_1.DEFAULT_ID),
       (this.RoleCfgId = TowerDefenceDefine_1.DEFAULT_ID),
       (this.mzt = void 0),
-      (this.yra = void 0),
-      (this.Ira = void 0),
-      (this.Ula = void 0),
-      (this.xla = !1),
+      (this.nsa = void 0),
+      (this.ssa = void 0),
+      (this.xua = void 0),
+      (this.Pua = !1),
       (this.eTt = () => {
         var e;
         TowerDefenceController_1.TowerDefenseController.CheckIsSelf(
@@ -41,18 +41,18 @@ class UiPanelFormationRolePhantomExtension extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroy() {
     (this.PlayerId = TowerDefenceDefine_1.DEFAULT_ID),
       (this.RoleCfgId = TowerDefenceDefine_1.DEFAULT_ID),
-      this.yra?.StopCurrentSequence(),
-      (this.yra = void 0),
-      (this.xla = !1),
-      this.Ira?.StopCurrentSequence(),
-      (this.Ira = void 0),
-      (this.Ula = void 0);
+      this.nsa?.StopCurrentSequence(),
+      (this.nsa = void 0),
+      (this.Pua = !1),
+      this.ssa?.StopCurrentSequence(),
+      (this.ssa = void 0),
+      (this.xua = void 0);
   }
   OnStart() {
-    (this.yra = new LevelSequencePlayer_1.LevelSequencePlayer(
+    (this.nsa = new LevelSequencePlayer_1.LevelSequencePlayer(
       this.GetItem(19),
     )),
-      (this.Ira = new LevelSequencePlayer_1.LevelSequencePlayer(this.mzt));
+      (this.ssa = new LevelSequencePlayer_1.LevelSequencePlayer(this.mzt));
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     var i = this.GetButton(20)?.GetRootComponent();
@@ -65,22 +65,22 @@ class UiPanelFormationRolePhantomExtension extends UiPanelBase_1.UiPanelBase {
     var t = this.GetSprite(22),
       s = this.GetSprite(23),
       o = this.GetTexture(24),
-      n = ((this.GetButton(20).IsSelfInteractive = i), e !== this.Ula);
-    (this.Ula = e)
+      n = ((this.GetButton(20).IsSelfInteractive = i), e !== this.xua);
+    (this.xua = e)
       ? (t.SetUIActive(!1),
         s.SetUIActive(!1),
         o.SetUIActive(!0),
         this.SetTextureByPath(e, this.GetTexture(24)),
         n &&
-          (i || (this.yra.StopCurrentSequence(), (this.xla = !1)),
-          this.Ira.PlayLevelSequenceByName("VisionIn")))
+          (i || (this.nsa.StopCurrentSequence(), (this.Pua = !1)),
+          this.ssa.PlayLevelSequenceByName("VisionIn")))
       : (t.SetUIActive(i),
         s.SetUIActive(!i),
         o.SetUIActive(!1),
         i
-          ? n && this.Ira.PlayLevelSequenceByName("VisionOut")
-          : this.xla ||
-            ((this.xla = !0), this.yra.PlayLevelSequenceByName("Loop")));
+          ? n && this.ssa.PlayLevelSequenceByName("VisionOut")
+          : this.Pua ||
+            ((this.Pua = !0), this.nsa.PlayLevelSequenceByName("Loop")));
   }
   SetRelativeUiActive(e) {
     this.GetItem(19).SetUIActive(e);

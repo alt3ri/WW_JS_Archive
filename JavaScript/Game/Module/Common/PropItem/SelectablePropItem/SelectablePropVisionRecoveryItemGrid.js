@@ -35,7 +35,9 @@ class SelectablePropVisionRecoveryItemGrid extends SelectablePropMediumItemGrid_
           (e.IsDisable = 1 < n),
           (e.BottomTextParameter = [o.GetPhantomLevel()]),
           (e.VisionFetterGroupId = o.GetFetterGroupId()),
-          (e.IsOmitBottomText = !0))
+          (e.IsOmitBottomText = !0),
+          (e.IsLockVisible = o.GetIsLock()),
+          (e.IsDeprecate = o.GetIsDeprecated()))
         : 0 < i
           ? ((e.BottomTextId = "Text_ItemEnoughText_Text"),
             (e.BottomTextParameter = [i, r]))

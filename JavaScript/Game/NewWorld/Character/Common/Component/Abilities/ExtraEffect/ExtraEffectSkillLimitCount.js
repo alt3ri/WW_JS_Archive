@@ -16,14 +16,14 @@ class ExtraEffectSkillLimitCount extends ExtraEffectBase_1.BuffEffect {
       0 === Number(t[2] ?? 0) ? (this.kXo = 0) : (this.kXo = 1);
   }
   OnCreated() {
-    var e = this.FXo().CheckGetComponent(190);
+    var e = this.FXo().CheckGetComponent(192);
     for (let t = 0; t < this.NXo.length; t++) {
       var s = Number(this.NXo[t]);
       e.IsSkillInCd(s), e.SetLimitCount(s, this.OXo[t]);
     }
   }
   OnRemoved() {
-    var t = this.FXo().CheckGetComponent(190);
+    var t = this.FXo().CheckGetComponent(192);
     if (t)
       for (const s of this.NXo) {
         var e = Number(s);

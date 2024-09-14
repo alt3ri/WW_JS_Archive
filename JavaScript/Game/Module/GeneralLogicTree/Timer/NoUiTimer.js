@@ -11,7 +11,7 @@ class NoUiTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
     this.MYt = e;
   }
   GetRemainTime() {
-    return (this.MYt - TimeUtil_1.TimeUtil.GetServerTimeStamp()) / 1e3;
+    return (this.MYt - TimeUtil_1.TimeUtil.GetServerStopTimeStamp()) / 1e3;
   }
 }
 exports.NoUiTimer = NoUiTimer;

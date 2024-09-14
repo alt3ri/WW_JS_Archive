@@ -11,23 +11,44 @@ class SCreatureGenBlackboardMapsLang {
   get MapString() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.mapstringLength(),
-      (t) => this.mapstring(t)?.key(),
-      (t) => this.mapstring(t)?.value(),
+      this.mapstringKey,
+      this.mapstringValue,
+      this,
     );
+  }
+  mapstringKey(t) {
+    return this.mapstring(t)?.key();
+  }
+  mapstringValue(t) {
+    return this.mapstring(t)?.value();
   }
   get MapInt() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.mapintLength(),
-      (t) => this.mapint(t)?.key(),
-      (t) => this.mapint(t)?.value(),
+      this.mapintKey,
+      this.mapintValue,
+      this,
     );
+  }
+  mapintKey(t) {
+    return this.mapint(t)?.key();
+  }
+  mapintValue(t) {
+    return this.mapint(t)?.value();
   }
   get MapBool() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.mapboolLength(),
-      (t) => this.mapbool(t)?.key(),
-      (t) => this.mapbool(t)?.value(),
+      this.mapboolKey,
+      this.mapboolValue,
+      this,
     );
+  }
+  mapboolKey(t) {
+    return this.mapbool(t)?.key();
+  }
+  mapboolValue(t) {
+    return this.mapbool(t)?.value();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
@@ -42,10 +63,10 @@ class SCreatureGenBlackboardMapsLang {
     return this.mapstring(t);
   }
   mapstring(t, i) {
-    var s = this.J7.__offset(this.z7, 4);
-    return s
+    var r = this.J7.__offset(this.z7, 4);
+    return r
       ? (i || new DicStringInt_1.DicStringInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
           this.J7,
         )
       : null;
@@ -58,10 +79,10 @@ class SCreatureGenBlackboardMapsLang {
     return this.mapint(t);
   }
   mapint(t, i) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s
+    var r = this.J7.__offset(this.z7, 6);
+    return r
       ? (i || new DicStringInt_1.DicStringInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
           this.J7,
         )
       : null;
@@ -74,10 +95,10 @@ class SCreatureGenBlackboardMapsLang {
     return this.mapbool(t);
   }
   mapbool(t, i) {
-    var s = this.J7.__offset(this.z7, 8);
-    return s
+    var r = this.J7.__offset(this.z7, 8);
+    return r
       ? (i || new DicStringBool_1.DicStringBool()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
           this.J7,
         )
       : null;

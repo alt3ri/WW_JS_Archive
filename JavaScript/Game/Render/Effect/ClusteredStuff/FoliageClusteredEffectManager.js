@@ -76,7 +76,8 @@ class FoliageClusteredEffectManager {
     var e;
     this.Ready &&
       0 !== this.FoliageTypes.length &&
-      (this.UpdateCounter--,
+      (RenderModuleConfig_1.RenderStats.StatFoliageClusteredEffectTick.Start(),
+      this.UpdateCounter--,
       0 < this.UpdateCounter ||
         ((this.UpdateCounter = this.UpdateInterval),
         RenderDataManager_1.RenderDataManager.Get()
@@ -100,8 +101,8 @@ class FoliageClusteredEffectManager {
           0,
           1,
         )),
-        (this.UpdateIndex =
-          (this.UpdateIndex + 1) % this.FoliageTypes.length)));
+        (this.UpdateIndex = (this.UpdateIndex + 1) % this.FoliageTypes.length)),
+      RenderModuleConfig_1.RenderStats.StatFoliageClusteredEffectTick.Stop());
   }
   BeginDebugDraw(t, e) {
     this.DebugDrawHandle = DebugDrawManager_1.DebugDrawManager.AddDebugBox(

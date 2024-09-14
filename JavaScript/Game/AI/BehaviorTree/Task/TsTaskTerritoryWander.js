@@ -67,8 +67,8 @@ class TsTaskTerritoryWander extends TsTaskAbortImmediatelyBase_1.default {
         var s = this.ActorComp.Entity,
           h = s.GetComponent(0);
         if (
-          ((this.MoveComp = s.GetComponent(163)),
-          (this.UnifiedStateComp = s.GetComponent(91)),
+          ((this.MoveComp = s.GetComponent(164)),
+          (this.UnifiedStateComp = s.GetComponent(92)),
           !this.RangeCenter)
         )
           if (this.TsRangeCenterKey) {

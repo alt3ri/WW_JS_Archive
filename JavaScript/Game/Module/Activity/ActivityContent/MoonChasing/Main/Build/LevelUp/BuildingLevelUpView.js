@@ -12,9 +12,9 @@ class BuildingLevelUpView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
       (this.Hwt = void 0),
-      (this.pSa = void 0),
-      (this.vSa = !1),
-      (this.zGn =
+      (this.qIa = void 0),
+      (this.GIa = !1),
+      (this.aOn =
         new BuildingLevelUpViewController_1.BuildingLevelUpViewController());
   }
   OnRegisterComponent() {
@@ -34,17 +34,17 @@ class BuildingLevelUpView extends UiTickViewBase_1.UiTickViewBase {
       [12, UE.UIItem],
       [13, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[6, this.zGn.CloseSelf]]);
+      (this.BtnBindInfo = [[6, this.aOn.CloseSelf]]);
   }
   OnStart() {
-    this.zGn.RegisterView(this),
-      this.zGn.Start(),
+    this.aOn.RegisterView(this),
+      this.aOn.Start(),
       (this.Hwt = this.GetSlider(0)),
-      (this.pSa = new UiSequencePlayer_1.UiSequencePlayer(this.GetItem(13))),
+      (this.qIa = new UiSequencePlayer_1.UiSequencePlayer(this.GetItem(13))),
       this.SetFillAmount(0);
   }
   OnTick(i) {
-    this.zGn.Tick(i);
+    this.aOn.Tick(i);
   }
   InitUnlock(i) {
     var i = ConfigManager_1.ConfigManager.BuildingConfig.GetBuildingById(i),
@@ -56,8 +56,8 @@ class BuildingLevelUpView extends UiTickViewBase_1.UiTickViewBase {
         this.GetItem(2)?.SetUIActive(!1),
         this.GetButton(6)?.RootUIComp.SetUIActive(!1),
         this.GetButton(5));
-    t?.OnPointDownCallBack.Bind(this.zGn.UnlockPress),
-      t?.OnPointUpCallBack.Bind(this.zGn.UnlockRelease),
+    t?.OnPointDownCallBack.Bind(this.aOn.UnlockPress),
+      t?.OnPointUpCallBack.Bind(this.aOn.UnlockRelease),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(1),
         "Moonfiesta_StartBuild",
@@ -139,10 +139,10 @@ class BuildingLevelUpView extends UiTickViewBase_1.UiTickViewBase {
     this.Hwt.SetValue(i);
   }
   PlayBuildingLoopSequence(i) {
-    this.vSa !== i &&
-      ((this.vSa = i)
-        ? this.pSa.PlaySequence("Loop")
-        : this.pSa.StopPrevSequence(!1, !0));
+    this.GIa !== i &&
+      ((this.GIa = i)
+        ? this.qIa.PlaySequence("Loop")
+        : this.qIa.StopPrevSequence(!1, !0));
   }
 }
 exports.BuildingLevelUpView = BuildingLevelUpView;

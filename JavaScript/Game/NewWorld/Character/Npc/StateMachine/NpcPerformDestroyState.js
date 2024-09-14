@@ -15,27 +15,27 @@ class NpcPerformDestroyState extends StateBase_1.StateBase {
     super(...arguments),
       (this.ActorComp = void 0),
       (this.PerformComp = void 0),
-      (this.eta = void 0),
-      (this.M1a = !1),
+      (this.mra = void 0),
+      (this.Sca = !1),
       (this.wCe = 0);
   }
   OnCreate(e) {
-    e?.DeathInteract && (this.eta = e.DeathInteract.Montage);
+    e?.DeathInteract && (this.mra = e.DeathInteract.Montage);
     e = this.Owner.Entity.GetComponent(0)?.GetPbEntityInitData();
     e &&
       (0, IComponent_1.getComponent)(e.ComponentsData, "EntityVisibleComponent")
         ?.UseFadeEffect &&
-      ((this.M1a = !0), (this.wCe = NpcPerformComponent_1.DEFUALT_DITHER_TIME));
+      ((this.Sca = !0), (this.wCe = NpcPerformComponent_1.DEFUALT_DITHER_TIME));
   }
   OnEnter(e) {
-    this.rta();
+    this.gra();
   }
-  rta() {
+  gra() {
     2 === this.Owner.Entity.GetComponent(0).GetSubEntityType()
-      ? this.sta()
-      : this.nta();
+      ? this.vra()
+      : this.pra();
   }
-  sta() {
+  vra() {
     var e = MathUtils_1.MathUtils.SecondToMillisecond / this.wCe;
     this.ActorComp.Actor.DitherEffectController?.EnterDisappearEffect(e, 1, !0),
       TimerSystem_1.TimerSystem.Delay(() => {
@@ -45,15 +45,15 @@ class NpcPerformDestroyState extends StateBase_1.StateBase {
         );
       }, NpcPerformComponent_1.DEFUALT_DITHER_TIME);
   }
-  nta() {
+  pra() {
     let e = void 0;
-    (e = this.eta
-      ? this.eta.IsAbp
+    (e = this.mra
+      ? this.mra.IsAbp
         ? ModelManager_1.ModelManager.PlotModel.GetAbpMontageConfig(
-            this.eta.MontageId,
+            this.mra.MontageId,
           )
         : ModelManager_1.ModelManager.PlotModel.GetMontageConfig(
-            this.eta.MontageId,
+            this.mra.MontageId,
           )
       : e)
       ? this.PerformComp.LoadAsync(e.ActionMontage, (e, t) => {
@@ -70,18 +70,18 @@ class NpcPerformDestroyState extends StateBase_1.StateBase {
             this.PerformComp?.PlayOnce(e),
             (this.wCe =
               e.SequenceLength * MathUtils_1.MathUtils.SecondToMillisecond)),
-            this.S1a();
+            this.Eca();
         })
-      : this.S1a();
+      : this.Eca();
   }
-  S1a() {
+  Eca() {
     var e;
     0 === this.wCe
       ? EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.DelayRemoveEntityFinished,
           this.Owner.Entity,
         )
-      : (this.M1a &&
+      : (this.Sca &&
           ((e = MathUtils_1.MathUtils.SecondToMillisecond / this.wCe),
           this.ActorComp.Actor.DitherEffectController?.EnterDisappearEffect(
             e,

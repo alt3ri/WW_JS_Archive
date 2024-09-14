@@ -216,6 +216,24 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
       this.SetResourceId(i, e), await o.Promise;
     }
   }
+  async SetTextureTransitionByPath(e, i, o = 5) {
+    if (GlobalData_1.GlobalData.World && i && i.IsValid()) {
+      this.CancelResource(i);
+      const n = new CustomPromise_1.CustomPromise();
+      e = ResourceSystem_1.ResourceSystem.LoadAsync(
+        e,
+        UE.Texture,
+        (e, t) => {
+          n.SetResult(),
+            this.DeleteResourceHandle(i),
+            i.IsValid() &&
+              (5 === o ? i.SetAllStateTexture(e) : i.SetStateTexture(o, e));
+        },
+        102,
+      );
+      this.SetResourceId(i, e), await n.Promise;
+    }
+  }
   _Cr(e, t) {
     var i,
       t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t),

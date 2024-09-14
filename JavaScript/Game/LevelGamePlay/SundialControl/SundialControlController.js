@@ -159,11 +159,11 @@ class SundialControlController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static EDe(e = "MainQuest") {
-    var t = Protocol_1.Aki.Protocol.TJn.create();
-    (t.z4n = e),
-      (t.Z4n = Protocol_1.Aki.Protocol.t3s.Proto_SundialPuzzle),
-      Net_1.Net.Call(5703, t, (e) => {
-        e.DEs === Protocol_1.Aki.Protocol.O4n.NRs &&
+    var t = Protocol_1.Aki.Protocol.wJn.create();
+    (t.a5n = e),
+      (t.h5n = Protocol_1.Aki.Protocol.h3s.Proto_SundialPuzzle),
+      Net_1.Net.Call(28002, t, (e) => {
+        e.BEs === Protocol_1.Aki.Protocol.Q4n.KRs &&
           UiManager_1.UiManager.CloseView("SundialControlView");
       });
   }

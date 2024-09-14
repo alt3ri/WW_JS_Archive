@@ -19,26 +19,53 @@ class AxisMapping {
   get PcKeys() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.pckeysLength(),
-      (t) => this.pckeys(t)?.key(),
-      (t) => this.pckeys(t)?.value(),
+      this.pckeysKey,
+      this.pckeysValue,
+      this,
     );
+  }
+  pckeysKey(t) {
+    return this.pckeys(t)?.key();
+  }
+  pckeysValue(t) {
+    return this.pckeys(t)?.value();
   }
   get FrancePcKeys() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.francepckeysLength(),
-      (t) => this.francepckeys(t)?.key(),
-      (t) => this.francepckeys(t)?.value(),
+      this.francepckeysKey,
+      this.francepckeysValue,
+      this,
     );
+  }
+  francepckeysKey(t) {
+    return this.francepckeys(t)?.key();
+  }
+  francepckeysValue(t) {
+    return this.francepckeys(t)?.value();
   }
   get GamepadKeys() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.gamepadkeysLength(),
-      (t) => this.gamepadkeys(t)?.key(),
-      (t) => this.gamepadkeys(t)?.value(),
+      this.gamepadkeysKey,
+      this.gamepadkeysValue,
+      this,
     );
+  }
+  gamepadkeysKey(t) {
+    return this.gamepadkeys(t)?.key();
+  }
+  gamepadkeysValue(t) {
+    return this.gamepadkeys(t)?.value();
   }
   get DisplayName() {
     return this.displayname();
+  }
+  get KeyboardVersion() {
+    return this.keyboardversion();
+  }
+  get GamepadVersion() {
+    return this.gamepadversion();
   }
   __init(t, s) {
     return (this.z7 = t), (this.J7 = s), this;
@@ -112,6 +139,14 @@ class AxisMapping {
   displayname(t) {
     var s = this.J7.__offset(this.z7, 16);
     return s ? this.J7.__string(this.z7 + s, t) : null;
+  }
+  keyboardversion() {
+    var t = this.J7.__offset(this.z7, 18);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  gamepadversion() {
+    var t = this.J7.__offset(this.z7, 20);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.AxisMapping = AxisMapping;

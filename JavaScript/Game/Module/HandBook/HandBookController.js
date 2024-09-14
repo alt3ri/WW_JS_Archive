@@ -29,25 +29,25 @@ class HandBookController extends UiControllerBase_1.UiControllerBase {
       (this.Uei = 0));
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(10246, (e) => {
+    Net_1.Net.Register(20414, (e) => {
       var t = ModelManager_1.ModelManager.HandBookModel.GetClientHandBookType(
-        e.Z4n,
-        e.nws.tws,
+        e.h5n,
+        e.cws.hws,
       );
-      HandBookController.CheckConfigIsLegal(t, e.nws.J4n) &&
+      HandBookController.CheckConfigIsLegal(t, e.cws.s5n) &&
         (ModelManager_1.ModelManager.HandBookModel.UpdateHandBookActiveStateMap(
-          e.Z4n,
-          e.nws,
+          e.h5n,
+          e.cws,
         ),
-        e.sws) &&
-        this.Aei(e.Z4n, e.nws);
+        e.dws) &&
+        this.Aei(e.h5n, e.cws);
     });
   }
   static Aei(e, t) {
     let a = "";
-    e === Protocol_1.Aki.Protocol.x5s.Proto_Photograph &&
+    e === Protocol_1.Aki.Protocol.N6s.Proto_Photograph &&
       ((e = ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfig(
-        t.J4n,
+        t.s5n,
       )),
       (a = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Name) ?? "")),
       a.length;
@@ -95,89 +95,89 @@ class HandBookController extends UiControllerBase_1.UiControllerBase {
     UiManager_1.UiManager.OpenView("PhotoSaveView", i);
   }
   static SendIllustratedRedDotRequest() {
-    var e = Protocol_1.Aki.Protocol.uos.create();
-    Net_1.Net.Call(13883, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.pos.create();
+    Net_1.Net.Call(28088, e, (e) => {
       e &&
-        ModelManager_1.ModelManager.HandBookModel.InitHandBookRedDotList(e.rws);
+        ModelManager_1.ModelManager.HandBookModel.InitHandBookRedDotList(e._ws);
     });
   }
   static async SendIllustratedInfoRequestAsync(e) {
-    var t = Protocol_1.Aki.Protocol.mos.create(),
+    var t = Protocol_1.Aki.Protocol.Sos.create(),
       a =
-        ((t.m9n =
+        ((t.E9n =
           ModelManager_1.ModelManager.HandBookModel.GetServerHandBookTypeList(
             e,
           )),
-        await Net_1.Net.CallAsync(20573, t));
+        await Net_1.Net.CallAsync(23142, t));
     if (a) {
       ModelManager_1.ModelManager.HandBookModel.ClearHandBookActiveStateMap();
-      var o = a.ows.length;
+      var o = a.uws.length;
       for (let e = 0; e < o; e++) {
-        var r = a.ows[e];
+        var r = a.uws[e];
         ModelManager_1.ModelManager.HandBookModel.InitHandBookActiveStateMap(
-          r.Z4n,
-          r.iws,
+          r.h5n,
+          r.lws,
         );
       }
       await Promise.resolve();
     }
   }
   static SendIllustratedInfoRequest(e) {
-    var t = Protocol_1.Aki.Protocol.mos.create();
-    (t.m9n =
+    var t = Protocol_1.Aki.Protocol.Sos.create();
+    (t.E9n =
       ModelManager_1.ModelManager.HandBookModel.GetServerHandBookTypeList(e)),
-      Net_1.Net.Call(20573, t, (t) => {
+      Net_1.Net.Call(23142, t, (t) => {
         if (t) {
           ModelManager_1.ModelManager.HandBookModel.ClearHandBookActiveStateMap();
-          var a = t.ows.length;
+          var a = t.uws.length;
           for (let e = 0; e < a; e++) {
-            var o = t.ows[e];
+            var o = t.uws[e];
             ModelManager_1.ModelManager.HandBookModel.InitHandBookActiveStateMap(
-              o.Z4n,
-              o.iws,
+              o.h5n,
+              o.lws,
             );
           }
         }
       });
   }
   static SendIllustratedReadRequest(t, e) {
-    const a = Protocol_1.Aki.Protocol.pos.create();
-    (a.Z4n =
+    const a = Protocol_1.Aki.Protocol.Los.create();
+    (a.h5n =
       ModelManager_1.ModelManager.HandBookModel.GetServerHandBookType(t)),
-      (a.J4n = e),
-      Net_1.Net.Call(17178, a, (e) => {
+      (a.s5n = e),
+      Net_1.Net.Call(22844, a, (e) => {
         e &&
-          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+          (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.O4n,
-                14319,
-                e.ivs,
+                e.Q4n,
+                26703,
+                e.lvs,
               )
-            : ModelManager_1.ModelManager.HandBookModel.UpdateRedDot(t, a.J4n));
+            : ModelManager_1.ModelManager.HandBookModel.UpdateRedDot(t, a.s5n));
       });
   }
   static SendIllustratedUnlockRequest(t, e) {
-    const a = Protocol_1.Aki.Protocol.gos.create();
-    (a.Z4n =
+    const a = Protocol_1.Aki.Protocol.yos.create();
+    (a.h5n =
       ModelManager_1.ModelManager.HandBookModel.GetServerHandBookType(t)),
-      (a.J4n = e),
-      Net_1.Net.Call(25354, a, (e) => {
+      (a.s5n = e),
+      Net_1.Net.Call(23987, a, (e) => {
         e &&
-          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+          (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.O4n,
-                15013,
-                e.ivs,
+                e.Q4n,
+                25162,
+                e.lvs,
               )
             : (ModelManager_1.ModelManager.HandBookModel.UpdateHandBookActiveStateMap(
-                a.Z4n,
-                e.nws,
+                a.h5n,
+                e.cws,
               ),
-              this.Aei(a.Z4n, e.nws),
+              this.Aei(a.h5n, e.cws),
               2 === t &&
                 ((e =
                   ConfigManager_1.ConfigManager.HandBookConfig.GetGeographyHandBookConfig(
-                    e.nws.J4n,
+                    e.cws.s5n,
                   )),
                 this.Pei(e))));
       });
@@ -281,7 +281,7 @@ class HandBookController extends UiControllerBase_1.UiControllerBase {
     var e = EntitySystem_1.EntitySystem.Get(e);
     e &&
       (e = e.GetComponent(0)) &&
-      e.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Animal &&
+      e.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Animal &&
       ((e = e.GetModelId()), HandBookController.wei(e)) &&
       HandBookController.SendIllustratedUnlockRequest(4, e);
   });

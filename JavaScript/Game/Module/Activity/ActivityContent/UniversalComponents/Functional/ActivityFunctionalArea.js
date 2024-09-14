@@ -2,87 +2,101 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityFunctionalArea = void 0);
 const UE = require("ue"),
-  RedDotController_1 = require("../../../../../RedDot/RedDotController"),
+  LevelGeneralCommons_1 = require("../../../../../LevelGamePlay/LevelGeneralCommons"),
+  ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
-  ButtonItem_1 = require("../../../../Common/Button/ButtonItem"),
-  LguiUtil_1 = require("../../../../Util/LguiUtil");
+  ButtonSpriteItem_1 = require("../../../../Common/Button/ButtonSpriteItem"),
+  ActivityButtonItem_1 = require("./ActivityButtonItem"),
+  ActivityFunctionalTypeA_1 = require("./ActivityFunctionalTypeA");
 class ActivityFunctionalArea extends UiPanelBase_1.UiPanelBase {
-  constructor() {
-    super(...arguments),
-      (this.h4e = void 0),
+  constructor(t) {
+    super(),
+      (this.Data = t),
       (this.FunctionButton = void 0),
-      (this.l4e = void 0),
-      (this._4e = () => {
-        this.h4e && this.h4e();
+      (this.CircleButton = void 0),
+      (this.PanelLock = void 0),
+      (this.X$a = () => {
+        this.Data &&
+          ModelManager_1.ModelManager.ActivityModel.SendActivityViewJumpClickLogData(
+            this.Data,
+          );
       });
   }
   OnRegisterComponent() {
-    (this.ComponentRegisterInfos = [
+    this.ComponentRegisterInfos = [
       [0, UE.UIItem],
-      [1, UE.UISprite],
-      [2, UE.UIText],
+      [1, UE.UIItem],
+      [2, UE.UIItem],
       [3, UE.UIItem],
-      [4, UE.UIButtonComponent],
-      [5, UE.UIItem],
-      [6, UE.UIItem],
-    ]),
-      (this.BtnBindInfo = [[4, this._4e]]);
+    ];
+  }
+  async OnBeforeStartAsync() {
+    var t = [],
+      e = this.GetItem(0),
+      e =
+        ((this.PanelLock =
+          new ActivityFunctionalTypeA_1.FunctionalPanelConditionLock()),
+        t.push(this.PanelLock.CreateByActorAsync(e.GetOwner())),
+        this.GetItem(3)),
+      e =
+        ((this.CircleButton = new ButtonSpriteItem_1.ButtonSpriteItem()),
+        t.push(this.CircleButton.CreateThenShowByActorAsync(e.GetOwner())),
+        this.GetItem(1));
+    (this.FunctionButton = new ActivityButtonItem_1.ActivityButtonItem()),
+      t.push(this.FunctionButton.CreateThenShowByActorAsync(e.GetOwner())),
+      await Promise.all(t);
   }
   OnStart() {
-    var t = this.GetItem(6);
-    (this.FunctionButton = new ButtonItem_1.ButtonItem(t)),
+    this.FunctionButton.SetExtraFunction(this.X$a),
       this.SetRewardRedDotVisible(!1);
   }
   SetLockTextByTextId(t, ...e) {
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), t, e);
+    this.PanelLock.SetTextByTextId(t, ...e);
   }
   SetLockTextByText(t) {
-    this.GetText(2).SetText(t);
-  }
-  GetLockSprite() {
-    return this.GetSprite(1);
+    this.PanelLock.SetTextByText(t);
   }
   SetLockSpriteVisible(t) {
-    this.GetSprite(1).SetUIActive(t);
+    this.PanelLock.SetSpriteVisible(t);
   }
   SetPanelConditionVisible(t) {
     this.GetItem(0).SetUIActive(t);
   }
   SetRewardButtonVisible(t) {
-    this.GetItem(3).SetUIActive(t);
-  }
-  SetRewardButtonEnableClick(t) {
-    this.GetButton(4).SetSelfInteractive(t);
+    this.GetItem(2).SetUIActive(t);
   }
   SetRewardButtonFunction(t) {
-    this.h4e = t;
+    this.CircleButton.SetFunction(t);
   }
   SetRewardRedDotVisible(t) {
-    this.GetItem(5).SetUIActive(t);
+    this.CircleButton.SetRedDotVisible(t);
+  }
+  BindRewardRedDot(t, e = 0) {
+    this.CircleButton.BindRedDot(t, e);
+  }
+  UnbindRewardRedDot() {
+    this.CircleButton.UnBindRedDot();
   }
   SetFunctionButtonVisible(t) {
     this.FunctionButton?.SetUiActive(t);
   }
-  BindRewardRedDot(t, e = 0) {
-    var i = this.GetItem(5);
-    i &&
-      ((this.l4e = t), this.l4e) &&
-      RedDotController_1.RedDotController.BindRedDot(t, i, void 0, e);
-  }
-  UnbindRewardRedDotById(t, e) {
-    var i = this.GetItem(5);
-    i && RedDotController_1.RedDotController.UnBindGivenUi(t, i, e);
-  }
-  UnBindRewardRedDot() {
-    this.l4e &&
-      (RedDotController_1.RedDotController.UnBindRedDot(this.l4e),
-      (this.l4e = void 0));
-  }
   SetPerformanceOpenTimeOver() {
     this.SetPanelConditionVisible(!0),
       this.SetLockTextByTextId("Activity_EndDesc01"),
+      this.PanelLock.SetButtonVisible(!1),
       this.SetRewardButtonVisible(!1),
       this.FunctionButton.SetUiActive(!1);
+  }
+  SetPerformanceConditionLock(t, e) {
+    this.SetPanelConditionVisible(!0), this.PanelLock.SetButtonVisible(!0);
+    t = LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(t);
+    t && this.SetLockTextByTextId(t),
+      (this.PanelLock.ButtonCallBack = () => {
+        ControllerHolder_1.ControllerHolder.ActivityController.OpenActivityConditionView(
+          e,
+        );
+      });
   }
 }
 exports.ActivityFunctionalArea = ActivityFunctionalArea;

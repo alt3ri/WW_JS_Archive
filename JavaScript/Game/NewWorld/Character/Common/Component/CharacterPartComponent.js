@@ -30,7 +30,7 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   GlobalData_1 = require("../../../../GlobalData"),
   CombatLog_1 = require("../../../../Utils/CombatLog");
@@ -65,8 +65,8 @@ class CharacterPart {
       (this.HitBoneName = ""),
       (this.BaseEntity = t),
       (this.ActorComp = t.GetComponent(3)),
-      (this.TagComponent = t.GetComponent(188)),
-      (this.AttributeComp = t.GetComponent(158)),
+      (this.TagComponent = t.GetComponent(190)),
+      (this.AttributeComp = t.GetComponent(159)),
       (this.Index = i),
       (this.PartTag = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagByName(
         e.部位标签.TagName,
@@ -98,7 +98,7 @@ class CharacterPart {
       this.AttributeBuffList.push(e.属性快照Buff列表.Get(t));
     this.InheritLife
       ? (this.LifeMax =
-          this.AttributeComp.GetCurrentValue(EAttributeId.e5n) *
+          this.AttributeComp.GetCurrentValue(EAttributeId.l5n) *
           e.继承生命值比例)
       : (this.LifeMax = -1),
       (this.Life = this.LifeMax);
@@ -119,12 +119,12 @@ class CharacterPart {
       this.BaseEntity,
       "UpdatePartInfo",
       ["TagName", this.PartTag.TagName],
-      ["Activated", t.t5n],
-      ["LifeValue", t.Wjn],
+      ["Activated", t._5n],
+      ["LifeValue", t.eWn],
     ),
-      this.bYo(t.t5n),
-      (this.LifeMax = t.e5n),
-      this.HandleChangeLife(t.Wjn, i);
+      this.bYo(t._5n),
+      (this.LifeMax = t.l5n),
+      this.HandleChangeLife(t.eWn, i);
   }
   OnDamage(t, i, e, s = !0) {
     let a = !1;
@@ -210,7 +210,7 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
   OnInitData() {
     var t = this.Entity.GetComponent(0);
     return (
-      (this.sjr = t.ComponentDataMap.get("rys")?.rys),
+      (this.sjr = t.ComponentDataMap.get("_ys")?._ys),
       (this.Parts = []),
       (this.PartMapByBone = new Map()),
       (this.PartMapByTag = new Map()),
@@ -222,7 +222,7 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
   }
   OnInit() {
     return (
-      (this.TagComponent = this.Entity.GetComponent(188)),
+      (this.TagComponent = this.Entity.GetComponent(190)),
       this.Entity.GetComponent(3).Actor?.DtCharacterPart && (this.ajr = !0),
       !0
     );
@@ -232,7 +232,7 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
       (this.ActorComp = this.Entity.GetComponent(3)),
         (this.BaseChar = this.ActorComp.Actor),
         (this.DtCharacterPart = this.BaseChar.DtCharacterPart);
-      var i = DataTableUtil_1.DataTableUtil.GetAllDataTableRowFromTable(
+      var i = DataTableUtil_1.DataTableUtil.GetDataTableAllRowFromTable(
           this.DtCharacterPart,
         ),
         e = this.sjr;
@@ -261,7 +261,7 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
           this.PartMapByTag.set(a.部位标签.TagName, r),
           this.njr.push(this.hjr(r, a.部位激活标签)),
           e
-            ? (s = e.yTs[t]) && r.UpdatePartInfo(s)
+            ? (s = e.PTs[t]) && r.UpdatePartInfo(s)
             : (a.是否出生激活 &&
                 (this.TagComponent.HasTag(a.部位激活标签.TagId) &&
                   Log_1.Log.CheckError() &&
@@ -273,11 +273,11 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
                     ["部位", a.部位名],
                   ),
                 this.TagComponent.AddTag(a.部位激活标签?.TagId)),
-              ((s = Protocol_1.Aki.Protocol.iFs.create()).Wjn = r.Life),
-              (s.e5n = r.LifeMax),
-              (s.bjn = r.Index),
-              (s.t5n = a.是否出生激活),
-              (s.qWn = r.PartTag.TagId));
+              ((s = Protocol_1.Aki.Protocol.lFs.create()).eWn = r.Life),
+              (s.l5n = r.LifeMax),
+              (s.jjn = r.Index),
+              (s._5n = a.是否出生激活),
+              (s.WWn = r.PartTag.TagId));
       }
     }
     return !0;
@@ -318,20 +318,20 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
     });
   }
   static PartUpdateNotify(t, i) {
-    var e = MathUtils_1.MathUtils.LongToNumber(i.P4n),
+    var e = MathUtils_1.MathUtils.LongToNumber(i.F4n),
       e = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
     if (e) {
-      var s = e.Entity.GetComponent(60);
-      for (const a of i.LTs) s.GetPartByIndex(a.bjn)?.UpdatePartInfo(a);
+      var s = e.Entity.GetComponent(61);
+      for (const a of i.xTs) s.GetPartByIndex(a.jjn)?.UpdatePartInfo(a);
     }
   }
   static PartComponentInitNotify(t, i) {
-    var e = MathUtils_1.MathUtils.LongToNumber(i.P4n),
+    var e = MathUtils_1.MathUtils.LongToNumber(i.F4n),
       e = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
     if (e) {
       CombatLog_1.CombatLog.Info("Part", t, "PartComponentInitNotify");
-      var s = e.Entity.GetComponent(60);
-      for (const a of i.rys.yTs) s.GetPartByIndex(a.bjn)?.UpdatePartInfo(a);
+      var s = e.Entity.GetComponent(61);
+      for (const a of i._ys.PTs) s.GetPartByIndex(a.jjn)?.UpdatePartInfo(a);
     }
   }
   GetDebugText() {
@@ -350,19 +350,19 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.Listen("SFn", !1)],
+  [CombatMessage_1.CombatNet.Listen("RFn", !1)],
   CharacterPartComponent,
   "PartUpdateNotify",
   null,
 ),
   __decorate(
-    [CombatMessage_1.CombatNet.Handle("EFn")],
+    [CombatMessage_1.CombatNet.Handle("xFn")],
     CharacterPartComponent,
     "PartComponentInitNotify",
     null,
   ),
   (CharacterPartComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(60)],
+    [(0, RegisterComponent_1.RegisterComponent)(61)],
     CharacterPartComponent,
   )),
   (exports.CharacterPartComponent = CharacterPartComponent);

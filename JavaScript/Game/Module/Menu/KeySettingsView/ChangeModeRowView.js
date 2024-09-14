@@ -31,9 +31,9 @@ class ChangeModeRowView extends UiPanelBase_1.UiPanelBase {
       (this.ChangeKeyModeRowData = void 0);
   }
   Refresh(i) {
-    (this.ChangeKeyModeRowData = i), this.Wzs(), this.ufo();
+    (this.ChangeKeyModeRowData = i), this.$ea(), this.ufo();
   }
-  Wzs() {
+  $ea() {
     var i;
     this.ChangeKeyModeRowData &&
       ((i = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(

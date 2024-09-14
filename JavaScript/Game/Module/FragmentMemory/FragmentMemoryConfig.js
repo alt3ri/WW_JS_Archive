@@ -44,6 +44,11 @@ class FragmentMemoryConfig extends ConfigBase_1.ConfigBase {
       "FragmentMemoryNotOpenLightTexture",
     );
   }
+  GetFragmentMemoryPreNeedItemId() {
+    return CommonParamById_1.configCommonParamById.GetIntConfig(
+      "OpenFragmentNeedItem",
+    );
+  }
 }
 exports.FragmentMemoryConfig = FragmentMemoryConfig;
 //# sourceMappingURL=FragmentMemoryConfig.js.map

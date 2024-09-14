@@ -8,6 +8,7 @@ const puerts_1 = require("puerts"),
   MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
+  IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
   Global_1 = require("../../../../Global"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   TickBehaviorNode_1 = require("./TickBehaviorNode"),
@@ -20,7 +21,7 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
       (this.i$t = Vector2D_1.Vector2D.Create()),
       (this.o$t = Vector2D_1.Vector2D.Create()),
       (this.Lo = void 0),
-      (this.pGn = -0),
+      (this.DGn = -0),
       (this.r$t = !1),
       (this.n$t = void 0);
   }
@@ -28,7 +29,7 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
     var i;
     return (
       !!super.OnCreate(t) &&
-      "ParallaxAlign" === (i = t.Condition).Type &&
+      (i = t.Condition).Type === IQuest_1.EChildQuest.ParallaxAlign &&
       ((this.Lo = i), !!this.Lo) &&
       ((this.e$t = Vector_1.Vector.Create(
         this.Lo.SourcePos.X,
@@ -50,14 +51,14 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
         (i = ModelManager_1.ModelManager.CreatureModel?.GetEntityIdByPbDataId(
           this.Lo.BallEntity,
         )) &&
-        (this.n$t = EntitySystem_1.EntitySystem.GetComponent(i, 185)),
+        (this.n$t = EntitySystem_1.EntitySystem.GetComponent(i, 187)),
       super.OnStart(t);
   }
   OnEnd(t) {
     (this.r$t = !0), super.OnEnd(t);
   }
   OnTick(t) {
-    var i, s, e, h, r, o, a;
+    var i, e, s, h, r, o, a;
     this.r$t ||
       ((i = (0, puerts_1.$ref)(void 0)),
       !UE.GameplayStatics.ProjectWorldToScreen(
@@ -79,46 +80,46 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
         (i = ModelManager_1.ModelManager.CreatureModel?.GetEntityIdByPbDataId(
           this.Lo.BallEntity,
         )) &&
-        (this.n$t = EntitySystem_1.EntitySystem.GetComponent(i, 185)),
+        (this.n$t = EntitySystem_1.EntitySystem.GetComponent(i, 187)),
       (i = Global_1.Global.CharacterController),
-      (s = (0, puerts_1.$ref)(void 0)),
       (e = (0, puerts_1.$ref)(void 0)),
-      i.GetViewportSize(s, e),
+      (s = (0, puerts_1.$ref)(void 0)),
+      i.GetViewportSize(e, s),
       (i = Math.max(
-        Math.abs(this.i$t.X - this.o$t.X) / (0, puerts_1.$unref)(s),
-        Math.abs(this.i$t.Y - this.o$t.Y) / (0, puerts_1.$unref)(e),
+        Math.abs(this.i$t.X - this.o$t.X) / (0, puerts_1.$unref)(e),
+        Math.abs(this.i$t.Y - this.o$t.Y) / (0, puerts_1.$unref)(s),
       )),
       this.n$t &&
-        ((s = MathCommon_1.MathCommon.Clamp(
+        ((e = MathCommon_1.MathCommon.Clamp(
           (i - this.Lo.ErrorRange) /
             (this.Lo.BrightnessAdjustRange - this.Lo.ErrorRange),
           0,
           1,
         )),
-        (e = this.Lo.DefaultBrightness || 0),
+        (s = this.Lo.DefaultBrightness || 0),
         this.Lo.FinalColor
           ? ((a =
               MathCommon_1.MathCommon.Lerp(
-                e * this.Lo.FinalColor.R,
+                s * this.Lo.FinalColor.R,
                 this.Lo.FinalColor.R,
-                1 - s,
+                1 - e,
               ) / 255),
             (h =
               MathCommon_1.MathCommon.Lerp(
-                e * this.Lo.FinalColor.G,
+                s * this.Lo.FinalColor.G,
                 this.Lo.FinalColor.G,
-                1 - s,
+                1 - e,
               ) / 255),
             (r =
               MathCommon_1.MathCommon.Lerp(
-                e * this.Lo.FinalColor.B,
+                s * this.Lo.FinalColor.B,
                 this.Lo.FinalColor.B,
-                1 - s,
+                1 - e,
               ) / 255),
             (o = MathCommon_1.MathCommon.Lerp(
-              e * this.Lo.FinalColor.A,
+              s * this.Lo.FinalColor.A,
               this.Lo.FinalColor.A,
-              1 - s,
+              1 - e,
             )),
             this.n$t.UpdateInteractionMaterialColorParam(
               EMISSION_PARAM_NAME,
@@ -127,7 +128,7 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
               r,
               o,
             ))
-          : ((a = MathCommon_1.MathCommon.Lerp(e, 1, 1 - s)),
+          : ((a = MathCommon_1.MathCommon.Lerp(s, 1, 1 - e)),
             this.n$t.UpdateInteractionMaterialColorParam(
               EMISSION_PARAM_NAME,
               a,
@@ -135,10 +136,10 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
               a,
             ))),
       i > this.Lo.ErrorRange)
-        ? (this.pGn = 0)
-        : ((this.pGn += t),
+        ? (this.DGn = 0)
+        : ((this.DGn += t),
           (!this.Lo.FixationTime ||
-            this.pGn >=
+            this.DGn >=
               this.Lo.FixationTime * CommonDefine_1.MILLIONSECOND_PER_SECOND) &&
             (this.SubmitNode(), (this.r$t = !0))));
   }

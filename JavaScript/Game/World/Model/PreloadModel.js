@@ -97,8 +97,7 @@ class AssetElement {
     );
   }
   Clear() {
-    Macro_1.NOT_SHIPPING_ENVIRONMENT && this.AssetForIndexMap.clear(),
-      this.AssetPathSet.clear(),
+    this.AssetPathSet.clear(),
       this.OtherAssetSet.clear(),
       this.MaterialAssetSet.clear(),
       this.MeshAssetSet.clear(),
@@ -114,35 +113,11 @@ class AssetElement {
 }
 class CommonAssetElement extends (exports.AssetElement = AssetElement) {
   AddObject(t, e) {
-    Macro_1.NOT_SHIPPING_ENVIRONMENT &&
-      this.AssetForIndexMap.set(
-        t,
-        ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.CommonAssets.Num(),
-      ),
-      ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.AddCommonAsset(
-        e,
-      );
+    ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.AddCommonAsset(
+      e,
+    );
   }
-  PrintDebugInfo() {
-    if (Macro_1.NOT_SHIPPING_ENVIRONMENT) {
-      var s =
-        ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.CommonAssets;
-      let e = `
-预加载的公共资源列表如下(数量:${s.Num()}):
-`;
-      var t,
-        i,
-        r = new Map();
-      for ([t, i] of this.AssetForIndexMap) r.set(i, t);
-      for (let t = 0; t < s.Num(); ++t) {
-        var h = s.Get(t),
-          a = r.get(t);
-        e += `    索引:${t}, Path:${a}, IsValid:${h?.IsValid()}, Name:${h?.IsValid() ? h.GetName() : void 0}
-`;
-      }
-      Log_1.Log.CheckDebug() && Log_1.Log.Debug("Preload", 3, e);
-    }
-  }
+  PrintDebugInfo() {}
   Clear() {
     ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.ClearCommonAsset(),
       super.Clear();
@@ -216,19 +191,11 @@ class EntityAssetElement extends AssetElement {
     this.DEr = t;
   }
   AddObject(t, e) {
-    var s;
     this.Kpo?.Valid &&
-      (Macro_1.NOT_SHIPPING_ENVIRONMENT &&
-        ((s =
-          ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.EntityAssetMap.Get(
-            this.Kpo.Id,
-          ))
-          ? this.AssetForIndexMap.set(t, s.Assets.Num())
-          : this.AssetForIndexMap.set(t, 0)),
       ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.AddEntityAsset(
         this.Kpo.Id,
         e,
-      ));
+      );
   }
   Clear() {
     ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.RemoveEntityAssets(
@@ -248,28 +215,7 @@ class EntityAssetElement extends AssetElement {
   GetLoadPriority() {
     return this.IEr;
   }
-  PrintDebugInfo() {
-    if (Macro_1.NOT_SHIPPING_ENVIRONMENT) {
-      var s =
-        ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.EntityAssetMap.Get(
-          this.Entity.Id,
-        ).Assets;
-      let e = `
-预加载的实体资源列表如下:(CreatureDataId:${this.CreatureDataComponent.GetCreatureDataId()}, 数量:${s.Num()}):
-`;
-      var t,
-        i,
-        r = new Map();
-      for ([t, i] of this.AssetForIndexMap) r.set(i, t);
-      for (let t = 0; t < s.Num(); ++t) {
-        var h = s.Get(t),
-          a = r.get(t);
-        e += `    索引:${t}, Path:${a}, IsValid:${h?.IsValid()}, Name:${h?.IsValid() ? h.GetName() : void 0}
-`;
-      }
-      Log_1.Log.CheckDebug() && Log_1.Log.Debug("Preload", 3, e);
-    }
-  }
+  PrintDebugInfo() {}
 }
 exports.EntityAssetElement = EntityAssetElement;
 class PreloadModel extends ModelBase_1.ModelBase {

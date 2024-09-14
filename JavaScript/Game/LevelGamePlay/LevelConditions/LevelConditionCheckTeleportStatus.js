@@ -12,9 +12,9 @@ class LevelConditionCheckTeleportStatus extends LevelGeneralBase_1.LevelConditio
       (e = e.LimitParams.get("State")),
       !!r) &&
       (1 === (e ? parseInt(e) : 0)
-        ? ModelManager_1.ModelManager.MapModel.CheckTeleportUnlocked(
+        ? (ModelManager_1.ModelManager.MapModel.CheckTeleportUnlocked(
             parseInt(r),
-          ) ?? !1
+          ) ?? !1)
         : !ModelManager_1.ModelManager.MapModel.CheckTeleportUnlocked(
             parseInt(r),
           ))

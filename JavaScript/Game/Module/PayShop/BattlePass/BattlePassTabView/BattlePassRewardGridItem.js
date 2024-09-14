@@ -23,7 +23,7 @@ class BattlePassRewardData {
     return !1;
   }
   GetItemCount(t, s) {
-    if (t === Protocol_1.Aki.Protocol.ENs.Proto_Free) {
+    if (t === Protocol_1.Aki.Protocol.ANs.Proto_Free) {
       const e = this.GetFreeRewardItem(s);
       return e.Item[1];
     }
@@ -57,7 +57,7 @@ class BattlePassRewardGridItem extends GridProxyAbstract_1.GridProxyAbstract {
         this.jbe(
           this.$Tt.FreeRewardItem[0].ItemType,
           t,
-          Protocol_1.Aki.Protocol.ENs.Proto_Free,
+          Protocol_1.Aki.Protocol.ANs.Proto_Free,
         );
       }),
       (this.C2i = (t) => {
@@ -65,7 +65,7 @@ class BattlePassRewardGridItem extends GridProxyAbstract_1.GridProxyAbstract {
         this.jbe(
           this.$Tt.PayRewardItem[0].ItemType,
           t,
-          Protocol_1.Aki.Protocol.ENs.Proto_Pay,
+          Protocol_1.Aki.Protocol.ANs.Proto_Pay,
         );
       }),
       (this.g2i = (t) => {
@@ -73,7 +73,7 @@ class BattlePassRewardGridItem extends GridProxyAbstract_1.GridProxyAbstract {
         this.jbe(
           this.$Tt.PayRewardItem[1].ItemType,
           t,
-          Protocol_1.Aki.Protocol.ENs.Proto_Pay,
+          Protocol_1.Aki.Protocol.ANs.Proto_Pay,
         );
       });
   }

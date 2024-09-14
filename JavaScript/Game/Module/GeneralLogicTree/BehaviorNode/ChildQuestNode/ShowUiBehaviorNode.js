@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ShowUiBehaviorNode = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+const IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   RoguelikeController_1 = require("../../../Roguelike/RoguelikeController"),
   ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
@@ -22,7 +23,7 @@ class ShowUiBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnCreate(e) {
     return (
       !!super.OnCreate(e) &&
-      "ShowUi" === (e = e.Condition).Type &&
+      (e = e.Condition).Type === IQuest_1.EChildQuest.ShowUi &&
       ((this.I$t = e.UiType), (this.T$t = e.KeepUiOpen), !0)
     );
   }

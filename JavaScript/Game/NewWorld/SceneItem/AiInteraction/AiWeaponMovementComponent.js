@@ -62,7 +62,7 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
     );
   }
   OnStart() {
-    return (this.Hte = this.Entity.GetComponent(185)), !0;
+    return (this.Hte = this.Entity.GetComponent(187)), !0;
   }
   OnTick(t) {
     this.EnableMovement && this.UpdateMovement(t);
@@ -94,7 +94,7 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
       ((this.jhn = 2),
       this.Yhn(),
       ModelManager_1.ModelManager.GameModeModel.IsMulti ||
-        this.Entity.GetComponent(144)?.CollectSampleAndSend(!0));
+        this.Entity.GetComponent(145)?.CollectSampleAndSend(!0));
   }
   UpdateItemStay(t) {
     this.EnableMovement = !1;
@@ -194,7 +194,7 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
   }
 };
 (AiWeaponMovementComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(110)],
+  [(0, RegisterComponent_1.RegisterComponent)(111)],
   AiWeaponMovementComponent,
 )),
   (exports.AiWeaponMovementComponent = AiWeaponMovementComponent);

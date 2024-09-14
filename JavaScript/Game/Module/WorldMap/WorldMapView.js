@@ -13,13 +13,13 @@ const UE = require("ue"),
   Vector2D_1 = require("../../../Core/Utils/Math/Vector2D"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  Global_1 = require("../../Global"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
   UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
-  UiLayer_1 = require("../../Ui/UiLayer"),
   UiManager_1 = require("../../Ui/UiManager"),
   UiModel_1 = require("../../Ui/UiModel"),
   LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer"),
@@ -32,6 +32,7 @@ const UE = require("ue"),
   MapUtil_1 = require("../Map/MapUtil"),
   ConfigMarkItem_1 = require("../Map/Marks/MarkItem/ConfigMarkItem"),
   TeleportMarkItem_1 = require("../Map/Marks/MarkItem/TeleportMarkItem"),
+  MapLogger_1 = require("../Map/Misc/MapLogger"),
   MapLifeEventDispatcher_1 = require("../Map/View/BaseMap/Assistant/MapLifeEvent/MapLifeEventDispatcher"),
   MapResourceMgr_1 = require("../Map/View/BaseMap/Assistant/MapResourceMgr"),
   Map_1 = require("../Map/View/BaseMap/Map"),
@@ -44,38 +45,26 @@ const UE = require("ue"),
   GenericLayout_1 = require("../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../Util/LguiUtil"),
   LongPressButton_1 = require("../Util/LongPressButton"),
-  SecondaryUiComponent_1 = require("./ViewComponent/SecondaryUiComponent"),
-  WorldMapInteractComponent_1 = require("./ViewComponent/WorldMapInteractComponent"),
-  WorldMapMoveComponent_1 = require("./ViewComponent/WorldMapMoveComponent"),
-  WorldMapScaleComponent_1 = require("./ViewComponent/WorldMapScaleComponent"),
+  WorldMapUiEntity_1 = require("./ViewComponent/WorldMapUiEntity"),
   WorldMapController_1 = require("./WorldMapController"),
   WorldMapDefine_1 = require("./WorldMapDefine"),
   WorldMapNoteItem_1 = require("./WorldMapNoteItem"),
   WorldMapSubMapItem_1 = require("./WorldMapSubMapItem"),
   WorldMapUtil_1 = require("./WorldMapUtil"),
   SCALE_STEP = 0.1,
-  RAD_2_DEG = 180 / Math.PI,
-  DEG_PI_4 = 90,
   MARKICON_HALFSIZE = 70,
   MAX_INT32_NUMBER = 2147483647,
   VIEW_PORT_BUFFER_REGION = 400;
 class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
+      (this.WorldMapUiEntity = void 0),
       (this.v3o = void 0),
       (this.BFo = void 0),
       (this.M3o = void 0),
-      (this.E3o = void 0),
-      (this.S3o = void 0),
-      (this.y3o = Vector2D_1.Vector2D.Create(0, 0)),
-      (this.I3o = void 0),
-      (this.T3o = -0),
-      (this.L3o = !1),
-      (this.D3o = void 0),
       (this.R3o = void 0),
-      (this.U3o = void 0),
-      (this.SQs = void 0),
-      (this.Szs = void 0),
+      (this.NXs = void 0),
+      (this.fea = void 0),
       (this.P3o = !1),
       (this.x3o = void 0),
       (this.w3o = void 0),
@@ -91,16 +80,13 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       (this.H3o = void 0),
       (this.j3o = new Map()),
       (this.W3o = void 0),
+      (this.X3o = void 0),
       (this.K3o = void 0),
       (this.Q3o = void 0),
-      (this.X3o = void 0),
-      (this.mWs = void 0),
-      (this.$3o = !1),
-      (this.Y3o = 0),
       (this.J3o = 0),
-      (this.PXs = !1),
+      (this.DKa = 0),
       (this.z3o = !1),
-      (this.Z3o = !1),
+      (this.WJa = [1506, 1510, 1512]),
       (this.e4o = () => {
         var t;
         this.J3o <= 0 ||
@@ -111,44 +97,17 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
           this.Q3o?.PlayLevelSequenceByName("Start", !0),
           this.v3o.HandleMapTileDelegate());
       }),
-      (this.t4o = void 0),
-      (this.i4o = void 0),
-      (this.o4o = void 0),
-      (this.r4o = void 0),
-      (this.n4o = (i, s, r) => {
-        if (((this.Z3o = !0), this.GetSlider(1).SetValue(s, !1), this.D3o))
-          this.o4o.PushMap(this.D3o, !1);
-        else {
-          let t = void 0;
-          var h = Vector2D_1.Vector2D.Create(
-            this.v3o.GetRootItem().GetAnchorOffset(),
-          );
-          let e = void 0;
-          switch (r) {
-            case 4:
-            case 5:
-              e = this.s4o();
-          }
-          (t = e
-            ? h
-                .SubtractionEqual(e)
-                .MultiplyEqual(s / i)
-                .AdditionEqual(e)
-            : h.MultiplyEqual(s / i)),
-            this.o4o.SetMapPosition(t, !1, 2);
-        }
-        this.Wut();
-      }),
-      (this.a4o = () => {
-        this.Vut(), this.Wut(), this.h4o();
-      }),
       (this.bZe = (t) => {
         ("PowerView" !== t && "ExploreProgressView" !== t) ||
-          this.t4o.OnUiOpen();
+          (this.WorldMapUiEntity.SecondaryUiComponent.ExtraSecondaryUiOpen =
+            !0);
       }),
       (this.$Ge = (t) => {
         ("PowerView" !== t && "ExploreProgressView" !== t) ||
-          ((this.l4o = !1), this.t4o.OnUiClose(), this._4o());
+          ((this.l4o = !1),
+          (this.WorldMapUiEntity.SecondaryUiComponent.ExtraSecondaryUiOpen =
+            !1),
+          this._4o());
       }),
       (this.l4o = !1),
       (this.Ili = () => {
@@ -158,14 +117,19 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this._4o = () => {
         this.v3o.SetClickRangeVisible(!1),
-          this.D3o &&
-            ((this.D3o.IsIgnoreScaleShow = !1),
-            this.D3o.SetSelected(!1),
-            this.y4o(this.D3o),
-            (this.D3o = void 0),
-            this.Vut()),
+          this.WorldMapUiEntity.ClickedItem &&
+            ((this.WorldMapUiEntity.ClickedItem.IsIgnoreScaleShow = !1),
+            this.WorldMapUiEntity.ClickedItem.SetSelected(!1),
+            this.WorldMapUiEntity.UpdateSingleMarkItem(
+              this.WorldMapUiEntity.ClickedItem,
+            ),
+            (this.WorldMapUiEntity.ClickedItem = void 0),
+            this.WorldMapUiEntity.UpdateMarkItems()),
           this.c4o(!0),
-          this.z3o || this.K3o?.PlayLevelSequenceByName("Show"),
+          this.z3o ||
+            (this.K3o.StopCurrentSequence(),
+            this.GetItem(17).SetUIActive(!0),
+            this.K3o.PlayLevelSequenceByName("Show")),
           this.m4o(Info_1.Info.IsInGamepad()),
           this.N3o.SetCursorActive(!0);
       }),
@@ -173,8 +137,26 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
         this.c4o(!1),
           this.z3o
             ? (this.z3o = !1)
-            : this.K3o?.PlayLevelSequenceByName("Hide"),
+            : (this.K3o.StopCurrentSequence(),
+              this.K3o.PlayLevelSequenceByName("Hide")),
           this.N3o.SetCursorActive(!1);
+      }),
+      (this.TYa = (t) => {
+        "Hide" === t && this.GetItem(17).SetUIActive(!1);
+      }),
+      (this.a4o = () => {
+        this.WorldMapUiEntity.UpdateMarkItems(),
+          this.WorldMapUiEntity.SyncTransformToFrontContainer(),
+          this.h4o();
+      }),
+      (this.OnSubMapFloorChanged = (t, e) => {
+        var i = this.WorldMapUiEntity.MultiFloorComponent;
+        i.MultiMapFloorLayout.DeselectCurrentGridProxy(),
+          i.MultiMapFloorLayout.SelectGridProxy(t),
+          0 === t
+            ? ((i.IsShowMultiMap = !1), this.v3o?.HideSubMapTile(), this.h4o())
+            : ((i.IsShowMultiMap = !0),
+              this.v3o.ShowSubMapTile(i.ShowMultiMapGroupId, t, !e));
       }),
       (this.vKe = (t) => {
         this.u4o();
@@ -182,11 +164,19 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       (this.GFo = (t) => {
         if (2 !== t.mouseButtonType && !this.l4o) {
           t = t.GetLocalPointInPlane();
-          const n = Vector2D_1.Vector2D.Create(t.X, t.Y);
-          if (this.L3o && this.C4o(n, this.v3o.SelfPlayerNode)[0])
-            this.o4o.FocusPlayer(this.y3o, !0, 1);
+          const a = Vector2D_1.Vector2D.Create(t.X, t.Y);
+          if (
+            this.WorldMapUiEntity.IsInPlayerMap &&
+            this.WorldMapUiEntity.PlayerComponent.PlayerOutOfBound &&
+            this.C4o(a, this.v3o.SelfPlayerNode)[0]
+          )
+            this.WorldMapUiEntity.MoveComponent.FocusPlayer(
+              this.WorldMapUiEntity.PlayerComponent.PlayerUiPosition,
+              !0,
+              1,
+            );
           else {
-            const a = [];
+            const n = [];
             var t = Vector_1.Vector.Create(t.X, t.Y, t.Z),
               e = [],
               i = [],
@@ -196,60 +186,67 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
               };
             for (const _ of this.v3o.GetMarkItemsByClickPosition(t))
               _.View &&
-                _.View.GetInteractiveFlag() &&
+                _.GetInteractiveFlag() &&
                 !_.IsOutOfBound &&
                 e.push(s(_));
             var r,
               t = Promise.all(e).then((t) => {
-                for (const e of t) this.C4o(n, e[1])[0] && a.push(e[0]);
+                for (const e of t) this.C4o(a, e[1])[0] && n.push(e[0]);
               });
             for ([, r] of this.v3o.GetAllMarkItems())
               for (var [, h] of r) h.IsOutOfBound && i.push(s(h));
             var o = Promise.all(i).then((t) => {
-              for (const e of t) this.C4o(n, e[1])[0] && a.push(e[0]);
+              for (const e of t) this.C4o(a, e[1])[0] && n.push(e[0]);
             });
             Promise.all([o, t]).then(() => {
-              0 === a.length
-                ? this.g4o(n)
-                : 1 === a.length
-                  ? this.f4o(a[0])
-                  : 1 < a.length && this.p4o(a, n);
+              0 === n.length
+                ? this.g4o(a)
+                : 1 === n.length
+                  ? this.f4o(n[0])
+                  : 1 < n.length && this.p4o(n, a);
             });
           }
         }
       }),
       (this.f4o = (e, i) => {
-        if (!this.D3o || this.D3o.MarkId !== e.MarkId) {
+        if (
+          !this.WorldMapUiEntity.ClickedItem ||
+          this.WorldMapUiEntity.ClickedItem.MarkId !== e.MarkId
+        ) {
           var s = ModelManager_1.ModelManager.WorldMapModel;
           (s.CurrentFocalMarkType = e.MarkType),
             (s.CurrentFocalMarkId = e.MarkId);
           let t = !0;
-          this.t4o.IsSecondaryUiOpening && ((this.z3o = !0), (t = !1)),
+          this.WorldMapUiEntity.SecondaryUiComponent.IsSecondaryUiOpening &&
+            (!e.IsOutOfBound || i ? (this.z3o = !0) : (this.z3o = !1),
+            (t = !1)),
             this.u4o(() => {
               var t;
-              (e.IsOutOfBound && (this.o4o.SetMapPosition(e, !0, 1), !i)) ||
+              (e.IsOutOfBound &&
+                (this.WorldMapUiEntity.MoveComponent.SetMapPosition(e, !0, 1),
+                !i)) ||
                 (this.R3o &&
                   !this.R3o.IsDestroy &&
                   this.R3o.GetRootItemAsync().then((t) => {
                     t && this.v4o(t).StopSequenceByKey("Dianji");
                   }),
                 (this.R3o = e),
-                (this.D3o = e),
-                this.D3o?.SetSelected(!0),
+                (this.WorldMapUiEntity.ClickedItem = e),
+                this.WorldMapUiEntity.ClickedItem?.SetSelected(!0),
                 Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Map",
-                    50,
+                    64,
                     "点击图标",
                     ["追踪状态:", e.IsTracked],
                     ["MarkId:", e.MarkId],
                   ),
-                this.D3o instanceof TeleportMarkItem_1.TeleportMarkItem &&
-                this.D3o.IsMultiMapTeleport
-                  ? (t =
-                      ConfigManager_1.ConfigManager.MapConfig?.GetSubMapConfigById(
-                        this.D3o.MarkConfig.MultiMapFloorId,
-                      )) && this.h4o(t.GroupId, t.Floor, !0)
+                this.WorldMapUiEntity.ClickedItem.IsMultiMap()
+                  ? ((t = this.WorldMapUiEntity.ClickedItem.GetMultiMapId()),
+                    (t =
+                      ConfigManager_1.ConfigManager.MapConfig.GetSubMapConfigById(
+                        t,
+                      )) && this.h4o(t.GroupId, t.Floor, !0))
                   : this.OnSubMapFloorChanged(0),
                 this.M4o(e));
             }, t);
@@ -258,7 +255,10 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       (this.E4o = async (i, s) => {
         var r = i.filter((t) => t.IsOutOfBound);
         if (0 === r.length)
-          this.t4o.ShowMarkMenu(this.RootItem, i),
+          this.WorldMapUiEntity.SecondaryUiComponent.ShowMarkMenu(
+            this.RootItem,
+            i,
+          ),
             this.v3o.SetClickRangeVisible(!0, s);
         else {
           let t = r[0];
@@ -268,60 +268,64 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
             Vector2D_1.Vector2D.Create(i.GetAnchorOffset()),
           );
           var h = [];
-          for (const a of r)
-            a.View &&
+          for (const n of r)
+            n.View &&
               h.push(
                 (async (t) => {
                   var e = await t.GetRootItemAsync();
                   return [t, e];
-                })(a),
+                })(n),
               );
           for (const _ of await Promise.all(h)) {
             var o = _[0],
-              n = _[1],
-              n = Vector2D_1.Vector2D.Distance(
+              a = _[1],
+              a = Vector2D_1.Vector2D.Distance(
                 s,
-                Vector2D_1.Vector2D.Create(n.GetAnchorOffset()),
+                Vector2D_1.Vector2D.Create(a.GetAnchorOffset()),
               );
-            e > n && ((t = o), (e = n));
+            e > a && ((t = o), (e = a));
           }
           i = Vector2D_1.Vector2D.Create(t.UiPosition.X, t.UiPosition.Y);
           i.UnaryNegation(i),
             i.MultiplyEqual(this.MapScale),
-            this.o4o.SetMapPosition(i, !1, 1);
-        }
-      }),
-      (this.S4o = () => {
-        if (void 0 !== this.v3o) {
-          var t = this.v3o.GetMarkItemsByType(11);
-          if (t && 0 !== t.size) for (var [, e] of t) this.y4o(e);
+            this.WorldMapUiEntity.MoveComponent.SetMapPosition(i, !1, 1);
         }
       }),
       (this.I4o = (t) => {
         t = this.v3o.GetMarkItem(t.MarkType, t.MarkId);
-        t && (9 === t.MarkType && (t.IsIgnoreScaleShow = !0), this.y4o(t));
+        t &&
+          (9 === t.MarkType && (t.IsIgnoreScaleShow = !0),
+          this.WorldMapUiEntity.UpdateSingleMarkItem(t));
       }),
       (this.T4o = (t, e) => {
         var i = this.v3o.GetMarkItem(t, e);
-        i && this.y4o(i),
-          this.D3o?.MarkType === t &&
-            this.D3o?.MarkId === e &&
-            (this.D3o = void 0);
-      }),
-      (this.Vut = () => {
-        var t;
-        this.L4o();
-        for ([, t] of this.v3o.GetAllMarkItems())
-          for (var [, e] of t) (this.D4o(e) && !e.IsTracked) || this.y4o(e);
-        this.Z3o = !1;
+        i && this.WorldMapUiEntity.UpdateSingleMarkItem(i),
+          this.WorldMapUiEntity.ClickedItem?.MarkType === t &&
+            this.WorldMapUiEntity.ClickedItem?.MarkId === e &&
+            (this.WorldMapUiEntity.ClickedItem = void 0);
       }),
       (this.R4o = (t, e) => {
-        this.U4o(t, e);
+        this.WorldMapUiEntity.QuickNavigateComponent.NavigateTo(e, t, !0);
+      }),
+      (this.RKa = (t, e, i) => {
+        var s = this.v3o.GetMarkItem(e, t);
+        s
+          ? (this.WorldMapUiEntity.MoveComponent.PushMap(s, !0),
+            i && this.U4o(s.MarkType, t))
+          : MapLogger_1.MapLogger.Error(
+              64,
+              "聚焦了不存在的标记",
+              ["地图标记类型:", e],
+              ["地图标记Id", t],
+            );
+      }),
+      (this.bXa = (t, e, i, s) => {
+        this.aza(t, e, i, s);
       }),
       (this.A4o = (t) => {
         this.u4o(() => {
           (ModelManager_1.ModelManager.WorldMapModel.HideCustomMarks = 0 === t),
-            this.Vut();
+            this.WorldMapUiEntity.UpdateMarkItems();
         });
       }),
       (this.P4o = () => {
@@ -333,35 +337,66 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       (this.AMo = () => {
         this.GetButton(5).ComponentHasTag(
           FNameUtil_1.FNameUtil.GetDynamicFName(HotKeyViewDefine_1.EXIT_TAG),
-        ) && this.t4o.IsSecondaryUiOpening
+        ) && this.WorldMapUiEntity.SecondaryUiComponent.IsSecondaryUiOpening
           ? this.u4o()
           : UiManager_1.UiManager.ResetToBattleView();
       }),
       (this.x4o = (t, e) => {
-        2 === e && this.i4o.IsJoystickZoom && this.o4o.KillTweening(),
-          this.t4o.IsSecondaryUiOpening || this.r4o.AddMapScale(t, e);
+        2 === e &&
+          this.WorldMapUiEntity.InteractComponent.IsJoystickZoom &&
+          this.WorldMapUiEntity.MoveComponent.KillTweening(),
+          this.WorldMapUiEntity.SecondaryUiComponent.IsSecondaryUiOpening ||
+            this.WorldMapUiEntity.ScaleComponent.AddMapScale(t, e);
       }),
       (this.B4o = (t, e) => e.MapNoteConfig.Rank - t.MapNoteConfig.Rank),
       (this.b4o = (t) => {
-        t = this.v3o.GetMarkItem(0, t);
-        t && this.U4o(t.MarkType, t.MarkId);
+        this.WorldMapUiEntity.QuickNavigateComponent.NavigateTo(t, 0, !0);
       }),
-      (this.zra = () => {
+      (this.bsa = () => {
         var t = MapNoteById_1.configMapNoteById.GetConfig(9);
-        if (
+        return t &&
+          this.UKa(t) &&
           ModelManager_1.ModelManager.RoguelikeModel?.GetMapNoteShowState() &&
           t
-        )
-          return {
-            MapNoteId: 9,
-            ClickCallBack: this.b4o,
-            MapNoteConfig: t,
-            MapMarkId: t.MarkIdMap.get(1),
-          };
+          ? {
+              MapNoteId: 9,
+              ClickCallBack: this.b4o,
+              MapNoteConfig: t,
+              MapMarkId: t.MarkIdMap.get(1),
+            }
+          : void 0;
+      }),
+      (this.tja = () => {
+        var t = MapNoteById_1.configMapNoteById.GetConfig(10);
+        if (t && this.UKa(t)) {
+          var e,
+            i = ModelManager_1.ModelManager.MingSuModel,
+            s = i.GetDragonPoolInstanceById(
+              MingSuDefine_1.DARK_COAST_POOL_CONFIG_ID,
+            );
+          if (s)
+            return (
+              (e = s.GetDragonPoolLevel()),
+              (e = s.GetNeedCoreCount(e) - s.GetHadCoreCount()),
+              (s = i.GetTargetDragonPoolCoreById(
+                MingSuDefine_1.DARK_COAST_POOL_CONFIG_ID,
+              )),
+              e <= i.GetItemCount(s) && t
+                ? {
+                    MapNoteId: 10,
+                    ClickCallBack: this.b4o,
+                    MapNoteConfig: t,
+                    MapMarkId: t.MarkIdMap.get(
+                      MingSuDefine_1.DARK_COAST_POOL_CONFIG_ID,
+                    ),
+                  }
+                : void 0
+            );
+        }
       }),
       (this.q4o = () => {
         var t = MapNoteById_1.configMapNoteById.GetConfig(2);
-        if (t) {
+        if (t && this.UKa(t)) {
           var e,
             i = ModelManager_1.ModelManager.MingSuModel,
             s = i.GetDragonPoolInstanceById(
@@ -389,16 +424,17 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.G4o = () => {
         var t = MapNoteById_1.configMapNoteById.GetConfig(3);
-        if (
+        return t &&
+          this.Qza() &&
           ModelManager_1.ModelManager.TowerModel.CanGetRewardAllDifficulties() &&
           t
-        )
-          return {
-            MapNoteId: 3,
-            ClickCallBack: this.b4o,
-            MapNoteConfig: t,
-            MapMarkId: t.MarkIdMap.get(1),
-          };
+          ? {
+              MapNoteId: 3,
+              ClickCallBack: this.b4o,
+              MapNoteConfig: t,
+              MapMarkId: t.MarkIdMap.get(1),
+            }
+          : void 0;
       }),
       (this.N4o = () => {
         var t =
@@ -408,87 +444,96 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
         if (t && t.CanLevelUp()) {
           t = MapNoteById_1.configMapNoteById.GetConfig(5);
           if (t)
-            return {
-              MapNoteId: 5,
-              ClickCallBack: this.b4o,
-              MapNoteConfig: t,
-              MapMarkId: t.MarkIdMap.get(1),
-            };
+            if (this.UKa(t))
+              return {
+                MapNoteId: 5,
+                ClickCallBack: this.b4o,
+                MapNoteConfig: t,
+                MapMarkId: t.MarkIdMap.get(1),
+              };
         }
       }),
       (this.O4o = () => {
         var t = ModelManager_1.ModelManager.LordGymModel.GetCanFightLordGym();
         if (0 !== t) {
-          var e = MapNoteById_1.configMapNoteById.GetConfig(5);
+          var e = MapNoteById_1.configMapNoteById.GetConfig(8);
           if (e)
-            return (
-              (t =
-                ModelManager_1.ModelManager.LordGymModel.GetMarkIdByLordGymId(
-                  t,
-                )),
-              {
-                MapNoteId: 8,
-                ClickCallBack: this.b4o,
-                MapNoteConfig: e,
-                MapMarkId: t,
-              }
-            );
+            if (this.UKa(e))
+              return (
+                (t =
+                  ModelManager_1.ModelManager.LordGymModel.GetMarkIdByLordGymId(
+                    t,
+                  )),
+                {
+                  MapNoteId: 8,
+                  ClickCallBack: this.b4o,
+                  MapNoteConfig: e,
+                  MapMarkId: t,
+                }
+              );
         }
       }),
       (this.k4o = () => {
-        var t = MapNoteById_1.configMapNoteById.GetConfig(4),
-          e = t.QuestIdList;
-        let s = 0,
-          i = !1;
-        for (const h of e) {
-          var r = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(h);
-          if (2 === r || 1 === r) {
-            (s = h), (i = !0);
-            break;
+        var e = MapNoteById_1.configMapNoteById.GetConfig(4);
+        if (this.UKa(e)) {
+          var s = e.QuestIdList;
+          let i = 0,
+            t = !1;
+          for (const h of s) {
+            var r = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(h);
+            if (2 === r || 1 === r) {
+              (i = h), (t = !0);
+              break;
+            }
           }
-        }
-        if (i && t)
-          return {
-            MapNoteId: 4,
-            ClickCallBack: (t) => {
-              var e = () => {
-                var t,
-                  e,
-                  i =
-                    ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()
-                      .Id;
-                i === s &&
-                  void 0 !==
-                    (t =
-                      ModelManager_1.ModelManager.QuestNewModel.TryGetMapMarkIdByQuestId(
+          return t && e
+            ? {
+                MapNoteId: 4,
+                ClickCallBack: (t) => {
+                  var e = () => {
+                    var t,
+                      e =
+                        ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()
+                          .Id;
+                    e === i &&
+                      void 0 !==
+                        (t =
+                          ModelManager_1.ModelManager.QuestNewModel.TryGetMapMarkIdByQuestId(
+                            e,
+                          )) &&
+                      (this.WorldMapUiEntity.QuickNavigateComponent.NavigateTo(
+                        t,
+                        12,
+                        !0,
+                      ),
+                      Log_1.Log.CheckInfo()) &&
+                      Log_1.Log.Info(
+                        "Quest",
+                        38,
+                        "选中鸣域等阶升级任务",
+                        ["QuestId", e],
+                        ["MarkID", t],
+                      );
+                  };
+                  ModelManager_1.ModelManager.QuestNewModel.IsTrackingQuest(i)
+                    ? e()
+                    : QuestController_1.QuestNewController.RequestTrackQuest(
                         i,
-                      )) &&
-                  ((e = this.v3o.GetMarkItem(12, t)),
-                  this.f4o(e, !0),
-                  Log_1.Log.CheckInfo()) &&
-                  Log_1.Log.Info(
-                    "Quest",
-                    38,
-                    "选中鸣域等阶升级任务",
-                    ["QuestId", i],
-                    ["MarkID", t],
-                  );
-              };
-              ModelManager_1.ModelManager.QuestNewModel.IsTrackingQuest(s)
-                ? e()
-                : QuestController_1.QuestNewController.RequestTrackQuest(
-                    s,
-                    !0,
-                    2,
-                    0,
-                    e,
-                  );
-            },
-            MapNoteConfig: t,
-          };
+                        !0,
+                        2,
+                        0,
+                        e,
+                      );
+                },
+                MapNoteConfig: e,
+              }
+            : void 0;
+        }
       }),
       (this.XBo = () => {
-        this.N3o.SetCursorActive(!this.t4o.IsSecondaryUiOpening);
+        this.N3o.SetCursorActive(
+          !this.WorldMapUiEntity.SecondaryUiComponent.IsSecondaryUiOpening,
+        );
       }),
       (this.F4o = () => {
         Info_1.Info.IsInGamepad() &&
@@ -499,7 +544,13 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
               : 1 < this.w3o.length && this.p4o(this.w3o, this.B3o));
       }),
       (this.V4o = () => {
-        this.i4o.SetJoystickFocus(!0), this.o4o.FocusPlayer(this.y3o, !0, 1);
+        this.WorldMapUiEntity.IsInPlayerMap &&
+          (this.WorldMapUiEntity.InteractComponent.SetJoystickFocus(!0),
+          this.WorldMapUiEntity.MoveComponent.FocusPlayer(
+            this.WorldMapUiEntity.PlayerComponent.PlayerUiPosition,
+            !0,
+            1,
+          ));
       }),
       (this.H4o = () => {
         ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId(
@@ -508,13 +559,14 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
           ? (this.k3o.SetActive(!0), this.k3o.Update())
           : this.k3o.SetActive(!1);
       }),
-      (this.OnSubMapFloorChanged = (t, e) => {
-        this.X3o.DeselectCurrentGridProxy(),
-          this.X3o.SelectGridProxy(t),
-          0 === t
-            ? ((this.$3o = !1), this.v3o?.HideSubMapTile(), this.h4o())
-            : ((this.$3o = !0), this.v3o.ShowSubMapTile(this.Y3o, t, !e));
+      (this.xKa = () => {
+        this.WorldMapUiEntity.SecondaryUiComponent.ShowQuickNavigate(
+          this.RootItem,
+        );
       });
+  }
+  Qza() {
+    return this.DKa === MapDefine_1.BIG_WORLD_MAP_ID;
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -539,19 +591,48 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       [18, UE.UIItem],
       [19, UE.UIVerticalLayout],
       [20, UE.UIItem],
+      [21, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[5, this.AMo]]);
+      (this.BtnBindInfo = [
+        [5, this.AMo],
+        [21, this.xKa],
+      ]);
   }
   async OnBeforeStartAsync() {
-    (this.BFo = this.GetItem(13)
-      .GetOwner()
-      .GetComponentByClass(UE.KuroWorldMapUIParams.StaticClass())),
+    (this.M3o = this.OpenParam),
+      this.OXa(),
+      (this.BFo = this.GetItem(13)
+        .GetOwner()
+        .GetComponentByClass(UE.KuroWorldMapUIParams.StaticClass())),
       await this.j4o(),
       await this.W3o.OnWorldMapBeforeStartAsync(),
       (this.X3o = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(19),
         () => new WorldMapSubMapItem_1.WorldMapSubMapItem(),
-      ));
+      )),
+      await ControllerHolder_1.ControllerHolder.TowerController.RefreshTower(),
+      await ControllerHolder_1.ControllerHolder.MingSuController.SendDarkCoastDeliveryRequestAsync();
+  }
+  OXa() {
+    var t, e;
+    this.M3o
+      ? (this.M3o.MarkId &&
+          void 0 === this.M3o.MapId &&
+          ((e = this.M3o.MarkId),
+          (t = this.M3o.MarkType),
+          (e = MapUtil_1.MapUtil.GetMarkBelongMapId(e, t)),
+          (this.M3o.MapId = e)),
+        void 0 === this.M3o.MapId &&
+          (this.M3o.MapId = MapUtil_1.MapUtil.GetCurrentBigMapId()),
+        (this.DKa = this.M3o.MapId))
+      : ((this.DKa = MapUtil_1.MapUtil.GetCurrentBigMapId()), this.KJa()),
+      (ModelManager_1.ModelManager.WorldMapModel.WorldMapMapId = this.DKa);
+  }
+  KJa() {
+    MapUtil_1.MapUtil.IsInBigWorld(this.DKa) ||
+      (this.WJa.includes(this.DKa) &&
+        (this.DKa = MapDefine_1.HHA_BIG_WORLD_MAP_ID),
+      (this.DKa = MapDefine_1.BIG_WORLD_MAP_ID));
   }
   async j4o() {
     await Promise.all([
@@ -560,11 +641,11 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
     ]),
       await Promise.all([
         this.W4o(),
-        this.Akn(),
+        this.Gkn(),
         this.Q4o(),
         this.X4o(),
         this.$4o(),
-        this.NQs(),
+        this.rYs(),
         this.Y4o(),
         this.J4o(),
       ]),
@@ -572,11 +653,12 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
   }
   async W4o() {
     (this.O3o = new MapResourceMgr_1.MapResourceMgr()),
-      await this.O3o.PreloadMapAssets();
+      await this.O3o.PreloadMapAssets(this.DKa);
   }
-  async Akn() {
+  async Gkn() {
     (this.V3o = this.GetItem(18)),
       (this.v3o = new Map_1.BaseMap(
+        this.DKa,
         2,
         this.MapScale,
         this.V3o,
@@ -594,27 +676,27 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   async Y4o() {
-    (this.SQs = new PowerCurrencyItem_1.PowerCurrencyItem()),
-      await this.SQs.CreateThenShowByResourceIdAsync(
+    (this.NXs = new PowerCurrencyItem_1.PowerCurrencyItem()),
+      await this.NXs.CreateThenShowByResourceIdAsync(
         "UIItem_CommonCurrencyItem",
         this.GetItem(10).GetParentAsUIItem(),
       ),
-      this.SQs.ShowWithoutText(ItemDefines_1.EItemId.Power),
-      this.SQs.SetButtonFunction(this.Ili),
-      this.SQs.SetActive(
+      this.NXs.ShowWithoutText(ItemDefines_1.EItemId.Power),
+      this.NXs.SetButtonFunction(this.Ili),
+      this.NXs.SetActive(
         ModelManager_1.ModelManager.FunctionModel.IsOpen(10017),
       );
   }
-  async NQs() {
+  async rYs() {
     this.GetItem(10)?.SetUIActive(!1),
-      (this.Szs = new PowerCurrencyItem_1.PowerCurrencyItem()),
-      await this.Szs.CreateThenShowByResourceIdAsync(
+      (this.fea = new PowerCurrencyItem_1.PowerCurrencyItem()),
+      await this.fea.CreateThenShowByResourceIdAsync(
         "UIItem_CommonCurrencyItem",
         this.GetItem(10).GetParentAsUIItem(),
       ),
-      this.Szs.ShowWithoutText(ItemDefines_1.EItemId.OverPower),
-      this.Szs.RefreshAddButtonActive(),
-      this.Szs.SetActive(
+      this.fea.ShowWithoutText(ItemDefines_1.EItemId.OverPower),
+      this.fea.RefreshAddButtonActive(),
+      this.fea.SetActive(
         ModelManager_1.ModelManager.FunctionModel.IsOpen(10066),
       );
   }
@@ -632,7 +714,7 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       e =
         ((this.F3o = new WorldMapTowerItem()),
         await this.F3o.Init(t),
-        ModelManager_1.ModelManager.FunctionModel.IsOpen(10055));
+        ModelManager_1.ModelManager.FunctionModel.IsOpen(10055) && this.Qza());
     t.SetUIActive(e), this.F3o.Update(this.v3o);
   }
   async J4o() {
@@ -666,45 +748,24 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       t.OnStateChange.Add(this.A4o);
   }
   e5o() {
-    this.T3o = 0;
+    this.WorldMapUiEntity.PlayerComponent.PlayerRotation = 0;
     var t = this.GetItem(8).GetWidth() / this.RootItem.GetWidth(),
       e = this.GetItem(8).GetHeight() / this.RootItem.GetHeight(),
-      i = WorldMapUtil_1.WorldMapUtil.GetViewportSizeByPool(),
-      t =
-        ((this.E3o = new UE.Vector2D(
-          (i.X / 2) * t - MARKICON_HALFSIZE,
-          (i.Y / 2) * e - MARKICON_HALFSIZE,
-        )),
-        (this.S3o = new UE.Vector2D(
-          (i.X / 2 + VIEW_PORT_BUFFER_REGION) * t,
-          (i.Y / 2 + VIEW_PORT_BUFFER_REGION) * e,
-        )),
-        this.GetSlider(1));
-    t.SetMinValue(
-      ModelManager_1.ModelManager.WorldMapModel.MapScaleMin,
-      !1,
-      !1,
-    ),
-      t.SetMaxValue(
-        ModelManager_1.ModelManager.WorldMapModel.MapScaleMax,
-        !1,
-        !1,
-      ),
-      t.OnValueChangeCb.Bind(this.r4o.OnScaleSliderValueChanged);
-  }
-  t5o() {
-    var t = this.v3o.SelfPlayerNode;
-    t.SetUIActive(!0), t.SetAsLastHierarchy();
+      i = WorldMapUtil_1.WorldMapUtil.GetViewportSizeByPool();
+    (this.WorldMapUiEntity.MarkEdgeSize = new UE.Vector2D(
+      (i.X / 2) * t - MARKICON_HALFSIZE,
+      (i.Y / 2) * e - MARKICON_HALFSIZE,
+    )),
+      (this.WorldMapUiEntity.OutOfViewPortSize = Vector2D_1.Vector2D.Create(
+        (i.X / 2 + VIEW_PORT_BUFFER_REGION) * t,
+        (i.Y / 2 + VIEW_PORT_BUFFER_REGION) * e,
+      ));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.MarkMenuClickItem,
       this.f4o,
     ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.ScenePlayerLocationChanged,
-        this.S4o,
-      ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnViewDone,
         this.bZe,
@@ -742,14 +803,6 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
         this.d4o,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.WorldMapScaleChanged,
-        this.n4o,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.WorldMapPositionChanged,
-        this.a4o,
-      ),
-      EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.InputControllerChange,
         this.XBo,
       ),
@@ -760,14 +813,6 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GetAreaProgress,
         this.H4o,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.UnTrackMark,
-        this.Vut,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.TrackMark,
-        this.Vut,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnWorldMapTrackMarkItem,
@@ -782,16 +827,24 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
         this.T4o,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.MarkForceVisibleChanged,
-        this.Vut,
-      ),
-      EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BlackScreenFadeOnPlotToWorldMap,
         this.e4o,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldMapSubMapChanged,
         this.OnSubMapFloorChanged,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.WorldMapPositionChanged,
+        this.a4o,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.WorldMapFocalMarkItem,
+        this.RKa,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.WorldMapChangeMap,
+        this.bXa,
       );
   }
   OnRemoveEventListener() {
@@ -800,10 +853,6 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       this.f4o,
     ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.ScenePlayerLocationChanged,
-        this.S4o,
-      ),
-      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnViewDone,
         this.bZe,
       ),
@@ -840,14 +889,6 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
         this.d4o,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.WorldMapScaleChanged,
-        this.n4o,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.WorldMapPositionChanged,
-        this.a4o,
-      ),
-      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.InputControllerChange,
         this.XBo,
       ),
@@ -858,14 +899,6 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GetAreaProgress,
         this.H4o,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.UnTrackMark,
-        this.Vut,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.TrackMark,
-        this.Vut,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnWorldMapTrackMarkItem,
@@ -880,97 +913,94 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
         this.T4o,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.MarkForceVisibleChanged,
-        this.Vut,
-      ),
-      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BlackScreenFadeOnPlotToWorldMap,
         this.e4o,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldMapSubMapChanged,
         this.OnSubMapFloorChanged,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.WorldMapPositionChanged,
+        this.a4o,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.WorldMapFocalMarkItem,
+        this.RKa,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.WorldMapChangeMap,
+        this.bXa,
       );
   }
   OnStart() {
     (this.x3o = []),
       this.i5o(),
-      this.LogicComponentsOnBegin(),
       (this.K3o = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.GetItem(17),
       )),
+      this.K3o.BindSequenceCloseEvent(this.TYa),
       PowerController_1.PowerController.SendUpdatePowerRequest([
         ItemDefines_1.EItemId.Power,
         ItemDefines_1.EItemId.OverPower,
-      ]),
-      (this.M3o = this.OpenParam);
+      ]);
   }
   OnBeforeShow() {
-    this.LogicComponentsOnShow(),
-      this.Z4o(),
-      this.t5o(),
+    this.Z4o(),
       this.e5o(),
-      this.GetSlider(1).SetValue(this.MapScale, !1),
-      this.GetItem(11).SetActive(!0),
+      this.WorldMapUiEntity.Init(),
+      (this.WorldMapUiEntity.MultiFloorComponent.MultiMapFloorContainer =
+        this.GetItem(20)),
       this.c4o(!0),
       this.H4o(),
-      this.Wut();
-    var t,
-      e = this.M3o;
-    this.t4o.IsSecondaryUiOpening ||
-      (e &&
-        e.IsNotFocusTween &&
-        (t = this.v3o.GetMarkItem(e.MarkType, e.MarkId)) &&
-        ((e.StartScale = this.r4o.MapScale),
-        (e.StartWorldPosition = Vector2D_1.Vector2D.Create(
-          -t.UiPosition.X * e.StartScale,
-          -t.UiPosition.Y * e.StartScale,
-        ))),
-      e?.StartScale &&
-        (this.r4o?.SetMapScale(e.StartScale, 6, !1),
-        this.GetSlider(1).SetValue(e.StartScale, !1)),
-      e?.StartWorldPosition
-        ? this.o4o?.SetMapPosition(e.StartWorldPosition, !1)
-        : MapUtil_1.MapUtil.IsInBigWorld(
-              ModelManager_1.ModelManager.GameModeModel.InstanceDungeon
-                .MapConfigId,
-            )
-          ? (this.L4o(), this.o4o.FocusPlayer(this.y3o, !1, 1))
-          : ((t =
-              ModelManager_1.ModelManager.GameModeModel.InstanceDungeon
-                .RecoverWorldLocation),
-            (e = MapUtil_1.MapUtil.WorldPosition2UiPosition2D(
-              Vector2D_1.Vector2D.Create(t[1] ?? 0, t[2] ?? 0),
-            )),
-            this.L4o(),
-            this.o4o.FocusPlayer(e, !1, 1))),
-      this.S4o(),
+      this.yOa(),
       this.o5o(),
-      this.Vut(),
       0 < this.J3o && this.v3o.HandleAreaOpen(this.J3o),
-      this.qna(),
+      this.RefreshSubMapFloorLayout(),
       this.W3o.OnWorldMapBeforeShow();
   }
   OnAfterShow() {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.WorldMapViewOpened);
     var t,
-      e = this.M3o;
-    e &&
-      ((t = this.v3o.GetMarkItem(e.MarkType, e.MarkId)) &&
-        (1 === t.MarkType
-          ? this.o4o.PushMap(t, !e.IsNotFocusTween)
-          : this.U4o(e.MarkType, e.MarkId)),
+      e,
+      i = this.M3o;
+    i &&
+      (MapUtil_1.MapUtil.GetMarkBelongMapId(i.MarkId, i.MarkType) ===
+        this.DKa &&
+        (e = this.v3o.GetMarkItem(i.MarkType, i.MarkId)) &&
+        (1 === e.MarkType
+          ? this.WorldMapUiEntity.MoveComponent.PushMap(e, !i.IsNotFocusTween)
+          : this.U4o(i.MarkType, i.MarkId)),
       (this.M3o = void 0)),
-      this.W3o.OnWorldMapAfterShow();
+      this.W3o.OnWorldMapAfterShow(),
+      i &&
+        (e = MapUtil_1.MapUtil.GetMarkBelongMapId(i.MarkId, i.MarkType)) !==
+          MapUtil_1.MapUtil.GetCurrentBigMapId() &&
+        ((t = this.v3o.GetMarkItem(i.MarkType, i.MarkId)) &&
+          ((e = MapUtil_1.MapUtil.GetInstanceDungeonTempWorldName(
+            e,
+            t.WorldPosition,
+          )),
+          ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
+            "CrossMapMainTips",
+            e,
+          )),
+        this.WorldMapUiEntity.QuickNavigateComponent.NavigateTo(
+          i.MarkId,
+          i.MarkType,
+          !0,
+        ));
   }
   OnBeforeHide() {
-    this.LogicComponentsOnHide(), this.v3o.UnBindMapTileDelegate();
+    this.v3o.UnBindMapTileDelegate();
   }
   OnTick(t) {
-    this.w3o || (this.w3o = new Array()),
-      this.i4o?.CheckTouch(),
-      this.o4o?.TickMoveDirty(),
-      this.m4o();
+    void 0 !== this.WorldMapUiEntity &&
+      (this.WorldMapUiEntity.Tick(t),
+      this.w3o || (this.w3o = new Array()),
+      this.WorldMapUiEntity.InteractComponent.CheckTouch(),
+      this.WorldMapUiEntity.MoveComponent.TickMoveDirty(),
+      this.m4o());
   }
   r5o() {
     if (Info_1.Info.IsInGamepad()) {
@@ -986,7 +1016,7 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
           s.View &&
             s.GetRootItemAsync().then((t) => {
               var [t, e] = this.C4o(this.B3o, t),
-                i = s.View.GetInteractiveFlag();
+                i = s.GetInteractiveFlag();
               t &&
                 i &&
                 (this.G3o[0] > e && ((this.G3o[0] = e), (this.G3o[1] = s)),
@@ -996,23 +1026,26 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   n5o(t = !1) {
-    ((Info_1.Info.IsInGamepad() && this.i4o.IsJoystickMoving) || t) &&
-      (this.o4o.KillTweening(), this.r5o());
+    ((Info_1.Info.IsInGamepad() &&
+      this.WorldMapUiEntity.InteractComponent.IsJoystickMoving) ||
+      t) &&
+      (this.WorldMapUiEntity.MoveComponent.KillTweening(), this.r5o());
   }
   s5o() {
     if (
       Info_1.Info.IsInGamepad() &&
-      !this.i4o.IsJoystickMoving &&
-      !this.i4o.IsJoystickZoom
+      !this.WorldMapUiEntity.InteractComponent.IsJoystickMoving &&
+      !this.WorldMapUiEntity.InteractComponent.IsJoystickZoom
     ) {
-      if (this.i4o.IsJoystickFocus) {
-        if (this.o4o.IsTweeningMove) return;
-        this.i4o.SetJoystickFocus(!1), this.r5o();
+      if (this.WorldMapUiEntity.InteractComponent.IsJoystickFocus) {
+        if (this.WorldMapUiEntity.MoveComponent.IsTweeningMove) return;
+        this.WorldMapUiEntity.InteractComponent.SetJoystickFocus(!1),
+          this.r5o();
       }
       0 < this.w3o.length &&
-        void 0 === this.D3o &&
+        void 0 === this.WorldMapUiEntity.ClickedItem &&
         (this.N3o.SetSelected(!0),
-        this.o4o.SetMapPosition(
+        this.WorldMapUiEntity.MoveComponent.SetMapPosition(
           this.G3o[1],
           !0,
           0,
@@ -1026,6 +1059,7 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnBeforeDestroy() {
     this.u4o(),
+      this.h5o(),
       this.a5o(),
       WorldMapController_1.WorldMapController.ClearFocalMarkItem(),
       this.GetExtendToggle(6).OnStateChange.Clear(),
@@ -1034,99 +1068,162 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       this.Q3o?.Clear(),
       this.K3o?.Clear(),
       (this.w3o = void 0),
-      this.SQs.Destroy(),
-      this.Szs.Destroy(),
+      this.NXs.Destroy(),
+      this.fea.Destroy(),
       this.v3o.Destroy(),
       this.O3o.Destroy(),
       this.N3o.Destroy(),
-      this.h5o();
+      (ModelManager_1.ModelManager.WorldMapModel.WorldMapMapId = void 0);
+  }
+  async aza(t, e, i, s) {
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.WorldMapBeforeChangeMap,
+    ),
+      this.v3o.UnBindMapTileDelegate(),
+      this.a5o(),
+      WorldMapController_1.WorldMapController.ClearFocalMarkItem(),
+      await this.v3o.DestroyAsync(),
+      this.O3o.Destroy(),
+      this.WorldMapUiEntity.RemoveComponent(2),
+      (this.M3o = { MarkId: t, MarkType: e, MapId: i }),
+      this.OXa(),
+      await Promise.all([this.W4o(), this.Gkn()]);
+    (t = this.GetItem(16)),
+      (e =
+        ModelManager_1.ModelManager.FunctionModel.IsOpen(10055) && this.Qza());
+    t.SetUIActive(e),
+      this.F3o.Update(this.v3o),
+      (this.WorldMapUiEntity.Map = this.v3o),
+      (this.WorldMapUiEntity.UiParams = this.BFo),
+      (this.WorldMapUiEntity.OpenParams = this.M3o),
+      (this.WorldMapUiEntity.MapId = this.DKa),
+      this.WorldMapUiEntity.AddComponent(2),
+      this.WorldMapUiEntity.Reset(),
+      this.c4o(!0),
+      this.H4o(),
+      this.o5o(),
+      this.RefreshSubMapFloorLayout(),
+      this.W3o.OnWorldMapBeforeShow(),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.WorldMapAfterChangeMap,
+      ),
+      this.RKa(this.M3o.MarkId, this.M3o.MarkType, s);
   }
   i5o() {
-    (this.U3o = new Map()),
-      (this.t4o = new SecondaryUiComponent_1.SecondaryUiComponent(this.v3o)),
-      this.U3o.set(0, this.t4o),
-      (this.i4o = new WorldMapInteractComponent_1.WorldMapInteractComponent(
-        this.v3o,
-        this.BFo,
-      )),
-      this.U3o.set(1, this.i4o),
-      (this.o4o = new WorldMapMoveComponent_1.WorldMapMoveComponent(
-        this.v3o,
-        this.BFo,
-      )),
-      this.U3o.set(2, this.o4o),
-      (this.r4o = new WorldMapScaleComponent_1.WorldMapScaleComponent(
-        this.v3o,
-      )),
-      this.U3o.set(3, this.r4o);
+    (this.WorldMapUiEntity = new WorldMapUiEntity_1.WorldMapUiEntity()),
+      (this.WorldMapUiEntity.Map = this.v3o),
+      (this.WorldMapUiEntity.UiParams = this.BFo),
+      (this.WorldMapUiEntity.OpenParams = this.M3o),
+      (this.WorldMapUiEntity.MapId = this.DKa),
+      this.WorldMapUiEntity.RegisterComponents(),
+      (this.WorldMapUiEntity.ScaleComponent.ScaleSlider = this.GetSlider(1)),
+      (this.WorldMapUiEntity.MultiFloorComponent.MultiMapFloorLayout =
+        this.X3o);
   }
   h5o() {
-    if (this.U3o) {
-      for (var [, t] of this.U3o) t.Destroy();
-      this.U3o.clear(),
-        (this.U3o = void 0),
-        (this.t4o = void 0),
-        (this.i4o = void 0),
-        (this.o4o = void 0),
-        (this.r4o = void 0);
-    }
-  }
-  LogicComponentsOnBegin() {
-    if (this.U3o) for (var [, t] of this.U3o) t.Begin();
-  }
-  LogicComponentsOnShow() {
-    if (this.U3o) for (var [, t] of this.U3o) t.Show();
-  }
-  LogicComponentsOnHide() {
-    if (this.U3o) for (var [, t] of this.U3o) t.Hide();
-  }
-  GetLogicComponent(t) {
-    return this.U3o.get(t);
+    this.WorldMapUiEntity.Dispose(), (this.WorldMapUiEntity = void 0);
   }
   get MapScale() {
     return ModelManager_1.ModelManager.WorldMapModel.MapScale;
   }
-  s4o() {
-    var e = Global_1.Global.CharacterController;
-    if (e) {
-      let t = void 0;
-      if (
-        (Info_1.Info.IsInKeyBoard()
-          ? (t = Vector2D_1.Vector2D.Create(e.GetCursorPosition()))
-          : Info_1.Info.IsInTouch() && (t = this.i4o.MultiTouchOriginCenter),
-        t)
-      ) {
-        var i,
-          e = UiLayer_1.UiLayer.UiRootItem.GetCanvasScaler();
-        if (e)
-          return (
-            (e = e.ConvertPositionFromViewportToLGUICanvas(t.ToUeVector2D())),
-            (i = WorldMapUtil_1.WorldMapUtil.GetViewportSizeByPool()).Set(
-              e.X - i.X / 2,
-              e.Y - i.Y / 2,
-            ),
-            i
-          );
-      }
-    }
-  }
   M4o(t, e = 1) {
     Info_1.Info.IsInGamepad()
-      ? this.o4o.PushMap(t, !0, 0)
-      : this.o4o.PushMap(t, !0, 1),
-      this.t4o.ShowPanel(t, this.RootItem, this.l5o(), e);
+      ? this.WorldMapUiEntity.MoveComponent.PushMap(t, !0, 0)
+      : this.WorldMapUiEntity.MoveComponent.PushMap(t, !0, 1),
+      this.WorldMapUiEntity.SecondaryUiComponent.ShowPanel(
+        t,
+        this.RootItem,
+        this.l5o(),
+        e,
+      );
   }
   u4o(t, e = !0) {
-    this.D3o &&
-      this.D3o.IsIgnoreScaleShow &&
-      ((this.D3o.IsIgnoreScaleShow = !1),
-      this.D3o.SetSelected(!1),
-      this.y4o(this.D3o)),
-      this.t4o.IsSecondaryUiOpening
-        ? (this.t4o.CloseUi(t, e),
+    this.WorldMapUiEntity.ClickedItem &&
+      this.WorldMapUiEntity.ClickedItem.IsIgnoreScaleShow &&
+      ((this.WorldMapUiEntity.ClickedItem.IsIgnoreScaleShow = !1),
+      this.WorldMapUiEntity.ClickedItem.SetSelected(!1),
+      this.WorldMapUiEntity.UpdateSingleMarkItem(
+        this.WorldMapUiEntity.ClickedItem,
+      )),
+      this.WorldMapUiEntity.SecondaryUiComponent.IsSecondaryUiOpening
+        ? (this.WorldMapUiEntity.SecondaryUiComponent.CloseUi(t, e),
           UiManager_1.UiManager.IsViewOpen("PowerView") &&
             UiManager_1.UiManager.CloseView("PowerView"))
         : t && t();
+  }
+  async z9s(t) {
+    var e = this.WorldMapUiEntity.MultiFloorComponent;
+    return (
+      e.MultiMapFloorContainerUiActive !== t &&
+        ((e.MultiMapFloorContainerUiActive = t),
+        e.MultiMapFloorContainerUiActive
+          ? (e.MultiMapFloorContainer.SetUIActive(!0),
+            await this.PlaySequenceAsync("LevelShow"))
+          : await this.PlaySequenceAsync("LevelHide"),
+        e.MultiMapFloorContainer.SetUIActive(e.MultiMapFloorContainerUiActive)),
+      !0
+    );
+  }
+  RefreshSubMapFloorLayout() {
+    var t = ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId();
+    t &&
+      (t =
+        ConfigManager_1.ConfigManager.MapConfig.GetSubMapConfigByAreaId(t)) &&
+      this.h4o(t.GroupId, t.Floor, !0, !1);
+  }
+  async h4o(e = void 0, r = void 0, t = !1, h = !0) {
+    var i,
+      s =
+        ModelManager_1.ModelManager.AreaModel?.GetCurrentAreaId(
+          ExploreProgressDefine_1.AREA_LEVEL,
+        ) ?? -1,
+      s = ModelManager_1.ModelManager.MapModel.CheckAreasUnlocked(s),
+      e = e || this.v3o.GetSubMapGroupIdByPosition(),
+      o = this.WorldMapUiEntity.MultiFloorComponent;
+    if (0 === e)
+      return o.MultiMapFloorContainerUiActive
+        ? ((i = o.IsShowMultiMap) ||
+            ((o.ShowMultiMapGroupId = 0),
+            EventSystem_1.EventSystem.Emit(
+              EventDefine_1.EEventName.WorldMapSelectMultiMap,
+              0,
+            )),
+          void (await this.z9s(i && s)))
+        : void 0;
+    if ((!o.MultiMapFloorContainerUiActive || t) && s) {
+      o.ShowMultiMapGroupId = e;
+      let t =
+        ConfigCommon_1.ConfigCommon.ToList(
+          ConfigManager_1.ConfigManager.MapConfig?.GetSubMapConfigByGroupId(e),
+        ) ?? [];
+      if (
+        ((t = t.filter(
+          (t) =>
+            ModelManager_1.ModelManager.MapModel.CheckUnlockMultiMapIds(t.Id) ||
+            0 === t.Floor,
+        )).sort((t, e) => e.Floor - t.Floor),
+        1 !== t.length)
+      ) {
+        let i = 0,
+          s = 0;
+        r &&
+          t.forEach((t, e) => {
+            t.Floor === r && ((i = e), (s = t.Id));
+          }),
+          0 !== i &&
+            (EventSystem_1.EventSystem.Emit(
+              EventDefine_1.EEventName.WorldMapSelectMultiMap,
+              s,
+            ),
+            this.OnSubMapFloorChanged(i, h)),
+          o.UpdateMultiMapPromise && (await o.UpdateMultiMapPromise.Promise),
+          (o.UpdateMultiMapPromise = new CustomPromise_1.CustomPromise()),
+          await this.z9s(!0),
+          await o.MultiMapFloorLayout.RefreshByDataAsync(t, !1),
+          o.MultiMapFloorLayout.SelectGridProxy(i),
+          o.UpdateMultiMapPromise.SetResult(!0);
+      }
+    }
   }
   C4o(t, e) {
     return e
@@ -1142,20 +1239,21 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       : [!1, 0];
   }
   g4o(t) {
-    this.o4o.IsTweeningMove && this.o4o.KillTweening(),
+    this.WorldMapUiEntity.MoveComponent.IsTweeningMove &&
+      this.WorldMapUiEntity.MoveComponent.KillTweening(),
       WorldMapController_1.WorldMapController.ClearFocalMarkItem(),
-      this.t4o.IsSecondaryUiOpening
-        ? (this.Vut(), this.u4o())
+      this.WorldMapUiEntity.SecondaryUiComponent.IsSecondaryUiOpening
+        ? ((this.z3o = !1), this.WorldMapUiEntity.UpdateMarkItems(), this.u4o())
         : this.l5o() ===
             ModelManager_1.ModelManager.WorldMapModel.CustomMarkSize
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "WorldMapTagFull",
             )
-          : ((this.D3o = this._5o(t)),
-            this.D3o &&
-              ((this.D3o.IsIgnoreScaleShow = !0),
-              (this.D3o.IsCanShowView = !0),
-              this.M4o(this.D3o, 0)),
+          : ((this.WorldMapUiEntity.ClickedItem = this._5o(t)),
+            this.WorldMapUiEntity.ClickedItem &&
+              ((this.WorldMapUiEntity.ClickedItem.IsIgnoreScaleShow = !0),
+              (this.WorldMapUiEntity.ClickedItem.IsCanShowView = !0),
+              this.M4o(this.WorldMapUiEntity.ClickedItem, 0)),
             AudioSystem_1.AudioSystem.PostEvent(
               "play_ui_ia_spl_map_click_com",
             ));
@@ -1167,6 +1265,7 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       i = MapController_1.MapController.GetNewCustomMarkPosition(i, -s),
       s = new MapDefine_1.DynamicMarkCreateInfo(i, 1, 9);
     return (
+      (s.MapId = this.DKa),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Map",
@@ -1189,43 +1288,13 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   p4o(t, e) {
-    this.t4o.IsSecondaryUiOpening && (this.z3o = !0),
+    this.WorldMapUiEntity.SecondaryUiComponent.IsSecondaryUiOpening &&
+      (this.z3o = !0),
       this.u4o(() => {
         this.E4o(t, e),
           AudioSystem_1.AudioSystem.PostEvent("play_ui_ia_spl_map_click_com");
       }),
       WorldMapController_1.WorldMapController.ClearFocalMarkItem();
-  }
-  async y4o(t) {
-    let e = void 0;
-    var i,
-      s,
-      r,
-      h,
-      o = this.MapScale;
-    (t.LogicWorldScale = o),
-      t.LogicUpdate(this.I3o),
-      t.ViewUpdate(this.I3o, this.i4o.IsDragging, this.Z3o),
-      t.View &&
-        ((i = Vector2D_1.Vector2D.Create(t.UiPosition.X, t.UiPosition.Y)),
-        t.IsTracked
-          ? ((s = Vector2D_1.Vector2D.Create(
-              this.v3o.GetRootItem().GetAnchorOffset(),
-            )),
-            (r = Vector2D_1.Vector2D.Create()),
-            ([r, h] = (i.Multiply(o, r).Addition(s, r), this.u5o(r))),
-            (e = await t.GetRootItemAsync()),
-            h
-              ? ((t.IsOutOfBound = !0),
-                t.View.SetOutOfBoundDirection(r),
-                e.SetAnchorOffset(
-                  r.SubtractionEqual(s).DivisionEqual(o).ToUeVector2D(!0),
-                ))
-              : ((t.IsOutOfBound = !1), e.SetAnchorOffset(i.ToUeVector2D(!0))))
-          : ((t.IsOutOfBound = !1),
-            (e = await t.GetRootItemAsync()).SetAnchorOffset(
-              i.ToUeVector2D(!0),
-            )));
   }
   U4o(t, e) {
     var i = this.v3o.GetMarkItem(t, e);
@@ -1234,78 +1303,16 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
         (i.IsFogUnlock && i.IsConditionShouldShow)
         ? ((i.IsCanShowView = !0),
           (i.IsIgnoreScaleShow = !0),
-          i?.View?.GetInteractiveFlag() && this.f4o(i, !0))
+          i?.GetInteractiveFlag() && this.f4o(i, !0))
         : ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
             "MapAreaIsLock",
           )
-      : Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "Map",
-          50,
+      : MapLogger_1.MapLogger.Error(
+          64,
           "申请了不存在的地图标记",
           ["地图标记类型:", t],
           ["地图标记Id", e],
         );
-  }
-  L4o() {
-    this.c5o(),
-      this.v3o.PlayerArrow.SetUIRelativeRotation(
-        new UE.Rotator(0, this.T3o, 0),
-      );
-    var t = Vector2D_1.Vector2D.Create(
-        this.v3o.GetRootItem().GetAnchorOffset(),
-      ),
-      e = Vector2D_1.Vector2D.Create(),
-      [i, s] =
-        (this.y3o.Multiply(this.MapScale, e).Addition(t, e), this.u5o(e)),
-      r = this.v3o.PlayerOutOfBoundIndicator;
-    s
-      ? ((this.L3o = !0),
-        this.v3o.SelfPlayerNode.SetAnchorOffset(
-          i.SubtractionEqual(t).DivisionEqual(this.MapScale).ToUeVector2D(!0),
-        ),
-        (i = Math.atan2(e.Y, e.X) * RAD_2_DEG - DEG_PI_4),
-        r.SetUIRelativeRotation(new UE.Rotator(0, i, 0)))
-      : ((this.L3o = !1),
-        this.v3o.SelfPlayerNode.SetAnchorOffset(this.y3o.ToUeVector2D())),
-      r.SetUIActive(s);
-  }
-  c5o() {
-    var t,
-      e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    e &&
-      (e = e.Entity.GetComponent(3)) &&
-      (MapUtil_1.MapUtil.IsInBigWorld(
-        ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.MapConfigId,
-      )
-        ? (this.I3o = e.ActorLocationProxy)
-        : ((t =
-            ModelManager_1.ModelManager.GameModeModel.InstanceDungeon
-              .RecoverWorldLocation),
-          (this.I3o = Vector_1.Vector.Create(t[1] ?? 0, t[2] ?? 0, t[3] ?? 0))),
-      (t = Vector2D_1.Vector2D.Create(this.I3o.X, this.I3o.Y)),
-      (this.y3o = MapUtil_1.MapUtil.WorldPosition2UiPosition2D(t, t)),
-      (this.T3o = -(e.ActorRotation.Yaw + 90)));
-  }
-  u5o(t) {
-    var e,
-      i = this.E3o;
-    return Math.abs(t.X) < i.X && Math.abs(t.Y) < i.Y
-      ? [t, !1]
-      : ((e = Vector2D_1.Vector2D.Create()),
-        Math.abs(t.X / t.Y) > i.X / i.Y
-          ? t.Multiply(i.X / Math.abs(t.X), e)
-          : t.Multiply(i.Y / Math.abs(t.Y), e),
-        [e, !0]);
-  }
-  D4o(t) {
-    t = Vector2D_1.Vector2D.Create(
-      t.UiPosition.X * ModelManager_1.ModelManager.WorldMapModel.MapScale +
-        this.v3o.GetRootItem().GetAnchorOffsetX(),
-      t.UiPosition.Y * ModelManager_1.ModelManager.WorldMapModel.MapScale +
-        this.v3o.GetRootItem().GetAnchorOffsetY(),
-    );
-    return Math.abs(t.X) > this.S3o.X || Math.abs(t.Y) > this.S3o.Y;
   }
   l5o() {
     var t = this.v3o.GetMarkItemsByType(9);
@@ -1319,7 +1326,8 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       this.k4o,
       this.N4o,
       this.O4o,
-      this.zra,
+      this.bsa,
+      this.tja,
     ]) {
       var t = s();
       t && e.push(t);
@@ -1330,6 +1338,10 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
       var i = e[t];
       this.m5o(i, t);
     }
+  }
+  UKa(t) {
+    t = t.MapId;
+    return 0 === t || t === this.WorldMapUiEntity.MapId;
   }
   m5o(t, e) {
     var i = t.MapNoteConfig.ConditionId;
@@ -1364,7 +1376,10 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
     let e = void 0;
     if ("PanelIndex" === t[0]) {
       var i = Number(t[1]);
-      e = this.t4o.GetSecondaryPanelGuideFocusUiItem(i);
+      e =
+        this.WorldMapUiEntity.SecondaryUiComponent.GetSecondaryPanelGuideFocusUiItem(
+          i,
+        );
     } else {
       (i = Number(t[0])),
         (t =
@@ -1381,7 +1396,7 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
         );
       const s = this.v3o.GetMarkItem(t, i);
       (e = s?.View.GetIconItem()),
-        this.o4o.SetMapPosition(s, !0, 1),
+        this.WorldMapUiEntity.MoveComponent.SetMapPosition(s, !0, 1),
         e
           .GetOwner()
           .AddComponentByClass(
@@ -1396,84 +1411,26 @@ class WorldMapView extends UiTickViewBase_1.UiTickViewBase {
     }
     if (void 0 !== e) return [e, e];
   }
-  Wut() {
-    var t = this.v3o.GetRootItem(),
-      e = t.GetAnchorOffset(),
-      e = (this.V3o.SetAnchorOffset(e), t.RelativeScale3D);
-    this.V3o.SetRelativeScale3D(e),
-      this.V3o.SetWidth(t.Width),
-      this.V3o.SetHeight(t.Height);
-  }
-  qna() {
-    var t = ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId();
-    t &&
-      (t =
-        ConfigManager_1.ConfigManager.MapConfig?.GetSubMapConfigByAreaId(t)) &&
-      this.h4o(t.GroupId, t.Floor, !0, !1);
-  }
-  async h4o(e = void 0, r = void 0, t = !1, h = !0) {
-    var i,
-      s =
-        ModelManager_1.ModelManager.AreaModel?.GetCurrentAreaId(
-          ExploreProgressDefine_1.AREA_LEVEL,
-        ) ?? 0,
-      s = ModelManager_1.ModelManager.MapModel.CheckAreasUnlocked(s) ?? !1,
-      e = e || this.v3o.GetSubMapGroupIdByPosition();
-    if (0 === e)
-      return this.PXs
-        ? ((i = this.$3o) ||
-            ((this.Y3o = 0),
-            EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.WorldMapSelectMultiMap,
-              0,
-            )),
-          void (await this.P9s(i && s)))
-        : void 0;
-    if ((!this.PXs || t) && s) {
-      this.Y3o = e;
-      let t =
-        ConfigCommon_1.ConfigCommon.ToList(
-          ConfigManager_1.ConfigManager.MapConfig?.GetSubMapConfigByGroupId(e),
-        ) ?? [];
-      if (
-        ((t = t.filter(
-          (t) =>
-            ModelManager_1.ModelManager.MapModel.CheckUnlockMultiMapIds(t.Id) ||
-            0 === t.Floor,
-        )).sort((t, e) => e.Floor - t.Floor),
-        1 !== t.length)
-      ) {
-        let i = 0,
-          s = 0;
-        r &&
-          t.forEach((t, e) => {
-            t.Floor === r && ((i = e), (s = t.Id));
-          }),
-          0 !== i &&
-            (EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.WorldMapSelectMultiMap,
-              s,
-            ),
-            this.OnSubMapFloorChanged(i, h)),
-          this.mWs && (await this.mWs.Promise),
-          (this.mWs = new CustomPromise_1.CustomPromise()),
-          await this.P9s(!0),
-          await this.X3o?.RefreshByDataAsync(t, !1),
-          this.X3o.SelectGridProxy(i),
-          this.mWs.SetResult(!0);
+  yOa() {
+    if (
+      !LocalStorage_1.LocalStorage.GetPlayer(
+        LocalStorageDefine_1.ELocalStoragePlayerKey.HasCleanInvalidCustomMark,
+        !1,
+      )
+    ) {
+      var t = this.v3o.GetMarkItemsByType(9);
+      if (t) {
+        var e = [];
+        for (const i of t.values())
+          this.v3o.InValidMapTile(i.WorldPosition) || e.push(i.MarkId);
+        0 < e.length &&
+          MapController_1.MapController.RequestRemoveMapMarks(9, e);
       }
+      LocalStorage_1.LocalStorage.SetPlayer(
+        LocalStorageDefine_1.ELocalStoragePlayerKey.HasCleanInvalidCustomMark,
+        !0,
+      );
     }
-  }
-  async P9s(t) {
-    return (
-      this.PXs !== t &&
-        ((this.PXs = t),
-        this.PXs
-          ? await this.PlaySequenceAsync("LevelShow")
-          : await this.PlaySequenceAsync("LevelHide"),
-        this.GetItem(20)?.SetUIActive(this.PXs)),
-      !0
-    );
   }
 }
 exports.WorldMapView = WorldMapView;
@@ -1550,7 +1507,7 @@ class WorldMapTowerItem extends UiPanelBase_1.UiPanelBase {
             }
         }
       }),
-      (this.kXs = () => {
+      (this.qJs = () => {
         this.aqe();
       });
   }
@@ -1573,13 +1530,13 @@ class WorldMapTowerItem extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnTowerRefreshStars,
-      this.kXs,
+      this.qJs,
     );
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnTowerRefreshStars,
-      this.kXs,
+      this.qJs,
     );
   }
   Update(t) {

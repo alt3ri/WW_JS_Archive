@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChatRoomItem = void 0);
 const UE = require("ue"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   PlayerHeadItem_1 = require("../../Common/PlayerHeadItem"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
@@ -32,6 +33,7 @@ class ChatRoomItem extends GridProxyAbstract_1.GridProxyAbstract {
       [5, UE.UISprite],
       [6, UE.UIItem],
       [7, UE.UIItem],
+      [8, UE.UIItem],
     ]),
       (this.BtnBindInfo = [[0, this.Syt]]);
   }
@@ -43,7 +45,7 @@ class ChatRoomItem extends GridProxyAbstract_1.GridProxyAbstract {
     (this.pSt = void 0), (this.Eyt = void 0), (this.fye = 0);
   }
   Clear() {}
-  Refresh(t, i, e) {
+  Refresh(t, e, i) {
     if (
       (this.GetItem(6).SetUIActive(!1),
       this.GetItem(7).SetUIActive(!1),
@@ -71,7 +73,15 @@ class ChatRoomItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.RefreshPlayerTexture(),
       this.K7e(),
       this.RefreshMuteItem(),
-      i ? this.SetToggleState(1) : this.SetToggleState(0);
+      this.qxa(),
+      e ? this.SetToggleState(1) : this.SetToggleState(0);
+  }
+  qxa() {
+    var t;
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
+      ? ((t = void 0 !== this.pSt && "" !== this.pSt?.GetSdkUserId()),
+        this.GetItem(8)?.SetUIActive(t))
+      : this.GetItem(8)?.SetUIActive(!1);
   }
   OnSelected(t) {
     this.SetToggleState(1), this.GetItem(2)?.SetUIActive(!1);
@@ -80,57 +90,57 @@ class ChatRoomItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.SetToggleState(0);
   }
   RefreshIsOnline(t) {
-    var i = this.GetItem(6),
+    var e = this.GetItem(6),
       t = t.IsOnline();
-    i.SetUIActive(!t),
+    e.SetUIActive(!t),
       this.GetSprite(5).SetIsGray(!t),
       this.GetItem(7).SetUIActive(t),
       this.oSt.SetIsGray(!t);
   }
   RefreshPlayerTexture() {
     var t,
-      i = this.GetSprite(5);
+      e = this.GetSprite(5);
     2 === this.Eyt || 3 === this.Eyt
-      ? (i.SetUIActive(!0), this.oSt.SetActive(!1))
-      : (i?.SetUIActive(!1),
-        (i =
+      ? (e.SetUIActive(!0), this.oSt.SetActive(!1))
+      : (e?.SetUIActive(!1),
+        (e =
           this.pSt?.PlayerId ??
           ModelManager_1.ModelManager.PlayerInfoModel.GetId())
           ? (t =
               ModelManager_1.ModelManager.ChatModel.GetChatPlayerData(
-                i,
+                e,
               )?.GetPlayerIcon())
             ? this.oSt.RefreshByRoleIdUseCard(t)
-            : this.oSt.RefreshByPlayerId(i, !0)
+            : this.oSt.RefreshByPlayerId(e, !0)
           : this.oSt.SetActive(!1));
   }
   K7e() {
     var t,
-      i,
-      e = this.GetText(1);
+      e,
+      i = this.GetText(1);
     2 === this.Eyt || 3 === this.Eyt
-      ? LguiUtil_1.LguiUtil.SetLocalText(e, "CurrentTeam")
+      ? LguiUtil_1.LguiUtil.SetLocalText(i, "CurrentTeam")
       : ((t = this.pSt.FriendRemark),
         StringUtils_1.StringUtils.IsEmpty(t)
-          ? ((i = this.pSt.PlayerName), e.SetText(i))
-          : e.SetText(t));
+          ? ((e = this.pSt.PlayerName), i.SetText(e))
+          : i.SetText(t));
   }
   RefreshMuteItem() {
     var t,
-      i = this.GetItem(3);
+      e = this.GetItem(3);
     this.pSt
       ? ((t = ModelManager_1.ModelManager.ChatModel.IsInMute(
           this.pSt.PlayerId,
         )),
-        i.SetUIActive(t))
-      : i.SetUIActive(!1);
+        e.SetUIActive(t))
+      : e.SetUIActive(!1);
   }
   BindOnClicked(t) {
     this.oft = t;
   }
   SetToggleState(t) {
-    var i = this.GetExtendToggle(0);
-    i && i.GetToggleState() !== t && i.SetToggleState(t, !1);
+    var e = this.GetExtendToggle(0);
+    e && e.GetToggleState() !== t && e.SetToggleState(t, !1);
   }
 }
 exports.ChatRoomItem = ChatRoomItem;

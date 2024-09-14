@@ -29,8 +29,10 @@ class Area {
     return this.father();
   }
   get Tag() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.tagLength(), (t) =>
-      this.tag(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.tagLength(),
+      this.tag,
+      this,
     );
   }
   get Record() {
@@ -45,12 +47,22 @@ class Area {
   get WorldMonsterLevelMax() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.worldmonsterlevelmaxLength(),
-      (t) => this.worldmonsterlevelmax(t)?.key(),
-      (t) => this.worldmonsterlevelmax(t)?.value(),
+      this.worldmonsterlevelmaxKey,
+      this.worldmonsterlevelmaxValue,
+      this,
     );
+  }
+  worldmonsterlevelmaxKey(t) {
+    return this.worldmonsterlevelmax(t)?.key();
+  }
+  worldmonsterlevelmaxValue(t) {
+    return this.worldmonsterlevelmax(t)?.value();
   }
   get WuYinQuID() {
     return this.wuyinquid();
+  }
+  get StateId() {
+    return this.stateid();
   }
   get AtmosphereId() {
     return this.atmosphereid();
@@ -154,20 +166,24 @@ class Area {
     var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  atmosphereid() {
+  stateid() {
     var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
+  atmosphereid() {
+    var t = this.J7.__offset(this.z7, 32);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
   edgewallname(t) {
-    var r = this.J7.__offset(this.z7, 32);
+    var r = this.J7.__offset(this.z7, 34);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   deliverymarktype() {
-    var t = this.J7.__offset(this.z7, 34);
+    var t = this.J7.__offset(this.z7, 36);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   sortindex() {
-    var t = this.J7.__offset(this.z7, 36);
+    var t = this.J7.__offset(this.z7, 38);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

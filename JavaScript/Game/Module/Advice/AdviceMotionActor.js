@@ -48,7 +48,7 @@ class AdviceMotionActor {
   }
   M9e(t, s) {
     var t = EntitySystem_1.EntitySystem.Get(t),
-      i = t.GetComponent(185),
+      i = t.GetComponent(187),
       t = t.GetComponent(0).GetAdviceInfo().GetAdviceData().GetAdviceMotionId();
     0 !== t &&
       (this.ActorInternal ||

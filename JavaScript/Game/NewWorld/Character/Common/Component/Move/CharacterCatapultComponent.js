@@ -57,7 +57,7 @@ let CharacterCatapultComponent =
         });
     }
     static get Dependencies() {
-      return [3, 163];
+      return [3, 164];
     }
     OnInitData() {
       return (this.x$r = new BigJumpUnit_1.BigJumpUnit()), !0;
@@ -65,7 +65,7 @@ let CharacterCatapultComponent =
     OnStart() {
       return (
         (this.Hte = this.Entity.GetComponent(3)),
-        (this.Gce = this.Entity.GetComponent(163)),
+        (this.Gce = this.Entity.GetComponent(164)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CustomMoveCatapult,
@@ -108,7 +108,7 @@ let CharacterCatapultComponent =
         );
       var t,
         e,
-        i = this.Entity.GetComponent(162);
+        i = this.Entity.GetComponent(163);
       i &&
         i.SetLocationAndRotatorWithModelBuffer(
           this.Hte.ActorLocationProxy.ToUeVector(),
@@ -117,7 +117,7 @@ let CharacterCatapultComponent =
           "Catapult Start",
         ),
         this.w$r &&
-          ((t = this.Entity.GetComponent(33).GetSkillMontageInstance(
+          ((t = this.Entity.GetComponent(34).GetSkillMontageInstance(
             Number(SUPER_CATAPULT_SKILL_ID),
             0,
           )),

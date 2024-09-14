@@ -105,7 +105,7 @@ class BattleUiSetModel extends ModelBase_1.ModelBase {
         o = s.EditOffsetX,
         r = s.EditOffsetY,
         n = s.EditorHierarchyIndex,
-        i = { J4n: s.ConfigId, u8n: t, c8n: a, m8n: o, d8n: r, C8n: n, g8n: 0 };
+        i = { s5n: s.ConfigId, M8n: t, S8n: a, E8n: o, y8n: r, I8n: n, T8n: 0 };
       (s.Size = t),
         (s.Alpha = a),
         (s.OffsetX = o),

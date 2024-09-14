@@ -23,17 +23,17 @@ class SceneItemUtility {
         7,
         "执行EntityTriggerAction，等待创建Entity",
         ["CreatureDataId", a],
-        ["PlayerId", n.q5n],
-        ["SessionId", n.T5n],
-        ["StartIndex", n.G5n],
-        ["EndIndex", n.avs],
+        ["PlayerId", n.W5n],
+        ["SessionId", n.w5n],
+        ["StartIndex", n.K5n],
+        ["EndIndex", n.mvs],
       );
     const t = () => {
       var e,
         t,
         r = ModelManager_1.ModelManager.CreatureModel.GetEntity(a);
       r &&
-        (r = r.Entity.GetComponent(77)) &&
+        (r = r.Entity.GetComponent(78)) &&
         (e = r.Actions) &&
         ((t = ModelManager_1.ModelManager.CreatureModel.GetEntity(o)) ||
           (Log_1.Log.CheckWarn() &&
@@ -51,18 +51,18 @@ class SceneItemUtility {
             "执行EntityTriggerAction，Entity创建完毕",
             ["CreatureDataId", a],
             ["otherCreatureDataId", o],
-            ["PlayerId", n.q5n],
-            ["SessionId", n.T5n],
-            ["StartIndex", n.G5n],
-            ["EndIndex", n.avs],
+            ["PlayerId", n.W5n],
+            ["SessionId", n.w5n],
+            ["StartIndex", n.K5n],
+            ["EndIndex", n.mvs],
           ),
         ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByServerNotify(
           e,
           r.CreateTriggerContext(t?.Id ?? 0),
-          n.q5n,
-          n.T5n,
-          n.G5n,
-          n.avs,
+          n.W5n,
+          n.w5n,
+          n.K5n,
+          n.mvs,
         ));
     };
     WaitEntityTask_1.WaitEntityTask.Create(a, (e) => {
@@ -79,17 +79,17 @@ class SceneItemUtility {
         "执行EntityTriggerAction，等待创建Entity",
         ["CreatureDataId", a],
         ["CreatureDataId", a],
-        ["PlayerId", n.q5n],
-        ["SessionId", n.T5n],
-        ["StartIndex", n.G5n],
-        ["EndIndex", n.avs],
+        ["PlayerId", n.W5n],
+        ["SessionId", n.w5n],
+        ["StartIndex", n.K5n],
+        ["EndIndex", n.mvs],
       );
     const t = () => {
       var e,
         t,
         r = ModelManager_1.ModelManager.CreatureModel.GetEntity(a);
       r &&
-        (r = r.Entity.GetComponent(77)) &&
+        (r = r.Entity.GetComponent(78)) &&
         (e = r.ExitActions) &&
         ((t = ModelManager_1.ModelManager.CreatureModel.GetEntity(o)) ||
           (Log_1.Log.CheckWarn() &&
@@ -106,18 +106,18 @@ class SceneItemUtility {
             7,
             "执行EntityTriggerAction，Entity创建完毕",
             ["CreatureDataId", a],
-            ["PlayerId", n.q5n],
-            ["SessionId", n.T5n],
-            ["StartIndex", n.G5n],
-            ["EndIndex", n.avs],
+            ["PlayerId", n.W5n],
+            ["SessionId", n.w5n],
+            ["StartIndex", n.K5n],
+            ["EndIndex", n.mvs],
           ),
         ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByServerNotify(
           e,
           r.CreateTriggerContext(t?.Id ?? 0),
-          n.q5n,
-          n.T5n,
-          n.G5n,
-          n.avs,
+          n.W5n,
+          n.w5n,
+          n.K5n,
+          n.mvs,
         ));
     };
     WaitEntityTask_1.WaitEntityTask.Create(a, (e) => {
@@ -133,10 +133,10 @@ class SceneItemUtility {
         7,
         "执行EntityStateChangeAction，等待创建Entity",
         ["CreatureDataId", n],
-        ["PlayerId", r.q5n],
-        ["SessionId", r.T5n],
-        ["StartIndex", r.G5n],
-        ["EndIndex", r.avs],
+        ["PlayerId", r.W5n],
+        ["SessionId", r.w5n],
+        ["StartIndex", r.K5n],
+        ["EndIndex", r.mvs],
       ),
       WaitEntityTask_1.WaitEntityTask.Create(
         n,
@@ -144,7 +144,7 @@ class SceneItemUtility {
           var t;
           e &&
             (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(n)) &&
-            (t = e.Entity.GetComponent(119)) &&
+            (t = e.Entity.GetComponent(120)) &&
             t.BehaviorMap &&
             (t = t.BehaviorMap.get(a)) &&
             (ControllerHolder_1.ControllerHolder.LevelGeneralController
@@ -155,21 +155,20 @@ class SceneItemUtility {
                 7,
                 "执行EntityStateChangeAction，Entity创建完毕",
                 ["CreatureDataId", n],
-                ["PlayerId", r.q5n],
-                ["SessionId", r.T5n],
-                ["StartIndex", r.G5n],
-                ["EndIndex", r.avs],
+                ["PlayerId", r.W5n],
+                ["SessionId", r.w5n],
+                ["StartIndex", r.K5n],
+                ["EndIndex", r.mvs],
               ),
             ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByServerNotify(
               t,
               LevelGeneralContextDefine_1.EntityContext.Create(e.Id),
-              r.q5n,
-              r.T5n,
-              r.G5n,
-              r.avs,
+              r.W5n,
+              r.w5n,
+              r.K5n,
+              r.mvs,
             ));
         },
-        !1,
         LevelGeneralNetworks_1.WAIT_ENTITY_ERROR_TIME,
         !0,
         !0,
@@ -182,19 +181,18 @@ class SceneItemUtility {
         var t;
         e &&
           (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(n)) &&
-          (t = e.Entity.GetComponent(136)) &&
+          (t = e.Entity.GetComponent(137)) &&
           (t = t.InteractActions) &&
           ((e = LevelGeneralContextDefine_1.EntityContext.Create(e.Id)),
           ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByServerNotify(
             t,
             e,
-            r.q5n,
-            r.T5n,
-            r.G5n,
-            r.avs,
+            r.W5n,
+            r.w5n,
+            r.K5n,
+            r.mvs,
           ));
       },
-      !1,
       LevelGeneralNetworks_1.WAIT_ENTITY_ERROR_TIME,
       !0,
       !0,
@@ -207,19 +205,18 @@ class SceneItemUtility {
         var t;
         e &&
           (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(n)) &&
-          (t = e.Entity.GetComponent(92)) &&
+          (t = e.Entity.GetComponent(93)) &&
           (t = t.DeadActions) &&
           ((e = LevelGeneralContextDefine_1.EntityContext.Create(e.Id)),
           ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByServerNotify(
             t,
             e,
-            r.q5n,
-            r.T5n,
-            r.G5n,
-            r.avs,
+            r.W5n,
+            r.w5n,
+            r.K5n,
+            r.mvs,
           ));
       },
-      !1,
       LevelGeneralNetworks_1.WAIT_ENTITY_ERROR_TIME,
       !0,
       !0,
@@ -232,18 +229,17 @@ class SceneItemUtility {
         var t;
         e &&
           (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(n)) &&
-          (t = e.Entity.GetComponent(120)) &&
+          (t = e.Entity.GetComponent(121)) &&
           (t = t.GetTargetActions(a)) &&
           ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByServerNotify(
             t,
             LevelGeneralContextDefine_1.EntityContext.Create(e.Id),
-            r.q5n,
-            r.T5n,
-            r.G5n,
-            r.avs,
+            r.W5n,
+            r.w5n,
+            r.K5n,
+            r.mvs,
           );
       },
-      !1,
       LevelGeneralNetworks_1.WAIT_ENTITY_ERROR_TIME,
       !0,
       !0,
@@ -256,18 +252,17 @@ class SceneItemUtility {
         var t;
         e &&
           (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(n)) &&
-          (t = e.Entity.GetComponent(119)) &&
+          (t = e.Entity.GetComponent(120)) &&
           (t = t.GetLifeCycleStageActions(a)) &&
           ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByServerNotify(
             t,
             LevelGeneralContextDefine_1.EntityContext.Create(e.Id),
-            r.q5n,
-            r.T5n,
-            r.G5n,
-            r.avs,
+            r.W5n,
+            r.w5n,
+            r.K5n,
+            r.mvs,
           );
       },
-      !1,
       LevelGeneralNetworks_1.WAIT_ENTITY_ERROR_TIME,
       !0,
       !0,
@@ -280,18 +275,17 @@ class SceneItemUtility {
         var t;
         e &&
           (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(n)) &&
-          (t = e.Entity.GetComponent(138)) &&
+          (t = e.Entity.GetComponent(139)) &&
           (t = a ? t.ActivateActions : t.DeactivateActions) &&
           ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByServerNotify(
             t,
             LevelGeneralContextDefine_1.EntityContext.Create(e.Id),
-            r.q5n,
-            r.T5n,
-            r.G5n,
-            r.avs,
+            r.W5n,
+            r.w5n,
+            r.K5n,
+            r.mvs,
           );
       },
-      !1,
       LevelGeneralNetworks_1.WAIT_ENTITY_ERROR_TIME,
       !0,
       !0,
@@ -304,18 +298,17 @@ class SceneItemUtility {
         var t;
         e &&
           (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(n)) &&
-          (t = e.Entity.GetComponent(195)) &&
+          (t = e.Entity.GetComponent(197)) &&
           (t = t.GetBeamReceiveActions(a)) &&
           ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByServerNotify(
             t,
             LevelGeneralContextDefine_1.EntityContext.Create(e.Id),
-            r.q5n,
-            r.T5n,
-            r.G5n,
-            r.avs,
+            r.W5n,
+            r.w5n,
+            r.K5n,
+            r.mvs,
           );
       },
-      !1,
       LevelGeneralNetworks_1.WAIT_ENTITY_ERROR_TIME,
       !0,
       !0,
@@ -328,20 +321,19 @@ class SceneItemUtility {
         var t;
         e &&
           (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(n)) &&
-          (t = e.Entity.GetComponent(119)) &&
+          (t = e.Entity.GetComponent(120)) &&
           (t = t.StateConfig?.StateChangeBehaviors) &&
           (t = t[a].ConditionAction) &&
           ((t = t[o].Action),
           ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByServerNotify(
             t,
             LevelGeneralContextDefine_1.EntityContext.Create(e.Id),
-            r.q5n,
-            r.T5n,
-            r.G5n,
-            r.avs,
+            r.W5n,
+            r.w5n,
+            r.K5n,
+            r.mvs,
           ));
       },
-      !1,
       LevelGeneralNetworks_1.WAIT_ENTITY_ERROR_TIME,
       !0,
       !0,

@@ -9,6 +9,7 @@ const UE = require("ue"),
   UiViewBase_1 = require("../../../../../Ui/Base/UiViewBase"),
   PopupCaptionItem_1 = require("../../../../../Ui/Common/PopupCaptionItem"),
   ButtonItem_1 = require("../../../../Common/Button/ButtonItem"),
+  ActivityMoonChasingController_1 = require("../Activity/ActivityMoonChasingController"),
   BuildingMainModule_1 = require("./Build/BuildingMainModule"),
   MoonChasingViewController_1 = require("./MoonChasingViewController"),
   PopularityModule_1 = require("./PopularityModule");
@@ -18,12 +19,12 @@ class MoonChasingMainView extends UiViewBase_1.UiViewBase {
       (this.eke = void 0),
       (this.lqe = void 0),
       (this.vRn = void 0),
-      (this.kWs = void 0),
-      (this.FWs = void 0),
-      (this.VWs = void 0),
-      (this.wCa = void 0),
+      (this.NKs = void 0),
+      (this.kKs = void 0),
+      (this.FKs = void 0),
+      (this.Tfa = void 0),
       (this.s6e = void 0),
-      (this.zGn = new MoonChasingViewController_1.MoonChasingViewController()),
+      (this.aOn = new MoonChasingViewController_1.MoonChasingViewController()),
       (this.u2e = () => {
         this.eke.RefreshPopularity();
       });
@@ -48,8 +49,8 @@ class MoonChasingMainView extends UiViewBase_1.UiViewBase {
   }
   async zDn() {
     (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(5))),
-      this.lqe.SetCloseCallBack(this.zGn.CloseSelf),
-      this.lqe.SetHelpCallBack(this.zGn.OpenHelpView);
+      this.lqe.SetCloseCallBack(this.aOn.CloseSelf),
+      this.lqe.SetHelpCallBack(this.aOn.OpenHelpView);
     var i = ConfigManager_1.ConfigManager.BusinessConfig.GetCoinItemId();
     await this.lqe.SetCurrencyItemList([i]);
   }
@@ -57,26 +58,29 @@ class MoonChasingMainView extends UiViewBase_1.UiViewBase {
     (this.vRn = new BuildingMainModule_1.BuildingMainModule()),
       await this.vRn.CreateThenShowByActorAsync(this.GetItem(8).GetOwner());
   }
-  HWs() {
-    (this.kWs = new ButtonItem_1.ButtonItem(this.GetItem(2))),
-      this.kWs.SetFunction(this.zGn.SkipToBusiness),
-      (this.FWs = new ButtonItem_1.ButtonItem(this.GetItem(3))),
-      this.FWs.SetFunction(this.zGn.SkipToBuild),
-      (this.VWs = new ButtonItem_1.ButtonItem(this.GetItem(4))),
-      this.VWs.SetFunction(this.zGn.SkipToTask),
-      (this.wCa = new ButtonItem_1.ButtonItem(this.GetItem(0))),
-      this.wCa.SetFunction(this.zGn.SkipToHandbook),
+  VKs() {
+    (this.NKs = new ButtonItem_1.ButtonItem(this.GetItem(2))),
+      this.NKs.SetFunction(this.aOn.SkipToBusiness),
+      (this.kKs = new ButtonItem_1.ButtonItem(this.GetItem(3))),
+      this.kKs.SetFunction(this.aOn.SkipToBuild),
+      (this.FKs = new ButtonItem_1.ButtonItem(this.GetItem(4))),
+      this.FKs.SetFunction(() => {
+        this.aOn.SkipToTask();
+      }),
+      (this.Tfa = new ButtonItem_1.ButtonItem(this.GetItem(0))),
+      this.Tfa.SetFunction(this.aOn.SkipToHandbook),
       (this.s6e = new ButtonItem_1.ButtonItem(this.GetItem(1))),
-      this.s6e.SetFunction(this.zGn.SkipToReward);
+      this.s6e.SetFunction(this.aOn.SkipToReward);
   }
   async OnBeforeStartAsync() {
-    this.zGn.RegisterView(this),
+    this.aOn.RegisterView(this),
       await ControllerHolder_1.ControllerHolder.MoonChasingController.TrackMoonAllDataRequest(),
       await Promise.all([this.zDn(), this.ERn(), this.SRn()]),
-      this.HWs();
+      this.VKs();
   }
   OnBeforeShow() {
-    this.zGn.Show();
+    this.aOn.Show(),
+      ActivityMoonChasingController_1.ActivityMoonChasingController.CheckIsActivityClose();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -114,11 +118,11 @@ class MoonChasingMainView extends UiViewBase_1.UiViewBase {
     this.vRn.RefreshBuilding(i);
   }
   RefreshRedDot() {
-    this.kWs.BindRedDot("MoonChasingDelegation"),
-      this.FWs.BindRedDot("MoonChasingBuilding"),
-      this.wCa.BindRedDot("MoonChasingHandbook"),
+    this.NKs.BindRedDot("MoonChasingDelegation"),
+      this.kKs.BindRedDot("MoonChasingBuilding"),
+      this.Tfa.BindRedDot("MoonChasingHandbook"),
       this.s6e.BindRedDot("MoonChasingRewardAndShop"),
-      this.VWs.BindRedDot("MoonChasingAllQuest");
+      this.FKs.BindRedDot("MoonChasingAllQuest");
   }
 }
 exports.MoonChasingMainView = MoonChasingMainView;

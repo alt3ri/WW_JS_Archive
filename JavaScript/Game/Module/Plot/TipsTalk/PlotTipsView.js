@@ -27,43 +27,43 @@ const UE = require("ue"),
 class PlotTipsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.dbn = void 0),
-      (this.mbn = void 0),
+      (this.Ebn = void 0),
+      (this.ybn = void 0),
       (this.vto = !1),
       (this.lZi = -1),
-      (this.fbn = new Map()),
-      (this.kbn = ""),
+      (this.Lbn = new Map()),
+      (this.$bn = ""),
       (this.Mto = (e) => {
-        (this.dbn = e), this.MZi();
-        (e = PublicUtil_1.PublicUtil.GetFlowConfigLocalText(this.dbn.TidTalk)),
+        (this.Ebn = e), this.MZi();
+        (e = PublicUtil_1.PublicUtil.GetFlowConfigLocalText(this.Ebn.TidTalk)),
           (e =
             ModelManager_1.ModelManager.PlotModel.PlotTextReplacer.Replace(
               e,
               !0,
             ) ?? ""),
           this.GetText(1)?.SetText(e),
-          (e = this.fbn.get(this.dbn.WhoId));
+          (e = this.Lbn.get(this.Ebn.WhoId));
         e && this.GetTexture(0)?.SetTexture(e),
-          this.mbn
+          this.ybn
             ? (Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Plot",
                   27,
                   "[PlotTips] 语音完成或没有语音，恢复提交字幕定时",
                 ),
-              this.mbn.Resume())
-            : (this.kbn !== LanguageSystem_1.LanguageSystem.PackageAudio &&
+              this.ybn.Resume())
+            : (this.$bn !== LanguageSystem_1.LanguageSystem.PackageAudio &&
                 (-1 !== this.lZi &&
-                  (PlotTipsView.Fbn++,
+                  (PlotTipsView.Ybn++,
                   AudioSystem_1.AudioSystem.ExecuteAction(this.lZi, 0, {
                     TransitionDuration: 0,
                   }),
                   (this.lZi = -1)),
-                (this.kbn = LanguageSystem_1.LanguageSystem.PackageAudio)),
+                (this.$bn = LanguageSystem_1.LanguageSystem.PackageAudio)),
               this.EZi() ||
                 this.pZi() ||
-                this.vbn(
-                  this.dbn.CaptionParams?.TotalTime ??
+                this.Rbn(
+                  this.Ebn.CaptionParams?.TotalTime ??
                     ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
                       .DefaultDurationPrompt,
                 ));
@@ -76,7 +76,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
           (!e && this.IsHideOrHiding) ||
           ((this.vto = e)
             ? (t && this.SetUiActive(!1),
-              this.pbn(),
+              this.Abn(),
               ControllerHolder_1.ControllerHolder.FlowController.CountDownSkip(
                 !0,
               ))
@@ -91,10 +91,10 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
         (this.OpenParam = e), this.yto();
       }),
       (this.rto = () => {
-        PlotTipsView.Fbn++,
-          this.mbn?.Remove(),
-          (this.mbn = void 0),
-          (this.dbn = void 0),
+        PlotTipsView.Ybn++,
+          this.ybn?.Remove(),
+          (this.ybn = void 0),
+          (this.Ebn = void 0),
           -1 !== this.lZi &&
             (AudioSystem_1.AudioSystem.ExecuteAction(this.lZi, 0, {
               TransitionDuration: BREAK_TIME,
@@ -160,7 +160,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
         const o = new CustomPromise_1.CustomPromise();
         e.push(o.Promise),
           ResourceSystem_1.ResourceSystem.LoadAsync(i[1], UE.Texture, (e) => {
-            ObjectUtils_1.ObjectUtils.IsValid(e) && this.fbn.set(i[0], e),
+            ObjectUtils_1.ObjectUtils.IsValid(e) && this.Lbn.set(i[0], e),
               o.SetResult();
           });
       }
@@ -170,7 +170,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
   OnStart() {
     ModelManager_1.ModelManager.PlotModel.CurTalkItem &&
       this.Mto(ModelManager_1.ModelManager.PlotModel.CurTalkItem),
-      (this.kbn = LanguageSystem_1.LanguageSystem.PackageAudio);
+      (this.$bn = LanguageSystem_1.LanguageSystem.PackageAudio);
   }
   OnAfterPlayStartSequence() {
     this.yto();
@@ -192,11 +192,11 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
       this.Eto(!0, !1);
   }
   OnBeforeDestroy() {
-    this.fbn.clear(),
+    this.Lbn.clear(),
       this.rto(),
       ControllerHolder_1.ControllerHolder.FlowController.CountDownSkip(!1);
   }
-  vbn(e, t = !1) {
+  Rbn(e, t = !1) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Plot",
@@ -205,17 +205,17 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
         ["delay", e],
         ["isPause", t],
       ),
-      (this.mbn = TimerSystem_1.TimerSystem.Delay(() => {
-        var e = this.dbn;
+      (this.ybn = TimerSystem_1.TimerSystem.Delay(() => {
+        var e = this.Ebn;
         this.rto(),
           ControllerHolder_1.ControllerHolder.FlowController.FlowShowTalk.SubmitSubtitle(
             e,
           );
       }, e * CommonDefine_1.MILLIONSECOND_PER_SECOND)),
-      t && this.mbn.Pause();
+      t && this.ybn.Pause();
   }
-  pbn() {
-    this.mbn?.Pause(),
+  Abn() {
+    this.ybn?.Pause(),
       -1 !== this.lZi &&
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Plot", 27, "[PlotTips] 暂停语音"),
@@ -247,24 +247,21 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
           this.CloseMe()));
   }
   EZi() {
-    var e = this.dbn.PlayVoice
-      ? PlotAudioById_1.configPlotAudioById.GetConfig(this.dbn.TidTalk)
+    var e = this.Ebn.PlayVoice
+      ? PlotAudioById_1.configPlotAudioById.GetConfig(this.Ebn.TidTalk)
       : void 0;
     if (!e) return !1;
     var t =
       ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
         e.ExternalSourceSetting,
       );
-    const i = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName([
-      e.IsCheckSex,
-      e.FileName,
-    ]);
+    const i = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName(e);
     e = (0, AudioSystem_1.parseAudioEventPath)(t.AudioEventPath);
     if (-1 === this.lZi) {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "[PlotTips] 语音播放", ["mediaName", i]),
-        PlotTipsView.Fbn++;
-      const o = PlotTipsView.Fbn;
+        PlotTipsView.Ybn++;
+      const o = PlotTipsView.Ybn;
       this.lZi = AudioSystem_1.AudioSystem.PostEvent(e, void 0, {
         ExternalSourceName: t.ExternalSrcName,
         ExternalSourceMediaName: i,
@@ -276,10 +273,10 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
               i,
             ]),
             0 === e &&
-              o === PlotTipsView.Fbn &&
+              o === PlotTipsView.Ybn &&
               ((this.lZi = -1),
-              this.vbn(
-                this.dbn.CaptionParams?.IntervalTime ??
+              this.Rbn(
+                this.Ebn.CaptionParams?.IntervalTime ??
                   ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
                     .AudioEndWaitTimePrompt,
                 this.vto,
@@ -293,11 +290,11 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
     return !0;
   }
   pZi() {
-    if (!this.dbn?.UniversalTone) return !1;
+    if (!this.Ebn?.UniversalTone) return !1;
     var e =
-        this.dbn.UniversalTone.TimberId ??
-        SpeakerById_1.configSpeakerById.GetConfig(this.dbn.WhoId)?.TimberId,
-      t = this.dbn.UniversalTone.UniversalToneId;
+        this.Ebn.UniversalTone.TimberId ??
+        SpeakerById_1.configSpeakerById.GetConfig(this.Ebn.WhoId)?.TimberId,
+      t = this.Ebn.UniversalTone.UniversalToneId;
     if (!e || !t)
       return (
         ControllerHolder_1.ControllerHolder.FlowController.LogError(
@@ -323,8 +320,8 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
     if (-1 === this.lZi) {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "[PlotTips] 语气播放", ["event", o]),
-        PlotTipsView.Fbn++;
-      const s = PlotTipsView.Fbn;
+        PlotTipsView.Ybn++;
+      const s = PlotTipsView.Ybn;
       this.lZi = AudioSystem_1.AudioSystem.PostEvent(o, void 0, {
         CallbackMask: 1,
         CallbackHandler: (e, t) => {
@@ -334,10 +331,10 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
               o,
             ]),
             0 === e &&
-              s === PlotTipsView.Fbn &&
+              s === PlotTipsView.Ybn &&
               ((this.lZi = -1),
-              this.vbn(
-                this.dbn?.CaptionParams?.IntervalTime ??
+              this.Rbn(
+                this.Ebn?.CaptionParams?.IntervalTime ??
                   ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
                     .AudioEndWaitTimePrompt,
                 this.vto,
@@ -353,7 +350,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
   MZi() {
     var e,
       t,
-      i = this.dbn.TalkAkEvent;
+      i = this.Ebn.TalkAkEvent;
     i &&
       (e = (0, AudioSystem_1.parseAudioEventPath)(i.AkEvent)) &&
       (i.Type === IAction_1.EPostAkEvent.Global
@@ -373,5 +370,5 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
               ])));
   }
 }
-(exports.PlotTipsView = PlotTipsView).Fbn = 0;
+(exports.PlotTipsView = PlotTipsView).Ybn = 0;
 //# sourceMappingURL=PlotTipsView.js.map

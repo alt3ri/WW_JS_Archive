@@ -14,7 +14,7 @@ class BuildingMainModule extends UiPanelBase_1.UiPanelBase {
       (this.Hwt = void 0),
       (this.ZoomIn = void 0),
       (this.ZoomOut = void 0),
-      (this.Djs = (i) => {
+      (this.Xjs = (i) => {
         3 !== i && this.Hwt.SetValue(this.o4o.MapScale, !1);
       }),
       (this.P4o = () => {
@@ -23,7 +23,7 @@ class BuildingMainModule extends UiPanelBase_1.UiPanelBase {
       (this.w4o = () => {
         this.o4o.LongPressScroll(this.o4o.ScaleStep);
       }),
-      (this.rHs = (i) => {
+      (this.CHs = (i) => {
         this.o4o.SliderScroll(i);
       });
   }
@@ -43,18 +43,18 @@ class BuildingMainModule extends UiPanelBase_1.UiPanelBase {
       ),
       this.kDn.SetBuildingItemActive(!1);
   }
-  X9s() {
+  S7s() {
     (this.o4o = new BuildingMapMoveComponent_1.BuildingMapMoveComponent(
       this.GetDraggable(0),
     )),
       this.o4o.SetScaleSafeArea(0.45, 0.6),
-      this.o4o.SetChangeScaleCallback(this.Djs);
+      this.o4o.SetChangeScaleCallback(this.Xjs);
   }
-  nHs() {
+  fHs() {
     (this.Hwt = this.GetSlider(2)),
       this.Hwt.SetMinValue(this.o4o.MapScaleSafeArea.Min, !1, !1),
       this.Hwt.SetMaxValue(this.o4o.MapScaleSafeArea.Max, !1, !1),
-      this.Hwt.OnValueChangeCb.Bind(this.rHs),
+      this.Hwt.OnValueChangeCb.Bind(this.CHs),
       this.Hwt.SetValue(this.o4o.MapScaleSafeArea.Min, !0),
       (this.ZoomIn = new LongPressButton_1.LongPressButton(
         this.GetButton(3),
@@ -70,7 +70,7 @@ class BuildingMainModule extends UiPanelBase_1.UiPanelBase {
     await Promise.all([this.JDn()]);
   }
   OnStart() {
-    this.X9s(), this.nHs();
+    this.S7s(), this.fHs();
   }
   RefreshModule() {
     this.kDn.RefreshRole();

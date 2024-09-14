@@ -191,24 +191,24 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
       this.gqo();
   }
   RegisterMe() {
-    this.AddEventListener(), this.hqo();
+    this.dde(), this.hqo();
   }
   UnRegisterMe() {
-    this.RemoveEventListener(),
-      this.OnUnRegisterMe(),
-      this.fqo(this.GetAxisName());
+    this.Cde(), this.OnUnRegisterMe(), this.fqo(this.GetAxisName());
   }
-  AddEventListener() {
+  dde() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnActionKeyChanged,
       this.Dut,
-    );
+    ),
+      this.OnAddEventListener();
   }
-  RemoveEventListener() {
+  Cde() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnActionKeyChanged,
       this.Dut,
-    );
+    ),
+      this.OnRemoveEventListener();
   }
   SetVisibleMode(t, i, e = !1) {
     var s = this.sqo;
@@ -293,6 +293,9 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
   GetHotKeyFunctionType() {
     return this.w7t;
   }
+  IsOccupancyFightInput() {
+    return this.OnIsOccupancyFightInput();
+  }
   RefreshSelfHotKeyState(t) {
     this.OnRefreshHotKeyShield(t), this.OnRefreshSelfHotKeyState(t), this.gqo();
   }
@@ -306,8 +309,13 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
     this.OnClear();
   }
   OnInit() {}
+  OnAddEventListener() {}
+  OnRemoveEventListener() {}
   OnUnRegisterMe() {}
   OnClear() {}
+  OnIsOccupancyFightInput() {
+    return !0;
+  }
   OnPress(t) {}
   OnRelease(t) {}
   OnInputAxis(t, i) {}

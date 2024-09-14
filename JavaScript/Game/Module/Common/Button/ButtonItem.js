@@ -61,6 +61,20 @@ class ButtonItem extends UiPanelBase_1.UiPanelBase {
       (this.UnBindRedDot(), (this.l4e = t), this.l4e) &&
       RedDotController_1.RedDotController.BindRedDot(t, i, void 0, e);
   }
+  BindGivenUid(t, e) {
+    var i = this.GetItem(2);
+    i &&
+      ((this.l4e = t), this.l4e) &&
+      RedDotController_1.RedDotController.BindRedDot(t, i, void 0, e);
+  }
+  UnBindGivenUid(t) {
+    this.l4e &&
+      RedDotController_1.RedDotController.UnBindGivenUi(
+        this.l4e,
+        this.GetItem(2),
+        t,
+      );
+  }
   UnBindRedDot() {
     this.l4e &&
       (RedDotController_1.RedDotController.UnBindRedDot(this.l4e),

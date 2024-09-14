@@ -24,14 +24,14 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
       (this.oze = new Map()),
-      (this.VXs = []),
+      (this.OJs = []),
       (this.rze = void 0),
       (this.nze = 0),
       (this.sze = void 0),
       (this.aze = !1),
       (this.hze = void 0),
       (this.SPe = void 0),
-      (this.PGn = (e) => {
+      (this.FGn = (e) => {
         2 === this.GetOperationType() &&
           this.gze().then(
             () => {
@@ -69,13 +69,13 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                 this.Lze();
                 break;
               case 3:
-                this.oXn();
+                this.mXn();
                 break;
               case 4:
                 this.Dze();
                 break;
               case 5:
-                this.mzs();
+                this.dXa();
             }
         } else
           e === InputMappingsDefine_1.actionMappings.组合主键 && this.Rze(t);
@@ -184,9 +184,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
   dze() {
     var e = Info_1.Info.IsInGamepad();
-    this.GetItem(4)?.SetUIActive(!e),
-      this.GetItem(5)?.SetUIActive(e),
-      this.Sze();
+    this.GetItem(5)?.SetUIActive(e), this.Sze();
   }
   Sze() {
     var e = Info_1.Info.IsInGamepad(),
@@ -204,7 +202,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     2 === this.GetOperationType() &&
       (EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRefreshChatRowData,
-        this.PGn,
+        this.FGn,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.InputControllerChange,
@@ -226,11 +224,11 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     2 === this.GetOperationType() &&
       (EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.OnRefreshChatRowData,
-        this.PGn,
+        this.FGn,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnRefreshChatRowData,
-          this.PGn,
+          this.FGn,
         ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.InputControllerChange,
@@ -267,7 +265,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   Bze() {
     return ModelManager_1.ModelManager.TowerModel.CheckInTower();
   }
-  oXn() {
+  mXn() {
     ControllerHolder_1.ControllerHolder.InstanceDungeonGuideController.StartReplayGuide();
   }
   Dze() {
@@ -283,7 +281,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       EventDefine_1.EEventName.BattleUiToggleSilentAreaInfoView,
     );
   }
-  mzs() {
+  dXa() {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.BattleUiToggleTowerDefenseInfoView,
     );
@@ -301,9 +299,10 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     if (1 === e.ContentChatRoomType) {
       var i = e.TargetPlayerId;
       if (!i) return;
-      var s = ModelManager_1.ModelManager.FriendModel;
-      if (!s.GetFriendById(i)) return;
-      if (s.HasBlockedPlayer(i)) return;
+      var s = ModelManager_1.ModelManager.FriendModel,
+        r = s.GetFriendById(i);
+      if (!r) return;
+      if (s.HasBlockedPlayer(i) || r.GetBlockBySdk()) return;
     }
     (s = this.GetItem(2)),
       (i = await this.NewDynamicChildViewByResourceId(
@@ -313,7 +312,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         !0,
         e,
       ));
-    this.oze.set(t, i), this.VXs.push(t);
+    this.oze.set(t, i), this.OJs.push(t);
   }
   DelayScroll(e) {
     this.xze(),
@@ -331,7 +330,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.rze = void 0);
   }
   fze() {
-    var e = this.HXs();
+    var e = this.NJs();
     e && this.GetScrollViewWithScrollbar(1)?.ScrollTo(e.GetRootItem());
   }
   mze(e) {
@@ -339,18 +338,18 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       t =
         (t?.GetRootActor()?.IsValid() && t.Destroy(),
         this.oze.delete(e),
-        this.VXs.indexOf(e));
-    0 <= t && this.VXs.splice(t, 1);
+        this.OJs.indexOf(e));
+    0 <= t && this.OJs.splice(t, 1);
   }
   qze() {
     for (const e of this.oze.values())
       e?.GetRootActor()?.IsValid() && e.Destroy();
-    this.oze.clear(), (this.VXs.length = 0);
+    this.oze.clear(), (this.OJs.length = 0);
   }
-  HXs() {
-    var e = this.VXs.length;
+  NJs() {
+    var e = this.OJs.length;
     if (!(e <= 0)) {
-      e = this.VXs[e - 1];
+      e = this.OJs[e - 1];
       if (e) return this.oze.get(e);
     }
   }
@@ -362,7 +361,12 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.rze = TimerSystem_1.TimerSystem.Delay(this.Aze, this.nze));
   }
   Pze(e) {
-    this.GetItem(3)?.SetUIActive(e);
+    this.GetItem(3)?.SetUIActive(e),
+      (ModelManager_1.ModelManager.BattleUiModel.ChatScrollViewVisible = e);
+  }
+  OnAfterDestroy() {
+    super.OnAfterDestroy(),
+      (ModelManager_1.ModelManager.BattleUiModel.ChatScrollViewVisible = !1);
   }
 }
 exports.ChatPanel = ChatPanel;

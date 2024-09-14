@@ -63,7 +63,6 @@ class SequenceModel extends ModelBase_1.ModelBase {
       (this.UseRuntimeData = !0),
       (this.DisableMotionBlurFrame = 0),
       (this.BeginSwitchFrame = 0),
-      (this.BeginBlendFrame = 0),
       (this.TwiceAnimFlag = !1);
   }
   Reset() {

@@ -43,7 +43,7 @@ class PawnTurnActionController {
         var t;
         this.Gce?.Valid
           ? ((t = Global_1.Global.BaseCharacter.CharacterActorComponent),
-            this.Gce.Entity.GetComponent(162).SetSightTargetItem(t),
+            this.Gce.Entity.GetComponent(163).SetSightTargetItem(t),
             this.WaitTurnEnd &&
               (this.Jrr(!1), this.OnTurnToInteractTargetEndHandle) &&
               this.OnTurnToInteractTargetEndHandle())
@@ -58,7 +58,7 @@ class PawnTurnActionController {
             this.OnTurnToDefaultForwardEndHandle();
       }),
       (this.Jh = t),
-      (this.Gce = t.GetComponent(37)),
+      (this.Gce = t.GetComponent(38)),
       (this.Hte = t.GetComponent(1)),
       this.Gce?.Valid && this.vir.DeepCopy(this.Hte.ActorForwardProxy);
   }
@@ -103,7 +103,7 @@ class PawnTurnActionController {
         ? ((this.Qrr = this.Gce.CharacterMovement.MovementMode),
           this.Gce.CharacterMovement.SetMovementMode(1),
           (t = Global_1.Global.BaseCharacter.CharacterActorComponent),
-          (i = (s = this.Gce.Entity).GetComponent(162)),
+          (i = (s = this.Gce.Entity).GetComponent(163)),
           (s = s.GetComponent(3)) &&
             ((o = Vector_1.Vector.Create(t.ActorLocationProxy)).AdditionEqual(
               this.PlayerOffset,
@@ -141,8 +141,8 @@ class PawnTurnActionController {
                     51,
                     "[PawnTurnActionController.TurnToInteractTarget][交互转身] 添加转身监听事件",
                     ["PbDataID", this.Hte?.CreatureData.GetPbDataId()],
-                  )),
-            (this.Krr = !0)))
+                  ),
+                (this.Krr = !0))))
         : (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "NPC",
@@ -166,7 +166,7 @@ class PawnTurnActionController {
     var i,
       s = Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity;
     s &&
-      ((i = s.GetComponent(53)),
+      ((i = s.GetComponent(54)),
       t
         ? (s.GetComponent(3).SetInputDirect(Vector_1.Vector.ZeroVector),
           i.ClearMoveVectorCache(),
@@ -179,8 +179,8 @@ class PawnTurnActionController {
       ? this.Gce?.Valid
         ? (1 !== (t = this.Gce.CharacterMovement).MovementMode &&
             t.SetMovementMode(1),
-          (t = this.Gce.Entity).GetComponent(171)?.OpenLookAt ||
-            ((i = t.GetComponent(162)) && i.SetSightTargetItem(void 0)),
+          (t = this.Gce.Entity).GetComponent(172)?.OpenLookAt ||
+            ((i = t.GetComponent(163)) && i.SetSightTargetItem(void 0)),
           (i = t.GetComponent(3)) &&
             (AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
               i,
@@ -208,6 +208,17 @@ class PawnTurnActionController {
             this.OnTurnToDefaultForwardEndHandle())
       : this.OnTurnToDefaultForwardEndHandle &&
         this.OnTurnToDefaultForwardEndHandle();
+  }
+  UpdateDefaultDirect(t) {
+    this.vir.DeepCopy(t),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "NPC",
+          51,
+          "[PawnTurnActionController.UpdateDefaultDirect]更新默认朝向",
+          ["PbDataID", this.Hte?.CreatureData.GetPbDataId()],
+          ["NewDirect", t],
+        );
   }
   Dispose() {
     this.RemoveEvents(), (this.Gce = void 0);

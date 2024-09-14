@@ -17,25 +17,37 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configBroadcastImageById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configBroadcastImageById.GetConfig"),
   CONFIG_STAT_PREFIX = "configBroadcastImageById.GetConfig(";
 exports.configBroadcastImageById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, e = !0) => {
-    if (
-      (a = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
-        var n = KEY_PREFIX + `#${o})`;
-        const i = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (i) return i;
+  GetConfig: (o, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      a =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (a) {
+      if (n) {
+        var i = KEY_PREFIX + `#${o})`;
+        const e = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (e)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
+          );
       }
       if (
         (a =
@@ -46,10 +58,9 @@ exports.configBroadcastImageById = {
               o,
             ]))
       ) {
-        var a,
-          n = void 0;
+        i = void 0;
         if (
-          (([a, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([a, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -57,20 +68,26 @@ exports.configBroadcastImageById = {
           )),
           a)
         ) {
-          const i = BroadcastImage_1.BroadcastImage.getRootAsBroadcastImage(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+          const e = BroadcastImage_1.BroadcastImage.getRootAsBroadcastImage(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
           );
           return (
-            e &&
+            n &&
               ((a = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(a, i)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(a, e)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=BroadcastImageById.js.map

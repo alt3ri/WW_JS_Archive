@@ -11,8 +11,10 @@ class AiTeamLevelNew {
     return this.id();
   }
   get PositionId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.positionidLength(), (t) =>
-      this.positionid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.positionidLength(),
+      this.positionid,
+      this,
     );
   }
   get AllocationPeriodic() {
@@ -31,13 +33,17 @@ class AiTeamLevelNew {
     return this.beattackcountdown();
   }
   get EliteRatio() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.eliteratioLength(), (t) =>
-      this.eliteratio(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.eliteratioLength(),
+      this.eliteratio,
+      this,
     );
   }
   get RangeRatio() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.rangeratioLength(), (t) =>
-      this.rangeratio(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.rangeratioLength(),
+      this.rangeratio,
+      this,
     );
   }
   __init(t, i) {

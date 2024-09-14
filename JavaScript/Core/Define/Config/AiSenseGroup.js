@@ -14,8 +14,10 @@ class AiSenseGroup {
     return this.losedelay();
   }
   get AiSenseIds() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.aisenseidsLength(), (t) =>
-      this.aisenseids(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.aisenseidsLength(),
+      this.aisenseids,
+      this,
     );
   }
   get ShareDis() {

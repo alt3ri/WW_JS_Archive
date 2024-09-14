@@ -25,7 +25,8 @@ class SynthesisFormula {
   get ConsumeItems() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.consumeitemsLength(),
-      (t) => this.consumeitems(t),
+      this.consumeitems,
+      this,
     );
   }
   get UnlockCondition() {
@@ -47,8 +48,10 @@ class SynthesisFormula {
     return this.limitcount();
   }
   get RoleList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.rolelistLength(), (t) =>
-      this.rolelist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.rolelistLength(),
+      this.rolelist,
+      this,
     );
   }
   get ComposeContent() {

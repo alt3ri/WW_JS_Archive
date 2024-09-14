@@ -17,60 +17,77 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configBeginnerGuideById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configBeginnerGuideById.GetConfig"),
   CONFIG_STAT_PREFIX = "configBeginnerGuideById.GetConfig(";
 exports.configBeginnerGuideById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (e, n = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (n) {
-        var o = KEY_PREFIX + `#${e})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(o);
-        if (r) return r;
+  GetConfig: (n, e = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var o = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${n})`),
+      i =
+        (o.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
+      if (e) {
+        var t = KEY_PREFIX + `#${n})`;
+        const g = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (g)
+          return (
+            o.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
+          );
       }
       if (
         (i =
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, n, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
               "Id",
-              e,
+              n,
             ]))
       ) {
-        var i,
-          o = void 0;
+        t = void 0;
         if (
-          (([i, o] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
-            ["Id", e],
+            ["Id", n],
           )),
           i)
         ) {
-          const r = BeginnerGuide_1.BeginnerGuide.getRootAsBeginnerGuide(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(o.buffer)),
+          const g = BeginnerGuide_1.BeginnerGuide.getRootAsBeginnerGuide(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
-            n &&
-              ((i = KEY_PREFIX + `#${e})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(i, r)),
+            e &&
+              ((i = KEY_PREFIX + `#${n})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, g)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            r
+            o.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    o.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=BeginnerGuideById.js.map

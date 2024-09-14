@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TreasureBoxDetectorMarkItemView = void 0);
 const UE = require("ue"),
   CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
   MarkDetectorRangeImageComponent_1 = require("./Components/MarkDetectorRangeImageComponent"),
   ServerMarkItemView_1 = require("./ServerMarkItemView");
 class TreasureBoxDetectorMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
@@ -34,7 +35,8 @@ class TreasureBoxDetectorMarkItemView extends ServerMarkItemView_1.ServerMarkIte
       "TreasureBoxDetectionMaxDistance",
     );
     this.GetDetectorRangeComponentAsync().then((e) => {
-      e.RangeImage.SetWidth((t / 100) * 2),
+      e.GetRootItem().SetAnchorOffset(Vector2D_1.Vector2D.ZeroVector),
+        e.RangeImage.SetWidth((t / 100) * 2),
         e.RangeImage.SetHeight((t / 100) * 2),
         e.GetRootItem().SetHierarchyIndex(0),
         this.SetScale(this.Holder.MarkScale);

@@ -17,28 +17,42 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configPayShopTabByShopIdAndTabId.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configPayShopTabByShopIdAndTabId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configPayShopTabByShopIdAndTabId.GetConfig(";
 exports.configPayShopTabByShopIdAndTabId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, n, a = !0) => {
-    if (
-      (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${n})`),
+      t =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
       if (a) {
-        var i = KEY_PREFIX + `#${o}#${n})`;
-        const d = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (d) return d;
+        var e = KEY_PREFIX + `#${o}#${n})`;
+        const C = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (C)
+          return (
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
+          );
       }
       if (
-        (e =
+        (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, n, ...logPair) &&
           0 <
@@ -50,32 +64,37 @@ exports.configPayShopTabByShopIdAndTabId = {
               ["TabId", n],
             ))
       ) {
-        var e,
-          i = void 0;
+        e = void 0;
         if (
-          (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([t, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["ShopId", o],
             ["TabId", n],
           )),
-          e)
+          t)
         ) {
-          const d = PayShopTab_1.PayShopTab.getRootAsPayShopTab(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+          const C = PayShopTab_1.PayShopTab.getRootAsPayShopTab(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
           );
           return (
             a &&
-              ((e = KEY_PREFIX + `#${o}#${n})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(e, d)),
+              ((t = KEY_PREFIX + `#${o}#${n})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(t, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            d
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=PayShopTabByShopIdAndTabId.js.map

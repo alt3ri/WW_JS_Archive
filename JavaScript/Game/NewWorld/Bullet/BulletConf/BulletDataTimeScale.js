@@ -13,7 +13,7 @@ class BulletDataTimeScale {
       (this.w9o = void 0),
       (this.B9o = void 0),
       (this.b9o = void 0),
-      (this.$fa = void 0),
+      (this.mSa = void 0),
       (this.Pe = t);
   }
   get AreaTimeScale() {
@@ -63,8 +63,8 @@ class BulletDataTimeScale {
   }
   get RemoveHitTimeScaleOnDestroy() {
     return (
-      void 0 === this.$fa && (this.$fa = this.Pe.子弹销毁时移除受击顿帧),
-      this.$fa
+      void 0 === this.mSa && (this.mSa = this.Pe.子弹销毁时移除受击顿帧),
+      this.mSa
     );
   }
 }

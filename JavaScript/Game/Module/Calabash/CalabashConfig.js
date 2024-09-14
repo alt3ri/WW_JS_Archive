@@ -83,7 +83,7 @@ class CalabashConfig extends ConfigBase_1.ConfigBase {
             "CalabashExpItemId",
           ) ?? 0)
       ? 0
-      : e.get(a) ?? 0;
+      : (e.get(a) ?? 0);
   }
   GetCalabashMaxLevel() {
     let e = 0;
@@ -106,6 +106,11 @@ class CalabashConfig extends ConfigBase_1.ConfigBase {
   GetIntensifyCaptureGuarantee() {
     return CommonParamById_1.configCommonParamById.GetIntConfig(
       "IntensifyCaptureGuarantee",
+    );
+  }
+  GetVisionBatchRecoveryMaxCount() {
+    return CommonParamById_1.configCommonParamById.GetIntConfig(
+      "PhantomRefiningMaxCount",
     );
   }
 }

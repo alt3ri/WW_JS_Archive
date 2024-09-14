@@ -12,19 +12,21 @@ const Stats_1 = require("../../../Core/Common/Stats"),
 class SkillCdController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      Net_1.Net.Register(16938, this.uQe),
-      Net_1.Net.Register(28589, this.cQe),
+      Net_1.Net.Register(25328, this.uQe),
+      Net_1.Net.Register(16179, this.cQe),
       !0
     );
   }
   static OnClear() {
-    return Net_1.Net.UnRegister(16938), Net_1.Net.UnRegister(28589), !0;
+    return Net_1.Net.UnRegister(25328), Net_1.Net.UnRegister(16179), !0;
   }
   static OnTick(e) {
     this.IsPause() ||
+      (SkillCdController.gW.Start(),
       ModelManager_1.ModelManager.SkillCdModel.Tick(
         e * Time_1.Time.TimeDilation,
-      );
+      ),
+      SkillCdController.gW.Stop());
   }
   static Pause(e, t) {
     var r = this.IsPause(),
@@ -45,7 +47,8 @@ class SkillCdController extends ControllerBase_1.ControllerBase {
     return 0 !== this.mQe;
   }
 }
-((exports.SkillCdController = SkillCdController).gW = void 0),
+((exports.SkillCdController = SkillCdController).gW =
+  Stats_1.Stat.Create("SkillCdTick")),
   (SkillCdController.mQe = 0),
   (SkillCdController.uQe = (e) => {
     ModelManager_1.ModelManager.SkillCdModel?.HandlePlayerSkillInfoPbNotify(e);

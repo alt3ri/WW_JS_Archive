@@ -5,7 +5,6 @@ const Log_1 = require("../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
-  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   CameraController_1 = require("../../Camera/CameraController"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
@@ -19,73 +18,31 @@ class LevelEventCameraLookAtPosition extends LevelGeneralBase_1.LevelEventBase {
       (this.dae = Vector_1.Vector.Create()),
       (this.pLe = "CameraLookAtPosition Ban Input");
   }
-  Execute(e, t) {
-    var i, r, o, a, s, n;
-    e
-      ? ((n = parseFloat(e.get("X"))),
-        (i = parseFloat(e.get("Y"))),
-        (r = parseFloat(e.get("Z"))),
-        (o = parseFloat(e.get("FadeInTime"))),
-        (a = parseFloat(e.get("StayTime"))),
-        (s = parseFloat(e.get("FadeOutTime"))),
-        (e = e.get("LockCameraInput") === StringUtils_1.ONE_STRING),
-        isNaN(n) || isNaN(i) || isNaN(r) || isNaN(o) || isNaN(a) || isNaN(s)
-          ? (Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "Camera",
-                15,
-                "关卡事件[LevelEventCameraLookAtPosition]参数非法",
-                ["x", n],
-                ["y", i],
-                ["z", r],
-                ["fadeInTime", o],
-                ["stayTime", a],
-                ["fadeOutTime", s],
-              ),
-            this.FinishExecute(!1))
-          : (this.LLe.Set(n, i, r),
-            CameraController_1.CameraController.FightCamera.LogicComponent.ApplyCameraGuide(
-              this.LLe,
-              o,
-              a,
-              s,
-              e,
-              void 0,
-              -1,
-            ),
-            this.IsWaitEnd
-              ? ((n = o + a + s + 0.5),
-                TimerSystem_1.TimerSystem.Delay(() => {
-                  this.FinishExecute(!0);
-                }, n * CommonDefine_1.MILLIONSECOND_PER_SECOND))
-              : this.FinishExecute(!0)))
-      : this.FinishExecute(!1);
-  }
   ExecuteNew(t, e) {
-    const i = t;
-    if (i) {
-      var t = i.Pos.X ?? 0,
-        r = i.Pos.Y ?? 0,
-        o = i.Pos.Z ?? 0,
-        a = i.FadeInTime,
-        s = i.StayTime,
-        n = i.FadeOutTime,
-        l = i.CameraPos?.X,
-        m = i.CameraPos?.Y,
-        _ = i.CameraPos?.Z,
-        u = i.Fov;
-      if (isNaN(t) || isNaN(r) || isNaN(o) || isNaN(a) || isNaN(s) || isNaN(n))
+    const r = t;
+    if (r) {
+      var t = r.Pos.X ?? 0,
+        o = r.Pos.Y ?? 0,
+        i = r.Pos.Z ?? 0,
+        n = r.FadeInTime,
+        a = r.StayTime,
+        s = r.FadeOutTime,
+        l = r.CameraPos?.X,
+        m = r.CameraPos?.Y,
+        _ = r.CameraPos?.Z,
+        u = r.Fov;
+      if (isNaN(t) || isNaN(o) || isNaN(i) || isNaN(n) || isNaN(a) || isNaN(s))
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Camera",
             15,
             "关卡事件[LevelEventCameraLookAtPosition]参数非法",
             ["x", t],
-            ["y", r],
-            ["z", o],
-            ["fadeInTime", a],
-            ["stayTime", s],
-            ["fadeOutTime", n],
+            ["y", o],
+            ["z", i],
+            ["fadeInTime", n],
+            ["stayTime", a],
+            ["fadeOutTime", s],
             ["endPositionX", l],
             ["endPositionY", m],
             ["endPositionZ", _],
@@ -93,7 +50,7 @@ class LevelEventCameraLookAtPosition extends LevelGeneralBase_1.LevelEventBase {
           ),
           this.FinishExecute(!1);
       else {
-        i.BanInput &&
+        r.BanInput &&
           ((ModelManager_1.ModelManager.GeneralLogicTreeModel.DisableInput =
             !0),
           EventSystem_1.EventSystem.Emit(
@@ -101,42 +58,42 @@ class LevelEventCameraLookAtPosition extends LevelGeneralBase_1.LevelEventBase {
             this.pLe,
           ),
           InputDistributeController_1.InputDistributeController.RefreshInputTag()),
-          i.HideUi &&
+          r.HideUi &&
             ModelManager_1.ModelManager.BattleUiModel.ChildViewData.HideBattleView(
               1,
             ),
-          this.LLe.Set(t, r, o);
+          this.LLe.Set(t, o, i);
         let e = void 0;
-        i.CameraPos
-          ? (e = this.dae).Set(i.CameraPos.X, i.CameraPos.Y, i.CameraPos.Z)
+        r.CameraPos
+          ? (e = this.dae).Set(r.CameraPos.X, r.CameraPos.Y, r.CameraPos.Z)
           : (e = void 0),
           CameraController_1.CameraController.FightCamera.LogicComponent.ExitSequenceDialogue(),
           CameraController_1.CameraController.FightCamera.LogicComponent.ApplyCameraGuide(
             this.LLe,
+            n,
             a,
             s,
-            n,
-            i.LockCamera ?? !1,
+            r.LockCamera ?? !1,
             e,
-            i.Fov,
+            r.Fov,
           ),
           this.IsAsync
-            ? (i.BanInput &&
+            ? (r.BanInput &&
                 ((ModelManager_1.ModelManager.GeneralLogicTreeModel.DisableInput =
                   !1),
                 InputDistributeController_1.InputDistributeController.RefreshInputTag()),
-              i.HideUi &&
+              r.HideUi &&
                 ModelManager_1.ModelManager.BattleUiModel.ChildViewData.ShowBattleView(
                   1,
                 ),
               this.FinishExecute(!0))
-            : ((l = a + s + n),
+            : ((l = n + a + s),
               TimerSystem_1.TimerSystem.Delay(() => {
-                i.BanInput &&
+                r.BanInput &&
                   ((ModelManager_1.ModelManager.GeneralLogicTreeModel.DisableInput =
                     !1),
                   InputDistributeController_1.InputDistributeController.RefreshInputTag()),
-                  i.HideUi &&
+                  r.HideUi &&
                     ModelManager_1.ModelManager.BattleUiModel.ChildViewData.ShowBattleView(
                       1,
                     ),

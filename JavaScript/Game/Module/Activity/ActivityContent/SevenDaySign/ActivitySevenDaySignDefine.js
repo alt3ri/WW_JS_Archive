@@ -26,11 +26,11 @@ class SignRewardItemBase extends UiPanelBase_1.UiPanelBase {
   RefreshByData(t, e, i) {}
   GetRewardStateTextId(t) {
     switch (t) {
-      case Protocol_1.Aki.Protocol.jps.j6n:
+      case Protocol_1.Aki.Protocol.zps.Z6n:
         return "NeedSign";
-      case Protocol_1.Aki.Protocol.jps.hMs:
+      case Protocol_1.Aki.Protocol.zps.CMs:
         return "CanGetReward";
-      case Protocol_1.Aki.Protocol.jps.Jfs:
+      case Protocol_1.Aki.Protocol.zps.ovs:
         return "CollectActivity_state_recived";
       default:
         return "NeedSign";
@@ -70,12 +70,12 @@ class ImportantRewardItem extends (exports.SignRewardItemBase =
     (this.Index = i),
       this.SetDayText(i + 1),
       this.SetStateText(this.GetRewardStateTextId(e));
-    var i = e === Protocol_1.Aki.Protocol.jps.Jfs,
-      s = e === Protocol_1.Aki.Protocol.jps.hMs,
+    var i = e === Protocol_1.Aki.Protocol.zps.ovs,
+      s = e === Protocol_1.Aki.Protocol.zps.CMs,
       r = ((this.CanGetReward = s), this.GetText(4)),
       e =
         (r?.SetChangeColor(
-          e === Protocol_1.Aki.Protocol.jps.j6n,
+          e === Protocol_1.Aki.Protocol.zps.Z6n,
           r.changeColor,
         ),
         this.GetItem(6).SetUIActive(i),
@@ -140,12 +140,12 @@ class NormalRewardItem extends SignRewardItemBase {
       (this.Mne = t.ItemId),
       this.SetDayText(i + 1),
       this.SetStateText(this.GetRewardStateTextId(e));
-    var i = e === Protocol_1.Aki.Protocol.jps.Jfs,
-      s = e === Protocol_1.Aki.Protocol.jps.hMs,
+    var i = e === Protocol_1.Aki.Protocol.zps.ovs,
+      s = e === Protocol_1.Aki.Protocol.zps.CMs,
       r = ((this.CanGetReward = s), this.GetText(2)),
       r =
         (r?.SetChangeColor(
-          e === Protocol_1.Aki.Protocol.jps.j6n,
+          e === Protocol_1.Aki.Protocol.zps.Z6n,
           r.changeColor,
         ),
         this.GetItem(4).SetUIActive(i),
@@ -166,9 +166,9 @@ class NormalRewardItem extends SignRewardItemBase {
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
           this.Mne,
         ),
-      r = e === Protocol_1.Aki.Protocol.jps.hMs,
-      o = e === Protocol_1.Aki.Protocol.jps.j6n,
-      a = e === Protocol_1.Aki.Protocol.jps.Jfs;
+      r = e === Protocol_1.Aki.Protocol.zps.CMs,
+      o = e === Protocol_1.Aki.Protocol.zps.Z6n,
+      a = e === Protocol_1.Aki.Protocol.zps.ovs;
     switch (s) {
       case 1:
         var h = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
@@ -247,8 +247,8 @@ class VersionSignRewardItem extends SignRewardItemBase {
   }
   RefreshByData(t, e, i) {
     (this.Index = i), (this.Mne = t.ItemId), this.N3e(i + 1);
-    var i = e === Protocol_1.Aki.Protocol.jps.Jfs,
-      s = e === Protocol_1.Aki.Protocol.jps.hMs;
+    var i = e === Protocol_1.Aki.Protocol.zps.ovs,
+      s = e === Protocol_1.Aki.Protocol.zps.CMs;
     (this.CanGetReward = s),
       this.O3e(this.GetRewardStateTextId(e)),
       this.GetItem(1).SetUIActive(s),
@@ -270,9 +270,9 @@ class VersionSignRewardItem extends SignRewardItemBase {
       r =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(this.Mne)
           ?.QualityId ?? 1,
-      o = e === Protocol_1.Aki.Protocol.jps.hMs,
-      a = e === Protocol_1.Aki.Protocol.jps.j6n,
-      h = e === Protocol_1.Aki.Protocol.jps.Jfs;
+      o = e === Protocol_1.Aki.Protocol.zps.CMs,
+      a = e === Protocol_1.Aki.Protocol.zps.Z6n,
+      h = e === Protocol_1.Aki.Protocol.zps.ovs;
     switch (s) {
       case 1:
         var l = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(

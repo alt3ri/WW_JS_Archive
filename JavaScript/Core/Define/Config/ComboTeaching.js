@@ -13,18 +13,24 @@ class ComboTeaching {
     return this.nextroleguideid();
   }
   get KeyID() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.keyidLength(), (t) =>
-      this.keyid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.keyidLength(),
+      this.keyid,
+      this,
     );
   }
   get IconText() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.icontextLength(), (t) =>
-      this.icontext(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.icontextLength(),
+      this.icontext,
+      this,
     );
   }
   get IconTagText() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.icontagtextLength(), (t) =>
-      this.icontagtext(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.icontagtextLength(),
+      this.icontagtext,
+      this,
     );
   }
   get DescriptionTitle() {
@@ -34,23 +40,31 @@ class ComboTeaching {
     return this.descriptioncontent();
   }
   get CommandID() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.commandidLength(), (t) =>
-      this.commandid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.commandidLength(),
+      this.commandid,
+      this,
     );
   }
   get guideID() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.guideidLength(), (t) =>
-      this.guideid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.guideidLength(),
+      this.guideid,
+      this,
     );
   }
   get InputEnums() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.inputenumsLength(), (t) =>
-      this.inputenums(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.inputenumsLength(),
+      this.inputenums,
+      this,
     );
   }
   get AddBuffID() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.addbuffidLength(), (t) =>
-      this.addbuffid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.addbuffidLength(),
+      this.addbuffid,
+      this,
     );
   }
   __init(t, i) {

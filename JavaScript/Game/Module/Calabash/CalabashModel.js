@@ -38,7 +38,7 @@ class CalabashDevelopRewardData {
     return this.DevelopRewardData.DevelopCondition.length;
   }
   SetUnlockConditionMap(e) {
-    for (const t of e) this.Zft.set(t.sLs, t.aLs);
+    for (const t of e) this.Zft.set(t.dLs, t.mLs);
   }
   GetUnlockConditionMap() {
     return this.Zft;
@@ -319,6 +319,9 @@ class CalabashModel extends ModelBase_1.ModelBase {
       t && e.push(t);
     }
     return e;
+  }
+  GmClearData() {
+    this.opt.length = 0;
   }
 }
 exports.CalabashModel = CalabashModel;

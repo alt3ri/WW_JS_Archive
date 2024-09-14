@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configRoleBattleViewInfoById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configRoleBattleViewInfoById.GetConfig"),
   CONFIG_STAT_PREFIX = "configRoleBattleViewInfoById.GetConfig(";
 exports.configRoleBattleViewInfoById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, e = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      n =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (n) {
       if (e) {
-        var n = KEY_PREFIX + `#${o})`;
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (t) return t;
+        var i = KEY_PREFIX + `#${o})`;
+        const f = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (f)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            f
+          );
       }
       if (
-        (i =
+        (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,32 +58,37 @@ exports.configRoleBattleViewInfoById = {
               o,
             ]))
       ) {
-        var i,
-          n = void 0;
+        i = void 0;
         if (
-          (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
           )),
-          i)
+          n)
         ) {
-          const t =
+          const f =
             RoleBattleViewInfo_1.RoleBattleViewInfo.getRootAsRoleBattleViewInfo(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
             );
           return (
             e &&
-              ((i = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(i, t)),
+              ((n = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(n, f)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            f
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=RoleBattleViewInfoById.js.map

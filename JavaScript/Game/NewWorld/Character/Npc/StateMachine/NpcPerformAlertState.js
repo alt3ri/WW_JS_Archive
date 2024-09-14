@@ -15,10 +15,10 @@ class NpcPerformAlertState extends StateBase_1.StateBase {
       });
   }
   CanChangeFrom(e) {
-    var t = this.Owner.Entity.GetComponent(171);
+    var t = this.Owner.Entity.GetComponent(172);
     return (
       void 0 !==
-        this.Owner.Entity.GetComponent(39)?.AiController?.AiAlert
+        this.Owner.Entity.GetComponent(40)?.AiController?.AiAlert
           ?.AiAlertConfig &&
       1 === e &&
       !t.IsInPlot

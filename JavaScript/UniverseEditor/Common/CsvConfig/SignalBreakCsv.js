@@ -72,28 +72,28 @@ const signalBreakConfigCsvFields = [
     CnName: "信号1",
     Type: "Int",
     Default: "0",
-    RenderType: 41,
+    RenderType: 42,
   }),
   (0, CsvLoader_1.createCsvField)({
     Name: "SignalData2",
     CnName: "信号2",
     Type: "Int",
     Default: "0",
-    RenderType: 41,
+    RenderType: 42,
   }),
   (0, CsvLoader_1.createCsvField)({
     Name: "SignalData3",
     CnName: "信号3",
     Type: "Int",
     Default: "0",
-    RenderType: 41,
+    RenderType: 42,
   }),
   (0, CsvLoader_1.createCsvField)({
     Name: "SignalData4",
     CnName: "信号4",
     Type: "Int",
     Default: "0",
-    RenderType: 41,
+    RenderType: 42,
   }),
 ];
 class SignalBreakConfigCsvLoader extends CsvLoader_1.CsvLoader {

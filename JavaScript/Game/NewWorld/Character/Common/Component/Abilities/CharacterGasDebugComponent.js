@@ -54,7 +54,7 @@ const puerts_1 = require("puerts"),
   CharacterUnifiedStateTypes_1 = require("./CharacterUnifiedStateTypes");
 var ESkillGenreName,
   EMovementModeName,
-  EAttributeId = Protocol_1.Aki.Protocol.Bks;
+  EAttributeId = Protocol_1.Aki.Protocol.Vks;
 const Info_1 = require("../../../../../../Core/Common/Info"),
   MAX_DEBUG_STRING_NUMS = 50;
 !(function (t) {
@@ -152,7 +152,7 @@ class DamageRecordDsp {
 }
 const attributeIdArray = [
   EAttributeId.Proto_Life,
-  EAttributeId.e5n,
+  EAttributeId.l5n,
   EAttributeId.Proto_Atk,
   EAttributeId.Proto_Crit,
   EAttributeId.Proto_CritDamage,
@@ -269,7 +269,7 @@ let CharacterGasDebugComponent =
                   r.push(CharacterGasDebugComponent_1.Jqr(Date.now())),
                   e.GetComponent(0)),
                 i = a.GetEntityType();
-              if (i === Protocol_1.Aki.Protocol.wks.Proto_Player) {
+              if (i === Protocol_1.Aki.Protocol.kks.Proto_Player) {
                 r.push("角色"), r.push(a.GetPbDataId().toFixed());
                 var n = a.Valid ? a.GetRoleId() : 0,
                   n = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(n);
@@ -282,7 +282,7 @@ let CharacterGasDebugComponent =
                     : "");
                 r.push(n);
               } else {
-                if (i !== Protocol_1.Aki.Protocol.wks.Proto_Monster) return;
+                if (i !== Protocol_1.Aki.Protocol.kks.Proto_Monster) return;
                 r.push("怪物"), r.push(a.GetPbDataId().toFixed());
                 n = PublicUtil_1.PublicUtil.GetConfigTextByKey(
                   a.GetBaseInfo()?.TidName ?? "",
@@ -295,7 +295,7 @@ let CharacterGasDebugComponent =
                   (r.push(i?.BulletName ?? "0"),
                   r.push(i.Base.DamageId.toString()),
                   t.BulletInitParams.SkillId)),
-                (n = (r.push(a ? a.toFixed() : ""), e.GetComponent(33))),
+                (n = (r.push(a ? a.toFixed() : ""), e.GetComponent(34))),
                 (i = a ? n.GetSkillInfo(a) : void 0),
                 (e =
                   (r.push(i ? ESkillGenreName[i.SkillGenre] : ""),
@@ -315,14 +315,14 @@ let CharacterGasDebugComponent =
               CharacterGasDebugComponent_1.SecondsSinceStartup(),
             ),
             i.push(CharacterGasDebugComponent_1.Jqr(Date.now())),
-            a?.GetComponent(85) ? i.push("角色") : i.push("怪物"),
+            a?.GetComponent(86) ? i.push("角色") : i.push("怪物"),
             (n = a?.CheckGetComponent(0).GetPbDataId()),
             i.push(n.toFixed(0)),
             (n = a?.GetComponent(3).Actor.GetName()),
             i.push(n),
             i.push(e.toString()),
             i.push(ESkillGenreName[r]),
-            (n = a.GetComponent(158)),
+            (n = a.GetComponent(159)),
             i.push(n.GetCurrentValue(EAttributeId.Proto_Atk).toFixed()),
             i.push(n.GetCurrentValue(EAttributeId.Proto_Crit).toFixed()),
             i.push(n.GetCurrentValue(EAttributeId.Proto_CritDamage).toFixed()),
@@ -337,7 +337,7 @@ let CharacterGasDebugComponent =
         (this.iGr = void 0),
         (this.ServerDebugInfoDirty = !1),
         (this.oGr = (t, e) => {
-          var e = this.Entity.GetComponent(33)?.GetSkillInfo(e),
+          var e = this.Entity.GetComponent(34)?.GetSkillInfo(e),
             r =
               (CharacterGasDebugComponent_1.rGr ||
                 (CharacterGasDebugComponent_1.rGr = new Map()),
@@ -472,7 +472,7 @@ let CharacterGasDebugComponent =
     }
     GetTagDebugStrings() {
       return (
-        this.Entity.GetComponent(188)?.TagContainer.GetDebugString() ??
+        this.Entity.GetComponent(190)?.TagContainer.GetDebugString() ??
         "找不到tag组件"
       );
     }
@@ -486,7 +486,7 @@ let CharacterGasDebugComponent =
     GetBuffEffectDebugString(t) {
       let e = "";
       for (const r of this.Entity.GetComponent(
-        159,
+        160,
       ).BuffEffectManager.GetAllEffects())
         this.cGr(t, String(r.BuffId)) &&
           (e += `${r.constructor.name} buffId:${r.BuffId} handle:${r.ActiveHandleId}\n`);
@@ -494,7 +494,7 @@ let CharacterGasDebugComponent =
     }
     GetShieldDebugString() {
       this.Fqr.length = 0;
-      var t = this.Entity.GetComponent(66);
+      var t = this.Entity.GetComponent(67);
       if (t)
         for (var [, e] of t.GetDebugShieldInfo()) {
           var r = e.ShieldValue,
@@ -504,17 +504,17 @@ let CharacterGasDebugComponent =
             `Shield magnitude: ${r} priority: ${a} templateId: ` + e,
           );
         }
-      t = this.Entity.GetComponent(158)?.GetLockDebugString() ?? "";
+      t = this.Entity.GetComponent(159)?.GetLockDebugString() ?? "";
       return "\n\nShields:\n" + this.Fqr.join("\n") + t;
     }
     GetAttributeDebugStrings() {
-      var e = this.Entity.GetComponent(158);
+      var e = this.Entity.GetComponent(159);
       if (!e) return "Invalid";
       let r = "";
       for (let t = 1; t < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX; t++) {
         var a = e.GetBaseValue(t),
           i = e.GetCurrentValue(t),
-          n = Protocol_1.Aki.Protocol.Bks[t];
+          n = Protocol_1.Aki.Protocol.Vks[t];
         CharacterAttributeTypes_1.stateAttributeIds.has(t) || i === a
           ? (r += `#${t} ${n}	= ${i.toFixed(0)}
 `)
@@ -531,11 +531,11 @@ let CharacterGasDebugComponent =
     }
     GetAllAttributeDebugStrings() {
       this.Vqr.length = 0;
-      var e = this.Entity.GetComponent(158);
+      var e = this.Entity.GetComponent(159);
       for (let t = 1; t < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX; t++) {
         var r = e.GetBaseValue(t),
           a = e.GetCurrentValue(t),
-          i = Protocol_1.Aki.Protocol.Bks[t],
+          i = Protocol_1.Aki.Protocol.Vks[t],
           i = `Attribute ID: ${t}   ${i}  
     Base: ${r.toFixed()}    Current: ${a.toFixed()} 
 `;
@@ -565,24 +565,24 @@ let CharacterGasDebugComponent =
       return t;
     }
     GetAllAttributeDebugInfo() {
-      var a = this.Entity.GetComponent(158);
+      var a = this.Entity.GetComponent(159);
       if (!a) return "Invalid";
       let i = "";
-      const n = this.iGr?.PSs;
+      const n = this.iGr?.GSs;
       var o = new Array(CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX);
-      if (n) for (const D of n) o[D.QMs] = D;
+      if (n) for (const D of n) o[D.tSs] = D;
       for (let r = 1; r < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX; r++) {
         var s = a.GetBaseValue(r),
           h = a.GetCurrentValue(r),
           u = h.toFixed(0);
         let t = (h - s).toFixed(0);
         s <= h && (t = "+" + t), (t = h === s ? "" : `(${t})`);
-        var _ = Protocol_1.Aki.Protocol.Bks[r].replace("Proto_", "");
+        var _ = Protocol_1.Aki.Protocol.Vks[r].replace("Proto_", "");
         const n = o[r];
-        var C = n?.d6n.toFixed(0) ?? "0";
-        let e = n ? (n.d6n - n.KMs).toFixed(0) : "0";
-        n && n.d6n > n.KMs && (e = "+" + e),
-          (e = n?.d6n === n?.KMs ? "" : `(${e})`),
+        var C = n?.y6n.toFixed(0) ?? "0";
+        let e = n ? (n.y6n - n.eSs).toFixed(0) : "0";
+        n && n.y6n > n.eSs && (e = "+" + e),
+          (e = n?.y6n === n?.eSs ? "" : `(${e})`),
           CharacterAttributeTypes_1.stateAttributeIds.has(r) || h === s
             ? (i += `#${r} ${_}	 C:${u} | S:${C}
 `)
@@ -590,9 +590,9 @@ let CharacterGasDebugComponent =
 `);
       }
       i += "\n队伍属性：\n";
-      var t = this.iGr?.u6n,
+      var t = this.iGr?.M6n,
         e = new Array();
-      if (t) for (const p of t) e[p.m6n] = p;
+      if (t) for (const p of t) e[p.E6n] = p;
       for (const d of FormationPropertyAll_1.configFormationPropertyAll.GetConfigList()) {
         var r = d.Id,
           l =
@@ -608,9 +608,9 @@ let CharacterGasDebugComponent =
               r,
             );
         const n = e[r];
-        var g = n?.d6n.toFixed(0) ?? "???",
-          m = n?.C6n.toFixed(0) ?? "???",
-          b = n?.f6n.toFixed(0) ?? "???";
+        var g = n?.y6n.toFixed(0) ?? "???",
+          m = n?.I6n.toFixed(0) ?? "???",
+          b = n?.L6n.toFixed(0) ?? "???";
         i +=
           `#${r}	 C:${l?.toFixed(0)}/${c?.toFixed(0)} (${f?.toFixed(0)}/s)` +
           ` | S:${g}/${m} (${b}/s)
@@ -668,7 +668,7 @@ let CharacterGasDebugComponent =
     DebugResetBaseValue(t, e) {
       t >= EAttributeId.Proto_Lv &&
         t < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX &&
-        this.Entity.GetComponent(158).SetBaseValue(t, e);
+        this.Entity.GetComponent(159).SetBaseValue(t, e);
     }
     static get IsServerLogOff() {
       return this.mGr;
@@ -684,9 +684,9 @@ let CharacterGasDebugComponent =
         (this.mGr = t);
     }
     static RequestSwitchServerMode(t) {
-      var e = Protocol_1.Aki.Protocol.cis.create({
-        Vjn: t,
-        Hjn: Protocol_1.Aki.Protocol.D4s.yAs,
+      var e = Protocol_1.Aki.Protocol.pis.create({
+        Jjn: t,
+        zjn: Protocol_1.Aki.Protocol.B4s.PAs,
       });
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -695,8 +695,8 @@ let CharacterGasDebugComponent =
           "[CharacterDamageComponent]Request Buff Mode",
           ["isClientControl", t],
         ),
-        Net_1.Net.Call(24709, e, (t) => {
-          this.ReceiveSwitchServerLogMode(t.Vjn);
+        Net_1.Net.Call(23699, e, (t) => {
+          this.ReceiveSwitchServerLogMode(t.Jjn);
         });
     }
     static SecondsSinceStartup() {
@@ -1032,11 +1032,11 @@ let CharacterGasDebugComponent =
         s.push(n.Type),
           s.push(n.ConfigId),
           s.push(n.Name),
-          a.GetComponent(85) ? s.push("角色") : s.push("怪物"),
-          s.push(MathUtils_1.MathUtils.LongToBigInt(i.NAs).toString());
+          a.GetComponent(86) ? s.push("角色") : s.push("怪物"),
+          s.push(MathUtils_1.MathUtils.LongToBigInt(i.KAs).toString());
         let t = ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(
             a,
-            MathUtils_1.MathUtils.LongToBigInt(i.ujn).toString(),
+            MathUtils_1.MathUtils.LongToBigInt(i.Mjn).toString(),
             !1,
           ),
           e = void 0;
@@ -1049,41 +1049,41 @@ let CharacterGasDebugComponent =
           (e = EntitySystem_1.EntitySystem.Get(o))?.Valid &&
             (t = ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(
               e,
-              MathUtils_1.MathUtils.LongToBigInt(i.ujn).toString(),
+              MathUtils_1.MathUtils.LongToBigInt(i.Mjn).toString(),
             ))),
           s.push(t?.BulletName ?? ""),
-          s.push(i.FAs.toFixed()),
-          s.push(i.X4n.toFixed());
-        let r = a.GetComponent(33)?.GetSkillInfo(i.X4n);
-        (r = r || e?.GetComponent(33)?.GetSkillInfo(i.X4n)),
+          s.push(i.QAs.toFixed()),
+          s.push(i.r5n.toFixed());
+        let r = a.GetComponent(34)?.GetSkillInfo(i.r5n);
+        (r = r || e?.GetComponent(34)?.GetSkillInfo(i.r5n)),
           s.push(r?.SkillName?.toString()),
-          s.push(MathUtils_1.MathUtils.LongToBigInt(i.jjn.P4n).toString());
+          s.push(MathUtils_1.MathUtils.LongToBigInt(i.Zjn.F4n).toString());
         var n = a?.CheckGetComponent(0).GetPbDataId().toFixed(),
           h = (s.push(n), s.length);
-        for (const u of i.HAs.GAs)
-          u.QMs === EAttributeId.Proto_Atk
-            ? (s[h] = u.d6n.toFixed())
-            : u.QMs === EAttributeId.Proto_Crit
-              ? (s[h + 1] = u.d6n.toFixed())
-              : u.QMs === EAttributeId.Proto_CritDamage
-                ? (s[h + 2] = u.d6n.toFixed())
-                : u.QMs === EAttributeId.Proto_Life
-                  ? (s[h + 3] = u.d6n.toFixed())
-                  : u.QMs === EAttributeId.Proto_Def
-                    ? (s[h + 4] = u.d6n.toFixed())
-                    : u.QMs === EAttributeId.Proto_DamageChange &&
-                      (s[h + 5] = u.d6n.toFixed());
+        for (const u of i.JAs.HAs)
+          u.tSs === EAttributeId.Proto_Atk
+            ? (s[h] = u.y6n.toFixed())
+            : u.tSs === EAttributeId.Proto_Crit
+              ? (s[h + 1] = u.y6n.toFixed())
+              : u.tSs === EAttributeId.Proto_CritDamage
+                ? (s[h + 2] = u.y6n.toFixed())
+                : u.tSs === EAttributeId.Proto_Life
+                  ? (s[h + 3] = u.y6n.toFixed())
+                  : u.tSs === EAttributeId.Proto_Def
+                    ? (s[h + 4] = u.y6n.toFixed())
+                    : u.tSs === EAttributeId.Proto_DamageChange &&
+                      (s[h + 5] = u.y6n.toFixed());
         CharacterGasDebugComponent_1.vGr.push(s.join(","));
         (o = ModelManager_1.ModelManager.CreatureModel.GetEntityId(
-          MathUtils_1.MathUtils.LongToNumber(i.HAs.P4n),
+          MathUtils_1.MathUtils.LongToNumber(i.JAs.F4n),
         )),
           (n = EntitySystem_1.EntitySystem.Get(o));
-        CharacterGasDebugComponent_1.DGr(n, a, i.FAs, r?.SkillGenre);
+        CharacterGasDebugComponent_1.DGr(n, a, i.QAs, r?.SkillGenre);
       }
     }
     static DGr(t, e, r, a) {
       let i = this.IGr;
-      t?.GetComponent(85) || (i = this.TGr);
+      t?.GetComponent(86) || (i = this.TGr);
       var n,
         o = t.Id.toFixed() + e.Id.toFixed(),
         s = i.get(o);
@@ -1122,70 +1122,70 @@ let CharacterGasDebugComponent =
       return !t || e.includes(t) || t.includes(e);
     }
     GetServerBuffString() {
-      if (!this.iGr?.LAs?.mIs) return "";
+      if (!this.iGr?.xAs?.SIs) return "";
       let t = "";
-      for (const s of this.iGr.LAs.mIs) {
-        var e = MathUtils_1.MathUtils.LongToBigInt(s.L6n),
-          r = MathUtils_1.MathUtils.LongToBigInt(s.Sjn).toString(),
+      for (const s of this.iGr.xAs.SIs) {
+        var e = MathUtils_1.MathUtils.LongToBigInt(s.b6n),
+          r = MathUtils_1.MathUtils.LongToBigInt(s.Rjn).toString(),
           a = CharacterBuffController_1.default.GetBuffDefinition(e),
           a = a ? a.Desc : "";
         t += this.RGr(
           e.toString(),
-          s.rVn,
+          s.cVn,
           a,
-          s.Ijn,
-          s.P6n,
-          s.qHn,
+          s.Bjn,
+          s.F6n,
+          s.WHn,
           r,
-          s.FEs,
-          s.Y4n,
+          s.QEs,
+          s.n5n,
         );
       }
-      if (!this.iGr?._Rs) return "";
-      for (const h of this.iGr._Rs) {
-        var i = MathUtils_1.MathUtils.LongToBigInt(h.J4n),
-          n = MathUtils_1.MathUtils.LongToBigInt(h.Sjn).toString(),
+      if (!this.iGr?.fRs) return "";
+      for (const h of this.iGr.fRs) {
+        var i = MathUtils_1.MathUtils.LongToBigInt(h.s5n),
+          n = MathUtils_1.MathUtils.LongToBigInt(h.Rjn).toString(),
           o = CharacterBuffController_1.default.GetBuffDefinition(i),
           o = o ? o.Desc : "";
         t += this.RGr(
           "编 " + i.toString(),
-          h.iVn,
+          h.uVn,
           o,
-          h.Ijn,
-          h.P6n,
-          h.qHn,
+          h.Bjn,
+          h.F6n,
+          h.WHn,
           n,
-          h.FEs ?? 0,
-          h.Y4n ?? 0,
+          h.QEs ?? 0,
+          h.n5n ?? 0,
         );
       }
-      if (0 < this.iGr.LAs.CIs.length) {
+      if (0 < this.iGr.xAs.EIs.length) {
         t += "\nCD : \n";
-        for (const u of this.iGr.LAs.CIs)
-          if (!(u.PTs.length <= 0)) {
+        for (const u of this.iGr.xAs.EIs)
+          if (!(u.GTs.length <= 0)) {
             t +=
-              "[" + MathUtils_1.MathUtils.LongToBigInt(u.L6n).toString() + "] ";
-            for (const _ of u.PTs) t += _.toFixed() + ", ";
+              "[" + MathUtils_1.MathUtils.LongToBigInt(u.b6n).toString() + "] ";
+            for (const _ of u.GTs) t += _.toFixed() + ", ";
           }
       }
       return t;
     }
     GetServerBuffRemainDuration(t) {
-      if (!this.iGr?.LAs?.mIs) return -1;
+      if (!this.iGr?.xAs?.SIs) return -1;
       let e = -1;
-      for (const r of this.iGr.LAs.mIs)
-        if (r.rVn === t) {
-          e = r.FEs;
+      for (const r of this.iGr.xAs.SIs)
+        if (r.cVn === t) {
+          e = r.QEs;
           break;
         }
       return e;
     }
     GetServerBuffTotalDuration(t) {
-      if (!this.iGr?.LAs?.mIs) return -1;
+      if (!this.iGr?.xAs?.SIs) return -1;
       let e = 0;
-      for (const r of this.iGr.LAs.mIs)
-        if (r.rVn === t) {
-          e = r.Y4n;
+      for (const r of this.iGr.xAs.SIs)
+        if (r.cVn === t) {
+          e = r.n5n;
           break;
         }
       return e;
@@ -1215,109 +1215,109 @@ let CharacterGasDebugComponent =
     }
     GetServerTagString() {
       let t = "";
-      if (this.iGr?.RAs)
-        for (const e of this.iGr.RAs)
+      if (this.iGr?.bAs)
+        for (const e of this.iGr.bAs)
           t =
             t +
-            GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(e.o5n)
+            GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(e.m5n)
               .TagName +
             " " +
-            e.o9n.toString() +
+            e.m9n.toString() +
             "\n";
-      if (this.iGr?.AAs)
-        for (const r of this.iGr.AAs)
+      if (this.iGr?.qAs)
+        for (const r of this.iGr.qAs)
           t =
             t +
             "[编] " +
-            GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(r.o5n)
+            GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(r.m5n)
               .TagName +
             " " +
-            r.o9n.toString() +
+            r.m9n.toString() +
             "\n";
       return t;
     }
     GetServerAttributeString() {
-      if (!this.iGr?.PSs) return "";
+      if (!this.iGr?.GSs) return "";
       let t = "";
-      for (const e of this.iGr.PSs)
+      for (const e of this.iGr.GSs)
         t =
           t +
-          e.QMs +
+          e.tSs +
           " " +
-          Protocol_1.Aki.Protocol.Bks[e.QMs] +
+          Protocol_1.Aki.Protocol.Vks[e.tSs] +
           ":[" +
-          e.KMs.toString() +
+          e.eSs.toString() +
           "][" +
-          e.d6n.toString() +
+          e.y6n.toString() +
           "]\n";
       t += "\n队伍属性：\n";
-      for (const r of this.iGr.u6n)
+      for (const r of this.iGr.M6n)
         t =
           t +
-          r.m6n.toString() +
+          r.E6n.toString() +
           "=" +
-          r.d6n.toString() +
+          r.y6n.toString() +
           "/" +
-          r.C6n.toString() +
+          r.I6n.toString() +
           "(" +
-          r.f6n.toString() +
+          r.L6n.toString() +
           "/s)\n";
       return t;
     }
     GetServerPartString() {
-      if (!this.iGr?.DAs?.yTs) return "";
+      if (!this.iGr?.BAs?.PTs) return "";
       let t = "";
-      for (const e of this.iGr.DAs.yTs)
+      for (const e of this.iGr.BAs.PTs)
         t +=
-          e.bjn +
+          e.jjn +
           " :  " +
-          e.Wjn.toFixed(1) +
+          e.eWn.toFixed(1) +
           " / " +
-          e.e5n.toFixed(1) +
+          e.l5n.toFixed(1) +
           ", " +
-          e.t5n +
+          e._5n +
           "\n";
       return t;
     }
     GetServerHateString() {
-      if (!this.iGr?.fSs) return "";
+      if (!this.iGr?.ISs) return "";
       let t = "";
-      for (const e of this.iGr.fSs)
+      for (const e of this.iGr.ISs)
         t +=
-          MathUtils_1.MathUtils.LongToBigInt(e.P4n) +
+          MathUtils_1.MathUtils.LongToBigInt(e.F4n) +
           " : " +
-          e.j8n.toFixed(1) +
+          e.Z8n.toFixed(1) +
           "\n";
       return t;
     }
     GetServerShieldString() {
-      if (!this.iGr?.Hys) return "";
-      let t = "护盾总值: " + this.iGr.Hys.MTs + "\n";
-      for (const e of this.iGr.Hys.pTs)
+      if (!this.iGr?.Jys) return "";
+      let t = "护盾总值: " + this.iGr.Jys.RTs + "\n";
+      for (const e of this.iGr.Jys.LTs)
         t +=
           "[" +
-          e._9n +
+          e.v9n +
           "," +
-          e.iVn +
+          e.uVn +
           "] " +
-          (e.vTs ? "生效" : "失效") +
+          (e.TTs ? "生效" : "失效") +
           ", " +
-          e.CTs +
+          e.ETs +
           "," +
-          e.fTs +
+          e.ITs +
           "," +
-          e.gTs +
+          e.yTs +
           "\n";
       return t;
     }
     ServerDebugInfoRequest() {
-      var t = Protocol_1.Aki.Protocol.Iis.create();
-      (t.P4n = MathUtils_1.MathUtils.NumberToLong(
+      var t = Protocol_1.Aki.Protocol.Uis.create();
+      (t.F4n = MathUtils_1.MathUtils.NumberToLong(
         ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(
           this.Entity.Id,
         ),
       )),
-        Net_1.Net.Call(26446, t, (t) => {
+        Net_1.Net.Call(22636, t, (t) => {
           t && ((this.iGr = t), (this.ServerDebugInfoDirty = !0));
         });
     }
@@ -1353,7 +1353,7 @@ let CharacterGasDebugComponent =
       var e,
         t = t.GetComponent(0),
         r = t.GetEntityType();
-      return r === Protocol_1.Aki.Protocol.wks.Proto_Player
+      return r === Protocol_1.Aki.Protocol.kks.Proto_Player
         ? ((e = t.Valid ? t.GetRoleId() : 0),
           (e = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(e))
             ? ((e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e)),
@@ -1365,7 +1365,7 @@ let CharacterGasDebugComponent =
                 ConfigId: t.GetPbDataId().toFixed(),
               })
             : void 0)
-        : r === Protocol_1.Aki.Protocol.wks.Proto_Monster
+        : r === Protocol_1.Aki.Protocol.kks.Proto_Monster
           ? {
               Name: PublicUtil_1.PublicUtil.GetConfigTextByKey(
                 t.GetBaseInfo()?.TidName ?? "",
@@ -1376,9 +1376,9 @@ let CharacterGasDebugComponent =
           : void 0;
     }
     static SetDamageRecord(t) {
-      var e = Protocol_1.Aki.Protocol.Debug.PZn.create();
-      (e.Kjn = t),
-        Net_1.Net.Call(13155, e, (t) => {
+      var e = Protocol_1.Aki.Protocol.Debug.GZn.create();
+      (e.tWn = t),
+        Net_1.Net.Call(25067, e, (t) => {
           t &&
             Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("CombatInfo", 21, "", ["Response", t]);
@@ -1395,17 +1395,17 @@ let CharacterGasDebugComponent =
         a,
         i = EntitySystem_1.EntitySystem.Get(
           ModelManager_1.ModelManager.CreatureModel.GetEntityId(
-            MathUtils_1.MathUtils.LongToNumber(r.jjn.P4n),
+            MathUtils_1.MathUtils.LongToNumber(r.Zjn.F4n),
           ),
         );
       i.GetComponent(24)?.GetStatisticsEnable() &&
         ((t = (
           0.001 *
-            (MathUtils_1.MathUtils.LongToNumber(r.kAs) -
+            (MathUtils_1.MathUtils.LongToNumber(r.WAs) -
               CharacterGasDebugComponent_1.CGr) -
           CharacterGasDebugComponent_1.sGr
         ).toFixed(2)),
-        (a = this.Jqr(r.kAs)),
+        (a = this.Jqr(r.WAs)),
         this.RecordDamage(i, r, t, a),
         this.AGr(i, r, t, a),
         this.PGr(i, r, t, a),
@@ -1413,7 +1413,7 @@ let CharacterGasDebugComponent =
     }
     static xGr(e, r) {
       var a = e.GetComponent(0);
-      if (a && a.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player) {
+      if (a && a.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player) {
         this.rGr || (this.rGr = new Map());
         a = e.Id;
         let t = this.rGr.get(a);
@@ -1422,7 +1422,7 @@ let CharacterGasDebugComponent =
           this.rGr.set(a, t));
         e = new DamageRecordDsp(
           Time_1.Time.WorldTimeSeconds - CharacterGasDebugComponent_1.sGr,
-          r.FAs,
+          r.QAs,
           !1,
           !1,
           !1,
@@ -1458,14 +1458,14 @@ let CharacterGasDebugComponent =
           s.push(n.ConfigId),
           s.push(n.Name),
           s.push(
-            i.VAs === Protocol_1.Aki.Protocol.VAs.Proto_FromBullet
+            i.XAs === Protocol_1.Aki.Protocol.XAs.Proto_FromBullet
               ? "子弹"
               : "Buff",
           ),
-          s.push(MathUtils_1.MathUtils.LongToBigInt(i.NAs).toString());
+          s.push(MathUtils_1.MathUtils.LongToBigInt(i.KAs).toString());
         let t = ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(
             a,
-            MathUtils_1.MathUtils.LongToBigInt(i.ujn).toString(),
+            MathUtils_1.MathUtils.LongToBigInt(i.Mjn).toString(),
             !1,
           ),
           e = void 0;
@@ -1478,24 +1478,24 @@ let CharacterGasDebugComponent =
           (e = EntitySystem_1.EntitySystem.Get(o))?.Valid &&
             (t = ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(
               e,
-              MathUtils_1.MathUtils.LongToBigInt(i.ujn).toString(),
+              MathUtils_1.MathUtils.LongToBigInt(i.Mjn).toString(),
             ))),
           s.push(t?.BulletName ?? ""),
-          s.push(i.FAs.toFixed()),
-          s.push(i.X4n.toFixed());
-        let r = a.GetComponent(33)?.GetSkillInfo(i.X4n)?.SkillName;
-        (r = r || e?.GetComponent(33)?.GetSkillInfo(i.X4n)?.SkillName),
+          s.push(i.QAs.toFixed()),
+          s.push(i.r5n.toFixed());
+        let r = a.GetComponent(34)?.GetSkillInfo(i.r5n)?.SkillName;
+        (r = r || e?.GetComponent(34)?.GetSkillInfo(i.r5n)?.SkillName),
           s.push(r?.toString() ?? ""),
-          s.push(MathUtils_1.MathUtils.LongToBigInt(i.jjn.P4n).toString()),
-          s.push(i.$As ? "1" : "0");
+          s.push(MathUtils_1.MathUtils.LongToBigInt(i.Zjn.F4n).toString()),
+          s.push(i.YAs ? "1" : "0");
         var n = s.length,
           o =
-            (this.wGr(i.HAs.OAs, s, n),
-            this.wGr(i.jjn.OAs, s, n + 59),
+            (this.wGr(i.JAs.jAs, s, n),
+            this.wGr(i.Zjn.jAs, s, n + 59),
             DamageById_1.configDamageById.GetConfig(
-              MathUtils_1.MathUtils.LongToBigInt(i.NAs),
+              MathUtils_1.MathUtils.LongToBigInt(i.KAs),
             )),
-          a = i.qjn,
+          a = i.Wjn,
           h =
             ((s[n + 118] = AbilityUtils_1.AbilityUtils.GetLevelValue(
               o.ToughLv,
@@ -1515,7 +1515,7 @@ let CharacterGasDebugComponent =
             ).toString()),
             new Array()),
           u = new Array();
-        for (const f of i.jjn.qAs) {
+        for (const f of i.Zjn.$As) {
           var _ = MathUtils_1.MathUtils.LongToBigInt(f),
             C = CharacterBuffController_1.default.GetBuffDefinition(_);
           h.push(C.Desc), u.push(_);
@@ -1524,7 +1524,7 @@ let CharacterGasDebugComponent =
           (s[n + 123] = h.join("|")),
           (h.length = 0),
           (u.length = 0);
-        for (const g of i.HAs.qAs) {
+        for (const g of i.JAs.$As) {
           var l = MathUtils_1.MathUtils.LongToBigInt(g),
             c = CharacterBuffController_1.default.GetBuffDefinition(l);
           h.push(c.Desc), u.push(l);
@@ -1556,14 +1556,14 @@ let CharacterGasDebugComponent =
           s.push(n.ConfigId),
           s.push(n.Name),
           s.push(
-            i.VAs === Protocol_1.Aki.Protocol.VAs.Proto_FromBullet
+            i.XAs === Protocol_1.Aki.Protocol.XAs.Proto_FromBullet
               ? "子弹"
               : "Buff",
           ),
-          s.push(MathUtils_1.MathUtils.LongToBigInt(i.NAs).toString());
+          s.push(MathUtils_1.MathUtils.LongToBigInt(i.KAs).toString());
         let t = ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(
             a,
-            MathUtils_1.MathUtils.LongToBigInt(i.ujn).toString(),
+            MathUtils_1.MathUtils.LongToBigInt(i.Mjn).toString(),
             !1,
           ),
           e = void 0;
@@ -1576,32 +1576,32 @@ let CharacterGasDebugComponent =
           (e = EntitySystem_1.EntitySystem.Get(o))?.Valid &&
             (t = ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(
               e,
-              MathUtils_1.MathUtils.LongToBigInt(i.ujn).toString(),
+              MathUtils_1.MathUtils.LongToBigInt(i.Mjn).toString(),
             ))),
           s.push(t?.BulletName ?? ""),
-          s.push(i.FAs.toFixed()),
-          s.push(i.X4n.toFixed());
-        let r = a.GetComponent(33)?.GetSkillInfo(i.X4n)?.SkillName;
-        (r = r || e?.GetComponent(33)?.GetSkillInfo(i.X4n)?.SkillName),
+          s.push(i.QAs.toFixed()),
+          s.push(i.r5n.toFixed());
+        let r = a.GetComponent(34)?.GetSkillInfo(i.r5n)?.SkillName;
+        (r = r || e?.GetComponent(34)?.GetSkillInfo(i.r5n)?.SkillName),
           s.push(r?.toString() ?? ""),
-          s.push(i.$As ? "1" : "0"),
-          s.push(MathUtils_1.MathUtils.LongToBigInt(i.jjn.P4n).toString());
+          s.push(i.YAs ? "1" : "0"),
+          s.push(MathUtils_1.MathUtils.LongToBigInt(i.Zjn.F4n).toString());
         var h = s.length,
           n =
-            (CharacterGasDebugComponent_1.BGr(i.HAs.GAs, s, h, h + 122),
+            (CharacterGasDebugComponent_1.BGr(i.JAs.HAs, s, h, h + 122),
             DamageById_1.configDamageById.GetConfig(
-              MathUtils_1.MathUtils.LongToBigInt(i.NAs),
+              MathUtils_1.MathUtils.LongToBigInt(i.KAs),
             )),
           u = EAttributeId.Proto_ElementEnergy;
         s[h + 120] = n.ElementPowerType.toString();
-        for (const m of i.jjn.GAs)
-          m.QMs === EAttributeId.Proto_ToughChange
-            ? (s[h + 118] = m.d6n.toFixed())
-            : m.QMs === EAttributeId.Proto_Energy
-              ? (s[h + 119] = m.d6n.toFixed())
-              : u && m.QMs === u && (s[h + 121] = m.d6n.toFixed());
-        CharacterGasDebugComponent_1.BGr(i.jjn.GAs, s, h + 59, h + 181);
-        var o = i.qjn,
+        for (const m of i.Zjn.HAs)
+          m.tSs === EAttributeId.Proto_ToughChange
+            ? (s[h + 118] = m.y6n.toFixed())
+            : m.tSs === EAttributeId.Proto_Energy
+              ? (s[h + 119] = m.y6n.toFixed())
+              : u && m.tSs === u && (s[h + 121] = m.y6n.toFixed());
+        CharacterGasDebugComponent_1.BGr(i.Zjn.HAs, s, h + 59, h + 181);
+        var o = i.Wjn,
           _ =
             ((s[h + 240] = AbilityUtils_1.AbilityUtils.GetLevelValue(
               n.HardnessLv,
@@ -1636,7 +1636,7 @@ let CharacterGasDebugComponent =
             ).toString()),
             new Array()),
           C = new Array();
-        for (const b of i.jjn.qAs) {
+        for (const b of i.Zjn.$As) {
           var l = MathUtils_1.MathUtils.LongToBigInt(b),
             c = CharacterBuffController_1.default.GetBuffDefinition(l);
           _.push(c.Desc), C.push(l);
@@ -1645,7 +1645,7 @@ let CharacterGasDebugComponent =
           (s[h + 248] = _.join("|")),
           (_.length = 0),
           (C.length = 0);
-        for (const D of i.HAs.qAs) {
+        for (const D of i.JAs.$As) {
           var f = MathUtils_1.MathUtils.LongToBigInt(D),
             g = CharacterBuffController_1.default.GetBuffDefinition(f);
           _.push(g.Desc), C.push(f);
@@ -1660,17 +1660,17 @@ let CharacterGasDebugComponent =
     static BGr(t, r, a, i) {
       for (const n of t)
         for (let t = 0, e = attributeIdArray.length; t < e; t++)
-          if (n.QMs === attributeIdArray[t]) {
-            (r[a + t] = (0 < n.d6n ? n.d6n : n.KMs).toString()),
-              (r[i + t] = n.KMs.toString());
+          if (n.tSs === attributeIdArray[t]) {
+            (r[a + t] = (0 < n.y6n ? n.y6n : n.eSs).toString()),
+              (r[i + t] = n.eSs.toString());
             break;
           }
     }
     static wGr(t, r, a) {
       for (const i of t)
         for (let t = 0, e = attributeIdArray.length; t < e; t++)
-          if (i.QMs === attributeIdArray[t]) {
-            r[a + t] = (0 < i.d6n ? i.d6n : i.KMs).toString();
+          if (i.tSs === attributeIdArray[t]) {
+            r[a + t] = (0 < i.y6n ? i.y6n : i.eSs).toString();
             break;
           }
     }
@@ -1719,7 +1719,7 @@ let CharacterGasDebugComponent =
     CharacterGasDebugComponent_1.Qyn = t;
   }),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("JFn")],
+    [CombatMessage_1.CombatNet.SyncHandle("s3n")],
     CharacterGasDebugComponent,
     "OnDamageRecordNotify",
     null,

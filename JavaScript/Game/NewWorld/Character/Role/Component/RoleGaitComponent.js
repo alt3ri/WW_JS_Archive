@@ -75,7 +75,7 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
       });
   }
   static get Dependencies() {
-    return [3, 163];
+    return [3, 164];
   }
   OnInitData() {
     return (
@@ -87,11 +87,11 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
   OnStart() {
     return (
       (this.Hte = this.Entity.CheckGetComponent(3)),
-      (this.Gce = this.Entity.CheckGetComponent(163)),
-      (this.HBr = this.Entity.CheckGetComponent(160)),
-      (this.Xte = this.Entity.CheckGetComponent(188)),
-      (this.Nce = this.Entity.CheckGetComponent(53)),
-      (this.$zo = this.Entity.CheckGetComponent(159)),
+      (this.Gce = this.Entity.CheckGetComponent(164)),
+      (this.HBr = this.Entity.CheckGetComponent(161)),
+      (this.Xte = this.Entity.CheckGetComponent(190)),
+      (this.Nce = this.Entity.CheckGetComponent(54)),
+      (this.$zo = this.Entity.CheckGetComponent(160)),
       RoleGaitStatic_1.RoleGaitStatic.Init(),
       this.InitRoleForbidMovementHelper(),
       !0
@@ -102,7 +102,7 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
       this.RoleGaitUnEnableState.set(1, new Set()),
       this.RoleGaitUnEnableState.set(3, new Set()),
       (this.RoleForbidMovementHelper.TagComp =
-        this.Entity.CheckGetComponent(188)),
+        this.Entity.CheckGetComponent(190)),
       this.RoleForbidMovementHelper.CreateTagHandler(-63548288, 1, this.Xin),
       this.RoleForbidMovementHelper.CreateTagHandler(229513169, 1, this.Yin),
       this.RoleForbidMovementHelper.CreateTagHandler(930178923, 0, this.Jin),
@@ -289,7 +289,7 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
   }
 };
 (RoleGaitComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(84)],
+  [(0, RegisterComponent_1.RegisterComponent)(85)],
   RoleGaitComponent,
 )),
   (exports.RoleGaitComponent = RoleGaitComponent);

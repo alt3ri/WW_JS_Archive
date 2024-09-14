@@ -17,29 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0,
+const initStat = Stats_1.Stat.Create("configMapMarkByMapId.Init"),
+  getConfigListStat = Stats_1.Stat.Create("configMapMarkByMapId.GetConfigList"),
   CONFIG_LIST_STAT_PREFIX = "configMapMarkByMapId.GetConfigList(";
 exports.configMapMarkByMapId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfigList: (o, n = !0) => {
-    var a;
-    if (
-      (a = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${o})`),
+      t =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
       if (n) {
-        var i = KEY_PREFIX + `#${o})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (r) return r;
+        var a = KEY_PREFIX + `#${o})`;
+        const r = ConfigCommon_1.ConfigCommon.GetConfig(a);
+        if (r)
+          return (
+            i.Stop(),
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            r
+          );
       }
       if (
-        (a = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair))
+        (t = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair))
       ) {
         const r = new Array();
         for (;;) {
@@ -53,15 +64,20 @@ exports.configMapMarkByMapId = {
             break;
           var e = void 0;
           if (
-            (([a, e] = ConfigCommon_1.ConfigCommon.GetValue(
+            (([t, e] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
               0,
               ...logPair,
               ["MapId", o],
             )),
-            !a)
+            !t)
           )
-            return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
+            return (
+              ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+              i.Stop(),
+              getConfigListStat.Stop(),
+              void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+            );
           e = MapMark_1.MapMark.getRootAsMapMark(
             new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
           );
@@ -69,14 +85,20 @@ exports.configMapMarkByMapId = {
         }
         return (
           n &&
-            ((i = KEY_PREFIX + `#${o})`),
-            ConfigCommon_1.ConfigCommon.SaveConfig(i, r, r.length)),
+            ((a = KEY_PREFIX + `#${o})`),
+            ConfigCommon_1.ConfigCommon.SaveConfig(a, r, r.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+          i.Stop(),
+          getConfigListStat.Stop(),
+          ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
           r
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=MapMarkByMapId.js.map

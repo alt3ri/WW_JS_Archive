@@ -21,15 +21,17 @@ class SceneInteractionLevel {
       (this.TempTargetState = void 0),
       (this.TempNeedTransition = !1),
       (this.IsDestroyed = !1),
+      (this.Active = !0),
       (this.TempForce = !1),
-      (this.OnLevelStreamingCompleteCallback = void 0),
+      (this.OnLevelStreamingShowCallback = void 0),
+      (this.OnLevelStreamingHideCallback = void 0),
       (this.t_r = !1);
   }
-  Init(t, i, e, s, h, r, o, n, c = !1) {
+  Init(t, i, s, e, h, r, o, n, c = !1) {
     (this.LevelStreamingDynamic = t),
       (this.LevelName = i),
-      (this.Location = e),
-      (this.Rotation = s),
+      (this.Location = s),
+      (this.Rotation = e),
       (this.HandleId = h),
       (this.CurrentState = r),
       (this.HasTempState = !1),
@@ -40,27 +42,32 @@ class SceneInteractionLevel {
       this.LevelStreamingDynamic.SetShouldBeVisible(n),
       (this.LoadingLevelComplete = !1),
       (this.IsDestroyed = !1),
-      (this.OnLevelStreamingCompleteCallback = o),
+      (this.OnLevelStreamingShowCallback = o),
       this.LevelStreamingDynamic.OnLevelShown.Add(() => {
         this.i_r();
       });
   }
-  ToggleLevelVisible(t, i, e = void 0) {
+  ToggleLevelVisible(t, i, s = void 0) {
     if (this.LevelStreamingDynamic?.IsValid()) {
-      var s = this.GetAllActorsInLevel();
-      if (s && !t && i)
-        for (let t = 0, i = s.Num(); t < i; t++) {
-          var h = s.Get(t);
+      var e = this.GetAllActorsInLevel();
+      if (e && !t && i)
+        for (let t = 0, i = e.Num(); t < i; t++) {
+          var h = e.Get(t);
           h instanceof UE.Actor && h.SetActorHiddenInGame(!0);
         }
       this.LevelStreamingDynamic.SetShouldBeVisible(t),
         t
-          ? ((this.OnLevelStreamingCompleteCallback = e),
+          ? ((this.OnLevelStreamingShowCallback = s),
             this.LevelStreamingDynamic.OnLevelShown.Clear(),
             this.LevelStreamingDynamic.OnLevelShown.Add(() => {
               this.i_r();
             }))
-          : this.InteractionActor?.TryStopCurrentState();
+          : (this.InteractionActor?.TryStopCurrentState(),
+            (this.OnLevelStreamingHideCallback = s),
+            this.LevelStreamingDynamic.OnLevelHidden.Clear(),
+            this.LevelStreamingDynamic.OnLevelHidden.Add(() => {
+              this.MFa();
+            }));
     }
   }
   get MainActor() {
@@ -90,21 +97,22 @@ class SceneInteractionLevel {
         this.LevelStreamingDynamic.SetShouldBeLoaded(!1)),
       (this.LevelStreamingDynamic = void 0),
       (this.InteractionActor = void 0),
-      (this.OnLevelStreamingCompleteCallback = void 0);
+      (this.OnLevelStreamingShowCallback = void 0);
   }
   Update() {
-    this.IsDestroyed ||
+    !this.Active ||
+      this.IsDestroyed ||
       (this.LoadingLevelComplete &&
         this.InteractionActor?.IsValid() &&
         this.InteractionActor.Update());
   }
-  SwitchToState(t, i, e, s) {
+  SwitchToState(t, i, s, e) {
     return this.InteractionActor
-      ? this.o_r(t, i, e, s)
+      ? this.o_r(t, i, s, e)
       : ((this.HasTempState = !0),
         (this.TempTargetState = t),
         (this.TempNeedTransition = i),
-        (this.TempForce = e),
+        (this.TempForce = s),
         !0);
   }
   GetAllActor() {
@@ -138,11 +146,11 @@ class SceneInteractionLevel {
     if (this.LoadingLevelComplete && this.InteractionActor?.IsValid())
       return this.InteractionActor.GetRefActorsByTag(t);
   }
-  o_r(t, i, e, s) {
+  o_r(t, i, s, e) {
     return (
       !!this.InteractionActor?.IsValid() &&
-      (e || this.CurrentState !== t
-        ? ((this.CurrentState = t), this.InteractionActor.SetState(t, i, s), !0)
+      (s || this.CurrentState !== t
+        ? ((this.CurrentState = t), this.InteractionActor.SetState(t, i, e), !0)
         : (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "RenderScene",
@@ -181,9 +189,9 @@ class SceneInteractionLevel {
         this.InteractionActor?.IsValid()
           ? (this.InteractionActor.Init(this.HandleId, this.LevelName),
             this.o_r(this.CurrentState, !1, !0, !this.t_r),
-            this.OnLevelStreamingCompleteCallback &&
-              this.OnLevelStreamingCompleteCallback(),
-            (this.OnLevelStreamingCompleteCallback = void 0),
+            this.OnLevelStreamingShowCallback &&
+              this.OnLevelStreamingShowCallback(),
+            (this.OnLevelStreamingShowCallback = void 0),
             this.HasTempState &&
               (this.o_r(
                 this.TempTargetState,
@@ -204,6 +212,11 @@ class SceneInteractionLevel {
           "this.LevelName",
           this.LevelName,
         ]);
+  }
+  MFa() {
+    this.OnLevelStreamingHideCallback && this.OnLevelStreamingHideCallback(),
+      (this.OnLevelStreamingHideCallback = void 0),
+      this.LevelStreamingDynamic?.OnLevelHidden.Clear();
   }
   GetAttachActor() {
     if (this.InteractionActor?.IsValid())
@@ -248,10 +261,10 @@ class SceneInteractionLevel {
   SetCollisionActorsOwner(i) {
     if (this.InteractionActor?.IsValid()) {
       if (this.InteractionActor.CollisionActors) {
-        var e = this.InteractionActor.CollisionActors.Num();
-        for (let t = 0; t < e; t++) {
-          var s = this.InteractionActor.CollisionActors.Get(t);
-          ObjectUtils_1.ObjectUtils.IsValid(s) && s.SetOwner(i);
+        var s = this.InteractionActor.CollisionActors.Num();
+        for (let t = 0; t < s; t++) {
+          var e = this.InteractionActor.CollisionActors.Get(t);
+          ObjectUtils_1.ObjectUtils.IsValid(e) && e.SetOwner(i);
         }
       }
       if (this.InteractionActor.PartCollisionActorsAndCorrespondingTags) {
@@ -327,6 +340,14 @@ class SceneInteractionLevel {
   GetReceivingDecalsActors() {
     if (this.InteractionActor?.IsValid())
       return this.InteractionActor.ReceivingDecalsActors;
+  }
+  Disable() {
+    (this.Active = !1),
+      this.InteractionActor && (this.InteractionActor.Active = !1);
+  }
+  Enable() {
+    (this.Active = !0),
+      this.InteractionActor && (this.InteractionActor.Active = !0);
   }
 }
 exports.SceneInteractionLevel = SceneInteractionLevel;

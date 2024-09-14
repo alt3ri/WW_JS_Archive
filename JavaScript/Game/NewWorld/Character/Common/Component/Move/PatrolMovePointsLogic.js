@@ -108,12 +108,12 @@ class PatrolMovePointsLogic {
                     "PbDataID",
                     this.Hte.CreatureData.GetPbDataId(),
                   ]),
-                ((i = Protocol_1.Aki.Protocol.Hes.create()).P4n =
+                ((i = Protocol_1.Aki.Protocol.Jes.create()).F4n =
                   MathUtils_1.MathUtils.NumberToLong(
                     this.Hte.CreatureData.GetCreatureDataId(),
                   )),
-                (i.B4n = !0),
-                Net_1.Net.Call(21490, i, () => {}))
+                (i.V4n = !0),
+                Net_1.Net.Call(17259, i, () => {}))
               : (t = this.TargetIndex - 1)
             : this.TargetIndex === this.MovePoint.length - 1
               ? ((this.ooe = !0),
@@ -123,12 +123,12 @@ class PatrolMovePointsLogic {
                     "PbDataID",
                     this.Hte.CreatureData.GetPbDataId(),
                   ]),
-                ((i = Protocol_1.Aki.Protocol.Hes.create()).P4n =
+                ((i = Protocol_1.Aki.Protocol.Jes.create()).F4n =
                   MathUtils_1.MathUtils.NumberToLong(
                     this.Hte.CreatureData.GetCreatureDataId(),
                   )),
-                (i.B4n = !1),
-                Net_1.Net.Call(21490, i, () => {}))
+                (i.V4n = !1),
+                Net_1.Net.Call(17259, i, () => {}))
               : (t = this.TargetIndex + 1)
         : (t = this.TargetIndex + 1),
       t
@@ -150,7 +150,7 @@ class PatrolMovePointsLogic {
   czo(t) {
     this.Hte.SkeletalMesh?.SetVisibility(!t.IsHide);
     var i,
-      e = this.Hte.Entity.GetComponent(188);
+      e = this.Hte.Entity.GetComponent(190);
     e &&
       ((i = -841499802),
       t.IsHide ? e.HasTag(i) || e.AddTag(i) : e.HasTag(i) && e.RemoveTag(i));

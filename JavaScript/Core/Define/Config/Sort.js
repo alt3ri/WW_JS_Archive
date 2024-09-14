@@ -12,25 +12,29 @@ class Sort {
   get FrontSortList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.frontsortlistLength(),
-      (t) => this.frontsortlist(t),
+      this.frontsortlist,
+      this,
     );
   }
   get BaseSortList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.basesortlistLength(),
-      (t) => this.basesortlist(t),
+      this.basesortlist,
+      this,
     );
   }
   get AttributeSortList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.attributesortlistLength(),
-      (t) => this.attributesortlist(t),
+      this.attributesortlist,
+      this,
     );
   }
   get LastSortList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.lastsortlistLength(),
-      (t) => this.lastsortlist(t),
+      this.lastsortlist,
+      this,
     );
   }
   get LimitNum() {

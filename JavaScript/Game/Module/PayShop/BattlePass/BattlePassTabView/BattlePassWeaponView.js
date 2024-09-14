@@ -14,12 +14,12 @@ class BattlePassWeaponView extends UiTabViewBase_1.UiTabViewBase {
       (this.G2i = void 0),
       (this.N2i = void 0),
       (this.O2i = void 0),
-      (this.mMa = 1),
+      (this.Mya = 1),
       (this.k2i = () => {
         let e = this.G2i.GetCurSelectedData();
         var t,
           i = e.GetFullLevelWeaponData();
-        void 0 !== i && ((t = 1 === this.mMa), (e = t ? i : e)),
+        void 0 !== i && ((t = 1 === this.Mya), (e = t ? i : e)),
           this.q2i.UpdateComponent(e),
           WeaponController_1.WeaponController.OnSelectedWeaponChange(
             e,
@@ -56,9 +56,11 @@ class BattlePassWeaponView extends UiTabViewBase_1.UiTabViewBase {
   OnAfterHide() {
     this.G2i?.CancelSelect();
   }
-  OnClickFullLevelToggle(t) {
-    if (t !== this.mMa) {
-      this.mMa = t;
+  OnClickFullLevelToggle(e) {
+    this.RefreshToggleState(e);
+  }
+  RefreshToggleState(t) {
+    if (t !== this.Mya && ((this.Mya = t), this.IsShowOrShowing)) {
       let e = this.G2i.GetCurSelectedData();
       var i = e.GetFullLevelWeaponData();
       1 === t && i && (e = i),

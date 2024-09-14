@@ -67,7 +67,7 @@ let SmartObjectComponent = class SmartObjectComponent extends EntityComponent_1.
     var t;
     return (
       (this.Hte = this.Entity.GetComponent(1)),
-      (this.vtn = this.Entity.GetComponent(76)),
+      (this.vtn = this.Entity.GetComponent(77)),
       this.Hte &&
         (t = this.Hte.CreatureData?.GetPbEntityInitData()?.ComponentsData) &&
         ((this.k_n = (0, IComponent_1.getComponent)(
@@ -97,7 +97,7 @@ let SmartObjectComponent = class SmartObjectComponent extends EntityComponent_1.
     this.vtn.AddOnEntityOverlapCallback(this.H_n), this.X_n();
   }
   j_n(t) {
-    var t = t.GetComponent(39);
+    var t = t.GetComponent(40);
     return !!t && !!(t = t.AiController?.AiAlert) && !!t.AiAlertConfig;
   }
   OnEnd() {
@@ -150,7 +150,7 @@ let SmartObjectComponent = class SmartObjectComponent extends EntityComponent_1.
   }
 };
 (SmartObjectComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(122)],
+  [(0, RegisterComponent_1.RegisterComponent)(123)],
   SmartObjectComponent,
 )),
   (exports.SmartObjectComponent = SmartObjectComponent);

@@ -9,7 +9,7 @@ class ActivityRecallTabGroupPanel {
       (this.TabItem = i),
       (this.TabCallBack = e),
       (this._He = void 0),
-      (this.m_a = void 0),
+      (this.Ida = void 0),
       (this.fqe = (t, i) => {
         return new ActivityRecallTabSwitchItemPanel_1.ActivityRecallTabSwitchItemPanel();
       }),
@@ -26,15 +26,15 @@ class ActivityRecallTabGroupPanel {
     );
   }
   RefreshByData(t, i) {
-    0 < (this.m_a = t).length && this.CHe(i);
+    0 < (this.Ida = t).length && this.CHe(i);
   }
   CHe(t) {
-    var i = this.m_a.length;
+    var i = this.Ida.length;
     const s = t;
     this._He.RefreshTabItemByLength(i, () => {
       var t, i;
       for ([t, i] of this._He.GetTabItemMap()) {
-        var e = this.m_a[t];
+        var e = this.Ida[t];
         i.UpdateView(e);
       }
       this._He.SelectToggleByIndex(s);

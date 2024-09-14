@@ -15,13 +15,15 @@ class PlayerStateRestriction {
   get IncludedTags() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.includedtagsLength(),
-      (t) => this.includedtags(t),
+      this.includedtags,
+      this,
     );
   }
   get ExcludedTags() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.excludedtagsLength(),
-      (t) => this.excludedtags(t),
+      this.excludedtags,
+      this,
     );
   }
   get CreatorId() {

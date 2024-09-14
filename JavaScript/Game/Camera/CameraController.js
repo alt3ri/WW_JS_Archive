@@ -1,22 +1,4 @@
 "use strict";
-var __decorate =
-  (this && this.__decorate) ||
-  function (e, t, a, r) {
-    var i,
-      s = arguments.length,
-      o =
-        s < 3
-          ? t
-          : null === r
-            ? (r = Object.getOwnPropertyDescriptor(t, a))
-            : r;
-    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      o = Reflect.decorate(e, t, a, r);
-    else
-      for (var n = e.length - 1; 0 <= n; n--)
-        (i = e[n]) && (o = (s < 3 ? i(o) : 3 < s ? i(t, a, o) : i(t, a)) || o);
-    return 3 < s && o && Object.defineProperty(t, a, o), o;
-  };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraController = void 0);
 const puerts_1 = require("puerts"),
@@ -116,7 +98,6 @@ class CameraController extends ControllerBase_1.ControllerBase {
       );
   }
   static OnTick(e) {
-    var t, a;
     this.Model.CurrentCameraActor?.IsValid() &&
       (this.Model.CameraLocation.FromUeVector(
         this.Model.CurrentCameraActor.K2_GetActorLocation(),
@@ -126,21 +107,6 @@ class CameraController extends ControllerBase_1.ControllerBase {
       ),
       (this.Model.CameraTransform =
         this.Model.CurrentCameraActor.GetTransform()),
-      (a =
-        !(t = Global_1.Global.BaseCharacter?.CharacterActorComponent)?.Actor ||
-        t.Actor.bHidden),
-      1 === this.Model.CameraMode && a
-        ? this.GetPlayerController()?.SetAudioListenerOverride(
-            void 0,
-            this.Model.CameraLocation.ToUeVector(),
-            this.Model.CameraRotator.ToUeRotator(),
-          )
-        : (a = t?.ActorLocation) &&
-          this.GetPlayerController()?.SetAudioListenerOverride(
-            void 0,
-            a,
-            this.Model.CameraRotator.ToUeRotator(),
-          ),
       this.UpdateCameraDitherRadius());
   }
   static EnterCameraMode(e, t = 0, a = 0, r = 0, i = () => {}, s = !1) {
@@ -299,6 +265,7 @@ class CameraController extends ControllerBase_1.ControllerBase {
   }
   static PlayWorldCameraShake(e, t, a, r, i, s) {
     this.IsSettlementCamera() ||
+      this.IsSequenceCameraInCinematic() ||
       (0 < CameraController.Model.ShakeModify &&
         UE.GameplayStatics.PlayWorldCameraShakeWithModifier(
           GlobalData_1.GlobalData.World,
@@ -315,6 +282,7 @@ class CameraController extends ControllerBase_1.ControllerBase {
   static PlayCameraShake(e, t = void 0, a = void 0, r = void 0, i = !1) {
     !Global_1.Global.CharacterCameraManager?.IsValid() ||
       this.IsSettlementCamera() ||
+      this.IsSequenceCameraInCinematic() ||
       (Global_1.Global.CharacterCameraManager.StartCameraShake(e, t, a, r),
       i && this.PlayForceFeedbackFromCameraShake(e));
   }
@@ -361,7 +329,7 @@ class CameraController extends ControllerBase_1.ControllerBase {
         t = [];
       ModelManager_1.ModelManager.CreatureModel.GetEntitiesInRange(
         CameraParams_1.DITHER_START_HIDE_DISTANCE_THRESHOLD,
-        2,
+        62,
         t,
       ),
         (this.Model.CameraDitherStartHideDistance =
@@ -383,15 +351,5 @@ class CameraController extends ControllerBase_1.ControllerBase {
     Global_1.Global.CharacterCameraManager.StopAllCameraShakes();
   }
 }
-__decorate(
-  [
-    (0, PerformanceDecorators_1.PerformanceFunctionEx)(
-      "CameraController.OnTick",
-    ),
-  ],
-  CameraController,
-  "OnTick",
-  null,
-),
-  (exports.CameraController = CameraController);
+exports.CameraController = CameraController;
 //# sourceMappingURL=CameraController.js.map

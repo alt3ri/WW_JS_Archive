@@ -55,8 +55,8 @@ class TaskMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
         this.RangeComponentInternal?.GetRootItem().SetAsFirstHierarchy(),
         this.SetScale(this.Holder.MarkScale),
         (e = this.Holder.MarkRange),
-        this.RangeComponentInternal.RangeImage.SetWidth(2 * e),
-        this.RangeComponentInternal.RangeImage.SetHeight(2 * e)),
+        this.RangeComponentInternal.RangeArea.SetWidth(2 * e),
+        this.RangeComponentInternal.RangeArea.SetHeight(2 * e)),
       this.RangeComponentInternal
     );
   }
@@ -66,7 +66,7 @@ class TaskMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
   IsRangeImageActive() {
     return this.FRi;
   }
-  HRi(s, e = 0) {
+  HRi(s, e = !1) {
     if (this.NRi)
       if (this.Holder.IsCanShowView) {
         var r,
@@ -88,12 +88,12 @@ class TaskMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
             : (e =
                 Vector_1.Vector.Dist(s, this.Holder.WorldPosition) *
                 MapDefine_1.FLOAT_0_01) > n),
-          this.GetTrackComponentAsync().then((e) => {
-            e.SetActive(t && this.Holder.IsTracked);
-          }),
+          super.UpdateTrackComponent(t && this.Holder.IsTracked),
           this.ige ? (this.jRi(!t), (this.ige = !1)) : this.jRi(e < a && i);
       } else this.jRi(!1);
+    else super.UpdateTrackComponent(this.Holder.IsTracked && !e);
   }
+  UpdateTrackComponent(e = 0) {}
   jRi(e) {
     var t;
     this.NRi &&

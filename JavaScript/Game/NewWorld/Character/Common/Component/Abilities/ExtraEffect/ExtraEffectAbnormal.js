@@ -46,7 +46,7 @@ class AbnormalThunder extends ExtraEffectBase_1.BuffEffect {
     this.RefreshModifier(e), this.RefreshCue(e);
   }
   ClearModifier() {
-    var e = this.ExactOwnerEntity?.GetComponent(157);
+    var e = this.ExactOwnerEntity?.GetComponent(158);
     this.OQo &&
       (e?.RemoveModifier(
         CharacterAttributeTypes_1.EAttributeId.Proto_Atk,
@@ -55,12 +55,12 @@ class AbnormalThunder extends ExtraEffectBase_1.BuffEffect {
       (this.OQo = 0));
   }
   ClearCue() {
-    var e = this.ExactOwnerEntity?.GetComponent(192);
+    var e = this.ExactOwnerEntity?.GetComponent(194);
     this.kQo && (e?.RemoveBuffByHandle(this.kQo), (this.kQo = 0));
   }
   RefreshModifier(r) {
     this.ClearModifier();
-    var e = this.ExactOwnerEntity?.GetComponent(157);
+    var e = this.ExactOwnerEntity?.GetComponent(158);
     if (e) {
       let t = 0;
       for (let e = this.FQo.length - 1; 0 <= e; e--) {
@@ -76,7 +76,7 @@ class AbnormalThunder extends ExtraEffectBase_1.BuffEffect {
           Type: 2,
           Value1: t,
           Value2: 0,
-          SourceAttributeId: CharacterAttributeTypes_1.EAttributeId._Vn,
+          SourceAttributeId: CharacterAttributeTypes_1.EAttributeId.vVn,
           SourceCalculationType: 0,
           SourceEntity:
             this.Buff?.InstigatorId ?? ActiveBuffConfigs_1.NULL_INSTIGATOR_ID,
@@ -86,7 +86,7 @@ class AbnormalThunder extends ExtraEffectBase_1.BuffEffect {
   }
   RefreshCue(t) {
     this.ClearCue();
-    var r = this.ExactOwnerEntity?.GetComponent(192);
+    var r = this.ExactOwnerEntity?.GetComponent(194);
     if (r) {
       let e = void 0;
       for (var [s, i] of this.VQo)
@@ -125,14 +125,14 @@ class AbnormalIce extends ExtraEffectBase_1.BuffEffect {
     this.RefreshModifier(e);
   }
   ClearModifier() {
-    var e = this.ExactOwnerEntity?.GetComponent(157);
+    var e = this.ExactOwnerEntity?.GetComponent(158);
     this.OQo &&
-      (e?.RemoveModifier(CharacterAttributeTypes_1.EAttributeId._Vn, this.OQo),
+      (e?.RemoveModifier(CharacterAttributeTypes_1.EAttributeId.vVn, this.OQo),
       (this.OQo = 0));
   }
   RefreshModifier(r) {
     this.ClearModifier();
-    var e = this.ExactOwnerEntity?.GetComponent(157);
+    var e = this.ExactOwnerEntity?.GetComponent(158);
     if (e) {
       let t = 0;
       for (let e = this.HQo.length - 1; 0 <= e; e--) {
@@ -142,11 +142,11 @@ class AbnormalIce extends ExtraEffectBase_1.BuffEffect {
           break;
         }
       }
-      this.OQo = e.AddModifier(CharacterAttributeTypes_1.EAttributeId._Vn, {
+      this.OQo = e.AddModifier(CharacterAttributeTypes_1.EAttributeId.vVn, {
         Type: 2,
         Value1: t - CharacterAttributeTypes_1.PER_TEN_THOUSAND,
         Value2: 0,
-        SourceAttributeId: CharacterAttributeTypes_1.EAttributeId._Vn,
+        SourceAttributeId: CharacterAttributeTypes_1.EAttributeId.vVn,
         SourceCalculationType: 0,
         SourceEntity:
           this.Buff?.InstigatorId ?? ActiveBuffConfigs_1.NULL_INSTIGATOR_ID,

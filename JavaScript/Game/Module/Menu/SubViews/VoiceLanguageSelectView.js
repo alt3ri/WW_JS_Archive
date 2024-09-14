@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VoiceLanguageSelectToggle = exports.VoiceLanguageSelectView =
     void 0);
 const LanguageUpdateManager_1 = require("../../../../Launcher/Update/LanguageUpdateManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
   UiManager_1 = require("../../../Ui/UiManager"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
-  MenuController_1 = require("../MenuController"),
   MenuTool_1 = require("../MenuTool"),
   LanguageSettingViewBase_1 = require("./LanguageSettingViewBase");
 class VoiceLanguageSelectView extends LanguageSettingViewBase_1.LanguageSettingViewBase {
@@ -22,7 +22,9 @@ class VoiceLanguageSelectView extends LanguageSettingViewBase_1.LanguageSettingV
           case 0:
           case 1:
             UiManager_1.UiManager.OpenView("VoiceLanguageDownloadView", [
-              MenuController_1.MenuController.GetTargetMenuData(53),
+              ModelManager_1.ModelManager.MenuModel.GetMenuDataByFunctionId(
+                53,
+              )[0],
               void 0,
             ]),
               this.bBi();
@@ -32,20 +34,20 @@ class VoiceLanguageSelectView extends LanguageSettingViewBase_1.LanguageSettingV
   InitScrollViewData() {
     var e =
       LanguageUpdateManager_1.LanguageUpdateManager.GetAllLanguageTypeForAudio();
-    this.ScrollView.RefreshByData(e.sort((e, t) => e - t)),
+    this.ScrollView.RefreshByData(e.sort((e, a) => e - a)),
       this.CancelButton.SetFunction(this.bBi),
       this.ConfirmButton.SetFunction(this.GBi),
       this.ConfirmButton.SetLocalText("PowerConfirm");
   }
-  CreateToggle(e, t, a) {
+  CreateToggle(e, a, t) {
     var i = new VoiceLanguageSelectToggle();
-    return i.Initialize(e, t, a), i;
+    return i.Initialize(e, a, t), i;
   }
   OnRefreshView(e) {
-    var t = this.MenuDataIns.MenuDataOptionsNameList[e.GetIndex()];
-    e.SetMainText(t);
+    var a = this.MenuDataIns.OptionsNameList[e.GetIndex()];
+    e.SetMainText(a);
   }
-  OnSelected(e, t) {
+  OnSelected(e, a) {
     2 === e.Updater.Status
       ? this.ConfirmButton.SetLocalText("PowerConfirm")
       : this.ConfirmButton.SetLocalText("GoToDownload");

@@ -91,7 +91,7 @@ class TsTaskPlayAction extends TsTaskAbortImmediatelyBase_1.default {
             ["spMontageName", o],
             ["montageName", e],
           ),
-        (this.InteractComponent = i.GetComponent(181)),
+        (this.InteractComponent = i.GetComponent(182)),
         this.TsMaskInteract &&
           this.InteractComponent &&
           this.InteractComponent.SetInteractionState(
@@ -99,7 +99,7 @@ class TsTaskPlayAction extends TsTaskAbortImmediatelyBase_1.default {
             "TsTaskPlayAction ReceiveExecuteAI",
           ),
         (this.EndTime = t + Time_1.Time.WorldTime),
-        (this.AnimComp = i.GetComponent(162)),
+        (this.AnimComp = i.GetComponent(163)),
         this.AnimComp &&
           ((o = this.AnimComp.GetMontageResPathByName(e)),
           s &&

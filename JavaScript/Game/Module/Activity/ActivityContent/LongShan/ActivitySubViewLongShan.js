@@ -17,7 +17,7 @@ class ActivitySubViewLongShan extends ActivitySubViewBase_1.ActivitySubViewBase 
       (this.ActivityBaseData = void 0),
       (this.CommonInfoPanel = void 0),
       (this.StageItems = void 0),
-      (this.LNn = !1),
+      (this.bNn = !1),
       (this.UOe = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.SetActivityViewState,
@@ -53,7 +53,7 @@ class ActivitySubViewLongShan extends ActivitySubViewBase_1.ActivitySubViewBase 
         ActivityLongShanController_1.ActivityLongShanController.GetActivityData().GetStageInfoById(
           t,
         )
-          ? ((this.LNn = !0), UiManager_1.UiManager.OpenView("LongShanView", t))
+          ? ((this.bNn = !0), UiManager_1.UiManager.OpenView("LongShanView", t))
           : ActivityLongShanController_1.ActivityLongShanController.ShowUnlockTip(
               t,
             );
@@ -117,7 +117,7 @@ class ActivitySubViewLongShan extends ActivitySubViewBase_1.ActivitySubViewBase 
       this.BNe();
   }
   async OnBeforeHideSelfAsync() {
-    this.LNn &&
+    this.bNn &&
       (await this.LevelSequencePlayer.PlaySequenceAsync(
         "TransOut",
         new CustomPromise_1.CustomPromise(),
@@ -131,19 +131,19 @@ class ActivitySubViewLongShan extends ActivitySubViewBase_1.ActivitySubViewBase 
     this.FNe(),
       this.CommonInfoPanel?.OnRefreshView(),
       this.AOe(),
-      this.LNn &&
+      this.bNn &&
         (this.LevelSequencePlayer.PlayLevelSequenceByName("TransIn", !0),
-        (this.LNn = !1));
+        (this.bNn = !1));
   }
   OnCommonViewStateChange(t) {
     this.PlaySubViewSequence(t ? "SwitchOut" : "SwitchIn", !0);
   }
   OnSequenceStart(t) {
     "Start" === t || "SwitchOut" === t
-      ? this.mBn(!1)
-      : "SwitchIn" === t && this.mBn(!0);
+      ? this.vBn(!1)
+      : "SwitchIn" === t && this.vBn(!0);
   }
-  mBn(t) {
+  vBn(t) {
     if ((this.GetButton(3)?.SetSelfInteractive(t), this.StageItems))
       for (const e of this.StageItems) e.SetButtonInteractive(t);
   }

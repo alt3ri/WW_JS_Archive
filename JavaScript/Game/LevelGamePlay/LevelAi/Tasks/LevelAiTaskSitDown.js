@@ -39,7 +39,7 @@ class LevelAiTaskSitDown extends LevelAiTask_1.LevelAiTask {
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(i)),
           this.jTe)
         ) {
-          var t = this.jTe.Entity.GetComponent(181);
+          var t = this.jTe.Entity.GetComponent(182);
           if (t) {
             var t = t.GetSubEntityInteractLogicController(),
               s = this.CreatureDataComponent.Entity.GetComponent(1),
@@ -51,41 +51,42 @@ class LevelAiTaskSitDown extends LevelAiTask_1.LevelAiTask {
                   this.CreatureDataComponent,
                   this.Description,
                 ),
-                t.GetInteractPoint()),
-              t = t.GetForwardDirection(),
-              r = Vector_1.Vector.Create(),
+                t.Possess(this.CreatureDataComponent.Entity),
+                t.GetSitLocation()),
+              r = t.GetForwardDirection(),
               l = Vector_1.Vector.Create(),
-              r =
-                (t.Multiply(NEARBY_CHAIR_OFFSET, r),
-                a.Addition(r, l),
+              _ = Vector_1.Vector.Create(),
+              l =
+                (r.Multiply(NEARBY_CHAIR_OFFSET, l),
+                a.Addition(l, _),
                 new LevelAiTaskMoveTo_1.LevelAiTaskMoveTo()),
-              _ =
-                (r.Serialize(
+              h =
+                (l.Serialize(
                   this.CharacterPlanComponent,
                   this.CreatureDataComponent,
                   this.Description +
                     " Move To Nearby Chair Location: " +
-                    l.ToString(),
+                    _.ToString(),
                 ),
-                (r.Target = Vector_1.Vector.Create()),
-                r.Target.DeepCopy(l),
-                (r.MoveState = 1),
-                (r.MoveSpeed = MOVE_TO_NEARBY_CHAIR_SPEED),
-                n.NextNodes.push(r),
+                (l.Target = Vector_1.Vector.Create()),
+                l.Target.DeepCopy(_),
+                (l.MoveState = 1),
+                (l.MoveSpeed = MOVE_TO_NEARBY_CHAIR_SPEED),
+                n.NextNodes.push(l),
                 new LevelAiTaskSetItemCollision_1.LevelAiTaskSetItemCollision()),
-              r =
-                (_.Serialize(
+              l =
+                (h.Serialize(
                   this.CharacterPlanComponent,
                   this.CreatureDataComponent,
                   this.Description + " Ignore Actor Collision",
                 ),
-                (_.ItemEntity = this.jTe),
-                (_.IsIgnore = !0),
-                r.NextNodes.push(_),
+                (h.ItemEntity = this.jTe),
+                (h.IsIgnore = !0),
+                l.NextNodes.push(h),
                 s.ActorLocationProxy),
-              s = Vector_1.Vector.Create(a.X, a.Y, r.Z),
+              s = Vector_1.Vector.Create(a.X, a.Y, l.Z),
               a = new LevelAiTaskMoveTo_1.LevelAiTaskMoveTo(),
-              r =
+              l =
                 (a.Serialize(
                   this.CharacterPlanComponent,
                   this.CreatureDataComponent,
@@ -97,56 +98,57 @@ class LevelAiTaskSitDown extends LevelAiTask_1.LevelAiTask {
                 a.Target.DeepCopy(s),
                 (a.MoveState = 1),
                 (a.MoveSpeed = MOVE_TO_CHAIR_SPEED),
-                _.NextNodes.push(a),
+                h.NextNodes.push(a),
                 Vector_1.Vector.Create()),
               s = Vector_1.Vector.Create(),
-              _ =
-                (t.Multiply(200, s),
-                l.Addition(s, r),
+              h =
+                (r.Multiply(200, s),
+                _.Addition(s, l),
                 {
                   EntityId: o,
-                  Pos: r,
+                  Pos: l,
                   MontageId: e.Option.MontageId.MontageId,
                   IsAbpMontage: e.Option.MontageId.IsAbp,
                   LoopDuration: e.Option.Duration,
                 }),
-              t =
+              r =
                 new LevelAiTaskTurnAndPlayMontage_1.LevelAiTaskTurnAndPlayMontage(),
               s =
-                (t.Serialize(
+                (r.Serialize(
                   this.CharacterPlanComponent,
                   this.CreatureDataComponent,
                   this.Description + " Turn To Chair And Play Sit Down Montage",
-                  _,
+                  h,
                 ),
-                a.NextNodes.push(t),
+                a.NextNodes.push(r),
+                t.UnPossess(this.CreatureDataComponent.Entity),
                 new LevelAiTaskMoveTo_1.LevelAiTaskMoveTo()),
-              h =
+              T =
                 (s.Serialize(
                   this.CharacterPlanComponent,
                   this.CreatureDataComponent,
                   this.Description +
                     " Move Back To Nearby Chair Location: " +
-                    l.ToString(),
+                    _.ToString(),
                 ),
                 (s.Target = Vector_1.Vector.Create()),
-                s.Target.DeepCopy(l),
+                s.Target.DeepCopy(_),
                 (s.MoveState = 1),
                 (s.MoveSpeed = MOVE_TO_CHAIR_SPEED),
-                t.NextNodes.push(s),
+                r.NextNodes.push(s),
                 new LevelAiTaskSetItemCollision_1.LevelAiTaskSetItemCollision());
             if (
-              (h.Serialize(
+              (T.Serialize(
                 this.CharacterPlanComponent,
                 this.CreatureDataComponent,
                 this.Description + " Reset Actor Collision",
               ),
-              (h.ItemEntity = this.jTe),
-              (h.IsIgnore = !1),
-              s.NextNodes.push(h),
+              (T.ItemEntity = this.jTe),
+              (T.IsIgnore = !1),
+              s.NextNodes.push(T),
               this.NextNodes.length)
             ) {
-              for (const T of this.NextNodes) h.NextNodes.push(T);
+              for (const A of this.NextNodes) T.NextNodes.push(A);
               this.NextNodes.length = 0;
             }
             this.NextNodes.push(n), (this.gU = !0);

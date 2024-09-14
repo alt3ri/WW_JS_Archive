@@ -4,18 +4,18 @@ var __decorate =
   function (t, e, i, n) {
     var s,
       r = arguments.length,
-      o =
+      a =
         r < 3
           ? e
           : null === n
             ? (n = Object.getOwnPropertyDescriptor(e, i))
             : n;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      o = Reflect.decorate(t, e, i, n);
+      a = Reflect.decorate(t, e, i, n);
     else
-      for (var a = t.length - 1; 0 <= a; a--)
-        (s = t[a]) && (o = (r < 3 ? s(o) : 3 < r ? s(e, i, o) : s(e, i)) || o);
-    return 3 < r && o && Object.defineProperty(e, i, o), o;
+      for (var o = t.length - 1; 0 <= o; o--)
+        (s = t[o]) && (a = (r < 3 ? s(a) : 3 < r ? s(e, i, a) : s(e, i)) || a);
+    return 3 < r && a && Object.defineProperty(e, i, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemActorComponent = void 0);
@@ -65,7 +65,8 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       (this.smn = void 0),
       (this.amn = 4),
       (this.hmn = void 0),
-      (this.a1a = !0),
+      (this.hca = !0),
+      (this.Y2a = !1),
       (this.lmn = 0),
       (this._mn = void 0),
       (this.v9e = () => {
@@ -84,6 +85,9 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
         this.RefreshShowActor();
       }),
       (this.mmn = void 0);
+  }
+  get IsReadyForOverlap() {
+    return this.Y2a;
   }
   get CurLevelPrefabShowActor() {
     return this.hmn;
@@ -232,7 +236,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
                 this.ActorInternal.SetPrimitiveEntityType(
                   RenderConfig_1.RenderConfig.GetEntityRenderPriority(
                     !1,
-                    Protocol_1.Aki.Protocol.wks.Proto_SceneItem,
+                    Protocol_1.Aki.Protocol.kks.Proto_SceneItem,
                   ),
                 ),
                 this.ActorInternal.SetPrimitiveBlueprintTypeName(
@@ -301,8 +305,8 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
   OnStart() {
     var t;
     return (
-      (void 0 !== this.Entity.GetComponent(142) ||
-        void 0 !== this.Entity.GetComponent(201)) &&
+      (void 0 !== this.Entity.GetComponent(143) ||
+        void 0 !== this.Entity.GetComponent(203)) &&
         (this.OverrideStaticMeshFromSceneInteraction(),
         (this.PhysicsMode = 0),
         (t = this.GetPrimitiveComponent()).SetCollisionEnabled(3),
@@ -323,13 +327,24 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
     );
   }
   OnEnable() {
-    this.OnSetActorActive(!0),
-      this.ToggleSceneInteractionVisible(this.CreatureData.GetVisible(), () => {
-        this.Txe();
-      });
+    this.OnSetActorActive(!0);
+    var t = this.CreatureData.GetVisible();
+    this.ToggleSceneInteractionVisible(
+      t,
+      t
+        ? () => {
+            this.Txe();
+          }
+        : () => {
+            this.vFa();
+          },
+    );
   }
   OnDisable(t) {
-    this.OnSetActorActive(!1, t), this.ToggleSceneInteractionVisible(!1);
+    this.OnSetActorActive(!1, t),
+      this.ToggleSceneInteractionVisible(!1, () => {
+        this.vFa();
+      });
   }
   OnActivate() {
     this.SetActorVisible(!0, "[SceneItemActorComponent.OnActivate] Visible"),
@@ -490,6 +505,15 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
   Txe() {
     if (-1 !== this.u9e) {
       (this.omn = !0),
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Entity",
+            19,
+            "场景交互物加载完成",
+            ["HandleId", this.u9e],
+            ["ModelId", this.CreatureDataInternal.GetModelConfig().ID],
+            ["PbDataId", this.CreatureData.GetPbDataId()],
+          ),
         SceneInteractionManager_1.SceneInteractionManager.Get().AttachToActor(
           this.u9e,
           this.ActorInternal,
@@ -510,6 +534,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
           var n = i.Get(t);
           n instanceof UE.StaticMeshActor &&
             (n.Tags.Add(CharacterNameDefines_1.CharacterNameDefines.NO_SLIDE),
+            n.Tags.Add(CharacterNameDefines_1.CharacterNameDefines.INVALID_POS),
             n.StaticMeshComponent?.SetReceivesDecals(!1));
         }
       var s =
@@ -521,15 +546,29 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
           s.Get(t)
             .GetComponentByClass(UE.PrimitiveComponent.StaticClass())
             ?.SetReceivesDecals(!0);
-      this.rmn ? this.gmn() : this.hla(),
+      this.rmn ? this.gmn() : this.lua(),
         this.fmn(),
         this.RefreshShowActor(),
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
         ),
-        this.a1a || (this.ToggleSceneInteractionVisible(!1), (this.a1a = !0));
+        SceneInteractionManager_1.SceneInteractionManager.Get().EnableInteractionLevel(
+          this.u9e,
+        ),
+        this.hca ||
+          (this.ToggleSceneInteractionVisible(!1, () => {
+            this.vFa();
+          }),
+          (this.hca = !0));
     }
+  }
+  vFa() {
+    (this.omn = !1),
+      (this.Y2a = !1),
+      SceneInteractionManager_1.SceneInteractionManager.Get().DisableInteractionLevel(
+        this.u9e,
+      );
   }
   RefreshShowActor() {
     var t;
@@ -558,7 +597,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
           )));
   }
   ToggleSceneInteractionVisible(t, e = void 0) {
-    (!this.omn && ((this.a1a = t), -1 === this.u9e)) ||
+    (!this.omn && ((this.hca = t), -1 === this.u9e)) ||
       SceneInteractionManager_1.SceneInteractionManager.Get().ToggleSceneInteractionVisible(
         this.u9e,
         t,
@@ -678,6 +717,12 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
         t,
       );
   }
+  GetAllActorsInSceneInteractionLevel() {
+    if (-1 !== this.u9e)
+      return SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllActorsInLevel(
+        this.u9e,
+      );
+  }
   OverrideStaticMeshFromSceneInteraction() {
     (this.rmn = !0), this.omn && this.gmn();
   }
@@ -698,12 +743,13 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       (n = UE.NewArray(UE.Transform)).Add(t.GetRelativeTransform()),
       UE.KuroStaticMeshLibrary.MergeSimpleCollisions(t, n),
       e.SetStaticMesh(t.StaticMesh),
-      3 === e.GetCollisionEnabled() && e.SetCollisionEnabled(0),
+      this.z2a(e.GetCollisionEnabled()) && e.SetCollisionEnabled(0),
+      (this.Y2a = !0),
       e.SetCollisionEnabled(3),
       e.SetHiddenInGame(!0),
       t.SetStaticMesh(i));
   }
-  hla() {
+  lua() {
     var e =
       SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
         this.u9e,
@@ -711,9 +757,13 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
     if (e) {
       let t = e.GetComponentByClass(UE.ShapeComponent.StaticClass());
       (t = t || e.GetComponentByClass(UE.StaticMeshComponent.StaticClass())) &&
-        (3 === t.GetCollisionEnabled() && t.SetCollisionEnabled(0),
+        (this.z2a(t.GetCollisionEnabled()) && t.SetCollisionEnabled(0),
+        (this.Y2a = !0),
         t.SetCollisionEnabled(3));
     }
+  }
+  z2a(t) {
+    return 2 === t || 3 === t;
   }
   ChangeSceneInteractionPlayDirection(t) {
     -1 !== this.u9e &&
@@ -866,7 +916,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
     }
   }
   OnChangeTimeDilation(t) {
-    var t = t * (this.Entity.GetComponent(109)?.CurrentTimeScale ?? 1),
+    var t = t * (this.Entity.GetComponent(110)?.CurrentTimeScale ?? 1),
       e =
         ((this.ActorInternal.CustomTimeDilation = t),
         this.GetInteractionMainActor());
@@ -905,9 +955,18 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       (this.mmn.A = s),
       r.InteractionMaterialController.ChangeVectorParameter(this.mmn, t));
   }
+  GetInteractCollisionActor() {
+    return -1 === this.u9e
+      ? this.HasMesh()
+        ? this.Owner
+        : void 0
+      : SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
+          this.u9e,
+        );
+  }
 };
 (SceneItemActorComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(185)],
+  [(0, RegisterComponent_1.RegisterComponent)(187)],
   SceneItemActorComponent,
 )),
   (exports.SceneItemActorComponent = SceneItemActorComponent);

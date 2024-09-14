@@ -4,11 +4,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
   QuestTagById_1 = require("../../../../Core/Define/ConfigQuery/QuestTagById"),
   ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
-  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
@@ -26,6 +26,7 @@ const UE = require("ue"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
   GeneralLogicTreeController_1 = require("../../GeneralLogicTree/GeneralLogicTreeController"),
   HelpController_1 = require("../../Help/HelpController"),
+  MapUtil_1 = require("../../Map/MapUtil"),
   ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   QuestController_1 = require("../Controller/QuestController"),
@@ -48,7 +49,7 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
       (this.Wno = void 0),
       (this.Ivt = void 0),
       (this.Kno = 0),
-      (this.wGn = !1),
+      (this.HGn = !1),
       (this.QuestDescChangeLang = () => {
         var e;
         this.kno &&
@@ -81,7 +82,7 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
       (this.$no = (e) => {
         this.Yno(e);
       }),
-      (this.UGn = (e) => {
+      (this.OGn = (e) => {
         if (this.Hno) {
           for (const t of this.Hno) t.UpdateList();
           this.zno(0);
@@ -127,6 +128,8 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
         this.GetItem(15).SetUIActive(!t),
           this.GetItem(13).SetUIActive(t),
           this.GetItem(13).SetAnchorOffset(Vector2D_1.Vector2D.ZeroVector),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Quest", 19, "任务界面是否为空", ["是否为空", t]),
           (this.Ono = !t),
           this.Ono
             ? this.Nno && this.Oei(i.GetDefaultItem()?.QuestId)
@@ -163,32 +166,32 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
             this.Zno(),
             this.eso();
         else {
-          const s = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
+          const r = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
             this.kno,
           );
-          if (s) {
+          if (r) {
             const t = () => {
               if (
                 (this.Fno ||
                   (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
                     ModelManager_1.ModelManager.GameModeModel.InstanceDungeon
-                      .Id !== s.Tree.DungeonId &&
+                      .Id !== r.Tree.DungeonId &&
                     ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                       "QuestTargetNotInCurScene",
                     )),
-                s?.IsSuspend())
+                r?.IsSuspend())
               )
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info("Quest", 66, "不允许强制切出", [
                     "任务Id",
                     this.kno,
                   ]),
-                  (e =
+                  (t =
                     MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
                       "Task_NoSwitch_Tips",
                     )),
                   ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
-                    e,
+                    t,
                   );
               else {
                 Log_1.Log.CheckInfo() &&
@@ -201,18 +204,49 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
                     !0,
                     1,
                   );
-                var e = s.GetCurrentActiveChildQuestNode(),
-                  t =
-                    GeneralLogicTreeController_1.GeneralLogicTreeController.IsShowNodeTrackDistance(
-                      s.TreeId,
-                      e.NodeId,
-                    ),
-                  e = s.GetTrackDistance(e.NodeId);
-                if (t && e) {
-                  t = s.GetCurrentActiveChildQuestNode()?.NodeId ?? 0;
-                  const i = {
+                var t = r.GetCurrentActiveChildQuestNode();
+                if (t) {
+                  var i =
+                      GeneralLogicTreeController_1.GeneralLogicTreeController.IsShowNodeTrackDistance(
+                        r.TreeId,
+                        t.NodeId,
+                      ),
+                    s = r.GetTrackDistance(t.NodeId),
+                    o = r.HasValidTrackTarget(t.NodeId);
+                  if (!i || !s) {
+                    let e = !1;
+                    if (
+                      !(e =
+                        !s &&
+                        o &&
+                        ((i = r.GetNodeDungeonId(t.NodeId) ?? 0),
+                        (s =
+                          ModelManager_1.ModelManager.CreatureModel.GetInstanceId()),
+                        MapUtil_1.MapUtil.IsDungeonDiffWorld(s, i))
+                          ? !0
+                          : e)
+                    )
+                      return (
+                        this.Zno(),
+                        this.eso(),
+                        ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                          "FollowQuestStepGuide",
+                        ),
+                        void (
+                          Log_1.Log.CheckInfo() &&
+                          Log_1.Log.Info(
+                            "Quest",
+                            50,
+                            "追踪失败，不满足任务追踪的前置条件",
+                            ["任务Id", this.kno],
+                          )
+                        )
+                      );
+                  }
+                  o = r.GetCurrentActiveChildQuestNode()?.NodeId ?? 0;
+                  const e = {
                     MarkType: 12,
-                    MarkId: s.GetDefaultMark(t),
+                    MarkId: r.GetDefaultMark(o),
                     IsNotFocusTween: !0,
                     OpenAreaId: 0,
                   };
@@ -221,14 +255,14 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
                         () => {
                           UiManager_1.UiManager.OpenView(
                             "WorldMapView",
-                            i,
+                            e,
                             () => {
                               UiManager_1.UiManager.CloseView("QuestView");
                             },
                           );
                         },
                       )
-                    : UiManager_1.UiManager.OpenView("WorldMapView", i, () => {
+                    : UiManager_1.UiManager.OpenView("WorldMapView", e, () => {
                         UiManager_1.UiManager.CloseView("QuestView");
                       });
                 } else
@@ -236,18 +270,11 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
                     this.eso(),
                     ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                       "FollowQuestStepGuide",
-                    ),
-                    Log_1.Log.CheckInfo() &&
-                      Log_1.Log.Info(
-                        "Quest",
-                        50,
-                        "追踪失败，不满足任务追踪的前置条件",
-                        ["任务Id", this.kno],
-                      );
+                    );
               }
             };
             var e;
-            s.IsSuspend()
+            r.IsSuspend()
               ? (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Quest",
@@ -259,7 +286,7 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
                   162,
                 )).FunctionMap.set(2, () => {
                   GeneralLogicTreeController_1.GeneralLogicTreeController.RequestForcedOccupation(
-                    s.TreeId,
+                    r.TreeId,
                     t,
                   );
                 }),
@@ -324,7 +351,7 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
           this.iso(e),
           this.oso(e),
           this.rso(e),
-          this.Ofa(e);
+          this.oSa(e);
       });
   }
   OnRegisterComponent() {
@@ -453,13 +480,13 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
         if (e) {
           const i = e.GetQuestItem(t.Id);
           i &&
-            ((this.wGn = !0),
-            TimerSystem_1.TimerSystem.Delay(() => {
-              this.wGn &&
+            ((this.HGn = !0),
+            TimerSystem_1.TimerSystem.Next(() => {
+              this.HGn &&
                 (this.GetScrollViewWithScrollbar(18).ScrollTo(i.GetRootItem()),
                 this.Oei(this.kno)),
-                (this.wGn = !1);
-            }, 200));
+                (this.HGn = !1);
+            }));
         }
       } else this.kno = QuestDefine_1.INVALID_QUEST_ID;
     }
@@ -483,7 +510,7 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ActivityQuestCountdownEnd,
-        this.UGn,
+        this.OGn,
       ),
       this.GetText(9).OnSelfLanguageChange.Bind(this.QuestDescChangeLang);
   }
@@ -506,7 +533,7 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ActivityQuestCountdownEnd,
-        this.UGn,
+        this.OGn,
       ),
       this.GetText(9).OnSelfLanguageChange.Unbind();
   }
@@ -685,7 +712,7 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
       });
     } else t.SetUIActive(!1);
   }
-  Ofa(e) {
+  oSa(e) {
     var t,
       i,
       s,
@@ -725,7 +752,7 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
                 : i.GetDefaultItem().SetSelected(!1),
               i.GetQuestItem(t).SetSelected(!0),
               this.GetScrollViewWithScrollbar(18).ScrollTo(i.GetRootItem()),
-              (this.wGn = !1),
+              (this.HGn = !1),
               [(t = s.GetTaskToggleItem()), t]
             );
         }

@@ -17,31 +17,44 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0,
+const initStat = Stats_1.Stat.Create("configUiDynamicTabByParentViewName.Init"),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configUiDynamicTabByParentViewName.GetConfigList",
+  ),
   CONFIG_LIST_STAT_PREFIX = "configUiDynamicTabByParentViewName.GetConfigList(";
 exports.configUiDynamicTabByParentViewName = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfigList: (i, n = !0) => {
-    var o;
-    if (
-      (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start();
+    var o = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${i})`),
+      t =
+        (o.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
       if (n) {
         var e = KEY_PREFIX + `#${i})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (r) return r;
+        const m = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (m)
+          return (
+            o.Stop(),
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            m
+          );
       }
       if (
-        (o = ConfigCommon_1.ConfigCommon.BindString(handleId, 1, i, ...logPair))
+        (t = ConfigCommon_1.ConfigCommon.BindString(handleId, 1, i, ...logPair))
       ) {
-        const r = new Array();
+        const m = new Array();
         for (;;) {
           if (
             1 !==
@@ -53,30 +66,41 @@ exports.configUiDynamicTabByParentViewName = {
             break;
           var a = void 0;
           if (
-            (([o, a] = ConfigCommon_1.ConfigCommon.GetValue(
+            (([t, a] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
               0,
               ...logPair,
               ["ParentViewName", i],
             )),
-            !o)
+            !t)
           )
-            return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
+            return (
+              ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+              o.Stop(),
+              getConfigListStat.Stop(),
+              void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+            );
           a = UiDynamicTab_1.UiDynamicTab.getRootAsUiDynamicTab(
             new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
           );
-          r.push(a);
+          m.push(a);
         }
         return (
           n &&
             ((e = KEY_PREFIX + `#${i})`),
-            ConfigCommon_1.ConfigCommon.SaveConfig(e, r, r.length)),
+            ConfigCommon_1.ConfigCommon.SaveConfig(e, m, m.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          r
+          o.Stop(),
+          getConfigListStat.Stop(),
+          ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+          m
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    o.Stop(),
+      getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=UiDynamicTabByParentViewName.js.map

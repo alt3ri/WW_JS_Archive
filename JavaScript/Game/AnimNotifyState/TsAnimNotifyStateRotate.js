@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   MathUtils_1 = require("../../Core/Utils/MathUtils"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
-  GlobalData_1 = require("../GlobalData"),
   GravityUtils_1 = require("../Utils/GravityUtils");
 class AnsRotateParam {
   constructor(t) {
@@ -51,10 +50,10 @@ class TsAnimNotifyStateRotate extends UE.KuroAnimNotifyState {
           : this.ParamsMap.set(t.Id, new AnsRotateParam(s)),
         this.在横板模式中禁用)
       ) {
-        if (t.GetComponent(97)?.Active) return !1;
+        if (t.GetComponent(98)?.Active) return !1;
       } else if (this.只在横板模式中生效)
-        if (!t.GetComponent(97)?.Active) return !1;
-      var e = t.GetComponent(33);
+        if (!t.GetComponent(98)?.Active) return !1;
+      var e = t.GetComponent(34);
       if (!e?.Valid) return !1;
       if (
         (e.SetSkillCanRotate(!0),
@@ -90,31 +89,31 @@ class TsAnimNotifyStateRotate extends UE.KuroAnimNotifyState {
   K2_NotifyTick(e, t, r) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
-      var a = e.CharacterActorComponent?.Entity;
-      if (!a?.Valid) return !1;
-      var h = this.ParamsMap.get(a.Id),
-        n = h.NowTime;
-      if (((h.NowTime += r), this.在横板模式中禁用)) {
-        if (a.GetComponent(97)?.Active) return !1;
+      var h = e.CharacterActorComponent?.Entity;
+      if (!h?.Valid) return !1;
+      var a = this.ParamsMap.get(h.Id);
+      if (!a) return !1;
+      var n = a.NowTime;
+      if (((a.NowTime += r), this.在横板模式中禁用)) {
+        if (h.GetComponent(98)?.Active) return !1;
       } else if (this.只在横板模式中生效)
-        if (!a.GetComponent(97)?.Active) return !1;
-      a = a.GetComponent(33);
-      if (!a?.Valid) return !1;
+        if (!h.GetComponent(98)?.Active) return !1;
+      h = h.GetComponent(34);
+      if (!h?.Valid) return !1;
       let s = this.旋转速度;
       if (this.是否平滑旋转) {
-        let t = n * h.TotalDurationReciprocal,
-          i = h.NowTime * h.TotalDurationReciprocal;
+        let t = n * a.TotalDurationReciprocal,
+          i = a.NowTime * a.TotalDurationReciprocal;
         this.Curve &&
           ((t = this.Curve.GetFloatValue(MathUtils_1.MathUtils.Clamp(t, 0, 1))),
           (i = this.Curve.GetFloatValue(MathUtils_1.MathUtils.Clamp(i, 0, 1))));
         n =
-          ((this.GetSkillRotateAngle(e.CharacterActorComponent, a) *
+          (Math.abs(this.GetSkillRotateAngle(e.CharacterActorComponent, h)) *
             MathUtils_1.MathUtils.Clamp((i - t) / (1 - t), 0, 1)) /
-            r) *
-          h.TotalDurationReciprocal;
-        s *= Math.min(n, 1);
+          r;
+        s = MathUtils_1.MathUtils.Clamp(n, 0, s);
       }
-      return a.SetSkillRotateSpeed(s), !0;
+      return h.SetSkillRotateSpeed(s), !0;
     }
     return !1;
   }
@@ -130,13 +129,13 @@ class TsAnimNotifyStateRotate extends UE.KuroAnimNotifyState {
     return (
       t instanceof TsBaseCharacter_1.default &&
         (this.ParamsMap?.delete(t.CharacterActorComponent?.Entity.Id ?? 0),
-        (t = t.CharacterActorComponent?.Entity?.GetComponent(33))?.Valid) &&
+        (t = t.CharacterActorComponent?.Entity?.GetComponent(34))?.Valid) &&
         (t.SetSkillCanRotate(!1), t.SetRotateTarget(void 0, 0)),
       !1
     );
   }
   Initialize() {
-    (this.IsInitialize && !GlobalData_1.GlobalData.IsPlayInEditor) ||
+    this.IsInitialize ||
       ((this.IsInitialize = !0), (this.ParamsMap = new Map()));
   }
   GetNotifyName() {

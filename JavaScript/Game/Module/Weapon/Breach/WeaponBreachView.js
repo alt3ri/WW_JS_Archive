@@ -33,45 +33,53 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
       (this.O2i = void 0),
       (this.dmo = void 0),
       (this.AOo = () => {
-        0 === this.ROo
-          ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-              "WeaponBreachNoEnoughMaterialText",
-            )
-          : 1 === this.ROo
-            ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-                "WeaponBreachNoEnoughMoneyText",
-              )
-            : ((this.N2i = UiSceneManager_1.UiSceneManager.GetWeaponObserver()),
-              (this.O2i =
-                UiSceneManager_1.UiSceneManager.GetWeaponScabbardObserver()),
-              (this.dmo =
-                UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()),
-              WeaponController_1.WeaponController.SendPbWeaponBreachRequest(
-                this.DOo,
-                (e) => {
-                  var i = this.N2i.Model,
-                    i =
-                      (UiModelUtil_1.UiModelUtil.PlayEffectAtRootComponent(
-                        i,
-                        "WeaponBreachEffect",
-                      ),
-                      WeaponController_1.WeaponController.PlayWeaponRenderingMaterial(
-                        "WeaponBreachMaterialController",
-                        this.N2i,
-                        this.O2i,
-                      ),
-                      ConfigManager_1.ConfigManager.RoleConfig.GetWeaponBreachDaDelayTime());
-                  TimerSystem_1.TimerSystem.Delay(() => {
-                    this.N2i?.Model?.CheckGetComponent(
-                      19,
-                    )?.RefreshWeaponBreachDa(e),
-                      this.O2i?.Model?.CheckGetComponent(
-                        19,
-                      )?.RefreshWeaponBreachDa(e),
-                      this.dmo?.Model?.CheckGetComponent(14)?.RefreshWeaponDa();
-                  }, i);
-                },
-              ));
+        if (0 === this.ROo)
+          ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+            "WeaponBreachNoEnoughMaterialText",
+          );
+        else if (1 === this.ROo)
+          ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+            "WeaponBreachNoEnoughMoneyText",
+          );
+        else {
+          (this.N2i = UiSceneManager_1.UiSceneManager.GetWeaponObserver()),
+            (this.O2i =
+              UiSceneManager_1.UiSceneManager.GetWeaponScabbardObserver()),
+            (this.dmo =
+              UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor());
+          const t =
+            ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
+              this.DOo,
+            )?.GetRoleId() ?? 0;
+          WeaponController_1.WeaponController.SendPbWeaponBreachRequest(
+            this.DOo,
+            (e) => {
+              var i = this.N2i.Model,
+                i =
+                  (UiModelUtil_1.UiModelUtil.PlayEffectAtRootComponent(
+                    i,
+                    "WeaponBreachEffect",
+                  ),
+                  WeaponController_1.WeaponController.PlayWeaponRenderingMaterial(
+                    "WeaponBreachMaterialController",
+                    this.N2i,
+                    this.O2i,
+                  ),
+                  ConfigManager_1.ConfigManager.RoleConfig.GetWeaponBreachDaDelayTime());
+              TimerSystem_1.TimerSystem.Delay(() => {
+                this.N2i?.Model?.CheckGetComponent(19)?.RefreshWeaponBreachDa(
+                  e,
+                  t,
+                ),
+                  this.O2i?.Model?.CheckGetComponent(19)?.RefreshWeaponBreachDa(
+                    e,
+                    t,
+                  ),
+                  this.dmo?.Model?.CheckGetComponent(14)?.RefreshWeaponDa();
+              }, i);
+            },
+          );
+        }
       }),
       (this.LevelUpLockTipClick = () => {
         var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(175);

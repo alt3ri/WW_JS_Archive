@@ -22,7 +22,7 @@ class VisionSkinView extends UiViewBase_1.UiViewBase {
       (this.aji = -1),
       (this.V1i = -1),
       (this.Xji = 0),
-      (this.$Xs = 0),
+      (this.jJs = 0),
       (this.$ji = void 0),
       (this.Yji = void 0),
       (this.Jji = !1),
@@ -176,7 +176,7 @@ class VisionSkinView extends UiViewBase_1.UiViewBase {
             (this.zji = this.Yji?.GetItemGridExtendToggle()),
             this.Yji?.SetCurrentEquipmentVisible(!0),
             (this.Xji = t[i]),
-            (this.$Xs = this.Xji);
+            (this.jJs = this.Xji);
         }),
         this.rWi(!1),
         this.nWi(!1);
@@ -222,7 +222,7 @@ class VisionSkinView extends UiViewBase_1.UiViewBase {
   OnAfterDestroy() {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.VisionSkinViewClose,
-      this.Xji !== this.$Xs,
+      this.Xji !== this.jJs,
     );
   }
 }

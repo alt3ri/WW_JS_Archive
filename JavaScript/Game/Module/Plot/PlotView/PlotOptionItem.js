@@ -36,58 +36,60 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.yzi = void 0),
       (this.aui = !1),
       (this.Lke = () => {
-        var t = this.$_i.GetToggleItem().GetToggleState();
-        return !this.aui || 1 !== t;
+        var t;
+        return (
+          !this.$_i.IsPlayingReleaseSequence &&
+          ((t = this.$_i.GetToggleItem().GetToggleState()),
+          !this.aui || 1 !== t)
+        );
       }),
       (this._ui = () => {
         this.tui && this.tui(this);
       }),
-      (this.OptionClick = (t = !0) => {
-        t &&
-          !this.aui &&
-          (ModelManager_1.ModelManager.PlotModel.OptionEnable
-            ? ((ModelManager_1.ModelManager.PlotModel.OptionEnable = !1),
-              (this.aui = !0),
-              this.$_i.PlayReleaseSequence().then(
-                () => {
-                  switch (this.fzi) {
-                    case 0:
-                      this.vzi
-                        ? (PlotController_1.PlotController.EndInteraction(
-                            "Flow" === this.Mzi.Type.Type,
-                          ),
-                          TsInteractionUtils_1.TsInteractionUtils.HandleInteractionOptionNew(
-                            this.Mzi,
-                            this.vzi,
-                          ))
-                        : PlotController_1.PlotController.EndInteraction();
-                      break;
-                    case 1:
-                      ModelManager_1.ModelManager.PlotModel.MarkGrayOption(
-                        this.Ezi,
-                        this.OptionIndex,
-                      ),
-                        this.yzi instanceof PlotView_1.PlotView
-                          ? ControllerHolder_1.ControllerHolder.FlowController.FlowShowTalk.SelectOption(
-                              this.OptionIndex,
-                              this.Option.Actions,
-                            )
-                          : SequenceController_1.SequenceController.SelectOption(
-                              this.OptionIndex,
-                              this.Ezi,
-                            );
-                  }
-                },
-                () => {},
-              ))
-            : Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn(
-                "Plot",
-                27,
-                "剧情选项点击失效",
-                ["index", this.OptionIndex],
-                ["id", this.Ezi],
-              ));
+      (this.OptionClick = (t = 0) => {
+        ModelManager_1.ModelManager.PlotModel.OptionEnable
+          ? ((ModelManager_1.ModelManager.PlotModel.OptionEnable = !1),
+            (this.aui = !0),
+            this.$_i.PlayReleaseSequence().then(
+              () => {
+                switch ((this.$_i.SetRaycastTarget(!1), this.fzi)) {
+                  case 0:
+                    this.vzi
+                      ? (PlotController_1.PlotController.EndInteraction(
+                          "Flow" === this.Mzi.Type.Type,
+                        ),
+                        TsInteractionUtils_1.TsInteractionUtils.HandleInteractionOptionNew(
+                          this.Mzi,
+                          this.vzi,
+                        ))
+                      : PlotController_1.PlotController.EndInteraction();
+                    break;
+                  case 1:
+                    ModelManager_1.ModelManager.PlotModel.MarkGrayOption(
+                      this.Ezi,
+                      this.OptionIndex,
+                    ),
+                      this.yzi instanceof PlotView_1.PlotView
+                        ? ControllerHolder_1.ControllerHolder.FlowController.FlowShowTalk.SelectOption(
+                            this.OptionIndex,
+                            this.Option.Actions,
+                          )
+                        : SequenceController_1.SequenceController.SelectOption(
+                            this.OptionIndex,
+                            this.Ezi,
+                          );
+                }
+              },
+              () => {},
+            ))
+          : Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn(
+              "Plot",
+              27,
+              "剧情选项点击失效",
+              ["index", this.OptionIndex],
+              ["id", this.Ezi],
+            );
       }),
       (this.yzi = t);
   }
@@ -105,11 +107,8 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnStart() {
     (this.aui = !1),
       this.$_i.SetFunction(this.OptionClick),
-      this.$_i.GetToggleItem().OnUndeterminedClicked.Add(this.OptionClick);
-    var t = this.$_i.GetToggleItem();
-    t.SetToggleState(1),
-      t.SetToggleState(0),
-      t.CanExecuteChange.Bind(this.Lke),
+      this.$_i.GetToggleItem().OnUndeterminedClicked.Add(this.OptionClick),
+      this.$_i.GetToggleItem().CanExecuteChange.Bind(this.Lke),
       this.Izi();
   }
   OnBeforeDestroy() {
@@ -124,8 +123,18 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
   BindOnHover(t) {
     this.tui = t;
   }
-  SetFollowItemActive(t) {
-    this.GetItem(1).SetUIActive(t);
+  SetSelectedDisplay(t) {
+    if ((this.GetItem(1).SetUIActive(t), this.$_i)) {
+      const e = this.$_i.GetToggleItem();
+      if (e)
+        if (t) e.SetToggleState(0, !1), e.SetToggleState(1, !1);
+        else if (this.Option?.ReadMarkEnabled)
+          if (this.CheckToggleGray()) {
+            const e = this.$_i.GetToggleItem();
+            void e.SetToggleState(2);
+          } else e.SetToggleState(0, !1);
+        else e.SetToggleState(0, !1);
+    }
   }
   SetupSubtitleOption(t, e) {
     (this.fzi = 1),
@@ -181,7 +190,8 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
           break;
         }
         let t = "Dialog";
-        (t = 1 === this.Option?.OptionStyle ? "OS" : this.Mzi.Icon ?? "Dialog"),
+        (t =
+          1 === this.Option?.OptionStyle ? "OS" : (this.Mzi.Icon ?? "Dialog")),
           (e = this.Dzi(t));
         break;
       }
@@ -216,7 +226,7 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
       !!t &&
       (2 === t.Type ||
         (6 === t.Type &&
-          t.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest))
+          t.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest))
     );
   }
   IsOpenSystemBoard() {
@@ -227,11 +237,6 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   IsLeaveItem() {
     return this.Szi;
-  }
-  SetToggleGray() {
-    this.Option?.ReadMarkEnabled &&
-      this.CheckToggleGray() &&
-      this.$_i.GetToggleItem().SetToggleState(2);
   }
   CheckToggleGray() {
     return ModelManager_1.ModelManager.PlotModel.IsOptionGray(
@@ -246,9 +251,8 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
         : this.Uzi(t)
       : this.Azi(),
       (this.aui = !1),
-      this.$_i.GetToggleItem().SetToggleState(0),
-      this.SetToggleGray(),
-      this.SetFollowItemActive(!1);
+      this.SetSelectedDisplay(!1),
+      this.$_i.SetRaycastTarget(!0);
   }
   Rzi(t) {
     this.yzi instanceof PlotSubtitleView_1.PlotSubtitleView ||

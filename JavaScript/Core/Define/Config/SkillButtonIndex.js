@@ -13,28 +13,44 @@ class SkillButtonIndex {
   get DesktopButtonTypeList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.desktopbuttontypelistLength(),
-      (t) => this.desktopbuttontypelist(t),
+      this.desktopbuttontypelist,
+      this,
     );
   }
   get PadButtonTypeList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.padbuttontypelistLength(),
-      (t) => this.padbuttontypelist(t),
+      this.padbuttontypelist,
+      this,
     );
   }
   get DesktopButtonTypeMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.desktopbuttontypemapLength(),
-      (t) => this.desktopbuttontypemap(t)?.key(),
-      (t) => this.desktopbuttontypemap(t)?.value(),
+      this.desktopbuttontypemapKey,
+      this.desktopbuttontypemapValue,
+      this,
     );
+  }
+  desktopbuttontypemapKey(t) {
+    return this.desktopbuttontypemap(t)?.key();
+  }
+  desktopbuttontypemapValue(t) {
+    return this.desktopbuttontypemap(t)?.value();
   }
   get PadButtonTypeMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.padbuttontypemapLength(),
-      (t) => this.padbuttontypemap(t)?.key(),
-      (t) => this.padbuttontypemap(t)?.value(),
+      this.padbuttontypemapKey,
+      this.padbuttontypemapValue,
+      this,
     );
+  }
+  padbuttontypemapKey(t) {
+    return this.padbuttontypemap(t)?.key();
+  }
+  padbuttontypemapValue(t) {
+    return this.padbuttontypemap(t)?.value();
   }
   __init(t, s) {
     return (this.z7 = t), (this.J7 = s), this;

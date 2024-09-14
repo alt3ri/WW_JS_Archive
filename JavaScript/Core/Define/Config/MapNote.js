@@ -13,11 +13,17 @@ class MapNote {
   get Type() {
     return this.type();
   }
+  get MapId() {
+    return this.mapid();
+  }
   get Icon() {
     return this.icon();
   }
   get Desc() {
     return this.desc();
+  }
+  get Style() {
+    return this.style();
   }
   get Priority() {
     return this.priority();
@@ -28,21 +34,32 @@ class MapNote {
   get MarkIdMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.markidmapLength(),
-      (t) => this.markidmap(t)?.key(),
-      (t) => this.markidmap(t)?.value(),
+      this.markidmapKey,
+      this.markidmapValue,
+      this,
     );
   }
+  markidmapKey(t) {
+    return this.markidmap(t)?.key();
+  }
+  markidmapValue(t) {
+    return this.markidmap(t)?.value();
+  }
   get MarkId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.markidLength(), (t) =>
-      this.markid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.markidLength(),
+      this.markid,
+      this,
     );
   }
   get ConditionId() {
     return this.conditionid();
   }
   get QuestIdList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.questidlistLength(), (t) =>
-      this.questidlist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.questidlistLength(),
+      this.questidlist,
+      this,
     );
   }
   __init(t, i) {
@@ -62,27 +79,35 @@ class MapNote {
     var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  icon(t) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+  mapid() {
+    var t = this.J7.__offset(this.z7, 8);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  desc(t) {
+  icon(t) {
     var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
+  desc(t) {
+    var i = this.J7.__offset(this.z7, 12);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
+  style() {
+    var t = this.J7.__offset(this.z7, 14);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
   priority() {
-    var t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   rank() {
-    var t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetMarkidmapAt(t, i) {
     return this.markidmap(t);
   }
   markidmap(t, i) {
-    var s = this.J7.__offset(this.z7, 16);
+    var s = this.J7.__offset(this.z7, 20);
     return s
       ? (i || new DicIntInt_1.DicIntInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -91,22 +116,22 @@ class MapNote {
       : null;
   }
   markidmapLength() {
-    var t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetMarkidAt(t) {
     return this.markid(t);
   }
   markid(t) {
-    var i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 22);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   markidLength() {
-    var t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   markidArray() {
-    var t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 22);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -116,22 +141,22 @@ class MapNote {
       : null;
   }
   conditionid() {
-    var t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetQuestidlistAt(t) {
     return this.questidlist(t);
   }
   questidlist(t) {
-    var i = this.J7.__offset(this.z7, 22);
+    var i = this.J7.__offset(this.z7, 26);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   questidlistLength() {
-    var t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   questidlistArray() {
-    var t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 26);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,

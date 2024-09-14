@@ -9,7 +9,7 @@ class GameplayCueCameraEffect extends GameplayCueBase_1.GameplayCueBase {
   }
   OnCreate() {
     this.CueConfig.Path &&
-      this.Entity.GetComponent(3).IsAutonomousProxy &&
+      this.EntityHandle.Entity.GetComponent(3).IsAutonomousProxy &&
       (0 !== this.hJ &&
         ModelManager_1.ModelManager.ScreenEffectModel.EndScreenEffect(this.hJ),
       (this.hJ = ModelManager_1.ModelManager.ScreenEffectModel.PlayScreenEffect(

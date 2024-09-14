@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configAreaAtmosphereInfoById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configAreaAtmosphereInfoById.GetConfig"),
   CONFIG_STAT_PREFIX = "configAreaAtmosphereInfoById.GetConfig(";
 exports.configAreaAtmosphereInfoById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, e = !0) => {
-    if (
-      (r = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      t =
+        (n.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
       if (e) {
-        var n = KEY_PREFIX + `#${o})`;
-        const i = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (i) return i;
+        var i = KEY_PREFIX + `#${o})`;
+        const r = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (r)
+          return (
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            r
+          );
       }
       if (
-        (r =
+        (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,32 +58,37 @@ exports.configAreaAtmosphereInfoById = {
               o,
             ]))
       ) {
-        var r,
-          n = void 0;
+        i = void 0;
         if (
-          (([r, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([t, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
           )),
-          r)
+          t)
         ) {
-          const i =
+          const r =
             AreaAtmosphereInfo_1.AreaAtmosphereInfo.getRootAsAreaAtmosphereInfo(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
             );
           return (
             e &&
-              ((r = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(r, i)),
+              ((t = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(t, r)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            r
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    n.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=AreaAtmosphereInfoById.js.map

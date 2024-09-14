@@ -26,11 +26,11 @@ class AdviceData {
       (this.x9e = "");
   }
   Phrase(t) {
-    (this.T9e = MathUtils_1.MathUtils.LongToBigInt(t.J4n)),
-      (this.L9e = t.l6n),
-      this.PhraseUpDownData(t.VMs),
+    (this.T9e = MathUtils_1.MathUtils.LongToBigInt(t.s5n)),
+      (this.L9e = t.p6n),
+      this.PhraseUpDownData(t.XMs),
       (this.R9e = new Array()),
-      t.i8n.forEach((t) => {
+      t.u8n.forEach((t) => {
         var e = new AdviceContentData();
         e.Phrase(t), this.R9e.push(e);
       }),
@@ -52,7 +52,7 @@ class AdviceData {
     const s = new StringBuilder_1.StringBuilder();
     t.forEach((i) => {
       switch (i.GetType()) {
-        case Protocol_1.Aki.Protocol.Aks.Proto_Sentence:
+        case Protocol_1.Aki.Protocol.qks.Proto_Sentence:
           {
             var t =
               ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceText(
@@ -71,17 +71,17 @@ class AdviceData {
             });
           }
           break;
-        case Protocol_1.Aki.Protocol.Aks.Proto_Conjunction:
+        case Protocol_1.Aki.Protocol.qks.Proto_Conjunction:
           t =
             ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceConjunctionText(
               i.GetId(),
             );
           s.Append(t);
           break;
-        case Protocol_1.Aki.Protocol.Aks.Proto_Expression:
+        case Protocol_1.Aki.Protocol.qks.Proto_Expression:
           this.U9e = i.GetId();
           break;
-        case Protocol_1.Aki.Protocol.Aks.r8n:
+        case Protocol_1.Aki.Protocol.qks.c8n:
           this.A9e = i.GetId();
       }
     }),
@@ -94,7 +94,7 @@ class AdviceData {
     for (let t = 0; t < r; t++) {
       var a = e[t],
         n = a.GetType();
-      if (n === Protocol_1.Aki.Protocol.Aks.Proto_Sentence) {
+      if (n === Protocol_1.Aki.Protocol.qks.Proto_Sentence) {
         var o,
           h = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceText(
             a.GetId(),
@@ -123,7 +123,7 @@ class AdviceData {
                       )),
                 s.Append(t));
           }
-      } else if (n === Protocol_1.Aki.Protocol.Aks.Proto_Conjunction) {
+      } else if (n === Protocol_1.Aki.Protocol.qks.Proto_Conjunction) {
         let t = "";
         0 < a.GetId()
           ? ((n =
@@ -196,13 +196,13 @@ class AdviceContentData {
     (this.xe = 0), (this.w9e = 0), (this.E9 = void 0);
   }
   Phrase(t) {
-    (this.xe = t.J4n), (this.w9e = t.o8n), (this.E9 = t.Z4n);
+    (this.xe = t.s5n), (this.w9e = t.m8n), (this.E9 = t.h5n);
   }
   PhraseData(t) {
     t instanceof AdviceContentData
       ? ((this.xe = t.xe), (this.w9e = t.w9e), (this.E9 = t.E9))
-      : t instanceof Protocol_1.Aki.Protocol.Dks &&
-        ((this.xe = t.J4n), (this.w9e = t.o8n), (this.E9 = t.Z4n));
+      : t instanceof Protocol_1.Aki.Protocol.Bks &&
+        ((this.xe = t.s5n), (this.w9e = t.m8n), (this.E9 = t.h5n));
   }
   SetData(t, e, i) {
     (this.xe = t), (this.w9e = e), (this.E9 = i);
@@ -217,8 +217,8 @@ class AdviceContentData {
     return this.E9;
   }
   ConvertToPb() {
-    var t = new Protocol_1.Aki.Protocol.Dks();
-    return (t.J4n = this.xe), (t.Z4n = this.E9), (t.o8n = this.w9e), t;
+    var t = new Protocol_1.Aki.Protocol.Bks();
+    return (t.s5n = this.xe), (t.h5n = this.E9), (t.m8n = this.w9e), t;
   }
 }
 exports.AdviceContentData = AdviceContentData;
@@ -228,9 +228,9 @@ class AdviceEntityData {
   }
   Phrase(t) {
     (this.b9e = new AdviceData()),
-      (this.j8 = t.q5n),
-      (this.B9e = t.HMs),
-      this.b9e.Phrase(t.$Ms);
+      (this.j8 = t.W5n),
+      (this.B9e = t.JMs),
+      this.b9e.Phrase(t.YMs);
   }
   PhraseVote(t) {
     this.b9e.PhraseUpDownData(t),

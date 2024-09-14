@@ -39,17 +39,23 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
     return SkillMessageController.UIt.clear(), !0;
   }
   static PreUseSkillNotify(e, o) {
-    e = e?.GetComponent(47);
-    return !(e && !e.PreSwitchRemoteFightState(o.nVn.oVn));
+    e = e?.GetComponent(48);
+    return !(e && !e.PreSwitchRemoteFightState(o.dVn.mVn));
   }
   static UseSkillNotify(e, o, t) {
     var l;
-    e && o && o.nVn && o.nVn.X4n
-      ? o.nVn.J4n &&
-        ((t = MathUtils_1.MathUtils.LongToBigInt(t.k8n)),
-        (e = e.GetComponent(33)),
-        (l = MathUtils_1.MathUtils.LongToNumber(o.nVn.sVn)),
-        e?.SimulatedBeginSkill(o.nVn.X4n, l, o.nVn.aVn, 0.001 * o.nVn.Y4n)) &&
+    e && o && o.dVn && o.dVn.r5n
+      ? o.dVn.s5n &&
+        ((t = MathUtils_1.MathUtils.LongToBigInt(t.$8n)),
+        (e = e.GetComponent(34)),
+        (l = MathUtils_1.MathUtils.LongToNumber(o.dVn.CVn)),
+        e?.SimulatedBeginSkill(
+          o.dVn.r5n,
+          l,
+          o.dVn.gVn,
+          0.001 * o.dVn.n5n,
+          t,
+        )) &&
         SkillMessageController.UIt.add(t)
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -59,23 +65,26 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
         );
   }
   static SkillNotify(e, o, t) {
-    var l = e?.GetComponent(33);
-    l
-      ? ((t = MathUtils_1.MathUtils.LongToBigInt(t.N8n)),
-        SkillMessageController.UIt.has(t)
-          ? o.lVn.hVn === SKILL_PLAY_MONTAGE &&
-            l.SimulatePlayMontage(
-              o.nVn?.X4n ?? 0,
-              o.lVn.eVn,
-              o.lVn._Vn,
-              o.lVn.uVn,
-              o.lVn.cVn,
-            )
+    var l,
+      r = e?.GetComponent(34);
+    r
+      ? ((l = MathUtils_1.MathUtils.LongToBigInt(t.X8n)),
+        SkillMessageController.UIt.has(l)
+          ? o.pVn.fVn === SKILL_PLAY_MONTAGE &&
+            ((l = MathUtils_1.MathUtils.LongToBigInt(t.$8n)),
+            r.SimulatePlayMontage(
+              o.dVn?.r5n ?? 0,
+              o.pVn.lVn,
+              o.pVn.vVn,
+              o.pVn.MVn,
+              o.pVn.SVn,
+              l,
+            ))
           : CombatLog_1.CombatLog.Info(
               "Skill",
               e,
               "技能释放未被确认，拒绝其后续行为",
-              ["技能Id", o.nVn.X4n],
+              ["技能Id", o.dVn.r5n],
             ))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -85,10 +94,10 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
         );
   }
   static EndSkillNotify(e, o, t) {
-    o.nVn && o.nVn.J4n
-      ? ((t = MathUtils_1.MathUtils.LongToBigInt(t.N8n)),
+    o.dVn && o.dVn.s5n
+      ? ((t = MathUtils_1.MathUtils.LongToBigInt(t.X8n)),
         SkillMessageController.UIt.delete(t),
-        e?.GetComponent(33)?.SimulateEndSkill(o.nVn.X4n))
+        e?.GetComponent(34)?.SimulateEndSkill(o.dVn.r5n))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "World",
@@ -97,42 +106,42 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
         );
   }
   static UseSkillRequest(o, e, t) {
-    const l = o.GetComponent(33);
+    const l = o.GetComponent(34);
     var r = e.SkillId,
       i = e.SkillInfo.AutonomouslyBySimulate,
       s = e.SkillInfo.MoveControllerTime,
       a = e.SkillInfo.InterruptLevel,
       _ = e.PreContextId,
       n = e.CombatMessageId,
-      C = Protocol_1.Aki.Protocol.L3n.create(),
+      C = Protocol_1.Aki.Protocol.b3n.create(),
       r =
-        ((C.nVn = Protocol_1.Aki.Protocol.k3s.create()),
-        (C.nVn.X4n = r),
+        ((C.dVn = Protocol_1.Aki.Protocol.W3s.create()),
+        (C.dVn.r5n = r),
         ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(t));
-    (C.nVn.sVn = MathUtils_1.MathUtils.NumberToLong(r)),
-      (C.nVn.V8n = Time_1.Time.NowSeconds),
-      (C.nVn.aVn = i),
-      (C.nVn.Y4n = 1e3 * s),
-      (C.nVn.mVn = a);
+    (C.dVn.CVn = MathUtils_1.MathUtils.NumberToLong(r)),
+      (C.dVn.J8n = Time_1.Time.NowSeconds),
+      (C.dVn.gVn = i),
+      (C.dVn.n5n = 1e3 * s),
+      (C.dVn.EVn = a);
     const c = e.FightStateHandle;
     return (
-      c && (C.nVn.oVn = l.FightStateComp?.GetFightState() ?? 0),
+      c && (C.dVn.mVn = l.FightStateComp?.GetFightState() ?? 0),
       CombatMessage_1.CombatNet.Call(
-        27988,
+        16263,
         o,
         C,
         (e) => {
           o.IsEnd ||
-            (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
+            (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
               ? c && l.FightStateComp?.ConfirmState(c)
               : (CombatLog_1.CombatLog.Info(
                   "Skill",
                   o,
                   "技能释放服务器拒绝，技能终止",
-                  ["技能Id", e.nVn?.X4n],
+                  ["技能Id", e.dVn?.r5n],
                 ),
                 l.EndSkill(
-                  e.nVn.X4n,
+                  e.dVn.r5n,
                   "SkillMessageController.UseSkillRequest",
                 )));
         },
@@ -145,11 +154,11 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
   static EndSkillRequest(e, o) {
     var t;
     return e
-      ? (((t = Protocol_1.Aki.Protocol.D3n.create()).nVn =
-          Protocol_1.Aki.Protocol.k3s.create()),
-        (t.nVn.X4n = o),
-        (t.nVn.V8n = Time_1.Time.NowSeconds),
-        CombatMessage_1.CombatNet.Call(9879, e, t, () => {}),
+      ? (((t = Protocol_1.Aki.Protocol.q3n.create()).dVn =
+          Protocol_1.Aki.Protocol.W3s.create()),
+        (t.dVn.r5n = o),
+        (t.dVn.J8n = Time_1.Time.NowSeconds),
+        CombatMessage_1.CombatNet.Call(16901, e, t, () => {}),
         !0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -173,28 +182,28 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
     n = void 0,
   ) {
     const C = Number(t);
-    (t = Protocol_1.Aki.Protocol.k3s.create()),
-      (t.X4n = C),
-      (t.sVn = l),
-      (t.V8n = Time_1.Time.NowSeconds),
-      (l = Protocol_1.Aki.Protocol.v4s.create()),
-      (l.hVn = e),
-      (l.eVn = r),
-      (l._Vn = i),
-      (l.uVn = s),
-      (l.cVn = a),
-      (e = Protocol_1.Aki.Protocol.T3n.create());
-    (e.nVn = t),
-      (e.lVn = l),
+    (t = Protocol_1.Aki.Protocol.W3s.create()),
+      (t.r5n = C),
+      (t.CVn = l),
+      (t.J8n = Time_1.Time.NowSeconds),
+      (l = Protocol_1.Aki.Protocol.T4s.create()),
+      (l.fVn = e),
+      (l.lVn = r),
+      (l.vVn = i),
+      (l.MVn = s),
+      (l.SVn = a),
+      (e = Protocol_1.Aki.Protocol.w3n.create());
+    (e.dVn = t),
+      (e.pVn = l),
       CombatMessage_1.CombatNet.Call(
-        10990,
+        16699,
         o,
         e,
         (e) => {
           if (!o.IsEnd)
-            switch (e.O4n) {
-              case Protocol_1.Aki.Protocol.O4n.NRs:
-              case Protocol_1.Aki.Protocol.O4n
+            switch (e.Q4n) {
+              case Protocol_1.Aki.Protocol.Q4n.KRs:
+              case Protocol_1.Aki.Protocol.Q4n
                 .Proto_ErrCombatSkillGAHandleGetEntityFailed:
                 break;
               default:
@@ -203,7 +212,7 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
                   o,
                   "播放蒙太奇请求失败",
                   ["技能Id", C],
-                  ["ErrorCode", e?.O4n],
+                  ["ErrorCode", e?.Q4n],
                 );
             }
         },
@@ -220,14 +229,14 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
       ["MontageIndex", t],
       ["animNotifyIndex", l],
     );
-    var s = Protocol_1.Aki.Protocol.r4n.create();
-    (s.dVn = l),
-      (s.eVn = t),
-      (s.X4n = o),
+    var s = Protocol_1.Aki.Protocol.c4n.create();
+    (s.yVn = l),
+      (s.lVn = t),
+      (s.r5n = o),
       CombatMessage_1.CombatNet.Call(
-        19910,
+        16341,
         e,
-        Protocol_1.Aki.Protocol.r4n.create(s),
+        Protocol_1.Aki.Protocol.c4n.create(s),
         void 0,
         r,
         i,
@@ -238,16 +247,16 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
       "被动技能Id",
       o,
     ]);
-    var l = Protocol_1.Aki.Protocol.a4n.create(),
+    var l = Protocol_1.Aki.Protocol.g4n.create(),
       o =
-        ((l.CVn = MathUtils_1.MathUtils.BigIntToLong(o)),
-        (l.gVn = e.GetComponent(0).GetCreatureDataId()),
+        ((l.IVn = MathUtils_1.MathUtils.BigIntToLong(o)),
+        (l.TVn = e.GetComponent(0).GetCreatureDataId()),
         ModelManager_1.ModelManager.CombatMessageModel.GenMessageId());
     return (
       CombatMessage_1.CombatNet.Call(
-        21141,
+        24321,
         e,
-        Protocol_1.Aki.Protocol.a4n.create(l),
+        Protocol_1.Aki.Protocol.g4n.create(l),
         void 0,
         t,
         o,
@@ -260,40 +269,41 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
       "被动技能Id",
       o,
     ]);
-    var r = Protocol_1.Aki.Protocol.M4n.create();
-    (r.CVn = MathUtils_1.MathUtils.BigIntToLong(o)),
-      (r.gVn = e.GetComponent(0).GetCreatureDataId()),
+    var r = Protocol_1.Aki.Protocol.U4n.create();
+    (r.IVn = MathUtils_1.MathUtils.BigIntToLong(o)),
+      (r.TVn = e.GetComponent(0).GetCreatureDataId()),
       CombatMessage_1.CombatNet.Call(
-        8676,
+        29986,
         e,
-        Protocol_1.Aki.Protocol.M4n.create(r),
+        Protocol_1.Aki.Protocol.U4n.create(r),
         void 0,
         t,
         l,
       );
   }
 }
-(SkillMessageController.UIt = new Set()),
+(SkillMessageController.CloseMonsterServerLogic = !1),
+  (SkillMessageController.UIt = new Set()),
   __decorate(
-    [CombatMessage_1.CombatNet.PreHandle("pFn")],
+    [CombatMessage_1.CombatNet.PreHandle("DFn")],
     SkillMessageController,
     "PreUseSkillNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("pFn")],
+    [CombatMessage_1.CombatNet.SyncHandle("DFn")],
     SkillMessageController,
     "UseSkillNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("fFn")],
+    [CombatMessage_1.CombatNet.SyncHandle("LFn")],
     SkillMessageController,
     "SkillNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("vFn")],
+    [CombatMessage_1.CombatNet.SyncHandle("AFn")],
     SkillMessageController,
     "EndSkillNotify",
     null,

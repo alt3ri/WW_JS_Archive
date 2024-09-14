@@ -86,7 +86,7 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
           )),
           (this.iRi = Math.pow(e, 2)));
     } else
-      (this.BtType = Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest),
+      (this.BtType = Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest),
         (this.TreeConfigId = t.TreeId);
     var e = ConfigManager_1.ConfigManager.MapConfig.GetTaskMarkConfig(
         this.ConfigId,
@@ -128,7 +128,7 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
     this.UpdateItemIsInDistance(t), this.UpdateTrackState(), this.hRi(t);
   }
   GetTitleText() {
-    if (this.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest)
+    if (this.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest)
       return ModelManager_1.ModelManager.QuestNewModel.GetQuest(
         this.TreeConfigId,
       )?.Name;
@@ -168,7 +168,7 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
   }
   _Ri(t) {
     var e, i;
-    this.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
+    this.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
       ((e = this.TreeConfigId),
       (i = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e))) &&
       4 === i.Type &&
@@ -204,7 +204,7 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
     this._Ri(t), (this.nRi = void 0);
   }
   CheckCanShowView() {
-    return this.BtType !== Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest
+    return this.BtType !== Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest
       ? 1 === this.MapType
       : !(
           ("number" == typeof this.TrackTarget &&
@@ -217,7 +217,7 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
   hRi(t) {
     var e, i;
     1 === this.MapType &&
-      this.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
+      this.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
       0 === this.NodeId &&
       this.IsCanShowView &&
       !this.aRi &&

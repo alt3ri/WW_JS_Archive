@@ -17,28 +17,44 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configTreasureBoxDetectorMarkByMarkId.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configTreasureBoxDetectorMarkByMarkId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configTreasureBoxDetectorMarkByMarkId.GetConfig(";
 exports.configTreasureBoxDetectorMarkByMarkId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, e = !0) => {
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var r = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      t =
+        (r.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
       if (e) {
-        var r = KEY_PREFIX + `#${o})`;
-        const a = ConfigCommon_1.ConfigCommon.GetConfig(r);
-        if (a) return a;
+        var n = KEY_PREFIX + `#${o})`;
+        const a = ConfigCommon_1.ConfigCommon.GetConfig(n);
+        if (a)
+          return (
+            r.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
-        (n =
+        (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,32 +62,37 @@ exports.configTreasureBoxDetectorMarkByMarkId = {
               o,
             ]))
       ) {
-        var n,
-          r = void 0;
+        n = void 0;
         if (
-          (([n, r] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["MarkId", o],
           )),
-          n)
+          t)
         ) {
           const a =
             TreasureBoxDetectorMark_1.TreasureBoxDetectorMark.getRootAsTreasureBoxDetectorMark(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(r.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
             );
           return (
             e &&
-              ((n = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(n, a)),
+              ((t = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(t, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            r.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    r.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=TreasureBoxDetectorMarkByMarkId.js.map

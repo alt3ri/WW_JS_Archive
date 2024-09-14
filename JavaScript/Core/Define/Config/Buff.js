@@ -19,19 +19,22 @@ class Buff {
   get DurationCalculationPolicy() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.durationcalculationpolicyLength(),
-      (t) => this.durationcalculationpolicy(t),
+      this.durationcalculationpolicy,
+      this,
     );
   }
   get DurationMagnitude() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.durationmagnitudeLength(),
-      (t) => this.durationmagnitude(t),
+      this.durationmagnitude,
+      this,
     );
   }
   get DurationMagnitude2() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.durationmagnitude2Length(),
-      (t) => this.durationmagnitude2(t),
+      this.durationmagnitude2,
+      this,
     );
   }
   get bDurationAffectedByBulletTime() {
@@ -58,19 +61,22 @@ class Buff {
   get CalculationPolicy() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.calculationpolicyLength(),
-      (t) => this.calculationpolicy(t),
+      this.calculationpolicy,
+      this,
     );
   }
   get ModifierMagnitude() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.modifiermagnitudeLength(),
-      (t) => this.modifiermagnitude(t),
+      this.modifiermagnitude,
+      this,
     );
   }
   get ModifierMagnitude2() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.modifiermagnitude2Length(),
-      (t) => this.modifiermagnitude2(t),
+      this.modifiermagnitude2,
+      this,
     );
   }
   get StackingType() {
@@ -109,102 +115,120 @@ class Buff {
   get GameplayCueIds() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.gameplaycueidsLength(),
-      (t) => this.gameplaycueids(t),
+      this.gameplaycueids,
+      this,
     );
   }
   get GrantedTags() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.grantedtagsLength(), (t) =>
-      this.grantedtags(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.grantedtagsLength(),
+      this.grantedtags,
+      this,
     );
   }
   get ApplicationSourceTagRequirements() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.applicationsourcetagrequirementsLength(),
-      (t) => this.applicationsourcetagrequirements(t),
+      this.applicationsourcetagrequirements,
+      this,
     );
   }
   get ApplicationSourceTagIgnores() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.applicationsourcetagignoresLength(),
-      (t) => this.applicationsourcetagignores(t),
+      this.applicationsourcetagignores,
+      this,
     );
   }
   get ApplicationTagRequirements() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.applicationtagrequirementsLength(),
-      (t) => this.applicationtagrequirements(t),
+      this.applicationtagrequirements,
+      this,
     );
   }
   get ApplicationTagIgnores() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.applicationtagignoresLength(),
-      (t) => this.applicationtagignores(t),
+      this.applicationtagignores,
+      this,
     );
   }
   get OngoingTagRequirements() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.ongoingtagrequirementsLength(),
-      (t) => this.ongoingtagrequirements(t),
+      this.ongoingtagrequirements,
+      this,
     );
   }
   get OngoingTagIgnores() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.ongoingtagignoresLength(),
-      (t) => this.ongoingtagignores(t),
+      this.ongoingtagignores,
+      this,
     );
   }
   get RemovalTagRequirements() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.removaltagrequirementsLength(),
-      (t) => this.removaltagrequirements(t),
+      this.removaltagrequirements,
+      this,
     );
   }
   get RemovalTagIgnores() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.removaltagignoresLength(),
-      (t) => this.removaltagignores(t),
+      this.removaltagignores,
+      this,
     );
   }
   get RemoveBuffWithTags() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.removebuffwithtagsLength(),
-      (t) => this.removebuffwithtags(t),
+      this.removebuffwithtags,
+      this,
     );
   }
   get GrantedApplicationImmunityTags() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.grantedapplicationimmunitytagsLength(),
-      (t) => this.grantedapplicationimmunitytags(t),
+      this.grantedapplicationimmunitytags,
+      this,
     );
   }
   get GrantedApplicationImmunityTagIgnores() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.grantedapplicationimmunitytagignoresLength(),
-      (t) => this.grantedapplicationimmunitytagignores(t),
+      this.grantedapplicationimmunitytagignores,
+      this,
     );
   }
   get PrematureExpirationEffects() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.prematureexpirationeffectsLength(),
-      (t) => this.prematureexpirationeffects(t),
+      this.prematureexpirationeffects,
+      this,
     );
   }
   get RoutineExpirationEffects() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.routineexpirationeffectsLength(),
-      (t) => this.routineexpirationeffects(t),
+      this.routineexpirationeffects,
+      this,
     );
   }
   get OverflowEffects() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.overfloweffectsLength(),
-      (t) => this.overfloweffects(t),
+      this.overfloweffects,
+      this,
     );
   }
   get RelatedExtraEffectBuffId() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.relatedextraeffectbuffidLength(),
-      (t) => this.relatedextraeffectbuffid(t),
+      this.relatedextraeffectbuffid,
+      this,
     );
   }
   get ExtraEffectID() {
@@ -213,31 +237,36 @@ class Buff {
   get ExtraEffectParameters() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.extraeffectparametersLength(),
-      (t) => this.extraeffectparameters(t),
+      this.extraeffectparameters,
+      this,
     );
   }
   get ExtraEffectParametersGrow1() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.extraeffectparametersgrow1Length(),
-      (t) => this.extraeffectparametersgrow1(t),
+      this.extraeffectparametersgrow1,
+      this,
     );
   }
   get ExtraEffectParametersGrow2() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.extraeffectparametersgrow2Length(),
-      (t) => this.extraeffectparametersgrow2(t),
+      this.extraeffectparametersgrow2,
+      this,
     );
   }
   get ExtraEffectRequirements() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.extraeffectrequirementsLength(),
-      (t) => this.extraeffectrequirements(t),
+      this.extraeffectrequirements,
+      this,
     );
   }
   get ExtraEffectReqPara() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.extraeffectreqparaLength(),
-      (t) => this.extraeffectreqpara(t),
+      this.extraeffectreqpara,
+      this,
     );
   }
   get ExtraEffectReqSetting() {
@@ -246,7 +275,8 @@ class Buff {
   get ExtraEffectCD() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.extraeffectcdLength(),
-      (t) => this.extraeffectcd(t),
+      this.extraeffectcd,
+      this,
     );
   }
   get ExtraEffectRemoveStackNum() {
@@ -255,17 +285,22 @@ class Buff {
   get ExtraEffectProbability() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.extraeffectprobabilityLength(),
-      (t) => this.extraeffectprobability(t),
+      this.extraeffectprobability,
+      this,
     );
   }
   get BuffAction() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buffactionLength(), (t) =>
-      this.buffaction(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buffactionLength(),
+      this.buffaction,
+      this,
     );
   }
   get TagLogic() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.taglogicLength(), (t) =>
-      this.taglogic(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.taglogicLength(),
+      this.taglogic,
+      this,
     );
   }
   __init(t, i) {

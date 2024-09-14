@@ -18,25 +18,41 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configEntityAudioConfigByIdWithZero.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configEntityAudioConfigByIdWithZero.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configEntityAudioConfigByIdWithZero.GetConfig(";
 exports.configEntityAudioConfigByIdWithZero = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, i, n, t = !0) => {
-    if (
-      (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var C = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${i}#${n})`),
+      e =
+        (C.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
       if (t) {
-        var d = KEY_PREFIX + `#${o}#${i}#${n})`;
-        const C = ConfigCommon_1.ConfigCommon.GetConfig(d);
-        if (C) return C;
+        var f = KEY_PREFIX + `#${o}#${i}#${n})`;
+        const g = ConfigCommon_1.ConfigCommon.GetConfig(f);
+        if (g)
+          return (
+            C.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
+          );
       }
       if (
         (e =
@@ -53,10 +69,9 @@ exports.configEntityAudioConfigByIdWithZero = {
               ["Id", n],
             ))
       ) {
-        var e,
-          d = void 0;
+        f = void 0;
         if (
-          (([e, d] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, f] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -66,21 +81,27 @@ exports.configEntityAudioConfigByIdWithZero = {
           )),
           e)
         ) {
-          const C =
+          const g =
             EntityAudioConfig_1.EntityAudioConfig.getRootAsEntityAudioConfig(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(d.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(f.buffer)),
             );
           return (
             t &&
               ((e = KEY_PREFIX + `#${o}#${i}#${n})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(e, C)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(e, g)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            C
+            C.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    C.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=EntityAudioConfigByIdWithZero.js.map

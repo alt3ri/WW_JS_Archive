@@ -137,7 +137,7 @@ class CookingIngredientsView extends UiPanelBase_1.UiPanelBase {
     } else {
       let e = !0;
       for (const s of ModelManager_1.ModelManager.CookModel.GetTmpMachiningItemList())
-        s.G6n || (e = !1);
+        s.K6n || (e = !1);
       i =
         ModelManager_1.ModelManager.CookModel.CheckCanProcessedNew(
           this.fGt.ItemId,

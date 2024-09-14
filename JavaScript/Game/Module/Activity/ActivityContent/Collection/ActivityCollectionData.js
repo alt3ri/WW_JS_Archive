@@ -29,23 +29,23 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
   }
   PhraseEx(t) {
     this.RefreshRewardData(), this.GetTotalProgress();
-    t = t.Gps?._ps;
+    t = t.Hps?.vps;
     if (t)
       for (const o of t) {
         var e,
-          i = this.MNe.get(o.lps),
-          r = this.TaskIdToQuestIdMap.get(o.lps),
+          i = this.MNe.get(o.gps),
+          r = this.TaskIdToQuestIdMap.get(o.gps),
           a = this.QuestStateMap.get(r);
         a &&
           i &&
-          ((e = o.F4n === Protocol_1.Aki.Protocol.sks.Proto_GatherTakeReward),
+          ((e = o.Y4n === Protocol_1.Aki.Protocol.dks.Proto_GatherTakeReward),
           ([e, r] =
             ((a.ClaimedReward = e),
             this.QuestStateMap.set(r, a),
             this.yNe(a.QuestState, a.ClaimedReward))),
           (i.RewardState = e),
           (i.RewardButtonText = r),
-          this.MNe.set(o.lps, i));
+          this.MNe.set(o.gps, i));
       }
     (ActivityCollectionController_1.ActivityCollectionController.CurrentActivityId =
       this.Id),

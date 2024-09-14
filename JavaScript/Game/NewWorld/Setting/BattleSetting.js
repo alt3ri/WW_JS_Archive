@@ -7,19 +7,19 @@ const Log_1 = require("../../../Core/Common/Log"),
   moduleNetworkState = [];
 class BattleSetting {
   static RequestSetModuleNetworkState(t, e) {
-    var o = Protocol_1.Aki.Protocol.cis.create();
-    (o.Hjn = t),
-      (o.Vjn = e),
+    var o = Protocol_1.Aki.Protocol.pis.create();
+    (o.zjn = t),
+      (o.Jjn = e),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Battle",
           20,
           "[BattleModule] Request module network mode",
-          ["ModuleName", Protocol_1.Aki.Protocol.D4s[t]],
+          ["ModuleName", Protocol_1.Aki.Protocol.B4s[t]],
           ["ClientControl", e],
         ),
-      Net_1.Net.Call(24709, o, (e) => {
-        BattleSetting.ReceiveSetModuleNetworkState(t, e.Vjn);
+      Net_1.Net.Call(23699, o, (e) => {
+        BattleSetting.ReceiveSetModuleNetworkState(t, e.Jjn);
       });
   }
   static IsModuleClientControl(e) {
@@ -31,7 +31,7 @@ class BattleSetting {
         "Battle",
         20,
         "[BattleModule] Receive module network mode notify",
-        ["ModuleName", Protocol_1.Aki.Protocol.D4s[e]],
+        ["ModuleName", Protocol_1.Aki.Protocol.B4s[e]],
         ["ClientControl", t],
       ),
       (moduleNetworkState[e] = t);

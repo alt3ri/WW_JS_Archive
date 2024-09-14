@@ -14,9 +14,10 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   ColorUtils_1 = require("../../../../Utils/ColorUtils");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
-  SOCKET_NAME = new UE.FName("MarkCase");
+  SOCKET_NAME = new UE.FName("MarkCase"),
+  UPDATE_TOLERATION = 0.1;
 class HeadStateData {
   constructor() {
     (this.CommonParam = void 0),
@@ -42,6 +43,8 @@ class HeadStateData {
       (this.M1t = void 0),
       (this.E1t = void 0),
       (this.S1t = Vector_1.Vector.Create()),
+      (this._Oa = Vector_1.Vector.Create()),
+      (this.uOa = Vector_1.Vector.Create()),
       (this.y1t = Vector_1.Vector.Create()),
       (this.I1t = void 0),
       (this.T1t = void 0),
@@ -120,14 +123,14 @@ class HeadStateData {
       (this.E0 = t.Id),
       (this.OC = t.GetComponent(1)?.Owner),
       (this.ActorComponent = t.GetComponent(1)),
-      (this.$te = t.GetComponent(158)),
-      (this.Xte = t.GetComponent(188)),
-      (this.l1t = t.GetComponent(66)),
-      (this._1t = t.GetComponent(134)),
+      (this.$te = t.GetComponent(159)),
+      (this.Xte = t.GetComponent(190)),
+      (this.l1t = t.GetComponent(67)),
+      (this._1t = t.GetComponent(135)),
       (this.u1t = t.GetComponent(0)),
       (this.c1t = this.Jh.GetComponent(19)),
-      (this.m1t = this.Jh.GetComponent(159)),
-      (this.d1t = this.Jh.GetComponent(116));
+      (this.m1t = this.Jh.GetComponent(160)),
+      (this.d1t = this.Jh.GetComponent(117));
     var t = this.u1t.GetBaseInfo();
     (this.h1t = t?.HeadStateViewConfig),
       (this.C1t = !1),
@@ -234,7 +237,7 @@ class HeadStateData {
           EventDefine_1.EEventName.OnSceneItemEntityHit,
           this.Ylt,
         ),
-      (t = this.Jh.GetComponent(188))?.Valid &&
+      (t = this.Jh.GetComponent(190))?.Valid &&
         ((this.v1t = t.ListenForTagAddOrRemove(242005298, this.V1t)),
         (this.v1t = t.ListenForTagAddOrRemove(1261361093, this.Yrt)),
         (this.M1t = t.ListenForTagAddOrRemove(-1109506297, this.Zrt)),
@@ -243,7 +246,7 @@ class HeadStateData {
         (this.G1t = t.ListenForTagAddOrRemove(1008164187, this.n$e)),
         (this.N1t = t.ListenForTagAddOrRemove(1996802261, this.aXe)),
         (this.O1t = t.ListenForTagAddOrRemove(1922078392, this.zrt))),
-      (t = this.Jh.GetComponent(158))?.Valid &&
+      (t = this.Jh.GetComponent(159))?.Valid &&
         (t.AddListener(
           EAttributeId.Proto_Hardness,
           this.tnt,
@@ -251,7 +254,7 @@ class HeadStateData {
         ),
         t.AddListener(EAttributeId.Proto_Rage, this.tnt, "Range.HeadState"),
         t.AddListener(EAttributeId.Proto_Lv, this.m2, "Lv.HeadState")),
-      (t = this.Jh.GetComponent(116))?.Valid) &&
+      (t = this.Jh.GetComponent(117))?.Valid) &&
       t.AddProgressDataChangedCallback(this.H1t);
   }
   m$e() {
@@ -304,11 +307,11 @@ class HeadStateData {
       this.G1t && (this.G1t.EndTask(), (this.G1t = void 0)),
       this.N1t && (this.N1t.EndTask(), (this.N1t = void 0)),
       this.O1t && (this.O1t.EndTask(), (this.O1t = void 0)),
-      (t = this.Jh?.GetComponent(158)) &&
+      (t = this.Jh?.GetComponent(159)) &&
         (t.RemoveListener(EAttributeId.Proto_Hardness, this.tnt),
         t.RemoveListener(EAttributeId.Proto_Rage, this.tnt),
         t.RemoveListener(EAttributeId.Proto_Lv, this.m2)),
-      (t = this.Jh?.GetComponent(116))) &&
+      (t = this.Jh?.GetComponent(117))) &&
       t.RemoveProgressDataChangedCallback(this.H1t);
   }
   BindOnShieldChanged(t) {
@@ -366,7 +369,7 @@ class HeadStateData {
     return this.$te ? this.$te.GetCurrentValue(EAttributeId.Proto_Lv) : 0;
   }
   GetMaxHp() {
-    return this.$te ? this.$te.GetCurrentValue(EAttributeId.e5n) : 1;
+    return this.$te ? this.$te.GetCurrentValue(EAttributeId.l5n) : 1;
   }
   GetHp() {
     return this.$te ? this.$te.GetCurrentValue(EAttributeId.Proto_Life) : 0;
@@ -393,9 +396,9 @@ class HeadStateData {
     var t;
     return (
       this.C1t
-        ? this.S1t.FromUeVector(this.tfe.GetSocketLocation(this.g1t))
+        ? this.uOa.FromUeVector(this.tfe.GetSocketLocation(this.g1t))
         : ((t = this.ActorComponent.ActorLocationProxy),
-          this.S1t.FromUeVector(t)),
+          this.uOa.FromUeVector(t)),
       this.CommonParam.DrawHeadStateSocket &&
         UE.KismetSystemLibrary.DrawDebugSphere(
           GlobalData_1.GlobalData.World,
@@ -406,15 +409,18 @@ class HeadStateData {
           0,
           3,
         ),
-      (this.S1t.Z += this.f1t),
-      0 !== this.p1t &&
-        (CameraController_1.CameraController.CameraLocation.Subtraction(
-          this.S1t,
-          this.y1t,
-        ),
-        this.y1t.Normalize(),
-        this.y1t.MultiplyEqual(this.p1t),
-        this.S1t.Addition(this.y1t, this.S1t)),
+      this.uOa.Equals(this._Oa, UPDATE_TOLERATION) ||
+        (this._Oa.FromUeVector(this.uOa),
+        this.S1t.FromUeVector(this._Oa),
+        (this.S1t.Z += this.f1t),
+        0 !== this.p1t &&
+          (CameraController_1.CameraController.CameraLocation.Subtraction(
+            this.S1t,
+            this.y1t,
+          ),
+          this.y1t.Normalize(),
+          this.y1t.MultiplyEqual(this.p1t),
+          this.S1t.Addition(this.y1t, this.S1t))),
       this.S1t
     );
   }
@@ -433,7 +439,7 @@ class HeadStateData {
       !!this.ActorComponent?.Valid &&
       !(
         this.ActorComponent.CreatureData.GetEntityType() !==
-          Protocol_1.Aki.Protocol.wks.Proto_Monster ||
+          Protocol_1.Aki.Protocol.kks.Proto_Monster ||
         ((0, RegisterComponent_1.isComponentInstance)(this.ActorComponent, 3) &&
           this.ActorComponent.IsBoss)
       )
@@ -443,7 +449,7 @@ class HeadStateData {
     return (
       !!this.ActorComponent?.Valid &&
       this.ActorComponent.CreatureData.GetEntityType() ===
-        Protocol_1.Aki.Protocol.wks.Proto_SceneItem
+        Protocol_1.Aki.Protocol.kks.Proto_SceneItem
     );
   }
   GetHeadStateType() {

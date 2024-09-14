@@ -4,7 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.QueryProductSt =
     exports.SharePlatformSt =
       void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   ue_1 = require("ue"),
   Info_1 = require("../../../Core/Common/Info"),
   Json_1 = require("../../../Core/Common/Json"),
@@ -14,16 +15,22 @@ const UE = require("ue"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
+  Platform_1 = require("../../../Launcher/Platform/Platform"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
   PublicUtil_1 = require("../../Common/PublicUtil"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
   GlobalData_1 = require("../../GlobalData"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  LogReportDefine_1 = require("../../Module/LogReport/LogReportDefine"),
   KuroSdkData_1 = require("../KuroSdkData"),
   KuroSdkReport_1 = require("../KuroSdkReport"),
   TIMEGAP = 1e3,
-  WEBVIEWCD = 5e3;
+  WEBVIEWCD = 5e3,
+  ONEYEARTIME = 31536e3;
 class SharePlatformSt {
   constructor() {
     (this.PlatformId = void 0), (this.IconUrl = void 0);
@@ -73,10 +80,11 @@ class PlatformSdkBase {
       this.KuroSdkBindRedPointFunction(this.VSe),
       this.jSe(),
       this.WSe(),
-      this.kMa(),
+      this.tIa(),
       this.BindSpecialEvent(),
       ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
         this.KSe(),
+      this.SetGamePadMode(Info_1.Info.IsInGamepad()),
       (this.CurrentDid = ue_1.KuroSDKManager.GetBasicInfo().DeviceId);
   }
   KSe() {
@@ -90,7 +98,8 @@ class PlatformSdkBase {
           this.QSe();
         }, TIMEGAP)))
       : (ue_1.KuroSDKManager.Get().LogoutDelegate.Clear(),
-        this.SdkLogout(),
+        ModelManager_1.ModelManager.LoginModel.HasBackToGameData() ||
+          this.SdkLogout(),
         EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.SdkInitDone));
   }
   QSe() {
@@ -103,7 +112,7 @@ class PlatformSdkBase {
       ControllerHolder_1.ControllerHolder.KuroSdkController.PostKuroSdkEvent(
         10,
       ),
-      "Windows" === UE.GameplayStatics.GetPlatformName() &&
+      Platform_1.Platform.IsWindowsPlatform() &&
         ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk() &&
         (this.GSe = TimerSystem_1.TimerSystem.Forever(() => {
           this.$Se();
@@ -140,7 +149,7 @@ class PlatformSdkBase {
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("KuroSdk", 28, "开始进行Sdk登录!!!"),
           ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
-            ("Windows" !== UE.GameplayStatics.GetPlatformName() ||
+            (!Platform_1.Platform.IsWindowsPlatform() ||
             UE.KuroLauncherLibrary.IsFirstIntoLauncher()
               ? ue_1.KuroSDKManager.KuroSDKEvent(0, "")
               : ue_1.KuroSDKManager.KuroSDKEvent(7, "")))
@@ -192,13 +201,13 @@ class PlatformSdkBase {
               EventDefine_1.EEventName.ExitGamePush,
             ),
             Info_1.Info.IsPcOrGamepadPlatform())
-          ? UE.KuroStaticLibrary.ExitGame(!1)
+          ? cpp_1.KuroApplication.ExitWithReason(!1, "SDK")
           : 1 === Info_1.Info.PlatformType ||
               (2 === Info_1.Info.PlatformType &&
                 ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk())
             ? (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("KuroSdk", 28, "直接退出"),
-              UE.KuroStaticLibrary.ExitGame(!1))
+              cpp_1.KuroApplication.ExitWithReason(!1, "SDK"))
             : ue_1.KuroSDKManager.KuroSDKEvent(5, "");
   }
   SdkOpenLoginWnd() {
@@ -214,18 +223,18 @@ class PlatformSdkBase {
         Log_1.Log.Debug("KuroSdk", 28, "协议尚未初始化");
   }
   GetAgreement() {
-    let n = new Array();
+    let _ = new Array();
     var e,
       o = ue_1.KuroSDKManager.GetAgreementUrl();
     return (
       ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk() ||
-        ("Android" === UE.GameplayStatics.GetPlatformName()
+        (Platform_1.Platform.IsAndroidPlatform()
           ? Json_1.Json.Parse(o).gameInit?.forEach((e) => {
-              n.push(e);
+              _.push(e);
             })
-          : "Windows" === UE.GameplayStatics.GetPlatformName()
-            ? ((e = Json_1.Json.Parse(o)), (n = e))
-            : "IOS" === UE.GameplayStatics.GetPlatformName() &&
+          : Platform_1.Platform.IsWindowsPlatform()
+            ? ((e = Json_1.Json.Parse(o)), (_ = e))
+            : Platform_1.Platform.IsIOSPlatform() &&
               o.split(",").forEach((e) => {
                 let o = e;
                 var r,
@@ -246,11 +255,11 @@ class PlatformSdkBase {
                   (r.title = r.title.replace(/"/g, "")),
                   (r.title = r.title.toLowerCase()),
                   (r.title = unescape(r.title)),
-                  n.push(r));
+                  _.push(r));
               })),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("KuroSdk", 28, "AgreementData", ["AgreementData", o]),
-      n
+      _
     );
   }
   QueryProduct(e, o) {
@@ -275,31 +284,19 @@ class PlatformSdkBase {
         ue_1.KuroSDKManager.KuroSDKEvent(8, e));
   }
   GetCurrentSelectServerId() {
-    var e = BaseConfigController_1.BaseConfigController.GetLoginServers();
-    if (!e)
-      return (
+    var e;
+    return BaseConfigController_1.BaseConfigController.GetLoginServers()
+      ? ("0" ===
+          (e =
+            ModelManager_1.ModelManager.LoginServerModel.GetCurrentLoginServerId()) &&
+          Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn("KuroSdk", 28, "海外选服没有服务器"),
         Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("KuroSdk", 28, "当前服务器Id", ["serverId", e]),
+        e)
+      : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("KuroSdk", 28, "没有登录服务器信息"),
-        "0"
-      );
-    let o = "";
-    return (
-      "0" ===
-        (o =
-          ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk()
-            ? void 0 ===
-              ModelManager_1.ModelManager.LoginServerModel
-                .CurrentSelectServerData
-              ? "0"
-              : ModelManager_1.ModelManager.LoginServerModel
-                  .CurrentSelectServerData.id
-            : e[0].id) &&
-        Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("KuroSdk", 28, "海外选服没有服务器"),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("KuroSdk", 28, "当前服务器Id", ["serverId", o]),
-      o
-    );
+        "0");
   }
   InitializePostWebView() {
     var e = this.GetCurrentSelectServerId(),
@@ -309,8 +306,8 @@ class PlatformSdkBase {
       e =
         ((o.language = LanguageSystem_1.LanguageSystem.PackageLanguage),
         (o.serverId = e),
-        "Windows" === UE.GameplayStatics.GetPlatformName() ||
-        "Android" === UE.GameplayStatics.GetPlatformName()
+        Platform_1.Platform.IsWindowsPlatform ||
+        Platform_1.Platform.IsAndroidPlatform()
           ? (o.cdn = [
               PublicUtil_1.PublicUtil.GetNoticeBaseUrl() +
                 "/gamenotice/" +
@@ -404,6 +401,9 @@ class PlatformSdkBase {
   GetAccessToken() {
     return "";
   }
+  GetPackageId() {
+    return UE.KuroSDKManager.GetPackageId();
+  }
   GetIsQRCodeLogin() {
     return ue_1.KuroSDKManager.GetSdkIsQRScan();
   }
@@ -437,27 +437,27 @@ class PlatformSdkBase {
       o = ModelManager_1.ModelManager.LoginModel,
       r = ModelManager_1.ModelManager.FunctionModel,
       t = ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
-        ? o.GetSdkLoginConfig()?.Token ?? "0"
+        ? (o.GetSdkLoginConfig()?.Token ?? "0")
         : "0",
-      n = ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
-        ? o.GetSdkLoginConfig()?.Uid ?? "0"
+      _ = ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
+        ? (o.GetSdkLoginConfig()?.Uid ?? "0")
         : "0",
-      _ = o.GetSdkLoginConfig()?.UserName
-        ? o.GetSdkLoginConfig()?.UserName ?? ""
+      n = o.GetSdkLoginConfig()?.UserName
+        ? (o.GetSdkLoginConfig()?.UserName ?? "")
         : "";
     return StringUtils_1.StringUtils.Format(
       this.FeedBackSt,
       e,
       t,
       o.GetServerId()?.toString() ?? "",
-      n,
       _,
+      n,
       r.GetPlayerName()?.toString() ?? "",
       ModelManager_1.ModelManager.FunctionModel.PlayerId.toString(),
       LanguageSystem_1.LanguageSystem.PackageAudio,
     );
   }
-  SdkOpenUrlWnd(e, o, r, t, n = 0) {
+  SdkOpenUrlWnd(e, o, r, t, _ = 0) {
     if (ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()) {
       if (0 !== this.LastOpenTime)
         if (Time_1.Time.Now - this.LastOpenTime <= WEBVIEWCD)
@@ -471,16 +471,16 @@ class PlatformSdkBase {
         ue_1.KuroSDKManager.KuroSDKEvent(9, e ?? "");
     }
   }
-  OpenWebView(e, o, r, t, n) {
+  OpenWebView(e, o, r, t, _) {
     1 === Info_1.Info.PlatformType
-      ? ue_1.KuroSDKManager.OpenWebView(o, e, r, t, n, "")
+      ? ue_1.KuroSDKManager.OpenWebView(o, e, r, t, _, "")
       : 2 === Info_1.Info.PlatformType &&
           ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk()
         ? ControllerHolder_1.ControllerHolder.KuroSdkController.SdkOpenUrlWnd(
             e,
             o,
           )
-        : ue_1.KuroSDKManager.OpenWebView(e, o, r, t, n, "");
+        : ue_1.KuroSDKManager.OpenWebView(e, o, r, t, _, "");
   }
   KuroSdkLoginBindFunction(o) {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, "绑定登录回调"),
@@ -515,7 +515,7 @@ class PlatformSdkBase {
           );
       });
   }
-  kMa() {
+  tIa() {
     ue_1.KuroSDKManager.Get().GameStateChangeCallBack.Clear(),
       ue_1.KuroSDKManager.Get().GameStateChangeCallBack.Add((e) => {
         Log_1.Log.CheckInfo() &&
@@ -537,16 +537,16 @@ class PlatformSdkBase {
           t = r.length;
         if (0 < t)
           for (let e = 0; e < t; e++) {
-            var n = r[e].split("=");
-            2 === n.length &&
-              "level" === n[0] &&
-              (0 === (n = Number(n[1]))
+            var _ = r[e].split("=");
+            2 === _.length &&
+              "level" === _[0] &&
+              (0 === (_ = Number(_[1]))
                 ? Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug("KuroSdk", 28, "sdklog", ["Debug", o])
-                : 1 === n
+                : 1 === _
                   ? Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info("KuroSdk", 28, "sdklog", ["Info", o])
-                  : 2 === n
+                  : 2 === _
                     ? Log_1.Log.CheckWarn() &&
                       Log_1.Log.Warn("KuroSdk", 28, "sdklog", ["Warn", o])
                     : Log_1.Log.CheckError() &&
@@ -568,7 +568,10 @@ class PlatformSdkBase {
                 28,
                 "GlobalData.World KuroSDKManager.Get()!.ExitDelegate",
               ),
-            UE.KuroStaticLibrary.ExitGame(!1));
+            cpp_1.KuroApplication.ExitWithReason(
+              !1,
+              "KuroSdkExitBindFunction",
+            ));
       });
   }
   BindProtocolListener() {
@@ -627,6 +630,19 @@ class PlatformSdkBase {
       (ue_1.KuroSDKManager.Get().PaymentDelegate.Clear(),
       ue_1.KuroSDKManager.Get().PaymentDelegate.Add((e, o) => {
         this.OnPaymentCallBack(e, o, r),
+          1 === e.PaymentType
+            ? (((o =
+                new LogReportDefine_1.SuccessSdkPayEvent()).s_sdk_pay_order =
+                ModelManager_1.ModelManager.KuroSdkModel.CurrentPayingOrderId),
+              ControllerHolder_1.ControllerHolder.LogReportController.LogReport(
+                o,
+              ))
+            : (((o = new LogReportDefine_1.FailSdkPayEvent()).s_sdk_pay_order =
+                ModelManager_1.ModelManager.KuroSdkModel.CurrentPayingOrderId),
+              (o.s_reason = 3 === e.PaymentType ? "cancel" : "fail"),
+              ControllerHolder_1.ControllerHolder.LogReportController.LogReport(
+                o,
+              )),
           KuroSdkReport_1.KuroSdkReport.OnSdkPay();
       }));
   }
@@ -664,6 +680,57 @@ class PlatformSdkBase {
     ue_1.KuroSDKManager.Get().RequestPhotoPermissionDelegate.Clear(),
       ue_1.KuroSDKManager.Get().RequestPhotoPermissionDelegate.Add(e),
       ue_1.KuroSDKManager.RequestPhotoPermission();
+  }
+  OpenReview() {
+    var e,
+      o = this.CheckIfCanReview();
+    o
+      ? (ue_1.KuroSDKManager.RequestReviewApp(""), this.SaveCurrentReviewTime())
+      : ((e =
+          LocalStorage_1.LocalStorage.GetGlobal(
+            LocalStorageDefine_1.ELocalStorageGlobalKey.OpenReviewTimeList,
+          ) ?? []),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "KuroSdk",
+            28,
+            "OpenReview Fail",
+            ["state", o],
+            ["reviewTimeList", e],
+          ));
+  }
+  CurrentPlatformYearReviewTime() {
+    return 0;
+  }
+  SaveCurrentReviewTime() {
+    var e =
+        LocalStorage_1.LocalStorage.GetGlobal(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.OpenReviewTimeList,
+        ) ?? [],
+      o = TimeUtil_1.TimeUtil.GetServerTime(),
+      r = this.CurrentPlatformYearReviewTime();
+    e.length < r || e.shift(),
+      e.push(o),
+      LocalStorage_1.LocalStorage.SetGlobal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.OpenReviewTimeList,
+        e,
+      );
+  }
+  CheckIfCanReview() {
+    var e =
+        LocalStorage_1.LocalStorage.GetGlobal(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.OpenReviewTimeList,
+        ) ?? [],
+      o = TimeUtil_1.TimeUtil.GetServerTime(),
+      r = this.CurrentPlatformYearReviewTime();
+    let t = !1;
+    return (t = e.length < r || o - e[0] >= ONEYEARTIME ? !0 : t);
+  }
+  SetCursor(e) {
+    ue_1.KuroSDKManager.SetCursor(e);
+  }
+  SetGamePadMode(e) {
+    ue_1.KuroSDKManager.SetGamePadMode(e);
   }
   OnClear() {}
 }

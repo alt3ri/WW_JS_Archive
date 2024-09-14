@@ -89,7 +89,9 @@ class FlowActionPlaySequenceData extends FlowActionBase_1.FlowActionBase {
       SequenceController_1.SequenceController.ManualFinish(),
       await PlotController_1.PlotController.CheckFormation(),
       t &&
-        (await TeleportController_1.TeleportController.TeleportToPositionNoLoading(
+        (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Plot", 27, "SaveFinalPos", ["transform", t]),
+        await TeleportController_1.TeleportController.TeleportToPositionNoLoading(
           t.GetLocation().ToUeVector(),
           t.GetRotation().Rotator().ToUeRotator(),
           "FlowActionPlaySequenceData.OnInterruptExecute",

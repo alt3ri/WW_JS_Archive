@@ -9,6 +9,7 @@ const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTex
   MapController_1 = require("../../../Map/Controller/MapController"),
   WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
   WorldMapDefine_1 = require("../../WorldMapDefine"),
+  MapTipsActivateTipPanel_1 = require("../Common/MapTipsActivateTipPanel"),
   TipsListView_1 = require("../TipsListView"),
   SCORE_KEY = "score",
   LINE_NUMBER_KEY = "line";
@@ -18,6 +19,7 @@ class ParkourEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       (this.u2o = void 0),
       (this.c2o = void 0),
       (this.ZAt = void 0),
+      (this.oza = void 0),
       (this.m2o = () => {
         MapController_1.MapController.RequestTrackMapMark(
           this.u2o.MarkType,
@@ -34,14 +36,24 @@ class ParkourEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
     this.ComponentRegisterInfos =
       WorldMapDefine_1.secondaryUiPanelComponentsRegisterInfoA;
   }
+  async OnBeforeStartAsync() {
+    await super.OnBeforeStartAsync(),
+      (this.oza = new MapTipsActivateTipPanel_1.MapTipsActivateTipPanel()),
+      await this.oza.CreateByActorAsync(this.GetItem(31).GetOwner());
+  }
   OnStart() {
     (this.c2o = new TipsListView_1.TipsListView()),
       this.c2o.Initialize(this.GetVerticalLayout(5)),
       (this.ZAt = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
-      this.ZAt.SetFunction(this.m2o);
+      this.ZAt.SetActive(!0),
+      this.ZAt.SetFunction(this.m2o),
+      this.GetItem(25).SetUIActive(!1),
+      this.GetItem(32).SetUIActive(!1),
+      this.oza.SetUiActive(!1),
+      this.GetItem(14).SetUIActive(!1);
   }
   OnBeforeDestroy() {
-    this.ZAt.Destroy(), this.c2o.Clear();
+    this.ZAt.Destroy(), this.c2o.Clear(), this.oza.Destroy();
   }
   OnShowWorldMapSecondaryUi(e) {
     (this.u2o = e),

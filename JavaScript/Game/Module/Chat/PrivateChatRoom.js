@@ -25,6 +25,12 @@ class PrivateChatRoom extends ChatRoom_1.ChatRoom {
   IsOnline() {
     return this.GetFriendData()?.PlayerIsOnline;
   }
+  GetPsnUserId() {
+    return this.GetFriendData()?.GetSdkUserId();
+  }
+  GetPsnOnlineId() {
+    return this.GetFriendData()?.GetSdkOnlineId();
+  }
   CanChat() {
     var e = ModelManager_1.ModelManager.FriendModel;
     return !e.HasBlockedPlayer(this.iSt) && !!e.HasFriend(this.iSt);

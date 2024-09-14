@@ -31,7 +31,7 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
   static GetOptionFunc(e) {
     return 0 === this.v5i.size && this.InitOptionMap(), this.v5i.get(e);
   }
-  static U5i() {
+  static GetPersonalData() {
     var e = new PersonalDefine_1.PersonalInfoData(),
       r =
         ModelManager_1.ModelManager.FriendModel.GetSelectedPlayerOrItemInstance();
@@ -49,24 +49,28 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
           (e.Name = r.PlayerName),
           (e.PlayerId = r.PlayerId),
           (e.Level = r.PlayerLevel),
-          (e.WorldLevel = r.WorldLevel))
+          (e.WorldLevel = r.WorldLevel),
+          (e.PsnUserId = r.GetSdkUserId()),
+          (e.PsnOnlineId = r.GetSdkOnlineId()))
         : ((r =
             ModelManager_1.ModelManager.OnlineModel.CachePlayerData
               .PlayerDetails),
-          (e.RoleShowList = r.dSs),
-          (e.CardShowList = r.mSs),
-          (e.CurCardId = r.CSs ?? void 0),
-          (e.Birthday = r.jVn ?? 0),
-          (e.IsBirthdayDisplay = r.gSs ?? !1),
+          (e.RoleShowList = r.MSs),
+          (e.CardShowList = r.SSs),
+          (e.CurCardId = r.ESs ?? void 0),
+          (e.Birthday = r.ZVn ?? 0),
+          (e.IsBirthdayDisplay = r.ySs ?? !1),
           (e.CardDataList =
             ModelManager_1.ModelManager.OnlineModel.CachePlayerData.CardUnlockList),
-          (e.Signature = r.HVn ?? ""),
-          (e.HeadPhotoId = r.sSs ?? void 0),
+          (e.Signature = r.zVn ?? ""),
+          (e.HeadPhotoId = r.dSs ?? void 0),
           (e.IsOtherData = !0),
-          (e.Name = r.w8n ?? ""),
-          (e.PlayerId = r.q5n ?? 0),
-          (e.Level = r.P6n ?? 0),
-          (e.WorldLevel = r.nSs ?? 0)),
+          (e.Name = r.H8n ?? ""),
+          (e.PlayerId = r.W5n ?? 0),
+          (e.Level = r.F6n ?? 0),
+          (e.WorldLevel = r.cSs ?? 0),
+          (e.PsnUserId = r.$xa ?? void 0),
+          (e.PsnOnlineId = r.Vxa ?? void 0)),
       e
     );
   }
@@ -146,7 +150,7 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
     UiManager_1.UiManager.OpenView("PersonalBirthView");
   }),
   (PersonalOptionController.D5i = () => {
-    const e = PersonalOptionController.U5i();
+    const e = PersonalOptionController.GetPersonalData();
     UiManager_1.UiManager.IsViewOpen("FriendProcessView")
       ? UiManager_1.UiManager.CloseViewAsync("FriendProcessView").then(
           () => {

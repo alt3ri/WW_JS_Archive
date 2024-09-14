@@ -6,6 +6,7 @@ const UE = require("ue"),
   CameraController_1 = require("../../../Camera/CameraController"),
   Global_1 = require("../../../Global"),
   SceneInteractionManager_1 = require("../../../Render/Scene/Interaction/SceneInteractionManager"),
+  SceneObjectAirWallEffect_1 = require("../../../Render/Scene/Interaction/SceneObjectAirWallEffect"),
   SceneObjectWaterEffect_1 = require("../../../Render/Scene/Interaction/SceneObjectWaterEffect"),
   CharacterHitComponent_1 = require("../../Character/Common/Component/CharacterHitComponent"),
   BulletUtil_1 = require("../BulletUtil"),
@@ -15,12 +16,12 @@ const UE = require("ue"),
     "/Game/Aki/Data/Fight/DA_DefaultBulletConfig.DA_DefaultBulletConfig";
 class BulletActionInitRender extends BulletActionBase_1.BulletActionBase {
   constructor() {
-    super(...arguments), (this.RVo = void 0);
+    super(...arguments), (this.RVo = void 0), (this.RKs = void 0);
   }
   OnExecute() {
     BulletModel_1.BulletModel.DefaultBulletSceneInteraction ||
       (BulletModel_1.BulletModel.DefaultBulletSceneInteraction =
-        ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+        ResourceSystem_1.ResourceSystem.Load(
           PATH_DEFAULT_INTERACT,
           UE.DefaultBulletSceneInteraction_C,
         ));
@@ -40,11 +41,11 @@ class BulletActionInitRender extends BulletActionBase_1.BulletActionBase {
             BulletModel_1.BulletModel.DefaultBulletSceneInteraction
               ?.ConditionConfig,
           i = r?.Num(),
-          l = this.GetSize();
+          n = this.GetSize();
         for (let e = 0; e < i; e++) {
-          var n = r.Get(e);
-          if (!(l >= n.RangeMin)) break;
-          t = n.Config.ToAssetPathName();
+          var a = r.Get(e);
+          if (!(n >= a.RangeMin)) break;
+          t = a.Config.ToAssetPathName();
         }
         "" !== t &&
           ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -56,6 +57,12 @@ class BulletActionInitRender extends BulletActionBase_1.BulletActionBase {
           );
       }
     }
+    e.Logic.InteractWithAirWall &&
+      ((this.RKs = new SceneObjectAirWallEffect_1.SceneObjectAirWallEffect()),
+      this.RKs.Start(this.BulletInfo.CollisionInfo.CollisionComponent),
+      SceneInteractionManager_1.SceneInteractionManager.Get().RegisterAirWallEffectObject(
+        this.RKs,
+      ));
     e = e.Render.AttackerCameraShakeOnStart;
     this.BulletInfo.Attacker?.Valid &&
       this.BulletInfo.IsAutonomousProxy &&
@@ -93,7 +100,12 @@ class BulletActionInitRender extends BulletActionBase_1.BulletActionBase {
       this.RVo &&
         SceneInteractionManager_1.SceneInteractionManager.Get().UnregisterWaterEffectObject(
           this.RVo,
-        );
+        ),
+      this.RKs &&
+        (SceneInteractionManager_1.SceneInteractionManager.Get().UnregisterAirWallEffectObject(
+          this.RKs,
+        ),
+        (this.RKs = void 0));
   }
 }
 exports.BulletActionInitRender = BulletActionInitRender;

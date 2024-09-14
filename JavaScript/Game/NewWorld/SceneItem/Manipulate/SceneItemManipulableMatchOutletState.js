@@ -26,7 +26,7 @@ class SceneItemManipulableMatchOutletState extends SceneItemManipulableBaseState
     var t,
       e,
       a,
-      i = this.SceneItem.Entity.GetComponent(112),
+      i = this.SceneItem.Entity.GetComponent(113),
       s = this.SceneItem.ActivatedOutlet;
     i &&
       s?.GetIsNeedAttach() &&
@@ -48,7 +48,7 @@ class SceneItemManipulableMatchOutletState extends SceneItemManipulableBaseState
       ));
   }
   Isr() {
-    var t = this.SceneItem.Entity.GetComponent(112);
+    var t = this.SceneItem.Entity.GetComponent(113);
     t && t.UnRegTarget("[MatchOutletState] TryDetachFromOutlet");
   }
 }

@@ -13,13 +13,13 @@ class TurntableControlController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnActivateUiCameraAnimationHandleFail,
-      this.mqn,
+      this.Eqn,
     );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnActivateUiCameraAnimationHandleFail,
-      this.mqn,
+      this.Eqn,
     );
   }
   static Clear() {
@@ -147,7 +147,7 @@ class TurntableControlController extends UiControllerBase_1.UiControllerBase {
   }
 }
 (exports.TurntableControlController = TurntableControlController),
-  ((_a = TurntableControlController).mqn = () => {
+  ((_a = TurntableControlController).Eqn = () => {
     Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
         "SceneItem",

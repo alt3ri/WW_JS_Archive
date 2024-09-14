@@ -22,12 +22,15 @@ const BasePanelHandle_1 = require("./PanelHandle/BasePanelHandle"),
   NavigationSelectableCreator_1 = require("./Selectable/NavigationSelectableCreator"),
   NavigationSlider_1 = require("./Selectable/NavigationSlider"),
   NavigationToggle_1 = require("./Selectable/NavigationToggle"),
+  NavigationQuestTitleToggle_1 = require("./Selectable/Quest/NavigationQuestTitleToggle"),
   NavigationRoguelikeGridToggle_1 = require("./Selectable/Roguelike/NavigationRoguelikeGridToggle"),
   NavigationRoleResonanceExitButton_1 = require("./Selectable/RoleRootView/Resonance/NavigationRoleResonanceExitButton"),
+  NavigationRoleResonanceLockToggle_1 = require("./Selectable/RoleRootView/Resonance/NavigationRoleResonanceLockToggle"),
   NavigationRoleResonanceToggle_1 = require("./Selectable/RoleRootView/Resonance/NavigationRoleResonanceToggle"),
   NavigationRoleSkillTreeExitButton_1 = require("./Selectable/RoleRootView/Skill/NavigationRoleSkillTreeExitButton"),
   NavigationRoleSkillTreeToggle_1 = require("./Selectable/RoleRootView/Skill/NavigationRoleSkillTreeToggle"),
   NavigationRouletteExitButton_1 = require("./Selectable/Roulette/NavigationRouletteExitButton"),
+  NavigationVisionReplaceSortTabToggle_1 = require("./Selectable/Vision/NavigationVisionReplaceSortTabToggle"),
   NavigationVisionTabViewReplaceButton_1 = require("./Selectable/Vision/NavigationVisionTabViewReplaceButton"),
   NavigationVisionTabViewToggle_1 = require("./Selectable/Vision/NavigationVisionTabViewToggle"),
   NavigationVisionToggle_1 = require("./Selectable/Vision/NavigationVisionToggle"),
@@ -55,6 +58,8 @@ const BasePanelHandle_1 = require("./PanelHandle/BasePanelHandle"),
       NavigationRoleSkillTreeExitButton_1.NavigationRoleSkillTreeExitButton,
     RoleResonanceToggle:
       NavigationRoleResonanceToggle_1.NavigationRoleResonanceToggle,
+    RoleResonanceLockToggle:
+      NavigationRoleResonanceLockToggle_1.NavigationRoleResonanceLockToggle,
     RoleResonanceExitButton:
       NavigationRoleResonanceExitButton_1.NavigationRoleResonanceExitButton,
     InventoryDestroyEnterButton:
@@ -67,6 +72,9 @@ const BasePanelHandle_1 = require("./PanelHandle/BasePanelHandle"),
       NavigationRouletteExitButton_1.NavigationRouletteExitButton,
     RoguelikeGridToggle:
       NavigationRoguelikeGridToggle_1.NavigationRoguelikeGridToggle,
+    QuestTitleToggle: NavigationQuestTitleToggle_1.NavigationQuestTitleToggle,
+    VisionReplaceSortTabToggle:
+      NavigationVisionReplaceSortTabToggle_1.NavigationVisionReplaceSortTabToggle,
   },
   panelHandleCtorMap = {
     Default: BasePanelHandle_1.BasePanelHandle,
@@ -82,8 +90,8 @@ class NavigationRegisterCenter {
     this.Hwo(), this.jwo();
   }
   static Hwo() {
-    for (const n in selectableCtorMap) {
-      var e = n;
+    for (const i in selectableCtorMap) {
+      var e = i;
       NavigationSelectableCreator_1.NavigationSelectableCreator.RegisterNavigationBehavior(
         e,
         selectableCtorMap[e],
@@ -91,8 +99,8 @@ class NavigationRegisterCenter {
     }
   }
   static jwo() {
-    for (const n in panelHandleCtorMap) {
-      var e = n;
+    for (const i in panelHandleCtorMap) {
+      var e = i;
       NavigationPanelHandleCreator_1.NavigationPanelHandleCreator.RegisterSpecialPanelHandle(
         e,
         panelHandleCtorMap[e],

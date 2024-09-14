@@ -5,7 +5,6 @@ const UE = require("ue"),
   AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
   Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
-  Stats_1 = require("../../../../Core/Common/Stats"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
@@ -54,28 +53,18 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       (this.jui = !1),
       (this.IsHoverHint = !1),
       (this.Wui = !1),
-      (this.eYs = !1),
+      (this.YJs = !1),
+      (this.XHa = !1),
       (this.Kui = !1),
-      (this.Csa = !1),
+      (this.nla = !1),
       (this.lqt = () => {
-        this.eci(), this.Ysa(), this.Jsa();
+        this.eci(), this.Jla(), this.zla();
       }),
       (this.Mzt = () => {
         this.Lri();
       }),
       (this.Qui = () => {
         this.CloseMe();
-      }),
-      (this.Xui = (t) => {
-        0 <= this.Uui && this.Oei(this.Uui),
-          this.Hui && this.jui && ((this.jui = !1), this.$ui());
-        var i = this.Sui.GetDisplayGridNum(),
-          e = this.yui > this.Iui ? this.Iui : this.yui,
-          i = ((this.yui = i), this.yui > this.Iui ? this.Iui : this.yui);
-        e !== i &&
-          ((this.Lui = this.Tui + this.Dui * ((i - 1) / 2)),
-          (this.Rui = 0),
-          (this.Wui = !0));
       }),
       (this.Yui = () => {
         var t = new InteractionHint_1.InteractionHint();
@@ -92,7 +81,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
         this.Oei(t);
       }),
       (this.zui = (t) => {
-        this.IsHoverHint = !1;
+        (this.IsHoverHint = !1), this.Hui?.SetSelected(!0);
       }),
       (this.sui = (t, i) => {
         Log_1.Log.CheckDebug() &&
@@ -138,20 +127,24 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
                   8,
                   "[InteractionView]刷新交互选项 - 下一帧会刷新交互选项",
                 )
-              : (this.bui = TimerSystem_1.TimerSystem.Next(() => {
-                  this.aci(),
-                    Log_1.Log.CheckDebug() &&
-                      Log_1.Log.Debug(
-                        "Test",
-                        8,
-                        "[InteractionView]刷新交互选项 - 开始刷新交互选项",
-                        ["Count", this.Pui?.length],
-                      ),
-                    this.hci(this.Pui),
-                    this.vci(),
-                    this.lci(),
-                    (this.bui = void 0);
-                }));
+              : (this.bui = TimerSystem_1.TimerSystem.Next(this.h5a));
+      }),
+      (this.h5a = () => {
+        this.aci(),
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "Test",
+              8,
+              "[InteractionView]刷新交互选项 - 开始刷新交互选项",
+              ["Count", this.Pui?.length],
+            ),
+          this._5a(this.Pui).then(
+            () => {
+              this.vci(), this.lci();
+            },
+            () => {},
+          ),
+          (this.bui = void 0);
       }),
       (this.bMe = (t, i) => {
         0 === i
@@ -205,7 +198,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       (this.BtnBindInfo = [[4, this.tci]]);
   }
   OnAddEventListener() {
-    this.Jsa(),
+    this.zla(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.InteractionViewUpdate,
         this.sci,
@@ -231,7 +224,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
         this.Mzt,
       );
   }
-  Jsa() {
+  zla() {
     InputDistributeController_1.InputDistributeController.BindAxis(
       InputMappingsDefine_1.axisMappings.WheelAxis,
       this.cci,
@@ -240,7 +233,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       ModelManager_1.ModelManager.InteractionModel.LockInteractionEntity
         ? ((this.Kui = !0),
           Info_1.Info.IsInGamepad()
-            ? ((this.Csa = !0),
+            ? ((this.nla = !0),
               InputDistributeController_1.InputDistributeController.BindAction(
                 InputMappingsDefine_1.actionMappings.UI左摇杆上,
                 this.mci,
@@ -286,7 +279,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   OnRemoveEventListener() {
-    this.Ysa(),
+    this.Jla(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.InteractionViewUpdate,
         this.sci,
@@ -312,15 +305,15 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
         this.Mzt,
       );
   }
-  Ysa() {
+  Jla() {
     InputDistributeController_1.InputDistributeController.UnBindAxis(
       InputMappingsDefine_1.axisMappings.WheelAxis,
       this.cci,
     ),
       this.Kui
         ? ((this.Kui = !1),
-          this.Csa
-            ? ((this.Csa = !1),
+          this.nla
+            ? ((this.nla = !1),
               InputDistributeController_1.InputDistributeController.UnBindAction(
                 InputMappingsDefine_1.actionMappings.UI左摇杆上,
                 this.mci,
@@ -378,13 +371,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
           InputMappingsDefine_1.actionMappings.通用交互,
         ));
   }
-  OnAfterShow() {
-    this.aci(), this.hci(this.Pui), this.lci(), this.Lri(), this.Oei(0);
-  }
-  OnAfterHide() {
-    this.Hui = void 0;
-  }
-  OnStart() {
+  async OnBeforeStartAsync() {
     (this.xqe = this.GetScrollViewWithScrollbar(2)),
       (this.Aui = this.GetItem(3)),
       (this.Eui = this.xqe.ScrollSensitivity),
@@ -402,7 +389,14 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
         ModelManager_1.ModelManager.InteractionModel);
     (this.xut =
       t.AutoLongPressTime + t.ShowLongPressTime + LONG_PRESS_SHOW_TIME),
-      this.xqe.OnLateUpdate.Bind(this.Xui);
+      this.aci(),
+      await this._5a(this.Pui);
+  }
+  OnAfterShow() {
+    this.lci(), this.Lri(), this.Oei(0);
+  }
+  OnAfterHide() {
+    this.Hui = void 0;
   }
   oci() {
     (this.Gui = !0),
@@ -428,7 +422,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       (ModelManager_1.ModelManager.InteractionModel.CanAutoPickUp(t) ||
         (this.Nui++, this.nci()),
       this.InteractPawn(this.Nui)
-        ? (this.Pui.splice(this.Nui, 1), this.hci(this.Pui))
+        ? (this.Pui.splice(this.Nui, 1), this._5a(this.Pui))
         : (this.Nui++, this.nci()),
       this.Oui >= this.kui)) &&
       this.Cci();
@@ -440,48 +434,48 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
           "InteractLength",
           this.Pui.length,
         ]),
-      this.hci(this.Pui),
+      this._5a(this.Pui),
       (this.wui = !1);
   }
-  InteractPawn(i, t = !1) {
-    if (this.eYs) return !1;
-    var e = this.Pui[i];
+  InteractPawn(t, i = !1) {
+    if (this.YJs) return !1;
+    var e = this.Pui[t];
     if (!e?.Valid) return !1;
-    const s = e.GetComponent(105);
-    if (!s?.IsPawnInteractive()) return !1;
+    e = e.GetComponent(106);
+    if (!e?.IsPawnInteractive()) return !1;
     if (this.Hui)
-      if (t) {
+      if (i) {
         if (this.Hui)
-          (this.eYs = !0),
+          (this.YJs = !0),
             this.Hui.PlayReleaseSequence().then(
               () => {
-                this.eYs = !1;
-                var t =
-                  ModelManager_1.ModelManager.InteractionModel.GetOptionInstanceIdByIndex(
-                    i,
-                  );
-                s.InteractPawn(t);
+                this.YJs = !1;
               },
               () => {},
-            );
+            ),
+            (i =
+              ModelManager_1.ModelManager.InteractionModel.GetOptionInstanceIdByIndex(
+                t,
+              )),
+            e.InteractPawn(i);
       } else {
-        (this.eYs = !1),
+        (this.YJs = !1),
           this.Hui?.PlayReleaseSequence().then(
             () => {},
             () => {},
           );
-        e =
+        var i =
           ModelManager_1.ModelManager.InteractionModel.GetOptionInstanceIdByIndex(
-            i,
+            t,
           );
-        s.InteractPawn(e);
+        e.InteractPawn(i);
       }
     else
-      (t =
+      (i =
         ModelManager_1.ModelManager.InteractionModel.GetOptionInstanceIdByIndex(
-          i,
+          t,
         )),
-        s.InteractPawn(t);
+        e.InteractPawn(i);
     return !0;
   }
   OnBeforeDestroy() {
@@ -491,15 +485,14 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       (this.Hui = void 0),
       this.Aui?.SetAnchorOffsetY(this.Vui),
       (this.Aui = void 0),
-      this.xqe &&
-        ((this.xqe.ScrollSensitivity = this.Eui),
-        this.xqe.OnLateUpdate.Unbind()),
+      this.xqe && (this.xqe.ScrollSensitivity = this.Eui),
       (this.Eui = 0),
       (this.xqe = void 0),
       (this.wui = !1),
       (this.qui = void 0),
       (this.Pui.length = 0),
       (this.Fui = !1),
+      (this.XHa = !1),
       this.Zui(),
       this.gci();
   }
@@ -508,10 +501,20 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       TimerSystem_1.TimerSystem.Has(this.bui) &&
       (TimerSystem_1.TimerSystem.Remove(this.bui), (this.bui = void 0));
   }
-  hci(t) {
-    this.Sui.RefreshByData(t);
-    t = MathUtils_1.MathUtils.Clamp(this.hLt, 0, t.length - 1);
-    this.Oei(t);
+  async _5a(t) {
+    var i;
+    await this.Sui.RefreshByDataAsync(t),
+      this.Sui &&
+        ((t = MathUtils_1.MathUtils.Clamp(this.hLt, 0, t.length - 1)),
+        this.Oei(t, !1),
+        this.Hui && this.jui && ((this.jui = !1), this.$ui()),
+        (t = this.Sui.GetDisplayGridNum()),
+        (i = this.yui > this.Iui ? this.Iui : this.yui),
+        (this.yui = t),
+        i !== (t = this.yui > this.Iui ? this.Iui : this.yui)) &&
+        ((this.Lui = this.Tui + this.Dui * ((t - 1) / 2)),
+        (this.Rui = 0),
+        (this.Wui = !0));
   }
   aci() {
     (this.Pui.length = 0), (this.xui = this.pci(this.Pui));
@@ -543,6 +546,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
         "[InteractionView]自动拾取-----当玩家按下通用交互，会打断自动拾取",
       ),
       (this.Gui = !1),
+      (this.XHa = !0),
       this.Hui &&
         !Info_1.Info.IsInTouch() &&
         this.ici() &&
@@ -558,14 +562,16 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
   $ui() {
     var t;
     this.Zui(),
-      this.Gui ||
-        ModelManager_1.ModelManager.InteractionModel.InInteractCd() ||
-        (this.GetActive() &&
-          this.Hui &&
-          this.InteractPawn(this.Hui.ActorIndex, !0) &&
-          (AudioSystem_1.AudioSystem.PostEvent("play_ui_ia_com_option"),
-          (t = Math.max(this.Pui.length - 1, 0)),
-          (this.hLt = Math.min(this.hLt, t))));
+      this.XHa &&
+        ((this.XHa = !1),
+        this.Gui ||
+          ModelManager_1.ModelManager.InteractionModel.InInteractCd() ||
+          (this.GetActive() &&
+            this.Hui &&
+            this.InteractPawn(this.Hui.ActorIndex, !0) &&
+            (AudioSystem_1.AudioSystem.PostEvent("play_ui_ia_com_option"),
+            (t = Math.max(this.Pui.length - 1, 0)),
+            (this.hLt = Math.min(this.hLt, t)))));
   }
   SelectHint(t) {
     let i = -1;
@@ -578,8 +584,8 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
         ? 0
         : i) < 0 || ((this.Uui = i), this.Oei(this.Uui));
   }
-  Oei(i) {
-    if (!Info_1.Info.IsInTouch() && this.Sui) {
+  Oei(i, t = !0) {
+    if ((!t || i !== this.hLt) && !Info_1.Info.IsInTouch() && this.Sui) {
       let t = this.Sui.GetLayoutItemByIndex(i);
       (t = t || this.Sui.GetLayoutItemByIndex(0)) &&
         (this.Hui?.SetSelected(!1),
@@ -662,5 +668,5 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
     return UiLayerType_1.ELayerType.Normal;
   }
 }
-(exports.InteractionHintView = InteractionHintView).fci = void 0;
+exports.InteractionHintView = InteractionHintView;
 //# sourceMappingURL=InteractionHintView.js.map

@@ -23,7 +23,7 @@ class TsAnimNotifyStateEnableAimIK extends UE.KuroAnimNotifyState {
     if (e instanceof TsBaseCharacter_1.default) {
       var s = e.CharacterActorComponent?.Entity;
       if (s) {
-        var s = s.GetComponent(162).MainAnimInstance;
+        var s = s.GetComponent(163).MainAnimInstance;
         if (
           UE.KuroStaticLibrary.IsObjectClassByName(
             s,
@@ -40,6 +40,7 @@ class TsAnimNotifyStateEnableAimIK extends UE.KuroAnimNotifyState {
             (s["Begin Bone Name"] = this.BeginBoneName),
             (s["End Bone Name"] = this.EndBoneName),
             (s.CameraMode = 3),
+            (s.CameraModeType = 3),
             (s["Assist Limit"] = this.AssistLimit),
             this.SkeletonChange && (s.Increment += 1),
             !0
@@ -49,7 +50,7 @@ class TsAnimNotifyStateEnableAimIK extends UE.KuroAnimNotifyState {
           Log_1.Log.Warn(
             "Test",
             58,
-            "No Entity for TsBaseCharacter",
+            "No Entity for TsBaseCharacter ",
             ["Name", e.GetName()],
             ["location", e.K2_GetActorLocation()],
           );
@@ -61,7 +62,7 @@ class TsAnimNotifyStateEnableAimIK extends UE.KuroAnimNotifyState {
     if (e instanceof TsBaseCharacter_1.default) {
       var i = e.CharacterActorComponent?.Entity;
       if (i) {
-        var i = i.GetComponent(162).MainAnimInstance;
+        var i = i.GetComponent(163).MainAnimInstance;
         if (
           UE.KuroStaticLibrary.IsObjectClassByName(
             i,
@@ -73,6 +74,7 @@ class TsAnimNotifyStateEnableAimIK extends UE.KuroAnimNotifyState {
             (i["Begin Bone Name"] = this.OldBeginBoneName),
             (i["End Bone Name"] = this.OldEndBoneName),
             (i.CameraMode = this.OldCameraMode),
+            (i.CameraModeType = this.OldCameraMode),
             (i["Assist Limit"] = this.OldAssistLimit),
             !0
           );

@@ -24,7 +24,8 @@ const Log_1 = require("../../../../Core/Common/Log"),
   EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
   PerformanceController_1 = require("../../../../Core/Performance/PerformanceController"),
-  MathUtils_1 = require("../../../../Core/Utils/MathUtils");
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 let UeActorTickManageComponent = class UeActorTickManageComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments), (this.Hte = void 0);
@@ -36,24 +37,29 @@ let UeActorTickManageComponent = class UeActorTickManageComponent extends Entity
     return (this.Hte = this.Entity.GetComponent(1)), !0;
   }
   OnActivate() {
-    this.Hte.Owner.SetActorTickEnabled(!1);
+    this.Hte.Owner.SetKuroOnlyTickOutside(!0);
   }
   OnTick(e) {
-    var t;
-    PerformanceController_1.PerformanceController.IsOpenCatchWorldEntity &&
-      (this.Entity.GetDeltaSeconds().toFixed(2),
-      this.Entity.GetTickInterval(),
-      this.Entity.DistanceWithCamera.toFixed(2),
-      (t = this.Entity.GetComponent(160))) &&
-      t.IsInFighting,
+    let t = void 0;
+    if (PerformanceController_1.PerformanceController.IsOpenCatchWorldEntity) {
+      let e =
+        `DeltaSeconds: ${this.Entity.GetDeltaSeconds().toFixed(2)}, TickInterval: ${this.Entity.GetTickInterval()}, Distance: ` +
+        this.Entity.DistanceWithCamera.toFixed(2);
+      var o = this.Entity.GetComponent(161);
+      o && ((o = o.IsInFighting), (e += " IsInFight: " + o)),
+        (t = Stats_1.Stat.Create(e));
+    }
+    t?.Start(),
       this.Hte.Owner.KuroTickActorOutside(
         e * MathUtils_1.MathUtils.MillisecondToSecond,
-      );
+      ),
+      t?.Stop();
   }
   DisableTickWithLog(e) {
     var t = this.Disable(e);
     return (
-      Log_1.Log.CheckInfo() &&
+      ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+        Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
           3,
@@ -68,7 +74,8 @@ let UeActorTickManageComponent = class UeActorTickManageComponent extends Entity
   }
   EnableTickWithLog(e, t) {
     return (
-      Log_1.Log.CheckInfo() &&
+      ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+        Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
           3,
@@ -86,7 +93,7 @@ let UeActorTickManageComponent = class UeActorTickManageComponent extends Entity
   }
 };
 (UeActorTickManageComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(98)],
+  [(0, RegisterComponent_1.RegisterComponent)(99)],
   UeActorTickManageComponent,
 )),
   (exports.UeActorTickManageComponent = UeActorTickManageComponent);

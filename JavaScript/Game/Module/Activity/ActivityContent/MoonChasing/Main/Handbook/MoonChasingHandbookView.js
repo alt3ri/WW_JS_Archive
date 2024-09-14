@@ -9,17 +9,18 @@ const UE = require("ue"),
   PopupCaptionItem_1 = require("../../../../../../Ui/Common/PopupCaptionItem"),
   CommonRewardPopup_1 = require("../../../../../Common/CommonRewardPopup"),
   LoopScrollView_1 = require("../../../../../Util/ScrollView/LoopScrollView"),
+  ActivityMoonChasingController_1 = require("../../Activity/ActivityMoonChasingController"),
   HandbookDisplayGrid_1 = require("./HandbookDisplayGrid"),
   HandbookRewardPanel_1 = require("./HandbookRewardPanel");
 class MoonChasingHandbookView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.lqe = void 0),
-      (this.N9s = void 0),
+      (this.u7s = void 0),
       (this.KTt = void 0),
       (this.S2t = void 0),
-      (this.k9s = () => new HandbookDisplayGrid_1.HandbookDisplayGrid()),
-      (this.F9s = (e) => {
+      (this.c7s = () => new HandbookDisplayGrid_1.HandbookDisplayGrid()),
+      (this.m7s = (e) => {
         this.S2t.Refresh(e);
       }),
       (this.OnTrackMoonHandbookUpdate = () => {
@@ -40,10 +41,10 @@ class MoonChasingHandbookView extends UiViewBase_1.UiViewBase {
       this.lqe.SetCloseCallBack(() => {
         this.CloseMe();
       }),
-      (this.N9s = new LoopScrollView_1.LoopScrollView(
+      (this.u7s = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(1),
         this.GetItem(2).GetOwner(),
-        this.k9s,
+        this.c7s,
       ));
     var e = this.GetItem(4);
     (this.KTt = new HandbookRewardPanel_1.HandbookRewardPanel()),
@@ -51,12 +52,15 @@ class MoonChasingHandbookView extends UiViewBase_1.UiViewBase {
       (this.S2t = new CommonRewardPopup_1.CommonRewardPopup(this.RootItem));
   }
   OnBeforeShow() {
-    this.v4e(), this.V9s(), this.KTt.RefreshLayout();
+    this.v4e(),
+      this.d7s(),
+      this.KTt.RefreshLayout(),
+      ActivityMoonChasingController_1.ActivityMoonChasingController.CheckIsActivityClose();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RefreshRewardPopUp,
-      this.F9s,
+      this.m7s,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TrackMoonHandbookUpdate,
@@ -66,21 +70,21 @@ class MoonChasingHandbookView extends UiViewBase_1.UiViewBase {
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RefreshRewardPopUp,
-      this.F9s,
+      this.m7s,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TrackMoonHandbookUpdate,
         this.OnTrackMoonHandbookUpdate,
       );
   }
-  V9s() {
+  d7s() {
     var e =
       ModelManager_1.ModelManager.MoonChasingModel.GetHandbookUnlockCount();
     this.GetText(3).SetText(e.toString());
   }
   v4e() {
     var e = ModelManager_1.ModelManager.MoonChasingModel.GetHandbookGridList();
-    this.N9s.RefreshByData(e, !1, void 0, !0);
+    this.u7s.RefreshByData(e, !1, void 0, !0);
   }
 }
 exports.MoonChasingHandbookView = MoonChasingHandbookView;

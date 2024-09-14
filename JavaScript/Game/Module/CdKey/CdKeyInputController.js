@@ -11,7 +11,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   CDKEY_USE_INTERVAL = 5e3;
 class CdKeyInputController extends UiControllerBase_1.UiControllerBase {
   static nEt() {
-    (this.c9s = !0),
+    (this.v9s = !0),
       (this.sEt = 0),
       (this.aEt = TimerSystem_1.TimerSystem.Forever(
         this.hEt,
@@ -21,7 +21,7 @@ class CdKeyInputController extends UiControllerBase_1.UiControllerBase {
   static lEt() {
     TimerSystem_1.TimerSystem.Has(this.aEt) &&
       TimerSystem_1.TimerSystem.Remove(this.aEt),
-      (this.c9s = !1),
+      (this.v9s = !1),
       (this.sEt = 0),
       (this.aEt = void 0);
   }
@@ -29,7 +29,7 @@ class CdKeyInputController extends UiControllerBase_1.UiControllerBase {
     return this.lEt(), !0;
   }
   static CheckInCdKeyUseCd() {
-    return this.c9s;
+    return this.v9s;
   }
   static GetCdKeyUseCd() {
     var e = Math.ceil(
@@ -40,7 +40,7 @@ class CdKeyInputController extends UiControllerBase_1.UiControllerBase {
 }
 (exports.CdKeyInputController = CdKeyInputController),
   ((_a = CdKeyInputController).aEt = void 0),
-  (CdKeyInputController.c9s = !1),
+  (CdKeyInputController.v9s = !1),
   (CdKeyInputController.sEt = 0),
   (CdKeyInputController.hEt = (e) => {
     (CdKeyInputController.sEt += e),
@@ -48,13 +48,13 @@ class CdKeyInputController extends UiControllerBase_1.UiControllerBase {
         CdKeyInputController.lEt();
   }),
   (CdKeyInputController.RequestCdKey = async (e) => {
-    var t = new Protocol_1.Aki.Protocol.Dzn(),
+    var t = new Protocol_1.Aki.Protocol.Bzn(),
       e =
-        ((t.S8n = e),
+        ((t.R8n = e),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Functional", 38, "请求CdKey兑换", ["CdKey", e]),
         CdKeyInputController.nEt(),
-        await Net_1.Net.CallAsync(9027, t));
-    if (e) return e.O4n;
+        await Net_1.Net.CallAsync(23536, t));
+    if (e) return e.Q4n;
   });
 //# sourceMappingURL=CdKeyInputController.js.map

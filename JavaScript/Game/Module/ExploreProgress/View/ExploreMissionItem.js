@@ -12,10 +12,10 @@ class ExploreMissionItem extends UiPanelBase_1.UiPanelBase {
       (this.ScrollViewDelegate = void 0),
       (this.GridIndex = 0),
       (this.DisplayIndex = 0),
-      (this.kHs = void 0),
-      (this.FHs = () => {
-        this.kHs &&
-          (SkipTaskManager_1.SkipTaskManager.Run(7, this.kHs.QuestId),
+      (this.zHs = void 0),
+      (this.ZHs = () => {
+        this.zHs &&
+          (SkipTaskManager_1.SkipTaskManager.Run(7, this.zHs.QuestId),
           UiManager_1.UiManager.CloseView("ExploreMissionView"));
       });
   }
@@ -29,10 +29,10 @@ class ExploreMissionItem extends UiPanelBase_1.UiPanelBase {
       [5, UE.UISprite],
       [6, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[3, this.FHs]]);
+      (this.BtnBindInfo = [[3, this.ZHs]]);
   }
   Refresh(i, e, s) {
-    var t = (this.kHs = i).IsBranchQuest(),
+    var t = (this.zHs = i).IsBranchQuest(),
       r = i.IsQuestVisible();
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), i.QuestNameId),
       this.GetSprite(1)?.SetUIActive(!t),

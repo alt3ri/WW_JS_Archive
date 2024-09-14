@@ -21,10 +21,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WidgetCameraDisplayComponent = void 0);
 const ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
   EntityComponent_1 = require("../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../Core/Entity/RegisterComponent"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
-  CameraController_1 = require("./CameraController"),
-  RegisterComponent_1 = require("../../Core/Entity/RegisterComponent");
+  CameraController_1 = require("./CameraController");
 let WidgetCameraDisplayComponent = class WidgetCameraDisplayComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -37,7 +37,7 @@ let WidgetCameraDisplayComponent = class WidgetCameraDisplayComponent extends En
               "WidgetCamera.OnWorldDone",
             );
       }),
-      (this.uMe = () => {
+      (this.y$a = () => {
         this.pxr &&
           (ActorSystem_1.ActorSystem.Put(this.pxr), (this.pxr = void 0));
       });
@@ -53,8 +53,8 @@ let WidgetCameraDisplayComponent = class WidgetCameraDisplayComponent extends En
         this.nye,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.ClearWorld,
-        this.uMe,
+        EventDefine_1.EEventName.OnUiManagerClearAsync,
+        this.y$a,
       ),
       !!this.pxr
     );
@@ -72,12 +72,12 @@ let WidgetCameraDisplayComponent = class WidgetCameraDisplayComponent extends En
           this.nye,
         ),
       EventSystem_1.EventSystem.Has(
-        EventDefine_1.EEventName.ClearWorld,
-        this.uMe,
+        EventDefine_1.EEventName.OnUiManagerClearAsync,
+        this.y$a,
       ) &&
         EventSystem_1.EventSystem.Remove(
-          EventDefine_1.EEventName.ClearWorld,
-          this.uMe,
+          EventDefine_1.EEventName.OnUiManagerClearAsync,
+          this.y$a,
         ),
       !0
     );

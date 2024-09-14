@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemViewData = void 0);
 const UiPlayItemById_1 = require("../../../Core/Define/ConfigQuery/UiPlayItemById"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../Manager/ModelManager"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder");
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class ItemViewData {
   constructor(e) {
     this.Lmi = e;
@@ -20,6 +20,9 @@ class ItemViewData {
   }
   SetIsLock(e) {
     this.Lmi.IsLock = e;
+  }
+  SetIsDeprecate(e) {
+    this.Lmi.IsDeprecate = e;
   }
   SetHasRedDot(e) {
     this.Lmi.HasRedDot = e;

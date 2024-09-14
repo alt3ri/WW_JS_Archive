@@ -12,7 +12,16 @@ class TowerDefensePhantomSkillItem extends GridProxyAbstract_1.GridProxyAbstract
         "Text_InstanceDungeonRecommendLevel_Text",
         e.Level,
       ),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.DescriptionTextId);
+      e.DescriptionArgs
+        ? LguiUtil_1.LguiUtil.SetLocalTextNew(
+            this.GetText(2),
+            e.DescriptionTextId,
+            ...e.DescriptionArgs,
+          )
+        : LguiUtil_1.LguiUtil.SetLocalTextNew(
+            this.GetText(2),
+            e.DescriptionTextId,
+          );
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [

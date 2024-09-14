@@ -12,7 +12,7 @@ class DigitalScreenModel extends ModelBase_1.ModelBase {
       (this.BackgroundPicture = ""),
       (this.TextFactor = 0),
       (this.StartTimes = []),
-      (this.$da = []),
+      (this.Tga = []),
       (this.DelayTimes = []),
       (this.DuringTimes = []),
       (this.TextLength = []),
@@ -23,7 +23,7 @@ class DigitalScreenModel extends ModelBase_1.ModelBase {
   }
   InitDigitalScreen(i) {
     (this.StartTimes = []),
-      (this.$da = []),
+      (this.Tga = []),
       (this.DelayTimes = []),
       (this.DuringTimes = []),
       (this.TextLength = []),
@@ -41,7 +41,7 @@ class DigitalScreenModel extends ModelBase_1.ModelBase {
       var t = DigitalScreenTextById_1.configDigitalScreenTextById.GetConfig(s),
         e =
           (this.StartTimes.push(t.ShowStartFrame),
-          this.$da.push(t.ShowEndFrame),
+          this.Tga.push(t.ShowEndFrame),
           t.ShowEndFrame - t.ShowStartFrame),
         e =
           ((this.During += 0 <= e ? e : 1),
@@ -53,8 +53,8 @@ class DigitalScreenModel extends ModelBase_1.ModelBase {
         this.ContentPos.push(t?.Alignment ?? 0);
     }
     for (let i = 0; i < this.StartTimes.length - 1; i++)
-      this.$da[i] < this.StartTimes[i + 1]
-        ? this.DelayTimes.push(this.StartTimes[i + 1] - this.$da[i])
+      this.Tga[i] < this.StartTimes[i + 1]
+        ? this.DelayTimes.push(this.StartTimes[i + 1] - this.Tga[i])
         : this.DelayTimes.push(0);
     return !0;
   }

@@ -27,7 +27,7 @@ class LockPredictedUnit extends HudUnitBase_1.HudUnitBase {
     this.InitTweenAnim(2), this.InitTweenAnim(3);
   }
   OnAfterShow() {
-    this.Mda();
+    this.hga();
   }
   async OnBeforeHideAsync() {
     CLOSE_ANIM_TIME <= 0 ||
@@ -49,7 +49,7 @@ class LockPredictedUnit extends HudUnitBase_1.HudUnitBase {
   Deactivate() {
     this.SetVisible(!1, 0);
   }
-  Mda() {
+  hga() {
     this.StopTweenAnim(3), this.PlayTweenAnim(2);
   }
   Wti() {

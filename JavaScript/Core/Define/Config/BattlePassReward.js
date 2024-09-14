@@ -16,16 +16,30 @@ class BattlePassReward {
   get FreeReward() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.freerewardLength(),
-      (t) => this.freereward(t)?.key(),
-      (t) => this.freereward(t)?.value(),
+      this.freerewardKey,
+      this.freerewardValue,
+      this,
     );
+  }
+  freerewardKey(t) {
+    return this.freereward(t)?.key();
+  }
+  freerewardValue(t) {
+    return this.freereward(t)?.value();
   }
   get PayReward() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.payrewardLength(),
-      (t) => this.payreward(t)?.key(),
-      (t) => this.payreward(t)?.value(),
+      this.payrewardKey,
+      this.payrewardValue,
+      this,
     );
+  }
+  payrewardKey(t) {
+    return this.payreward(t)?.key();
+  }
+  payrewardValue(t) {
+    return this.payreward(t)?.value();
   }
   get IsMilestone() {
     return this.ismilestone();
@@ -51,10 +65,10 @@ class BattlePassReward {
     return this.freereward(t);
   }
   freereward(t, e) {
-    var s = this.J7.__offset(this.z7, 8);
-    return s
+    var r = this.J7.__offset(this.z7, 8);
+    return r
       ? (e || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
           this.J7,
         )
       : null;
@@ -67,10 +81,10 @@ class BattlePassReward {
     return this.payreward(t);
   }
   payreward(t, e) {
-    var s = this.J7.__offset(this.z7, 10);
-    return s
+    var r = this.J7.__offset(this.z7, 10);
+    return r
       ? (e || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
           this.J7,
         )
       : null;

@@ -12,7 +12,8 @@ class MonsterSizeId {
   get MonsterSizeTag() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.monstersizetagLength(),
-      (t) => this.monstersizetag(t),
+      this.monstersizetag,
+      this,
     );
   }
   __init(t, s) {

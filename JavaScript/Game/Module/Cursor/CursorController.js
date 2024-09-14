@@ -7,6 +7,7 @@ const UE = require("ue"),
   FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
 class CursorController extends UiControllerBase_1.UiControllerBase {
   static Init() {
@@ -39,27 +40,21 @@ class CursorController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.Debug("UiCommon", 28, "SetWindowCursorStyle"),
       Info_1.Info.IsInKeyBoard())
     ) {
-      let o = void 0,
-        r = void 0,
-        e = void 0;
-      e = Info_1.Info.IsPlayInEditor
-        ? ((o = FNameUtil_1.FNameUtil.GetDynamicFName(
-            "Aki/UI/Module/Cursor/SourceResource/CursorNor",
-          )),
-          (r = FNameUtil_1.FNameUtil.GetDynamicFName(
-            "Aki/UI/Module/Cursor/SourceResource/CursorHi",
-          )),
-          FNameUtil_1.FNameUtil.GetDynamicFName(
-            "Aki/UI/Module/Cursor/SourceResource/CursorPre",
-          ))
-        : ((o = FNameUtil_1.FNameUtil.GetDynamicFName("Aki/Cursor/CursorNor")),
-          (r = FNameUtil_1.FNameUtil.GetDynamicFName("Aki/Cursor/CursorHi")),
-          FNameUtil_1.FNameUtil.GetDynamicFName("Aki/Cursor/CursorPre"));
-      var i = new UE.Vector2D(0, 0),
-        s = GlobalData_1.GlobalData.World.GetWorld();
-      UE.WidgetBlueprintLibrary.SetHardwareCursor(s, 1, o, i),
-        UE.WidgetBlueprintLibrary.SetHardwareCursor(s, 16, r, i),
-        UE.WidgetBlueprintLibrary.SetHardwareCursor(s, 15, e, i);
+      let o = "";
+      o = Info_1.Info.IsPlayInEditor
+        ? "Aki/UI/Module/Cursor/SourceResource"
+        : "Aki/Cursor";
+      var r = FNameUtil_1.FNameUtil.GetDynamicFName(o + "/CursorNor"),
+        e = FNameUtil_1.FNameUtil.GetDynamicFName(o + "/CursorHi"),
+        t = FNameUtil_1.FNameUtil.GetDynamicFName(o + "/CursorPre"),
+        l = new UE.Vector2D(0, 0),
+        s = GlobalData_1.GlobalData.World.GetWorld(),
+        r =
+          (UE.WidgetBlueprintLibrary.SetHardwareCursor(s, 1, r, l),
+          UE.WidgetBlueprintLibrary.SetHardwareCursor(s, 16, e, l),
+          UE.WidgetBlueprintLibrary.SetHardwareCursor(s, 15, t, l),
+          `${UE.BlueprintPathsLibrary.ProjectContentDir()}/${o}/CursorNor.png`);
+      ControllerHolder_1.ControllerHolder.KuroSdkController.SetCursor(r);
     }
   }
 }

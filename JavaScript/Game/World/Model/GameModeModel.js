@@ -29,7 +29,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
       (this.HMr = !1),
       (this.jMr = ""),
       (this.WMr = new Array()),
-      (this.sia = void 0),
+      (this.Aoa = void 0),
       (this.KMr = void 0),
       (this.QMr = void 0),
       (this.XMr = 0),
@@ -95,14 +95,14 @@ class GameModeModel extends ModelBase_1.ModelBase {
       (this.yAr = void 0),
       (this._Er = void 0),
       (this.zIo = void 0),
-      (this.fKs = void 0),
+      (this.x$s = void 0),
       (this.dEr = void 0),
       (this.CEr = void 0),
       (this.gEr = void 0),
       (this.ETn = void 0),
       (this.fEr = void 0),
       (this.vEr = void 0),
-      (this.Mbn = void 0),
+      (this.Dbn = void 0),
       (this.MEr = void 0),
       (this.EEr = void 0),
       (this.SEr = !1);
@@ -277,7 +277,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
     this.WMr.length = 0;
   }
   get VoxelStreamingSource() {
-    return this.sia;
+    return this.Aoa;
   }
   get StreamingSource() {
     return this.KMr;
@@ -303,7 +303,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
   get RoleLocation() {
     return this.hEr;
   }
-  static aia(e, t, i, s) {
+  static nQs(e, t, i, s) {
     var o = ActorSystem_1.ActorSystem.Get(UE.Actor.StaticClass(), e),
       r =
         (o.AddComponentByClass(
@@ -334,8 +334,8 @@ class GameModeModel extends ModelBase_1.ModelBase {
         new UE.Vector(1, 1, 1),
       ),
       t = [WorldDefine_1.VOXEL_GRID_NAME];
-    (this.sia = GameModeModel.aia(e, 64, 0, t)),
-      (this.KMr = GameModeModel.aia(e, 128, 1, t)),
+    (this.Aoa = GameModeModel.nQs(e, 64, 0, t)),
+      (this.KMr = GameModeModel.nQs(e, 128, 1, t)),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Level",
@@ -483,7 +483,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
     return this.zIo;
   }
   get VoxelStreamingCompleted() {
-    return this.fKs;
+    return this.x$s;
   }
   get LoadMultiFormationPromise() {
     return this.dEr;
@@ -513,10 +513,10 @@ class GameModeModel extends ModelBase_1.ModelBase {
     this.vEr = e;
   }
   get CheckRenderAssetsTimeoutId() {
-    return this.Mbn;
+    return this.Dbn;
   }
   set CheckRenderAssetsTimeoutId(e) {
-    this.Mbn = e;
+    this.Dbn = e;
   }
   get VideoStartPromise() {
     return this.MEr;
@@ -535,7 +535,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
       (this.yAr = new GameModePromise_1.GameModePromise()),
       (this._Er = new GameModePromise_1.GameModePromise()),
       (this.zIo = new GameModePromise_1.GameModePromise()),
-      (this.fKs = new GameModePromise_1.GameModePromise()),
+      (this.x$s = new GameModePromise_1.GameModePromise()),
       (this.CEr = new GameModePromise_1.GameModePromise()),
       (this.MEr = new GameModePromise_1.GameModePromise()),
       (this.EEr = new GameModePromise_1.GameModePromise()),
@@ -546,7 +546,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
       (this.yAr = void 0),
       (this._Er = void 0),
       (this.zIo = void 0),
-      (this.fKs = void 0),
+      (this.x$s = void 0),
       (this.CEr = void 0),
       (this.dEr = void 0),
       (this.MEr = void 0),
@@ -563,8 +563,8 @@ class GameModeModel extends ModelBase_1.ModelBase {
     this.zMr &&
       (this.KMr?.IsValid() &&
         (ActorSystem_1.ActorSystem.Put(this.KMr), (this.KMr = void 0)),
-      this.sia?.IsValid()) &&
-      (ActorSystem_1.ActorSystem.Put(this.sia), (this.sia = void 0));
+      this.Aoa?.IsValid()) &&
+      (ActorSystem_1.ActorSystem.Put(this.Aoa), (this.Aoa = void 0));
   }
   OnLeaveLevel() {
     var e,
@@ -588,7 +588,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
       (this.jMr = ""),
       (this.$Mr = 0),
       (this.JMr = !1),
-      (this.YMr = Protocol_1.Aki.Protocol.XFs.Proto_NoneInstance),
+      (this.YMr = Protocol_1.Aki.Protocol.i4s.Proto_NoneInstance),
       (this.QMr = void 0),
       (this.XMr = 0),
       (this.zMr = !1),
@@ -597,7 +597,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
       this.ResetPromise(),
       (this.fEr = void 0),
       (this.vEr = void 0),
-      !(this.Mbn = void 0)
+      !(this.Dbn = void 0)
     );
   }
   OnChangeMode() {

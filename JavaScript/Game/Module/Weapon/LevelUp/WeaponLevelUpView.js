@@ -191,7 +191,7 @@ class WeaponLevelUpView extends UiTabViewBase_1.UiTabViewBase {
         (n.IsSingleSelected = !1),
           (n.OnChangeSelectedFunction = this.AMt),
           (i.ItemDataBaseList = r),
-          (i.SelectedDataList = o),
+          (i.SelectedDataList = o ?? []),
           (i.ExpData = s),
           (i.SelectableComponentData = n),
           (i.UseWayId = 2),

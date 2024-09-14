@@ -23,10 +23,10 @@ class TsAnimNotifyStateRoleRotate extends UE.KuroAnimNotifyState {
       t = t.GetEntityNoBlueprint();
       if (!t?.Valid) return !1;
       if (this.在横板模式中禁用) {
-        if (t.GetComponent(97)?.Active) return !1;
+        if (t.GetComponent(98)?.Active) return !1;
       } else if (this.只在横板模式中生效)
-        if (!t.GetComponent(97)?.Active) return !1;
-      t = t.GetComponent(33);
+        if (!t.GetComponent(98)?.Active) return !1;
+      t = t.GetComponent(34);
       if (t?.Valid)
         return t.SetSkillRotateToTarget(this.是否自动朝向目标, !1, 0), !0;
     }
@@ -41,13 +41,13 @@ class TsAnimNotifyStateRoleRotate extends UE.KuroAnimNotifyState {
       var r = t.CharacterActorComponent?.Entity;
       if (!r?.Valid) return !1;
       if (this.在横板模式中禁用) {
-        if (r.GetComponent(97)?.Active) return !1;
+        if (r.GetComponent(98)?.Active) return !1;
       } else if (this.只在横板模式中生效)
-        if (!r.GetComponent(97)?.Active) return !1;
-      r = r?.GetComponent(33);
+        if (!r.GetComponent(98)?.Active) return !1;
+      r = r?.GetComponent(34);
       if (!r?.Valid) return !1;
       if (this.是否自动朝向目标)
-        r.SetSkillRotateToTarget(r.SkillTarget?.Valid ?? !1, !1, 0),
+        r.SetSkillRotateToTarget(r.GetSkillTargetForAns()?.Valid ?? !1, !1, 0),
           r.SetSkillRotateSpeed(this.旋转速度);
       else {
         var s,
@@ -93,7 +93,7 @@ class TsAnimNotifyStateRoleRotate extends UE.KuroAnimNotifyState {
   K2_NotifyEnd(t, i) {
     t = t.GetOwner();
     if (t instanceof TsBaseCharacter_1.default) {
-      t = t.CharacterActorComponent?.Entity?.GetComponent(33);
+      t = t.CharacterActorComponent?.Entity?.GetComponent(34);
       if (t?.Valid) return t.SetSkillCanRotate(!1), !0;
     }
     return !1;

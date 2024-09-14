@@ -7,7 +7,6 @@ const Log_1 = require("../../../../Core/Common/Log"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
-  PayItemController_1 = require("../../PayItem/PayItemController"),
   DiscountShopView_1 = require("./DiscountShopView");
 class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
   constructor() {
@@ -34,20 +33,12 @@ class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
   AddEventListener() {
     super.AddEventListener(),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.RefreshPayGiftList,
-        this.n3i,
-      ),
-      EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPayItemSuccess,
         this.USe,
       );
   }
   RemoveEventListener() {
     super.RemoveEventListener(),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.RefreshPayGiftList,
-        this.n3i,
-      ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPayItemSuccess,
         this.USe,
@@ -64,7 +55,8 @@ class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
       this.GetLoopScrollViewComponent(1).RootUIComp.SetUIActive(
         0 < this.PayShopGoodsList.length,
       ),
-      this.GetItem(8).SetUIActive(this.PayShopGoodsList.length <= 0);
+      this.GetItem(8).SetUIActive(this.PayShopGoodsList.length <= 0),
+      this.CheckIfNeedShowPlayStationStoreIcon();
   }
   UpdateTabs(o) {
     const i = ModelManager_1.ModelManager.PayGiftModel.GetTabList();
@@ -91,12 +83,15 @@ class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
           this.GetViewName(),
         ]);
   }
+  async OnBeforeShowAsyncImplement() {
+    var e = await Promise.all([
+      ControllerHolder_1.ControllerHolder.PayGiftController.SendPayGiftInfoRequestAsync(),
+      ControllerHolder_1.ControllerHolder.PayItemController.SendPayItemInfoRequestAsync(),
+    ]);
+    (this.r3i = e.every((e) => e)), this.n3i();
+  }
   OnBeforeShow() {
-    this.GetItem(4).SetUIActive(!0),
-      this.TabGroup.SetActive(!0),
-      (this.r3i = !0),
-      ControllerHolder_1.ControllerHolder.PayGiftController.SendPayGiftInfoRequest(),
-      PayItemController_1.PayItemController.SendPayItemInfoRequest();
+    this.GetItem(4).SetUIActive(!0), this.TabGroup.SetActive(!0);
   }
 }
 exports.PayPackageShopView = PayPackageShopView;

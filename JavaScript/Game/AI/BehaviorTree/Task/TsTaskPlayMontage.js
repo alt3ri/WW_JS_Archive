@@ -10,6 +10,7 @@ class TsTaskPlayMontage extends TsTaskAbortImmediatelyBase_1.default {
     super(...arguments),
       (this.Montage = void 0),
       (this.MontagePath = ""),
+      (this.ExpressionId = 0),
       (this.LoopDuration = 0),
       (this.RepeatTimes = 0),
       (this.MaskInteract = !1),
@@ -20,6 +21,7 @@ class TsTaskPlayMontage extends TsTaskAbortImmediatelyBase_1.default {
       (this.LoopMontage = !1),
       (this.TsLoopDuration = 0),
       (this.TsRepeatTimes = 0),
+      (this.TsExpressionId = 0),
       (this.InteractComponent = void 0),
       (this.HasAborted = !1),
       (this.PlayingMontageId = 0),
@@ -32,24 +34,25 @@ class TsTaskPlayMontage extends TsTaskAbortImmediatelyBase_1.default {
       "" === this.TsMontage && (this.TsMontage = this.MontagePath),
       (this.TsMaskInteract = this.MaskInteract),
       (this.TsLoopDuration = this.LoopDuration),
-      (this.TsRepeatTimes = this.RepeatTimes));
+      (this.TsRepeatTimes = this.RepeatTimes),
+      (this.TsExpressionId = this.ExpressionId));
   }
   ReceiveExecuteAI(t, s) {
     this.InitTsVariables();
     var i,
-      e = t.AiController;
-    if (e) {
-      this.Entity = e.CharActorComp.Entity;
-      const o = ServerGmController_1.ServerGmController.AnimalDebug;
-      o &&
-        Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "AI",
-          6,
-          "AnimalDebug PlayMontage",
-          ["Tree", this.TreeAsset?.GetName()],
-          ["TsMontage", this.TsMontage],
-        ),
+      e,
+      h = t.AiController;
+    h
+      ? ((this.Entity = h.CharActorComp.Entity),
+        (h = ServerGmController_1.ServerGmController.AnimalDebug) &&
+          Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "AI",
+            6,
+            "AnimalDebug PlayMontage",
+            ["Tree", this.TreeAsset?.GetName()],
+            ["TsMontage", this.TsMontage],
+          ),
         "" === this.TsMontage
           ? (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
@@ -60,7 +63,7 @@ class TsTaskPlayMontage extends TsTaskAbortImmediatelyBase_1.default {
                 ["BehaviorTree", this.TreeAsset.GetName()],
               ),
             this.FinishExecute(!0))
-          : ((this.InteractComponent = this.Entity.GetComponent(181)),
+          : ((this.InteractComponent = this.Entity.GetComponent(182)),
             this.TsMaskInteract &&
               this.InteractComponent &&
               this.InteractComponent.SetInteractionState(
@@ -70,20 +73,29 @@ class TsTaskPlayMontage extends TsTaskAbortImmediatelyBase_1.default {
             (this.IsPlayLoop = 0 !== this.TsLoopDuration),
             (this.LoopMontage =
               -1 === this.TsLoopDuration || -1 === this.TsRepeatTimes),
-            (e = this.Entity.GetComponent(38)),
-            (i = new BasePerformComponent_1.PlayMontageConfig(
+            (i = this.Entity.GetComponent(39)),
+            (e = new BasePerformComponent_1.PlayMontageConfig(
               this.RepeatTimes,
               this.LoopDuration,
               this.IsPlayLoop,
               this.LoopMontage,
             )),
             (this.HasAborted = !1),
-            (this.PlayingMontageId = e.LoadAndPlayMontage(
+            (this.PlayingMontageId = i.LoadAndPlayMontage(
               this.TsMontage,
-              i,
-              void 0,
+              e,
+              (t) => {
+                this.TsExpressionId &&
+                  t?.BodyMontage?.IsValid() &&
+                  this.Entity?.GetComponent(
+                    172,
+                  )?.ExpressionController?.ChangeFaceForExpression(
+                    t.BodyMontage,
+                    this.TsExpressionId,
+                  );
+              },
               () => {
-                o &&
+                ServerGmController_1.ServerGmController.AnimalDebug &&
                   Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info("AI", 6, "AnimalDebug PlayMontage3", [
                     "HasAborted",
@@ -92,26 +104,25 @@ class TsTaskPlayMontage extends TsTaskAbortImmediatelyBase_1.default {
                   this.HasAborted || this.FinishExecute(!0);
               },
               () => (
-                o &&
+                ServerGmController_1.ServerGmController.AnimalDebug &&
                   Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info("AI", 6, "AnimalDebug PlayMontage4"),
                 !this.HasAborted
               ),
             )),
-            o &&
+            h &&
               Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("AI", 6, "AnimalDebug PlayMontage2", [
                 "PlayingMontageId",
                 this.PlayingMontageId,
               ]),
-            this.PlayingMontageId < 0 && this.FinishExecute(!0));
-    } else
-      Log_1.Log.CheckError() &&
-        Log_1.Log.Error("BehaviorTree", 30, "错误的Controller类型", [
-          "Type",
-          t.GetClass().GetName(),
-        ]),
-        this.FinishExecute(!0);
+            this.PlayingMontageId < 0 && this.FinishExecute(!0)))
+      : (Log_1.Log.CheckError() &&
+          Log_1.Log.Error("BehaviorTree", 30, "错误的Controller类型", [
+            "Type",
+            t.GetClass().GetName(),
+          ]),
+        this.FinishExecute(!0));
   }
   OnAbort() {
     this.TsMaskInteract &&
@@ -122,7 +133,7 @@ class TsTaskPlayMontage extends TsTaskAbortImmediatelyBase_1.default {
       ),
       (this.InteractComponent = void 0),
       (this.HasAborted = !0),
-      this.Entity?.GetComponent(38)?.ClearAndStopMontage(this.PlayingMontageId);
+      this.Entity?.GetComponent(39)?.ClearAndStopMontage(this.PlayingMontageId);
   }
 }
 exports.default = TsTaskPlayMontage;

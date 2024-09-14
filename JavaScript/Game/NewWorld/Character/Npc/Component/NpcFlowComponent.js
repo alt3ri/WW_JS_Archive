@@ -32,7 +32,7 @@ let NpcFlowComponent = class NpcFlowComponent extends CharacterFlowComponent_1.C
     super(...arguments), (this.Stn = void 0), (this.Ftn = !1);
   }
   OnStart() {
-    return (this.Stn = this.Entity.GetComponent(108)), super.OnStart(), !0;
+    return (this.Stn = this.Entity.GetComponent(109)), super.OnStart(), !0;
   }
   InitFlowLogic(e) {
     e &&
@@ -64,7 +64,7 @@ let NpcFlowComponent = class NpcFlowComponent extends CharacterFlowComponent_1.C
     );
   }
   TryPlayMontage(e) {
-    const t = this.Entity.GetComponent(36);
+    const t = this.Entity.GetComponent(37);
     return (
       t &&
         e?.includes("/") &&
@@ -83,14 +83,14 @@ let NpcFlowComponent = class NpcFlowComponent extends CharacterFlowComponent_1.C
     var e;
     this.ActorComp &&
       this.ActorComp.SkeletalMesh &&
-      (e = this.Entity.GetComponent(36)) &&
+      (e = this.Entity.GetComponent(37)) &&
       (this.Ftn &&
         e.IsMontagePlaying() &&
         e.StopMontage(STOP_MONTAGE_BLEND_OUT_TIME),
       (this.Ftn = !1));
   }
   RemoveFlowActions() {
-    this.Entity.GetComponent(72).HideDialogueText(),
+    this.Entity.GetComponent(73).HideDialogueText(),
       this.FlowLogic?.ClearAudio(),
       this.Vtn();
   }
@@ -99,7 +99,7 @@ let NpcFlowComponent = class NpcFlowComponent extends CharacterFlowComponent_1.C
   }
 };
 (NpcFlowComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(169)],
+  [(0, RegisterComponent_1.RegisterComponent)(170)],
   NpcFlowComponent,
 )),
   (exports.NpcFlowComponent = NpcFlowComponent);

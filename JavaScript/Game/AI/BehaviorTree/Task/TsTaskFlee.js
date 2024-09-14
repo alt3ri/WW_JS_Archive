@@ -76,7 +76,7 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
           if (r) {
             const n = r.Entity;
             if (n)
-              if (((this.MoveComp = n.GetComponent(163)), this.MoveComp)) {
+              if (((this.MoveComp = n.GetComponent(164)), this.MoveComp)) {
                 5 === this.MoveComp.CharacterMovement.MovementMode &&
                   (this.IsFlying = !0);
                 var r = r.ActorLocationProxy,
@@ -146,7 +146,7 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
                     ? ((this.CurrentNavigationIndex = 1),
                       (this.NavigationEndTime =
                         Time_1.Time.WorldTime + s.AiFlee.TimeMilliseconds),
-                      (l = s.CharAiDesignComp.Entity.GetComponent(91))?.Valid &&
+                      (l = s.CharAiDesignComp.Entity.GetComponent(92))?.Valid &&
                         l.SetMoveState(
                           CharacterUnifiedStateTypes_1.ECharMoveState.Run,
                         ))

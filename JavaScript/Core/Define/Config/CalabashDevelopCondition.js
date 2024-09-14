@@ -16,7 +16,8 @@ class CalabashDevelopCondition {
   get ConditionParam() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.conditionparamLength(),
-      (t) => this.conditionparam(t),
+      this.conditionparam,
+      this,
     );
   }
   get Description() {
@@ -25,9 +26,16 @@ class CalabashDevelopCondition {
   get RewardExp() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.rewardexpLength(),
-      (t) => this.rewardexp(t)?.key(),
-      (t) => this.rewardexp(t)?.value(),
+      this.rewardexpKey,
+      this.rewardexpValue,
+      this,
     );
+  }
+  rewardexpKey(t) {
+    return this.rewardexp(t)?.key();
+  }
+  rewardexpValue(t) {
+    return this.rewardexp(t)?.value();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;

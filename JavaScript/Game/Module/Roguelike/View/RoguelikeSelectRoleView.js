@@ -42,16 +42,16 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
       (this.yDn = []),
       (this.NUe = 0),
       (this.IDn = void 0),
-      (this.XXs = 1),
+      (this.WJs = 1),
       (this.xVi = void 0),
       (this.vNt = void 0),
       (this.Zho = void 0),
-      (this.nMa = 0),
-      (this.sMa = 0),
+      (this.cya = 0),
+      (this.mya = 0),
       (this.UQ = 0),
-      (this.UIa = !0),
-      (this.qla = (t, e, i) => {
-        this.UIa ||
+      (this.HUa = !0),
+      (this.Gua = (t, e, i) => {
+        this.HUa ||
           this.DynamicScrollViewComponent.GetScrollItemItems().forEach((e) => {
             1 === e.Data?.Type && ((e.Data.RoleIdList = t), e.RefreshData());
           });
@@ -74,7 +74,10 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
             ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
               o.FightFormationId,
             ),
-          s = 0 < this.nMa ? this.nMa : e.GetLevelData().GetLevel(),
+          s =
+            0 < this.cya && this.cya > e.GetLevelData().GetLevel()
+              ? this.cya
+              : e.GetLevelData().GetLevel(),
           r = e.GetDataId(),
           n =
             void 0 !==
@@ -87,12 +90,12 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
               ? ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByRoleDataId(
                   e.GetDataId(),
                 ).GetLevel()
-              : 0) < this.sMa &&
+              : 0) < this.mya &&
             !e.IsTrialRole() &&
             n &&
             o,
           e =
-            e.GetLevelData().GetLevel() < this.nMa &&
+            e.GetLevelData().GetLevel() < this.cya &&
             !e.IsTrialRole() &&
             n &&
             o;
@@ -101,12 +104,12 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(14),
             "Text_RoleAddLevel_Text",
-            this.nMa,
+            this.cya,
           ),
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(15),
             "Text_WeaponAddLevel_Text",
-            this.sMa,
+            this.mya,
           ),
           this.GetText(15).SetUIActive(r),
           this.GetText(14).SetUIActive(e),
@@ -135,7 +138,7 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
       }),
       (this.olo = (e) => {
         let t = RoguelikeDefine_1.DEFAULT_ROGUELIKE_ENTRY_RATE;
-        for (const s of (this.Zho.IHn = e)) {
+        for (const s of (this.Zho.BHn = e)) {
           var i =
             ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguelikePopularEntriesById(
               s,
@@ -161,7 +164,7 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.nlo = () => {
-        2 === this.XXs
+        2 === this.WJs
           ? RoleController_1.RoleController.OpenRoleMainView(1, 0, [
               this.IDn.GetDataId(),
             ])
@@ -169,7 +172,7 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
               this.IDn.GetDataId(),
             ]);
       }),
-      (this.HGn = () => {
+      (this.JGn = () => {
         HelpController_1.HelpController.OpenHelpById(
           RoguelikeDefine_1.ROGUELIKE_HELP_ID,
         );
@@ -202,7 +205,7 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
         [2, this.ilo],
         [8, this.rlo],
         [10, this.nlo],
-        [12, this.HGn],
+        [12, this.JGn],
       ]);
   }
   async OnBeforeStartAsync() {
@@ -218,12 +221,12 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
           this.NUe,
         )),
     ]),
-      (this.yDn = t.Mqs),
-      (this.nMa = t.Cbs),
-      (this.sMa = t.sjn),
-      (this.UQ = t.qXs),
-      (this.Zho = e.Z2s),
-      this.olo(e.Z2s.IHn),
+      (this.yDn = t.Rqs),
+      (this.cya = t.Ebs),
+      (this.mya = t.Cjn),
+      (this.UQ = t.wJs),
+      (this.Zho = e.sqs),
+      this.olo(e.sqs.BHn),
       (this.Jho = new RoguelikeSelectRoleBaseGrid()),
       (this.DynamicScrollViewComponent = new DynScrollView_1.DynamicScrollView(
         this.GetUIDynScrollViewComponent(3),
@@ -235,13 +238,13 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
       this.GetButton(8)?.GetRootComponent()?.SetUIActive(this.ITn()),
       (this.vNt = new FilterSortEntrance_1.FilterSortEntrance(
         this.GetItem(5),
-        this.qla,
+        this.Gua,
       ));
   }
   OnStart() {
     (RoguelikeSelectRoleGrid.CurSelectRoleItem = void 0),
       this.InitRoleList(),
-      (this.UIa = !1);
+      (this.HUa = !1);
   }
   InitRoleList() {
     var e = this.OpenParam,
@@ -256,8 +259,8 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
         new RoguelikeSelectRoleData(
           0,
           e,
-          this.nMa,
-          this.sMa,
+          this.cya,
+          this.mya,
           this.UQ,
           s.LimitRole,
         ),
@@ -318,8 +321,8 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
         new RoguelikeSelectRoleData(
           1,
           o,
-          this.nMa,
-          this.sMa,
+          this.cya,
+          this.mya,
           this.UQ,
           r,
           s.RecommendFormation,
@@ -329,17 +332,17 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
         new RoguelikeSelectRoleData(
           2,
           n,
-          this.nMa,
-          this.sMa,
+          this.cya,
+          this.mya,
           this.UQ,
           r,
           s.RecommendFormation,
         ),
       ),
       0 < o.length
-        ? ((this.IDn = o[0]), (this.XXs = 1))
+        ? ((this.IDn = o[0]), (this.WJs = 1))
         : 0 < n.length
-          ? ((this.IDn = n[0]), (this.XXs = 2))
+          ? ((this.IDn = n[0]), (this.WJs = 2))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Roguelike",
@@ -371,7 +374,7 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
       RoleController_1.RoleController.OnSelectedRoleChangeByConfig(
         this.IDn.GetRoleId(),
       ),
-      this.TDn(this.IDn, this.XXs);
+      this.TDn(this.IDn, this.WJs);
   }
   GetTrailRoleInstanceList(e) {
     const t = [];
@@ -389,7 +392,7 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
   }
   ITn() {
     for (const e of ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguelikePopularEntries())
-      if (e.Insts.includes(this.Zho.X5n)) return !0;
+      if (e.Insts.includes(this.Zho.r6n)) return !0;
     return !1;
   }
 }

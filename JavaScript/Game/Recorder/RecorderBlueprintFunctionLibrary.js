@@ -145,7 +145,7 @@ class CharacterRecorderObject {
   static get NotUseCloneType() {
     return (
       this.gAr ||
-        (this.gAr = new Set([Protocol_1.Aki.Protocol.wks.Proto_Player])),
+        (this.gAr = new Set([Protocol_1.Aki.Protocol.kks.Proto_Player])),
       this.gAr
     );
   }
@@ -311,6 +311,13 @@ class EffectRecorderObject {
         i - exports.EFFECT_CREATE_ADVANCE,
         this.n8,
       ),
+      EffectSystem_1.EffectSystem.IsHandleFreeze(e) &&
+        ((t.LifeTimeType = 3),
+        this.iy.AddAutoFloatPropertyTrack(
+          r,
+          new UE.FName("ManualProcessTime"),
+          i,
+        )),
       (t.EffectModelDataPath = this.n8),
       (t.EffectModelData = EffectSystem_1.EffectSystem.GetEffectModel(e)),
       Log_1.Log.CheckInfo() &&
@@ -406,11 +413,11 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return (
       RecorderBlueprintFunctionLibrary.CharacterTypesInternal ||
         (RecorderBlueprintFunctionLibrary.CharacterTypesInternal = new Set([
-          Protocol_1.Aki.Protocol.wks.Proto_Animal,
-          Protocol_1.Aki.Protocol.wks.Proto_Monster,
-          Protocol_1.Aki.Protocol.wks.Proto_Npc,
-          Protocol_1.Aki.Protocol.wks.Proto_Player,
-          Protocol_1.Aki.Protocol.wks.Proto_Vision,
+          Protocol_1.Aki.Protocol.kks.Proto_Animal,
+          Protocol_1.Aki.Protocol.kks.Proto_Monster,
+          Protocol_1.Aki.Protocol.kks.Proto_Npc,
+          Protocol_1.Aki.Protocol.kks.Proto_Player,
+          Protocol_1.Aki.Protocol.kks.Proto_Vision,
         ])),
       RecorderBlueprintFunctionLibrary.CharacterTypesInternal
     );
@@ -419,7 +426,7 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return (
       RecorderBlueprintFunctionLibrary.SceneItemTypesInternal ||
         (RecorderBlueprintFunctionLibrary.SceneItemTypesInternal = new Set([
-          Protocol_1.Aki.Protocol.wks.Proto_SceneItem,
+          Protocol_1.Aki.Protocol.kks.Proto_SceneItem,
         ])),
       RecorderBlueprintFunctionLibrary.SceneItemTypesInternal
     );
@@ -486,9 +493,12 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       RecorderBlueprintFunctionLibrary.IgnoreClasses.Add(
         UE.BP_Cinematics_Tick_C.StaticClass(),
       ),
-      (RecorderBlueprintFunctionLibrary.Stat1 = void 0),
-      (RecorderBlueprintFunctionLibrary.Stat2 = void 0),
-      (RecorderBlueprintFunctionLibrary.Stat3 = void 0);
+      (RecorderBlueprintFunctionLibrary.Stat1 =
+        Stats_1.Stat.Create("RecorderStat1")),
+      (RecorderBlueprintFunctionLibrary.Stat2 =
+        Stats_1.Stat.Create("RecorderStat2")),
+      (RecorderBlueprintFunctionLibrary.Stat3 =
+        Stats_1.Stat.Create("RecorderStat3"));
   }
   static StartRecord(r, e, t, i, n, o) {
     if (
@@ -571,6 +581,7 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         o,
         c = Time_1.Time.DeltaTimeSeconds;
       (RecorderBlueprintFunctionLibrary.RecordingTimeInternal += c),
+        RecorderBlueprintFunctionLibrary.Stat3.Start(),
         RecorderBlueprintFunctionLibrary.StopRecordersWhenUpdate(),
         RecorderBlueprintFunctionLibrary.FightCameraRecorder?.TickRecorder(c),
         RecorderBlueprintFunctionLibrary.SequenceCameraRecorder?.TickRecorder(
@@ -587,7 +598,8 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         n.TickRecorder(c);
       for ([, o] of RecorderBlueprintFunctionLibrary.GameplayCueRecorders)
         o.TickRecorder(c);
-      RecorderBlueprintFunctionLibrary.StartRecordersWhenUpdate();
+      RecorderBlueprintFunctionLibrary.StartRecordersWhenUpdate(),
+        RecorderBlueprintFunctionLibrary.Stat3.Stop();
     }
   }
   static StopRecord() {
@@ -696,8 +708,13 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static StartRecordersWhenUpdate() {
     var r = this.FindCenterLocation();
+    RecorderBlueprintFunctionLibrary.Stat1.Start();
     let e = RecorderBlueprintFunctionLibrary.StartEntityRecorders(r);
-    e = !!RecorderBlueprintFunctionLibrary.StartEffectRecorders(r) || e;
+    RecorderBlueprintFunctionLibrary.Stat1.Stop(),
+      RecorderBlueprintFunctionLibrary.Stat2.Start(),
+      RecorderBlueprintFunctionLibrary.StartEffectRecorders(r) && (e = !0),
+      RecorderBlueprintFunctionLibrary.Stat2.Stop(),
+      e;
   }
   static StartEntityRecorders(r) {
     let e = !1;
@@ -737,7 +754,7 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
           RecorderBlueprintFunctionLibrary.SceneItemTypes.has(
             o.GetEntityType(),
           ) &&
-          (!(o = n.GetComponent(185)).GetIsSceneInteractionLoadCompleted() ||
+          (!(o = n.GetComponent(187)).GetIsSceneInteractionLoadCompleted() ||
             Vector_1.Vector.DistSquared(o.ActorLocationProxy, r) >
               RecorderBlueprintFunctionLibrary.RecordDistSquared ||
             ((o = new SceneItemRecorderObject(

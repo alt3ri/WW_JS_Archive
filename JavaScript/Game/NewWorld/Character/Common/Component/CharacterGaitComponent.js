@@ -34,8 +34,8 @@ let CharacterGaitComponent = class CharacterGaitComponent extends EntityComponen
   OnStart() {
     return (
       (this.Hte = this.Entity.GetComponent(3)),
-      (this.Gce = this.Entity.GetComponent(163)),
-      (this.HBr = this.Entity.GetComponent(160)),
+      (this.Gce = this.Entity.GetComponent(164)),
+      (this.HBr = this.Entity.GetComponent(161)),
       !(!this.Hte || !this.Gce || !this.HBr)
     );
   }
@@ -85,7 +85,7 @@ let CharacterGaitComponent = class CharacterGaitComponent extends EntityComponen
   }
 };
 (CharacterGaitComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(50)],
+  [(0, RegisterComponent_1.RegisterComponent)(51)],
   CharacterGaitComponent,
 )),
   (exports.CharacterGaitComponent = CharacterGaitComponent);

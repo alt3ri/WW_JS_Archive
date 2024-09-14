@@ -17,25 +17,39 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configInstanceDungeonEntranceById.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configInstanceDungeonEntranceById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configInstanceDungeonEntranceById.GetConfig(";
 exports.configInstanceDungeonEntranceById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (n, o = !0) => {
-    if (
-      (t = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${n})`),
+      t =
+        (e.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
       if (o) {
-        var e = KEY_PREFIX + `#${n})`;
-        const i = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (i) return i;
+        var i = KEY_PREFIX + `#${n})`;
+        const a = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (a)
+          return (
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
         (t =
@@ -46,10 +60,9 @@ exports.configInstanceDungeonEntranceById = {
               n,
             ]))
       ) {
-        var t,
-          e = void 0;
+        i = void 0;
         if (
-          (([t, e] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([t, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -57,21 +70,27 @@ exports.configInstanceDungeonEntranceById = {
           )),
           t)
         ) {
-          const i =
+          const a =
             InstanceDungeonEntrance_1.InstanceDungeonEntrance.getRootAsInstanceDungeonEntrance(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
             );
           return (
             o &&
               ((t = KEY_PREFIX + `#${n})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(t, i)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(t, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    e.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=InstanceDungeonEntranceById.js.map

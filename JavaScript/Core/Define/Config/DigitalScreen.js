@@ -19,8 +19,10 @@ class DigitalScreen {
     return this.existtime();
   }
   get TextId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.textidLength(), (t) =>
-      this.textid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.textidLength(),
+      this.textid,
+      this,
     );
   }
   get TextFactor() {

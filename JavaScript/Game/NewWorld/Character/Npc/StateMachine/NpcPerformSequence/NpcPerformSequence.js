@@ -18,8 +18,8 @@ class NpcPerformSequence {
       (this.Ntr = void 0),
       (this.PUo = void 0),
       (this.Otr = void 0),
-      (this.eGn = () => {
-        this.$ne(), this.tGn();
+      (this.lGn = () => {
+        this.$ne(), this._Gn();
       }),
       (this.pLo = () => {
         Log_1.Log.CheckInfo() &&
@@ -41,16 +41,16 @@ class NpcPerformSequence {
             "[CollectionItemDisplay]开始销毁Npc表现Sequence时，Sequence仍在播放，等播放完成后销毁",
           ),
         this.SPe.OnFinished.Clear(),
-        this.SPe.OnFinished.Add(this.eGn))
+        this.SPe.OnFinished.Add(this.lGn))
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "NPC",
             8,
             "[CollectionItemDisplay]开始销毁Npc表现Sequence",
           ),
-        this.tGn());
+        this._Gn());
   }
-  tGn() {
+  _Gn() {
     if (
       (this.Fbi &&
         (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.Fbi),

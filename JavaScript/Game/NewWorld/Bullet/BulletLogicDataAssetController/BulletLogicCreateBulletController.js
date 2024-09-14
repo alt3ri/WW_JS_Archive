@@ -65,7 +65,7 @@ class BulletLogicCreateBulletController extends BulletLogicController_1.BulletLo
             (l = this.l7o(r.AttachToActor, t)) &&
               o !== StringUtils_1.NONE_STRING &&
               ((e = FNameUtil_1.FNameUtil.GetDynamicFName(o)),
-              (r = i.GetComponent(154)),
+              (r = i.GetComponent(155)),
               (o = l.Mesh),
               r.SetActorLocation(o.GetSocketLocation(e)),
               r.SetAttachToComponent(o, e, 1, 0, 0, !1),

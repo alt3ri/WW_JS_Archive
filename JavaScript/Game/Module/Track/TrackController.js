@@ -90,14 +90,14 @@ class TrackController extends ControllerBase_1.ControllerBase {
 }
 ((exports.TrackController = TrackController).gRo = (r) => {
   if (r) {
-    var t = r.GetComponent(146);
+    var t = r.GetComponent(147);
     if (t?.Valid) {
       var n = r.GetComponent(1).CreatureData.GetPbEntityInitData(),
         n = (0, IComponent_1.getComponent)(
           n.ComponentsData,
           "InteractComponent",
         ),
-        e = r.GetComponent(180);
+        e = r.GetComponent(181);
       if (!e || !e.HasTag(1196894179)) {
         let e = 3;
         n && (e = n.Range / 100),

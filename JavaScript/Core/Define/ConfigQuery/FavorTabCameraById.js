@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configFavorTabCameraById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configFavorTabCameraById.GetConfig"),
   CONFIG_STAT_PREFIX = "configFavorTabCameraById.GetConfig(";
 exports.configFavorTabCameraById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, a = !0) => {
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      e =
+        (n.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
       if (a) {
-        var e = KEY_PREFIX + `#${o})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (r) return r;
+        var i = KEY_PREFIX + `#${o})`;
+        const t = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (t)
+          return (
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            t
+          );
       }
       if (
-        (n =
+        (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,31 +58,36 @@ exports.configFavorTabCameraById = {
               o,
             ]))
       ) {
-        var n,
-          e = void 0;
+        i = void 0;
         if (
-          (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
           )),
-          n)
+          e)
         ) {
-          const r = FavorTabCamera_1.FavorTabCamera.getRootAsFavorTabCamera(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
+          const t = FavorTabCamera_1.FavorTabCamera.getRootAsFavorTabCamera(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
           );
           return (
             a &&
-              ((n = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(n, r)),
+              ((e = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(e, t)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            r
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            t
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    n.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=FavorTabCameraById.js.map

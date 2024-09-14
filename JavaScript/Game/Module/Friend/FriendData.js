@@ -5,7 +5,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.FriendApplyData =
     exports.FriendBlackListData =
       void 0);
-const MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+const Log_1 = require("../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  PlatformSdkManagerNew_1 = require("../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
@@ -14,8 +17,8 @@ class FriendBlackListData {
   constructor() {
     this.j6t = void 0;
   }
-  InitializeFriendBlackListData(t) {
-    (this.j6t = new FriendData()), this.j6t.SetPlayerBasicInfo(t);
+  async InitializeFriendBlackListData(t) {
+    (this.j6t = new FriendData()), await this.j6t.SetPlayerBasicInfo(t);
   }
   get GetBlockedPlayerData() {
     return this.j6t;
@@ -27,12 +30,12 @@ class FriendBlackListData {
 exports.FriendBlackListData = FriendBlackListData;
 class FriendApplyData {
   constructor() {
-    (this.j6t = void 0), (this.W6t = -0), (this.Fresh = !0), (this.Tta = 0);
+    (this.j6t = void 0), (this.W6t = -0), (this.Fresh = !0), (this.jra = 0);
   }
-  InitializeFriendApply(t) {
+  async InitializeFriendApply(t) {
     (this.j6t = new FriendData()),
-      this.j6t.SetPlayerBasicInfo(t.FVn),
-      (this.W6t = Number(MathUtils_1.MathUtils.LongToBigInt(t.TUs)));
+      await this.j6t.SetPlayerBasicInfo(t.YVn),
+      (this.W6t = Number(MathUtils_1.MathUtils.LongToBigInt(t.wUs)));
   }
   get ApplyCreatedTime() {
     return this.W6t;
@@ -47,10 +50,10 @@ class FriendApplyData {
     this.j6t = t;
   }
   get ApplyTimeLeftTime() {
-    return this.Tta - TimeUtil_1.TimeUtil.GetServerTime();
+    return this.jra - TimeUtil_1.TimeUtil.GetServerTime();
   }
   set ApplyTimeLeftTime(t) {
-    this.Tta = t + ModelManager_1.ModelManager.FriendModel.ApplyCdTime;
+    this.jra = t + ModelManager_1.ModelManager.FriendModel.ApplyCdTime;
   }
 }
 exports.FriendApplyData = FriendApplyData;
@@ -58,9 +61,9 @@ class RecentlyTeamData {
   constructor() {
     (this.PlayerData = new FriendData()), (this.TeamTime = -0);
   }
-  InitData(t) {
-    this.PlayerData.SetPlayerBasicInfo(t.FVn),
-      (this.TeamTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.PUs)));
+  async InitData(t) {
+    await this.PlayerData.SetPlayerBasicInfo(t.YVn),
+      (this.TeamTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.GUs)));
   }
   GetOfflineDay() {
     var t = this.TeamTime;
@@ -87,49 +90,75 @@ class FriendData {
       (this.CardShowList = []),
       (this.Birthday = 0),
       (this.IsBirthdayDisplay = !1),
-      (this.CardUnlockList = []);
+      (this.CardUnlockList = []),
+      (this.jxa = ""),
+      (this.Wxa = ""),
+      (this.Qxa = !1),
+      (this.Kxa = "");
   }
-  SetFriendDataAttribute(t) {
-    this.SetPlayerBasicInfo(t.FVn),
-      (this.Y6t = t.VVn),
+  async SetFriendDataAttribute(t) {
+    await this.SetPlayerBasicInfo(t.YVn),
+      (this.Y6t = t.JVn),
       this.Y6t ||
-        ((t = ModelManager_1.ModelManager.FriendModel.GetFriendById(t.FVn.q5n)),
+        ((t = ModelManager_1.ModelManager.FriendModel.GetFriendById(t.YVn.W5n)),
         (this.Y6t = t?.Y6t));
   }
-  SetPlayerBasicInfo(e) {
-    (this.xe = e.q5n),
-      (this.he = e.w8n),
-      (this.B8 = e.P6n),
-      (this.K6t = e.sSs),
-      (this.Q6t = e.aSs),
-      (this.X6t = e.hSs),
-      (this.$6t = Number(MathUtils_1.MathUtils.LongToBigInt(e._Ss))),
+  async SetPlayerBasicInfo(e) {
+    (this.xe = e.W5n),
+      (this.he = e.H8n),
+      (this.B8 = e.F6n),
+      (this.K6t = e.dSs),
+      (this.Q6t = e.mSs),
+      (this.X6t = e.CSs),
+      (this.$6t = Number(MathUtils_1.MathUtils.LongToBigInt(e.fSs))),
       this.Y6t ||
-        ((t = ModelManager_1.ModelManager.FriendModel.GetFriendById(e.q5n)),
+        ((t = ModelManager_1.ModelManager.FriendModel.GetFriendById(e.W5n)),
         (this.Y6t = t?.Y6t)),
-      (this.WorldLevel = e.nSs),
-      (this.TeamMemberCount = e.uSs),
-      (this.Signature = e.HVn),
-      (this.CurCard = e.CSs),
+      (this.WorldLevel = e.cSs),
+      (this.TeamMemberCount = e.vSs),
+      (this.Signature = e.zVn),
+      (this.CurCard = e.ESs),
       0 === this.CurCard &&
         (this.CurCard =
           ConfigManager_1.ConfigManager.FriendConfig.GetDefaultBackgroundCardId()),
       (this.RoleShowList = []);
     var t,
-      i = e.dSs.length;
+      i = e.MSs.length;
     for (let t = 0; t < i; t++) {
-      var s = e.dSs[t];
-      this.RoleShowList.push(new PersonalDefine_1.RoleShowEntry(s.O6n, s.P6n));
+      var s = e.MSs[t];
+      this.RoleShowList.push(new PersonalDefine_1.RoleShowEntry(s.Q6n, s.F6n));
     }
-    (this.CardShowList = e.mSs),
+    (this.CardShowList = e.SSs),
       (this.CardUnlockList = []),
-      e.mSs.forEach((t) => {
+      e.SSs.forEach((t) => {
         this.CardUnlockList.push(
           new PersonalDefine_1.PersonalCardData(t, !0, !0),
         );
       }),
-      (this.Birthday = e.jVn),
-      (this.IsBirthdayDisplay = e.gSs);
+      (this.Birthday = e.ZVn),
+      (this.IsBirthdayDisplay = e.ySs),
+      e.$xa &&
+        ((this.jxa = e.$xa),
+        (this.Wxa = e.Vxa),
+        (this.Kxa = e.hwa),
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Friend",
+            28,
+            "FriendSdkData",
+            ["SdkUserId", this.jxa],
+            ["SdkOnlineId", this.Wxa],
+            ["this.SdkAccountId", this.Kxa],
+          ),
+        StringUtils_1.StringUtils.IsEmpty(this.jxa) ||
+          (await this.RefreshSdkBlockState()));
+  }
+  async RefreshSdkBlockState() {
+    var t = await ModelManager_1.ModelManager.KuroSdkModel.GetSdkBlockUserMap();
+    t &&
+      (t = t.get(this.Kxa)) &&
+      ((this.Qxa = t), Log_1.Log.CheckDebug()) &&
+      Log_1.Log.Debug("Friend", 28, "BlockBySdk", ["state", this.Qxa]);
   }
   get PlayerId() {
     return this.xe;
@@ -176,6 +205,26 @@ class FriendData {
   }
   set FriendRemark(t) {
     this.Y6t = t;
+  }
+  GetSdkOnlineId() {
+    return this.Wxa;
+  }
+  GetSdkUserId() {
+    return this.jxa;
+  }
+  GetAccountId() {
+    return this.Kxa;
+  }
+  IfSdkCanShowFriend() {
+    var t =
+      PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.GetSdkFriendOnlyState();
+    return !t || "" !== this.jxa;
+  }
+  GetBlockBySdk() {
+    return this.Qxa;
+  }
+  CanShowInFriendList() {
+    return !this.GetBlockBySdk() && this.IfSdkCanShowFriend();
   }
 }
 exports.FriendData = FriendData;

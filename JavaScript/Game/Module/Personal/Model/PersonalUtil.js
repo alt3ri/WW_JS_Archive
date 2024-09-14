@@ -34,14 +34,14 @@ class PersonalUtil {
             102,
           ),
             await m.Promise;
-          var s = ActorSystem_1.ActorSystem.Get(
+          var s = ActorSystem_1.ActorSystem.Spawn(
               UE.LevelSequenceActor.StaticClass(),
               new UE.Transform(),
               void 0,
-              !1,
             ),
             o =
               (s.SetSequence(r),
+              UE.KuroSequenceRuntimeFunctionLibrary.SetSequenceInUiScene(r, !0),
               o.set(e, s),
               new UE.MovieSceneSequencePlaybackSettings()),
             i =

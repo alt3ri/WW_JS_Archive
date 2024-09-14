@@ -20,13 +20,17 @@ class FormationProperty {
     return this.initmax();
   }
   get MarkTag() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.marktagLength(), (t) =>
-      this.marktag(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.marktagLength(),
+      this.marktag,
+      this,
     );
   }
   get ResistTag() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.resisttagLength(), (t) =>
-      this.resisttag(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.resisttagLength(),
+      this.resisttag,
+      this,
     );
   }
   get TriggerRange1() {
@@ -41,7 +45,8 @@ class FormationProperty {
   get TriggerEffectParams1() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.triggereffectparams1Length(),
-      (t) => this.triggereffectparams1(t),
+      this.triggereffectparams1,
+      this,
     );
   }
   get TriggerRange2() {
@@ -56,7 +61,8 @@ class FormationProperty {
   get TriggerEffectParams2() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.triggereffectparams2Length(),
-      (t) => this.triggereffectparams2(t),
+      this.triggereffectparams2,
+      this,
     );
   }
   get TriggerRange3() {
@@ -71,7 +77,8 @@ class FormationProperty {
   get TriggerEffectParams3() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.triggereffectparams3Length(),
-      (t) => this.triggereffectparams3(t),
+      this.triggereffectparams3,
+      this,
     );
   }
   __init(t, r) {

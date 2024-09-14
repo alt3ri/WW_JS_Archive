@@ -8,10 +8,12 @@ class SkipToTaskView extends SkipToMoonChasingBase_1.SkipToMoonChasingBase {
   OnRun(i) {
     var e;
     this.CheckMainViewOpen()
-      ? ((((e = UiManager_1.UiManager.GetViewByName("MoonChasingMainView"))
+      ? (((e = (e = UiManager_1.UiManager.GetViewByName("MoonChasingMainView"))
           ? e.OpenParam
-          : new MoonChasingMainViewModel_1.MoonChasingMainViewModel()
-        ).SkipTarget = 3),
+          : new MoonChasingMainViewModel_1.MoonChasingMainViewModel()).SkipTarget =
+          3),
+        (e.TaskType = 1),
+        (e.IsLastTask = !0),
         UiManager_1.UiManager.IsViewOpen("RewardMainView") &&
           UiManager_1.UiManager.CloseView("RewardMainView"))
       : this.SkipToMap(parseInt(i));

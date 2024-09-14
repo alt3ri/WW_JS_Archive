@@ -22,10 +22,10 @@ const AudioController_1 = require("../../../Core/Audio/AudioController"),
   RewardItemData_1 = require("./RewardData/RewardItemData");
 class ItemRewardController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(25285, this.tfa);
+    Net_1.Net.Register(23435, this.yMa);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(25285);
+    Net_1.Net.UnRegister(23435);
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -91,7 +91,7 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
       );
     e && this.Open(e);
   }
-  static OpenExploreRewardView(e, r = !0, t, a, o, i, n, l, d, s, _, w, g) {
+  static OpenExploreRewardView(e, r = !0, t, a, o, i, n, l, d, s, _, w, g, M) {
     e =
       ModelManager_1.ModelManager.ItemRewardModel.RefreshExploreRewardDataFromConfig(
         e,
@@ -106,6 +106,7 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
         s,
         w,
         g,
+        M,
       );
     return !!e && (this.Open(e, _), !0);
   }
@@ -172,7 +173,7 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
           ? ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e.HeadId)
               .RoleHeadIconCircle
           : ""),
-        (t = e ? ItemRewardController.zYs(e.PlayerNumber) : ""),
+        (t = e ? ItemRewardController.$zs(e.PlayerNumber) : ""),
         (a = {
           PlayerId: a,
           PlayerLevel: l.Level,
@@ -184,14 +185,14 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
           OnClickCallback: (e) => {
             FriendController_1.FriendController.RequestFriendApplyAddSend(
               e,
-              Protocol_1.Aki.Protocol.S5s.Proto_RecentlyTeam,
+              Protocol_1.Aki.Protocol.D6s.Proto_RecentlyTeam,
             );
           },
         }),
         o.push(a));
     return o;
   }
-  static zYs(e) {
+  static $zs(e) {
     e = `FormationOnline${e}PIcon`;
     return ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e);
   }
@@ -213,15 +214,15 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
 (exports.ItemRewardController = ItemRewardController),
   ((_a = ItemRewardController).RewardViewReasonArray = void 0),
   (ItemRewardController.b0i = (e) => {
-    var r = e.U9n;
+    var r = e.O9n;
     if (!(r.length <= 0)) {
       var t = [];
       for (const i of r) {
-        var a = new RewardItemData_1.RewardItemData(i.f8n, i.o9n, i.L9n);
+        var a = new RewardItemData_1.RewardItemData(i.L8n, i.m9n, i.b9n);
         t.push(a);
       }
       var r = ModelManager_1.ModelManager.ItemRewardModel,
-        o = e.E9n;
+        o = e.x9n;
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Test", 8, "[ItemRewardController]当掉落协议通知时", [
           "reasonId",
@@ -247,7 +248,7 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
                     },
                   }),
                   (e =
-                    1 < e.I9n
+                    1 < e.B9n
                       ? ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivityFullTip(
                           [3],
                           !1,
@@ -281,26 +282,29 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
                       : ItemRewardController.AddItemList(t)));
     }
   }),
-  (ItemRewardController.tfa = (e) => {
+  (ItemRewardController.yMa = (e) => {
     _a.OnItemObtainNotify(e);
   }),
   (ItemRewardController.OnItemObtainNotify = (e, r) => {
-    var t = e.RMs;
+    var t = e.Trh;
     if (!(t.length <= 0)) {
-      var a = [];
+      var a,
+        o = [];
       const n = [];
       for (const l of t)
-        if (
-          1 !==
-          ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
-            l.J4n,
-          )
-        ) {
-          var o = new RewardItemData_1.RewardItemData(l.J4n, l.o9n, l.L9n);
-          a.push(o);
-        } else for (let e = 0; e < l.o9n; e++) n.push(l.J4n);
+        1 !==
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
+          l.Irh.s5n,
+        )
+          ? ((a = new RewardItemData_1.RewardItemData(
+              l.Irh.s5n,
+              l.Irh.m9n,
+              l.Irh.b9n,
+            )),
+            o.push(a))
+          : n.push(l);
       var t = ModelManager_1.ModelManager.ItemRewardModel,
-        i = e.E9n,
+        i = e.x9n,
         t =
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -323,14 +327,14 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
           ItemExchangeController_1.ItemExchangeController.NeedPop
         )
           if (t === ItemRewardDefine_1.QUEST_SPECIAL_REWARD)
-            ItemRewardController.OpenQuestRewardView(i, a, r);
+            ItemRewardController.OpenQuestRewardView(i, o, r);
           else if (0 === n.length)
-            ItemRewardController.OpenCommonRewardView(i, a, r);
-          else if (0 === a.length)
+            ItemRewardController.OpenCommonRewardView(i, o, r);
+          else if (0 === o.length)
             for (const d of n)
               GachaController_1.GachaController.CommonShowRoleResult(d, !0, !1);
           else
-            ItemRewardController.OpenCommonRewardView(i, a, () => {
+            ItemRewardController.OpenCommonRewardView(i, o, () => {
               for (const e of n)
                 GachaController_1.GachaController.CommonShowRoleResult(
                   e,
@@ -340,7 +344,7 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
               r?.();
             });
       } else
-        ItemRewardController.AddItemList(a),
+        ItemRewardController.AddItemList(o),
           void 0 !== r &&
             Log_1.Log.CheckError() &&
             Log_1.Log.Error("Test", 9, "OnItemObtainNotify err", ["notify", e]);

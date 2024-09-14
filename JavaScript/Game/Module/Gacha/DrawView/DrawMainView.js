@@ -93,7 +93,7 @@ class DrawMainView extends GachaSceneView_1.GachaSceneView {
     ModelManager_1.ModelManager.GachaModel.CurGachaResult.forEach((e, i) => {
       e =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          e.WVn.f8n,
+          e.e9n.L8n,
         )?.QualityId ?? 0;
       e > t && (t = e);
     });
@@ -149,7 +149,7 @@ class DrawMainView extends GachaSceneView_1.GachaSceneView {
     ModelManager_1.ModelManager.GachaModel.CurGachaResult.forEach((e, i) => {
       e =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          e.WVn.f8n,
+          e.e9n.L8n,
         )?.QualityId ?? 0;
       e > t && (t = e);
     });

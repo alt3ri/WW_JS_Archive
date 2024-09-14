@@ -91,24 +91,24 @@ class GachaResultItemNew extends GridProxyAbstract_1.GridProxyAbstract {
       : e.SetUIActive(!1);
   }
   Update(e) {
-    var t = e.WVn.f8n,
+    var t = e.e9n.L8n,
       i =
         ((this.ETt = t),
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t)),
       a = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(t),
-      r = ((this.PWt = a.TrialId), e.ZVn),
+      r = ((this.PWt = a.TrialId), e.h9n),
       s =
         (r && 0 < r?.length
           ? (this.GetItem(6).SetUIActive(!0),
             (s = {
               Type: 4,
-              Data: (r = r[0]).f8n,
+              Data: (r = r[0]).L8n,
               QualityId: 0,
-              ItemConfigId: r.f8n,
-              BottomText: r.YVn.toString(),
+              ItemConfigId: r.L8n,
+              BottomText: r.n9n.toString(),
             }),
             this.xWt?.Apply(s),
-            this.xWt?.SetBottomTextVisible(1 < r.YVn))
+            this.xWt?.SetBottomTextVisible(1 < r.n9n))
           : (this.xWt?.SetUiActive(!1), this.GetItem(6).SetUIActive(!e.IsNew)),
         ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(t));
     let o = 0;
@@ -136,9 +136,7 @@ class GachaResultItemNew extends GridProxyAbstract_1.GridProxyAbstract {
           )) && this.SetTextureByPath(s.WeaponTypeTexture, this.GetTexture(4)),
         (o = i.QualityId),
         this.GetItem(5).SetUIActive(e.IsNew),
-        this.GetItem(6).SetUIActive(!1),
-        (r = new UE.Vector(0.8, 0.8, 0.8)),
-        this.GetTexture(8).SetUIItemScale(r)),
+        this.GetItem(6).SetUIActive(!1)),
       this.UpdateQuality(o),
       this.SetTextureByPath(
         a.GachaResultViewTexture,

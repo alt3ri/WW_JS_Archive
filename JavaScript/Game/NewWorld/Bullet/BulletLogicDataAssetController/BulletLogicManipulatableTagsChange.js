@@ -15,9 +15,9 @@ class BulletLogicManipulatableTagsChange extends BulletLogicController_1.BulletL
       t.Entity.GetComponent(0).IsSceneItem()
     ) {
       var t = t.Entity,
-        e = t?.GetComponent(142),
+        e = t?.GetComponent(143),
         r = this.Parameter,
-        l = t?.GetComponent(180);
+        l = t?.GetComponent(181);
       if (e && this.CheckCondition(t) && l) {
         var o = r.AddTags.GameplayTags,
           a = o.Num();
@@ -36,7 +36,7 @@ class BulletLogicManipulatableTagsChange extends BulletLogicController_1.BulletL
   }
   CheckCondition(t) {
     var e = this.Parameter,
-      r = t?.GetComponent(180);
+      r = t?.GetComponent(181);
     if (!r) return !1;
     var l = e.ExistTagsCondition.GameplayTags,
       o = l.Num();

@@ -5,62 +5,34 @@ const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager");
 class MarkItemDataUtil {
-  static TransformMarkTypeToClient(r) {
-    switch (r) {
-      case Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_None:
-        return 0;
-      case Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_Custom:
-        return 9;
-      case Protocol_1.Aki.Protocol.T6s.ENUMS.eTs:
-        return 12;
-      case Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_TemporaryTeleport:
-        return 15;
-      case Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_SoundBox:
-        return 16;
-      case Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_TreasureBoxPoint:
-        return 17;
-      case Protocol_1.Aki.Protocol.T6s.ENUMS.U7n:
-        return 18;
-      case Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_CalmingWindBell:
-        return 21;
-      default:
-        return 0;
-    }
+  static TransformMarkTypeToClient(o) {
+    return this._Ga.get(o) ?? 0;
   }
-  static InverseTransformMarkTypeToClient(r) {
-    switch (r) {
-      case 9:
-        return Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_Custom;
-      case 12:
-        return Protocol_1.Aki.Protocol.T6s.ENUMS.eTs;
-      case 15:
-        return Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_TemporaryTeleport;
-      case 16:
-        return Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_SoundBox;
-      case 17:
-        return Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_TreasureBoxPoint;
-      case 18:
-        return Protocol_1.Aki.Protocol.T6s.ENUMS.U7n;
-      case 21:
-        return Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_CalmingWindBell;
-      default:
-        return 0;
-    }
-  }
-  static GetMarkIcon(r) {
-    var e = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(r);
-    if (e)
-      switch (e.ObjectType) {
+  static GetMarkIcon(o) {
+    var r = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(o);
+    if (r)
+      switch (r.ObjectType) {
         case 10:
         case 19:
-          var o = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
-            e.RelativeId,
+          var e = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
+            r.RelativeId,
           );
-          return !o || o.IsClose ? e.LockMarkPic : e.UnlockMarkPic;
+          return !e || e.IsClose ? r.LockMarkPic : r.UnlockMarkPic;
         default:
-          return e.LockMarkPic;
+          return r.LockMarkPic;
       }
   }
 }
-exports.MarkItemDataUtil = MarkItemDataUtil;
+(exports.MarkItemDataUtil = MarkItemDataUtil)._Ga = new Map([
+  [Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_None, 0],
+  [Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_Custom, 9],
+  [Protocol_1.Aki.Protocol.w5s.ENUMS.aTs, 12],
+  [Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_TemporaryTeleport, 15],
+  [Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_SoundBox, 16],
+  [Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_TreasureBoxPoint, 17],
+  [Protocol_1.Aki.Protocol.w5s.ENUMS.O7n, 18],
+  [Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_CalmingWindBell, 21],
+  [Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_EnrichmentArea, 22],
+  [Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_EnrichmentAreaChild, 23],
+]);
 //# sourceMappingURL=MarkItemDataUtil.js.map

@@ -14,7 +14,9 @@ const UE = require("ue"),
   RogueSelectResult_1 = require("../Define/RogueSelectResult"),
   RoguelikeController_1 = require("../RoguelikeController"),
   RogueSelectBaseView_1 = require("./RogueSelectBaseView"),
-  TopPanel_1 = require("./TopPanel");
+  TopPanel_1 = require("./TopPanel"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../Core/Net/Net");
 class RoleBuffSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -75,9 +77,15 @@ class RoleBuffSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       (this.m8t = () => {
         var e;
         this.ulo.RogueGainEntryList.length <= 0
-          ? RoguelikeController_1.RoguelikeController.RogueChooseDataResultRequest(
-              3,
-            )
+          ? (((e = new Protocol_1.Aki.Protocol.c_s()).RHn =
+              this.ulo?.Index ?? 0),
+            (e.AHn = ModelManager_1.ModelManager.RoguelikeModel.CurRoomCount),
+            Net_1.Net.Call(16693, e, () => {
+              UiManager_1.UiManager.CloseView(
+                this.Info.Name,
+                this.ulo?.CallBack,
+              );
+            }))
           : (e = this.GetRoleBuffSelectItem())
             ? ((ModelManager_1.ModelManager.RoguelikeModel.CurrentRogueGainEntry =
                 e.RogueGainEntry),

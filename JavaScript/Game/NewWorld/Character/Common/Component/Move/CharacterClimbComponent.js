@@ -187,7 +187,7 @@ let CharacterClimbComponent =
               this.Hte.ResetCachedVelocityTime()));
         }),
         (this.ero = (t, i, s) => {
-          i = this.Entity.GetComponent(33).GetSkillInfo(i);
+          i = this.Entity.GetComponent(34).GetSkillInfo(i);
           NORMAL_GROUP_ID !== i.GroupId ||
             (this.HBr.MoveState !==
               CharacterUnifiedStateTypes_1.ECharMoveState.NormalClimb &&
@@ -227,6 +227,7 @@ let CharacterClimbComponent =
         (this._Yr = 0),
         (this.uYr = void 0),
         (this.cYr = void 0),
+        (this.t3a = Vector_1.Vector.Create()),
         (this.DVr = (t, i) => {
           var s;
           if (t !== i)
@@ -279,22 +280,40 @@ let CharacterClimbComponent =
                 !t &&
                 (t = this.oRe.GetMeshTransform()),
                 this.Hte.IsDefaultCapsule ||
-                  (CharacterController_1.CharacterController.FindSpaceForExitClimb(
-                    this.Hte,
-                    this.Hte.DefaultHalfHeight,
-                    this.Hte.DefaultRadius,
-                    CLIMBING_CAPSULE_SIZE,
-                    this.Lz,
-                  ) &&
-                    (this.Hte.SetActorLocation(
-                      this.Lz.ToUeVector(),
-                      "ExitClimb Capsule",
-                      !1,
-                    ),
-                    (i = !0),
-                    this.oRe) &&
-                    !t &&
-                    (t = this.oRe.GetMeshTransform())),
+                  (2 ===
+                  (s =
+                    CharacterController_1.CharacterController.FindSpaceForExitClimb(
+                      this.Hte,
+                      this.Hte.DefaultHalfHeight,
+                      this.Hte.DefaultRadius,
+                      CLIMBING_CAPSULE_SIZE,
+                      this.Lz,
+                    ))
+                    ? (this.Hte.SetActorLocation(
+                        this.Lz.ToUeVector(),
+                        "ExitClimb Capsule Safety",
+                        !1,
+                      ),
+                      (i = !0),
+                      this.oRe && !t && (t = this.oRe.GetMeshTransform()))
+                    : 1 === s &&
+                      (Log_1.Log.CheckInfo() &&
+                        Log_1.Log.Info(
+                          "Movement",
+                          6,
+                          "ExitClimb Capsule NotSafety",
+                          ["CurrentLocation", this.Hte?.ActorLocationProxy],
+                          ["Last", this.t3a],
+                        ),
+                      this.Hte.SetActorLocation(
+                        this.t3a.ToUeVector(),
+                        "ExitClimb Capsule NotSafety",
+                        !1,
+                      ),
+                      (i = !0),
+                      this.oRe) &&
+                      !t &&
+                      (t = this.oRe.GetMeshTransform())),
                 i && t && this.oRe.SetModelBuffer(t, FAST_CACHE_TIME),
                 this.Hte.ResetCapsuleRadiusAndHeight(),
                 this.mYr();
@@ -350,29 +369,29 @@ let CharacterClimbComponent =
             this.TYr();
         }),
         (this.DYr = Vector_1.Vector.Create()),
-        (this.RYr = void 0),
-        (this.UYr = void 0),
-        (this.AYr = void 0),
-        (this.PYr = void 0),
-        (this.xYr = void 0),
-        (this.wYr = void 0),
-        (this.BYr = void 0),
-        (this.bYr = void 0),
-        (this.qYr = void 0),
+        (this.RYr = Stats_1.Stat.Create("OnTick1")),
+        (this.UYr = Stats_1.Stat.Create("OnTick2")),
+        (this.AYr = Stats_1.Stat.Create("OnTick3")),
+        (this.PYr = Stats_1.Stat.Create("DetectClimb1")),
+        (this.xYr = Stats_1.Stat.Create("DetectClimb2")),
+        (this.wYr = Stats_1.Stat.Create("DetectClimb3")),
+        (this.BYr = Stats_1.Stat.Create("DetectUpArriveBothVaultAndOnTop1")),
+        (this.bYr = Stats_1.Stat.Create("DetectUpArriveBothVaultAndOnTop2")),
+        (this.qYr = Stats_1.Stat.Create("DetectClimbWalking1")),
         (this.GYr = Rotator_1.Rotator.Create(0, 180, 0)),
-        (this.NYr = void 0),
-        (this.OYr = void 0),
+        (this.NYr = Stats_1.Stat.Create("DetectEnterClimb1")),
+        (this.OYr = Stats_1.Stat.Create("DetectEnterClimb2")),
         (this.kYr = void 0),
         (this.FYr = new Set([2, 7, 9, 8])),
         (this.AwakeClimbInput = (t) => {
           this.k$r = t;
         }),
-        (this.VYr = void 0),
-        (this.HYr = void 0),
-        (this.jYr = void 0);
+        (this.VYr = Stats_1.Stat.Create("ClimbingExitPositionFix1")),
+        (this.HYr = Stats_1.Stat.Create("ClimbingExitPositionFix2")),
+        (this.jYr = Stats_1.Stat.Create("ClimbingExitPositionFix3"));
     }
     static get Dependencies() {
-      return [3, 163];
+      return [3, 164];
     }
     get ClimbBlocking() {
       return this.lYr;
@@ -412,14 +431,14 @@ let CharacterClimbComponent =
       );
     }
     OnInit() {
-      return (this.Xte = this.Entity.GetComponent(188)), !0;
+      return (this.Xte = this.Entity.GetComponent(190)), !0;
     }
     OnStart() {
       if (
         ((this.Hte = this.Entity.CheckGetComponent(3)),
-        (this.Gce = this.Entity.CheckGetComponent(163)),
-        (this.oRe = this.Entity.GetComponent(162)),
-        (this.HBr = this.Entity.CheckGetComponent(160)),
+        (this.Gce = this.Entity.CheckGetComponent(164)),
+        (this.oRe = this.Entity.GetComponent(163)),
+        (this.HBr = this.Entity.CheckGetComponent(161)),
         (this.k$r = !0),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
@@ -637,7 +656,8 @@ let CharacterClimbComponent =
             ["Actor", i.Actors.Get(0)?.GetName()],
             ["Comp", i.Components.Get(0)?.GetName()],
           ),
-        this.DYr.DeepCopy(this.Hte.ActorLocationProxy));
+        this.DYr.DeepCopy(this.Hte.ActorLocationProxy)),
+        this.RYr.Start();
       var i = this.Hte.InputDirectProxy;
       0 !== this.H$r
         ? (i.ContainsNaN()
@@ -652,7 +672,9 @@ let CharacterClimbComponent =
             (this.N$r.IsNearlyZero()
               ? this.N$r.DeepCopy(this.G$r)
               : this.N$r.Equals(this.G$r) || (this._Yr = 0)))
-        : (this.G$r.Reset(), this.N$r.Reset());
+        : (this.G$r.Reset(), this.N$r.Reset()),
+        this.RYr.Stop(),
+        this.UYr.Start();
       let s =
         this.HBr.PositionState ===
         CharacterUnifiedStateTypes_1.ECharPositionState.Climb;
@@ -668,6 +690,8 @@ let CharacterClimbComponent =
             MathUtils_1.MathUtils.DotProduct(i, this.Hte.ActorForwardProxy) >
               THREADHOLD_ENTER_CLIMB_FORWARD_NEED) &&
           (this.SetClimbState(0), this.KYr(t)),
+        this.UYr.Stop(),
+        this.AYr.Start(),
         s &&
           FormationAttributeController_1.FormationAttributeController.GetValue(
             1,
@@ -675,7 +699,12 @@ let CharacterClimbComponent =
           3 !== this.H$r &&
           !this.Xte.HasTag(-976785652) &&
           this.TYr(),
-        (this.O$r = s);
+        s
+          ? 3 !== this.H$r &&
+            this.t3a.FromUeVector(this.Q$r.GetSafetyLocation())
+          : this.t3a.DeepCopy(this.Hte.ActorLocationProxy),
+        (this.O$r = s),
+        this.AYr.Stop();
     }
     GetExitClimbType() {
       return this.W$r;
@@ -686,12 +715,17 @@ let CharacterClimbComponent =
         ((i = this.QYr()) &&
           this.HBr.MoveState !==
             CharacterUnifiedStateTypes_1.ECharMoveState.Glide &&
-          (this.XYr(), 0 !== this.H$r)) ||
+          (this.wYr.Start(), this.XYr(), this.wYr.Stop(), 0 !== this.H$r)) ||
         (i || this.Xte.HasTag(400631093)
-          ? (this.$Yr(!0),
-            (i = this.Hte?.Entity?.GetComponent(33)),
-            0 !== this.H$r && i.StopGroup1Skill("攀爬打断技能"))
-          : this.$Yr(!1));
+          ? (this.PYr.Start(),
+            this.$Yr(!0),
+            this.PYr.Stop(),
+            (i = this.Hte?.Entity?.GetComponent(34)),
+            0 !== this.H$r &&
+              (this.xYr.Start(),
+              i.StopGroup1Skill("攀爬打断技能"),
+              this.xYr.Stop()))
+          : (this.PYr.Start(), this.$Yr(!1), this.PYr.Stop()));
     }
     $Yr(t) {
       switch (this.HBr.PositionState) {
@@ -706,28 +740,30 @@ let CharacterClimbComponent =
           break;
         case CharacterUnifiedStateTypes_1.ECharPositionState.Water:
           this.JYr() &&
-            this.Entity.GetComponent(68).CheckCanEnterClimbFromSwim() &&
+            this.Entity.GetComponent(69).CheckCanEnterClimbFromSwim() &&
             (this.zYr(), 0 === this.H$r) &&
             this.ZYr(1);
       }
     }
     zYr() {
-      switch (
-        this.Q$r.TryUpArrives(
-          this.Hte.ActorForward,
-          this.eJr(this.vYr),
-          this.uYr,
-        )
-      ) {
+      this.BYr.Start();
+      var t = this.Q$r.TryUpArrives(
+        this.Hte.ActorForward,
+        this.eJr(this.vYr),
+        this.uYr,
+      );
+      switch ((this.BYr.Stop(), this.bYr.Start(), t)) {
         case 1:
           this.tJr(2, (0, puerts_1.$unref)(this.uYr));
           break;
         case 2:
           this.tJr(7, (0, puerts_1.$unref)(this.uYr));
       }
+      this.bYr.Stop();
     }
     YYr(t) {
-      (this.Xte.HasTag(498191540) && (this.iJr(), 0 !== this.H$r)) ||
+      (this.Xte.HasTag(498191540) &&
+        (this.qYr.Start(), this.iJr(), this.qYr.Stop(), 0 !== this.H$r)) ||
         (this.JYr() && (this.zYr(), 0 === this.H$r) && this.ZYr(t ? 4 : 2));
     }
     mYr() {
@@ -819,10 +855,10 @@ let CharacterClimbComponent =
       this.HBr.PositionState ===
       CharacterUnifiedStateTypes_1.ECharPositionState.Ground
         ? this.Gce.PlayerMotionRequest(
-            Protocol_1.Aki.Protocol.Q6s.Proto_StepAcross,
+            Protocol_1.Aki.Protocol.t8s.Proto_StepAcross,
           )
         : this.Gce.PlayerMotionRequest(
-            Protocol_1.Aki.Protocol.Q6s.Proto_ClimbTop,
+            Protocol_1.Aki.Protocol.t8s.Proto_ClimbTop,
           ),
         s &&
           this.Gce.CharacterMovement.SetMovementMode(
@@ -921,14 +957,15 @@ let CharacterClimbComponent =
     iJr() {}
     ZYr(t) {
       if (
-        !(
-          this.SYr > Time_1.Time.Now ||
+        (this.NYr.Start(),
+        this.SYr > Time_1.Time.Now ||
           FormationAttributeController_1.FormationAttributeController.GetValue(
             1,
-          ) <= STRENGTH_THREADHOLD ||
-          this.Xte.HasTag(-866600078)
-        )
-      ) {
+          ) <= STRENGTH_THREADHOLD)
+      )
+        this.NYr.Stop();
+      else if (this.Xte.HasTag(-866600078)) this.NYr.Stop();
+      else {
         if (
           this.HBr.PositionState ===
             CharacterUnifiedStateTypes_1.ECharPositionState.Air &&
@@ -941,11 +978,14 @@ let CharacterClimbComponent =
             GravityUtils_1.GravityUtils.GetZnInGravity(this.Hte, i) <
             THREAHOLD_ENTER_CLIMB_MIN_Z_SPEED
           )
-            return;
+            return void this.NYr.Stop();
           this.Hte.InputDirectProxy.Multiply(FIVE_HUNDRED, this.Lz),
             this.Lz.AdditionEqual(i);
         }
-        this.sJr(t, this.Lz);
+        this.NYr.Stop(),
+          this.OYr.Start(),
+          this.sJr(t, this.Lz),
+          this.OYr.Stop();
       }
     }
     sJr(t, i) {
@@ -1019,25 +1059,49 @@ let CharacterClimbComponent =
     }
     DealClimbUpStart() {}
     DealClimbUpFinish() {
-      CharacterController_1.CharacterController.FindSpaceForExitClimb(
+      var t = CharacterController_1.CharacterController.FindSpaceForExitClimb(
         this.Hte,
         this.Hte.DefaultHalfHeight,
         this.Hte.DefaultRadius,
         CLIMBING_CAPSULE_SIZE,
         this.Lz,
-      ) &&
-        (this.Z_e.Set(
-          this.Lz,
-          this.Hte.ActorQuatProxy,
-          this.Hte.ActorScaleProxy,
-        ),
-        this.SetCharacterTransformAndBuffer(
-          this.Z_e.ToUeTransform(),
-          FAST_CACHE_TIME,
-        )),
+      );
+      2 === t
+        ? (this.Z_e.Set(
+            this.Lz,
+            this.Hte.ActorQuatProxy,
+            this.Hte.ActorScaleProxy,
+          ),
+          this.SetCharacterTransformAndBuffer(
+            this.Z_e.ToUeTransform(),
+            FAST_CACHE_TIME,
+            void 0,
+            !1,
+          ))
+        : 1 === t &&
+          (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "Movement",
+              6,
+              "DealClimbUpFinish NotSafety",
+              ["CurrentLocation", this.Hte?.ActorLocationProxy],
+              ["Last", this.t3a],
+            ),
+          this.Z_e.Set(
+            this.t3a,
+            this.Hte.ActorQuatProxy,
+            this.Hte.ActorScaleProxy,
+          ),
+          this.SetCharacterTransformAndBuffer(
+            this.Z_e.ToUeTransform(),
+            FAST_CACHE_TIME,
+            void 0,
+            !1,
+          )),
         this.Hte.ResetCapsuleRadiusAndHeight();
     }
     q$r(i) {
+      CharacterClimbComponent_1.wz.Start();
       var t = this.NeedProcessTransform();
       if (
         (ModelManager_1.ModelManager.SundryModel.SceneCheckOn &&
@@ -1088,15 +1152,20 @@ let CharacterClimbComponent =
               this.Hte.Actor.K2_GetActorLocation(),
             ]),
           this.Hte.ResetLocationCachedTime(),
+          CharacterClimbComponent_1.wz.Stop(),
           t)
-        )
+        ) {
+          CharacterClimbComponent_1.Bz.Start();
+          i = this.Q$r.TryClimbingArrives(
+            this.Hte.InputDirect,
+            this.eJr(this.MYr),
+            this.uYr,
+            this.QYr(),
+          );
           switch (
-            this.Q$r.TryClimbingArrives(
-              this.Hte.InputDirect,
-              this.eJr(this.MYr),
-              this.uYr,
-              this.QYr(),
-            )
+            (CharacterClimbComponent_1.Bz.Stop(),
+            CharacterClimbComponent_1.bz.Start(),
+            i)
           ) {
             case 1:
               this.tJr(2, (0, puerts_1.$unref)(this.uYr), !1);
@@ -1110,6 +1179,8 @@ let CharacterClimbComponent =
             case 4:
               this.tJr(10, (0, puerts_1.$unref)(this.uYr), !1);
           }
+          CharacterClimbComponent_1.bz.Stop();
+        }
       } else
         ModelManager_1.ModelManager.SundryModel.SceneCheckOn &&
           Log_1.Log.CheckWarn() &&
@@ -1117,7 +1188,8 @@ let CharacterClimbComponent =
             "Location",
             this.Hte.Actor.K2_GetActorLocation(),
           ]),
-          this.TYr();
+          this.TYr(),
+          CharacterClimbComponent_1.wz.Stop();
     }
     GetClimbInfo() {
       return (
@@ -1175,7 +1247,7 @@ let CharacterClimbComponent =
               ),
             this.Gce.CharacterMovement.SetMovementMode(3));
     }
-    SetCharacterTransformAndBuffer(t, i, s = void 0) {
+    SetCharacterTransformAndBuffer(t, i, s = void 0, h = !0) {
       (this.CYr = void 0),
         s &&
           (0 < i
@@ -1186,11 +1258,11 @@ let CharacterClimbComponent =
               (this.CYr = i * TimeUtil_1.TimeUtil.Millisecond))
             : t.SetLocation(s.ToUeVector())),
         this.oRe?.Valid
-          ? this.oRe.SetTransformWithModelBuffer(t, i)
+          ? this.oRe.SetTransformWithModelBuffer(t, i, void 0, h)
           : this.Hte.SetActorTransform(
               t,
               "攀爬.SetCharacterTransformAndBuffer",
-              !0,
+              h,
             );
     }
     KickWallExit() {
@@ -1310,7 +1382,7 @@ let CharacterClimbComponent =
         CharacterUnifiedStateTypes_1.ECharPositionState.Climb &&
         (this.G$r.X < THREAHOLD_JUMP_LEAVE
           ? this.KickWallExit()
-          : (t = this.Entity.GetComponent(162)).Valid && t.ClimbDash());
+          : (t = this.Entity.GetComponent(163)).Valid && t.ClimbDash());
     }
     GetClimbRadius() {
       return this.X$r ? this.X$r.ClimbRadius : 0;
@@ -1338,7 +1410,8 @@ let CharacterClimbComponent =
       );
     }
     oJr() {
-      this.Tz.FromUeVector(this.Q$r.GetSafetyLocation()),
+      this.VYr.Start(),
+        this.Tz.FromUeVector(this.Q$r.GetSafetyLocation()),
         this.Hte.ActorLocationProxy.Subtraction(this.Tz, this.Lz);
       var t = this.Hte.DefaultHalfHeight - this.Hte.DefaultRadius,
         t = MAX_ROLE_CYLINDER_HALF_HEIGHT - t;
@@ -1346,6 +1419,7 @@ let CharacterClimbComponent =
         this.Hte,
         this.Lz,
       );
+      this.VYr.Stop(), this.HYr.Start();
       var s = this.Lz.SizeSquared(),
         h = MAX_ROLE_RADIUS - this.Hte.DefaultRadius;
       h <= 0
@@ -1360,19 +1434,24 @@ let CharacterClimbComponent =
           this.az,
         ),
         this.Z_e.Set(this.Lz, this.az, this.Hte.ActorScaleProxy),
+        this.HYr.Stop(),
+        this.jYr.Start(),
         this.SetCharacterTransformAndBuffer(
           this.Z_e.ToUeTransform(),
           NORMAL_CACHE_TIME,
+          void 0,
+          !1,
         ),
+        this.jYr.Stop(),
         this.Hte.ResetCapsuleRadiusAndHeight();
     }
     QYr() {
       return this.Xte.HasTag(388142570) && !this.Xte.HasTag(1098729489);
     }
   });
-(CharacterClimbComponent.wz = void 0),
-  (CharacterClimbComponent.Bz = void 0),
-  (CharacterClimbComponent.bz = void 0),
+(CharacterClimbComponent.wz = Stats_1.Stat.Create("ClimbStat1")),
+  (CharacterClimbComponent.Bz = Stats_1.Stat.Create("ClimbStat2")),
+  (CharacterClimbComponent.bz = Stats_1.Stat.Create("ClimbStat3")),
   (CharacterClimbComponent = CharacterClimbComponent_1 =
     __decorate(
       [(0, RegisterComponent_1.RegisterComponent)(31)],

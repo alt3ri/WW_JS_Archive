@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configFlowTemplateDataById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configFlowTemplateDataById.GetConfig"),
   CONFIG_STAT_PREFIX = "configFlowTemplateDataById.GetConfig(";
 exports.configFlowTemplateDataById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, e = !0) => {
-    if (
-      (t = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
-        var a = KEY_PREFIX + `#${o})`;
-        const n = ConfigCommon_1.ConfigCommon.GetConfig(a);
-        if (n) return n;
+  GetConfig: (o, t = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      a =
+        (e.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (a) {
+      if (t) {
+        var n = KEY_PREFIX + `#${o})`;
+        const i = ConfigCommon_1.ConfigCommon.GetConfig(n);
+        if (i)
+          return (
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            i
+          );
       }
       if (
-        (t =
+        (a =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,32 +58,37 @@ exports.configFlowTemplateDataById = {
               o,
             ]))
       ) {
-        var t,
-          a = void 0;
+        n = void 0;
         if (
-          (([t, a] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([a, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
           )),
-          t)
+          a)
         ) {
-          const n =
+          const i =
             FlowTemplateData_1.FlowTemplateData.getRootAsFlowTemplateData(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
             );
           return (
-            e &&
-              ((t = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(t, n)),
+            t &&
+              ((a = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(a, i)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            n
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            i
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    e.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=FlowTemplateDataById.js.map

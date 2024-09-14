@@ -33,13 +33,13 @@ class ItemUseLogic {
         "NoneRole",
       );
     else {
-      n = n?.EntityHandle?.Entity?.GetComponent(158);
+      n = n?.EntityHandle?.Entity?.GetComponent(159);
       if (!n) return !1;
       var t = Math.ceil(
         n.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.Proto_Life),
       );
       Math.ceil(
-        n.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.e5n),
+        n.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.l5n),
       ) <= t
         ? ((n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew("HpFull")),
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(n))
@@ -141,9 +141,9 @@ class ItemUseLogic {
     }
     return !1;
   }),
-  (ItemUseLogic.TryUsePowerItem = (e, r = 0) =>
+  (ItemUseLogic.TryUsePowerItem = (e, r = 1) =>
     10800 === e &&
-    (PowerController_1.PowerController.RequestPowerViewData(), !0)),
+    (PowerController_1.PowerController.TryExchangePowerItem(e, r), !0)),
   (ItemUseLogic.TryUseMonthCardItem = (e, r = 0) => {
     var o,
       n,

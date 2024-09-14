@@ -14,10 +14,10 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class FlowServerNotifyCenter extends ControllerAssistantBase_1.ControllerAssistantBase {
   OnDestroy() {}
   HandleFlowStartNotify(e) {
-    var o = MathUtils_1.MathUtils.LongToNumber(e.tHn),
+    var o = MathUtils_1.MathUtils.LongToNumber(e._Hn),
       r =
         LevelGeneralContextUtil_1.LevelGeneralContextUtil.CreateByServerContext(
-          e.nvs,
+          e.cvs,
         );
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
@@ -26,34 +26,34 @@ class FlowServerNotifyCenter extends ControllerAssistantBase_1.ControllerAssista
         "服务器下发剧情",
         ["Type", r?.Type],
         ["FlowIncID", o],
-        ["isAsync", e.dUs],
-        ["isSkip", e.rHn],
+        ["isAsync", e.MUs],
+        ["isSkip", e.cHn],
       ),
-      e.nvs?._vs === Protocol_1.Aki.Protocol.vOs.Proto_GmPlayFlow &&
+      e.cvs?.fvs === Protocol_1.Aki.Protocol.TOs.Proto_GmPlayFlow &&
         (ModelManager_1.ModelManager.PlotModel.PlotConfig.IsGmPlayPlotOnce =
           !0);
     let l = void 0;
-    e.z$s &&
-      (e.Z$s
-        ? (l = Vector_1.Vector.Create(e.Z$s.X, e.Z$s.Y, e.Z$s.Z))
+    e.BYs &&
+      (e.qYs
+        ? (l = Vector_1.Vector.Create(e.qYs.X, e.qYs.Y, e.qYs.Z))
         : FlowController_1.FlowController.LogError("未配置剧情坐标点", [
             "incId",
             o,
           ])),
       ControllerHolder_1.ControllerHolder.FlowController.StartFlow(
-        e._5n,
-        e.u5n,
-        e.c5n,
+        e.v5n,
+        e.M5n,
+        e.S5n,
         r,
         o,
         !0,
-        e.dUs,
-        e.rHn,
+        e.MUs,
+        e.cHn,
         l,
       );
   }
   HandleFlowEndNotify(e) {
-    e = MathUtils_1.MathUtils.LongToNumber(e.tHn);
+    e = MathUtils_1.MathUtils.LongToNumber(e._Hn);
     ControllerHolder_1.ControllerHolder.FlowController.FinishFlow(
       "服务器剧情通知打断剧情",
       e,
@@ -67,10 +67,10 @@ class FlowServerNotifyCenter extends ControllerAssistantBase_1.ControllerAssista
           "Plot",
           46,
           "服务器跳过剧情，检查是否有黑幕",
-          ["FlowListName", e._5n],
-          ["FlowId", e.u5n],
-          ["StateId", e.c5n],
-          ["FadeOutScreen", e.CUs],
+          ["FlowListName", e.v5n],
+          ["FlowId", e.M5n],
+          ["StateId", e.S5n],
+          ["FadeOutScreen", e.EUs],
         ),
       LevelLoadingController_1.LevelLoadingController.CloseLoading(0));
   }

@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configDaySelectPresetById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configDaySelectPresetById.GetConfig"),
   CONFIG_STAT_PREFIX = "configDaySelectPresetById.GetConfig(";
 exports.configDaySelectPresetById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (e, o = !0) => {
-    if (
-      (t = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${e})`),
+      n =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (n) {
       if (o) {
-        var n = KEY_PREFIX + `#${e})`;
-        const i = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (i) return i;
+        var i = KEY_PREFIX + `#${e})`;
+        const a = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (a)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
-        (t =
+        (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,31 +58,36 @@ exports.configDaySelectPresetById = {
               e,
             ]))
       ) {
-        var t,
-          n = void 0;
+        i = void 0;
         if (
-          (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", e],
           )),
-          t)
+          n)
         ) {
-          const i = DaySelectPreset_1.DaySelectPreset.getRootAsDaySelectPreset(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+          const a = DaySelectPreset_1.DaySelectPreset.getRootAsDaySelectPreset(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
           );
           return (
             o &&
-              ((t = KEY_PREFIX + `#${e})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(t, i)),
+              ((n = KEY_PREFIX + `#${e})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(n, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=DaySelectPresetById.js.map

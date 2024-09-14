@@ -13,12 +13,15 @@ const UE = require("ue"),
   ActivityRogueController_1 = require("../../../Activity/ActivityContent/RougeActivity/ActivityRogueController"),
   ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
   MapController_1 = require("../../../Map/Controller/MapController"),
+  MarkUiUtils_1 = require("../../../Map/Mark/Misc/MarkUiUtils"),
   RoguelikeController_1 = require("../../../Roguelike/RoguelikeController"),
+  TeleportController_1 = require("../../../Teleport/TeleportController"),
   GenericLayoutAdd_1 = require("../../../Util/GenericLayoutAdd"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
   WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
   WorldMapController_1 = require("../../WorldMapController"),
   WorldMapDefine_1 = require("../../WorldMapDefine"),
+  MapTipsActivateTipPanel_1 = require("../Common/MapTipsActivateTipPanel"),
   RewardItemBar_1 = require("../RewardItemBar"),
   TipsListView_1 = require("../TipsListView"),
   ROGUE_SCORE_KEY = "rougeScore",
@@ -32,11 +35,14 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       (this.u2o = void 0),
       (this.U2o = void 0),
       (this.ZAt = void 0),
+      (this.k4a = void 0),
+      (this.N4a = void 0),
       (this.IRe = void 0),
       (this.RewardsView = void 0),
+      (this.oza = void 0),
       (this.OnInstanceRefresh = (e, t, i, r) => {
-        var n = new TipsListView_1.InstanceDungeonCostTip();
-        return n.SetRootActor(t.GetOwner(), !0), { Key: e, Value: n };
+        var o = new TipsListView_1.InstanceDungeonCostTip();
+        return o.SetRootActor(t.GetOwner(), !0), { Key: e, Value: o };
       }),
       (this.m2o = () => {
         this.u2o.IsLocked
@@ -50,6 +56,34 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Map", 50, "追踪", ["markId", this.u2o.MarkId]),
             WorldMapController_1.WorldMapController.TryTeleport(this.u2o)),
+          this.Close();
+      }),
+      (this.F4a = () => {
+        var e = MarkUiUtils_1.MarkUiUtils.FindNearbyValidGotoMark(
+          this.Map,
+          this.u2o,
+        );
+        e &&
+          MarkUiUtils_1.MarkUiUtils.QuickGotoTeleport(this.u2o, e, () => {
+            this.Close();
+          });
+      }),
+      (this.P8e = () => {
+        var e = this.u2o;
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Map",
+            64,
+            "[地图系统]GeneralPanel->追踪标记",
+            ["markId", e.MarkId],
+            ["IsTracked", e.IsTracked],
+          ),
+          MapController_1.MapController.RequestTrackMapMark(
+            e.MarkType,
+            e.MarkId,
+            !e.IsTracked,
+          ),
+          this.l_i(),
           this.Close();
       });
   }
@@ -75,23 +109,35 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       await this.RewardsView.CreateThenShowByActorAsync(
         this.GetItem(8).GetOwner(),
       ),
+      (this.oza = new MapTipsActivateTipPanel_1.MapTipsActivateTipPanel()),
+      await this.oza.CreateByActorAsync(this.GetItem(31).GetOwner()),
       super.OnBeforeStartAsync()
     );
   }
   OnStart() {
     this.RootItem.SetRaycastTarget(!1),
       (this.ZAt = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
+      this.ZAt.SetActive(!0),
       this.ZAt.SetFunction(this.m2o),
-      this.GetItem(14)?.SetUIActive(!0),
+      (this.k4a = new ButtonItem_1.ButtonItem(this.GetButton(28).RootUIComp)),
+      this.k4a.SetFunction(this.P8e),
+      (this.N4a = new ButtonItem_1.ButtonItem(this.GetButton(29).RootUIComp)),
+      this.N4a.SetFunction(this.F4a),
       this.GetVerticalLayout(5)?.RootUIComp.SetUIActive(!0),
       (this.U2o = new GenericLayoutAdd_1.GenericLayoutAdd(
         this.GetVerticalLayout(5),
         this.OnInstanceRefresh,
-      ));
+      )),
+      this.GetItem(25).SetUIActive(!1),
+      this.GetItem(32).SetUIActive(!1),
+      this.oza.SetUiActive(!1);
   }
   OnBeforeDestroy() {
     this.U2o.ClearChildren(),
       this.ZAt.Destroy(),
+      this.k4a.Destroy(),
+      this.N4a.Destroy(),
+      this.oza.Destroy(),
       this.IRe && TimerSystem_1.TimerSystem.Remove(this.IRe);
   }
   OnShowWorldMapSecondaryUi(e) {
@@ -134,16 +180,32 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         );
   }
   SHe() {
-    var e = this.P2o;
-    e &&
-      (this.GetText(4).ShowTextNew(e.Description),
+    var e,
+      t,
+      i = this.P2o;
+    i &&
+      (this.GetText(4).ShowTextNew(i.Description),
       this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
-      this.GetText(1).ShowTextNew(e.Name),
-      (e = this.u2o.GetAreaText()) && this.GetText(3).SetText(e),
+      this.GetText(1).ShowTextNew(i.Name),
+      (i = this.u2o.GetAreaText()) && this.GetText(3).SetText(i),
       this.GetItem(9).SetUIActive(!this.u2o.IsFogUnlock),
       this.GetText(10).ShowTextNew("Instance_Dungeon_Rcommand_Text"),
       this.GetItem(12).SetUIActive(!1),
-      this.GetItem(8).SetUIActive(!1));
+      this.GetItem(8).SetUIActive(!1),
+      (i = MarkUiUtils_1.MarkUiUtils.IsShowGoto(this.u2o)),
+      this.ZAt.SetActive(!i),
+      this.GetItem(14).SetUIActive(!1),
+      this.GetItem(32).SetUIActive(i),
+      this.oza.SetUiActive(!1),
+      i) &&
+      ((i = this.GetButton(29)),
+      (e = TeleportController_1.TeleportController.CheckCanTeleport()),
+      (t = MarkUiUtils_1.MarkUiUtils.FindNearbyValidGotoMark(
+        this.Map,
+        this.u2o,
+      )),
+      this.oza.SetUiActive(!e || void 0 === t),
+      i.SetSelfInteractive(e && void 0 !== t));
   }
   jqe() {
     var e =
@@ -165,9 +227,9 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       6 === e &&
         (ModelManager_1.ModelManager.RoguelikeModel?.CheckRogueIsOpen()
           ? (this.h4i(),
-            this._zs(),
-            this.uzs(),
-            this.czs(),
+            this.sea(),
+            this.aea(),
+            this.hea(),
             this.IRe && TimerSystem_1.TimerSystem.Remove(this.IRe),
             (this.IRe = TimerSystem_1.TimerSystem.Forever(() => {
               this.h4i();
@@ -207,7 +269,7 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       e.SetLeftText(t), e.SetHelpButtonVisible(!1);
     }
   }
-  _zs() {
+  sea() {
     var t = ModelManager_1.ModelManager.RoguelikeModel?.CurrSeasonData;
     if (t) {
       this.U2o.AddItemToLayout([ROGUE_DIFFICULTY_PROGRESS]);
@@ -216,7 +278,7 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
           (i.SetIconVisible(!1),
           i.SetStarVisible(!1),
           ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRogueSeasonConfigById(
-            t.MHn,
+            t.UHn,
           )),
         t =
           ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig?.GetConfig(
@@ -247,7 +309,7 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       i.SetLeftText(t), i.SetHelpButtonVisible(!1);
     }
   }
-  uzs() {
+  aea() {
     var e = ModelManager_1.ModelManager.RoguelikeModel?.CurrSeasonData;
     if (e) {
       this.U2o.AddItemToLayout([ROGUE_ACHIEVEMENT_PROGRESS]);
@@ -256,7 +318,7 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
           (r.SetIconVisible(!1),
           r.SetStarVisible(!1),
           ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-            e.MHn,
+            e.UHn,
           )),
         e =
           ModelManager_1.ModelManager.AchievementModel.GetAchievementCategoryGroups(
@@ -289,7 +351,7 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       r.SetLeftText(e), r.SetHelpButtonVisible(!1);
     }
   }
-  czs() {
+  hea() {
     var e,
       t,
       i = ModelManager_1.ModelManager.RoguelikeModel?.CurrSeasonData;
@@ -304,7 +366,7 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
           "Text_Rogue_Score",
         ) ?? "{0}/{1}",
-        i.gqs.toString(),
+        i.yqs.toString(),
         t.toString(),
       )),
       e.SetRightText(i),
@@ -324,7 +386,8 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         ? "InstanceDungeonEntranceCancelTrack"
         : "InstanceDungeonEntranceTrack"
       : "TeleportFastMove"),
-      this.ZAt.SetLocalText(e);
+      this.ZAt.SetLocalText(e),
+      this.k4a.SetLocalText(e);
   }
   OnCloseWorldMapSecondaryUi() {
     this?.U2o?.ClearChildren();
@@ -345,10 +408,10 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       );
     var t = e.EndOpenTime,
       r = e.EndShowTime;
-    let n = 0;
-    n = 0 !== e.EndOpenTime && i ? t : r;
+    let o = 0;
+    o = 0 !== e.EndOpenTime && i ? t : r;
     (e = TimeUtil_1.TimeUtil.GetServerTime()),
-      (i = Math.max(n - e, 1)),
+      (i = Math.max(o - e, 1)),
       (t = this.FOe(i));
     return (
       TimeUtil_1.TimeUtil.GetCountDownDataFormat2(i, t[0], t[1])

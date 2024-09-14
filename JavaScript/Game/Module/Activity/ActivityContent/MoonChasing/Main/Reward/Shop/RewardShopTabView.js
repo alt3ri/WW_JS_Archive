@@ -7,23 +7,17 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../../../../../Manager/ModelManager"),
   UiTabViewBase_1 = require("../../../../../../../Ui/Base/UiTabViewBase"),
   UiTabSequence_1 = require("../../../../../../DynamicTab/UiTabViewBehavior/UiTabSequence"),
-  PayShopItem_1 = require("../../../../../../PayShop/PayShopTab/TabItem/PayShopItem"),
-  LoopScrollView_1 = require("../../../../../../Util/ScrollView/LoopScrollView");
+  LoopScrollView_1 = require("../../../../../../Util/ScrollView/LoopScrollView"),
+  RewardShopGridItem_1 = require("./RewardShopGridItem");
 class RewardShopTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
       (this.LoopScrollView = void 0),
-      (this.t3i = (e, t, i) => {
+      (this.t3i = (e, i, t) => {
         this.LoopScrollView.RefreshAllGridProxies();
       }),
       (this.sGe = () => {
-        var e = new PayShopItem_1.PayShopItem();
-        return e.SetExtraFunction(this.q0a), e;
-      }),
-      (this.q0a = (e, t) => {
-        ModelManager_1.ModelManager.MoonChasingRewardModel.ReadShopItemUnlockFlag(
-          t,
-        ) && e.SetNewFlagState(!1);
+        return new RewardShopGridItem_1.RewardShopGridItem();
       });
   }
   OnRegisterComponent() {
@@ -40,19 +34,12 @@ class RewardShopTabView extends UiTabViewBase_1.UiTabViewBase {
     );
   }
   async OnShowAsyncImplementImplement() {
-    var t =
+    var e =
       ModelManager_1.ModelManager.MoonChasingRewardModel.GetShopDataList();
-    await this.LoopScrollView.RefreshByDataAsync(t, !1, !0),
+    await this.LoopScrollView.RefreshByDataAsync(e, !1, !0),
       ModelManager_1.ModelManager.MoonChasingRewardModel.ReadShopItemCheckFlag(
-        t,
+        e,
       );
-    for (let e = 0; e < t.length; e++) {
-      var i =
-        ModelManager_1.ModelManager.MoonChasingRewardModel.CheckShopItemRedDotState(
-          t[e],
-        );
-      this.LoopScrollView.UnsafeGetGridProxy(e)?.SetNewFlagState(i);
-    }
   }
   OnBeforeShow() {
     this.GetTabBehavior(UiTabSequence_1.UiTabSequence)

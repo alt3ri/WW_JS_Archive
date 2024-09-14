@@ -4,7 +4,11 @@ function toVector2R(t) {
   return t ? (t.X && t.Y ? t : { X: t.X ?? 0, Y: t.Y ?? 0 }) : { X: 0, Y: 0 };
 }
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.Vector3Op =
+  (exports.getNormalVector2D =
+    exports.isClockwise =
+    exports.isInSimpleShape =
+    exports.isInRangeConfig =
+    exports.Vector3Op =
     exports.toVectorInfo =
     exports.toVector3R =
     exports.RectOp =
@@ -72,19 +76,19 @@ class Vector2Op {
     return Math.abs(t.X - r.X) < 1e-4 && Math.abs(t.Y - r.Y) < 1e-4;
   }
   static Intersect(t, r, e, c) {
-    var s = r.X - t.X,
+    var n = r.X - t.X,
       r = r.Y - t.Y,
-      a = c.X - e.X,
+      s = c.X - e.X,
       c = c.Y - e.Y,
-      o = -a * r + s * c;
+      o = -s * r + n * c;
     return (
       0 != o &&
-      ((r = (-r * (t.X - e.X) + s * (t.Y - e.Y)) / o),
-      (s = (a * (t.Y - e.Y) - c * (t.X - e.X)) / o),
+      ((r = (-r * (t.X - e.X) + n * (t.Y - e.Y)) / o),
+      (n = (s * (t.Y - e.Y) - c * (t.X - e.X)) / o),
       0 <= r) &&
       r <= 1 &&
-      0 <= s &&
-      s <= 1
+      0 <= n &&
+      n <= 1
     );
   }
 }
@@ -106,11 +110,11 @@ class RectOp {
     if (t.X < r.X && t.Y < r.Y) return { Min: t, Max: r };
     let e = t.X,
       c = r.X,
-      s = (t.X > r.X && ((e = r.X), (c = t.X)), t.Y),
-      a = r.Y;
+      n = (t.X > r.X && ((e = r.X), (c = t.X)), t.Y),
+      s = r.Y;
     return (
-      t.Y > r.Y && ((s = r.Y), (a = t.Y)),
-      { Min: Vector2Op.New(e, s), Max: Vector2Op.New(c, a) }
+      t.Y > r.Y && ((n = r.Y), (s = t.Y)),
+      { Min: Vector2Op.New(e, n), Max: Vector2Op.New(c, s) }
     );
   }
   static RoundS(t) {
@@ -145,27 +149,27 @@ class RectOp {
   static IntersectLine(t, r, e) {
     var c = t.Min,
       t = t.Max,
-      s = c,
-      a = { X: t.X, Y: c.Y },
+      n = c,
+      s = { X: t.X, Y: c.Y },
       o = t,
       c = { X: c.X, Y: t.Y };
     return (
-      Vector2Op.Intersect(r, e, s, a) ||
-      Vector2Op.Intersect(r, e, a, o) ||
+      Vector2Op.Intersect(r, e, n, s) ||
+      Vector2Op.Intersect(r, e, s, o) ||
       Vector2Op.Intersect(r, e, o, c) ||
-      Vector2Op.Intersect(r, e, c, s)
+      Vector2Op.Intersect(r, e, c, n)
     );
   }
   static IntersectOrIncludeLine(t, r, e) {
-    var c, s, a;
+    var c, n, s;
     return (
       !(!RectOp.Contains(t, r) && !RectOp.Contains(t, e)) ||
-      ((a = t.Min),
-      (s = { X: (t = t.Max).X, Y: (c = a).Y }),
-      (t = { X: a.X, Y: (a = t).Y }),
-      Vector2Op.Intersect(r, e, c, s)) ||
-      Vector2Op.Intersect(r, e, s, a) ||
-      Vector2Op.Intersect(r, e, a, t) ||
+      ((s = t.Min),
+      (n = { X: (t = t.Max).X, Y: (c = s).Y }),
+      (t = { X: s.X, Y: (s = t).Y }),
+      Vector2Op.Intersect(r, e, c, n)) ||
+      Vector2Op.Intersect(r, e, n, s) ||
+      Vector2Op.Intersect(r, e, s, t) ||
       Vector2Op.Intersect(r, e, t, c)
     );
   }
@@ -236,13 +240,16 @@ class Vector3Op {
   static Distance(t, r) {
     return Math.sqrt((t.X - r.X) ** 2 + (t.Y - r.Y) ** 2 + (t.Z - r.Z) ** 2);
   }
+  static PowDistance(t, r) {
+    return (t.X - r.X) ** 2 + (t.Y - r.Y) ** 2 + (t.Z - r.Z) ** 2;
+  }
   static Normalize(t) {
     var r = this.Magnitude(t),
       e = this.Magnitude({ X: t.X, Y: t.Y, Z: 0 }),
       c = t.Z,
-      s = e / r,
-      a = t.Y / e;
-    return { X: (t.X / e) * s, Y: a * s, Z: c / r };
+      n = e / r,
+      s = t.Y / e;
+    return { X: (t.X / e) * n, Y: s * n, Z: c / r };
   }
   static Abs(t) {
     return { X: Math.abs(t.X), Y: Math.abs(t.Y), Z: Math.abs(t.Z) };
@@ -251,7 +258,91 @@ class Vector3Op {
     return !t.X && !t.Y && !t.Z;
   }
 }
+function isInRangeConfig(t, r) {
+  var e = r.Center,
+    r = r.Radius;
+  return (
+    Vector3Op.PowDistance(
+      { X: t.X ?? 0, Y: t.Y ?? 0, Z: t.Z ?? 0 },
+      { X: e.X ?? 0, Y: e.Y ?? 0, Z: e.Z ?? 0 },
+    ) <=
+    r * r
+  );
+}
+function isInSphereRange(t, r, e) {
+  var c = r.Radius;
+  return (
+    Vector3Op.PowDistance(
+      { X: t.X ?? 0, Y: t.Y ?? 0, Z: t.Z ?? 0 },
+      {
+        X: (e.X ?? 0) + (r.Center.X ?? 0),
+        Y: (e.Y ?? 0) + (r.Center.Y ?? 0),
+        Z: (e.Z ?? 0) + (r.Center.Z ?? 0),
+      },
+    ) <=
+    c * c
+  );
+}
+function isInBoxRange(t, r, e) {
+  var c = (e.X ?? 0) + (r.Center.X ?? 0) - (r.Size.X ?? 0) / 2,
+    n = (e.X ?? 0) + (r.Center.X ?? 0) + (r.Size.X ?? 0) / 2,
+    s = (e.Y ?? 0) + (r.Center.Y ?? 0) - (r.Size.Y ?? 0) / 2,
+    o = (e.Y ?? 0) + (r.Center.Y ?? 0) + (r.Size.Y ?? 0) / 2,
+    a = (e.Z ?? 0) + (r.Center.Z ?? 0) - (r.Size.Z ?? 0) / 2,
+    e = (e.Z ?? 0) + (r.Center.Z ?? 0) + (r.Size.Z ?? 0) / 2;
+  return (
+    (t.X ?? 0) > c &&
+    (t.X ?? 0) < n &&
+    (t.Y ?? 0) > s &&
+    (t.Y ?? 0) < o &&
+    (t.Z ?? 0) > a &&
+    (t.Z ?? 0) < e
+  );
+}
+function isInCylinderRanger(t, r, e) {
+  var e = Math.sqrt(
+      ((e.X ?? 0) - (r.Center.X ?? 0)) ** 2 +
+        ((e.Y ?? 0) - (r.Center.Y ?? 0)) ** 2,
+    ),
+    c = (t.Z ?? 0) + (r.Center.Z ?? 0) - r.Height / 2,
+    n = (t.Z ?? 0) + (r.Center.Z ?? 0) + r.Height / 2;
+  return e < r.Radius && (t.Z ?? 0) > c && (t.Z ?? 0) < n;
+}
+function isInSimpleShape(t, r, e) {
+  let c = !1;
+  var n = e ?? { X: 0, Y: 0, Z: 0 };
+  switch (r.Type) {
+    case "Box":
+      c = isInBoxRange(t, r, n);
+      break;
+    case "Sphere":
+      c = isInSphereRange(t, r, n);
+      break;
+    case "Cylinder":
+      c = isInCylinderRanger(t, r, n);
+  }
+  return c;
+}
+function isClockwise(r) {
+  let e = 0;
+  var c = r.length;
+  for (let t = 0; t < r.length; t++) {
+    var n = r[t]?.X ?? 0,
+      s = r[(t + 1) % c]?.X ?? 0,
+      o = r[t]?.Y ?? 0,
+      a = r[(t + 1) % c]?.Y ?? 0;
+    e += (s - n) * (a + o);
+  }
+  return e < 0;
+}
+function getNormalVector2D(t, r) {
+  return r ? { X: t.Y, Y: -t.X, Z: 0 } : { X: -t.Y, Y: t.X, Z: 0 };
+}
 (exports.Vector3Op = Vector3Op),
   ((_c = Vector3Op).One = _c.New(1, 1, 1)),
-  (Vector3Op.Zero = _c.New(0, 0, 0));
+  (Vector3Op.Zero = _c.New(0, 0, 0)),
+  (exports.isInRangeConfig = isInRangeConfig),
+  (exports.isInSimpleShape = isInSimpleShape),
+  (exports.isClockwise = isClockwise),
+  (exports.getNormalVector2D = getNormalVector2D);
 //# sourceMappingURL=Geometry.js.map

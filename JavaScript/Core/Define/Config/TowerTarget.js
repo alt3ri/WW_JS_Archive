@@ -13,8 +13,10 @@ class TowerTarget {
     return this.targettype();
   }
   get Params() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.paramsLength(), (t) =>
-      this.params(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.paramsLength(),
+      this.params,
+      this,
     );
   }
   get DesText() {

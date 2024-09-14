@@ -27,7 +27,7 @@ class TsTaskAiMarkItem extends TsTaskAbortImmediatelyBase_1.default {
       o = t.AiController;
     o
       ? (this.InitTsVariables(),
-        (s = (o = o.CharActorComp).Entity.GetComponent(71)),
+        (s = (o = o.CharActorComp).Entity.GetComponent(72)),
         (r = BlackboardController_1.BlackboardController.GetIntValueByEntity(
           o.Entity.Id,
           this.TsItemBlackboardKey,
@@ -37,7 +37,7 @@ class TsTaskAiMarkItem extends TsTaskAbortImmediatelyBase_1.default {
             ? this.FinishExecute(!0)
             : this.FinishExecute(!1)
           : !(r = EntitySystem_1.EntitySystem.Get(r)) ||
-              !(i = r.GetComponent(130)) ||
+              !(i = r.GetComponent(131)) ||
               i.IsSearchByOther(o.Entity.Id)
             ? this.FinishExecute(!1)
             : (this.TsSearchFilterIsMarkByAi

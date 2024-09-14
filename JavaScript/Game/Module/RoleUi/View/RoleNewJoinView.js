@@ -36,7 +36,7 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
       (this.exe = void 0),
       (this.hKt = void 0),
       (this.$be = void 0),
-      (this.mNn =
+      (this.ENn =
         UiModelResourcesManager_1.UiModelResourcesManager.StreamingInvalidValue),
       (this.lKt = 0),
       (this.l0o = !1),
@@ -111,9 +111,9 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
     ]);
   }
   async OnBeforeStartAsync() {
-    await this.dNn();
+    await this.yNn();
   }
-  async dNn() {
+  async yNn() {
     var e = this.dFe,
       e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(e),
       e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaSequenceConfigById(
@@ -149,7 +149,7 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
       }
     }
     i.Num() <= 0 ||
-      ((this.mNn =
+      ((this.ENn =
         UiModelResourcesManager_1.UiModelResourcesManager.LoadMeshesComponentsBundleStreaming(
           i,
           void 0,
@@ -192,13 +192,13 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
       this.UiCameraHandleData,
       GachaDefine_1.GACHA_BLEND_CAMERA,
     ),
-      this.mNn ===
+      this.ENn ===
         UiModelResourcesManager_1.UiModelResourcesManager
           .StreamingInvalidValue &&
         (UiModelResourcesManager_1.UiModelResourcesManager.ReleaseMeshesComponentsBundleStreaming(
-          this.mNn,
+          this.ENn,
         ),
-        (this.mNn =
+        (this.ENn =
           UiModelResourcesManager_1.UiModelResourcesManager.StreamingInvalidValue)),
       this.DKt(),
       this.hKt?.EndGachaScene(),

@@ -21,6 +21,8 @@ class RedDotRoleSystemRoleList extends RedDotBase_1.RedDotBase {
       EventDefine_1.EEventName.RedDotRoleChange,
       EventDefine_1.EEventName.RedDotUnLockPhantom,
       EventDefine_1.EEventName.RedDotCreateRole,
+      EventDefine_1.EEventName.RoleSystemChangeRole,
+      EventDefine_1.EEventName.RoleSystemDeleteRole,
     ];
   }
   OnCheck(e) {

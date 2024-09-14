@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayAbilityVisionMorph = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../../../../Core/Common/Log"),
-  GameplayCueById_1 = require("../../../../../../../Core/Define/ConfigQuery/GameplayCueById"),
   Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol"),
   TimerSystem_1 = require("../../../../../../../Core/Timer/TimerSystem"),
   Vector_1 = require("../../../../../../../Core/Utils/Math/Vector"),
@@ -25,16 +24,16 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
       (this.OZo = void 0),
       (this.KZo = void 0),
       (this.fAr = void 0),
-      (this.mpa = void 0),
+      (this.BSa = void 0),
       (this.kZo = void 0),
       (this.XZo = void 0),
-      (this.sZs = void 0),
-      (this.aZs = void 0),
+      (this.rta = void 0),
+      (this.ota = void 0),
       (this.pAr = !1),
       (this.vAr = !1),
       (this.zZo = !1),
       (this.ZZo = !1),
-      (this.kQo = void 0),
+      (this.kQo = 0),
       (this.PDn = 0);
   }
   OnDestroy() {
@@ -59,7 +58,7 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
             EventDefine_1.EEventName.VisionMorphInterrupt,
           ),
           this.SkillComponent.EndSkill(
-            this.SkillComponent.CurrentSkill.SkillId,
+            this.SkillComponent.CurrentSkill?.SkillId ?? 0,
             "GameplayAbilityVisionMorph.IsHit",
           ))
         : (this.ActorComponent.SetActorLocationAndRotation(
@@ -85,7 +84,7 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
       !this.AU() ||
       ((this.pAr = !0),
       this.oMt.空中能否释放 ||
-        this.SkillComponent.PlaySkillMontage(!1, 0, "", 0, () => {}),
+        this.SkillComponent.PlaySkillMontage(!1, 0, "", 0),
       this.ter(),
       this.GameplayTagComponent.AddTag(
         GameplayAbilityVisionMisc_1.invincibleTag,
@@ -95,7 +94,7 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
         InstigatorId: this.BuffComponent.CreatureDataId,
         Reason: "开始幻象变身时角色添加渐变隐藏材质特效",
       }),
-      (this.sZs = TimerSystem_1.TimerSystem.Delay(() => {
+      (this.rta = TimerSystem_1.TimerSystem.Delay(() => {
         this.ier(!0);
       }, GameplayAbilityVisionMisc_1.CHARACTER_HIDDEN_DELAY)),
       this.oer(),
@@ -106,11 +105,6 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
     return (
       this.pAr &&
         ((this.pAr = !1),
-        this.BuffComponent.RemoveBuff(
-          GameplayAbilityVisionMisc_1.damageReductionBuffId,
-          -1,
-          "结束幻象变身",
-        ),
         this.ner(!1),
         this.GameplayTagComponent.RemoveTag(
           GameplayAbilityVisionMisc_1.invincibleTag,
@@ -128,7 +122,7 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
     return (
       (this.MZo = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
         this.VisionComponent.Entity,
-        Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantVision,
+        Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeConcomitantVision,
       )),
       !!this.MZo.IsInit &&
         !this.MZo.Entity.Active &&
@@ -136,10 +130,10 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
           this.VisionComponent.GetVisionId(),
         )),
         (this.OZo = this.MZo.Entity.GetComponent(3)),
-        (this.KZo = this.MZo.Entity.GetComponent(159)),
+        (this.KZo = this.MZo.Entity.GetComponent(160)),
         (this.fAr = this.MZo.Entity.GetComponent(19)),
-        (this.mpa = this.MZo.Entity.GetComponent(163)),
-        (this.kZo = this.MZo.Entity.GetComponent(34)),
+        (this.BSa = this.MZo.Entity.GetComponent(164)),
+        (this.kZo = this.MZo.Entity.GetComponent(35)),
         this.kZo.InitVisionSkill(this.EntityHandle, !0),
         !0)
     );
@@ -156,7 +150,7 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
   }
   oer() {
     (this.vAr = !0),
-      this.mpa.SetForceSpeed(Vector_1.Vector.ZeroVectorProxy),
+      this.BSa.SetForceSpeed(Vector_1.Vector.ZeroVectorProxy),
       PhantomUtil_1.PhantomUtil.SetVisionEnable(
         this.VisionComponent.Entity,
         !0,
@@ -194,13 +188,6 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
         InstigatorId: this.KZo.CreatureDataId,
         Reason: "开始幻象变身时幻象自身的材质和粒子",
       }),
-      this.BuffComponent.AddBuff(
-        GameplayAbilityVisionMisc_1.damageReductionBuffId,
-        {
-          InstigatorId: this.BuffComponent.CreatureDataId,
-          Reason: "幻象变身减伤",
-        },
-      ),
       (this.PDn = this.oMt.技能ID);
     for (let i = 0; i < this.oMt.条件技能ID.Num(); ++i) {
       var t = this.oMt.条件技能ID.GetKey(i);
@@ -237,7 +224,7 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
       i &&
         this.SkillComponent.PlaySkillMontage(!1, t, "", 0, () => {
           this.SkillComponent.EndSkill(
-            this.SkillComponent.CurrentSkill.SkillId,
+            this.SkillComponent.CurrentSkill?.SkillId ?? 0,
             "GameplayAbilityVisionMorph.MorphEnd",
           );
         }),
@@ -274,9 +261,9 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
   eer() {
     (this.zZo = !1),
       this.XZo && (this.XZo.EndTask(), (this.XZo = void 0)),
-      this.sZs &&
-        TimerSystem_1.TimerSystem.Has(this.sZs) &&
-        (TimerSystem_1.TimerSystem.Remove(this.sZs), (this.sZs = void 0));
+      this.rta &&
+        TimerSystem_1.TimerSystem.Has(this.rta) &&
+        (TimerSystem_1.TimerSystem.Remove(this.rta), (this.rta = void 0));
   }
   rer() {
     var i = (0, GameplayAbilityVisionMisc_1.getLineTrace)(),
@@ -295,43 +282,25 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
       : (this.MoveComponent.CharacterMovement.SetMovementMode(3), !1);
   }
   NZo() {
-    this.fAr?.CreateGameplayCue(
-      GameplayCueById_1.configGameplayCueById.GetConfig(
+    (this.ota = TimerSystem_1.TimerSystem.Delay(() => {
+      Log_1.Log.CheckError() &&
+        Log_1.Log.Error("Battle", 29, "幻象消失材质没有正常结束，被保底"),
+        this.NBa();
+    }, GameplayAbilityVisionMisc_1.VISION_HIDDEN_DELAY)),
+      this.fAr?.CreateGameplayCue(
         GameplayAbilityVisionMisc_1.morphParticleCueId,
+        { Sync: !0, Instant: !0 },
       ),
-      { Sync: !0 },
-    ),
-      (this.kQo = this.fAr?.CreateGameplayCue(
-        GameplayCueById_1.configGameplayCueById.GetConfig(
-          GameplayAbilityVisionMisc_1.materialCueId,
-        ),
+      (this.kQo = this.fAr.CreateGameplayCue(
+        GameplayAbilityVisionMisc_1.materialCueId,
         {
           EndCallback: () => {
-            BulletController_1.BulletController.CreateBulletCustomTarget(
-              this.MZo.Entity,
-              GameplayAbilityVisionMisc_1.VISION_END_BULLET,
-              void 0,
-            ),
-              PhantomUtil_1.PhantomUtil.SetVisionEnable(
-                this.VisionComponent.Entity,
-                !1,
-              ),
-              this.kQo?.Destroy(),
-              (this.kQo = void 0),
-              this.aZs &&
-                TimerSystem_1.TimerSystem.Has(this.aZs) &&
-                (TimerSystem_1.TimerSystem.Remove(this.aZs),
-                (this.aZs = void 0));
+            TimerSystem_1.TimerSystem.Has(this.ota) &&
+              (TimerSystem_1.TimerSystem.Remove(this.ota), this.NBa());
           },
           Sync: !0,
         },
-      )),
-      (this.aZs = TimerSystem_1.TimerSystem.Delay(() => {
-        PhantomUtil_1.PhantomUtil.SetVisionEnable(
-          this.VisionComponent.Entity,
-          !1,
-        );
-      }, GameplayAbilityVisionMisc_1.VISION_HIDDEN_DELAY));
+      ));
   }
   Wxr(i, t) {
     var s = (0, GameplayAbilityVisionMisc_1.getLineTrace)(),
@@ -343,6 +312,23 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
           "GameplayAbilityVisionMorph.FixLocation",
         ));
     return i && s.HitResult.bBlockingHit;
+  }
+  NBa() {
+    (this.ota = void 0),
+      this.pAr &&
+        this.GameplayTagComponent.RemoveTag(
+          GameplayAbilityVisionMisc_1.invincibleTag,
+        ),
+      BulletController_1.BulletController.CreateBulletCustomTarget(
+        this.MZo.Entity,
+        GameplayAbilityVisionMisc_1.VISION_END_BULLET,
+        void 0,
+      ),
+      PhantomUtil_1.PhantomUtil.SetVisionEnable(
+        this.VisionComponent.Entity,
+        !1,
+      ),
+      this.fAr?.DestroyGameplayCueByHandle(this.kQo);
   }
 }
 exports.GameplayAbilityVisionMorph = GameplayAbilityVisionMorph;

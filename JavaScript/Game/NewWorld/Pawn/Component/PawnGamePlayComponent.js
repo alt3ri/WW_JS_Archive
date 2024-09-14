@@ -27,7 +27,7 @@ let PawnGamePlayComponent = class PawnGamePlayComponent extends EntityComponent_
   GrabResponse() {}
 };
 (PawnGamePlayComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(103)],
+  [(0, RegisterComponent_1.RegisterComponent)(104)],
   PawnGamePlayComponent,
 )),
   (exports.PawnGamePlayComponent = PawnGamePlayComponent);

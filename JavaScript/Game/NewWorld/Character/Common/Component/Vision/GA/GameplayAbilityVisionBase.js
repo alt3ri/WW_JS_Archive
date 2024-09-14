@@ -54,25 +54,25 @@ class GameplayAbilityVisionBase {
     return this.Entity.GetComponent(3);
   }
   get AttributeComponent() {
-    return this.Entity.GetComponent(158);
-  }
-  get GameplayTagComponent() {
-    return this.Entity.GetComponent(188);
-  }
-  get SkillComponent() {
-    return this.Entity.GetComponent(33);
-  }
-  get BuffComponent() {
     return this.Entity.GetComponent(159);
   }
+  get GameplayTagComponent() {
+    return this.Entity.GetComponent(190);
+  }
+  get SkillComponent() {
+    return this.Entity.GetComponent(34);
+  }
+  get BuffComponent() {
+    return this.Entity.GetComponent(160);
+  }
   get MoveComponent() {
-    return this.Entity.GetComponent(163);
+    return this.Entity.GetComponent(164);
   }
   get AudioComponent() {
-    return this.Entity.GetComponent(43);
+    return this.Entity.GetComponent(44);
   }
   get TeamComponent() {
-    return this.Entity.GetComponent(83);
+    return this.Entity.GetComponent(84);
   }
 }
 exports.GameplayAbilityVisionBase = GameplayAbilityVisionBase;

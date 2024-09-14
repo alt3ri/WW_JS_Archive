@@ -23,31 +23,30 @@ const cpp_1 = require("cpp"),
   TimerSystem_1 = require("./Timer/TimerSystem");
 class Core {
   constructor() {}
-  static Initialize(e) {
+  static *Initialize(e) {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("Core", 1, Logo_1.LOGO),
       Log_1.Log.CheckInfo() && Log_1.Log.Info("Core", 1, Info_1.Info.Version),
-      Info_1.Info.Initialize(e),
       Log_1.Log.SetLevel(
         Info_1.Info.IsBuildShipping || Info_1.Info.IsBuildTest ? 2 : 3,
       ),
-      CycleCounter_1.CycleCounter.SetEnable(!Info_1.Info.IsBuildShipping),
       GameBudgetInterfaceController_1.GameBudgetInterfaceController.InitializeEnvironment(
         e.GetWorld(),
       ),
       PerfSight_1.PerfSight.Initialize(),
       Time_1.Time.Initialize(),
       Net_1.Net.Initialize(),
-      TickSystem_1.TickSystem.Initialize(e),
+      TickSystem_1.TickSystem.Add(this.Tick, "Core", 0, !0),
+      TickSystem_1.TickSystem.Add(this.AfterTick, "Core", 4, !0),
+      yield this.bqa(),
       ConfigStatement_1.ConfigStatement.Init(),
+      yield this.bqa(),
       ObjectSystem_1.ObjectSystem.Initialize(),
       EntitySystem_1.EntitySystem.Initialize(),
       EntityComponentSystem_1.EntityComponentSystem.Initialize(),
       Application_1.Application.Initialize(),
       ActorSystem_1.ActorSystem.Initialize(),
       EffectEnvironment_1.EffectEnvironment.Initialize(),
-      (ProxyLru_1.ProxyLru.ProxyLruEnable = Info_1.Info.IsPlayInEditor),
-      TickSystem_1.TickSystem.Add(this.Tick, "Core", 0, !0),
-      TickSystem_1.TickSystem.Add(this.AfterTick, "Core", 4, !0);
+      (ProxyLru_1.ProxyLru.ProxyLruEnable = Info_1.Info.IsPlayInEditor);
   }
   static RegisterPreTick(e) {
     this.Y7.has(e)
@@ -69,25 +68,32 @@ class Core {
           "[Core.UnRegisterPreTick] 未注册的PreTickfunc",
         );
   }
+  static async bqa() {
+    return new Promise((e) => {
+      TimerSystem_1.TimerSystem.Next(() => {
+        e();
+      });
+    });
+  }
 }
 (exports.Core = Core),
   ((_a = Core).Y7 = new Set()),
-  (Core._Ks = 0),
+  (Core.QQs = 0),
   (Core.Tick = (e) => {
     if (
       (CycleCounter_1.CycleCounter.RefreshState(),
       !TickSystem_1.TickSystem.IsPaused)
     )
-      for (const i of _a.Y7) i(e);
+      for (const o of _a.Y7) o(e);
     var t = e / 1e3,
       r =
         (Net_1.Net.Tick(t),
         Time_1.Time.Tick(e),
         TimerSystem_1.TimerSystem.Tick(e),
         Time_1.Time.ServerTimeStamp),
-      o = r - _a._Ks;
-    (_a._Ks = r),
-      TimerSystem_1.RealTimeTimerSystem.Tick(o),
+      i = r - _a.QQs;
+    (_a.QQs = r),
+      TimerSystem_1.RealTimeTimerSystem.Tick(i),
       TickSystem_1.TickSystem.IsPaused ||
         (EffectEnvironment_1.EffectEnvironment.Tick(e, Info_1.Info.World),
         Info_1.Info.EnableForceTick && EntitySystem_1.EntitySystem.ForceTick(e),

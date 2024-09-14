@@ -13,8 +13,10 @@ class LordGymEntrance {
     return this.markid();
   }
   get LordGymList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.lordgymlistLength(), (t) =>
-      this.lordgymlist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.lordgymlistLength(),
+      this.lordgymlist,
+      this,
     );
   }
   get EntranceTitle() {

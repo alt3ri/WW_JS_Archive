@@ -5,8 +5,14 @@ class FogTextureConfig {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
   }
+  get Id() {
+    return this.id();
+  }
   get Block() {
     return this.block();
+  }
+  get MapId() {
+    return this.mapid();
   }
   get MapTilePath() {
     return this.maptilepath();
@@ -35,32 +41,40 @@ class FogTextureConfig {
       t,
     );
   }
-  block(t) {
+  id(t) {
     var i = this.J7.__offset(this.z7, 4);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  maptilepath(t) {
+  block(t) {
     var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  minimaptilepath(t) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+  mapid() {
+    var t = this.J7.__offset(this.z7, 8);
+    return t ? this.J7.readInt32(this.z7 + t) : 8;
   }
-  hdmaptilepath(t) {
+  maptilepath(t) {
     var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  fogtilepath(t) {
+  minimaptilepath(t) {
     var i = this.J7.__offset(this.z7, 12);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  minifogtilepath(t) {
+  hdmaptilepath(t) {
     var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
+  fogtilepath(t) {
+    var i = this.J7.__offset(this.z7, 16);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
+  minifogtilepath(t) {
+    var i = this.J7.__offset(this.z7, 18);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
   submapgroupid() {
-    var t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

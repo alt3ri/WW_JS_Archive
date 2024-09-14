@@ -63,32 +63,36 @@ class DamageText {
   get OwnCommonDamageCurvePath() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.owncommondamagecurvepathLength(),
-      (t) => this.owncommondamagecurvepath(t),
+      this.owncommondamagecurvepath,
+      this,
     );
   }
   get OwnCriticalDamageCurvePath() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.owncriticaldamagecurvepathLength(),
-      (t) => this.owncriticaldamagecurvepath(t),
+      this.owncriticaldamagecurvepath,
+      this,
     );
   }
   get MonsterCommonDamageCurvePath() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.monstercommondamagecurvepathLength(),
-      (t) => this.monstercommondamagecurvepath(t),
+      this.monstercommondamagecurvepath,
+      this,
     );
   }
   get MonsterCriticalDamageCurvePath() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.monstercriticaldamagecurvepathLength(),
-      (t) => this.monstercriticaldamagecurvepath(t),
+      this.monstercriticaldamagecurvepath,
+      this,
     );
   }
-  __init(t, e) {
-    return (this.z7 = t), (this.J7 = e), this;
+  __init(t, i) {
+    return (this.z7 = t), (this.J7 = i), this;
   }
-  static getRootAsDamageText(t, e) {
-    return (e || new DamageText()).__init(
+  static getRootAsDamageText(t, i) {
+    return (i || new DamageText()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -98,32 +102,32 @@ class DamageText {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   commonicon(t) {
-    var e = this.J7.__offset(this.z7, 6);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 6);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   criticon(t) {
-    var e = this.J7.__offset(this.z7, 8);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 8);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   critniagarapath(t) {
-    var e = this.J7.__offset(this.z7, 10);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 10);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   textcolor(t) {
-    var e = this.J7.__offset(this.z7, 12);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 12);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   strokecolor(t) {
-    var e = this.J7.__offset(this.z7, 14);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 14);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   crittextcolor(t) {
-    var e = this.J7.__offset(this.z7, 16);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 16);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   critstrokecolor(t) {
-    var e = this.J7.__offset(this.z7, 18);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 18);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   mindeviationx() {
     var t = this.J7.__offset(this.z7, 20);
@@ -142,24 +146,24 @@ class DamageText {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   owndamagesequence(t) {
-    var e = this.J7.__offset(this.z7, 28);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 28);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   owncriticaldamagesequence(t) {
-    var e = this.J7.__offset(this.z7, 30);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 30);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   monsterdamagesequence(t) {
-    var e = this.J7.__offset(this.z7, 32);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 32);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   monstercriticaldamagesequence(t) {
-    var e = this.J7.__offset(this.z7, 34);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 34);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   damagetextsequence(t) {
-    var e = this.J7.__offset(this.z7, 36);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 36);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   ispreload() {
     var t = this.J7.__offset(this.z7, 38);
@@ -168,10 +172,10 @@ class DamageText {
   GetOwncommondamagecurvepathAt(t) {
     return this.owncommondamagecurvepath(t);
   }
-  owncommondamagecurvepath(t, e) {
-    var i = this.J7.__offset(this.z7, 40);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, e)
+  owncommondamagecurvepath(t, i) {
+    var e = this.J7.__offset(this.z7, 40);
+    return e
+      ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i)
       : null;
   }
   owncommondamagecurvepathLength() {
@@ -181,10 +185,10 @@ class DamageText {
   GetOwncriticaldamagecurvepathAt(t) {
     return this.owncriticaldamagecurvepath(t);
   }
-  owncriticaldamagecurvepath(t, e) {
-    var i = this.J7.__offset(this.z7, 42);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, e)
+  owncriticaldamagecurvepath(t, i) {
+    var e = this.J7.__offset(this.z7, 42);
+    return e
+      ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i)
       : null;
   }
   owncriticaldamagecurvepathLength() {
@@ -194,10 +198,10 @@ class DamageText {
   GetMonstercommondamagecurvepathAt(t) {
     return this.monstercommondamagecurvepath(t);
   }
-  monstercommondamagecurvepath(t, e) {
-    var i = this.J7.__offset(this.z7, 44);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, e)
+  monstercommondamagecurvepath(t, i) {
+    var e = this.J7.__offset(this.z7, 44);
+    return e
+      ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i)
       : null;
   }
   monstercommondamagecurvepathLength() {
@@ -207,10 +211,10 @@ class DamageText {
   GetMonstercriticaldamagecurvepathAt(t) {
     return this.monstercriticaldamagecurvepath(t);
   }
-  monstercriticaldamagecurvepath(t, e) {
-    var i = this.J7.__offset(this.z7, 46);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, e)
+  monstercriticaldamagecurvepath(t, i) {
+    var e = this.J7.__offset(this.z7, 46);
+    return e
+      ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i)
       : null;
   }
   monstercriticaldamagecurvepathLength() {

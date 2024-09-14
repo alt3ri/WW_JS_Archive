@@ -8,12 +8,12 @@ const UE = require("ue"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
-  GameQualitySettingsManager_1 = require("../../../GameQualitySettings/GameQualitySettingsManager"),
+  GameSettingsDeviceRender_1 = require("../../../GameSettings/GameSettingsDeviceRender"),
   GlobalData_1 = require("../../../GlobalData"),
   LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsAiController_1 = require("../../Controller/TsAiController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   PROFILE_KEY = "TsTaskNpcPatrol_GetObstacleLocation",
   PATROL_TURN_SPEED = 540,
   NO_FORWARD_DISTANCE = 100,
@@ -66,22 +66,22 @@ class TsTaskPatrolLogic extends TsTaskAbortImmediatelyBase_1.default {
       (this.IsInitTsVariables = !0);
   }
   InitComp(t) {
-    var i =
-      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
-    (this.FrameRate = i.GetFrameRate()),
-      (this.FrameSeconds = i.GetFrameSeconds()),
+    (this.FrameRate =
+      GameSettingsDeviceRender_1.GameSettingsDeviceRender.FrameRate),
+      (this.FrameSeconds =
+        GameSettingsDeviceRender_1.GameSettingsDeviceRender.FrameSeconds),
       (this.PatrolLogic = t.AiPatrol),
       (this.PatrolConfig = this.PatrolLogic.GetConfig()),
       this.PatrolConfig
         ? ((this.IsMoveFlyingState = this.PatrolConfig.ContainZ),
           (this.Entity = t.CharAiDesignComp.Entity),
           (this.ActorComp = t.CharActorComp),
-          (this.MoveComp = this.Entity.GetComponent(37)),
+          (this.MoveComp = this.Entity.GetComponent(38)),
           this.IsMoveFlyingState &&
             this.MoveComp &&
             this.MoveComp.CharacterMovement.SetMovementMode(5),
-          (this.StateComp = this.Entity.GetComponent(91)),
-          (this.AnimComp = this.Entity.GetComponent(162)),
+          (this.StateComp = this.Entity.GetComponent(92)),
+          (this.AnimComp = this.Entity.GetComponent(163)),
           this.PatrolLogic.IsInitialized || this.PatrolLogic.GeneratePatrol(!1),
           (this.IsSplineLoading = !0),
           (this.IsInitComp = !0))

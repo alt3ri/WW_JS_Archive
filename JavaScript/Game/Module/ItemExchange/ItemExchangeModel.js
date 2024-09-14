@@ -32,7 +32,7 @@ class ItemExchangeModel extends ModelBase_1.ModelBase {
     return !(this.Dgi = void 0);
   }
   InitItemExchangeTimeInfo(e) {
-    for (const t of e) this.Dgi.set(t.f8n, t);
+    for (const t of e) this.Dgi.set(t.L8n, t);
   }
   GetExchangeInfo(e) {
     return (
@@ -48,11 +48,11 @@ class ItemExchangeModel extends ModelBase_1.ModelBase {
     );
   }
   GetExChangeTime(e) {
-    return this.Dgi.get(e)?.t9n ?? 0;
+    return this.Dgi.get(e)?._9n ?? 0;
   }
   AddExchangeTime(e, t) {
     e = this.Dgi.get(e);
-    e && ((e.i9n += t), (e.t9n += t));
+    e && ((e.u9n += t), (e._9n += t));
   }
   CalculateConsume(i, e = 0, s = 0, h = !1) {
     let g = e;
@@ -104,8 +104,8 @@ class ItemExchangeModel extends ModelBase_1.ModelBase {
   }
   Rgi(e) {
     var e = this.GetExchangeInfo(e),
-      t = 0 < e.gxs ? e.gxs - e.i9n : ItemExchangeDefine_1.MAX_COUNT,
-      e = 0 < e.Cxs ? e.Cxs - e.t9n : ItemExchangeDefine_1.MAX_COUNT;
+      t = 0 < e.yxs ? e.yxs - e.u9n : ItemExchangeDefine_1.MAX_COUNT,
+      e = 0 < e.Exs ? e.Exs - e._9n : ItemExchangeDefine_1.MAX_COUNT;
     return Math.min(t, e);
   }
   GetCurExchangeInfo(e, t = 0) {
@@ -127,7 +127,7 @@ class ItemExchangeModel extends ModelBase_1.ModelBase {
   CheckIsMaxExChangeTime(e, t = 0) {
     e = this.GetExchangeInfo(e);
     return (
-      (0 < e.gxs && e.i9n + t >= e.gxs) || (0 < e.Cxs && e.t9n + t >= e.Cxs)
+      (0 < e.yxs && e.u9n + t >= e.yxs) || (0 < e.Exs && e._9n + t >= e.Exs)
     );
   }
   GetMaxExChangeTime(e) {

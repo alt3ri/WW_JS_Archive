@@ -7,7 +7,7 @@ const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   BattleUiControl_1 = require("../../BattleUiControl"),
   BattleEntityChildView_1 = require("../BattleChildView/BattleEntityChildView");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 const PERCENT_RATE = 100;
 class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
   constructor() {
@@ -131,7 +131,7 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
       ),
       this.ListenForAttributeChanged(
         t,
-        EAttributeId.e5n,
+        EAttributeId.l5n,
         this.OnBossMaxHealthChanged,
       );
   }
@@ -161,7 +161,7 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
     this.RefreshHardnessAttributeId();
   }
   RefreshHardnessAttributeId() {
-    this.GetEntity().GetComponent(188).HasTag(-1838149281)
+    this.GetEntity().GetComponent(190).HasTag(-1838149281)
       ? ((this.HardnessAttributeId = EAttributeId.Proto_Rage),
         (this.MaxHardnessAttributeId = EAttributeId.Proto_RageMax))
       : ((this.HardnessAttributeId = EAttributeId.Proto_Hardness),
@@ -176,7 +176,7 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
   OnBossHardnessChanged(t) {}
   OnBossLanguageChange() {}
   RefreshHiddenTagState() {
-    var t = this.GetEntity()?.GetComponent(188);
+    var t = this.GetEntity()?.GetComponent(190);
     (this.HasHiddenTag = t?.HasTag(-13489149)),
       (this.HasFallDownTag = t?.HasTag(1922078392)),
       (this.HasFightTag = t?.HasTag(1996802261) ?? !1);
@@ -203,20 +203,20 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
   GetHpAndShieldPercent() {
     if (!this.IsValid()) return [0, 0];
     var t = this.GetCurrentAttributeValueById(EAttributeId.Proto_Life),
-      i = this.GetCurrentAttributeValueById(EAttributeId.e5n),
+      i = this.GetCurrentAttributeValueById(EAttributeId.l5n),
       e = this.GetBossShield();
     let s = e <= i ? e / i : 1;
     return [t / i, s];
   }
   GetAttributeComponent() {
-    return this.GetEntity().CheckGetComponent(158);
+    return this.GetEntity().CheckGetComponent(159);
   }
   GetCurrentAttributeValueById(t) {
     return this.GetAttributeComponent().GetCurrentValue(t);
   }
   GetBossShield() {
     return this.IsValid()
-      ? this.GetEntity().CheckGetComponent(66).ShieldTotal
+      ? this.GetEntity().CheckGetComponent(67).ShieldTotal
       : 0;
   }
   GetMonsterConfig() {

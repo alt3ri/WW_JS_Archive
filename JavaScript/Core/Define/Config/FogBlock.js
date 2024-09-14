@@ -5,8 +5,14 @@ class FogBlock {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
   }
+  get Id() {
+    return this.id();
+  }
   get Block() {
     return this.block();
+  }
+  get MapId() {
+    return this.mapid();
   }
   get R() {
     return this.r();
@@ -29,24 +35,32 @@ class FogBlock {
       t,
     );
   }
-  block(t) {
+  id(t) {
     var s = this.J7.__offset(this.z7, 4);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
-  r() {
-    var t = this.J7.__offset(this.z7, 6);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  block(t) {
+    var s = this.J7.__offset(this.z7, 6);
+    return s ? this.J7.__string(this.z7 + s, t) : null;
   }
-  g() {
+  mapid() {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  b() {
+  r() {
     var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  alpha() {
+  g() {
     var t = this.J7.__offset(this.z7, 12);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  b() {
+    var t = this.J7.__offset(this.z7, 14);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  alpha() {
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

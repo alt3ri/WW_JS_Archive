@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineProcessView = void 0);
 const UE = require("ue"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
@@ -77,6 +78,8 @@ class OnlineProcessView extends UiViewBase_1.UiViewBase {
       [8, UE.UIItem],
       [9, UE.UIGridLayout],
       [11, UE.UIText],
+      [12, UE.UIItem],
+      [13, UE.UIText],
     ]),
       (this.BtnBindInfo = [[6, this.Z8t]]);
   }
@@ -134,6 +137,9 @@ class OnlineProcessView extends UiViewBase_1.UiViewBase {
   t9t() {
     var e = ModelManager_1.ModelManager.OnlineModel.CachePlayerData;
     (ModelManager_1.ModelManager.FriendModel.SelectedPlayerId = e.PlayerId),
+      ModelManager_1.ModelManager.FriendModel.SetCurrentOperationPlayerId(
+        e.PlayerId,
+      ),
       this.w8t(),
       this.g8t.RefreshByHeadPhotoId(e.HeadId),
       this.GetText(5).SetText(e.Level.toString()),
@@ -162,11 +168,27 @@ class OnlineProcessView extends UiViewBase_1.UiViewBase {
       t = this.GetText(11);
     e && "" !== e ? t.SetText(e) : t.SetText("");
   }
+  qxa() {
+    var e;
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
+      ? ((e =
+          "" !==
+          ModelManager_1.ModelManager.OnlineModel.CachePlayerData?.PlayerDetails
+            .$xa),
+        this.GetItem(12)?.SetUIActive(e),
+        e &&
+          ((e =
+            ModelManager_1.ModelManager.OnlineModel.CachePlayerData
+              .PlayerDetails.Vxa),
+          this.GetText(13)?.SetText(e)))
+      : this.GetItem(12)?.SetUIActive(!1);
+  }
   w8t() {
     var e = ModelManager_1.ModelManager.OnlineModel.CachePlayerData,
       e =
         (this.P5e(),
         this.r9t(),
+        this.qxa(),
         ModelManager_1.ModelManager.FriendModel.IsMyFriend(e.PlayerId));
     this.Y8t.GetRootItem().SetUIActive(e),
       this.W8t.GetRootItem().SetUIActive(!1),

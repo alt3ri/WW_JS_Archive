@@ -17,28 +17,42 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configOverlayAbpMontageDataById.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configOverlayAbpMontageDataById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configOverlayAbpMontageDataById.GetConfig(";
 exports.configOverlayAbpMontageDataById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, a = !0) => {
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (a) {
+  GetConfig: (o, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      a =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (a) {
+      if (n) {
         var e = KEY_PREFIX + `#${o})`;
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (t) return t;
+        const i = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (i)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            i
+          );
       }
       if (
-        (n =
+        (a =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,32 +60,37 @@ exports.configOverlayAbpMontageDataById = {
               o,
             ]))
       ) {
-        var n,
-          e = void 0;
+        e = void 0;
         if (
-          (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([a, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
           )),
-          n)
+          a)
         ) {
-          const t =
+          const i =
             OverlayAbpMontageData_1.OverlayAbpMontageData.getRootAsOverlayAbpMontageData(
               new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
             );
           return (
-            a &&
-              ((n = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(n, t)),
+            n &&
+              ((a = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(a, i)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            i
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=OverlayAbpMontageDataById.js.map

@@ -24,7 +24,7 @@ class BuffItem extends UiPanelBase_1.UiPanelBase {
       (this.Bst = -0),
       (this.bst = void 0),
       (this.qst = void 0),
-      (this.Bda = void 0),
+      (this.Ega = void 0),
       (this.Gst = 0),
       (this.Nst = !1);
     t = BattleUiControl_1.BattleUiControl.Pool.GetBuffItem(t);
@@ -68,7 +68,7 @@ class BuffItem extends UiPanelBase_1.UiPanelBase {
       this.GetSprite(8)?.SetUIActive(h === BUFF),
       this.GetSprite(4)?.SetUIActive(h === DEBUFF),
       1 < i && "" !== t.Parameters[1] ? this.Vst(t.Parameters[1]) : this.Vst(),
-      2 < i && "" !== t.Parameters[2] ? this.qda(t.Parameters[2]) : this.qda(),
+      2 < i && "" !== t.Parameters[2] ? this.yga(t.Parameters[2]) : this.yga(),
       this.SetActive(!0),
       this.Gnt(6),
       s
@@ -109,9 +109,9 @@ class BuffItem extends UiPanelBase_1.UiPanelBase {
       : (this.qst || (this.qst = UE.Color.FromHex("FFFFFF7F")),
         this.Pst.SetColor(this.qst));
   }
-  qda(t) {
-    t !== this.Bda &&
-      ((this.Bda = t)
+  yga(t) {
+    t !== this.Ega &&
+      ((this.Ega = t)
         ? this.Ust.SetColor(UE.Color.FromHex(t))
         : this.Ust.SetColor(ColorUtils_1.ColorUtils.ColorWhile));
   }
@@ -144,10 +144,10 @@ class BuffItem extends UiPanelBase_1.UiPanelBase {
   DestroyOverride() {
     return (
       this.RootActor &&
-        (this.Bda &&
+        (this.Ega &&
           this.Ust &&
           (this.Ust.SetColor(ColorUtils_1.ColorUtils.ColorWhile),
-          (this.Bda = void 0)),
+          (this.Ega = void 0)),
         BattleUiControl_1.BattleUiControl.Pool.RecycleBuffItem(this.RootActor)),
       !0
     );

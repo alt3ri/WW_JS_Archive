@@ -21,7 +21,7 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
       (this.t$i = !1),
       (this.i$i = 0),
       (this.Cgo = new Array()),
-      (this.Txn = 7),
+      (this.Axn = 7),
       (this.StartPlotNetworkPending = () => {
         var e;
         ModelManager_1.ModelManager.PlotModel.IsInPlot ||
@@ -42,9 +42,10 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
                 this.n$i(e))
               : (this.t$i = !0)));
       }),
-      (this.Lxn = (e, t) =>
+      (this.Uxn = (e, o) =>
         !ModelManager_1.ModelManager.LoadingModel.IsLoading ||
-        (t.FadeBegin &&
+        (!o.FadeBeginDone &&
+          o.FadeBegin &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Plot", 27, "Loading期间准备播剧情，提前打开黑幕"),
           ControllerHolder_1.ControllerHolder.LevelLoadingController.OpenLoading(
@@ -52,55 +53,68 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
             3,
             void 0,
             0,
-            t.FadeBegin,
+            o.FadeBegin,
             !1,
             !1,
           ),
-          (t.FadeBegin = void 0)),
+          (o.FadeBeginDone = !0)),
         !1)),
       (this.o$i = new Set(["BattleView", "PlotView", "PlotSubtitleView"])),
-      (this.Dxn = (e, t) => {
-        return t.UiParam?.ViewName
-          ? !!UiManager_1.UiManager.IsViewShow(t.UiParam.ViewName) ||
-              (!!t.CanBeAbandoned &&
-                ((t.IsBreakdown = !0),
+      (this.Rxn = (e, o) => {
+        return (
+          o.FadeBeginDone &&
+            (2e3 <= o.WaitUiTime
+              ? (ControllerHolder_1.ControllerHolder.LevelLoadingController.CloseLoading(
+                  0,
+                  void 0,
+                  0.5,
+                ),
+                (o.FadeBeginDone = !1),
+                (o.WaitUiTime = 0))
+              : (o.WaitUiTime += e)),
+          o.UiParam?.ViewName
+            ? !!UiManager_1.UiManager.IsViewShow(o.UiParam.ViewName) ||
+              (!!o.CanBeAbandoned &&
+                ((o.IsBreakdown = !0),
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Plot",
                     27,
                     "剧情检查条件不通过，且允许被舍弃，丢了",
-                    ["incId", t.FlowIncId],
-                    ["flowListName", t.FlowListName],
-                    ["flowId", t.FlowId],
-                    ["stateId", t.StateId],
+                    ["incId", o.FlowIncId],
+                    ["flowListName", o.FlowListName],
+                    ["flowId", o.FlowId],
+                    ["stateId", o.StateId],
                   ),
                 !0))
-          : !!(t = UiModel_1.UiModel.GetTopView(UiLayerType_1.ELayerType.Normal)
-              ?.Info?.Name) &&
-              !!this.o$i.has(t) &&
-              UiManager_1.UiManager.IsViewShow(t);
+            : !!(e = UiModel_1.UiModel.GetTopView(
+                UiLayerType_1.ELayerType.Normal,
+              )?.Info?.Name) &&
+              !!this.o$i.has(e) &&
+              UiManager_1.UiManager.IsViewShow(e)
+        );
       }),
-      (this.Axn = (e, t) =>
+      (this.xxn = (e, o) =>
         !ModelManager_1.ModelManager.TeleportModel.IsTeleport),
-      (this.Uxn = (e, t) =>
+      (this.Pxn = (e, o) =>
         !ModelManager_1.ModelManager.SceneTeamModel.IsAllDid()),
-      (this.Rxn = (e, t) => {
-        var o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem;
-        return !!o && !o.IsDead();
+      (this.wxn = (e, o) => {
+        var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem;
+        return !!t && !t.IsDead();
       }),
-      (this.xxn = (e, t) =>
+      (this.Bxn = (e, o) =>
         ModelManager_1.ModelManager.SceneTeamModel.IsTeamReady),
-      (this.Pxn = (e, t) => {
+      (this.bxn = (e, o) => {
         return !(
-          ("LevelC" === t.PlotLevel || t.IsWaitAnim) &&
+          ("LevelC" === o.PlotLevel || o.IsWaitAnim) &&
           (this.i$i >
           ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig.WaitCalmTime
             ? (this.i$i = 0)
-            : (t =
+            : (o =
                   ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.CheckGetComponent(
-                    188,
+                    190,
                   ))?.Valid
-              ? t.HasTag(-1371021686)
+              ? o.HasTag(-1371021686)
                 ? ((this.i$i += e), 1)
                 : (this.i$i = 0)
               : (Log_1.Log.CheckDebug() &&
@@ -115,131 +129,135 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
   }
   OnDestroy() {}
   OnInit() {
-    this.Cgo.push([0, "场景未加载完", this.Lxn]),
-      this.Cgo.push([1, "界面检查不通过", this.Dxn]),
-      this.Cgo.push([2, "传送未完成", this.Axn]),
-      this.Cgo.push([3, "死亡或者队伍没人", this.Uxn]),
-      this.Cgo.push([4, "当前角色死亡", this.Rxn]),
-      this.Cgo.push([5, "编队未准备好", this.xxn]),
-      this.Cgo.push([6, "人物动作还没回正", this.Pxn]),
-      this.Cgo.forEach((e, t) => {
-        e[0] !== t &&
+    this.Cgo.push([0, "场景未加载完", this.Uxn]),
+      this.Cgo.push([1, "界面检查不通过", this.Rxn]),
+      this.Cgo.push([2, "传送未完成", this.xxn]),
+      this.Cgo.push([3, "死亡或者队伍没人", this.Pxn]),
+      this.Cgo.push([4, "当前角色死亡", this.wxn]),
+      this.Cgo.push([5, "编队未准备好", this.Bxn]),
+      this.Cgo.push([6, "人物动作还没回正", this.bxn]),
+      this.Cgo.forEach((e, o) => {
+        e[0] !== o &&
           Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Plot", 27, "剧情开始检查队列顺序错误", ["index", t]);
+          Log_1.Log.Error("Plot", 27, "剧情开始检查队列顺序错误", ["index", o]);
       });
   }
   StartFlow(
     e,
-    t,
     o,
+    t,
     r = void 0,
-    i = FlowController_1.LOCAL_FLOWINCID,
-    a = !1,
+    a = FlowController_1.LOCAL_FLOWINCID,
     l = !1,
+    i = !1,
     n,
     s = !1,
     _ = !1,
     g,
   ) {
     var d,
-      h,
-      M = ConfigManager_1.ConfigManager.FlowConfig.GetFlowStateActions(e, t, o);
-    return M
-      ? ((i = a ? i : FlowLaunchCenter.s$i--),
+      M,
+      h = ConfigManager_1.ConfigManager.FlowConfig.GetFlowStateActions(e, o, t);
+    return h
+      ? ((a = l ? a : FlowLaunchCenter.s$i--),
         (r = r ? LevelGeneralContextDefine_1.GeneralContext.Copy(r) : void 0),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Plot",
             18,
             "StartFlow",
-            ["FLowIncId", i],
+            ["FLowIncId", a],
             ["FlowListName", e],
-            ["FlowId", t],
-            ["StateId", o],
+            ["FlowId", o],
+            ["StateId", t],
           ),
         EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnStartFlow),
         (d = ConfigManager_1.ConfigManager.FlowConfig.GetFlowStateKeepMusic(
           e,
-          t,
           o,
+          t,
         )),
-        (h = PlotData_1.PlotInfo.Create()).Init(
+        (M = PlotData_1.PlotInfo.Create()).Init(
+          l,
           a,
-          i,
           e,
-          t,
           o,
-          M,
+          t,
+          h,
           d,
           r,
-          l,
+          i,
           n,
           s,
           _,
           g,
         ),
-        this.r$i(h)
-          ? this.n$i(h)
-          : (ModelManager_1.ModelManager.PlotModel.PendingPlot(h),
+        this.r$i(M)
+          ? this.n$i(M)
+          : (ModelManager_1.ModelManager.PlotModel.PendingPlot(M),
             (this.t$i = !0),
             ControllerHolder_1.ControllerHolder.FlowController.CheckDisableInput(
-              h.PlotLevel,
+              M.PlotLevel,
             )),
-        i)
+        a)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Level",
             27,
             "[StartFlow] 无法找到对应剧情的状态",
             ["FlowListName", e],
-            ["FlowId", t],
-            ["FlowId", t],
-            ["StateId", o],
+            ["FlowId", o],
+            ["FlowId", o],
+            ["StateId", t],
           ),
         0);
   }
   Tick(e) {
-    var t;
+    var o;
     this.t$i &&
-      ((t =
+      ((o =
         0 <= ModelManager_1.ModelManager.PlotModel.PlotPendingList.length
           ? ModelManager_1.ModelManager.PlotModel.PlotPendingList[0]
           : void 0)
-        ? this.r$i(t, e) &&
+        ? this.r$i(o, e) &&
           (ModelManager_1.ModelManager.PlotModel.PlotPendingList.shift(),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Plot",
               27,
               "开始缓存的剧情",
-              ["FlowIncId", t.FlowIncId],
-              ["FlowListName", t.FlowListName],
-              ["FlowId", t.FlowId],
-              ["StateID", t.StateId],
+              ["FlowIncId", o.FlowIncId],
+              ["FlowListName", o.FlowListName],
+              ["FlowId", o.FlowId],
+              ["StateID", o.StateId],
             ),
           (this.t$i = !1),
-          this.n$i(t))
+          this.n$i(o))
         : (this.t$i = !1));
   }
-  r$i(e, t = 0) {
-    if (!e.IsBreakdown) {
-      if (7 !== this.Txn && !this.Cgo[this.Txn][2](t, e)) return !1;
-      for (const o of this.Cgo)
-        if (o[0] !== this.Txn && !o[2](t, e))
+  r$i(e, o = 0) {
+    if (
+      (!ModelManager_1.ModelManager.AutoRunModel?.IsInLogicTreeGmMode() ||
+        !ModelManager_1.ModelManager.AutoRunModel.ShouldFastSkip) &&
+      !e.IsBreakdown
+    ) {
+      if (7 !== this.Axn && !this.Cgo[this.Axn][2](o, e)) return !1;
+      for (const t of this.Cgo)
+        if (t[0] !== this.Axn && !t[2](o, e))
           return (
-            (this.Txn = o[0]),
+            (this.Axn = t[0]),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Plot",
                 27,
                 "剧情开始检查不通过",
-                ["reason", o[1]],
+                ["reason", t[1]],
                 ["IncId", e.FlowIncId],
               ),
             !1
           );
     }
-    return (this.Txn = 7), !0;
+    return (this.Axn = 7), !0;
   }
   n$i(e) {
     if (
@@ -250,8 +268,8 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
       ModelManager_1.ModelManager.PlotModel.CheckCanPlayNow(e))
     ) {
       ControllerHolder_1.ControllerHolder.PlotController.OnStartPlotNetwork(e);
-      const t = FlowData_1.FlowContext.Create();
-      t.Init(
+      const o = FlowData_1.FlowContext.Create();
+      o.Init(
         e.IsServerNotify,
         e.FlowListName,
         e.FlowIncId,
@@ -271,12 +289,12 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
             "Plot",
             27,
             "剧情行为组开始",
-            ["id", t.FormatId],
+            ["id", o.FormatId],
             ["num", e.StateActions.length],
           ),
         ControllerHolder_1.ControllerHolder.FlowController.ExecuteActions(
           e.StateActions,
-          t,
+          o,
           () => {
             ControllerHolder_1.ControllerHolder.PlotController.OnEndPlotNetwork(),
               Log_1.Log.CheckInfo() &&
@@ -284,11 +302,11 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
                   "Plot",
                   27,
                   "EndFlow",
-                  ["incId", t.FlowIncId],
-                  ["id", t.FormatId],
-                  ["IsSkip", t.IsBackground],
+                  ["incId", o.FlowIncId],
+                  ["id", o.FormatId],
+                  ["IsSkip", o.IsBackground],
                 ),
-              t.Recycle(),
+              o.Recycle(),
               this.StartPlotNetworkPending();
           },
         ),

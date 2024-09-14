@@ -14,7 +14,7 @@ class ActivitySubViewBase extends UiPanelBase_1.UiPanelBase {
       (this.ActivityRemainTimeText = ""),
       (this.ActivityBaseData = void 0),
       (this.LevelSequencePlayer = void 0),
-      (this.dBn = (e) => {
+      (this.MBn = (e) => {
         this.OnSequenceStart(e);
       }),
       (this.yTn = (e) => {
@@ -32,7 +32,7 @@ class ActivitySubViewBase extends UiPanelBase_1.UiPanelBase {
       this.LevelSequencePlayer ||
         ((this.LevelSequencePlayer =
           new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-        this.LevelSequencePlayer.BindSequenceStartEvent(this.dBn),
+        this.LevelSequencePlayer.BindSequenceStartEvent(this.MBn),
         this.LevelSequencePlayer.BindSequenceCloseEvent(this.yTn)),
       this.kOe(),
       this.OnAddEventListener();

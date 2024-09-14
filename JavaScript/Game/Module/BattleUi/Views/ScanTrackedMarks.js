@@ -212,10 +212,7 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
     );
   }
   xmt(e) {
-    EffectSystem_1.EffectSystem.IsValid(this.ymt) &&
-      EffectSystem_1.EffectSystem.GetEffectActor(this.ymt).SetActorHiddenInGame(
-        e,
-      );
+    EffectSystem_1.EffectSystem.SetEffectHidden(this.ymt, e);
   }
   ToClose() {
     this.RootItem.bIsUIActive &&

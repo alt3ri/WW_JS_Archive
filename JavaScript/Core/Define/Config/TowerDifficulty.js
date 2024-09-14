@@ -11,8 +11,10 @@ class TowerDifficulty {
     return this.difficulty();
   }
   get Reward() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.rewardLength(), (t) =>
-      this.reward(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.rewardLength(),
+      this.reward,
+      this,
     );
   }
   __init(t, i) {

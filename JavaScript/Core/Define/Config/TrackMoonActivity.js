@@ -19,8 +19,10 @@ class TrackMoonActivity {
     return this.activitybuttontype();
   }
   get RewardList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.rewardlistLength(), (t) =>
-      this.rewardlist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.rewardlistLength(),
+      this.rewardlist,
+      this,
     );
   }
   get FocusMarkId() {

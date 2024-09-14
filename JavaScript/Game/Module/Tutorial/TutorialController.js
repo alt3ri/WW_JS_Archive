@@ -25,10 +25,10 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(17135, this.PRo);
+    Net_1.Net.Register(20918, this.PRo);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(17135);
+    Net_1.Net.UnRegister(20918);
   }
   static OnAddOpenViewCheckFunction() {
     UiManager_1.UiManager.AddOpenViewCheckFunction(
@@ -50,13 +50,13 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static GmUnlockOneTutorial(e) {
-    var t = Protocol_1.Aki.Protocol.C0s.create();
-    (t.J4n = e),
-      Net_1.Net.Call(29738, t, (e) => {
+    var t = Protocol_1.Aki.Protocol.E0s.create();
+    (t.s5n = e),
+      Net_1.Net.Call(18457, t, (e) => {
         e &&
-          e.O4n === Protocol_1.Aki.Protocol.O4n.NRs &&
+          e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs &&
           ModelManager_1.ModelManager.TutorialModel.UpdateUnlockTutorials(
-            e.eOs,
+            e.aOs,
           );
       });
   }
@@ -65,30 +65,30 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
       this.xRo(e);
   }
   static xRo(o) {
-    var e = Protocol_1.Aki.Protocol.C0s.create();
-    (e.J4n = o),
-      Net_1.Net.Call(11656, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.E0s.create();
+    (e.s5n = o),
+      Net_1.Net.Call(27821, e, (e) => {
         var t;
         e &&
-          e.O4n === Protocol_1.Aki.Protocol.O4n.NRs &&
-          ((t = Number(Object.keys(e.rvs)[0])),
-          (e = e.rvs[t]),
+          e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs &&
+          ((t = Number(Object.keys(e._vs)[0])),
+          (e = e._vs[t]),
           ModelManager_1.ModelManager.TutorialModel.RewardInfo
-            ? (ModelManager_1.ModelManager.TutorialModel.RewardInfo.U9n[0].o9n +=
+            ? (ModelManager_1.ModelManager.TutorialModel.RewardInfo.O9n[0].m9n +=
                 e)
             : ((t = {
-                y6n: ConfigManager_1.ConfigManager.TutorialConfig.GetTutorial(o)
+                P6n: ConfigManager_1.ConfigManager.TutorialConfig.GetTutorial(o)
                   .DropId,
-                U9n: [
+                O9n: [
                   {
-                    q9n: TutorialDefine_1.TutorialUtils.FixedDropDropShowPlanId,
-                    f8n: t,
-                    o9n: e,
-                    L9n: 0,
+                    W9n: TutorialDefine_1.TutorialUtils.FixedDropDropShowPlanId,
+                    L8n: t,
+                    m9n: e,
+                    b9n: 0,
                   },
                 ],
-                E9n: 0,
-                I9n: 1,
+                x9n: 0,
+                B9n: 1,
               }),
               (ModelManager_1.ModelManager.TutorialModel.RewardInfo = t)));
       });
@@ -104,12 +104,12 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
     var o;
     ModelManager_1.ModelManager.TutorialModel.GetSavedDataById(e)
       ? t(!0)
-      : (((o = Protocol_1.Aki.Protocol.C0s.create()).J4n = e),
-        Net_1.Net.Call(29738, o, (e) => {
-          !e || e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+      : (((o = Protocol_1.Aki.Protocol.E0s.create()).s5n = e),
+        Net_1.Net.Call(18457, o, (e) => {
+          !e || e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? t(!1)
             : (ModelManager_1.ModelManager.TutorialModel.UpdateUnlockTutorials(
-                e.eOs,
+                e.aOs,
               ),
               t(!0));
         }));
@@ -117,14 +117,14 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
 }
 ((exports.TutorialController = TutorialController).PRo = (e) => {
   if (e)
-    for (const t of e.ZGs)
+    for (const t of e.sOs)
       ModelManager_1.ModelManager.TutorialModel.UpdateUnlockTutorials(t);
 }),
   (TutorialController.Q5e = () => {
-    var e = Protocol_1.Aki.Protocol.c0s.create();
-    Net_1.Net.Call(12127, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.p0s.create();
+    Net_1.Net.Call(21138, e, (e) => {
       e &&
-        (ModelManager_1.ModelManager.TutorialModel.InitUnlockTutorials(e.ZGs),
+        (ModelManager_1.ModelManager.TutorialModel.InitUnlockTutorials(e.sOs),
         (e =
           ModelManager_1.ModelManager.TutorialModel.GetUnlockedTutorialDataByType(
             TutorialDefine_1.ETutorialType.All,

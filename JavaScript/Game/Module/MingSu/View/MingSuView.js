@@ -176,7 +176,7 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
     var i = ModelManager_1.ModelManager.MingSuModel,
       s = i.GetTargetDragonPoolLevelById(this.PoolConfigId),
       h = i.GetTargetDragonPoolMaxLevelById(this.PoolConfigId),
-      r = this.GetText(4);
+      n = this.GetText(4);
     if (
       this.CurrentShowLevel === s + 1 ||
       (this.CurrentShowLevel === s && this.CurrentShowLevel === h)
@@ -188,19 +188,19 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
         s === h && --e;
       var h = i.GetTargetDragonPoolLevelNeedCoreById(this.PoolConfigId, e);
       let t = 0;
-      var n = 2 === i.GetTargetDragonPoolActiveById(this.PoolConfigId),
-        n =
-          (t = n ? h : i.GetTargetDragonPoolCoreCountById(this.PoolConfigId)) /
+      var r = 2 === i.GetTargetDragonPoolActiveById(this.PoolConfigId),
+        r =
+          (t = r ? h : i.GetTargetDragonPoolCoreCountById(this.PoolConfigId)) /
           h;
-      this.Vbi.SetFillAmount(n), r.SetText(t + "/" + h);
+      this.Vbi.SetFillAmount(r), n.SetText(t + "/" + h);
     } else
       this.CurrentShowLevel <= s
         ? ((this.kbi = 0),
-          (n = i.GetTargetDragonPoolLevelNeedCoreById(
+          (r = i.GetTargetDragonPoolLevelNeedCoreById(
             this.PoolConfigId,
             this.CurrentShowLevel - 1,
           )),
-          r.SetText(n + "/" + n),
+          n.SetText(r + "/" + r),
           this.Vbi.SetFillAmount(1))
         : this.CurrentShowLevel > s + 1 &&
           ((this.kbi = 2),
@@ -208,7 +208,7 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
             this.PoolConfigId,
             this.CurrentShowLevel - 1,
           )),
-          r.SetText("0/" + h),
+          n.SetText("0/" + h),
           this.Vbi.SetFillAmount(0));
   }
   jqe() {
@@ -313,7 +313,15 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
   OnCollectItemCountChanged(e) {
     this.Jbi();
   }
-  OnCloseRewardView() {
+  OnLevelMaxSequenceFinished() {
+    this.SetActive(!0),
+      (this.Kbi = !1),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.HangPlotViewHud,
+        !1,
+      );
+  }
+  OnLevelUpSequenceFinished() {
     this.SetActive(!0),
       (this.Kbi = !1),
       EventSystem_1.EventSystem.Emit(

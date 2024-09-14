@@ -13,10 +13,10 @@ class CipherController extends UiControllerBase_1.UiControllerBase {
       UiManager_1.UiManager.OpenView("CipherView"));
   }
   static RequestCipherComplete() {
-    var e = Protocol_1.Aki.Protocol.TJn.create();
-    (e.z4n = ModelManager_1.ModelManager.CipherModel.GetCipherConfigId()),
-      (e.Z4n = Protocol_1.Aki.Protocol.t3s.Proto_Cipher),
-      Net_1.Net.Call(5703, e, (e) => {});
+    var e = Protocol_1.Aki.Protocol.wJn.create();
+    (e.a5n = ModelManager_1.ModelManager.CipherModel.GetCipherConfigId()),
+      (e.h5n = Protocol_1.Aki.Protocol.h3s.Proto_Cipher),
+      Net_1.Net.Call(28002, e, (e) => {});
   }
 }
 exports.CipherController = CipherController;

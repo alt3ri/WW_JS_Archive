@@ -33,10 +33,10 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
           );
       }),
       (this.z2e = (e) => {
-        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.O4n,
-            12613,
+            e.Q4n,
+            27498,
           ),
           (e = {
             ButtonTextId: "ConfirmBox_133_ButtonText_0",
@@ -58,10 +58,10 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
       });
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(12613, this.z2e);
+    Net_1.Net.Register(27498, this.z2e);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(12613);
+    Net_1.Net.UnRegister(27498);
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -97,7 +97,7 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
   }
   OnCreateActivityData(e) {
     return (
-      (ActivityRoleTrialController.CurrentActivityId = e.J4n),
+      (ActivityRoleTrialController.CurrentActivityId = e.s5n),
       new ActivityRoleTrialData_1.ActivityRoleTrialData()
     );
   }
@@ -106,14 +106,14 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
     return !1;
   }
   static RequestRoleInstanceReward(t) {
-    var e = new Protocol_1.Aki.Protocol.Lus();
-    (e.O6n = t),
-      Net_1.Net.Call(9233, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.xus();
+    (e.Q6n = t),
+      Net_1.Net.Call(16800, e, (e) => {
         e &&
-          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+          (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              2799,
+              e.Q4n,
+              27936,
             ),
           (e = this.J2e())) &&
           (e.SetRewardStateByRoleId(t, 2),

@@ -19,11 +19,11 @@ class CountDownFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptFloat
       (this.dJt = ""),
       (this.Oct = void 0),
       (this.LevelSequencePlayer = void 0),
-      (this.PYt = (e, t) => {
-        void 0 === (this.uJt = e) || e <= 0
+      (this.PYt = (e) => {
+        var t;
+        (this.uJt = e) <= 0
           ? (this.GetUiNiagara(2).SetUIActive(!1),
             this.GetUiNiagara(3).SetUIActive(!1),
-            t && this.SetExtraText((t = "00"), t, t),
             (ModelManager_1.ModelManager.GeneralLogicTreeModel.CountDownViewClosing =
               !0),
             this.CloseMe((e) => {

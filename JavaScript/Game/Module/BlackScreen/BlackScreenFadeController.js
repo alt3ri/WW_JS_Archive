@@ -22,7 +22,7 @@ class BlackScreenFadeController extends UiControllerBase_1.UiControllerBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnTeamLivingStateChange,
-        this.M7s,
+        this.t$s,
       );
   }
   static OnRemoveEvents() {
@@ -32,7 +32,7 @@ class BlackScreenFadeController extends UiControllerBase_1.UiControllerBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnTeamLivingStateChange,
-        this.M7s,
+        this.t$s,
       );
   }
   static AddFadeBlackScreen(e, r, n, t, i) {
@@ -64,14 +64,14 @@ class BlackScreenFadeController extends UiControllerBase_1.UiControllerBase {
               )
             )
           );
-        (this.gQs = t),
+        (this.BXs = t),
           EventSystem_1.EventSystem.Has(
             EventDefine_1.EEventName.GeneralLogicTreeRemove,
-            this.fQs,
+            this.bXs,
           ) ||
             EventSystem_1.EventSystem.Add(
               EventDefine_1.EEventName.GeneralLogicTreeRemove,
-              this.fQs,
+              this.bXs,
             );
       }
       (BlackScreenFadeController.NeedInputDis = !0),
@@ -99,13 +99,13 @@ class BlackScreenFadeController extends UiControllerBase_1.UiControllerBase {
       this.r0t.HideItem(),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.GeneralLogicTreeRemove,
-        this.fQs,
+        this.bXs,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.GeneralLogicTreeRemove,
-          this.fQs,
+          this.bXs,
         ),
-      (this.gQs = void 0));
+      (this.BXs = void 0));
   }
   static OnClear() {
     return this.r0t && (this.r0t.Destroy(), (this.r0t = void 0)), !0;
@@ -132,7 +132,7 @@ class BlackScreenFadeController extends UiControllerBase_1.UiControllerBase {
 (exports.BlackScreenFadeController = BlackScreenFadeController),
   ((_a = BlackScreenFadeController).r0t = void 0),
   (BlackScreenFadeController.NeedInputDis = !1),
-  (BlackScreenFadeController.gQs = void 0),
+  (BlackScreenFadeController.BXs = void 0),
   (BlackScreenFadeController.l0t = new Set(["GuideTutorialView"])),
   (BlackScreenFadeController.n0t = () => {
     _a.r0t ||
@@ -143,7 +143,7 @@ class BlackScreenFadeController extends UiControllerBase_1.UiControllerBase {
         !0,
       ));
   }),
-  (BlackScreenFadeController.M7s = (e, r, n) => {
+  (BlackScreenFadeController.t$s = (e, r, n) => {
     e &&
       1 === r &&
       2 === n &&
@@ -158,9 +158,9 @@ class BlackScreenFadeController extends UiControllerBase_1.UiControllerBase {
       (r.Type === UiLayerType_1.ELayerType.Normal && _a.l0t.has(e))
     );
   }),
-  (BlackScreenFadeController.fQs = (e, r) => {
+  (BlackScreenFadeController.bXs = (e, r) => {
     r &&
-      _a.gQs === r &&
+      _a.BXs === r &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("BlackScreen", 46, "监听玩法结束销毁黑幕"),
       LevelLoadingController_1.LevelLoadingController.CloseAllBlackScreenLoading());

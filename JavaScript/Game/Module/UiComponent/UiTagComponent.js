@@ -37,7 +37,7 @@ class UiTagComponent {
     return !!t && this.ContainsTagById(t);
   }
   GetTagCountById(t) {
-    return void 0 === t ? 0 : this.Rxo.get(t) ?? 0;
+    return void 0 === t ? 0 : (this.Rxo.get(t) ?? 0);
   }
   Axo(t, i, e, ...s) {
     void 0 !== t &&

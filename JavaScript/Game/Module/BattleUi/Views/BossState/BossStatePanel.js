@@ -22,7 +22,7 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
       (this.Drt = new Set()),
-      (this.HQn = new Map()),
+      (this.YQn = new Map()),
       (this.Rrt = -1),
       (this.Urt = void 0),
       (this.Art = void 0),
@@ -30,7 +30,14 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.xrt = 0),
       (this.wrt = 0),
       (this.Brt = (t) => {
-        t && this.brt(t);
+        t &&
+          this.brt(t) &&
+          EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+            this,
+            t,
+            EventDefine_1.EEventName.RemoveEntity,
+            this.zpe,
+          );
       }),
       (this.zpe = (t, e) => {
         var i;
@@ -38,7 +45,15 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           (i = e.Entity.GetComponent(3)) &&
           i.IsBoss &&
           ((i = e.Id), this.Drt.has(i)) &&
-          (this.Drt.delete(i), this.HQn.delete(i), i === this.Rrt) &&
+          (this.Drt.delete(i),
+          this.YQn.delete(i),
+          EventSystem_1.EventSystem.RemoveWithTargetUseKey(
+            this,
+            e,
+            EventDefine_1.EEventName.RemoveEntity,
+            this.zpe,
+          ),
+          i === this.Rrt) &&
           this.IsTargetBossExist() &&
           (this.qrt(!1), this.Grt());
       }),
@@ -132,7 +147,11 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ));
   }
   OnTickBattleChildViewPanel(t) {
-    this.Vrt(), this.Art?.Tick(t), this.Prt?.Tick(t);
+    BossStatePanel.vJe.Start(),
+      this.Vrt(),
+      this.Art?.Tick(t),
+      this.Prt?.Tick(t),
+      BossStatePanel.vJe.Stop();
   }
   OnChangeBoss(t) {
     this.Art && (this.qrt(), this.Grt()), (this.Rrt = t);
@@ -165,7 +184,7 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       n &&
         (n = n.GetComponent(3)) &&
         ((n = n.Owner.GetSquaredDistanceTo(t)),
-        (s = this.HQn.get(h))
+        (s = this.YQn.get(h))
           ? n <= s && n < i && ((i = n), (e = h))
           : n > this.wrt ||
             (n <= this.xrt && n < i && ((i = n), (e = h)),
@@ -188,29 +207,25 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   IsTargetBossExist() {
     return -1 !== this.Rrt;
   }
-  brt(e) {
-    if (e?.Valid) {
-      var i = e.Entity.GetComponent(0);
-      if (i) {
-        i = i.GetMonsterComponent();
-        if (i) {
-          let t = 0;
-          var i = i.BossViewConfig;
-          0 === (t = i ? i.BossStateViewType : t) ||
-            this.Drt.has(e.Id) ||
-            (this.Drt.add(e.Id),
-            i?.ShowDistance &&
-              ((i = i.ShowDistance * i.ShowDistance), this.HQn.set(e.Id, i)));
-        }
-      }
-    }
+  brt(t) {
+    if (!t?.Valid) return !1;
+    var e = t.Entity.GetComponent(0);
+    if (!e) return !1;
+    e = e.GetMonsterComponent();
+    if (!e) return !1;
+    let i = 0;
+    var e = e.BossViewConfig;
+    return (
+      0 !== (i = e ? e.BossStateViewType : i) &&
+      !this.Drt.has(t.Id) &&
+      (this.Drt.add(t.Id),
+      e?.ShowDistance &&
+        ((e = e.ShowDistance * e.ShowDistance), this.YQn.set(t.Id, e)),
+      !0)
+    );
   }
   AddEvents() {
     EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.SpawnBoss, this.Brt),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.RemoveEntity,
-        this.zpe,
-      ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharOnBuffAddUITexture,
         this.AQe,
@@ -233,10 +248,7 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       EventDefine_1.EEventName.SpawnBoss,
       this.Brt,
     ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.RemoveEntity,
-        this.zpe,
-      ),
+      EventSystem_1.EventSystem.RemoveAllTargetUseKey(this),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharOnBuffAddUITexture,
         this.AQe,
@@ -258,5 +270,7 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     return this.Art?.GetRootActor();
   }
 }
-(exports.BossStatePanel = BossStatePanel).vJe = void 0;
+(exports.BossStatePanel = BossStatePanel).vJe = Stats_1.Stat.Create(
+  "[BattleView]BossStatePanelTick",
+);
 //# sourceMappingURL=BossStatePanel.js.map

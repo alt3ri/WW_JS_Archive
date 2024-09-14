@@ -13,30 +13,36 @@ class AiBattleWanderGroup {
   get DistanceRange() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.distancerangeLength(),
-      (t) => this.distancerange(t),
+      this.distancerange,
+      this,
     );
   }
   get NearActionRates() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.nearactionratesLength(),
-      (t) => this.nearactionrates(t),
+      this.nearactionrates,
+      this,
     );
   }
   get MiddleActionRates() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.middleactionratesLength(),
-      (t) => this.middleactionrates(t),
+      this.middleactionrates,
+      this,
     );
   }
   get FarActionRates() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.faractionratesLength(),
-      (t) => this.faractionrates(t),
+      this.faractionrates,
+      this,
     );
   }
   get TurnSpeeds() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.turnspeedsLength(), (t) =>
-      this.turnspeeds(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.turnspeedsLength(),
+      this.turnspeeds,
+      this,
     );
   }
   get RunTurnSpeed() {

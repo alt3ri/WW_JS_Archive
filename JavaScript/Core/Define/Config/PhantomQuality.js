@@ -16,15 +16,23 @@ class PhantomQuality {
   get SlotUnlockLevel() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.slotunlocklevelLength(),
-      (t) => this.slotunlocklevel(t),
+      this.slotunlocklevel,
+      this,
     );
   }
   get IdentifyCost() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.identifycostLength(),
-      (t) => this.identifycost(t)?.key(),
-      (t) => this.identifycost(t)?.value(),
+      this.identifycostKey,
+      this.identifycostValue,
+      this,
     );
+  }
+  identifycostKey(t) {
+    return this.identifycost(t)?.key();
+  }
+  identifycostValue(t) {
+    return this.identifycost(t)?.value();
   }
   get IdentifyCoin() {
     return this.identifycoin();

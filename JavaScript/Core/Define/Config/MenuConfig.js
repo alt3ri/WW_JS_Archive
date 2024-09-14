@@ -14,6 +14,9 @@ class MenuConfig {
   get FunctionId() {
     return this.functionid();
   }
+  get SliderDefault() {
+    return this.sliderdefault();
+  }
   get OptionsDefault() {
     return this.optionsdefault();
   }
@@ -48,25 +51,27 @@ class MenuConfig {
     return this.settype();
   }
   get SliderRange() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.sliderrangeLength(), (t) =>
-      this.sliderrange(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.sliderrangeLength(),
+      this.sliderrange,
+      this,
     );
-  }
-  get SliderDefault() {
-    return this.sliderdefault();
   }
   get Digits() {
     return this.digits();
   }
   get OptionsName() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.optionsnameLength(), (t) =>
-      this.optionsname(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.optionsnameLength(),
+      this.optionsname,
+      this,
     );
   }
   get OptionsValue() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.optionsvalueLength(),
-      (t) => this.optionsvalue(t),
+      this.optionsvalue,
+      this,
     );
   }
   get KeyMap() {
@@ -81,53 +86,81 @@ class MenuConfig {
   get RelationFunction() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.relationfunctionLength(),
-      (t) => this.relationfunction(t),
+      this.relationfunction,
+      this,
     );
   }
   get DisableValue() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.disablevalueLength(),
-      (t) => this.disablevalue(t),
+      this.disablevalue,
+      this,
     );
   }
   get DisableFunction() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.disablefunctionLength(),
-      (t) => this.disablefunction(t),
+      this.disablefunction,
+      this,
     );
   }
   get AffectedValue() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.affectedvalueLength(),
-      (t) => this.affectedvalue(t),
+      this.affectedvalue,
+      this,
     );
   }
   get AffectedFunction() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.affectedfunctionLength(),
-      (t) => this.affectedfunction(t)?.key(),
-      (t) => this.affectedfunction(t)?.value(),
+      this.affectedfunctionKey,
+      this.affectedfunctionValue,
+      this,
     );
+  }
+  affectedfunctionKey(t) {
+    return this.affectedfunction(t)?.key();
+  }
+  affectedfunctionValue(t) {
+    return this.affectedfunction(t)?.value();
   }
   get ValueTipsMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.valuetipsmapLength(),
-      (t) => this.valuetipsmap(t)?.key(),
-      (t) => this.valuetipsmap(t)?.value(),
+      this.valuetipsmapKey,
+      this.valuetipsmapValue,
+      this,
     );
+  }
+  valuetipsmapKey(t) {
+    return this.valuetipsmap(t)?.key();
+  }
+  valuetipsmapValue(t) {
+    return this.valuetipsmap(t)?.value();
   }
   get ClickedTipsMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.clickedtipsmapLength(),
-      (t) => this.clickedtipsmap(t)?.key(),
-      (t) => this.clickedtipsmap(t)?.value(),
+      this.clickedtipsmapKey,
+      this.clickedtipsmapValue,
+      this,
     );
+  }
+  clickedtipsmapKey(t) {
+    return this.clickedtipsmap(t)?.key();
+  }
+  clickedtipsmapValue(t) {
+    return this.clickedtipsmap(t)?.value();
   }
   get ClickedTips() {
     return this.clickedtips();
   }
   get BlockOnIosCheckServer() {
     return this.blockonioscheckserver();
+  }
+  get DetailText() {
+    return this.detailtext();
   }
   get ConditionGroup() {
     return this.conditiongroup();
@@ -149,63 +182,67 @@ class MenuConfig {
     var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  optionsdefault() {
+  sliderdefault() {
     var t = this.J7.__offset(this.z7, 8);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
+    return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
-  maintype() {
+  optionsdefault() {
     var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
+  maintype() {
+    var t = this.J7.__offset(this.z7, 12);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
   subname(t) {
-    var i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   subtype() {
-    var t = this.J7.__offset(this.z7, 14);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  subsort() {
     var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  subimage(t) {
-    var i = this.J7.__offset(this.z7, 18);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+  subsort() {
+    var t = this.J7.__offset(this.z7, 18);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  name(t) {
+  subimage(t) {
     var i = this.J7.__offset(this.z7, 20);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  platform() {
-    var t = this.J7.__offset(this.z7, 22);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  name(t) {
+    var i = this.J7.__offset(this.z7, 22);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  functionsort() {
+  platform() {
     var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
+  functionsort() {
+    var t = this.J7.__offset(this.z7, 26);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
   functionimage(t) {
-    var i = this.J7.__offset(this.z7, 26);
+    var i = this.J7.__offset(this.z7, 28);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   settype() {
-    var t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetSliderrangeAt(t) {
     return this.sliderrange(t);
   }
   sliderrange(t) {
-    var i = this.J7.__offset(this.z7, 30);
+    var i = this.J7.__offset(this.z7, 32);
     return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   sliderrangeLength() {
-    var t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   sliderrangeArray() {
-    var t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 32);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -213,10 +250,6 @@ class MenuConfig {
           this.J7.__vector_len(this.z7 + t),
         )
       : null;
-  }
-  sliderdefault() {
-    var t = this.J7.__offset(this.z7, 32);
-    return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   digits() {
     var t = this.J7.__offset(this.z7, 34);
@@ -408,8 +441,12 @@ class MenuConfig {
     var t = this.J7.__offset(this.z7, 62);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
+  detailtext(t) {
+    var i = this.J7.__offset(this.z7, 64);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
   conditiongroup() {
-    var t = this.J7.__offset(this.z7, 64);
+    var t = this.J7.__offset(this.z7, 66);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

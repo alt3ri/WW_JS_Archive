@@ -16,13 +16,13 @@ class ActivityRun extends ActivityData_1.ActivityBaseData {
   }
   PhraseEx(i) {
     (this.kFe = new Array()),
-      i.Aps.aps.forEach((t) => {
+      i.Gps.mps.forEach((t) => {
         var e =
           ModelManager_1.ModelManager.ActivityRunModel.CreateActivityRunData(
-            i.J4n,
-            t.W6n,
+            i.s5n,
+            t.e8n,
           );
-        e.Phrase(t), this.kFe.push(e), this.OFe.set(t.W6n, i.J4n);
+        e.Phrase(t), this.kFe.push(e), this.OFe.set(t.e8n, i.s5n);
       });
   }
   GetChallengeActivityId(t) {
@@ -226,8 +226,8 @@ class ActivityRunData extends ActivityData_1.ActivityExData {
     );
   }
   OnChallengeEnd(t) {
-    (this.HFe = t.mMs),
-      (this.Cce = t.Y4n),
+    (this.HFe = t.SMs),
+      (this.Cce = t.n5n),
       this.HFe > this.xte && (this.xte = this.HFe),
       (this.Cce < this.pne || 0 === this.pne) && (this.pne = this.Cce),
       EventSystem_1.EventSystem.Emit(
@@ -237,18 +237,18 @@ class ActivityRunData extends ActivityData_1.ActivityExData {
       this.RefreshActivityRedPoint();
   }
   Phrase(t) {
-    t instanceof Protocol_1.Aki.Protocol.q6s
-      ? ((this.FFe = t.W6n),
+    t instanceof Protocol_1.Aki.Protocol.$5s
+      ? ((this.FFe = t.e8n),
         (this.VFe = []),
-        t.Ybs.forEach((t) => {
+        t.rBs.forEach((t) => {
           this.VFe.push(t);
         }),
-        (this.xte = t.Qbs),
-        (this.pne = t.Xbs))
-      : t instanceof Protocol_1.Aki.Protocol.nks &&
-        ((this.FFe = t.W6n),
-        (this.WFe = Number(MathUtils_1.MathUtils.LongToBigInt(t.nps))),
-        (this.KFe = Number(MathUtils_1.MathUtils.LongToBigInt(t.sps)))),
+        (this.xte = t.tBs),
+        (this.pne = t.iBs))
+      : t instanceof Protocol_1.Aki.Protocol.cks &&
+        ((this.FFe = t.e8n),
+        (this.WFe = Number(MathUtils_1.MathUtils.LongToBigInt(t.cps))),
+        (this.KFe = Number(MathUtils_1.MathUtils.LongToBigInt(t.dps)))),
       this.QFe ||
         (this.QFe =
           ConfigManager_1.ConfigManager.ActivityRunConfig.GetActivityRunScoreMap(

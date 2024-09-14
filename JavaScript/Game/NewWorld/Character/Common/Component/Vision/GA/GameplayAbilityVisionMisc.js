@@ -13,7 +13,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.summonParticleCueId =
     exports.morphParticleCueId =
     exports.materialCueId =
-    exports.damageReductionBuffId =
     exports.roleAppearBuffId =
     exports.visionAppearBuffId =
     exports.roleHideBuffId =
@@ -35,8 +34,6 @@ const UE = require("ue"),
     CharacterBuffIds_1.gameplayAbilityVisionBuffId.VisionAppearBuffId),
   (exports.roleAppearBuffId =
     CharacterBuffIds_1.gameplayAbilityVisionBuffId.RoleAppearBuffId),
-  (exports.damageReductionBuffId =
-    CharacterBuffIds_1.gameplayAbilityVisionBuffId.DamageReductionBuffId),
   (exports.materialCueId =
     CharacterBuffIds_1.gameplayAbilityVisionBuffId.MaterialCueId),
   (exports.morphParticleCueId =
@@ -47,7 +44,7 @@ const UE = require("ue"),
   (exports.VISION_HIDDEN_DELAY = 1e3),
   (exports.EXPLORE_SKILL_ID = 12e5),
   (exports.VISION_END_BULLET = "210000004"),
-  (exports.controlVisionEnergy = Protocol_1.Aki.Protocol.Bks.Proto_Life),
+  (exports.controlVisionEnergy = Protocol_1.Aki.Protocol.Vks.Proto_Life),
   (exports.morphTag = -2100129479),
   (exports.summonTag = -1369542279),
   (exports.invincibleTag = -208062360),

@@ -38,9 +38,9 @@ class SubMeshItem {
     (this.Name = e),
       (this.Mesh = t),
       (this.VisibleInternal = !1),
-      (this.iCa = void 0),
-      (this.rCa = () => {
-        this.Mesh.SetVisibility(!1, !1), (this.iCa = void 0);
+      (this.cva = void 0),
+      (this.dva = () => {
+        this.Mesh.SetVisibility(!1, !1), (this.cva = void 0);
       }),
       (this.CurrentPdHandle = 0),
       (this.CurrentEffectHandle = 0),
@@ -52,10 +52,10 @@ class SubMeshItem {
   SetVisible(e, t = 0) {
     this.VisibleInternal !== e &&
       ((this.VisibleInternal = e),
-      this.iCa &&
-        (TimerSystem_1.TimerSystem.Remove(this.iCa), (this.iCa = void 0)),
+      this.cva &&
+        (TimerSystem_1.TimerSystem.Remove(this.cva), (this.cva = void 0)),
       !this.VisibleInternal && 0 < t
-        ? (this.iCa = TimerSystem_1.TimerSystem.Delay(this.rCa, t))
+        ? (this.cva = TimerSystem_1.TimerSystem.Delay(this.dva, t))
         : this.Mesh.SetVisibility(e, !1));
   }
 }
@@ -150,7 +150,7 @@ let SubMeshComponent = class SubMeshComponent extends EntityComponent_1.EntityCo
   }
 };
 (SubMeshComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(203)],
+  [(0, RegisterComponent_1.RegisterComponent)(205)],
   SubMeshComponent,
 )),
   (exports.SubMeshComponent = SubMeshComponent);

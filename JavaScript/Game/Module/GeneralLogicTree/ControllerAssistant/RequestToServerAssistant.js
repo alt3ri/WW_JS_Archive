@@ -23,16 +23,16 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
-      (this.QNn = new Map()),
-      (this.XNn = new Map()),
+      (this.ikn = new Map()),
+      (this.rkn = new Map()),
       (this.pct = !1),
       (this.zpe = (e, o) => {
         var r, t;
-        o.ConfigType === Protocol_1.Aki.Protocol.YTs.P6n &&
+        o.ConfigType === Protocol_1.Aki.Protocol.rLs.F6n &&
           ((r = ModelManager_1.ModelManager.CreatureModel.GetInstanceId()),
-          this.$Nn(r, o.PbDataId),
+          this.okn(r, o.PbDataId),
           (t = this.GetEntityPos(o, !0)),
-          this.YNn(r, o.PbDataId, t));
+          this.nkn(r, o.PbDataId, t));
       });
   }
   OnAddEvents() {
@@ -48,7 +48,7 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
     );
   }
   OnDestroy() {
-    this.QNn.clear(), this.XNn.clear();
+    this.ikn.clear(), this.rkn.clear();
   }
   RequestSubmitNode(e, r, o = 0) {
     var t,
@@ -71,25 +71,25 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
               ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeOwnerId(
                 e.TreeIncId,
               )),
-            ((t = Protocol_1.Aki.Protocol.YYn.create()).n9n = i ?? 0),
-            (t.s9n = MathUtils_1.MathUtils.BigIntToLong(e.TreeIncId)),
-            (t.L5n = e.NodeId),
-            Net_1.Net.Call(20968, t, (e) => {
+            ((t = Protocol_1.Aki.Protocol.rJn.create()).d9n = i ?? 0),
+            (t.C9n = MathUtils_1.MathUtils.BigIntToLong(e.TreeIncId)),
+            (t.b5n = e.NodeId),
+            Net_1.Net.Call(28983, t, (e) => {
               var o;
-              e.DEs !== Protocol_1.Aki.Protocol.O4n.NRs &&
-                e.DEs !==
-                  Protocol_1.Aki.Protocol.O4n.Proto_ErrTreeNodeNotActive &&
+              e.BEs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
+                e.BEs !==
+                  Protocol_1.Aki.Protocol.Q4n.Proto_ErrTreeNodeNotActive &&
                 ((o =
                   ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(
-                    e.DEs,
+                    e.BEs,
                   )),
                 Log_1.Log.CheckInfo()) &&
                 Log_1.Log.Info("GeneralLogicTree", 19, o),
-                r(e.DEs === Protocol_1.Aki.Protocol.O4n.NRs);
+                r(e.BEs === Protocol_1.Aki.Protocol.Q4n.KRs);
             }))
           : ((i =
               ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(
-                Protocol_1.Aki.Protocol.O4n.Proto_ErrPreCondition,
+                Protocol_1.Aki.Protocol.Q4n.Proto_ErrPreCondition,
               )),
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("GeneralLogicTree", 19, i),
@@ -105,24 +105,44 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
           ),
         r(!1));
   }
+  RequestSubmitAwakeAndLoadEntityNode(e, r) {
+    var o =
+        ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeOwnerId(
+          e.TreeIncId,
+        ),
+      t = Protocol_1.Aki.Protocol.Sth.create();
+    (t.d9n = o ?? 0),
+      (t.C9n = MathUtils_1.MathUtils.BigIntToLong(e.TreeIncId)),
+      (t.b5n = e.NodeId),
+      Net_1.Net.Call(20009, t, (e) => {
+        var o;
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
+          ((o = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(
+            e.Q4n,
+          )),
+          Log_1.Log.CheckInfo()) &&
+          Log_1.Log.Info("GeneralLogicTree", 19, o),
+          r(e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs);
+      });
+  }
   RequestSetTimerInfo(o, e, r, t, i) {
     var n =
         ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeOwnerId(
           o,
         ),
-      n = Protocol_1.Aki.Protocol.eJn.create({
-        n9n: n,
-        s9n: MathUtils_1.MathUtils.BigIntToLong(o),
-        L5n: e,
-        r9n: r,
-        h9n: t,
-        q4n: i,
+      n = Protocol_1.Aki.Protocol.aJn.create({
+        d9n: n,
+        C9n: MathUtils_1.MathUtils.BigIntToLong(o),
+        b5n: e,
+        c9n: r,
+        f9n: t,
+        W4n: i,
       });
-    Net_1.Net.Call(6625, n, (e) => {
-      e.DEs !== Protocol_1.Aki.Protocol.O4n.NRs &&
+    Net_1.Net.Call(15628, n, (e) => {
+      e.BEs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          e.DEs,
-          1180,
+          e.BEs,
+          22843,
         ),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.GeneralLogicTreeTimerInfoChanged,
@@ -137,16 +157,16 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
     var e,
       t = ModelManager_1.ModelManager.GeneralLogicTreeModel,
       i = t.GetBehaviorTree(o);
-    i && (e = i.GetProcessingFailedNode()) && i.CheckCanGiveUp()
+    i && (e = i.GetProcessingCanGiveupFailedNode()) && i.CheckCanGiveUp()
       ? ((i = t.GetBehaviorTreeOwnerId(o)),
-        (t = Protocol_1.Aki.Protocol._Jn.create({
-          n9n: i,
-          s9n: MathUtils_1.MathUtils.BigIntToLong(o),
-          L5n: e.NodeId,
+        (t = Protocol_1.Aki.Protocol.fJn.create({
+          d9n: i,
+          C9n: MathUtils_1.MathUtils.BigIntToLong(o),
+          b5n: e.NodeId,
         })),
-        Net_1.Net.Call(25031, t, (e) => {
-          e.DEs !== Protocol_1.Aki.Protocol.O4n.NRs
-            ? (e.DEs === Protocol_1.Aki.Protocol.O4n.Proto_ErrTreeNotFailedNode
+        Net_1.Net.Call(17398, t, (e) => {
+          e.BEs !== Protocol_1.Aki.Protocol.Q4n.KRs
+            ? (e.BEs === Protocol_1.Aki.Protocol.Q4n.Proto_ErrTreeNotFailedNode
                 ? Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "GeneralLogicTree",
@@ -155,8 +175,8 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
                     ["TreeIncId", o],
                   )
                 : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                    e.DEs,
-                    14806,
+                    e.BEs,
+                    25310,
                   ),
               r(!1))
             : r(!0);
@@ -181,9 +201,9 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
               "服务器下发的失败回退节点并没在之前被保存，已走保底检测第一个失败节点，确认是否有问题",
               ["treeId", o],
             ),
-          (e = t.GetProcessingFailedNode())),
+          (e = t.GetProcessingCanGiveupFailedNode())),
         e?.NeedSecondaryConfirm
-          ? r === Protocol_1.Aki.Protocol.xEs.Proto_TransferFail
+          ? r === Protocol_1.Aki.Protocol.NEs.Proto_TransferFail
             ? this.Q$t(o, !1)
             : ((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
                 77,
@@ -204,7 +224,7 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
                 3,
                 3,
                 void 0,
-                0.2,
+                1,
               ),
             this.Q$t(o, !0));
     } else
@@ -223,19 +243,19 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
           ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeOwnerId(
             e,
           )),
-        (r = Protocol_1.Aki.Protocol.dJn.create({
-          n9n: r,
-          s9n: MathUtils_1.MathUtils.BigIntToLong(e),
-          l9n: o ? 1 : 2,
+        (r = Protocol_1.Aki.Protocol.MJn.create({
+          d9n: r,
+          C9n: MathUtils_1.MathUtils.BigIntToLong(e),
+          p9n: o ? 1 : 2,
         })),
-        Net_1.Net.Call(28068, r, (e) => {
-          e.DEs !== Protocol_1.Aki.Protocol.O4n.NRs &&
+        Net_1.Net.Call(26466, r, (e) => {
+          e.BEs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             (ControllerHolder_1.ControllerHolder.LevelLoadingController.CloseLoading(
               3,
             ),
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.DEs,
-              24254,
+              e.BEs,
+              17060,
               void 0,
               !1,
             ));
@@ -256,25 +276,25 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
         ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeOwnerId(
           e,
         ),
-      r = Protocol_1.Aki.Protocol.yJn.create({
-        n9n: r,
-        s9n: MathUtils_1.MathUtils.BigIntToLong(e),
-        r9n: o,
+      r = Protocol_1.Aki.Protocol.PJn.create({
+        d9n: r,
+        C9n: MathUtils_1.MathUtils.BigIntToLong(e),
+        c9n: o,
       });
-    Net_1.Net.Call(9732, r, (e) => {
-      e.DEs !== Protocol_1.Aki.Protocol.O4n.NRs &&
+    Net_1.Net.Call(25365, r, (e) => {
+      e.BEs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
         ((e = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(
-          e.DEs,
+          e.BEs,
         )),
         Log_1.Log.CheckInfo()) &&
         Log_1.Log.Info("GeneralLogicTree", 19, e);
     });
   }
   RequestFinishUiGameplay(e, o) {
-    var r = Protocol_1.Aki.Protocol.TJn.create();
-    (r.z4n = o),
-      (r.Z4n = e),
-      Net_1.Net.Call(5703, r, (e) => {
+    var r = Protocol_1.Aki.Protocol.wJn.create();
+    (r.a5n = o),
+      (r.h5n = e),
+      Net_1.Net.Call(28002, r, (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Quest",
@@ -285,10 +305,10 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
       });
   }
   RequestForcedOccupation(o, r) {
-    var e = Protocol_1.Aki.Protocol.hJn.create({
-      s9n: MathUtils_1.MathUtils.BigIntToLong(o),
+    var e = Protocol_1.Aki.Protocol.CJn.create({
+      C9n: MathUtils_1.MathUtils.BigIntToLong(o),
     });
-    Net_1.Net.Call(25467, e, (e) => {
+    Net_1.Net.Call(25771, e, (e) => {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Quest",
@@ -301,17 +321,17 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
   }
   RequestEntityPosition(o, r, e) {
     var e = e ?? Vector_1.Vector.Create(),
-      t = this.JNn(o, r);
+      t = this.skn(o, r);
     return (
       t
         ? e.Set(t.X, t.Y, t.Z)
-        : ((t = this.zNn(o, r)) && e.Set(t.X, t.Y, t.Z),
+        : ((t = this.akn(o, r)) && e.Set(t.X, t.Y, t.Z),
           this.pct ||
-            ((t = Protocol_1.Aki.Protocol.xfs.create({ _9n: r, u9n: o })),
+            ((t = Protocol_1.Aki.Protocol.Nfs.create({ v9n: r, M9n: o })),
             (this.pct = !0),
-            Net_1.Net.Call(9840, t, (e) => {
-              e?.O4n === Protocol_1.Aki.Protocol.O4n.NRs &&
-                ((e = Vector_1.Vector.Create(e.e8n)), this.ZNn(o, r, e)),
+            Net_1.Net.Call(16814, t, (e) => {
+              e?.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs &&
+                ((e = Vector_1.Vector.Create(e.l8n)), this.hkn(o, r, e)),
                 (this.pct = !1);
             }))),
       e
@@ -339,25 +359,25 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
       } else (o = e.GetLocation()), r.Set(o.X, o.Y, o.Z);
     return r;
   }
-  JNn(e, o) {
-    e = this.QNn.get(e);
+  skn(e, o) {
+    e = this.ikn.get(e);
     if (e) return e.get(o);
   }
-  $Nn(e, o) {
-    e = this.QNn.get(e);
+  okn(e, o) {
+    e = this.ikn.get(e);
     e && e.delete(o);
   }
-  ZNn(e, o, r) {
-    let t = this.QNn.get(e);
-    t || ((t = new Map()), this.QNn.set(e, t)), t.set(o, r);
+  hkn(e, o, r) {
+    let t = this.ikn.get(e);
+    t || ((t = new Map()), this.ikn.set(e, t)), t.set(o, r);
   }
-  zNn(e, o) {
-    e = this.XNn.get(e);
+  akn(e, o) {
+    e = this.rkn.get(e);
     if (e) return e.get(o);
   }
-  YNn(e, o, r) {
-    let t = this.XNn.get(e);
-    t || ((t = new Map()), this.XNn.set(e, t)), t.set(o, r);
+  nkn(e, o, r) {
+    let t = this.rkn.get(e);
+    t || ((t = new Map()), this.rkn.set(e, t)), t.set(o, r);
   }
 }
 exports.RequestToServerAssistant = RequestToServerAssistant;

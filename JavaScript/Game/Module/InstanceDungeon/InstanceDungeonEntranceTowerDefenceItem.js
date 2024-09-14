@@ -8,7 +8,7 @@ const UE = require("ue"),
 class InstanceDungeonEntranceTowerDefenceItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.KYs = void 0),
+      (this.Hzs = void 0),
       (this.JGe = () =>
         new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid());
   }
@@ -23,7 +23,7 @@ class InstanceDungeonEntranceTowerDefenceItem extends UiPanelBase_1.UiPanelBase 
     ];
   }
   OnStart() {
-    (this.KYs = new GenericScrollViewNew_1.GenericScrollViewNew(
+    (this.Hzs = new GenericScrollViewNew_1.GenericScrollViewNew(
       this.GetScrollViewWithScrollbar(0),
       this.JGe,
     )),
@@ -32,8 +32,8 @@ class InstanceDungeonEntranceTowerDefenceItem extends UiPanelBase_1.UiPanelBase 
       this.SetButtonUiActive(1, !1);
   }
   SetPhantoms(e) {
-    this.KYs.RefreshByDataAsync(e).then(() => {
-      this.KYs.GetScrollItemList().forEach((e) => {
+    this.Hzs.RefreshByDataAsync(e).then(() => {
+      this.Hzs.GetScrollItemList().forEach((e) => {
         e.SetToggleInteractive(!1), e.SetQuality();
       });
     });

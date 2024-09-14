@@ -8,23 +8,21 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
-  ConfigMarkItemView_1 = require("./ConfigMarkItemView"),
-  SUB_ICON_PATH = "SP_MarkRecommend",
-  MULTI_MAP_ICON_PATH = "SP_MarkMultiMap",
-  MULTI_MAP_SELECT_ICON_PATH = "SP_MarkMultiMapSelect";
+  WorldMapDefine_1 = require("../../../WorldMap/WorldMapDefine"),
+  ConfigMarkItemView_1 = require("./ConfigMarkItemView");
 class TeleportMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
   constructor(e) {
     super(e),
       (this.IsSelectThisFloor = !1),
-      (this.jbn = (e) => {
+      (this.Zbn = (e) => {
         var t = this.Holder;
-        (this.IsSelectThisFloor = t.MarkMultiMapId === e),
+        (this.IsSelectThisFloor = t.GetMultiMapId() === e),
           this.OnIconPathChanged(t.IconPath);
       }),
       (this.OnMarkItemStateChange = (e) => {
         (ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
           this.Holder.MarkId,
-        )).ShowFlag === Protocol_1.Aki.Protocol.I6s.Proto_ShowDisable
+        )).ShowFlag === Protocol_1.Aki.Protocol.U5s.Proto_ShowDisable
           ? this.GetSprite(2).SetUIActive(!0)
           : this.GetSprite(2).SetUIActive(!1);
       });
@@ -36,7 +34,7 @@ class TeleportMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldMapSelectMultiMap,
-        this.jbn,
+        this.Zbn,
       ),
       super.OnInitialize();
   }
@@ -47,7 +45,7 @@ class TeleportMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldMapSelectMultiMap,
-        this.jbn,
+        this.Zbn,
       );
   }
   OnAfterShow() {
@@ -63,10 +61,10 @@ class TeleportMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
     (2 === this.Holder?.MapType && !e) ||
       ((e = this.Holder),
       (t = this.IsSelectThisFloor),
-      e.IsMultiMapTeleport &&
+      e.IsMultiMap() &&
       ((i = ModelManager_1.ModelManager.AreaModel?.GetCurrentAreaId()),
       (o = ConfigManager_1.ConfigManager.MapConfig?.GetSubMapConfigById(
-        e.MarkMultiMapId,
+        e.GetMultiMapId(),
       ))) &&
       o.Area.includes(i)
         ? (this.IsSelectThisFloor = !0)
@@ -75,12 +73,14 @@ class TeleportMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
       this.OnIconPathChanged(e.IconPath);
   }
   OnIconPathChanged(e) {
-    var t = this.GetSprite(1),
-      i = this.Holder,
-      o = ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
+    var t, i, o;
+    this.IsShowOrShowing &&
+      ((t = this.GetSprite(1)),
+      (i = this.Holder),
+      (o = ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
         this.Holder.MarkId,
-      );
-    this.GetSprite(1).SetUIActive(!0),
+      )),
+      t.SetUIActive(!0),
       this.LoadIcon(t, e),
       i.IsDungeonEntrance && !i.IsFogUnlock
         ? this.GetChildIconComponentAsync()
@@ -89,7 +89,7 @@ class TeleportMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
                 e.SetUiActive(!0),
                   (e.Icon =
                     ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-                      SUB_ICON_PATH,
+                      WorldMapDefine_1.SUB_ICON_PATH,
                     ));
               },
               void 0,
@@ -106,15 +106,15 @@ class TeleportMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
             })
             .finally(void 0)
         : this.ChildIconComponentInternal?.SetUiActive(!1),
-      i.IsMultiMapTeleport &&
+      i.IsMultiMap() &&
         this.GetChildIconComponentAsync()
           .then((e) => {
             e.SetUiActive(!0),
               (e.Icon =
                 ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
                   this.IsSelectThisFloor
-                    ? MULTI_MAP_SELECT_ICON_PATH
-                    : MULTI_MAP_ICON_PATH,
+                    ? WorldMapDefine_1.MULTI_MAP_SELECT_ICON_PATH
+                    : WorldMapDefine_1.MULTI_MAP_ICON_PATH,
                 ));
           })
           .catch((e) => {
@@ -128,15 +128,15 @@ class TeleportMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
               );
           })
           .finally(void 0),
-      o.ShowFlag === Protocol_1.Aki.Protocol.I6s.Proto_ShowDisable
+      o.ShowFlag === Protocol_1.Aki.Protocol.U5s.Proto_ShowDisable
         ? this.GetSprite(2).SetUIActive(!0)
-        : this.GetSprite(2).SetUIActive(!1);
+        : this.GetSprite(2).SetUIActive(!1));
   }
   OnSelectedStateChange(e) {
     e &&
       (ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
         this.Holder.MarkId,
-      )).ShowFlag === Protocol_1.Aki.Protocol.I6s.Proto_ShowDisable &&
+      )).ShowFlag === Protocol_1.Aki.Protocol.U5s.Proto_ShowDisable &&
       ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
         "Map_TeleportMark_Disable_Tips",
       );

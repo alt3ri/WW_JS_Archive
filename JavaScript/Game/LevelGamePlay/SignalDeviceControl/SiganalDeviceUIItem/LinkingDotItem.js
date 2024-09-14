@@ -21,9 +21,9 @@ class LinkingDotItem extends UiPanelBase_1.UiPanelBase {
       (this.NAe = void 0),
       (this.OAe = void 0),
       (this.kAe = void 0),
-      (this.fea = void 0),
-      (this.pea = void 0),
-      (this.oda = void 0),
+      (this.Tia = void 0),
+      (this.Lia = void 0),
+      (this.oga = void 0),
       (this.SPe = void 0),
       (this.FAe = (i, t, e, n, o) => {});
   }
@@ -74,12 +74,12 @@ class LinkingDotItem extends UiPanelBase_1.UiPanelBase {
       this.NAe.SetUIActive(!1),
       this.kAe.SetUIActive(!1),
       1 === ModelManager_1.ModelManager.SignalDeviceModel.ViewType &&
-        ((this.fea = this.GetSprite(9)),
-        (this.pea = this.GetSprite(8)),
-        (this.oda = this.GetSprite(10)),
-        this.fea.SetUIActive(!1),
-        this.pea.SetUIActive(!1),
-        this.oda.SetUIActive(!1),
+        ((this.Tia = this.GetSprite(9)),
+        (this.Lia = this.GetSprite(8)),
+        (this.oga = this.GetSprite(10)),
+        this.Tia.SetUIActive(!1),
+        this.Lia.SetUIActive(!1),
+        this.oga.SetUIActive(!1),
         (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
           this.GetRootItem(),
         ))),
@@ -118,14 +118,14 @@ class LinkingDotItem extends UiPanelBase_1.UiPanelBase {
         LinkingDotItem.FxColorMap.get(i));
     this.kAe.SetColor(UE.Color.FromHex(h)),
       t &&
-        ((h = LinkingDotItem.vea.get(i)),
+        ((h = LinkingDotItem.Dia.get(i)),
         (t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(h)),
-        this.SetSpriteByPath(t, this.fea, !1),
-        (h = LinkingDotItem.nda.get(i)),
+        this.SetSpriteByPath(t, this.Tia, !1),
+        (h = LinkingDotItem.nga.get(i)),
         (t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(h)),
-        this.SetSpriteByPath(t, this.oda, !1),
+        this.SetSpriteByPath(t, this.oga, !1),
         (h = LinkingDotItem.CmColorMap.get(i)),
-        this.pea.SetColor(UE.Color.FromHex(h)),
+        this.Lia.SetColor(UE.Color.FromHex(h)),
         (t = LinkingDotItem.CmAnimColorMap.get(i)),
         this.GetSprite(11)?.SetColor(UE.Color.FromHex(t)),
         this.GetSprite(11)?.SetUIActive(!1),
@@ -136,7 +136,7 @@ class LinkingDotItem extends UiPanelBase_1.UiPanelBase {
   async ResetIcon() {
     var i;
     1 === ModelManager_1.ModelManager.SignalDeviceModel.ViewType
-      ? (this.oda.SetUIActive(!1),
+      ? (this.oga.SetUIActive(!1),
         this.GetSprite(11)?.SetUIActive(!1),
         (i = new CustomPromise_1.CustomPromise()),
         await this.SPe.PlaySequenceAsync("PressUp", i),
@@ -146,7 +146,7 @@ class LinkingDotItem extends UiPanelBase_1.UiPanelBase {
   async OnPressed(i) {
     var t, e;
     1 === ModelManager_1.ModelManager.SignalDeviceModel.ViewType
-      ? (this.oda.SetUIActive(!0),
+      ? (this.oga.SetUIActive(!0),
         (t = i ? "PressDown" : "PressUp"),
         (e = new CustomPromise_1.CustomPromise()),
         await this.SPe.PlaySequenceAsync(t, e))
@@ -155,7 +155,7 @@ class LinkingDotItem extends UiPanelBase_1.UiPanelBase {
   async OnLinked() {
     var i;
     1 === ModelManager_1.ModelManager.SignalDeviceModel.ViewType
-      ? (this.oda.SetUIActive(!0),
+      ? (this.oga.SetUIActive(!0),
         this.GetSprite(11)?.SetUIActive(!0),
         (i = new CustomPromise_1.CustomPromise()),
         await this.SPe.PlaySequenceAsync("Activate", i),
@@ -198,13 +198,13 @@ class LinkingDotItem extends UiPanelBase_1.UiPanelBase {
     [IAction_1.EPieceColorType.Red, "SP_LineRed"],
     [IAction_1.EPieceColorType.Yellow, "SP_LineYellow"],
   ])),
-  (LinkingDotItem.vea = new Map([
+  (LinkingDotItem.Dia = new Map([
     [IAction_1.EPieceColorType.Blue, "SP_AnimLineBlue"],
     [IAction_1.EPieceColorType.Green, "SP_AnimLineGreen"],
     [IAction_1.EPieceColorType.Red, "SP_AnimLineRed"],
     [IAction_1.EPieceColorType.Yellow, "SP_AnimLineYellow"],
   ])),
-  (LinkingDotItem.nda = new Map([
+  (LinkingDotItem.nga = new Map([
     [IAction_1.EPieceColorType.Blue, "SP_AnimDotBlue"],
     [IAction_1.EPieceColorType.Green, "SP_AnimDotGreen"],
     [IAction_1.EPieceColorType.Red, "SP_AnimDotRed"],

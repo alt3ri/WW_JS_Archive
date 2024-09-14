@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GlobalData = void 0);
-const UE = require("ue");
+const UE = require("ue"),
+  Info_1 = require("../Core/Common/Info"),
+  Platform_1 = require("../Launcher/Platform/Platform");
 class GlobalData {
   constructor() {}
   static Init(t) {
@@ -57,8 +59,8 @@ class GlobalData {
     return (
       void 0 === this.UMe &&
         (this.IsPlayInEditor ||
-        UE.KuroStaticLibrary.IsBuildShipping() ||
-        "Windows" !== UE.GameplayStatics.GetPlatformName()
+        Info_1.Info.IsBuildShipping ||
+        !Platform_1.Platform.IsWindowsPlatform()
           ? (this.UMe = !1)
           : ((t =
               UE.BlueprintPathsLibrary.ProjectDir() +

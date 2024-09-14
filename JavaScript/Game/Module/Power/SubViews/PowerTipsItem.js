@@ -10,9 +10,9 @@ const UE = require("ue"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   LguiResourceManager_1 = require("../../../Ui/LguiResourceManager"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
-  ItemConfig_1 = require("../../Inventory/ItemConfig"),
   PayShopItem_1 = require("../../PayShop/PayShopTab/TabItem/PayShopItem"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
   GAP = 1e3;
 class PowerTipsItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
@@ -20,12 +20,12 @@ class PowerTipsItem extends UiPanelBase_1.UiPanelBase {
       (this.i4i = void 0),
       (this.Xbe = void 0),
       (this.$8i = void 0),
-      (this.bQs = void 0),
-      (this.qQs = void 0),
-      (this.GQs = void 0),
+      (this.ZXs = void 0),
+      (this.eYs = void 0),
+      (this.tYs = void 0),
       (this.SPe = void 0),
-      (this.OQs = () => {
-        this.GQs?.();
+      (this.iYs = () => {
+        this.tYs?.();
       }),
       (this.dde = () => {
         EventSystem_1.EventSystem.Add(
@@ -40,7 +40,7 @@ class PowerTipsItem extends UiPanelBase_1.UiPanelBase {
         );
       }),
       (this.A6e = () => {
-        this.mGe(), this.DQs();
+        this.mGe(), this.WXs();
       });
   }
   OnRegisterComponent() {
@@ -55,22 +55,27 @@ class PowerTipsItem extends UiPanelBase_1.UiPanelBase {
       [7, UE.UIText],
       [8, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[5, this.OQs]]);
+      (this.BtnBindInfo = [[5, this.iYs]]);
   }
   SetBackBackCallBack(e) {
-    this.GQs = e;
+    this.tYs = e;
   }
   OnStart() {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(6), "Energy_Title"),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), "Energy_Text"),
-      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.dde();
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
+    var e = this.GetItem(2);
+    this.i4i.GetRootItem().SetUIParent(e), this.dde();
   }
   OnBeforeShow() {
     this.PlayStartSequence();
   }
   PlayStartSequence() {
     this.SPe?.PlaySequencePurely("Start");
+  }
+  async PlayCloseSequence() {
+    var e = new CustomPromise_1.CustomPromise();
+    await this.SPe.PlaySequenceAsync("Close", e);
   }
   async OnCreateAsync() {
     return new Promise((i) => {
@@ -87,16 +92,13 @@ class PowerTipsItem extends UiPanelBase_1.UiPanelBase {
   }
   RefreshByData(e) {
     (this.$8i = e),
-      (this.qQs = new ItemConfig_1.ItemConfig()),
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigDataRef(
+      (this.eYs =
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          this.$8i.ItemId,
+        )),
+      (this.ZXs = ModelManager_1.ModelManager.PowerModel.GetPowerDataById(
         this.$8i.ItemId,
-        this.qQs,
-      ),
-      (this.bQs = ModelManager_1.ModelManager.PowerModel.GetPowerDataById(
-        this.$8i.ItemId,
-      ));
-    var i = this.GetItem(2);
-    this.i4i.GetRootItem().SetUIParent(i),
+      )),
       this.i4i.HideExchangePopViewElement(),
       this.i4i.Refresh(e.ConvertToPayShopGoods(), !1, 0),
       (this.Xbe = TimerSystem_1.TimerSystem.Forever(() => {
@@ -105,10 +107,10 @@ class PowerTipsItem extends UiPanelBase_1.UiPanelBase {
       this.Og();
   }
   Og() {
-    this.mGe(), this.Pqe(), this.Sta(), this.DQs();
+    this.mGe(), this.Pqe(), this.kra(), this.WXs();
   }
-  DQs() {
-    var e = this.bQs.GetPowerRecoveryMode();
+  WXs() {
+    var e = this.ZXs.GetPowerRecoveryMode();
     2 === e
       ? LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), "PowerMax")
       : 1 === e
@@ -119,27 +121,27 @@ class PowerTipsItem extends UiPanelBase_1.UiPanelBase {
         : LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(4),
             "PowerNextRecovery",
-            this.bQs.GetNextTimerRecoverText(),
+            this.ZXs.GetNextTimerRecoverText(),
           );
   }
   mGe() {
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(1),
       "Energy_Number",
-      this.bQs.GetCurrentPower(),
-      this.bQs.GetPowerLimit(),
+      this.ZXs.GetCurrentPower(),
+      this.ZXs.GetPowerLimit(),
     );
   }
   Pqe() {
-    var e = this.qQs.AttributesDescription;
+    var e = this.eYs.AttributesDescription;
     this.GetText(3).ShowTextNew(e);
   }
-  Sta() {
-    var e = this.qQs.BgDescription;
+  kra() {
+    var e = this.eYs.BgDescription;
     e && this.GetText(8).ShowTextNew(e);
   }
   u3e() {
-    this.DQs();
+    this.WXs();
   }
   q7e() {
     this.u3e();

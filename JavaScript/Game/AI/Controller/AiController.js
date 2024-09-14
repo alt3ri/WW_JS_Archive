@@ -92,7 +92,7 @@ class AiController {
     var i;
     this.UpdateCooldownTrigger(),
       this.cY &&
-        (this.fie === Protocol_1.Aki.Protocol.wks.Proto_Monster &&
+        (this.fie === Protocol_1.Aki.Protocol.kks.Proto_Monster &&
           (i = this.GetTeamLevelId()) !== this.AiTeam?.AiTeamLevel.Id &&
           (AiModelController_1.AiModelController.RemoveAiFromTeam(this),
           AiModelController_1.AiModelController.AddAiToTeam(this, i)),
@@ -108,7 +108,7 @@ class AiController {
       this.AiAlert.Tick(this.mie),
       this.AiHateList.AiHate &&
         (this.AiTaunt.Tick(), this.AiHateList.Tick(this.mie)),
-      this.fie === Protocol_1.Aki.Protocol.wks.Proto_Monster &&
+      this.fie === Protocol_1.Aki.Protocol.kks.Proto_Monster &&
         this.AiPerceptionEvents.TickHate(),
       (this.mie = 0),
       PerformanceController_1.PerformanceController
@@ -133,7 +133,7 @@ class AiController {
       !this.NpcDecision) &&
       this.cY &&
       this.CharActorComp &&
-      this.fie === Protocol_1.Aki.Protocol.wks.Proto_Npc &&
+      this.fie === Protocol_1.Aki.Protocol.kks.Proto_Npc &&
       ((this.NpcDecision = new NpcDecisionController_1.NpcDecisionController()),
       this.NpcDecision.Init(this));
   }
@@ -144,14 +144,14 @@ class AiController {
       (this.CharActorComp = t.GetComponent(3)),
       (i = this.CharActorComp.CreatureData),
       (this.fie = this.CharActorComp.CreatureData.GetEntityType()),
-      (this.CharSkillComp = t.GetComponent(33)),
-      (i = i.ComponentDataMap.get("_ys"))?._ys?.Wys &&
-        (this.Cie = MathUtils_1.MathUtils.LongToBigInt(i?._ys?.Wys)),
-      i?._ys?.Qys &&
+      (this.CharSkillComp = t.GetComponent(34)),
+      (i = i.ComponentDataMap.get("fys"))?.fys?.Zys &&
+        (this.Cie = MathUtils_1.MathUtils.LongToBigInt(i?.fys?.Zys)),
+      i?.fys?.tIs &&
         (this.AiCombatMessageId = MathUtils_1.MathUtils.LongToBigInt(
-          i?._ys?.Qys,
+          i?.fys?.tIs,
         )),
-      (i = i?._ys?.Kys ?? 0),
+      (i = i?.fys?.eIs ?? 0),
       (this.gie = i),
       ModelManager_1.ModelManager.AiModel.AddActiveAiController(this),
       this.AiHateList.RefreshAbilityComp(),
@@ -159,7 +159,7 @@ class AiController {
       this.AiPatrol.Init(this.CharActorComp),
       this.AiAlert.Init(this.CharActorComp),
       this.AiPerception) &&
-      (i = t.GetComponent(108)) &&
+      (i = t.GetComponent(109)) &&
       i.SetLogicRange(this.AiPerception.MaxSenseRange),
       (this.cY = !!this.CharAiDesignComp && this.CharAiDesignComp.Active),
       this.CharActorComp &&
@@ -304,10 +304,10 @@ class AiController {
       s = this.AiCoolDownEvents.get(t);
     this.AiCoolDownList.set(t, [e ?? 0, !0]),
       ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-        (((o = (i = Protocol_1.Aki.Protocol.Ai).X3n.create()).w4n = [
-          i.Xks.create({ b4n: t, q4n: !0 }),
+        (((o = (i = Protocol_1.Aki.Protocol.Ai).r4n.create()).H4n = [
+          i.iNs.create({ j4n: t, W4n: !0 }),
         ]),
-        CombatMessage_1.CombatNet.Call(29197, this.CharAiDesignComp.Entity, o)),
+        CombatMessage_1.CombatNet.Call(17281, this.CharAiDesignComp.Entity, o)),
       void 0 !== e && s && s.IsValid() && s.Callback.Broadcast(!0);
   }
   GetCoolDownReady(t) {
@@ -342,10 +342,10 @@ class AiController {
         (s = Protocol_1.Aki.Protocol.Ai),
         ModelManager_1.ModelManager.GameModeModel.IsMulti &&
           o &&
-          (((e = s.X3n.create()).G4n = [s.Qks.create({ b4n: t, q4n: i })]),
-          (e.w4n = [s.Xks.create({ b4n: t, q4n: !1 })]),
+          (((e = s.r4n.create()).K4n = [s.tNs.create({ j4n: t, W4n: i })]),
+          (e.H4n = [s.iNs.create({ j4n: t, W4n: !1 })]),
           CombatMessage_1.CombatNet.Call(
-            29197,
+            17281,
             this.CharAiDesignComp.Entity,
             e,
           )));
@@ -367,59 +367,59 @@ class AiController {
         this.SetCoolDownTime(t, o, !0, "初始化AIC延迟节点"));
   }
   static AiInformationNotify(t, i) {
-    var o = t.GetComponent(39)?.AiController;
-    for (const e of i.vSs)
+    var o = t.GetComponent(40)?.AiController;
+    for (const e of i.TSs)
       o.SetCoolDownTime(
-        e.b4n,
-        MathUtils_1.MathUtils.LongToNumber(e.q4n),
+        e.j4n,
+        MathUtils_1.MathUtils.LongToNumber(e.W4n),
         !1,
         "远程同步",
       );
   }
   static AiInformationS(t, i) {
-    var o = t.GetComponent(39)?.AiController;
+    var o = t.GetComponent(40)?.AiController;
     if (o) {
-      for (var { b4n: e, q4n: s } of i.G4n) {
+      for (var { j4n: e, W4n: s } of i.K4n) {
         var r = o.AiCoolDownList.get(e)?.[1] ?? !0;
         o.AiCoolDownList.set(e, [
           Number(MathUtils_1.MathUtils.LongToBigInt(s)),
           r,
         ]);
       }
-      for (var { b4n: h, q4n: n } of i.w4n) {
+      for (var { j4n: h, W4n: n } of i.H4n) {
         var a = o.AiCoolDownList.get(h)?.[0] ?? 0;
         o.AiCoolDownList.set(h, [a, n]);
       }
-      for (const l of i.pSs)
+      for (const l of i.LSs)
         o.AiCoolDownList.delete(l), o.AiCoolDownEvents.delete(l);
     }
   }
   AiControlSwitchRequest(t, i) {
-    var o = Protocol_1.Aki.Protocol.Ai.jXn.create();
+    var o = Protocol_1.Aki.Protocol.Ai.zXn.create();
     const e = t.GetComponent(0).GetCreatureDataId();
-    (o.P4n = MathUtils_1.MathUtils.NumberToLong(e)),
-      Net_1.Net.Call(27100, o, (t) => {
-        t.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+    (o.F4n = MathUtils_1.MathUtils.NumberToLong(e)),
+      Net_1.Net.Call(17767, o, (t) => {
+        t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "AI",
               15,
               "AiControlSwitchRequest返回错误",
               ["EntityId", e],
-              ["ErrorCode", t.O4n],
+              ["ErrorCode", t.Q4n],
             ),
           i.ResetSwitchControlState());
       });
   }
 }
 __decorate(
-  [CombatMessage_1.CombatNet.SyncHandle("OFn")],
+  [CombatMessage_1.CombatNet.SyncHandle("QFn")],
   AiController,
   "AiInformationNotify",
   null,
 ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("VFn")],
+    [CombatMessage_1.CombatNet.SyncHandle("JFn")],
     AiController,
     "AiInformationS",
     null,

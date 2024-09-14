@@ -9,6 +9,7 @@ class RedDotInventoryCard extends RedDotBase_1.RedDotBase {
     return [
       EventDefine_1.EEventName.OnAddCommonItemList,
       EventDefine_1.EEventName.OnRemoveItemRedDot,
+      EventDefine_1.EEventName.OnResponseCommonItemFinished,
     ];
   }
   OnCheck(e) {

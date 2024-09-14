@@ -30,18 +30,18 @@ let LockComponent = class LockComponent extends EntityComponent_1.EntityComponen
       (this.onn = 0);
   }
   OnStart() {
-    (this.inn = this.Entity.GetComponent(180)),
+    (this.inn = this.Entity.GetComponent(181)),
       (this.u1t = this.Entity.GetComponent(0));
     var t = this.u1t.GetEntityEnterComponentState();
     if (void 0 !== t)
       switch (t) {
-        case Protocol_1.Aki.Protocol.I3s.Proto_NotUnlock:
+        case Protocol_1.Aki.Protocol.U3s.Proto_NotUnlock:
           this.onn = -421801185;
           break;
-        case Protocol_1.Aki.Protocol.I3s.Proto_Unlockable:
+        case Protocol_1.Aki.Protocol.U3s.Proto_Unlockable:
           this.onn = 1960897308;
           break;
-        case Protocol_1.Aki.Protocol.I3s.Proto_Unlocked:
+        case Protocol_1.Aki.Protocol.U3s.Proto_Unlocked:
           this.onn = 1196894179;
           break;
         default:
@@ -55,7 +55,7 @@ let LockComponent = class LockComponent extends EntityComponent_1.EntityComponen
   }
 };
 (LockComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(94)],
+  [(0, RegisterComponent_1.RegisterComponent)(95)],
   LockComponent,
 )),
   (exports.LockComponent = LockComponent);

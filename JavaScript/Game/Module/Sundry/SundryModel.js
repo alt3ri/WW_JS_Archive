@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TipsActorData = exports.SundryModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+const Info_1 = require("../../../Core/Common/Info"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   TestModuleBridge_1 = require("../../Bridge/TestModuleBridge"),
-  Info_1 = require("../../../Core/Common/Info");
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem");
 class SundryModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -18,11 +20,11 @@ class SundryModel extends ModelBase_1.ModelBase {
       (this.CanOpenGmView = !1),
       (this.IsBlockTips = !1),
       (this.eIn = 0),
-      (this.EnableDebugDetailSet = new Set()),
+      (this.ModuleDebugLevelMap = new Map()),
       (this.TipsActorDataMap = void 0);
   }
-  set BlockTpDungeonCount(t) {
-    this.eIn = t < 0 ? 0 : t;
+  set BlockTpDungeonCount(e) {
+    this.eIn = e < 0 ? 0 : e;
   }
   get BlockTpDungeonCount() {
     return this.eIn;
@@ -30,27 +32,34 @@ class SundryModel extends ModelBase_1.ModelBase {
   IsBlockTpDungeon() {
     return 0 < this.BlockTpDungeonCount;
   }
-  ToggleDebugDetail(t, e) {
-    e ? this.EnableDebugDetailSet.add(t) : this.EnableDebugDetailSet.delete(t);
+  ChangeModuleDebugLevel(e, t) {
+    0 < t
+      ? this.ModuleDebugLevelMap.set(e, t)
+      : this.ModuleDebugLevelMap.delete(e),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnChangeModuleDebugLevel,
+        e,
+        t,
+      );
   }
-  IsEnableDebugDetail(t) {
-    return this.EnableDebugDetailSet.has(t);
+  GetModuleDebugLevel(e) {
+    return this.ModuleDebugLevelMap.get(e) ?? 0;
   }
   OnInit() {
     return (
       Info_1.Info.IsBuildShipping ||
         (TestModuleBridge_1.TestModuleBridge.TryGetTestModuleExports().then(
-          (t) => {
-            t &&
-              t.GmBlueprintFunctionLib &&
-              (this.RIo = t.GmBlueprintFunctionLib);
+          (e) => {
+            e &&
+              e.GmBlueprintFunctionLib &&
+              (this.RIo = e.GmBlueprintFunctionLib);
           },
         ),
         TestModuleBridge_1.TestModuleBridge.TryGetTestModuleExports().then(
-          (t) => {
-            t &&
-              t.GmUniverseEditorFunctionLib &&
-              (this.UIo = t.GmUniverseEditorFunctionLib);
+          (e) => {
+            e &&
+              e.GmUniverseEditorFunctionLib &&
+              (this.UIo = e.GmUniverseEditorFunctionLib);
           },
         )),
       !0
@@ -65,9 +74,9 @@ class SundryModel extends ModelBase_1.ModelBase {
 }
 exports.SundryModel = SundryModel;
 class TipsActorData {
-  constructor(t, e, s) {
-    (this.Id = t),
-      (this.InitTransform = e),
+  constructor(e, t, s) {
+    (this.Id = e),
+      (this.InitTransform = t),
       (this.InitParam = s),
       (this.Actor = void 0);
   }

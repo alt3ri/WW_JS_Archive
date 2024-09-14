@@ -9,16 +9,16 @@ const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
 class SceneItemBuffController extends ControllerBase_1.ControllerBase {
   static BuffOperate(e, r, t) {
     var e = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e),
-      o = Protocol_1.Aki.Protocol.nes.create();
-    (o.$Wn = MathUtils_1.MathUtils.NumberToLong(e)),
-      (o.YWn = r),
-      Net_1.Net.Call(18889, o, (e) => {
+      o = Protocol_1.Aki.Protocol.ces.create();
+    (o.oKn = MathUtils_1.MathUtils.NumberToLong(e)),
+      (o.nKn = r),
+      Net_1.Net.Call(25010, o, (e) => {
         let r = !1;
-        e.O4n === Protocol_1.Aki.Protocol.O4n.NRs && (r = !0);
-        var o = MathUtils_1.MathUtils.LongToNumber(e.$Wn);
+        e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs && (r = !0);
+        var o = MathUtils_1.MathUtils.LongToNumber(e.oKn);
         ModelManager_1.ModelManager.CreatureModel.GetEntity(o)?.IsInit &&
           t &&
-          t(e.YWn, r);
+          t(e.nKn, r);
       });
   }
 }

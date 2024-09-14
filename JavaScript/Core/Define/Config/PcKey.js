@@ -17,6 +17,9 @@ class PcKey {
   get KeyDisplayName() {
     return this.keydisplayname();
   }
+  get FrenchKeyName() {
+    return this.frenchkeyname();
+  }
   get KeyIconPath() {
     return this.keyiconpath();
   }
@@ -45,8 +48,12 @@ class PcKey {
     var e = this.J7.__offset(this.z7, 10);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
-  keyiconpath(t) {
+  frenchkeyname(t) {
     var e = this.J7.__offset(this.z7, 12);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
+  }
+  keyiconpath(t) {
+    var e = this.J7.__offset(this.z7, 14);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
 }

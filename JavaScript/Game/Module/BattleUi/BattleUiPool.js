@@ -96,8 +96,8 @@ class BattleUiPool {
     var t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
         e.ResourceId,
       ),
-      r = await this.QXe.LoadPrefabAsync(t, i);
-    if (!r?.IsValid())
+      o = await this.QXe.LoadPrefabAsync(t, i);
+    if (!o?.IsValid())
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Battle", 18, "预加载Actor失败", [
@@ -106,25 +106,33 @@ class BattleUiPool {
           ]),
         !1
       );
-    r.RootComponent.SetUIActive(!1);
+    o.RootComponent.SetUIActive(!1);
     var t = new BattleUiPoolElement(),
-      o = ((t.ExistMulti = 0 < e.PreloadCount), new Array());
-    o.push(r);
+      r = ((t.ExistMulti = 0 < e.PreloadCount), new Array());
+    r.push(o);
     for (let t = 0; t < e.PreloadCount; t++) {
-      var a = LguiUtil_1.LguiUtil.DuplicateActor(r, i);
-      o.push(a);
+      var a = LguiUtil_1.LguiUtil.DuplicateActor(o, i);
+      r.push(a);
     }
-    return (t.ActorList = o), (t.Actor = r), this.WXe.set(e.ResourceId, t), !0;
+    return (t.ActorList = r), (t.Actor = o), this.WXe.set(e.ResourceId, t), !0;
   }
   GetActor(t, e, i) {
-    var r,
-      o = this.WXe.get(t);
-    if (o && !(o.ActorList.length <= 0))
-      return o.ExistMulti
-        ? 1 < o.ActorList.length
-          ? ((r = o.ActorList.pop()), i && r.K2_AttachRootComponentTo(e), r)
-          : LguiUtil_1.LguiUtil.DuplicateActor(o.ActorList[0], e)
-        : ((r = o.ActorList[0]), i && r.K2_AttachRootComponentTo(e), r);
+    var o,
+      r = this.WXe.get(t);
+    if (r && !(r.ActorList.length <= 0))
+      return r.ExistMulti
+        ? 1 < r.ActorList.length
+          ? ((o = r.ActorList.pop()), i && o.K2_AttachRootComponentTo(e), o)
+          : LguiUtil_1.LguiUtil.DuplicateActor(r.ActorList[0], e)
+        : (o = r.ActorList.pop())
+          ? (i && o.K2_AttachRootComponentTo(e), o)
+          : void (
+              Log_1.Log.CheckError() &&
+              Log_1.Log.Error("Battle", 18, "BattleUiPool重复获取单一预制体", [
+                "resourceId",
+                t,
+              ])
+            );
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Battle", 18, "BattleUiPool没有缓存该预制体", [
         "resourceId",
@@ -132,12 +140,20 @@ class BattleUiPool {
       ]);
   }
   RecycleActor(t, e, i = !1) {
-    var r = this.WXe.get(t);
-    return r
+    var o = this.WXe.get(t);
+    return o
       ? (e.RootComponent.SetUIActive(!1),
         i && e.K2_AttachRootComponentTo(this.$Xe),
-        r.ExistMulti && r.ActorList.push(e),
-        !0)
+        !o.ExistMulti && 0 !== o.ActorList.length
+          ? (Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Battle",
+                18,
+                "BattleUiPool重复Recycle单一预制体",
+                ["resourceId", t],
+              ),
+            !1)
+          : (o.ActorList.push(e), !0))
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Battle", 18, "BattleUiPool没有缓存该预制体", [
             "resourceId",
@@ -177,20 +193,20 @@ class BattleUiPool {
   }
   async LoadActor(t, e) {
     var i,
-      r = void 0;
-    let o = this.WXe.get(t);
-    return o
-      ? this.t$e(o, e)
-      : (r = await this.QXe.LoadPrefabAsync(t, this.$Xe))?.IsValid()
-        ? ((o = this.WXe.get(t))
-            ? ActorSystem_1.ActorSystem.Put(r)
-            : ((o = new BattleUiPoolElement()),
-              this.WXe.set(t, o),
-              (i = new Array()).push(r),
-              (o.ActorList = i),
-              (o.Actor = r),
-              this.WXe.set(t, o)),
-          this.t$e(o, e))
+      o = void 0;
+    let r = this.WXe.get(t);
+    return r
+      ? this.t$e(r, e)
+      : (o = await this.QXe.LoadPrefabAsync(t, this.$Xe))?.IsValid()
+        ? ((r = this.WXe.get(t))
+            ? ActorSystem_1.ActorSystem.Put(o)
+            : ((r = new BattleUiPoolElement()),
+              this.WXe.set(t, r),
+              (i = new Array()).push(o),
+              (r.ActorList = i),
+              (r.Actor = o),
+              this.WXe.set(t, r)),
+          this.t$e(r, e))
         : void (
             Log_1.Log.CheckError() &&
             Log_1.Log.Error("Battle", 18, "加载Actor失败", ["", t])

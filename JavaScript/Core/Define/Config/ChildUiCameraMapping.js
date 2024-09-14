@@ -31,9 +31,16 @@ class ChildUiCameraMapping {
   get BodyCameraSettingsNameMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.bodycamerasettingsnamemapLength(),
-      (t) => this.bodycamerasettingsnamemap(t)?.key(),
-      (t) => this.bodycamerasettingsnamemap(t)?.value(),
+      this.bodycamerasettingsnamemapKey,
+      this.bodycamerasettingsnamemapValue,
+      this,
     );
+  }
+  bodycamerasettingsnamemapKey(t) {
+    return this.bodycamerasettingsnamemap(t)?.key();
+  }
+  bodycamerasettingsnamemapValue(t) {
+    return this.bodycamerasettingsnamemap(t)?.value();
   }
   get DefaultCameraBlendName() {
     return this.defaultcamerablendname();
@@ -41,18 +48,25 @@ class ChildUiCameraMapping {
   get UiCameraBlendNameMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.uicamerablendnamemapLength(),
-      (t) => this.uicamerablendnamemap(t)?.key(),
-      (t) => this.uicamerablendnamemap(t)?.value(),
+      this.uicamerablendnamemapKey,
+      this.uicamerablendnamemapValue,
+      this,
     );
+  }
+  uicamerablendnamemapKey(t) {
+    return this.uicamerablendnamemap(t)?.key();
+  }
+  uicamerablendnamemapValue(t) {
+    return this.uicamerablendnamemap(t)?.value();
   }
   get UiCameraDelayTime() {
     return this.uicameradelaytime();
   }
-  __init(t, i) {
-    return (this.z7 = t), (this.J7 = i), this;
+  __init(t, e) {
+    return (this.z7 = t), (this.J7 = e), this;
   }
-  static getRootAsChildUiCameraMapping(t, i) {
-    return (i || new ChildUiCameraMapping()).__init(
+  static getRootAsChildUiCameraMapping(t, e) {
+    return (e || new ChildUiCameraMapping()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -62,20 +76,20 @@ class ChildUiCameraMapping {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   viewname(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var e = this.J7.__offset(this.z7, 6);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   defaultuicamerasettingsname(t) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var e = this.J7.__offset(this.z7, 8);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   ischeckspecialstate() {
     var t = this.J7.__offset(this.z7, 10);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   specialstatecamerasettingname(t) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var e = this.J7.__offset(this.z7, 12);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   bplayloadingcameraanimation() {
     var t = this.J7.__offset(this.z7, 14);
@@ -85,14 +99,14 @@ class ChildUiCameraMapping {
     var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  GetBodycamerasettingsnamemapAt(t, i) {
+  GetBodycamerasettingsnamemapAt(t, e) {
     return this.bodycamerasettingsnamemap(t);
   }
-  bodycamerasettingsnamemap(t, i) {
-    var e = this.J7.__offset(this.z7, 18);
-    return e
-      ? (i || new DicStringString_1.DicStringString()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + e) + 4 * t),
+  bodycamerasettingsnamemap(t, e) {
+    var i = this.J7.__offset(this.z7, 18);
+    return i
+      ? (e || new DicStringString_1.DicStringString()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
           this.J7,
         )
       : null;
@@ -102,17 +116,17 @@ class ChildUiCameraMapping {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultcamerablendname(t) {
-    var i = this.J7.__offset(this.z7, 20);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var e = this.J7.__offset(this.z7, 20);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
   }
-  GetUicamerablendnamemapAt(t, i) {
+  GetUicamerablendnamemapAt(t, e) {
     return this.uicamerablendnamemap(t);
   }
-  uicamerablendnamemap(t, i) {
-    var e = this.J7.__offset(this.z7, 22);
-    return e
-      ? (i || new DicStringString_1.DicStringString()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + e) + 4 * t),
+  uicamerablendnamemap(t, e) {
+    var i = this.J7.__offset(this.z7, 22);
+    return i
+      ? (e || new DicStringString_1.DicStringString()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
           this.J7,
         )
       : null;

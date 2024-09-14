@@ -13,8 +13,10 @@ class CustomMark {
     return this.markpic();
   }
   get ShowRange() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.showrangeLength(), (t) =>
-      this.showrange(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.showrangeLength(),
+      this.showrange,
+      this,
     );
   }
   get ShowPriority() {

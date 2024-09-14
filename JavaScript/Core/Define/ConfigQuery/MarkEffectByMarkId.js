@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configMarkEffectByMarkId.Init"),
+  getConfigStat = Stats_1.Stat.Create("configMarkEffectByMarkId.GetConfig"),
   CONFIG_STAT_PREFIX = "configMarkEffectByMarkId.GetConfig(";
 exports.configMarkEffectByMarkId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, e = !0) => {
-    if (
-      (r = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
-        var n = KEY_PREFIX + `#${o})`;
-        const f = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (f) return f;
+  GetConfig: (o, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      f =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (f) {
+      if (n) {
+        var e = KEY_PREFIX + `#${o})`;
+        const i = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (i)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            i
+          );
       }
       if (
-        (r =
+        (f =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,31 +58,36 @@ exports.configMarkEffectByMarkId = {
               o,
             ]))
       ) {
-        var r,
-          n = void 0;
+        e = void 0;
         if (
-          (([r, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([f, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["MarkId", o],
           )),
-          r)
+          f)
         ) {
-          const f = MarkEffect_1.MarkEffect.getRootAsMarkEffect(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+          const i = MarkEffect_1.MarkEffect.getRootAsMarkEffect(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
           );
           return (
-            e &&
-              ((r = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(r, f)),
+            n &&
+              ((f = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(f, i)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            f
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            i
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=MarkEffectByMarkId.js.map

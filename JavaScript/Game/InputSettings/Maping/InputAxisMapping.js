@@ -41,6 +41,9 @@ class InputAxisMapping {
   GetAxisBinding(e) {
     return this.XEe.get(e);
   }
+  GetAxisBindingMap() {
+    return this.XEe;
+  }
   GetAxisBindingByAxisMappingType(e) {
     return this.$Ee.get(e);
   }

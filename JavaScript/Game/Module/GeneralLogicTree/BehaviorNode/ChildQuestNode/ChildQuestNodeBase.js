@@ -2,48 +2,50 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChildQuestNodeBase = void 0);
 const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../../../Common/PublicUtil"),
   GeneralLogicTreeController_1 = require("../../GeneralLogicTreeController"),
   BehaviorNodeBase_1 = require("../BehaviorNodeBase");
 class ChildQuestNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
   constructor(t) {
     super(t),
-      (this.ChildQuestType = "CheckEntityState"),
+      (this.ChildQuestType = IQuest_1.EChildQuest.CheckEntityState),
       (this.ChildQuestStatus = void 0),
       (this.OnAfterSubmit = (t) => {}),
       (this.NodeType = "ChildQuest");
   }
   get CanGiveUp() {
     return (
-      this.ChildQuestStatus === Protocol_1.Aki.Protocol.bNs.Proto_CQNS_Progress
+      this.ChildQuestStatus === Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Progress
     );
   }
   get IsFinished() {
     return (
       this.ChildQuestStatus ===
-        Protocol_1.Aki.Protocol.bNs.Proto_CQNS_Finished ||
+        Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Finished ||
       this.ChildQuestStatus ===
-        Protocol_1.Aki.Protocol.bNs.Proto_CQNS_FinishAction
+        Protocol_1.Aki.Protocol.FNs.Proto_CQNS_FinishAction
     );
   }
-  Init(t, e, i, s, o) {
+  Init(t, e, i, s, r) {
     "ChildQuest" === s.Type &&
-      (super.Init(t, e, i, s, o),
+      (super.Init(t, e, i, s, r),
       (this.ChildQuestStatus =
-        Protocol_1.Aki.Protocol.bNs.Proto_CQNS_NotActive),
-      i.zSs) &&
-      (this.UpdateChildQuestStatus(i.zSs.w6n, e),
-      this.UpdateProgress(i.zSs.zfs));
+        Protocol_1.Aki.Protocol.FNs.Proto_CQNS_NotActive),
+      i.nEs) &&
+      (this.UpdateChildQuestStatus(i.nEs.H6n, e),
+      this.UpdateProgress(i.nEs.nvs));
   }
   UpdateChildQuestStatus(t, e) {
     var i = this.ChildQuestStatus;
     if (((this.ChildQuestStatus = t), i !== this.ChildQuestStatus)) {
       switch (t) {
-        case Protocol_1.Aki.Protocol.bNs.Proto_CQNS_Progress:
+        case Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Progress:
           this.il(e);
           break;
-        case Protocol_1.Aki.Protocol.bNs.Proto_CQNS_Finished:
+        case Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Finished:
           this.$ne();
       }
       EventSystem_1.EventSystem.Emit(
@@ -51,7 +53,14 @@ class ChildQuestNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
         this.Context,
         i,
         this.ChildQuestStatus,
-      );
+      ),
+        EventSystem_1.EventSystem.EmitWithTarget(
+          this.Blackboard,
+          EventDefine_1.EEventName.OnLogicTreeChildQuestNodeStatusChange,
+          this.Context,
+          i,
+          this.ChildQuestStatus,
+        );
     }
   }
   OnNodeActive() {
@@ -68,7 +77,7 @@ class ChildQuestNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
       t ||
         (this.wXt(!1),
         (this.ChildQuestStatus =
-          Protocol_1.Aki.Protocol.bNs.Proto_CQNS_NotActive));
+          Protocol_1.Aki.Protocol.FNs.Proto_CQNS_NotActive));
   }
   wXt(t) {
     this.RemoveEventsOnChildQuestEnd(), this.OnEnd(t);
@@ -82,6 +91,9 @@ class ChildQuestNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
       t.AlwaysShowNavigation && this.AddTag(5),
       (this.TrackTarget = t.TrackTarget),
       (this.TrackTextConfig = t.TidTip),
+      (this.MultiTrackText = PublicUtil_1.PublicUtil.GetConfigTextByKey(
+        this.TrackTextConfig,
+      )),
       !0
     );
   }
@@ -90,15 +102,14 @@ class ChildQuestNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
   AddEventsOnChildQuestStart() {}
   RemoveEventsOnChildQuestEnd() {}
   SubmitNode(t = void 0) {
-    this.Blackboard.ContainTag(7)
-      ? this.Blackboard.RemovePreparingRollbackNode(this.NodeId)
-      : this.Blackboard.IsSuspend() ||
-        (this.OnBeforeSubmit(),
-        GeneralLogicTreeController_1.GeneralLogicTreeController.RequestSubmitNode(
-          this.Context,
-          this.OnAfterSubmit,
-          t,
-        ));
+    this.Blackboard.ContainTag(6) ||
+      this.Blackboard.IsSuspend() ||
+      (this.OnBeforeSubmit(),
+      GeneralLogicTreeController_1.GeneralLogicTreeController.RequestSubmitNode(
+        this.Context,
+        this.OnAfterSubmit,
+        t,
+      ));
   }
   OnBeforeSubmit() {}
   GetCorrelativeEntities() {

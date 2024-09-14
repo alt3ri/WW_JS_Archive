@@ -7,8 +7,8 @@ const Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   ConfigMarkItemView_1 = require("../MarkItemView/ConfigMarkItemView"),
   MarkItem_1 = require("./MarkItem");
 class ConfigMarkItem extends MarkItem_1.MarkItem {
-  constructor(t, i, e, r, s, h = 1) {
-    super(e, r, s, h),
+  constructor(t, i, e, s, r, h = 1) {
+    super(e, s, r, h),
       (this.MarkConfig = void 0),
       (this.InnerMarkId = 0),
       (this.IsServerSaveShowState = !1),
@@ -22,7 +22,6 @@ class ConfigMarkItem extends MarkItem_1.MarkItem {
   get IsFogUnlock() {
     return (
       1 === this.MarkConfig.FogShow ||
-      0 === this.MarkConfig.FogHide ||
       ModelManager_1.ModelManager.MapModel.CheckAreasUnlocked(
         this.MarkConfig.FogHide,
       )
@@ -39,6 +38,8 @@ class ConfigMarkItem extends MarkItem_1.MarkItem {
   }
   Initialize() {
     this.MarkConfig.Scale && this.SetConfigScale(this.MarkConfig.Scale),
+      this.MarkConfig.CornerScale &&
+        this.SetCornerScale(this.MarkConfig.CornerScale),
       this.InitShowCondition(),
       this.InitPosition(this.MarkConfig),
       this.InitIcon();
@@ -78,27 +79,10 @@ class ConfigMarkItem extends MarkItem_1.MarkItem {
     );
   }
   GetAreaText() {
-    var t, i, e, r;
     if ("number" == typeof this.TrackTarget)
-      return (
-        (r =
-          ConfigManager_1.ConfigManager.MapConfig.GetEntityConfigByMapIdAndEntityId(
-            this.MapId,
-            this.TrackTarget,
-          )?.AreaId ?? 0),
-        (i = ConfigManager_1.ConfigManager.AreaConfig.GetParentAreaId(r)),
-        (t = (r = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(r))
-          ? ConfigManager_1.ConfigManager.AreaConfig.GetAreaLocalName(r.Title)
-          : ""),
-        (e = (i = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(i))
-          ? ConfigManager_1.ConfigManager.AreaConfig.GetAreaLocalName(i.Title)
-          : ""),
-        (r = r
-          ? ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryTitle(
-              r.CountryId,
-            )
-          : ""),
-        0 === i?.Father ? r + "-" + t : r + `-${e}-` + t
+      return ModelManager_1.ModelManager.MapModel.GetMarkAreaText(
+        this.MapId,
+        this.TrackTarget,
       );
   }
   GDi(t) {

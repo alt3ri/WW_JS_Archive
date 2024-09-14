@@ -6,6 +6,7 @@ const UE = require("ue"),
   RedDotController_1 = require("../../../../../../RedDot/RedDotController"),
   UiViewBase_1 = require("../../../../../../Ui/Base/UiViewBase"),
   PopupCaptionItem_1 = require("../../../../../../Ui/Common/PopupCaptionItem"),
+  ActivityMoonChasingController_1 = require("../../Activity/ActivityMoonChasingController"),
   PopularityModule_1 = require("../PopularityModule"),
   TaskBranchLineModule_1 = require("./TaskBranchLineModule"),
   TaskMainLineModule_1 = require("./TaskMainLineModule");
@@ -16,42 +17,28 @@ class MoonChasingTaskView extends UiViewBase_1.UiViewBase {
       (this.lqe = void 0),
       (this.gAn = void 0),
       (this.fAn = void 0),
-      (this.G0a = void 0),
-      (this.O0a = void 0),
+      (this.sMa = void 0),
+      (this.aMa = void 0),
       (this.vAn = (i) => {
-        (this.O0a.TaskType = 2),
+        (this.aMa.TaskType = 2),
           this.fAn?.SetActive(!1),
           this.GetExtendToggle(3)?.SetToggleState(0),
-          this.GetExtendToggle(3)
-            ?.GetOwner()
-            ?.GetComponentByClass(UE.LGUICanvas.StaticClass())
-            .SetSortOrder(0),
-          this.GetExtendToggle(2)
-            ?.GetOwner()
-            ?.GetComponentByClass(UE.LGUICanvas.StaticClass())
-            .SetSortOrder(1),
-          this.MAn(this.O0a.TargetTaskId).finally(() => {
-            this.G0a?.Play();
-          });
+          this.MAn(this.aMa.TargetTaskId).finally(() => {
+            this.sMa?.Play();
+          }),
+          this.Bwa(1);
       }),
       (this.EAn = (i) => {
-        (this.O0a.TaskType = 1),
+        (this.aMa.TaskType = 1),
           this.gAn?.SetActive(!1),
           this.GetExtendToggle(2)?.SetToggleState(0),
-          this.GetExtendToggle(3)
-            ?.GetOwner()
-            ?.GetComponentByClass(UE.LGUICanvas.StaticClass())
-            .SetSortOrder(1),
-          this.GetExtendToggle(2)
-            ?.GetOwner()
-            ?.GetComponentByClass(UE.LGUICanvas.StaticClass())
-            .SetSortOrder(0),
-          this.SAn(this.O0a.TargetTaskId).finally(() => {
-            this.G0a?.Play();
-          });
+          this.SAn(this.aMa.TargetTaskId, this.aMa.IsLastTask).finally(() => {
+            this.sMa?.Play();
+          }),
+          this.Bwa(0);
       }),
-      (this.yAn = () => 2 === this.O0a.TaskType),
-      (this.IAn = () => 2 !== this.O0a.TaskType),
+      (this.yAn = () => 2 === this.aMa.TaskType),
+      (this.IAn = () => 2 !== this.aMa.TaskType),
       (this.m2e = () => {
         this.CloseMe();
       });
@@ -89,8 +76,8 @@ class MoonChasingTaskView extends UiViewBase_1.UiViewBase {
     await Promise.all([this.ERn(), this.U3e()]);
   }
   OnStart() {
-    (this.O0a = this.OpenParam),
-      void 0 === this.O0a
+    (this.aMa = this.OpenParam),
+      void 0 === this.aMa
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "MoonChasing",
@@ -98,10 +85,10 @@ class MoonChasingTaskView extends UiViewBase_1.UiViewBase {
             "MoonChasingTaskView Invalid OpenParam",
           )
         : (this.Mqt(),
-          (this.G0a = this.GetItem(1)
+          (this.sMa = this.GetItem(1)
             .GetOwner()
             .GetComponentByClass(UE.UIInturnAnimController.StaticClass())),
-          (1 === this.O0a.TaskType
+          (1 === this.aMa.TaskType
             ? this.GetExtendToggle(3)
             : this.GetExtendToggle(2)
           ).SetToggleStateForce(1, !0));
@@ -116,16 +103,17 @@ class MoonChasingTaskView extends UiViewBase_1.UiViewBase {
         "MoonChasingBranchTab",
         this.GetItem(6),
         void 0,
-      );
+      ),
+      ActivityMoonChasingController_1.ActivityMoonChasingController.CheckIsActivityClose();
   }
   OnBeforeHide() {
     RedDotController_1.RedDotController.UnBindRedDot("MoonChasingMainlineTab"),
       RedDotController_1.RedDotController.UnBindRedDot("MoonChasingBranchTab");
   }
-  async SAn(i) {
+  async SAn(i, t) {
     this.fAn ||
       ((this.fAn = new TaskMainLineModule_1.TaskMainLineModule()),
-      this.fAn.SetSelectTaskId(i),
+      this.fAn.SetSelectTaskId(i, t),
       await this.fAn.CreateThenShowByResourceIdAsync(
         "UiItem_MissionMainLine",
         this.GetItem(1),
@@ -141,6 +129,15 @@ class MoonChasingTaskView extends UiViewBase_1.UiViewBase {
         this.GetItem(1),
       )),
       await this.gAn.ShowAsync();
+  }
+  Bwa(i) {
+    var t = this.GetExtendToggle(3).RootUIComp,
+      s = this.GetExtendToggle(2).RootUIComp,
+      e = t.GetHierarchyIndex(),
+      o = s.GetHierarchyIndex();
+    (o < e && 0 === i) ||
+      (e < o && 1 === i) ||
+      (t.SetHierarchyIndex(o), s.SetHierarchyIndex(e));
   }
   GetGuideUiItemAndUiItemForShowEx(i) {
     if (!(i.length < 1))

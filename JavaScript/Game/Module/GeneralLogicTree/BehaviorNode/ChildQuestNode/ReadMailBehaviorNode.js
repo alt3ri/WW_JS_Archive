@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReadMailBehaviorNode = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+const IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class ReadMailBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
@@ -17,7 +18,7 @@ class ReadMailBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnCreate(e) {
     return (
       !!super.OnCreate(e) &&
-      "ReadMail" === (e = e.Condition).Type &&
+      (e = e.Condition).Type === IQuest_1.EChildQuest.ReadMail &&
       ((this.E$t = e.MailId), !0)
     );
   }

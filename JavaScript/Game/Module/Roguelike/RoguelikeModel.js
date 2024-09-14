@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeModel = void 0);
-const Time_1 = require("../../../Core/Common/Time"),
+const Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   StateRef_1 = require("../../../Core/Utils/Audio/StateRef"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
@@ -125,10 +126,23 @@ class RoguelikeModel extends ModelBase_1.ModelBase {
   }
   SetRoguelikeChooseData(e) {
     for (const t of e)
-      this.qao.set(t.r5n, new RoguelikeChooseData_1.RoguelikeChooseData(t));
+      this.qao.set(t.c5n, new RoguelikeChooseData_1.RoguelikeChooseData(t));
   }
   GetRoguelikeChooseDataById(e) {
-    return this.qao.get(e);
+    e = this.qao.get(e);
+    return (
+      e?.Layer !== this.CurRoomCount &&
+        Log_1.Log.CheckError() &&
+        Log_1.Log.Error(
+          "Roguelike",
+          9,
+          "肉鸽界面数据异常!",
+          ["InstId", ModelManager_1.ModelManager.CreatureModel.GetInstanceId()],
+          ["Layer", this.CurRoomCount],
+          ["dataLayer", e?.Layer],
+        ),
+      e
+    );
   }
   GetSortElementInfoArrayMap(e = void 0) {
     var t,
@@ -140,15 +154,15 @@ class RoguelikeModel extends ModelBase_1.ModelBase {
       for (var [n, a] of e) 9 !== n && ((r = i.get(n) ?? 0), i.set(n, r + a));
     var u,
       s,
-      l = new Array(),
-      g = new Map();
+      g = new Array(),
+      l = new Map();
     for ([u, s] of i) {
       var h = new RoguelikeDefine_1.ElementInfo(Number(u), s);
       e && (h.IsPreview = 0 < (e.get(u) ?? 0)),
-        l.push(h),
-        g.set(h.ElementId, h);
+        g.push(h),
+        l.set(h.ElementId, h);
     }
-    return l.sort((e, t) => t.Count - e.Count), [l, g];
+    return g.sort((e, t) => t.Count - e.Count), [g, l];
   }
   CheckInRoguelike() {
     return (
@@ -195,7 +209,7 @@ class RoguelikeModel extends ModelBase_1.ModelBase {
       !!(e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData) &&
       !!(e =
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-          e.MHn,
+          e.UHn,
         )) &&
       ((r = r.GetRogueActivityState()),
       (t = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
@@ -228,23 +242,30 @@ class RoguelikeModel extends ModelBase_1.ModelBase {
     );
   }
   GetMapNoteShowState() {
-    var e,
-      t =
-        ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData();
+    if (
+      !ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData()
+    )
+      return !1;
+    var e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData;
+    if (!e) return !1;
+    e = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
+      e.UHn,
+    );
+    if (!e) return !1;
+    e = ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig?.GetConfig(
+      e.InstanceDungeonEntrance,
+    );
+    if (!e) return !1;
+    let t = !1;
     return (
-      !(
-        !t ||
-        !(e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData) ||
-        !ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-          e.MHn,
-        ) ||
-        ((e = t.GetRogueActivityState()),
-        ActivityRogueController_1.ActivityRogueController.RefreshActivityRedDot(),
-        0 !== e) ||
-        LocalStorage_1.LocalStorage.GetPlayer(
-          LocalStorageDefine_1.ELocalStoragePlayerKey.RoguelikeShopRecord,
-        )
-      ) && this.CheckIsGuideDungeonFinish()
+      e.InstanceDungeonList.forEach((e) => {
+        !ModelManager_1.ModelManager.ExchangeRewardModel.IsFinishInstance(e) &&
+          ModelManager_1.ModelManager.InstanceDungeonEntranceModel?.CheckInstanceUnlock(
+            e,
+          ) &&
+          (t = !0);
+      }),
+      t
     );
   }
   RecordRoguelikeShopRedDot(e) {
@@ -259,7 +280,7 @@ class RoguelikeModel extends ModelBase_1.ModelBase {
       void 0 !== e &&
       ((e =
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-          e.MHn,
+          e.UHn,
         )),
       ModelManager_1.ModelManager.AchievementModel.GetCategoryRedPointState(
         e.Achievement,
@@ -292,7 +313,7 @@ class RoguelikeModel extends ModelBase_1.ModelBase {
       ? ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRogueParamConfig(e)
       : this.CurrSeasonData
         ? ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueParamConfig(
-            this.CurrSeasonData.MHn,
+            this.CurrSeasonData.UHn,
           )
         : ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueParamConfig();
   }

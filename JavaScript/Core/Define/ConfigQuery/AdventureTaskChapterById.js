@@ -17,28 +17,42 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configAdventureTaskChapterById.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configAdventureTaskChapterById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configAdventureTaskChapterById.GetConfig(";
 exports.configAdventureTaskChapterById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (e, o = !0) => {
-    if (
-      (t = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (o) {
-        var n = KEY_PREFIX + `#${e})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (r) return r;
+  GetConfig: (e, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${e})`),
+      o =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (o) {
+      if (n) {
+        var i = KEY_PREFIX + `#${e})`;
+        const a = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (a)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
-        (t =
+        (o =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,32 +60,37 @@ exports.configAdventureTaskChapterById = {
               e,
             ]))
       ) {
-        var t,
-          n = void 0;
+        i = void 0;
         if (
-          (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([o, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", e],
           )),
-          t)
+          o)
         ) {
-          const r =
+          const a =
             AdventureTaskChapter_1.AdventureTaskChapter.getRootAsAdventureTaskChapter(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
             );
           return (
-            o &&
-              ((t = KEY_PREFIX + `#${e})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(t, r)),
+            n &&
+              ((o = KEY_PREFIX + `#${e})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(o, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            r
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=AdventureTaskChapterById.js.map

@@ -27,8 +27,9 @@ class EffectManagerBusinessProxy {
       (this.BJe = (e, t, s) => {
         this.d1r &&
           e === this.C1r &&
-          (e = this.d1r.GetComponent(33)?.GetSkillInfo(t)) &&
+          (e = this.d1r.GetComponent(34)?.GetSkillInfo(t)) &&
           3 === e.SkillGenre &&
+          (this.c1r.Start(),
           this.m1r.forEach((e) => {
             EffectSystem_1.EffectSystem.IsValid(e) &&
               (Log_1.Log.CheckInfo() &&
@@ -41,7 +42,8 @@ class EffectManagerBusinessProxy {
                 "[EffectManagerBusinessProxy.OnCharUseSkill]",
                 !0,
               ));
-          });
+          }),
+          this.c1r.Stop());
       });
   }
   static Get() {
@@ -51,7 +53,9 @@ class EffectManagerBusinessProxy {
     );
   }
   Init() {
-    (this.c1r = void 0),
+    (this.c1r = Stats_1.Stat.Create(
+      "EffectManagerBusinessProxy_DestroyOnBurst",
+    )),
       (this.m1r = new Set()),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BeforePlayEffect,

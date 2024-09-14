@@ -11,6 +11,9 @@ class MonsterDetection {
   get BlueprintType() {
     return this.blueprinttype();
   }
+  get MarkId() {
+    return this.markid();
+  }
   get Name() {
     return this.name();
   }
@@ -47,9 +50,6 @@ class MonsterDetection {
   get BeginTimeStamp() {
     return this.begintimestamp();
   }
-  get MarkId() {
-    return this.markid();
-  }
   get LockCon() {
     return this.lockcon();
   }
@@ -73,55 +73,55 @@ class MonsterDetection {
     var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
+  markid() {
+    var t = this.J7.__offset(this.z7, 8);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
   name(t) {
-    var i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   showreward() {
-    var t = this.J7.__offset(this.z7, 10);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  entityconfigid() {
     var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  dangertype() {
+  entityconfigid() {
     var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  typedescription2() {
+  dangertype() {
     var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  attributesdescriptionlock(t) {
-    var i = this.J7.__offset(this.z7, 18);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+  typedescription2() {
+    var t = this.J7.__offset(this.z7, 18);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  attributesdescriptionunlock(t) {
+  attributesdescriptionlock(t) {
     var i = this.J7.__offset(this.z7, 20);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  bigicon(t) {
+  attributesdescriptionunlock(t) {
     var i = this.J7.__offset(this.z7, 22);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  icon(t) {
+  bigicon(t) {
     var i = this.J7.__offset(this.z7, 24);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  temporaryiconunlock(t) {
+  icon(t) {
     var i = this.J7.__offset(this.z7, 26);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  temporaryiconlock(t) {
+  temporaryiconunlock(t) {
     var i = this.J7.__offset(this.z7, 28);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  begintimestamp() {
-    var t = this.J7.__offset(this.z7, 30);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  temporaryiconlock(t) {
+    var i = this.J7.__offset(this.z7, 30);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  markid() {
+  begintimestamp() {
     var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }

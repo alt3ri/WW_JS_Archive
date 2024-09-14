@@ -14,9 +14,9 @@ class KeySettingRowData {
       (this.bPi = ""),
       (this.qPi = ""),
       (this.IsActionOrAxis = !0),
-      (this.GPi = void 0),
-      (this.NPi = void 0),
-      (this.OPi = void 0),
+      (this.ActionBinding = void 0),
+      (this.AxisBinding = void 0),
+      (this.CombinationAxisBinding = void 0),
       (this.OneActionBinding = void 0),
       (this.TwoActionBinding = void 0),
       (this.kPi = 0),
@@ -36,7 +36,8 @@ class KeySettingRowData {
       (this.CanCombination = !1),
       (this.OpenViewType = 0),
       (this.IsCheckSameKey = !0),
-      (this.ButtonTextId = void 0);
+      (this.ButtonTextId = void 0),
+      (this.CanDisable = !1);
   }
   InitializeKeyType(t) {
     (this.ConfigId = t.TypeId),
@@ -68,6 +69,7 @@ class KeySettingRowData {
       (this.IsCheckSameKey = t.IsCheckSameKey),
       (this.ButtonTextId = t.ButtonTextId),
       (this.ConnectedKeySettingId = t.ConnectedKeySettingId),
+      (this.CanDisable = t.CanDisable),
       this.BothActionName && 2 === this.BothActionName.length
         ? ((t = this.BothActionName[0]),
           (i = this.BothActionName[1]),
@@ -76,28 +78,28 @@ class KeySettingRowData {
           (this.TwoActionBinding =
             InputSettingsManager_1.InputSettingsManager.GetActionBinding(i)))
         : this.IsActionOrAxis
-          ? (this.GPi =
+          ? (this.ActionBinding =
               InputSettingsManager_1.InputSettingsManager.GetActionBinding(
                 this.qPi,
               ))
-          : ((this.OPi =
-              InputSettingsManager_1.InputSettingsManager.GetCombinationAxisBindingByActionName(
+          : ((this.CombinationAxisBinding =
+              InputSettingsManager_1.InputSettingsManager.GetCombinationAxisBindingByAxisName(
                 this.qPi,
               )),
-            (this.NPi =
+            (this.AxisBinding =
               InputSettingsManager_1.InputSettingsManager.GetAxisBinding(
                 this.qPi,
               )));
   }
-  $Pi() {
+  FindCombinationActionBinding() {
     return InputSettingsManager_1.InputSettingsManager.GetCombinationActionBindingByActionName(
       this.qPi,
     );
   }
   Clear() {
-    (this.GPi = void 0),
-      (this.NPi = void 0),
-      (this.OPi = void 0),
+    (this.ActionBinding = void 0),
+      (this.AxisBinding = void 0),
+      (this.CombinationAxisBinding = void 0),
       (this.OneActionBinding = void 0),
       (this.TwoActionBinding = void 0);
   }
@@ -139,13 +141,13 @@ class KeySettingRowData {
   }
   GetKeyNameRichTextByKeyNameList(i, s, e = "+") {
     if (!s) return "";
-    let r = "";
+    let h = "";
     for (let t = 0; t < s.length; t++) {
-      var h = s[t],
-        h = this.GetKeyIconPath(h, i);
-      h && (r += `<texture=${h}>`), t < s.length - 1 && (r += e);
+      var r = s[t],
+        r = this.GetKeyIconPath(r, i);
+      r && (h += `<texture=${r}>`), t < s.length - 1 && (h += e);
     }
-    return r;
+    return h;
   }
   GetKeyIconPath(t, i) {
     var s = ConfigManager_1.ConfigManager.InputSettingsConfig;
@@ -166,30 +168,29 @@ class KeySettingRowData {
   zPi(t) {
     var i;
     return (
-      !!this.GPi &&
+      !!this.ActionBinding &&
       ((t = this.GetKeyIndex(t)),
-      this.GPi.GetKeyNameList((i = [])),
+      this.ActionBinding.GetKeyNameList((i = [])),
       !!(i = i[t])) &&
       InputSettings_1.InputSettings.IsValidKey(i)
     );
   }
   IsCombination(t) {
     if (this.IsActionOrAxis) {
-      var i = this.$Pi();
-      if (!i) return !this.zPi(t);
-      if (i)
+      var i = this.FindCombinationActionBinding();
+      if ((i || this.zPi(t)) && i)
         switch (t) {
           case 1:
             return i.HasKeyboardCombinationAction();
           case 2:
             return i.HasGamepadCombinationAction();
         }
-    } else if (this.OPi)
+    } else if (this.CombinationAxisBinding)
       switch (t) {
         case 1:
-          return this.OPi.HasKeyboardCombinationAxis();
+          return this.CombinationAxisBinding.HasKeyboardCombinationAxis();
         case 2:
-          return this.OPi.HasGamepadCombinationAxis();
+          return this.CombinationAxisBinding.HasGamepadCombinationAxis();
       }
     return !1;
   }
@@ -200,25 +201,26 @@ class KeySettingRowData {
         e = new Map();
       switch (t) {
         case 1:
-          this.$Pi()?.GetPcKeyNameMap(e);
+          this.FindCombinationActionBinding()?.GetPcKeyNameMap(e);
           break;
         case 2:
-          this.$Pi()?.GetGamepadKeyNameMap(e);
+          this.FindCombinationActionBinding()?.GetGamepadKeyNameMap(e);
           break;
         default:
           return;
       }
       if (e) for ([i, s] of e) return [i, s];
-    } else if (this.GPi) {
-      var r = [];
-      switch ((this.GPi?.GetKeyNameList(r), t)) {
-        case 1:
-          return [r[this.kPi]];
-        case 2:
-          return [r[this.wAn]];
-        default:
-          return;
-      }
+    } else if (this.ActionBinding) {
+      var h = [];
+      if ((this.ActionBinding?.GetKeyNameList(h), !(h.length <= 0)))
+        switch (t) {
+          case 1:
+            return [h[this.kPi]];
+          case 2:
+            return [h[this.wAn]];
+          default:
+            return;
+        }
     }
   }
   JPi(t) {
@@ -228,37 +230,38 @@ class KeySettingRowData {
         e = new Map();
       switch (t) {
         case 1:
-          this.OPi?.GetPcKeyNameMap(e);
+          this.CombinationAxisBinding?.GetPcKeyNameMap(e);
           break;
         case 2:
-          this.OPi?.GetGamepadKeyNameMap(e);
+          this.CombinationAxisBinding?.GetGamepadKeyNameMap(e);
           break;
         default:
           return;
       }
       if (e) for ([i, s] of e) return [i, s];
     } else {
-      var r = this.NPi?.GetInputAxisKeyMap();
-      if (r)
-        for (var [h, n] of r) {
-          var a = n.GetKey();
-          if (a)
-            switch (t) {
-              case 1:
-                if (
-                  (a.IsKeyboardKey || a.IsMouseButton) &&
-                  n.Scale === this.HPi
-                )
-                  return [h];
-                break;
-              case 2:
-                if (a.IsGamepadKey && n.Scale === this.BAn) return [h];
-                break;
-              default:
-                return;
-            }
-        }
+      t = this.S7a(t);
+      if (t) return [t];
     }
+  }
+  S7a(t) {
+    var i = this.AxisBinding?.GetInputAxisKeyMap();
+    if (i)
+      for (var [s, e] of i) {
+        var h = e.GetKey();
+        if (h)
+          switch (t) {
+            case 1:
+              if ((h.IsKeyboardKey || h.IsMouseButton) && e.Scale === this.HPi)
+                return s;
+              break;
+            case 2:
+              if (h.IsGamepadKey && e.Scale === this.BAn) return s;
+              break;
+            default:
+              return;
+          }
+      }
   }
   ChangeBothAction(t) {
     var i, s, e;
@@ -275,37 +278,59 @@ class KeySettingRowData {
       this.OneActionBinding.SetKeys(i),
       this.TwoActionBinding.SetKeys(s));
   }
-  ZPi(t) {
-    if (this.GPi) {
-      var i = [],
-        s = (this.GPi.GetKeyNameList(i), this.GetKeyIndex(t));
-      switch (t) {
-        case 1:
-          i[s] = "Keyboard_Invalid";
-          break;
-        case 2:
-          i[s] = "Gamepad_Invalid";
-      }
-      this.GPi.SetKeys(i);
+  IsBothAction() {
+    return void 0 !== this.OneActionBinding && void 0 !== this.TwoActionBinding;
+  }
+  ZPi(t, i) {
+    var s;
+    this.ActionBinding &&
+      (this.ActionBinding.GetKeyNameList((s = [])),
+      (s[t] = this.y7a(i)),
+      this.ActionBinding.SetKeys(s));
+  }
+  y7a(t) {
+    switch (t) {
+      case 1:
+        return "Keyboard_Invalid";
+      case 2:
+        return "Gamepad_Invalid";
+      default:
+        return "Keyboard_Invalid";
     }
   }
-  exi(i) {
-    for (let t = 0; t < i.length; t++) i[t] || (i[t] = "Keyboard_Invalid");
+  E7a(t) {
+    var i, s, e;
+    this.AxisBinding &&
+      this.AxisBinding.GetInputAxisKeyMap() &&
+      (e = this.S7a(t)) &&
+      void 0 !== (s = (i = this.GetAxisKeyScaleMap()).get(e)) &&
+      (i.delete(e),
+      (e = this.y7a(t)),
+      i.set(e, s),
+      this.AxisBinding.SetKeys(i));
+  }
+  exi(i, s) {
+    for (let t = 0; t < i.length; t++) i[t] || (i[t] = this.y7a(s));
   }
   SetKey(t, i) {
     return this.IsActionOrAxis
       ? this.txi(t, i)
       : !this.IsCombination(i) && this.ixi(t[0], i);
   }
+  DisableKey(t) {
+    (this.OneActionBinding && this.TwoActionBinding) ||
+      (this.IsActionOrAxis ? this.I7a(t) : this.T7a(t));
+  }
   txi(t, i) {
     if (!t || t.length <= 0)
-      this.GPi && this.GPi.SetKeys([]),
+      this.ActionBinding && ((s = this.GetKeyIndex(i)), this.ZPi(s, i)),
         InputSettingsManager_1.InputSettingsManager.ClearCombinationActionKeyMap();
     else {
       var s = this.GetCurrentKeyName(i);
-      if (s[0] !== t[0] || s[1] !== t[1])
+      if (!s || s[0] !== t[0] || s[1] !== t[1])
         if (
-          (1 < s.length &&
+          (s &&
+            1 < s.length &&
             InputSettingsManager_1.InputSettingsManager.RemoveCombinationActionKeyMap(
               this.qPi,
               s[0],
@@ -319,56 +344,72 @@ class KeySettingRowData {
               t[0],
               t[1],
             ),
-            this.ZPi(i));
+            (s = this.GetKeyIndex(i)),
+            this.ZPi(s, i));
         else {
-          (s = t[0]), (i = this.GetKeyIndex(i));
-          if (this.GPi) {
+          var s = t[0],
+            e = this.GetKeyIndex(i);
+          if (this.ActionBinding) {
             const t = [];
-            return (this.GPi.GetKeyNameList(t), t)
-              ? ((t[i] = s), this.exi(t), this.GPi.SetKeys(t), !0)
+            return (this.ActionBinding.GetKeyNameList(t), t)
+              ? ((t[e] = s), this.exi(t, i), this.ActionBinding.SetKeys(t), !0)
               : !1;
           }
         }
     }
     return !0;
   }
+  I7a(t) {
+    var i;
+    this.IsCombination(t)
+      ? 1 < (i = this.GetCurrentKeyName(t)).length &&
+        InputSettingsManager_1.InputSettingsManager.RemoveCombinationActionKeyMap(
+          this.qPi,
+          i[0],
+          i[1],
+        )
+      : this.ActionBinding && ((i = this.GetKeyIndex(t)), this.ZPi(i, t));
+  }
   ixi(s, e) {
-    if (!this.NPi) return !1;
-    if (!s && this.NPi) {
+    if (!this.AxisBinding) return !1;
+    if (!s && this.AxisBinding) {
       const a = new Map();
-      this.NPi.SetKeys(a);
+      this.AxisBinding.SetKeys(a);
     } else {
       let t = void 0,
         i = void 0;
       const a = this.GetAxisKeyScaleMap();
-      for (var [r, h] of a) {
-        var n = InputSettings_1.InputSettings.GetKey(r);
+      for (var [h, r] of a) {
+        var n = InputSettings_1.InputSettings.GetKey(h);
         if (n) {
           if (
             (n.IsKeyboardKey || n.IsMouseButton) &&
             1 === e &&
-            h === this.HPi
+            r === this.HPi
           ) {
-            (t = r), (i = h);
+            (t = h), (i = r);
             break;
           }
-          if (n.IsGamepadKey && 2 === e && h === this.BAn) {
-            (t = r), (i = h);
+          if (n.IsGamepadKey && 2 === e && r === this.BAn) {
+            (t = h), (i = r);
             break;
           }
         }
       }
-      t && a.delete(t), i && s && a.set(s, i), this.NPi.SetKeys(a);
+      t && a.delete(t), i && s && a.set(s, i), this.AxisBinding.SetKeys(a);
     }
     return !0;
   }
+  T7a(t) {
+    this.IsCombination(t) || this.E7a(t);
+  }
   SetAxisBindingKeys(t) {
-    this.NPi?.SetKeys(t);
+    this.AxisBinding?.SetKeys(t);
   }
   GetAxisKeyScaleMap() {
     var t = new Map();
-    if (this.NPi) {
-      var i = this.NPi.GetInputAxisKeyMap();
+    if (this.AxisBinding) {
+      var i = this.AxisBinding.GetInputAxisKeyMap();
       if (i) for (var [s, e] of i) t.set(s, e.Scale);
     }
     return t;
@@ -406,21 +447,23 @@ class KeySettingRowData {
   HasKey(t, i) {
     if (1 < t.length) {
       if (this.IsCombination(i)) {
-        var s = this.$Pi();
+        var s = this.FindCombinationActionBinding();
         if (s) return s.HasKey(t[0], t[1]);
-        if (this.OPi) return this.OPi.HasKey(t[0], t[1]);
+        if (this.CombinationAxisBinding)
+          return this.CombinationAxisBinding.HasKey(t[0], t[1]);
       }
     } else {
       var e = t[0];
-      if (this.GPi)
+      if (this.ActionBinding)
         return (
           (s = this.GetKeyIndex(i)),
-          this.GPi.GetKeyNameList((t = [])),
+          this.ActionBinding.GetKeyNameList((t = [])),
           t[s] === e
         );
-      if (this.NPi) {
+      if (this.AxisBinding) {
         t = this.GetKeyScale(i);
-        for (const r of this.NPi.GetKey(t)) if (r.KeyName === e) return !0;
+        for (const h of this.AxisBinding.GetKey(t))
+          if (h.KeyName === e) return !0;
       }
     }
     return !1;

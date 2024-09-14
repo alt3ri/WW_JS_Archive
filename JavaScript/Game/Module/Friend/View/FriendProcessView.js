@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FriendProcessView = void 0);
 const UE = require("ue"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
@@ -97,6 +98,8 @@ class FriendProcessView extends UiViewBase_1.UiViewBase {
       [8, UE.UIItem],
       [9, UE.UIGridLayout],
       [11, UE.UIText],
+      [12, UE.UIItem],
+      [13, UE.UIText],
     ]),
       (this.BtnBindInfo = [[6, this.Z8t]]);
   }
@@ -185,6 +188,19 @@ class FriendProcessView extends UiViewBase_1.UiViewBase {
       : (i.SetText(e.GetSelectedPlayerOrItemInstance().PlayerName),
         (i.useChangeColor = !1));
   }
+  qxa() {
+    var e;
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
+      ? ((e =
+          "" !==
+          ModelManager_1.ModelManager.FriendModel.GetSelectedPlayerOrItemInstance().GetSdkUserId()),
+        this.GetItem(12)?.SetUIActive(e),
+        e &&
+          ((e =
+            ModelManager_1.ModelManager.FriendModel.GetSelectedPlayerOrItemInstance().GetSdkOnlineId()),
+          this.GetText(13)?.SetText(e)))
+      : this.GetItem(12)?.SetUIActive(!1);
+  }
   r9t() {
     var e = ModelManager_1.ModelManager.FriendModel,
       i = e.GetSelectedPlayerOrItemInstance()?.Signature,
@@ -202,6 +218,7 @@ class FriendProcessView extends UiViewBase_1.UiViewBase {
       t = e.ShowingView;
     this.P5e(),
       this.r9t(),
+      this.qxa(),
       this.Y8t.GetRootItem().SetUIActive(
         e.IsMyFriend(e.GetSelectedPlayerOrItemInstance().PlayerId),
       ),

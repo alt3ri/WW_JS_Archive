@@ -47,17 +47,17 @@ class AiStateMachineTaskMontage extends AiStateMachineTask_1.AiStateMachineTask 
       (this.Node.TaskFinish = !1),
       (this.Dne = !0),
       (this.Playing = !1),
-      this.Ine &&
-        !this.Rne &&
-        (this.Rne = this.Node.ActorComponent.DisableActor("状态机加载动作")),
       this.rse ||
+        (this.Ine &&
+          !this.Rne &&
+          (this.Rne = this.Node.ActorComponent.DisableActor("状态机加载动作")),
         (this.rse = this.Node.MontageComponent.PlayMontageAsync(
           this.ise,
           this.Une,
           this.nse,
           !1,
           this.ose,
-        )),
+        ))),
       this.rse
         ? ((this.Playing = !0),
           this.Node.MontageComponent.PlayMontageTaskAndRequest(

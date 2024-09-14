@@ -544,6 +544,18 @@ class MathUtils {
       Math.abs(t) < a
     );
   }
+  static LinePlaneIntersectionOriginNormal(t, a, i, r, s) {
+    let e = 0;
+    a.Subtraction(t, this.cz);
+    var a = this.cz,
+      o = a.DotProduct(r);
+    return 0 === o
+      ? ((e = -1), s.Reset(), !1)
+      : (i.Subtraction(t, this.fz),
+        (e = this.fz.DotProduct(r) / o) < 0 || 1 < e
+          ? (s.Reset(), !1)
+          : (t.Addition(a.Multiply(e, this.pz), s), !0));
+  }
 }
 ((exports.MathUtils = MathUtils).MaxFloat = 3402823466e29),
   (MathUtils.Int32Max = 2147483647),

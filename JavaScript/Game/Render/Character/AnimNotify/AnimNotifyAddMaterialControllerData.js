@@ -81,7 +81,7 @@ class AnimNotifyAddMaterialControllerData extends UE.KuroAnimNotify {
             this.RemoveWhenRevive &&
             EntitySystem_1.EntitySystem.GetComponent(
               t.EntityId,
-              175,
+              176,
             )?.AddMaterialHandle(e),
           r
         );

@@ -17,7 +17,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   TIME_BUFFER_CHECK_COUNT_MIN = 5,
   TIME_BUFFER_CHECK_TIME_MAX = 3,
   MAX_FLUCTUATE = 0.5,
-  MESSAGE_ID_MASK = (1n << MathUtils_1.intBit) - 1n;
+  MESSAGE_ID_MASK = 60n;
 class CombatMessageBuffer {
   constructor(e) {
     (this.CreatureDataId = e),
@@ -33,17 +33,17 @@ class CombatMessageBuffer {
   get RemainBufferTime() {
     return this.LastNotifyExecuteTime - Time_1.Time.NowSeconds;
   }
-  Push(e, t, o, s) {
-    var i,
-      r,
-      a = t?.GetComponent(45);
-    a
+  Push(e, t, s, i) {
+    var r,
+      a,
+      o = t?.GetComponent(46);
+    o
       ? e
-        ? (i = o.V8n)
-          ? ((r = t?.GetComponent(0)),
-            this.RecordMessageTime(i, r.GetPbDataId()),
-            (r = i + this.TimelineOffset),
-            a.Push(e, o, s, r))
+        ? (r = s.J8n)
+          ? ((a = t?.GetComponent(0)),
+            this.RecordMessageTime(r, a.GetPbDataId()),
+            (a = r + this.TimelineOffset),
+            o.Push(e, s, i, a))
           : (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "MultiplayerCombat",
@@ -51,13 +51,13 @@ class CombatMessageBuffer {
                 "[CombatMessageModel.Push]失败, messageTime非法",
                 ["CreatureDataId", this.CreatureDataId],
                 ["id", e],
-                ["messageTime", i],
+                ["messageTime", r],
               ),
             CombatMessageController_1.CombatMessageController.Process(
               e,
               t,
+              i,
               s,
-              o,
             ))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -67,46 +67,46 @@ class CombatMessageBuffer {
             ["CreatureDataId", this.CreatureDataId],
             ["id", e],
           )
-      : CombatMessageController_1.CombatMessageController.Process(e, t, s, o);
+      : CombatMessageController_1.CombatMessageController.Process(e, t, i, s);
   }
-  RecordMessageTime(e, t, o = !1) {
-    var s = Time_1.Time.NowSeconds,
-      i =
-        (o ||
-          (this.yIt.Push([e, s]),
+  RecordMessageTime(e, t, s = !1) {
+    var i = Time_1.Time.NowSeconds,
+      r =
+        (s ||
+          (this.yIt.Push([e, i]),
           this.yIt.Size >= TIME_BUFFER_SIZE && this.yIt.Pop()),
         this.IIt(),
         e + this.TimelineOffset);
-    i > this.LastNotifyExecuteTime && (this.LastNotifyExecuteTime = i),
-      this.ReportMoveDataReceiveInfo(s - e, t, o);
+    r > this.LastNotifyExecuteTime && (this.LastNotifyExecuteTime = r),
+      this.ReportMoveDataReceiveInfo(i - e, t, s);
   }
   IIt() {
     if (0 !== this.yIt.Size) {
       let e = this.yIt.Size - 1;
-      var i = this.yIt.Get(e);
-      let t = i[1] - i[0],
-        o = t;
-      var r = i[0];
-      let s = 0;
+      var r = this.yIt.Get(e);
+      let t = r[1] - r[0],
+        s = t;
+      var a = r[0];
+      let i = 0;
       for (; 0 < e; e--) {
-        s++;
-        var [a, _] = this.yIt.Get(e);
+        i++;
+        var [o, h] = this.yIt.Get(e);
         if (
-          s > TIME_BUFFER_CHECK_TIME_MAX &&
-          r - a > TIME_BUFFER_CHECK_COUNT_MIN
+          i > TIME_BUFFER_CHECK_TIME_MAX &&
+          a - o > TIME_BUFFER_CHECK_COUNT_MIN
         )
           break;
-        _ = _ - a;
-        t > _ ? (t = _) : o < _ && (o = _);
+        h = h - o;
+        t > h ? (t = h) : s < h && (s = h);
       }
-      (i = o - t), (i = MathUtils_1.MathUtils.Clamp(i, i, MAX_FLUCTUATE));
+      (r = s - t), (r = MathUtils_1.MathUtils.Clamp(r, r, MAX_FLUCTUATE));
       (this.TimelineOffsetBase = t),
         ModelManager_1.ModelManager.CombatMessageModel.MoveSyncUdpMode
           ? (this.DesiredBuffer =
-              i * BUFFER_TIME_RATE +
+              r * BUFFER_TIME_RATE +
               ModelManager_1.ModelManager.CombatMessageModel
                 .MoveSyncUdpSendInterval)
-          : (this.DesiredBuffer = i * BUFFER_TIME_RATE + FIX_BUFFER_TIME),
+          : (this.DesiredBuffer = r * BUFFER_TIME_RATE + FIX_BUFFER_TIME),
         this.TIt(0);
     }
   }
@@ -120,7 +120,7 @@ class CombatMessageBuffer {
   OnTick(e) {
     this.TIt(e * TIME_OFFSET_LERP_RATE);
   }
-  ReportMoveDataReceiveInfo(e, t, o) {
+  ReportMoveDataReceiveInfo(e, t, s) {
     (t = {
       udp_mode: ModelManager_1.ModelManager.CombatMessageModel.MoveSyncUdpMode,
       creature_id: this.CreatureDataId,
@@ -130,7 +130,7 @@ class CombatMessageBuffer {
       buffer: this.Buffer,
       desired_buffer: this.DesiredBuffer,
       remain_buffer: this.RemainBufferTime,
-      udp_message: o,
+      udp_message: s,
     }),
       (e = JSON.stringify(t));
     CombatDebugController_1.CombatDebugController.DataReport(
@@ -149,15 +149,15 @@ class CombatMessageModel extends ModelBase_1.ModelBase {
       (this.CombatMessageSendInterval = 0.04),
       (this.CombatMessageSendIntervalMulti = 0.03),
       (this.CombatMessageSendPendingTime = 0),
-      (this.LIt = 0),
+      (this.EJa = 1),
+      (this.LIt = 0n),
       (this.CombatMessageBufferMap = new Map()),
       (this.CombatMessageBufferMapByEntity = new Map()),
       (this.NeedPushMove = !1),
       (this.MoveSyncSet = new Set()),
       (this.AnyEntityInFight = !1),
       (this.AnyHateChange = !1),
-      (this.MessagePack = Protocol_1.Aki.Protocol.CombatMessage.Zzn.create()),
-      (this.DIt = new Map());
+      (this.MessagePack = Protocol_1.Aki.Protocol.CombatMessage.sZn.create());
   }
   OnLeaveLevel() {
     return !(this.AnyEntityInFight = !1);
@@ -172,27 +172,13 @@ class CombatMessageModel extends ModelBase_1.ModelBase {
     return !!this.MoveSyncSet.delete(e);
   }
   GenMessageId() {
-    var e = BigInt(ModelManager_1.ModelManager.CreatureModel.GetPlayerId());
-    return BigInt(++this.LIt) | (e << MathUtils_1.intBit);
+    return ++this.LIt | (BigInt(this.EJa) << MESSAGE_ID_MASK);
+  }
+  SetLastPrefix(e) {
+    this.EJa = e;
   }
   SetLastMessageId(e) {
-    var t = Number(e & MESSAGE_ID_MASK),
-      o = Number((e & ~MESSAGE_ID_MASK) >> MathUtils_1.intBit);
-    o !== ModelManager_1.ModelManager.CreatureModel.GetPlayerId()
-      ? (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn(
-            "CombatInfo",
-            51,
-            "服务器设置的ContextId与当前PlayerId不一致",
-            ["value", e],
-            ["playerIdFromValue", o],
-            [
-              "playerId",
-              ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
-            ],
-          ),
-        (this.LIt = 0))
-      : (this.LIt = t);
+    this.LIt = e;
   }
   GetMessageBuffer(t) {
     if (0 !== t) {
@@ -211,95 +197,6 @@ class CombatMessageModel extends ModelBase_1.ModelBase {
   SetEntityMap(e, t) {
     t = this.CombatMessageBufferMap.get(t);
     this.CombatMessageBufferMapByEntity.set(e, t);
-  }
-  CreateMontageContext(e, t) {
-    var o = this.GenMessageId(),
-      s = Protocol_1.Aki.Protocol.CombatMessage.xFs.create();
-    return (
-      (s.Z8n = Protocol_1.Aki.Protocol.Z8n.create({
-        X4n: e,
-        eVn: t,
-        tVn: MathUtils_1.MathUtils.BigIntToLong(o),
-      })),
-      this.SetCombatContext(o, s),
-      o
-    );
-  }
-  SetCombatContext(e, t) {
-    e && this.DIt.set(e, t);
-  }
-  RemoveCombatContext(e) {
-    this.DIt.delete(e);
-  }
-  GetCombatContext(e) {
-    if (e) return this.DIt.get(e);
-  }
-  DebugCombatContext(e) {
-    var t, o, s;
-    e
-      ? (t = this.DIt.get(e))
-        ? t.OLs
-          ? ((o = t.OLs.fTs),
-            Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug(
-                "Battle",
-                51,
-                "Buff Context",
-                ["BuffId", o],
-                ["ContextId", t.OLs.tVn],
-              ))
-          : t.kLs
-            ? ((o = t.kLs.iVn),
-              Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug(
-                  "Battle",
-                  51,
-                  "Bullet Context",
-                  ["BulletId", o?.rVn],
-                  ["PlayerId", o?.q5n],
-                  ["ContextId", t.kLs.tVn],
-                ))
-            : t.Z8n
-              ? ((o = t.Z8n.X4n),
-                (s = t.Z8n.eVn),
-                Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug(
-                    "Battle",
-                    51,
-                    "Montage Context",
-                    ["SkillId", o],
-                    ["MontageId", s],
-                    ["ContextId", t.Z8n.tVn],
-                  ))
-              : t.GLs
-                ? ((o = t.GLs.X4n),
-                  Log_1.Log.CheckDebug() &&
-                    Log_1.Log.Debug(
-                      "Battle",
-                      51,
-                      "Skill Context",
-                      ["SkillId", o],
-                      ["ContextId", t.GLs.tVn],
-                    ))
-                : t.qLs
-                  ? ((s = t.qLs.k4n),
-                    Log_1.Log.CheckDebug() &&
-                      Log_1.Log.Debug(
-                        "Battle",
-                        51,
-                        "FSM Context",
-                        ["FsmId", s],
-                        ["ContextId", void 0],
-                      ))
-                  : Log_1.Log.CheckError() &&
-                    Log_1.Log.Error("Battle", 51, "Error Context Type")
-        : Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Battle", 51, "Cannot Find Corresponding Context", [
-            "ContextId",
-            e,
-          ])
-      : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Battle", 51, "Context Id Invalid!");
   }
 }
 exports.CombatMessageModel = CombatMessageModel;

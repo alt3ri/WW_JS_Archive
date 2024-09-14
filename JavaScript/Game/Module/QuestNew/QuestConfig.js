@@ -108,8 +108,8 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
   GetQuestMainTypeName(e) {
     e = this.GetQuestMainTypeConfig(e);
     return e
-      ? MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.MainTypeName) ??
-          ""
+      ? (MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.MainTypeName) ??
+          "")
       : "";
   }
   GetQuestTabIcon(e) {

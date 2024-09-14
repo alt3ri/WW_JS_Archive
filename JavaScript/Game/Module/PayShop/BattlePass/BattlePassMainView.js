@@ -38,6 +38,7 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
           i = t.ChildViewName,
           e = this.TabComponent.GetTabItemByIndex(e);
         this.TabViewComponent.ToggleCallBack(t, i, e, this.yki),
+          this.J4a(),
           this.GetItem(2).SetUIActive("BattlePassWeaponView" !== i),
           this.GetItem(4).SetUIActive("BattlePassWeaponView" !== i),
           this.GetItem(5).SetUIActive("BattlePassWeaponView" !== i),
@@ -64,7 +65,7 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
           .Info.Name === this.Info.Name &&
           BattlePassController_1.BattlePassController.TryShowUpLevelView(!1);
       }),
-      (this.cMa = (e) => {
+      (this.vya = (e) => {
         var t;
         "BattlePassWeaponView" ===
           this.TabViewComponent.GetCurrentTabViewName() &&
@@ -116,7 +117,7 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
       await this.TabComponent.RefreshTabItemByLengthAsync(
         this.TabDataList.length,
       ),
-      await this.TabComponent.CreatePopupToggleTab(this.cMa),
+      await this.TabComponent.CreatePopupToggleTab(this.vya),
       this.TabComponent.SetPopupToggleName("PrefabTextItem_3652268202_Text"),
       (this.TabViewComponent = new TabViewComponent_1.TabViewComponent(
         this.GetItem(1),
@@ -131,6 +132,13 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     this.TabComponent.SelectToggleByIndex(0, !0);
+  }
+  J4a() {
+    var e, t;
+    "BattlePassWeaponView" === this.TabViewComponent.GetCurrentTabViewName() &&
+      ((e = this.TabViewComponent.GetCurrentTabView()),
+      (t = this.TabComponent.GetCaptionToggleState()),
+      e.RefreshToggleState(t));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(

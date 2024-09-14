@@ -17,28 +17,42 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configBattleScoreLevelConfById.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configBattleScoreLevelConfById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configBattleScoreLevelConfById.GetConfig(";
 exports.configBattleScoreLevelConfById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, e = !0) => {
-    if (
-      (t = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      n =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (n) {
       if (e) {
-        var n = KEY_PREFIX + `#${o})`;
-        const i = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (i) return i;
+        var i = KEY_PREFIX + `#${o})`;
+        const C = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (C)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
+          );
       }
       if (
-        (t =
+        (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,32 +60,37 @@ exports.configBattleScoreLevelConfById = {
               o,
             ]))
       ) {
-        var t,
-          n = void 0;
+        i = void 0;
         if (
-          (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
           )),
-          t)
+          n)
         ) {
-          const i =
+          const C =
             BattleScoreLevelConf_1.BattleScoreLevelConf.getRootAsBattleScoreLevelConf(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
             );
           return (
             e &&
-              ((t = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(t, i)),
+              ((n = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(n, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=BattleScoreLevelConfById.js.map

@@ -20,10 +20,10 @@ class CollectItemViewBase extends UiViewBase_1.UiViewBase {
       (this.QUn = () => {
         this.OnSubmitItemLevelMax();
       }),
-      (this.vGn = () => {
+      (this.AGn = () => {
         this.OnLevelMaxSequenceFinished();
       }),
-      (this.xGn = () => {
+      (this.kGn = () => {
         this.OnLevelUpSequenceFinished();
       }),
       (this.XUn = () => {
@@ -56,11 +56,11 @@ class CollectItemViewBase extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAntiqueShopLevelMaxSequenceFinished,
-        this.vGn,
+        this.AGn,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAntiqueShopUpgradeSequenceFinished,
-        this.xGn,
+        this.kGn,
       ),
       (ModelManager_1.ModelManager.MingSuModel.CurrentInteractCreatureDataLongId =
         ModelManager_1.ModelManager.InteractionModel.InteractCreatureDataLongId),
@@ -81,11 +81,11 @@ class CollectItemViewBase extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAntiqueShopLevelMaxSequenceFinished,
-        this.vGn,
+        this.AGn,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAntiqueShopUpgradeSequenceFinished,
-        this.xGn,
+        this.kGn,
       ),
       this.OnEnded();
   }

@@ -5,18 +5,19 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.UrlPrefixSelector =
     exports.DOWNLOAD_SUFFIX =
       void 0);
-const puerts_1 = require("puerts"),
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
   UE = require("ue"),
   BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
   HotPatchLogReport_1 = require("../HotPatchLogReport"),
-  LauncherLog_1 = require("../Util/LauncherLog"),
-  DownloadDefine_1 = require("./DownloadDefine"),
   NetworkDefine_1 = require("../NetworkDefine"),
+  LauncherLog_1 = require("../Util/LauncherLog"),
   LauncherSerialize_1 = require("../Util/LauncherSerialize"),
   ProcedureUtil_1 = require("../Util/ProcedureUtil"),
+  DownloadDefine_1 = require("./DownloadDefine"),
   INLINE_SPEED_RATIO = 0.8,
   INLINE_PRICE_RATIO = 0.2,
-  TEST_TIME = 3,
+  TEST_TIME = 5,
   TIME_OUT = ((exports.DOWNLOAD_SUFFIX = ".download"), 3),
   bigIntZero = 0n,
   bigIntTwoToPowerOfTen = 1024n,
@@ -158,10 +159,10 @@ class RequestFileInfo {
 exports.RequestFileInfo = RequestFileInfo;
 class UrlPrefixDownload {
   constructor() {
-    (this.MSr = void 0), (this.ESr = !1), (this.jpa = !1), (this.SSr = void 0);
+    (this.MSr = void 0), (this.ESr = !1), (this.jSa = !1), (this.SSr = void 0);
   }
   CancelDownload() {
-    this.jpa || (this.MSr && this.MSr.Cancel(), (this.ESr = !0));
+    this.jSa || (this.MSr && this.MSr.Cancel(), (this.ESr = !0));
   }
   async StartEvaluatePrefix(e, t = !1, o = void 0) {
     if (e.length <= 0)
@@ -178,7 +179,7 @@ class UrlPrefixDownload {
     var t = UrlPrefixSelector.GetPrimaryPrefixList(),
       o = new HotPatchLogReport_1.HotPatchLog(),
       r = ((o.s_step_id = "start_prefixes_evaluate"), { success: !0 }),
-      i = new Array();
+      i = [];
     for (const d of t) {
       var n = {
         Address: d.Address,
@@ -666,7 +667,7 @@ class UrlPrefixDownload {
           (s.s_file_name = r.FileName),
           { success: !0 });
       try {
-        (this.MSr = new UE.DownloaderProxy()), (this.jpa = !1);
+        (this.MSr = new UE.DownloaderProxy()), (this.jSa = !1);
         var _ = await this.DSr(o, e, n, r, n ? l : -1);
         if (((d += _.DownloadedSize), (l = _.RemainedTime), _.Complete)) {
           LauncherLog_1.LauncherLog.Info(
@@ -749,13 +750,13 @@ class UrlPrefixDownload {
         p = (e, t, o) => {
           var r;
           this.SSr &&
-            ((r = UE.KuroStaticLibrary.IsBuildShipping()
+            ((r = cpp_1.FKuroUtilityForPuerts.IsBuildShipping()
               ? w.HashString
               : w.FileName),
             this.SSr(w.FileName, r, e, t, o));
         },
         h = (e, t) => {
-          this.jpa = !0;
+          this.jSa = !0;
           var o = new Date(),
             r = 7 === e,
             i =

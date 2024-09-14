@@ -32,8 +32,10 @@ class LevelEntityConfig {
     return this.areaid();
   }
   get Transform() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.transformLength(), (t) =>
-      this.transform(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.transformLength(),
+      this.transform,
+      this,
     );
   }
   get ComponentsData() {

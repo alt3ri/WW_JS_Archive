@@ -29,13 +29,13 @@ class RenderConfig {
     if (e) return 3;
     this.Klr ||
       (this.Klr = new Map([
-        [Protocol_1.Aki.Protocol.wks.Proto_Player, 1],
-        [Protocol_1.Aki.Protocol.wks.Proto_Npc, 2],
-        [Protocol_1.Aki.Protocol.wks.Proto_Monster, 4],
-        [Protocol_1.Aki.Protocol.wks.Proto_Vision, 5],
-        [Protocol_1.Aki.Protocol.wks.Proto_Animal, 6],
-        [Protocol_1.Aki.Protocol.wks.Proto_SceneItem, 7],
-        [Protocol_1.Aki.Protocol.wks.Proto_Custom, 8],
+        [Protocol_1.Aki.Protocol.kks.Proto_Player, 1],
+        [Protocol_1.Aki.Protocol.kks.Proto_Npc, 2],
+        [Protocol_1.Aki.Protocol.kks.Proto_Monster, 4],
+        [Protocol_1.Aki.Protocol.kks.Proto_Vision, 5],
+        [Protocol_1.Aki.Protocol.kks.Proto_Animal, 6],
+        [Protocol_1.Aki.Protocol.kks.Proto_SceneItem, 7],
+        [Protocol_1.Aki.Protocol.kks.Proto_Custom, 8],
       ]));
     e = this.Klr.get(n);
     return e || 0;
@@ -222,6 +222,9 @@ class RenderConfig {
   (RenderConfig.GlobalCharacterWorldForwardDirection = new UE.FName(
     "GlobalCharacterWorldForwardDirection",
   )),
+  (RenderConfig.GlobalCharacterOnGround = new UE.FName(
+    "GlobalCharacterOnGround",
+  )),
   (RenderConfig.GlobalCameraPosAndRadius = new UE.FName(
     "GlobalCameraPosAndRadius",
   )),
@@ -244,6 +247,7 @@ class RenderConfig {
   (RenderConfig.IdNpcDitherEffect = 8),
   (RenderConfig.IdBodyEffect = 9),
   (RenderConfig.IdDecalShadow = 10),
+  (RenderConfig.IdGrassInteraction = 11),
   (RenderConfig.EmptyMaterialPath =
     "/Game/Aki/Render/Shaders/Character/MI_Empty"),
   (RenderConfig.E_Action_UseBaseColorScale = new UE.FName(

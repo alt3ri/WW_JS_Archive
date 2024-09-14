@@ -24,22 +24,22 @@ class PersonalRoleShowView extends UiViewBase_1.UiViewBase {
         if (0 === this.RVi) {
           for (let e = 0; e < t; e++) {
             var r = i[e];
-            s.push(r.O6n);
+            s.push(r.Q6n);
           }
           s.push(this.nVi);
         } else if (2 === this.RVi)
           for (let e = 0; e < t; e++) {
             var h = i[e];
-            h.O6n !== this.nVi && s.push(h.O6n);
+            h.Q6n !== this.nVi && s.push(h.Q6n);
           }
         else if (1 === this.RVi)
           for (let e = 0; e < t; e++) {
             var o = i[e];
-            o.O6n === this.nVi
+            o.Q6n === this.nVi
               ? s.push(this.DVi)
-              : o.O6n === this.DVi
+              : o.Q6n === this.DVi
                 ? s.push(this.nVi)
-                : s.push(o.O6n);
+                : s.push(o.Q6n);
           }
         PersonalController_1.PersonalController.SendRoleShowListUpdateRequest(
           s,
@@ -114,7 +114,7 @@ class PersonalRoleShowView extends UiViewBase_1.UiViewBase {
       t = i.length;
     let s = !1;
     for (let e = 0; e < t; e++)
-      if (i[e].O6n === this.nVi) {
+      if (i[e].Q6n === this.nVi) {
         s = !0;
         break;
       }

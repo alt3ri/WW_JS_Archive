@@ -18,25 +18,39 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configWeaponHideConfigByIdWithZero.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configWeaponHideConfigByIdWithZero.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configWeaponHideConfigByIdWithZero.GetConfig(";
 exports.configWeaponHideConfigByIdWithZero = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, n, i, e = !0) => {
-    if (
-      (C = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${n}#${i})`),
+      C =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (C) {
       if (e) {
-        var d = KEY_PREFIX + `#${o}#${n}#${i})`;
-        const f = ConfigCommon_1.ConfigCommon.GetConfig(d);
-        if (f) return f;
+        var f = KEY_PREFIX + `#${o}#${n}#${i})`;
+        const g = ConfigCommon_1.ConfigCommon.GetConfig(f);
+        if (g)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
+          );
       }
       if (
         (C =
@@ -53,10 +67,9 @@ exports.configWeaponHideConfigByIdWithZero = {
               ["Id", i],
             ))
       ) {
-        var C,
-          d = void 0;
+        f = void 0;
         if (
-          (([C, d] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([C, f] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -66,21 +79,27 @@ exports.configWeaponHideConfigByIdWithZero = {
           )),
           C)
         ) {
-          const f =
+          const g =
             WeaponHideConfig_1.WeaponHideConfig.getRootAsWeaponHideConfig(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(d.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(f.buffer)),
             );
           return (
             e &&
               ((C = KEY_PREFIX + `#${o}#${n}#${i})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(C, f)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(C, g)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            f
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=WeaponHideConfigByIdWithZero.js.map

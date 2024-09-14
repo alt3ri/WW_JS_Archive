@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayAbilityVisionControl = void 0);
 const Log_1 = require("../../../../../../../Core/Common/Log"),
-  GameplayCueById_1 = require("../../../../../../../Core/Define/ConfigQuery/GameplayCueById"),
   Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol"),
   TimerSystem_1 = require("../../../../../../../Core/Timer/TimerSystem"),
   ModelManager_1 = require("../../../../../../Manager/ModelManager"),
@@ -16,28 +15,26 @@ class GameplayAbilityVisionControl extends GameplayAbilityVisionBase_1.GameplayA
     super(...arguments),
       (this.wZo = void 0),
       (this.BZo = void 0),
-      (this.kQo = void 0),
-      (this.aZs = void 0),
-      (this._yo = (i, e, t) => {
-        e < Number.EPSILON &&
-          (this.GameplayTagComponent.HasTag(
-            GameplayAbilityVisionMisc_1.skillTag,
-          )
-            ? (this.TeamComponent?.SetTeamTag(1),
-              this.wZo ||
-                (this.wZo = this.GameplayTagComponent.ListenForTagAddOrRemove(
-                  GameplayAbilityVisionMisc_1.skillTag,
-                  (i, e) => {
-                    e || (this.wZo?.EndTask(), (this.wZo = void 0), this.bZo());
-                  },
-                )))
+      (this.kQo = 0),
+      (this.ota = void 0),
+      (this._yo = (i, t, e) => {
+        t < Number.EPSILON &&
+          (this.TeamComponent?.SetTeamTag(1),
+          this.GameplayTagComponent.HasTag(GameplayAbilityVisionMisc_1.skillTag)
+            ? this.wZo ||
+              (this.wZo = this.GameplayTagComponent.ListenForTagAddOrRemove(
+                GameplayAbilityVisionMisc_1.skillTag,
+                (i, t) => {
+                  t || (this.wZo?.EndTask(), (this.wZo = void 0), this.bZo());
+                },
+              ))
             : this.bZo());
       });
   }
   OnCreate() {
-    var i, e, t, o;
+    var i, t, e, o;
     this.CreatureDataComponent.SummonType ===
-      Protocol_1.Aki.Protocol.Summon.L3s
+      Protocol_1.Aki.Protocol.Summon.x3s
         .Proto_ESummonTypeConcomitantPhantomRole &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Battle", 29, "GameplayAbilityVisionControl.OnCreate"),
@@ -46,22 +43,21 @@ class GameplayAbilityVisionControl extends GameplayAbilityVisionBase_1.GameplayA
         GameplayAbilityVisionMisc_1.controlVisionEnergy,
         this._yo,
       ),
-      this.GZo(this.EntityHandle),
       (i = ModelManager_1.ModelManager.PlayerInfoModel.GetId() ?? 0),
-      (t = (e = this.EntityHandle.Entity.GetComponent(0)).GetRoleId()),
+      (e = (t = this.EntityHandle.Entity.GetComponent(0)).GetRoleId()),
       ((o = new SceneTeamData_1.SceneTeamRole()).CreatureDataId =
-        e.GetCreatureDataId()),
-      (o.RoleId = t),
+        t.GetCreatureDataId()),
+      (o.RoleId = e),
       ModelManager_1.ModelManager.SceneTeamModel.UpdateGroupData(i, {
         GroupType: -1,
         GroupRoleList: [o],
-        CurrentRoleId: t,
+        CurrentRoleId: e,
       }));
   }
   OnDestroy() {
     var i;
     this.CreatureDataComponent.SummonType ===
-      Protocol_1.Aki.Protocol.Summon.L3s
+      Protocol_1.Aki.Protocol.Summon.x3s
         .Proto_ESummonTypeConcomitantPhantomRole &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Battle", 29, "GameplayAbilityVisionControl.OnDestroy"),
@@ -92,18 +88,13 @@ class GameplayAbilityVisionControl extends GameplayAbilityVisionBase_1.GameplayA
       return !1;
     var i = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
       this.Entity,
-      Protocol_1.Aki.Protocol.Summon.L3s
+      Protocol_1.Aki.Protocol.Summon.x3s
         .Proto_ESummonTypeConcomitantPhantomRole,
     );
     if (!i) return !1;
-    if (
-      i.Entity.GetComponent(158).GetCurrentValue(
-        GameplayAbilityVisionMisc_1.controlVisionEnergy,
-      ) < Number.EPSILON
-    )
-      return !1;
-    i.Entity.CheckGetComponent(83)?.SetTeamTag(2),
+    i.Entity.CheckGetComponent(84)?.SetTeamTag(2),
       (GameplayAbilityVisionControl.VisionControlHandle = i),
+      this.GZo(i),
       (this.BZo = ModelManager_1.ModelManager.SceneTeamModel.CurrentGroupType);
     i = ModelManager_1.ModelManager.PlayerInfoModel.GetId() ?? 0;
     return (
@@ -121,73 +112,66 @@ class GameplayAbilityVisionControl extends GameplayAbilityVisionBase_1.GameplayA
       !(
         !GameplayAbilityVisionControl.VisionControlHandle ||
         (this.NZo(),
-        this.GZo(GameplayAbilityVisionControl.VisionControlHandle),
         (GameplayAbilityVisionControl.VisionControlHandle = void 0))
       )
     );
   }
   qZo(i) {
-    var e = ModelManager_1.ModelManager.CreatureModel.GetEntity(
+    var t = ModelManager_1.ModelManager.CreatureModel.GetEntity(
       this.CreatureDataComponent.GetSummonerId(),
     );
-    e && (e.Entity.GetComponent(0).VisionControlCreatureDataId = i);
+    t && (t.Entity.GetComponent(0).VisionControlCreatureDataId = i);
   }
   bZo() {
     var i = ModelManager_1.ModelManager.CreatureModel.GetEntity(
       this.CreatureDataComponent.GetSummonerId(),
     );
     i?.Valid
-      ? i.Entity.GetComponent(35).EndAbilityVision(3)
+      ? i.Entity.GetComponent(36).EndAbilityVision(3)
       : (GameplayAbilityVisionControl.VisionControlHandle = void 0);
   }
   GZo(i) {
     i.Valid &&
-      (i = i.Entity.GetComponent(159)).AddBuff(
+      (i = i.Entity.GetComponent(160)).AddBuff(
         CharacterBuffIds_1.buffId.VisionControl,
         { InstigatorId: i.CreatureDataId, Reason: "操控幻象回满能量" },
       );
   }
   NZo() {
+    this.ota = TimerSystem_1.TimerSystem.Delay(() => {
+      Log_1.Log.CheckError() &&
+        Log_1.Log.Error("Battle", 29, "幻象消失材质没有正常结束，被保底"),
+        this.Cga();
+    }, GameplayAbilityVisionMisc_1.VISION_HIDDEN_DELAY);
     var i =
       GameplayAbilityVisionControl.VisionControlHandle.Entity.GetComponent(19);
-    i?.CreateGameplayCue(
-      GameplayCueById_1.configGameplayCueById.GetConfig(
-        GameplayAbilityVisionMisc_1.morphParticleCueId,
-      ),
-      { Sync: !0 },
-    ),
-      (this.kQo = i?.CreateGameplayCue(
-        GameplayCueById_1.configGameplayCueById.GetConfig(
-          GameplayAbilityVisionMisc_1.materialCueId,
-        ),
+    i?.CreateGameplayCue(GameplayAbilityVisionMisc_1.morphParticleCueId, {
+      Sync: !0,
+      Instant: !0,
+    }),
+      (this.kQo = i.CreateGameplayCue(
+        GameplayAbilityVisionMisc_1.materialCueId,
         {
           EndCallback: () => {
-            this.BuffComponent.AddBuff(
-              GameplayAbilityVisionMisc_1.roleAppearBuffId,
-              {
-                InstigatorId: this.BuffComponent.CreatureDataId,
-                Reason: "幻象变身结束时角色自身的材质和粒子",
-              },
-            ),
-              this.Ida(),
-              this.kQo?.Destroy(),
-              (this.kQo = void 0),
-              this.aZs &&
-                TimerSystem_1.TimerSystem.Has(this.aZs) &&
-                (TimerSystem_1.TimerSystem.Remove(this.aZs),
-                (this.aZs = void 0));
+            TimerSystem_1.TimerSystem.Has(this.ota) &&
+              (TimerSystem_1.TimerSystem.Remove(this.ota), this.Cga());
           },
           Sync: !0,
         },
-      )),
-      (this.aZs = TimerSystem_1.TimerSystem.Delay(() => {
-        this.Ida();
-      }, GameplayAbilityVisionMisc_1.VISION_HIDDEN_DELAY));
+      ));
   }
-  Ida() {
+  Cga() {
+    (this.ota = void 0),
+      this.BuffComponent.AddBuff(GameplayAbilityVisionMisc_1.roleAppearBuffId, {
+        InstigatorId: this.BuffComponent.CreatureDataId,
+        Reason: "幻象变身结束时角色自身的材质和粒子",
+      });
     var i = ModelManager_1.ModelManager.PlayerInfoModel.GetId() ?? 0;
     ModelManager_1.ModelManager.SceneTeamModel.SwitchGroup(i, this.BZo ?? 1),
-      (this.BZo = void 0);
+      (this.BZo = void 0),
+      GameplayAbilityVisionControl.VisionControlHandle.Entity.GetComponent(
+        19,
+      )?.DestroyGameplayCueByHandle(this.kQo);
   }
 }
 (exports.GameplayAbilityVisionControl =

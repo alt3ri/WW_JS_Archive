@@ -16,7 +16,7 @@ const CsvLoader_1 = require("./CsvLoader"),
       CnName: "音色Id",
       Type: "Int",
       Filter: "1",
-      RenderType: 48,
+      RenderType: 49,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "Desc",
@@ -29,12 +29,12 @@ const CsvLoader_1 = require("./CsvLoader"),
       CnName: "通用语气台本Id",
       Type: "Int",
       Filter: "1",
-      RenderType: 49,
+      RenderType: 50,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "AkEvent",
       CnName: "音频事件",
-      RenderType: 33,
+      RenderType: 34,
     }),
   ];
 class TimbreAkEventCsvLoader extends CsvLoader_1.CsvLoader {

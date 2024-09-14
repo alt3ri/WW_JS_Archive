@@ -11,10 +11,23 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.logTestMsg =
     exports.enableTestLog =
     exports.TEST_LOG_TAG =
+    exports.resetDefaultTestCaseTimeout =
+    exports.setDefaultTestCaseTimeout =
+    exports.DEFAULT_TEST_TIMEOUT =
       void 0);
-const ColorDefine_1 = require("../Misc/ColorDefine"),
-  Log_1 = require("../Misc/Log"),
-  DEFAULT_TIMEOUT = 3e3;
+const Async_1 = require("../Misc/Async"),
+  ColorDefine_1 = require("../Misc/ColorDefine"),
+  Log_1 = require("../Misc/Log");
+exports.DEFAULT_TEST_TIMEOUT = 3e3;
+let defaultTestCaseTimeout = exports.DEFAULT_TEST_TIMEOUT;
+function setDefaultTestCaseTimeout(t) {
+  defaultTestCaseTimeout = t;
+}
+function resetDefaultTestCaseTimeout() {
+  defaultTestCaseTimeout = exports.DEFAULT_TEST_TIMEOUT;
+}
+(exports.setDefaultTestCaseTimeout = setDefaultTestCaseTimeout),
+  (exports.resetDefaultTestCaseTimeout = resetDefaultTestCaseTimeout);
 let isEnableTestLog = !(exports.TEST_LOG_TAG = "[UniverseTestCase]");
 function enableTestLog(t) {
   isEnableTestLog = t;
@@ -83,7 +96,9 @@ class TestContext {
   }
 }
 function beatifyError(t, e) {
-  return (t.message?.split("\n") ?? []).map((t) => "" + e + t).join("\n");
+  var s = t.message?.split("\n") ?? [],
+    t = t.stack?.split("\n") ?? [];
+  return s.push(...t), s.map((t) => "" + e + t).join("\n");
 }
 exports.TestContext = TestContext;
 class TestResult {
@@ -121,7 +136,10 @@ class TestFilter {
         );
   }
   GetAllTestNames() {
-    return Array.from(this.rt.values()).map((t) => t.Name);
+    return this.GetAllTestCases().map((t) => t.Name);
+  }
+  GetAllTestCases() {
+    return Array.from(this.rt.values());
   }
   Clear() {
     this.rt.clear();
@@ -222,8 +240,11 @@ class TestOp {
   static async RunCase(i, r, n, o) {
     return (
       logTestMsg("开始运行测试用例: " + n.Name),
+      n.TestCaseInterval &&
+        0 < n.TestCaseInterval &&
+        (await (0, Async_1.delayMs)(n.TestCaseInterval)),
       new Promise((e) => {
-        const t = (i.CurrentTest = n).TimeOut ?? DEFAULT_TIMEOUT,
+        const t = (i.CurrentTest = n).TimeOut ?? defaultTestCaseTimeout,
           s = setTimeout(() => {
             (o.Result = !1),
               (o.Error = new Error(
@@ -231,10 +252,11 @@ class TestOp {
 File  : ` + n.FileLocation,
               )),
               e();
-          }, n.TimeOut ?? DEFAULT_TIMEOUT);
+          }, n.TimeOut ?? defaultTestCaseTimeout);
         this.lt(r, n, o)
           .then(() => {
-            logTestMsg("测试用例运行结束: " + n.Name), clearTimeout(s), e();
+            o.Error ||
+              (logTestMsg("测试用例运行结束: " + n.Name), clearTimeout(s), e());
           })
           .catch((t) => {
             clearTimeout(s), (0, Log_1.log)("RunCaseAsync failed: " + t), e();

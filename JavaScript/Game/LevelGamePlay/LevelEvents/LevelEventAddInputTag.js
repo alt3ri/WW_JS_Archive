@@ -52,7 +52,7 @@ class LevelEventAddInputTag extends LevelGeneralBase_1.LevelEventBase {
           ),
             (e = "FightInputRoot.FightInput.AxisInput.MoveInput"),
             o?.Valid &&
-              (o.GetComponent(188)?.AddTag(477750727),
+              (o.GetComponent(190)?.AddTag(477750727),
               Log_1.Log.CheckDebug()) &&
               Log_1.Log.Debug(
                 "Test",

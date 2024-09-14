@@ -168,9 +168,9 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
           e.BindOnCanExecuteChange(() => !1),
           e.BindOnExtendToggleClicked((e) => {
             e = e.Data;
-            e.G6n
+            e.K6n
               ? ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-                  e.f8n,
+                  e.L8n,
                 )
               : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                   "ItemSelectCookUnlockTip",
@@ -378,8 +378,8 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       i = 0;
     e = e.filter(
       (e) =>
-        e.f8n !== CookController_1.CookController.CookCoinId ||
-        ((t = !0), (i = e.MVn), !1),
+        e.L8n !== CookController_1.CookController.CookCoinId ||
+        ((t = !0), (i = e.UVn), !1),
     );
     return [t, i, e];
   }
@@ -458,7 +458,7 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
         });
       let e = !0;
       for (const i of t)
-        if (!i.G6n) {
+        if (!i.K6n) {
           e = !1;
           break;
         }

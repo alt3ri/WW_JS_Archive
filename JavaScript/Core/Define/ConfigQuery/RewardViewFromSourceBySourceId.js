@@ -17,25 +17,41 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configRewardViewFromSourceBySourceId.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configRewardViewFromSourceBySourceId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configRewardViewFromSourceBySourceId.GetConfig(";
 exports.configRewardViewFromSourceBySourceId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, e = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var r = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      i =
+        (r.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
       if (e) {
-        var r = KEY_PREFIX + `#${o})`;
-        const n = ConfigCommon_1.ConfigCommon.GetConfig(r);
-        if (n) return n;
+        var n = KEY_PREFIX + `#${o})`;
+        const t = ConfigCommon_1.ConfigCommon.GetConfig(n);
+        if (t)
+          return (
+            r.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            t
+          );
       }
       if (
         (i =
@@ -46,10 +62,9 @@ exports.configRewardViewFromSourceBySourceId = {
               o,
             ]))
       ) {
-        var i,
-          r = void 0;
+        n = void 0;
         if (
-          (([i, r] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -57,21 +72,27 @@ exports.configRewardViewFromSourceBySourceId = {
           )),
           i)
         ) {
-          const n =
+          const t =
             RewardViewFromSource_1.RewardViewFromSource.getRootAsRewardViewFromSource(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(r.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
             );
           return (
             e &&
               ((i = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(i, n)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, t)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            n
+            r.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            t
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    r.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=RewardViewFromSourceBySourceId.js.map

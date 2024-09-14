@@ -13,7 +13,7 @@ class LevelConditionCheckCharacterTag extends LevelGeneralBase_1.LevelConditionB
         (e = e.LimitParams.get("Tag")) &&
         (r =
           (r = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity) &&
-          r.Entity.GetComponent(188))
+          r.Entity.GetComponent(190))
       ) && r.HasTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e))
     );
   }
@@ -22,7 +22,7 @@ class LevelConditionCheckCharacterTag extends LevelGeneralBase_1.LevelConditionB
     let r = !1;
     var l = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     return (
-      l && (l = l.Entity.GetComponent(188)) && (r = l.HasTag(e.TagId)),
+      l && (l = l.Entity.GetComponent(190)) && (r = l.HasTag(e.TagId)),
       e.IsContain ? r : !r
     );
   }

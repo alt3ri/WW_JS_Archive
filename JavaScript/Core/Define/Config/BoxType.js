@@ -16,14 +16,17 @@ class BoxType {
     return this.startstate();
   }
   get IdleState() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.idlestateLength(), (t) =>
-      this.idlestate(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.idlestateLength(),
+      this.idlestate,
+      this,
     );
   }
   get IdleStartState() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.idlestartstateLength(),
-      (t) => this.idlestartstate(t),
+      this.idlestartstate,
+      this,
     );
   }
   get DeathState() {

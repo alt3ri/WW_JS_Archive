@@ -107,7 +107,7 @@ class TsAnimNotifyStateAudioEvent extends UE.KuroAnimNotifyState {
   GetAkComponent(t, i) {
     let e = void 0;
     if (t.IsA(UE.TsBaseCharacter_C.StaticClass())) {
-      var o = t.CharacterActorComponent?.Entity?.GetComponent(43);
+      var o = t.CharacterActorComponent?.Entity?.GetComponent(44);
       if (!o?.Valid) return;
       e = o.GetAkComponent(i);
     } else

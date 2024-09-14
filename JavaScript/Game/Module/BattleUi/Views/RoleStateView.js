@@ -11,7 +11,7 @@ const UE = require("ue"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   BattleChildView_1 = require("./BattleChildView/BattleChildView");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 const LOW_HP_PERCENT = 0.2;
 class RoleStateView extends BattleChildView_1.BattleChildView {
   constructor() {
@@ -92,7 +92,7 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
       ? ((this.Wst = t),
         (this.E0 = t?.EntityHandle?.Id),
         (this.$te = t.AttributeComponent),
-        (this.l1t = t?.EntityHandle?.Entity?.GetComponent(66)),
+        (this.l1t = t?.EntityHandle?.Entity?.GetComponent(67)),
         this.RefreshRoleState())
       : ((this.Wst = void 0),
         (this.E0 = void 0),
@@ -180,7 +180,7 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
     this.IsValid() &&
       (i = this.$te) &&
       ((h = i.GetCurrentValue(EAttributeId.Proto_Life)),
-      (i = i.GetCurrentValue(EAttributeId.e5n)),
+      (i = i.GetCurrentValue(EAttributeId.l5n)),
       (s = this.l1t.ShieldTotal),
       (e = h / i),
       (s = Math.min(s / i, 1)),
@@ -200,7 +200,7 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
     i &&
       ((i =
         i.GetCurrentValue(EAttributeId.Proto_Life) /
-        i.GetCurrentValue(EAttributeId.e5n)),
+        i.GetCurrentValue(EAttributeId.l5n)),
       (t = this.snt) <= i || ((this.j1t = i), (this.W1t = t), (this.K1t = 0)));
   }
   ast(t) {

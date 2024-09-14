@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhotoMemoryCollect = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class PhotoMemoryCollect {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -47,11 +48,21 @@ class PhotoMemoryCollect {
   get TraceMarkId() {
     return this.tracemarkid();
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  get QuestId() {
+    return this.questid();
   }
-  static getRootAsPhotoMemoryCollect(t, r) {
-    return (r || new PhotoMemoryCollect()).__init(
+  get QuestIdList() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.questidlistLength(),
+      this.questidlist,
+      this,
+    );
+  }
+  __init(t, s) {
+    return (this.z7 = t), (this.J7 = s), this;
+  }
+  static getRootAsPhotoMemoryCollect(t, s) {
+    return (s || new PhotoMemoryCollect()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -73,32 +84,32 @@ class PhotoMemoryCollect {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   themebg(t) {
-    var r = this.J7.__offset(this.z7, 12);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var s = this.J7.__offset(this.z7, 12);
+    return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   bgresourcem(t) {
-    var r = this.J7.__offset(this.z7, 14);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var s = this.J7.__offset(this.z7, 14);
+    return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   bgresourcef(t) {
-    var r = this.J7.__offset(this.z7, 16);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var s = this.J7.__offset(this.z7, 16);
+    return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   title(t) {
-    var r = this.J7.__offset(this.z7, 18);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var s = this.J7.__offset(this.z7, 18);
+    return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   tipsdesc(t) {
-    var r = this.J7.__offset(this.z7, 20);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var s = this.J7.__offset(this.z7, 20);
+    return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   clueid() {
     var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   desc(t) {
-    var r = this.J7.__offset(this.z7, 24);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var s = this.J7.__offset(this.z7, 24);
+    return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   dropid() {
     var t = this.J7.__offset(this.z7, 26);
@@ -111,6 +122,31 @@ class PhotoMemoryCollect {
   tracemarkid() {
     var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  questid() {
+    var t = this.J7.__offset(this.z7, 32);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  GetQuestidlistAt(t) {
+    return this.questidlist(t);
+  }
+  questidlist(t) {
+    var s = this.J7.__offset(this.z7, 34);
+    return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
+  }
+  questidlistLength() {
+    var t = this.J7.__offset(this.z7, 34);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  questidlistArray() {
+    var t = this.J7.__offset(this.z7, 34);
+    return t
+      ? new Int32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
 }
 exports.PhotoMemoryCollect = PhotoMemoryCollect;

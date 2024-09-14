@@ -47,7 +47,7 @@ let DurabilityComponent = class DurabilityComponent extends EntityComponent_1.En
     return (
       t.DurabilityStateConfig?.NonDestructable ||
         (this.DeadActions = t.DestructionActions),
-      this.Entity.GetComponent(108).SetLogicRange(
+      this.Entity.GetComponent(109).SetLogicRange(
         ConfigManager_1.ConfigManager.ManipulateConfig.SearchRange,
       ),
       !0
@@ -93,7 +93,7 @@ let DurabilityComponent = class DurabilityComponent extends EntityComponent_1.En
   }
 };
 (DurabilityComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(92)],
+  [(0, RegisterComponent_1.RegisterComponent)(93)],
   DurabilityComponent,
 )),
   (exports.DurabilityComponent = DurabilityComponent);

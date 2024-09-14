@@ -9,12 +9,13 @@ class RedDotInventoryVirtual extends RedDotBase_1.RedDotBase {
     return [
       EventDefine_1.EEventName.OnAddCommonItemList,
       EventDefine_1.EEventName.OnRemoveItemRedDot,
+      EventDefine_1.EEventName.OnResponseCommonItemFinished,
     ];
   }
   OnCheck(e) {
-    var t =
+    var n =
       ModelManager_1.ModelManager.InventoryModel.GetItemMainTypeMapping(0);
-    return !!t && t.HasRedDot();
+    return !!n && n.HasRedDot();
   }
 }
 exports.RedDotInventoryVirtual = RedDotInventoryVirtual;

@@ -5,14 +5,15 @@ const UE = require("ue"),
   MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
-  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RewardItemBar extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.H3e = void 0),
-      (this.JGe = (e, t, r) => {
-        var i = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
-        return i.Initialize(t.GetOwner()), i.Refresh(e), { Key: r, Value: i };
+      (this.JGe = (e, t, i) => {
+        var r = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
+        return r.Initialize(t.GetOwner()), r.Refresh(e), { Key: i, Value: r };
       });
   }
   OnRegisterComponent() {
@@ -33,6 +34,9 @@ class RewardItemBar extends UiPanelBase_1.UiPanelBase {
   }
   RebuildRewardsByData(e) {
     this.H3e.RebuildLayoutByDataNew(e);
+  }
+  SetTitleNewTxt(e) {
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e);
   }
 }
 exports.RewardItemBar = RewardItemBar;

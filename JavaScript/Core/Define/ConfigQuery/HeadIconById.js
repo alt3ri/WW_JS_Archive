@@ -17,25 +17,37 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configHeadIconById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configHeadIconById.GetConfig"),
   CONFIG_STAT_PREFIX = "configHeadIconById.GetConfig(";
 exports.configHeadIconById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, n = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      i =
+        (e.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
       if (n) {
-        var e = KEY_PREFIX + `#${o})`;
-        const d = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (d) return d;
+        var t = KEY_PREFIX + `#${o})`;
+        const a = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (a)
+          return (
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
         (i =
@@ -46,10 +58,9 @@ exports.configHeadIconById = {
               o,
             ]))
       ) {
-        var i,
-          e = void 0;
+        t = void 0;
         if (
-          (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -57,20 +68,26 @@ exports.configHeadIconById = {
           )),
           i)
         ) {
-          const d = HeadIcon_1.HeadIcon.getRootAsHeadIcon(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
+          const a = HeadIcon_1.HeadIcon.getRootAsHeadIcon(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
             n &&
               ((i = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(i, d)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            d
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    e.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=HeadIconById.js.map

@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TemporaryTeleportPanel = void 0);
 const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
   MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
-  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
@@ -71,24 +70,16 @@ class TemporaryTeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       ),
     );
     var e =
-        ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
-          "TeleportFastMove",
-        ),
-      e =
-        (this.wAt.SetText(
-          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e),
-        ),
-        ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel()
-          ? this.mFo.SetActive(
-              ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam(),
-            )
-          : this.mFo.SetActive(!0),
-        ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
-          this.u2o.MarkId,
-        ));
-    e.ShowFlag === Protocol_1.Aki.Protocol.I6s.Proto_ShowDisable
-      ? this.wAt.RefreshEnable(!1)
-      : this.wAt.RefreshEnable(!0);
+      ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
+        "TeleportFastMove",
+      );
+    this.wAt.SetText(MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e)),
+      ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel()
+        ? this.mFo.SetActive(
+            ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam(),
+          )
+        : this.mFo.SetActive(!0),
+      this.wAt.RefreshEnable(!this.u2o.IsServerDisable);
   }
 }
 exports.TemporaryTeleportPanel = TemporaryTeleportPanel;

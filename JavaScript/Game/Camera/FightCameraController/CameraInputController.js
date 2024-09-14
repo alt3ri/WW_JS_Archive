@@ -8,10 +8,11 @@ const cpp_1 = require("cpp"),
   QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine"),
   FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
   Quat_1 = require("../../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
-  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  GameSettingsDeviceRender_1 = require("../../GameSettings/GameSettingsDeviceRender"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   CampUtils_1 = require("../../NewWorld/Character/Common/Blueprint/Utils/CampUtils"),
   ColorUtils_1 = require("../../Utils/ColorUtils"),
@@ -27,13 +28,13 @@ const cpp_1 = require("cpp"),
   AIM_RANGE_TOLERANT = 1.05,
   MIN_PHYSICAL_DENSITY_DPI = 160,
   DEFAULT_DPI = 180,
-  MAX_PITCH_DELTA_TIME = 0.033,
-  NORMALIZED_FRAME_RATE = 30,
-  MAX_SMOOTH_DELTA_TIME = 0.3;
+  MAX_YAW_DELTA_TIME = 0.033,
+  MAX_PITCH_DELTA_TIME = 0.033;
 class CameraInputController extends CameraControllerBase_1.CameraControllerBase {
   constructor() {
     super(...arguments),
       (this.ZoomSpeed = 0),
+      (this.GamePadZoomSpeed = 0),
       (this.InputSpeedMax = 0),
       (this.InputSpeedPercentage = 0),
       (this.SmoothFactorMin = 0),
@@ -72,6 +73,8 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
       (this.H_e = 0),
       (this.j_e = 0),
       (this.W_e = 0),
+      (this.cUa = !1),
+      (this.mUa = !1),
       (this.K_e = 0),
       (this.Q_e = void 0),
       (this.X_e = !1),
@@ -81,17 +84,20 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
       (this.Lz = Vector_1.Vector.Create()),
       (this.J_e = Vector_1.Vector.Create()),
       (this.z_e = Vector_1.Vector.Create()),
+      (this.Gue = Rotator_1.Rotator.Create()),
+      (this.EPn = Rotator_1.Rotator.Create()),
       (this.az = Quat_1.Quat.Create()),
       (this.KJ = Quat_1.Quat.Create()),
+      (this.QJ = Quat_1.Quat.Create()),
       (this.eue = []),
       (this.tue = new Array()),
-      (this.EOn = 0),
-      (this.yOn = 0),
-      (this.IOn = 0),
-      (this.TOn = 0),
-      (this.LOn = 0),
-      (this.DOn = 0),
-      (this.UOn = 0);
+      (this.xOn = 0),
+      (this.POn = 0),
+      (this.BOn = 0),
+      (this.wOn = 0),
+      (this.bOn = 0),
+      (this.qOn = 0),
+      (this.GOn = 0);
   }
   get IsAiming() {
     return (
@@ -103,6 +109,7 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
   }
   OnInit() {
     this.SetConfigMap(1, "ZoomSpeed"),
+      this.SetConfigMap(24, "GamePadZoomSpeed"),
       this.SetConfigMap(5, "InputSpeedMin"),
       this.SetConfigMap(6, "InputSpeedMax"),
       this.SetConfigMap(2, "SmoothFactorMin"),
@@ -162,50 +169,51 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
       Info_1.Info.IsMobilePlatform()
         ? ((t = (i = cpp_1.KuroScreen.GetPhysicalScreenResolution()).X),
           (i = i.Y),
-          (s =
-            GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetDefaultScreenResolution()
-              .X),
-          (h =
-            GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetDefaultScreenResolution()
-              .Y),
-          (this.EOn = Math.max(s, h)),
-          (this.yOn = Math.min(s, h)),
-          (this.IOn = Math.max(t, i)),
-          (this.TOn = Math.min(t, i)),
+          (s = (h =
+            GameSettingsDeviceRender_1.GameSettingsDeviceRender.GetDefaultScreenResolution())
+            .X),
+          (h = h.Y),
+          (this.xOn = Math.max(s, h)),
+          (this.POn = Math.min(s, h)),
+          (this.BOn = Math.max(t, i)),
+          (this.wOn = Math.min(t, i)),
           1 === Info_1.Info.PlatformType
-            ? (this.LOn = Math.max(
+            ? (this.bOn = Math.max(
                 cpp_1.KuroScreen.ComputePhysicalScreenDensity(),
                 MIN_PHYSICAL_DENSITY_DPI,
               ))
-            : (this.LOn = Math.max(
+            : (this.bOn = Math.max(
                 cpp_1.KuroScreen.GetPhysicalScreenDensityDPI(),
                 MIN_PHYSICAL_DENSITY_DPI,
               )),
-          (MathUtils_1.MathUtils.IsNearlyEqual(this.IOn, 0) ||
-            MathUtils_1.MathUtils.IsNearlyEqual(this.TOn, 0)) &&
-            ((this.IOn = this.EOn), (this.TOn = this.yOn)),
-          (this.DOn = this.IOn / (this.EOn * this.LOn)),
-          (this.UOn = this.TOn / (this.yOn * this.LOn)),
+          (MathUtils_1.MathUtils.IsNearlyEqual(this.BOn, 0) ||
+            MathUtils_1.MathUtils.IsNearlyEqual(this.wOn, 0)) &&
+            ((this.BOn = this.xOn), (this.wOn = this.POn)),
+          (this.qOn = this.BOn / (this.xOn * this.bOn)),
+          (this.GOn = this.wOn / (this.POn * this.bOn)),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Camera",
               58,
               "CameraInputController",
-              ["GameScreenWidth", this.EOn],
-              ["GameScreenHeight", this.yOn],
-              ["PhysicalScreenWidth", this.IOn],
-              ["PhysicalScreenHeight", this.TOn],
-              ["PhysicalDensityDpi", this.LOn],
-              ["MobileDensityYawScale", this.DOn],
-              ["MobileDensityPitchScale", this.UOn],
+              ["GameScreenWidth", this.xOn],
+              ["GameScreenHeight", this.POn],
+              ["PhysicalScreenWidth", this.BOn],
+              ["PhysicalScreenHeight", this.wOn],
+              ["PhysicalDensityDpi", this.bOn],
+              ["MobileDensityYawScale", this.qOn],
+              ["MobileDensityPitchScale", this.GOn],
             ))
-        : ((this.DOn = 1 / DEFAULT_DPI), (this.UOn = 1 / DEFAULT_DPI));
+        : ((this.qOn = 1 / DEFAULT_DPI), (this.GOn = 1 / DEFAULT_DPI));
   }
   OnDisable() {
     (this.K_e = 0), (this.W_e = 0), (this.j_e = 0);
   }
   UpdateInternal(t) {
-    (this.Camera.TargetEntity && this.Camera.IsTargetLocationValid) ||
+    var i = this.Camera.ContainsAnyTag([-1150819426, 1260125908]);
+    (this.Camera.TargetEntity &&
+      this.Camera.IsTargetLocationValid &&
+      (i || !this.Camera.CameraFocusController.CanMoveCameraInSoftLock())) ||
       this.iue(t),
       this.oue(t),
       this.rue();
@@ -233,19 +241,21 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
   }
   iue(s) {
     var h = this.Camera.CharacterEntityHandle;
-    if (h && h.IsInit) {
-      var e = this.Camera.CharacterController;
-      if (e)
+    if (h && h.IsInit)
+      if (this.Camera.CharacterController)
         if (this.N_e.Active) {
-          var a = e.GetControlRotation(),
-            r = this.Camera.CurrentCamera.ArmRotation;
-          let [t, i] = h.Entity.GetComponent(53).GetCameraInput();
+          (this.cUa = !1), (this.mUa = !1);
+          var e = this.Camera.CurrentCamera.ArmRotation,
+            a = h.Entity.GetComponent(164);
+          let [t, i] = h.Entity.GetComponent(54).GetCameraInput();
           Info_1.Info.IsInGamepad()
-            ? ((t *= this.GamepadInputRate), (i *= this.GamepadInputRate))
+            ? ModelManager_1.ModelManager.ControlScreenModel?.IsTouching
+              ? ((t *= DEFAULT_DPI * this.qOn), (i *= DEFAULT_DPI * this.GOn))
+              : ((t *= this.GamepadInputRate), (i *= this.GamepadInputRate))
             : Info_1.Info.IsInKeyBoard()
               ? ((t /= DEFAULT_FPS), (i /= DEFAULT_FPS))
               : Info_1.Info.IsInTouch() &&
-                ((t *= DEFAULT_DPI * this.DOn), (i *= DEFAULT_DPI * this.UOn));
+                ((t *= DEFAULT_DPI * this.qOn), (i *= DEFAULT_DPI * this.GOn));
           var h = ModelManager_1.ModelManager.CameraModel,
             h =
               (this.IsAiming
@@ -254,7 +264,7 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
                 : ((t *= h.CameraBaseYawSensitivityInputModifier),
                   (i *= h.CameraBasePitchSensitivityInputModifier)),
               Math.sqrt(t * t + i * i)),
-            _ =
+            r =
               ((t *=
                 MathUtils_1.MathUtils.Lerp(
                   this.SensitivityYawMin,
@@ -262,7 +272,7 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
                   this.SensitivityYawCurve.GetCurrentValue(
                     h / this.SensitivityYawRange,
                   ),
-                ) * s),
+                ) * Math.min(s, MAX_YAW_DELTA_TIME)),
               (i *=
                 MathUtils_1.MathUtils.Lerp(
                   this.SensitivityPitchMin,
@@ -274,10 +284,10 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
               (this.X_e = !1),
               this.nue(s, !(!t && !i))),
             h =
-              (_ &&
+              (r &&
                 ((t *= 1 - this.AimAssistDamping),
                 (i *= 1 - this.AimAssistDamping)),
-              this.fga(h, s));
+              this.upa(h, s));
           (this.j_e = this.j_e * h + t * (1 - h)),
             (this.W_e = this.W_e * h + i * (1 - h)),
             (this.j_e = MathUtils_1.MathUtils.Clamp(
@@ -298,38 +308,58 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
             (this.InputSpeedPercentage = Math.abs(
               this.j_e / this.InputSpeedMax,
             )),
+            this.Gue.DeepCopy(e),
+            this.Gue.Quaternion(this.az),
             0 !== this.O_e.size ||
               MathUtils_1.MathUtils.IsNearlyZero(
                 this.j_e,
                 this.InputSpeedMin,
               ) ||
-              (e.AddYawInput(this.j_e),
-              MathUtils_1.MathUtils.IsNearlyEqual(
-                r.Yaw,
-                a.Yaw,
-                MathUtils_1.MathUtils.KindaSmallNumber,
-              )) ||
-              ((this.Camera.DesiredCamera.ArmRotation.Yaw = a.Yaw),
+              ((this.cUa = !0),
               (this.Camera.IsModifiedArmRotationYaw = !0),
-              (this.Camera.FadeArmRotationYaw = !1)),
+              !a || a.IsStandardGravity
+                ? (this.Gue.Yaw = MathUtils_1.MathUtils.WrapAngle(
+                    this.Gue.Yaw +
+                      this.j_e * this.Camera.CharacterController.InputYawScale,
+                  ))
+                : (Quat_1.Quat.ConstructorByAxisAngle(
+                    a.GravityUp,
+                    this.j_e *
+                      this.Camera.CharacterController.InputYawScale *
+                      MathUtils_1.MathUtils.DegToRad,
+                    this.KJ,
+                  ),
+                  this.KJ.Multiply(this.az, this.QJ),
+                  this.az.DeepCopy(this.QJ))),
             0 !== this.k_e.size ||
               MathUtils_1.MathUtils.IsNearlyZero(
                 this.W_e,
                 this.InputSpeedMin,
               ) ||
-              (e.AddPitchInput(this.W_e),
-              MathUtils_1.MathUtils.IsNearlyEqual(
-                r.Pitch,
-                a.Pitch,
-                MathUtils_1.MathUtils.KindaSmallNumber,
-              )) ||
-              ((this.Camera.DesiredCamera.ArmRotation.Pitch = a.Pitch),
+              ((this.mUa = !0),
               (this.Camera.IsModifiedArmRotationPitch = !0),
-              (this.Camera.FadeArmRotationPitch = !1)),
-            _ && this.sue(s);
+              (h = this.Camera.GetCameraPitchInGravity()),
+              (e = MathUtils_1.MathUtils.Clamp(
+                h + this.W_e * this.Camera.CharacterController.InputPitchScale,
+                -90,
+                90,
+              )),
+              !a || a.IsStandardGravity
+                ? (this.Gue.Pitch = e)
+                : ((e = e - h),
+                  Math.abs(e) > MathUtils_1.MathUtils.SmallNumber &&
+                    (this.EPn.Set(e, 0, 0),
+                    this.EPn.Quaternion(this.KJ),
+                    this.az.Multiply(this.KJ, this.QJ),
+                    this.az.DeepCopy(this.QJ)))),
+            (this.cUa || this.mUa) &&
+              (!a || a.IsStandardGravity
+                ? this.Camera.DesiredCamera.ArmRotation.DeepCopy(this.Gue)
+                : this.az.Rotator(this.Camera.DesiredCamera.ArmRotation)),
+            r && this.sue(s);
         } else this.K_e = 0;
       else this.K_e = 0;
-    } else this.K_e = 0;
+    else this.K_e = 0;
   }
   oue(t) {
     var i = this.Camera.CharacterEntityHandle;
@@ -338,9 +368,12 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
       (!this.N_e.Active ||
         0 < this.F_e.size ||
         this.Camera.IsModifiedArmLength ||
-        ((i = -i.Entity.GetComponent(53).GetZoomInput() * t) &&
+        ((i = -i.Entity.GetComponent(54).GetZoomInput() * t) &&
           ((t =
-            (i * this.ZoomSpeed) /
+            (i *
+              (Info_1.Info.IsInGamepad()
+                ? this.GamePadZoomSpeed
+                : this.ZoomSpeed)) /
             (this.Camera.DesiredCamera.MaxArmLength -
               this.Camera.DesiredCamera.MinArmLength)),
           this.aue(this.Camera.DesiredCamera.ZoomModifier + t),
@@ -459,7 +492,7 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
               ModelManager_1.ModelManager.CreatureModel.GetEntitiesInRangeWithLocation(
                 this.Lz,
                 i,
-                3,
+                63,
                 this.eue,
               ),
               (this.Q_e = void 0),
@@ -474,9 +507,9 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
                   CampUtils_1.CampUtils.GetCampRelationship(_, o.Actor.Camp) &&
                 CameraUtility_1.CameraUtility.TargetCanBeSelect(o)
               )
-                for (var [, n] of o.AimParts) this.Yca(n, s, e);
-              o = l.Entity.GetComponent(140);
-              if (o) for (const M of o.AimParts) this.Yca(M, s, e);
+                for (var [, n] of o.AimParts) this.ega(n, s, e);
+              o = l.Entity.GetComponent(141);
+              if (o) for (const M of o.AimParts) this.ega(M, s, e);
             }
           this.tue.sort((t, i) => t[0] - i[0]);
           for ([, r] of this.tue)
@@ -493,7 +526,7 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
           (this.Q_e = void 0);
     return !1;
   }
-  Yca(t, i, s) {
+  ega(t, i, s) {
     t.GetAimPointLocation(this.J_e),
       ModelManager_1.ModelManager.CameraModel.AimAssistDebugDraw &&
         UE.KismetSystemLibrary.DrawDebugSphere(
@@ -636,27 +669,19 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
       }
     }
   }
-  fga(t, i) {
-    var s = UE.GameUserSettings.GetGameUserSettings().GetFrameRateLimit(),
-      t = MathUtils_1.MathUtils.Lerp(
-        Info_1.Info.IsInGamepad()
-          ? this.GamePadSmoothFactorMin
-          : this.SmoothFactorMin,
-        Info_1.Info.IsInGamepad()
-          ? this.GamePadSmoothFactorMax
-          : this.SmoothFactorMax,
-        Info_1.Info.IsInGamepad()
-          ? this.GamePadSmoothFactorCurve.GetCurrentValue(
-              t / this.GamePadSmoothFactorRange,
-            )
-          : this.SmoothFactorCurve.GetCurrentValue(t / this.SmoothFactorRange),
-      );
-    return (
-      (t +=
-        (((1 - t) / (s / NORMALIZED_FRAME_RATE)) *
-          (s - NORMALIZED_FRAME_RATE)) /
-        NORMALIZED_FRAME_RATE),
-      Math.pow(t, Math.max(1, Math.min(MAX_SMOOTH_DELTA_TIME, i * s)))
+  upa(t, i) {
+    return MathUtils_1.MathUtils.Lerp(
+      Info_1.Info.IsInGamepad()
+        ? this.GamePadSmoothFactorMin
+        : this.SmoothFactorMin,
+      Info_1.Info.IsInGamepad()
+        ? this.GamePadSmoothFactorMax
+        : this.SmoothFactorMax,
+      Info_1.Info.IsInGamepad()
+        ? this.GamePadSmoothFactorCurve.GetCurrentValue(
+            t / this.GamePadSmoothFactorRange,
+          )
+        : this.SmoothFactorCurve.GetCurrentValue(t / this.SmoothFactorRange),
     );
   }
   ResetCameraInput() {

@@ -12,7 +12,7 @@ class LevelConditionEntityState extends LevelGeneralBase_1.LevelConditionBase {
       !!(t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
         e.EntityId,
       ))?.Valid) &&
-      !!(t = t.Entity.GetComponent(180)) &&
+      !!(t = t.Entity.GetComponent(181)) &&
       ((t = t.ContainsTagByName(e.State)), "Eq" === e.Compare ? t : !t)
     );
   }

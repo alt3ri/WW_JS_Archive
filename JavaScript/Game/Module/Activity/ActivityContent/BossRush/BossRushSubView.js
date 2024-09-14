@@ -7,7 +7,6 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiManager_1 = require("../../../../Ui/UiManager"),
   DifficultUnlockTipView_1 = require("../../../InstanceDungeon/DifficultUnlockTipView"),
   WorldMapController_1 = require("../../../WorldMap/WorldMapController"),
@@ -46,11 +45,7 @@ class BossRushSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
             }),
             WorldMapController_1.WorldMapController.OpenView(2, !1, i))
           : ((i = this.ActivityBaseData.GetUnFinishPreGuideQuestId()),
-            UiManager_1.UiManager.OpenView("QuestView", i),
-            ModelManager_1.ModelManager.ActivityModel.SendActivityViewJumpClickLogData(
-              this.ActivityBaseData,
-              1,
-            ));
+            UiManager_1.UiManager.OpenView("QuestView", i));
       });
   }
   OnRegisterComponent() {
@@ -75,20 +70,22 @@ class BossRushSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
   }
   async OnBeforeStartAsync() {
     var i = this.GetItem(0),
-      e =
+      t =
         ((this.LNe = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
         this.GetItem(1)),
-      t =
+      e =
         ((this.DNe = new ActivityDescriptionTypeA_1.ActivityDescriptionTypeA()),
         this.GetItem(2)),
       s =
         ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
         this.GetItem(3));
-    (this.ANe = new ActivityFunctionalArea_1.ActivityFunctionalArea()),
+    (this.ANe = new ActivityFunctionalArea_1.ActivityFunctionalArea(
+      this.ActivityBaseData,
+    )),
       await Promise.all([
         this.LNe.CreateThenShowByActorAsync(i.GetOwner()),
-        this.DNe.CreateThenShowByActorAsync(e.GetOwner()),
-        this.UNe.CreateThenShowByActorAsync(t.GetOwner()),
+        this.DNe.CreateThenShowByActorAsync(t.GetOwner()),
+        this.UNe.CreateThenShowByActorAsync(e.GetOwner()),
         this.ANe.CreateThenShowByActorAsync(s.GetOwner()),
       ]),
       this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
@@ -118,7 +115,7 @@ class BossRushSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
     this.ANe.BindRewardRedDot("BossRushReward", this.pyn.Id);
   }
   _Dn() {
-    this.ANe.UnbindRewardRedDotById("BossRushReward", this.pyn.Id);
+    this.ANe.UnbindRewardRedDot();
   }
   Eyn() {
     var i;
@@ -131,21 +128,25 @@ class BossRushSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
   _Oe() {
     var i = this.ActivityBaseData.IsUnLock();
     this.ANe.SetPanelConditionVisible(!i),
-      i || this.ANe.SetLockTextByText(this.GetCurrentLockConditionText()),
+      i ||
+        this.ANe.SetPerformanceConditionLock(
+          this.ActivityBaseData.ConditionGroupId,
+          this.ActivityBaseData.Id,
+        ),
       this.GetItem(3)?.SetUIActive(i);
   }
   mGe() {
     this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle());
-    var [i, e] = this.GetTimeVisibleAndRemainTime();
-    this.LNe.SetTimeTextVisible(i), i && this.LNe.SetTimeTextByText(e);
+    var [i, t] = this.GetTimeVisibleAndRemainTime();
+    this.LNe.SetTimeTextVisible(i), i && this.LNe.SetTimeTextByText(t);
   }
   Pqe() {
     var i = this.ActivityBaseData.LocalConfig,
-      e = i.DescTheme,
+      t = i.DescTheme,
       i = i.Desc,
-      t = !StringUtils_1.StringUtils.IsEmpty(e);
-    this.LNe.SetSubTitleVisible(t),
-      t && this.LNe.SetSubTitleByTextId(e),
+      e = !StringUtils_1.StringUtils.IsEmpty(t);
+    this.LNe.SetSubTitleVisible(e),
+      e && this.LNe.SetSubTitleByTextId(t),
       this.DNe.SetContentByTextId(i);
   }
   jqe() {
@@ -163,8 +164,8 @@ class BossRushSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
   }
   BNe() {
     var i = this.pyn.EntranceRedDot(),
-      e = this.pyn.GetPreGuideQuestFinishState();
-    this.ANe.FunctionButton.SetRedDotVisible(e && i);
+      t = this.pyn.GetPreGuideQuestFinishState();
+    this.ANe.FunctionButton.SetRedDotVisible(t && i);
   }
 }
 exports.BossRushSubView = BossRushSubView;

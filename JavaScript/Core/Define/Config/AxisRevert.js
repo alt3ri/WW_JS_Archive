@@ -19,9 +19,16 @@ class AxisRevert {
   get RevertInfo() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.revertinfoLength(),
-      (t) => this.revertinfo(t)?.key(),
-      (t) => this.revertinfo(t)?.value(),
+      this.revertinfoKey,
+      this.revertinfoValue,
+      this,
     );
+  }
+  revertinfoKey(t) {
+    return this.revertinfo(t)?.key();
+  }
+  revertinfoValue(t) {
+    return this.revertinfo(t)?.value();
   }
   __init(t, e) {
     return (this.z7 = t), (this.J7 = e), this;

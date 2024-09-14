@@ -107,6 +107,9 @@ class QualityInfo {
   get TrainingWeight() {
     return this.trainingweight();
   }
+  get RoleTrialQualityColor() {
+    return this.roletrialqualitycolor();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -251,6 +254,10 @@ class QualityInfo {
   trainingweight() {
     var t = this.J7.__offset(this.z7, 70);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
+  }
+  roletrialqualitycolor(t) {
+    var i = this.J7.__offset(this.z7, 72);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.QualityInfo = QualityInfo;

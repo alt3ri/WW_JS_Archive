@@ -46,12 +46,14 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
       }),
       (this.Uwn = (e) => {
         let t = !1;
+        this.Ovt();
         for (const i of this.Lwn)
           if (i.Id === e) {
             (this.Twn = i), (t = !0);
             break;
           }
         t || (this.Twn = void 0),
+          ModelManager_1.ModelManager.FragmentMemoryModel.SaveTopicOpened(e),
           this.SPe?.PlayLevelSequenceByName("SwitchOut");
       }),
       (this.Awn = (t) => {
@@ -144,16 +146,19 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
   xwn() {
     this.Dwn = [];
     for (const t of this.Lwn) this.Dwn.push(t.Id);
-    this.Dwn.push(-1), this.ELo?.ReloadView(this.Dwn.length, this.Dwn);
+    this.Dwn.push(-1);
     var e = this.Dwn.indexOf(this.Twn.Id);
-    this.ELo?.AttachToIndex(e, !0);
+    this.ELo?.ReloadView(this.Dwn.length, this.Dwn),
+      this.ELo?.AttachToIndex(e, !0);
   }
   Og() {
-    this.ZGe(), this.L8i(), this.Pwn(), this.BNe(), this.PKt(), this.fNn();
+    this.ZGe(), this.L8i(), this.Pwn(), this.BNe(), this.PKt(), this.LNn();
+  }
+  Ovt() {
+    this.Twn && this.p9t?.UnBindGivenUid(this.Twn.Id);
   }
   BNe() {
-    this.p9t?.UnBindRedDot(),
-      this.Twn && this.p9t?.BindRedDot("FragmentMemoryTopic", this.Twn.Id);
+    this.Twn && this.p9t?.BindGivenUid("FragmentMemoryTopic", this.Twn.Id);
   }
   wwn() {
     return ModelManager_1.ModelManager.FragmentMemoryModel.GetTopicUnlockState(
@@ -180,7 +185,7 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
     var e = void 0 !== this.Twn;
     this.GetItem(7)?.SetUIActive(e), this.GetItem(8)?.SetUIActive(!e);
   }
-  fNn() {
+  LNn() {
     var e;
     void 0 !== this.Twn &&
       ((e = this.Twn.TopicTexture),

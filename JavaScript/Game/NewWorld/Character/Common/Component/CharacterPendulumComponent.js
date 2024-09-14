@@ -110,7 +110,7 @@ let CharacterPendulumComponent =
             EventDefine_1.EEventName.CharMovementModeChanged,
             this.Ejr,
           ),
-          this.Entity.GetComponent(163).CharacterMovement);
+          this.Entity.GetComponent(164).CharacterMovement);
       return (this.vjr = t.AirControl), !0;
     }
     OnEnd() {
@@ -193,7 +193,7 @@ let CharacterPendulumComponent =
               : t / LIMIT_FRAME_TIME),
           1 < (e = this.Anr.Size() / i)) &&
           this.Anr.Z < 0 &&
-          ((i = this.Entity.GetComponent(163)),
+          ((i = this.Entity.GetComponent(164)),
           (n = t > LIMIT_FRAME_TIME2 ? UPDATE_UP_Z2 : UPDATE_UP_Z),
           CharacterPendulumComponent_1.TmpVector.Set(
             0,
@@ -213,14 +213,14 @@ let CharacterPendulumComponent =
         (i = Vector_1.Vector.Create()),
         e.Multiply(n, i),
         i.Multiply(this.RopeForce, i),
-        (t = this.Entity.GetComponent(163).CharacterMovement),
+        (t = this.Entity.GetComponent(164).CharacterMovement),
         i.Size() > LIMIT_FORCE && (i.Normalize(), i.Multiply(LIMIT_FORCE, i)),
         t.AddForce(i.ToUeVector()),
         (t.AirControl = this.fjr));
     }
     Sjr() {
       (this.cjr = !1),
-        (this.Entity.GetComponent(163).CharacterMovement.AirControl = this.vjr);
+        (this.Entity.GetComponent(164).CharacterMovement.AirControl = this.vjr);
     }
     SetPendulumData(t, e, n, i, r, s, o, h, _, a, E) {
       (this.cjr = !0), (this.pjr = 1);
@@ -232,7 +232,7 @@ let CharacterPendulumComponent =
 (CharacterPendulumComponent.TmpVector = Vector_1.Vector.Create()),
   (CharacterPendulumComponent = CharacterPendulumComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(62)],
+      [(0, RegisterComponent_1.RegisterComponent)(63)],
       CharacterPendulumComponent,
     )),
   (exports.CharacterPendulumComponent = CharacterPendulumComponent);

@@ -40,6 +40,10 @@ class VisionDestroyFilter extends CommonFilter_1.CommonFilter {
         26,
         VisionDestroyFilterLogic_1.VisionDestroyFilterLogic
           .GetVisionDestroyAttribute,
+      ),
+      this.FilterMap.set(
+        28,
+        VisionDestroyFilterLogic_1.VisionDestroyFilterLogic.GetPhantomDeprecate,
       );
   }
 }

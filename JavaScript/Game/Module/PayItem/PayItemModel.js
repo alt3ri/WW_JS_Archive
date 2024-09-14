@@ -1,9 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayItemModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
-  EventDefine_1 = require("../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../Common/Event/EventSystem"),
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   PayItemDefine_1 = require("./PayItemDefine");
@@ -13,7 +12,24 @@ class PayItemModel extends ModelBase_1.ModelBase {
       (this.YOi = []),
       (this.JOi = new Map()),
       (this.Version = ""),
-      (this.zOi = void 0);
+      (this.zOi = void 0),
+      (this.lka = new Map());
+  }
+  UpdateProductInfoMap(e) {
+    e.forEach((e) => {
+      this.lka.set(e.GoodId, e);
+    }),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Pay", 17, "PayItemModel UpdateProductInfoMap:", [
+          "ProductInfoMap",
+          this.lka,
+        ]);
+  }
+  GetProductLabelByGoodsId(e) {
+    return this.lka.get(e)?.GoodLabel;
+  }
+  GetProductInfoByGoodsId(e) {
+    return this.lka.get(e);
   }
   GetDataList() {
     return this.YOi;
@@ -42,9 +58,8 @@ class PayItemModel extends ModelBase_1.ModelBase {
     0 !== this.YOi.length && 0 !== e.length && (this.YOi.length = 0);
     for (const a of e) {
       var t = new PayItemDefine_1.PayItemData();
-      t.Phrase(a), this.YOi.push(t), this.JOi.set(a.J4n, t);
+      t.Phrase(a), this.YOi.push(t), this.JOi.set(a.s5n, t);
     }
-    EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.RefreshPayItemList);
   }
   OnClear() {
     return (
@@ -58,16 +73,16 @@ class PayItemModel extends ModelBase_1.ModelBase {
   CreateSdkPayment(e, t, a) {
     var e = ConfigManager_1.ConfigManager.PayItemConfig.GetPayItem(e),
       r = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(e.ItemId),
-      n = ConfigManager_1.ConfigManager.ItemConfig.GetItemDesc(e.ItemId),
+      o = ConfigManager_1.ConfigManager.ItemConfig.GetItemDesc(e.ItemId),
       i = e.PayId,
-      o = ModelManager_1.ModelManager.RechargeModel.GetPayIdAmount(i);
+      n = ModelManager_1.ModelManager.RechargeModel.GetPayIdAmount(i);
     return {
       product_id:
         ModelManager_1.ModelManager.RechargeModel.GetPayIdProductId(i),
       cpOrderId: t,
-      price: o,
+      price: n,
       goodsName: "" + r + e.ItemCount,
-      goodsDesc: "" + n + e.ItemCount,
+      goodsDesc: "" + o + e.ItemCount,
       extraParams: " ",
       callbackUrl: a,
       currency: "",

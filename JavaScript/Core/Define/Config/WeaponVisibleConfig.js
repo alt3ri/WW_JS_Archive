@@ -10,18 +10,24 @@ class WeaponVisibleConfig {
     return this.id();
   }
   get BaseType() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.basetypeLength(), (t) =>
-      this.basetype(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.basetypeLength(),
+      this.basetype,
+      this,
     );
   }
   get VisibleTags() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.visibletagsLength(), (t) =>
-      this.visibletags(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.visibletagsLength(),
+      this.visibletags,
+      this,
     );
   }
   get HiddenTags() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.hiddentagsLength(), (t) =>
-      this.hiddentags(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.hiddentagsLength(),
+      this.hiddentags,
+      this,
     );
   }
   __init(t, s) {

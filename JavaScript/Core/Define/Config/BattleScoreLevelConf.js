@@ -18,7 +18,8 @@ class BattleScoreLevelConf {
   get LowerUpperLimits() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.lowerupperlimitsLength(),
-      (t) => this.lowerupperlimits(t),
+      this.lowerupperlimits,
+      this,
     );
   }
   get Bgm() {

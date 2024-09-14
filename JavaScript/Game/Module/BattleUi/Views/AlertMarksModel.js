@@ -8,8 +8,8 @@ class AlertMarkModel extends ModelBase_1.ModelBase {
       (this.AlertMarkInit = !1),
       (this.PendingMarkInfos = new Map());
   }
-  AddPendingMarkInfo(e, s, r) {
-    this.PendingMarkInfos.set(e, [s, r]);
+  AddPendingMarkInfo(e, s, r, o) {
+    this.PendingMarkInfos.set(e, [s, r, o]);
   }
 }
 exports.AlertMarkModel = AlertMarkModel;

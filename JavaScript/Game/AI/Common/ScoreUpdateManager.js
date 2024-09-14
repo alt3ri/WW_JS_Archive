@@ -35,6 +35,7 @@ class ScoreUpdateManager {
         var o = this.Ate[t],
           s = 1 / t;
         for (const i of o) {
+          ScoreUpdateManager.wte.Start();
           try {
             i.ScoreUpdate();
           } catch (t) {
@@ -58,7 +59,8 @@ class ScoreUpdateManager {
                 );
           }
           if (
-            (this.Pte.set(i, 0),
+            (ScoreUpdateManager.wte.Stop(),
+            this.Pte.set(i, 0),
             o.delete(i),
             (e += s),
             ++r,
@@ -71,5 +73,7 @@ class ScoreUpdateManager {
     }
   }
 }
-(exports.ScoreUpdateManager = ScoreUpdateManager).wte = void 0;
+(exports.ScoreUpdateManager = ScoreUpdateManager).wte = Stats_1.Stat.Create(
+  "ScoreUpdate AiPerception",
+);
 //# sourceMappingURL=ScoreUpdateManager.js.map

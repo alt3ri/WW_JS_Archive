@@ -8,9 +8,12 @@ const cpp_1 = require("cpp"),
   Time_1 = require("../../Core/Common/Time"),
   EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
   ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
+  Macro_1 = require("../../Core/Preprocessor/Macro"),
   MathUtils_1 = require("../../Core/Utils/MathUtils"),
   ThinkDataLaunchReporter_1 = require("../../Launcher/ThinkDataReport/ThinkDataLaunchReporter"),
+  ConfigManager_1 = require("../Manager/ConfigManager"),
   ModelManager_1 = require("../Manager/ModelManager"),
+  CharacterAttributeTypes_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterAttributeTypes"),
   CombatDebugHelper_1 = require("./CombatDebug/CombatDebugHelper"),
   CombatLog_1 = require("./CombatLog"),
   game = {},
@@ -34,7 +37,7 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
     CombatLog_1.CombatLog.DebugCombatInfo &&
       this.lgr.get(e) &&
       (o
-        ? ((o = `[Message][${t}][${e}][EntityId:${MathUtils_1.MathUtils.LongToBigInt(o.P4n)}][PlayerId:${MathUtils_1.MathUtils.LongToNumber(o.F8n)}]`),
+        ? ((o = `[Message][${t}][${e}][EntityId:${MathUtils_1.MathUtils.LongToBigInt(o.F4n)}][PlayerId:${MathUtils_1.MathUtils.LongToNumber(o.Y8n)}]`),
           Log_1.Log.CheckInfo() && Log_1.Log.Info("CombatInfo", 15, o))
         : ((o = `[Message][${t}][${e}]`),
           Log_1.Log.CheckInfo() && Log_1.Log.Info("CombatInfo", 15, o)));
@@ -42,8 +45,8 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
   static CombatContextInfoMessage(t, e, o) {
     CombatLog_1.CombatLog.DebugCombatInfo &&
       this.lgr.get(e) &&
-      (o = o.G8n) &&
-      ((t = `[Message][${t}][${e}][EntityId:${MathUtils_1.MathUtils.LongToBigInt(o.P4n)}][PlayerId:${MathUtils_1.MathUtils.LongToNumber(o.F8n)}][MessageId:${MathUtils_1.MathUtils.LongToBigInt(o.k8n)}][PreMessageId:${MathUtils_1.MathUtils.LongToBigInt(o.N8n)}]`),
+      (o = o.K8n) &&
+      ((t = `[Message][${t}][${e}][EntityId:${MathUtils_1.MathUtils.LongToBigInt(o.F4n)}][PlayerId:${MathUtils_1.MathUtils.LongToNumber(o.Y8n)}][MessageId:${MathUtils_1.MathUtils.LongToBigInt(o.$8n)}][PreMessageId:${MathUtils_1.MathUtils.LongToBigInt(o.X8n)}]`),
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info("CombatInfo", 51, t);
   }
@@ -152,37 +155,38 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
   (CombatDebugController.ScriptHelper =
     new CombatDebugHelper_1.CombatScriptHelper()),
   (CombatDebugController.lgr = new Map([
-    ["y3n", !0],
-    ["I3n", !0],
-    ["T3n", !0],
-    ["L3n", !0],
-    ["D3n", !0],
-    ["x3n", !0],
     ["P3n", !0],
-    ["U3n", !0],
-    ["R3n", !0],
-    ["V3n", !0],
-    ["A3n", !0],
-    ["gFn", !0],
-    ["fFn", !0],
-    ["pFn", !0],
-    ["vFn", !0],
-    ["MFn", !0],
-    ["TFn", !0],
-    ["AFn", !0],
-    ["yFn", !0],
-    ["IFn", !0],
-    ["OFn", !0],
-    ["SFn", !0],
-    ["xFn", !0],
-    ["DFn", !0],
-    ["S3n", !0],
+    ["B3n", !0],
+    ["w3n", !0],
+    ["b3n", !0],
+    ["q3n", !0],
+    ["k3n", !0],
+    ["F3n", !0],
     ["O3n", !0],
     ["N3n", !0],
-    ["E3n", !0],
+    ["J3n", !0],
+    ["G3n", !0],
+    ["TFn", !0],
+    ["LFn", !0],
+    ["DFn", !0],
+    ["AFn", !0],
+    ["UFn", !0],
     ["wFn", !0],
+    ["GFn", !0],
+    ["PFn", !0],
+    ["BFn", !0],
+    ["QFn", !0],
+    ["RFn", !0],
+    ["kFn", !0],
+    ["qFn", !0],
+    ["R3n", !0],
+    ["Q3n", !0],
+    ["X3n", !0],
+    ["x3n", !0],
+    ["HFn", !0],
   ])),
   (CombatDebugController.cgr = "773a58b321b8462e8431e0b3010bb3d3"),
   (CombatDebugController.ugr = "https://ali-sh-datareceiver.kurogame.xyz"),
-  (CombatDebugController.c4t = 0);
+  (CombatDebugController.c4t = 0),
+  (CombatDebugController.RYa = new Map());
 //# sourceMappingURL=CombatDebugController.js.map

@@ -71,7 +71,7 @@ class TsAnimNotifyStateHideMesh extends UE.KuroAnimNotifyState {
       n.set(this, h),
       s instanceof TsBaseCharacter_1.default &&
         s.CharacterActorComponent?.Entity?.GetComponent(
-          162,
+          163,
         )?.StartForceDisableAnimOptimization(2, !1),
       !0
     );
@@ -97,7 +97,7 @@ class TsAnimNotifyStateHideMesh extends UE.KuroAnimNotifyState {
           ?.AddMaterialControllerData(this.EndEffect),
       t instanceof TsBaseCharacter_1.default &&
         t.CharacterActorComponent?.Entity?.GetComponent(
-          162,
+          163,
         )?.CancelForceDisableAnimOptimization(2),
       !0
     );

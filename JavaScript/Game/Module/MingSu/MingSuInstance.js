@@ -4,56 +4,59 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const DragonPoolById_1 = require("../../../Core/Define/ConfigQuery/DragonPoolById");
 class MingSuInstance {
   constructor(t) {
-    (this.Rbi = 0),
-      (this.Abi = 0),
-      (this.Pbi = 0),
-      (this.xbi = 0),
-      (this.Dbi = void 0),
-      (this.Ubi = void 0),
-      (this.Rbi = t),
-      (this.Ubi = DragonPoolById_1.configDragonPoolById.GetConfig(this.Rbi)),
-      (this.Abi = 0),
-      (this.Pbi = 0),
-      (this.xbi = 0);
+    (this.DragonPoolId = 0),
+      (this.DragonPoolState = 0),
+      (this.DragonPoolLevel = 0),
+      (this.HadCoreCount = 0),
+      (this.DropItemList = void 0),
+      (this.DragonPoolConfig = void 0),
+      (this.DragonPoolId = t),
+      (this.DragonPoolConfig = DragonPoolById_1.configDragonPoolById.GetConfig(
+        this.DragonPoolId,
+      )),
+      (this.DragonPoolState = 0),
+      (this.DragonPoolLevel = 0),
+      (this.HadCoreCount = 0);
   }
   SetDragonPoolLevel(t) {
-    this.Pbi = t;
+    this.DragonPoolLevel = t;
   }
   GetDragonPoolLevel() {
-    return this.Pbi;
+    return this.DragonPoolLevel;
   }
   SetDragonPoolState(t) {
-    this.Abi = t;
+    this.DragonPoolState = t;
   }
   GetDragonPoolState() {
-    return this.Abi;
+    return this.DragonPoolState;
   }
   SetHadCoreCount(t) {
-    this.xbi = t;
+    this.HadCoreCount = t;
   }
   GetHadCoreCount() {
-    return this.xbi;
+    return this.HadCoreCount;
   }
   GetDragonPoolMaxLevel() {
-    return this.Ubi.Goal.length;
+    return this.DragonPoolConfig.Goal.length;
   }
   GetNeedCoreCount(t) {
-    return this.Ubi.Goal[t];
+    return this.DragonPoolConfig.Goal[t];
   }
   GetGoalList() {
-    return this.Ubi.Goal;
+    return this.DragonPoolConfig.Goal;
   }
   GetRewardId(t) {
-    return this.Ubi.DropIds[t];
+    return this.DragonPoolConfig.DropIds[t];
   }
   GetCoreId() {
-    return this.Ubi.CoreId;
+    return this.DragonPoolConfig.CoreId;
   }
+  SetLevelGainList(t) {}
   SetDropItemList(t) {
-    this.Dbi = t;
+    this.DropItemList = t;
   }
   GetDropItemList() {
-    return this.Dbi;
+    return this.DropItemList;
   }
 }
 exports.MingSuInstance = MingSuInstance;

@@ -18,65 +18,86 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configWeaponBreachByBreachIdAndLevel.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configWeaponBreachByBreachIdAndLevel.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configWeaponBreachByBreachIdAndLevel.GetConfig(";
 exports.configWeaponBreachByBreachIdAndLevel = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (e, o, n = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+  GetConfig: (o, e, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var a = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${e})`),
+      i =
+        (a.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
       if (n) {
-        var a = KEY_PREFIX + `#${e}#${o})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(a);
-        if (r) return r;
+        var t = KEY_PREFIX + `#${o}#${e})`;
+        const r = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (r)
+          return (
+            a.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            r
+          );
       }
       if (
         (i =
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, o, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, e, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(
               handleId,
               !0,
               ...logPair,
-              ["BreachId", e],
-              ["Level", o],
+              ["BreachId", o],
+              ["Level", e],
             ))
       ) {
-        var i,
-          a = void 0;
+        t = void 0;
         if (
-          (([i, a] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
-            ["BreachId", e],
-            ["Level", o],
+            ["BreachId", o],
+            ["Level", e],
           )),
           i)
         ) {
           const r = WeaponBreach_1.WeaponBreach.getRootAsWeaponBreach(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
             n &&
-              ((i = KEY_PREFIX + `#${e}#${o})`),
+              ((i = KEY_PREFIX + `#${o}#${e})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(i, r)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            a.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             r
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    a.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=WeaponBreachByBreachIdAndLevel.js.map

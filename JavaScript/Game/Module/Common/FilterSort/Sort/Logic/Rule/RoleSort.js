@@ -85,7 +85,7 @@ class RoleSort extends CommonSort_1.CommonSort {
           (t = t.GetAttrValueById(RoleDefine_1.ATTACK_ATTR_ID));
         if (e !== t) return (t - e) * (i ? -1 : 1);
       }),
-      (this.Bla = (e, t, i) => {
+      (this.bua = (e, t, i) => {
         var r,
           s =
             ModelManager_1.ModelManager.RoguelikeModel.SelectRoleViewShowRoleList.includes(
@@ -174,7 +174,7 @@ class RoleSort extends CommonSort_1.CommonSort {
       this.SortMap.set(14, this.rUt),
       this.SortMap.set(15, this.nUt),
       this.SortMap.set(16, this.sUt),
-      this.SortMap.set(17, this.Bla);
+      this.SortMap.set(17, this.bua);
   }
 }
 exports.RoleSort = RoleSort;

@@ -46,7 +46,7 @@ class PlotTimeOfDay {
           ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second &&
         TimeOfDayController_1.TimeOfDayController.AdjustTime(
           this.mzi,
-          Protocol_1.Aki.Protocol.h4s.Proto_LevelPlayAuto,
+          Protocol_1.Aki.Protocol.C4s.Proto_LevelPlayAuto,
         ),
       (this.Uk = !1),
       (this.mzi = 0);
@@ -61,7 +61,7 @@ class PlotTimeOfDay {
           ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second &&
         TimeOfDayController_1.TimeOfDayController.AdjustTime(
           this.czi,
-          Protocol_1.Aki.Protocol.h4s.Proto_LevelPlayAuto,
+          Protocol_1.Aki.Protocol.C4s.Proto_LevelPlayAuto,
         ),
       (this.czi = 0),
       (this.uzi = !1),
@@ -80,7 +80,7 @@ class PlotTimeOfDay {
   SetTime(e) {
     TimeOfDayController_1.TimeOfDayController.AdjustTime(
       e,
-      Protocol_1.Aki.Protocol.h4s.Proto_LevelPlayAuto,
+      Protocol_1.Aki.Protocol.C4s.Proto_LevelPlayAuto,
     );
   }
   SetTimeDuration(t, e, o, r) {
@@ -89,7 +89,7 @@ class PlotTimeOfDay {
     if ((a > TimeOfDayDefine_1.TOD_SECOND_PER_DAY && (a = 0), r <= 0))
       TimeOfDayController_1.TimeOfDayController.AdjustTime(
         a,
-        Protocol_1.Aki.Protocol.h4s.Proto_LevelPlayAuto,
+        Protocol_1.Aki.Protocol.C4s.Proto_LevelPlayAuto,
       );
     else {
       let e = o;
@@ -101,13 +101,13 @@ class PlotTimeOfDay {
         (ModelManager_1.ModelManager.TimeOfDayModel.TimeRunLockState = !1),
         TimeOfDayController_1.TimeOfDayController.AdjustTime(
           a,
-          Protocol_1.Aki.Protocol.h4s.Proto_LevelPlayAuto,
+          Protocol_1.Aki.Protocol.C4s.Proto_LevelPlayAuto,
         ),
         TimeOfDayController_1.TimeOfDayController.ChangeTimeScale(i),
         (this.IRe = TimerSystem_1.TimerSystem.Delay(() => {
           TimeOfDayController_1.TimeOfDayController.AdjustTime(
             o,
-            Protocol_1.Aki.Protocol.h4s.Proto_LevelPlayAuto,
+            Protocol_1.Aki.Protocol.C4s.Proto_LevelPlayAuto,
           ),
             (this.IRe = void 0),
             TimeOfDayController_1.TimeOfDayController.ResumeTimeScale(),

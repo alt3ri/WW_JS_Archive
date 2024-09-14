@@ -3,15 +3,47 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldMapConfig = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  AkiMapAll_1 = require("../../../Core/Define/ConfigQuery/AkiMapAll"),
   AkiMapByMapId_1 = require("../../../Core/Define/ConfigQuery/AkiMapByMapId"),
   AkiMapSourceByMapId_1 = require("../../../Core/Define/ConfigQuery/AkiMapSourceByMapId"),
   AudioById_1 = require("../../../Core/Define/ConfigQuery/AudioById"),
   CustomMarkAll_1 = require("../../../Core/Define/ConfigQuery/CustomMarkAll"),
   ExploreProgressById_1 = require("../../../Core/Define/ConfigQuery/ExploreProgressById"),
+  InstanceDungeonById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonById"),
   MapNoteById_1 = require("../../../Core/Define/ConfigQuery/MapNoteById"),
+  PunishReportById_1 = require("../../../Core/Define/ConfigQuery/PunishReportById"),
   TeleporterById_1 = require("../../../Core/Define/ConfigQuery/TeleporterById"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class WorldMapConfig extends ConfigBase_1.ConfigBase {
+  constructor() {
+    super(...arguments), (this.AKa = new Map());
+  }
+  OnInit() {
+    var e = AkiMapAll_1.configAkiMapAll.GetConfigList();
+    return (
+      e
+        ? e.forEach((e) => {
+            this.AKa.set(e.MapId, e);
+          })
+        : Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Map",
+            64,
+            "[地图系统]->不存在地图配置，请联系策划检查akiMap配置!",
+          ),
+      !0
+    );
+  }
+  OnClear() {
+    return this.AKa.clear(), !0;
+  }
+  GetCacheAkiMapConfig(e) {
+    return this.AKa.get(e);
+  }
+  IsInBigWorld(e) {
+    e = this.GetInstanceDungeonConfig(e);
+    return void 0 !== e && 13 === e.InstSubType;
+  }
   GetCommonValue(e) {
     return CommonParamById_1.configCommonParamById.GetIntConfig(e) ?? 0;
   }
@@ -92,6 +124,12 @@ class WorldMapConfig extends ConfigBase_1.ConfigBase {
           )),
       r
     );
+  }
+  GetInstanceDungeonConfig(e) {
+    return InstanceDungeonById_1.configInstanceDungeonById.GetConfig(e);
+  }
+  GetPunishReportConfig(e) {
+    return PunishReportById_1.configPunishReportById.GetConfig(e);
   }
 }
 exports.WorldMapConfig = WorldMapConfig;

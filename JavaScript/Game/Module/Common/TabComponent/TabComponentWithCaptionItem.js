@@ -46,7 +46,7 @@ class TabComponentWithCaptionItem extends UiPanelBase_1.UiPanelBase {
       this.lqe.SetCloseCallBack(this.Obt),
       (this.xqe = this.GetScrollViewWithScrollbar(1)),
       (this.Gbt = new TabComponent_1.TabComponent(
-        this.xqe.ContentUIItem,
+        this.xqe.Content.GetUIItem(),
         this.R6e,
         this.pqe,
         void 0,
@@ -74,6 +74,9 @@ class TabComponentWithCaptionItem extends UiPanelBase_1.UiPanelBase {
   }
   async CreatePopupToggleTab(t) {
     await this.lqe.CreateToggleTab(t);
+  }
+  GetCaptionToggleState() {
+    return this.lqe.GetToggleState();
   }
   SetPopupToggleName(t) {
     this.lqe?.SetToggleName(t);
@@ -151,6 +154,9 @@ class TabComponentWithCaptionItem extends UiPanelBase_1.UiPanelBase {
   }
   SetTitle(t) {
     this.lqe?.SetTitle(t);
+  }
+  SetTitleByTextIdAndArgNew(t, ...e) {
+    this.lqe?.SetTitleByTextIdAndArgNew(t, e);
   }
   SetTitleIcon(t) {
     this.lqe.SetTitleIcon(t);

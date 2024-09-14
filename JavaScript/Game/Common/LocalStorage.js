@@ -3,13 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LocalStorage = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
   Stats_1 = require("../../Core/Common/Stats"),
   GlobalData_1 = require("../GlobalData"),
   EventDefine_1 = require("./Event/EventDefine"),
   EventSystem_1 = require("./Event/EventSystem"),
   LocalStorageDefine_1 = require("./LocalStorageDefine"),
-  Info_1 = require("../../Core/Common/Info"),
   DBPATH = "LocalStorage/LocalStorage",
   DBSUFFIX = ".db",
   TABLENAME = "LocalStorage",
@@ -62,7 +62,7 @@ class LocalStorage {
               ["value", a],
             ),
           !1)
-        : !!(e = LocalStorage.xkn(e, a)) && LocalStorage.vde(t, e))
+        : !!(e = LocalStorage.kkn(e, a)) && LocalStorage.vde(t, e))
     );
   }
   static DeleteGlobal(e) {
@@ -90,7 +90,7 @@ class LocalStorage {
               ["value", a],
             ),
           !1)
-        : !!(e = LocalStorage.Pkn(e, a)) && LocalStorage.vde(t, e))
+        : !!(e = LocalStorage.Fkn(e, a)) && LocalStorage.vde(t, e))
     );
   }
   static DeletePlayer(e) {
@@ -100,17 +100,18 @@ class LocalStorage {
   static cde() {
     var e;
     LocalStorage.Sde ||
-      ((e = UE.KismetSystemLibrary.GetProjectSavedDirectory()),
+      ((e = UE.KuroLauncherLibrary.GameSavedDir()),
       (LocalStorage.Sde = e + DBPATH + DBSUFFIX));
   }
   static mde() {
+    this.yde.Start();
     let a = LocalStorage.Sde,
       t = UE.KuroSqliteLibrary.OpenCreateDB(a, USE_THREAD);
     if (!t) {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("LocalStorage", 31, "打开DB失败！", ["dbFilePath", a]);
       for (let e = 2; e <= DBNUM; e++) {
-        var r = UE.KismetSystemLibrary.GetProjectSavedDirectory();
+        var r = UE.KuroLauncherLibrary.GameSavedDir();
         if (
           ((a = r + DBPATH + e + DBSUFFIX),
           (t = UE.KuroSqliteLibrary.OpenCreateDB(a, USE_THREAD)))
@@ -126,15 +127,19 @@ class LocalStorage {
               "dbFilePath",
               a,
             ]),
+          this.yde.Stop(),
           !1
         );
     }
     return (
       UE.KuroSqliteLibrary.Execute(a, getJournalMode(USE_JOURNAL_MODE)),
-      (t = LocalStorage.Ide())
+      (t = LocalStorage.Ide()),
+      this.yde.Stop(),
+      t
     );
   }
   static Ide() {
+    this.Tde.Start();
     var e = LocalStorage.Sde,
       a = `create table if not exists ${TABLENAME}(key text primary key not null , value text not null)`,
       e = UE.KuroSqliteLibrary.Execute(e, a);
@@ -145,6 +150,7 @@ class LocalStorage {
             "command",
             a,
           ])),
+      this.Tde.Stop(),
       e
     );
   }
@@ -244,27 +250,27 @@ class LocalStorage {
           );
     }
   }
-  static xkn(e, a) {
-    return LocalStorage.Bkn(
+  static kkn(e, a) {
+    return LocalStorage.Vkn(
       LocalStorageDefine_1.ELocalStorageGlobalKey[e],
       a,
-      LocalStorage.wkn.includes(e),
+      LocalStorage.Hkn.includes(e),
     );
   }
-  static Pkn(e, a) {
-    return LocalStorage.Bkn(
+  static Fkn(e, a) {
+    return LocalStorage.Vkn(
       LocalStorageDefine_1.ELocalStoragePlayerKey[e],
       a,
-      LocalStorage.bkn.includes(e),
+      LocalStorage.jkn.includes(e),
     );
   }
-  static Bkn(e, a, t) {
+  static Vkn(e, a, t) {
     a = LocalStorage.O8(a);
     return (
       t ||
         Info_1.Info.IsBuildShipping ||
         ((t = a?.length ?? 0),
-        (t = LocalStorage.qkn + t) >= CHECK_COMPLEX_THRESHOLD &&
+        (t = LocalStorage.Wkn + t) >= CHECK_COMPLEX_THRESHOLD &&
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "LocalStorage",
@@ -278,7 +284,7 @@ class LocalStorage {
     );
   }
   static O8(a) {
-    LocalStorage.qkn = 0;
+    LocalStorage.Wkn = 0;
     try {
       return JSON.stringify(a, LocalStorage.Dde);
     } catch (e) {
@@ -329,24 +335,25 @@ class LocalStorage {
 }
 ((exports.LocalStorage = LocalStorage).Sde = void 0),
   (LocalStorage.j8 = void 0),
-  (LocalStorage.yde = void 0),
-  (LocalStorage.Tde = void 0),
+  (LocalStorage.yde = Stats_1.Stat.Create("LocalStorage_OpenOrCreateDb")),
+  (LocalStorage.Tde = Stats_1.Stat.Create("LocalStorage_CreateTable")),
   (LocalStorage.Lde = (e) => {
     (LocalStorage.j8 = e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.LocalStorageInitPlayerId,
       );
   }),
-  (LocalStorage.qkn = 0),
-  (LocalStorage.wkn = [
+  (LocalStorage.Wkn = 0),
+  (LocalStorage.Hkn = [
+    LocalStorageDefine_1.ELocalStorageGlobalKey.PlayMenuInfo,
     LocalStorageDefine_1.ELocalStorageGlobalKey.MenuData,
     LocalStorageDefine_1.ELocalStorageGlobalKey.CombineAction,
   ]),
-  (LocalStorage.bkn = [
+  (LocalStorage.jkn = [
     LocalStorageDefine_1.ELocalStoragePlayerKey.GetItemConfigListSaveKey,
   ]),
   (LocalStorage.Dde = (e, a) => {
-    if ((++LocalStorage.qkn, void 0 === a)) return "___undefined___";
+    if ((++LocalStorage.Wkn, void 0 === a)) return "___undefined___";
     if (Number.isNaN(a)) return "___NaN___";
     if (a === 1 / 0) return "___Infinity___";
     if (a === -1 / 0) return "___-Infinity___";

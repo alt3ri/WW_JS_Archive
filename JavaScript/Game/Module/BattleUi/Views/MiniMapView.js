@@ -11,7 +11,6 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil"),
-  MapDefine_1 = require("../../Map/MapDefine"),
   MapUtil_1 = require("../../Map/MapUtil"),
   MiniMap_1 = require("../../Map/View/BaseMap/MiniMap"),
   WorldMapController_1 = require("../../WorldMap/WorldMapController"),
@@ -47,32 +46,30 @@ class MiniMapView extends BattleVisibleChildView_1.BattleVisibleChildView {
           i.SetUIRelativeRotation(this.cie));
       }),
       (this.Vut = () => {
-        this.jut();
+        MiniMapView.Hut.Start(), this.jut(), MiniMapView.Hut.Stop();
       });
   }
   Initialize(e) {
     super.Initialize(e), this.InitChildType(4), (this.Out = !1);
   }
   async InitializeAsync() {
-    var e,
-      i = ConfigManager_1.ConfigManager.WorldMapConfig.GetAkiMapConfig(
-        MapDefine_1.BIG_WORLD_MAP_ID,
-      );
-    i &&
-      ((e = this.GetItem(0)),
-      (this.kut = this.GetItem(4)),
-      (i = i ? i.LittleMapDefaultScale / 100 : 1),
-      (this.Nut = new MiniMap_1.MiniMap(
-        1,
-        this.kut,
-        i,
-        CommonParamById_1.configCommonParamById.GetFloatConfig(
-          "MiniMap_Mark_Scale",
-        ),
-      )),
+    var e = MapUtil_1.MapUtil.GetCurrentBigMapId(),
+      e = ConfigManager_1.ConfigManager.WorldMapConfig.GetAkiMapConfig(e),
+      i = this.GetItem(0),
+      e = ((this.kut = this.GetItem(4)), e ? e.LittleMapDefaultScale / 100 : 1),
+      t = MapUtil_1.MapUtil.GetCurrentMapOrDungeonId();
+    (this.Nut = new MiniMap_1.MiniMap(
+      1,
+      t,
+      this.kut,
+      e,
+      CommonParamById_1.configCommonParamById.GetFloatConfig(
+        "MiniMap_Mark_Scale",
+      ),
+    )),
       await this.Nut.CreateThenShowByResourceIdAsync(
         "UiItem_MiniMap_Prefab",
-        e,
+        i,
         !0,
       ),
       (this.RealMinimapScale =
@@ -83,10 +80,7 @@ class MiniMapView extends BattleVisibleChildView_1.BattleVisibleChildView {
         ),
       ),
       (this.Out = !0),
-      (this.IRe = TimerSystem_1.TimerSystem.Forever(
-        this.Vut,
-        UPDATE_INTERVAL,
-      )));
+      (this.IRe = TimerSystem_1.TimerSystem.Forever(this.Vut, UPDATE_INTERVAL));
   }
   Reset() {
     this.Nut.Destroy(),
@@ -136,5 +130,7 @@ class MiniMapView extends BattleVisibleChildView_1.BattleVisibleChildView {
       this.kut.SetHeight(e.Height);
   }
 }
-(exports.MiniMapView = MiniMapView).Hut = void 0;
+(exports.MiniMapView = MiniMapView).Hut = Stats_1.Stat.Create(
+  "MiniMapView.UpdateMarkItems",
+);
 //# sourceMappingURL=MiniMapView.js.map

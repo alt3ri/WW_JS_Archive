@@ -205,7 +205,7 @@ class SkillButtonEntityData {
             var s = h.IsEnable();
             (s && i) ||
               ((t = i
-                ? (h.SetEnable(!0), !0)
+                ? (h.SetEnable(!0, 1), !0)
                 : (h.RefreshIsEnable(), h.IsEnable() !== s)),
               this.IsCurEntity && t && (this.$So.add(h), this.VXe()));
           }
@@ -218,7 +218,7 @@ class SkillButtonEntityData {
             var s = h.IsEnable();
             s === i &&
               ((t = i
-                ? (h.SetEnable(!1), !0)
+                ? (h.SetEnable(!1, 4), !0)
                 : (h.RefreshIsEnable(), h.IsEnable() !== s)),
               this.IsCurEntity && t) &&
               (this.$So.add(h), this.VXe());
@@ -235,7 +235,7 @@ class SkillButtonEntityData {
               (s
                 ? (h = o.GetSkillId()) &&
                   o.GetDisableSkillIdTagIds().get(i)?.has(h) &&
-                  (o.SetEnable(!1), (t = !0))
+                  (o.SetEnable(!1, 5), (t = !0))
                 : (o.RefreshIsEnable(), (t = o.IsEnable() !== e)),
               this.IsCurEntity && t) &&
               (this.$So.add(o), this.VXe());
@@ -364,10 +364,10 @@ class SkillButtonEntityData {
       (this.RoleConfig = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
         this.RoleId,
       )),
-      (this.AttributeComponent = t.GetComponent(158)),
-      (this.GameplayTagComponent = t.GetComponent(188)),
-      (this.SkillComponent = t.GetComponent(33)),
-      (this.CharacterSkillCdComponent = t.GetComponent(190)),
+      (this.AttributeComponent = t.GetComponent(159)),
+      (this.GameplayTagComponent = t.GetComponent(190)),
+      (this.SkillComponent = t.GetComponent(34)),
+      (this.CharacterSkillCdComponent = t.GetComponent(192)),
       (i = ConfigManager_1.ConfigManager.SkillButtonConfig);
     (this.SkillButtonConfigList = i.GetAllSkillButtonConfig(this.RoleId)),
       (this.SkillCommonButtonConfigList = i.GetAllSkillCommonButtonConfig()),
@@ -454,7 +454,7 @@ class SkillButtonEntityData {
     }
   }
   Syo(t, i) {
-    t.Refresh(this.EntityHandle, i),
+    t.Refresh(this.EntityHandle, i, 0),
       this.AttributeIdSkillButtonMapping.AddSingle(t.AttributeId, t),
       this.AttributeIdSkillButtonMapping.AddSingle(t.MaxAttributeId, t);
     for (const s of t.AttributeIdTagMap.keys())
@@ -739,5 +739,6 @@ class SkillButtonEntityData {
     return this.DynamicEffectTagSkillButtonMapping.Get(t);
   }
 }
-(exports.SkillButtonEntityData = SkillButtonEntityData).jXe = void 0;
+(exports.SkillButtonEntityData = SkillButtonEntityData).jXe =
+  Stats_1.Stat.Create("SkillButtonEntityDataNextTick");
 //# sourceMappingURL=SkillButtonEntityData.js.map

@@ -11,7 +11,7 @@ class PopupCaptionItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.ucr = void 0),
-      (this.Maa = void 0),
+      (this.S1a = void 0),
       (this.OnClickCloseBtnCall = () => {}),
       (this.OnClickHelpBtnCall = () => {}),
       (this.Jvt = () => {
@@ -20,7 +20,7 @@ class PopupCaptionItem extends UiPanelBase_1.UiPanelBase {
       (this.pcr = () => {
         this.OnClickHelpBtnCall && this.OnClickHelpBtnCall();
       }),
-      this.CreateThenShowByActor(t.GetOwner());
+      void 0 !== t && this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -97,18 +97,18 @@ class PopupCaptionItem extends UiPanelBase_1.UiPanelBase {
     return this.ucr?.GetCurrencyItemList();
   }
   async CreateToggleTab(t) {
-    (this.Maa = new PopupCaptionToggleItem_1.PopupCaptionToggleItem()),
-      await this.Maa.CreateByResourceIdAsync("TogTabCName", this.GetItem(5)),
-      this.Maa.SetClickToggleCallback(t);
+    (this.S1a = new PopupCaptionToggleItem_1.PopupCaptionToggleItem()),
+      await this.S1a.CreateByResourceIdAsync("TogTabCName", this.GetItem(5)),
+      this.S1a.SetClickToggleCallback(t);
   }
   SetToggleName(t) {
-    this.Maa?.SetNameText(t);
+    this.S1a?.SetNameText(t);
   }
   SetToggleVisible(t) {
-    this.Maa?.SetUiActive(t);
+    this.S1a?.SetUiActive(t);
   }
   GetToggleState() {
-    return void 0 === this.Maa ? 0 : this.Maa.GetToggleState();
+    return void 0 === this.S1a ? 0 : this.S1a.GetToggleState();
   }
   GetCostContent() {
     return this.GetItem(4);

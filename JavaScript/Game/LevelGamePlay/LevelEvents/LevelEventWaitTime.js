@@ -14,10 +14,6 @@ class LevelEventWaitTime extends LevelGeneralBase_1.LevelEventBase {
   ExecuteInGm(e, t) {
     this.FinishExecute(!0);
   }
-  Execute(e, t) {
-    (t && e && ((t = e.get("Time")), (this.oUe = parseFloat(t)), this.oUe)) ||
-      this.FinishExecute(!1);
-  }
   ExecuteNew(e, t) {
     (this.oUe = e.Time * CommonDefine_1.MILLIONSECOND_PER_SECOND),
       e.BanInput &&

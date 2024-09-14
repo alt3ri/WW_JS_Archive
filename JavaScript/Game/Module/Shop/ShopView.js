@@ -83,7 +83,7 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
         this.RefreshShopItemList(), this.UpdateCurrency();
       }),
       (this.aoo = (e) => {
-        this.mMo === e && this.RefreshShopItemList();
+        this.mMo === e && this.RefreshShopItemList(!1, !0);
       }),
       (this.vMo = () => {
         this.PlaySequence("Sle", this.Mxe),
@@ -171,7 +171,7 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
     var i = EntitySystem_1.EntitySystem.Get(
       ModelManager_1.ModelManager.ShopModel.InteractTarget,
     );
-    i && (t = i.GetComponent(104)?.PawnName ?? ""), this.GetText(2).SetText(t);
+    i && (t = i.GetComponent(105)?.PawnName ?? ""), this.GetText(2).SetText(t);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -231,7 +231,7 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
     var e = ModelManager_1.ModelManager.ShopModel.GetShopConfig(this.mMo);
     e && this.yMo(e);
   }
-  RefreshShopItemList(i = !1) {
+  RefreshShopItemList(i = !1, s = !1) {
     var e = new AsyncTask_1.AsyncTask(
       "ShopView.RefreshShopItemList",
       async () => {
@@ -253,10 +253,11 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
         }
         return (
           await this.ShopItemScrollView.RefreshByDataAsync(this.CMo, !1),
-          i &&
-            (this.ShopItemScrollView.ClearSelectInfo(),
-            this.ShopItemScrollView.SelectGridProxy(0, !0),
-            this.vMo()),
+          i
+            ? (this.ShopItemScrollView.ClearSelectInfo(),
+              this.ShopItemScrollView.SelectGridProxy(0, !0),
+              this.vMo())
+            : s && this.vMo(),
           !0
         );
       },

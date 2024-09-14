@@ -162,7 +162,7 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
           e.SetPrimitiveEntityType(
             RenderConfig_1.RenderConfig.GetEntityRenderPriority(
               !1,
-              Protocol_1.Aki.Protocol.wks.Proto_Npc,
+              Protocol_1.Aki.Protocol.kks.Proto_Npc,
             ),
           ),
           GlobalData_1.GlobalData.IsPlayInEditor &&
@@ -207,10 +207,10 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
         0,
         0,
       );
-    var t = Protocol_1.Aki.Protocol.cms.create(),
+    var t = Protocol_1.Aki.Protocol.pms.create(),
       e = this.Entity.GetComponent(0).GetCreatureDataId();
-    t.ySs.push(MathUtils_1.MathUtils.NumberToLong(e)),
-      Net_1.Net.Call(7805, t, (t) => {}),
+    t.PSs.push(MathUtils_1.MathUtils.NumberToLong(e)),
+      Net_1.Net.Call(21772, t, (t) => {}),
       this.CFr();
   }
   OnTick(t) {
@@ -244,7 +244,7 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
     this.OnSetActorActive(!1, t);
   }
   OnChangeTimeDilation(t) {
-    var e = this.Entity.GetComponent(109)?.CurrentTimeScale ?? 1;
+    var e = this.Entity.GetComponent(110)?.CurrentTimeScale ?? 1;
     this.ActorInternal.CustomTimeDilation = t * e;
   }
   OnSetActorActive(e, t) {
@@ -276,7 +276,7 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
   }
 };
 (SimpleNpcActorComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(178)],
+  [(0, RegisterComponent_1.RegisterComponent)(179)],
   SimpleNpcActorComponent,
 )),
   (exports.SimpleNpcActorComponent = SimpleNpcActorComponent);

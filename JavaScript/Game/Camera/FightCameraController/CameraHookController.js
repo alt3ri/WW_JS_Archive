@@ -122,7 +122,7 @@ class CameraHookController extends CameraControllerBase_1.CameraControllerBase {
       (this.Camera.IsModifiedArmRotationYaw = !0);
   }
   b_e() {
-    var t = this.U_e.Location,
+    var t = this.U_e.HookLocation,
       i = this.Camera.PlayerLocation;
     t.Subtraction(i, this.x_e),
       this.x_e.Normalize(),

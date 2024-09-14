@@ -34,7 +34,7 @@ class LevelEventEntityLookAt extends LevelGeneralBase_1.LevelEventBase {
       );
     t
       ? ((e = (this.sDe = t).Entity.GetComponent(3)),
-        (t = t.Entity.GetComponent(37)?.CharacterMovement),
+        (t = t.Entity.GetComponent(38)?.CharacterMovement),
         ObjectUtils_1.ObjectUtils.IsValid(t)
           ? ((this.WTe = t.MovementMode),
             (t.MovementMode = 1),
@@ -65,7 +65,7 @@ class LevelEventEntityLookAt extends LevelGeneralBase_1.LevelEventBase {
             t.ActorRotationProxy,
             TOLERANCE,
           ) &&
-          ((t.Entity.GetComponent(37).CharacterMovement.MovementMode =
+          ((t.Entity.GetComponent(38).CharacterMovement.MovementMode =
             this.WTe),
           this.FinishExecute(!0))
         : this.FinishExecute(!0));

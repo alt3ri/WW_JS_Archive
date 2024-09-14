@@ -11,7 +11,7 @@ const UE = require("ue"),
 class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.EMa = []),
+      (this.qya = []),
       (this.Hnt = void 0),
       (this.zst = void 0),
       (this.Bst = 0),
@@ -56,24 +56,24 @@ class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
       ((t = this.zst.IconFrame.AssetPathName.toString()),
       (s = this.zst.Icon.AssetPathName.toString()),
       (i = this.zst.IconFull.AssetPathName.toString()),
-      (e = []).push(this.yMa(t, 0)),
-      e.push(this.yMa(s, 1)),
-      e.push(this.yMa(i, 2)),
+      (e = []).push(this.Gya(t, 0)),
+      e.push(this.Gya(s, 1)),
+      e.push(this.Gya(i, 2)),
       await Promise.all(e));
   }
-  async yMa(t, s) {
+  async Gya(t, s) {
     const i = new CustomPromise_1.CustomPromise();
     ResourceSystem_1.ResourceSystem.LoadAsync(
       t,
       UE.LGUISpriteData_BaseObject,
       (t) => {
-        t.IsValid() && (this.EMa[s] = t), i.SetResult(!0);
+        t.IsValid() && (this.qya[s] = t), i.SetResult(!0);
       },
     ),
       await i.Promise;
   }
   OnStart() {
-    this.IMa(1, 0), this.IMa(4, 1), this.IMa(5, 2), (this.EMa.length = 0);
+    this.Oya(1, 0), this.Oya(4, 1), this.Oya(5, 2), (this.qya.length = 0);
     var t,
       s = this.zst?.SceneEffect.ToAssetPathName(),
       s =
@@ -90,17 +90,17 @@ class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
       this.Est(9),
       this.Est(10);
   }
-  IMa(t, s) {
-    (t = this.GetSprite(t)), (s = this.EMa[s]);
+  Oya(t, s) {
+    (t = this.GetSprite(t)), (s = this.qya[s]);
     s && t?.SetSprite(s, !1);
   }
   OnBeforeShow() {
-    this.TMa(this.qte, this.BY);
+    this.kya(this.qte, this.BY);
   }
   SetPercent(t, s) {
-    (this.qte = t), (this.BY = s), this.IsShowOrShowing && this.TMa(t, s);
+    (this.qte = t), (this.BY = s), this.IsShowOrShowing && this.kya(t, s);
   }
-  TMa(i, e) {
+  kya(i, e) {
     if (i <= 0 || e <= 0) (this.Bst = 0), this.aat(!1);
     else if (this.zst) {
       i = Math.min(1, Math.max(0, i / e));

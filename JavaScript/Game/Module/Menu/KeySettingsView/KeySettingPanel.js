@@ -21,7 +21,7 @@ class KeySettingPanel extends UiPanelBase_1.UiPanelBase {
       (this.yPi = void 0),
       (this.IPi = void 0),
       (this.TPi = []),
-      (this.jCa = 0),
+      (this.Nfa = 0),
       (this.LSi = (i, t, e) => {
         var s = new KeySettingRowContainerItem_1.KeySettingRowContainerItem();
         return (
@@ -71,7 +71,7 @@ class KeySettingPanel extends UiPanelBase_1.UiPanelBase {
       (this.yPi = void 0),
       (this.IPi = void 0),
       (this.SPi = void 0),
-      (this.jCa = 0);
+      (this.Nfa = 0);
   }
   SelectKeySettingRow(i) {
     this.IPi?.SetSelected(!1), (this.IPi = i), this.IPi?.SetSelected(!0);
@@ -102,14 +102,14 @@ class KeySettingPanel extends UiPanelBase_1.UiPanelBase {
     if (e)
       return (
         t &&
-          0 === this.jCa &&
-          ((this.jCa = 1),
+          0 === this.Nfa &&
+          ((this.Nfa = 1),
           e.ScrollToItemIndex(i - ScrollToOffset).finally(() => {
-            this.jCa = 2;
+            this.Nfa = 2;
           })),
-        1 === this.jCa
+        1 === this.Nfa
           ? void 0
-          : ((this.jCa = 0),
+          : ((this.Nfa = 0),
             e.AddListenerOnItemClear(i, () => {
               Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug("Guide", 65, "停止当前所有引导"),

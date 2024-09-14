@@ -260,9 +260,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
       await this.CreateAsync();
   }
   SetActive(t) {
-    t
-      ? this.IsShowOrShowing || this.Show()
-      : this.IsHideOrHiding || this.Hide();
+    t ? this.Show() : this.Hide();
   }
   GetActive() {
     return !!this.RootItem?.IsValid() && this.RootItem.IsUIActiveSelf();
@@ -338,35 +336,11 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
           (i = LguiUtil_1.LguiUtil.GetComponentsRegistry(e))),
       i)
     ) {
-      Macro_1.NOT_SHIPPING_ENVIRONMENT &&
-        (i.TsClassName = this.constructor.name);
       var s = i.Components.Num();
-      Macro_1.NOT_SHIPPING_ENVIRONMENT &&
-        s !== this.ComponentRegisterInfos.length &&
-        Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn(
-          "UiCore",
-          17,
-          "componentsRegistry和代码中的ComponentRegisterInfos长度不一致",
-          ["actorFullPath", LguiUtil_1.LguiUtil.GetActorFullPath(t)],
-          ["tsName", this.constructor.name],
-          ["componentsRegistry length", i.Components.Num()],
-          ["ComponentRegisterInfos length", this.ComponentRegisterInfos.length],
-        );
       for (const o of this.ComponentRegisterInfos) {
         var n = o[0];
-        s <= n
-          ? Macro_1.NOT_SHIPPING_ENVIRONMENT &&
-            Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn(
-              "UiCore",
-              17,
-              "[FindInitedComponentRegistryActor]请该UI负责人和程序检查以下路径的LGUIComponentsRegistry组件, 数组长度越界",
-              ["节点全路径为", LguiUtil_1.LguiUtil.GetActorFullPath(e)],
-              ["缺失组件的索引为", o[0]],
-              ["缺失的组件类型为", o[1].StaticClass().GetName()],
-            )
-          : (n = i.Components.Get(n)?.GetComponentByClass(o[1].StaticClass()))
+        s <= n ||
+          ((n = i.Components.Get(n)?.GetComponentByClass(o[1].StaticClass()))
             ? (this.F_r.set(o[0], [o[1], n]), this.J_r(o[1], n))
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -376,7 +350,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
                 ["节点全路径为", LguiUtil_1.LguiUtil.GetActorFullPath(e)],
                 ["缺失组件的索引为", o[0]],
                 ["缺失的组件类型为", o[1].StaticClass().GetName()],
-              );
+              ));
       }
       return e;
     }
@@ -518,6 +492,10 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
   GetText(t) {
     t = this.F_r.get(t);
     if (t && t[0] === UE.UIText) return t[1];
+  }
+  GetArtText(t) {
+    t = this.F_r.get(t);
+    if (t && t[0] === UE.UIArtText) return t[1];
   }
   GetSprite(t) {
     t = this.F_r.get(t);
@@ -662,6 +640,9 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
     e
       ? this.j_r.SetTextureByPathSync(t, i, e, s)
       : this.j_r.SetTextureByPathAsync(t, i, s);
+  }
+  async SetTextureTransitionByPath(t, i, e = 5) {
+    await this.j_r.SetTextureTransitionByPath(t, i, e);
   }
   async SetTextureAsync(t, i) {
     await this.j_r.SetTextureAsync(t, i);

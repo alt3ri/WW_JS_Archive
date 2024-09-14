@@ -10,14 +10,17 @@ class BossRushBuff {
     return this.id();
   }
   get BuffId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buffidLength(), (t) =>
-      this.buffid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buffidLength(),
+      this.buffid,
+      this,
     );
   }
   get PassiveSkill() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.passiveskillLength(),
-      (t) => this.passiveskill(t),
+      this.passiveskill,
+      this,
     );
   }
   get Texture() {
@@ -32,7 +35,8 @@ class BossRushBuff {
   get DescriptionParam() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.descriptionparamLength(),
-      (t) => this.descriptionparam(t),
+      this.descriptionparam,
+      this,
     );
   }
   __init(t, s) {

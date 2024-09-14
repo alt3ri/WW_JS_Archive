@@ -29,6 +29,15 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
     t = DropPackageById_1.configDropPackageById.GetConfig(t);
     if (t) return t.DropPreview;
   }
+  GetDropPackagePreviewItemList(t) {
+    var o,
+      e,
+      i = [];
+    for ([o, e] of DropPackageById_1.configDropPackageById.GetConfig(t)
+      .DropPreview)
+      i.push([{ ItemId: o, IncId: 0 }, e]);
+    return i;
+  }
   GetDropShowPlan(t) {
     return DropShowPlanById_1.configDropShowPlanById.GetConfig(t);
   }
@@ -150,8 +159,8 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
       for (const r of t) {
         var e = this.GetDropPackage(r)?.DropPreview;
         if (e)
-          for (const _ of e) {
-            var i = [{ IncId: 0, ItemId: _[0] }, _[1]];
+          for (const a of e) {
+            var i = [{ IncId: 0, ItemId: a[0] }, a[1]];
             o.push(i);
           }
       }

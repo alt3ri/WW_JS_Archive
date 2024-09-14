@@ -5,6 +5,8 @@ const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
   MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  LocalStorage_1 = require("../../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
   LevelGeneralCommons_1 = require("../../../LevelGamePlay/LevelGeneralCommons"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
@@ -39,40 +41,42 @@ class PayShopGoodsData {
       (this.he = ""),
       (this.StageImage = ""),
       (this.IFi = 0),
-      (this.ABn = ""),
-      (this.Ijs = !1),
-      (this.UnFinishedCondition = void 0);
+      (this.OBn = ""),
+      (this.Kjs = !1),
+      (this.UnFinishedCondition = void 0),
+      (this.SYa = !1);
   }
   Phrase(t) {
-    this.Id = t.J4n;
+    this.Id = t.s5n;
     var i = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
-      t.J4n,
+      t.s5n,
     );
     (this.TabId = i.TabId),
-      (this.ItemId = t.f8n),
-      (this.ItemCount = t.YVn),
-      (this.Locked = t.cBs),
-      (this.yFi = t.pBs),
-      (this.BuyLimit = t.sBs),
-      (this.BoughtCount = t.N7n),
-      this.Price.Phrase(t.dBs),
-      (this.BeginTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.nps))),
-      (this.EndTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.sps))),
+      (this.ItemId = t.L8n),
+      (this.ItemCount = t.n9n),
+      (this.Locked = t.pBs),
+      (this.yFi = t.LBs),
+      (this.BuyLimit = t.dBs),
+      (this.BoughtCount = t.X7n),
+      this.Price.Phrase(t.MBs),
+      (this.BeginTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.cps))),
+      (this.EndTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.dps))),
       (this.BeginPromotionTime = Number(
-        MathUtils_1.MathUtils.LongToBigInt(t.mBs),
+        MathUtils_1.MathUtils.LongToBigInt(t.SBs),
       )),
       (this.EndPromotionTime = Number(
-        MathUtils_1.MathUtils.LongToBigInt(t.CBs),
+        MathUtils_1.MathUtils.LongToBigInt(t.EBs),
       )),
-      (this.UpdateTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.pxs))),
-      (this.UpdateType = Number(t.UAs)),
-      (this.ShopItemType = Number(t.gBs)),
+      (this.UpdateTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.Lxs))),
+      (this.UpdateType = Number(t.OAs)),
+      (this.ShopItemType = Number(t.yBs)),
       (this.LabelId = i.Tag),
-      (this.LabelBeginTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.fBs))),
-      (this.LabelEndTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.vBs))),
+      (this.LabelBeginTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.IBs))),
+      (this.LabelEndTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.TBs))),
       (this.Sort = i.Sort),
       (this.PromotionShow = i.PromotionShow),
-      (this.Ijs = i.SoldoutShowInShop),
+      (this.Kjs = i.SoldoutShowInShop),
+      (this.SYa = t.Drh),
       this.MFi();
   }
   GetIfCanBuy() {
@@ -86,7 +90,8 @@ class PayShopGoodsData {
     return !!this.yFi;
   }
   IfRoleCallBackItem() {
-    return this.GetItemConfig().ShowTypes.includes(30);
+    var t = this.GetItemConfig();
+    return !!t && !!t.ShowTypes && t.ShowTypes.includes(30);
   }
   IfHaveRoleCallBackItemNeedRole() {
     if (this.IfRoleCallBackItem()) {
@@ -114,6 +119,15 @@ class PayShopGoodsData {
     }
     return !0;
   }
+  GetBuyConditionId() {
+    return 1 === this.IFi
+      ? this.UnFinishedCondition && 0 < this.UnFinishedCondition.length
+        ? this.UnFinishedCondition[0]
+        : 0
+      : ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
+          this.Id,
+        ).BuyConditionId;
+  }
   GetUnFinishConditionText() {
     if (this.IfRoleCallBackItem()) {
       if (!this.IfHaveRoleCallBackItemNeedRole())
@@ -130,11 +144,7 @@ class PayShopGoodsData {
       ? MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
           "Text_MonthlyCardMax_Text",
         )
-      : 0 !==
-          (t =
-            ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
-              this.Id,
-            ).BuyConditionId)
+      : 0 !== (t = this.GetBuyConditionId())
         ? ((t =
             LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
               t,
@@ -168,15 +178,15 @@ class PayShopGoodsData {
           t,
           this.ItemCount.toString(),
         ))),
-      (this.ABn = LanguageSystem_1.LanguageSystem.PackageLanguage),
+      (this.OBn = LanguageSystem_1.LanguageSystem.PackageLanguage),
       (this.he = t);
   }
   PhraseFromPayPackageData(t) {
     (this.Id = t.Id),
       (this.ItemId = t.ItemId),
       (this.ItemCount = t.ItemCount),
-      (this.Locked = !1),
-      (this.yFi = !0),
+      (this.Locked = t.IsLock),
+      (this.yFi = t.IsCanBuy),
       (this.BuyLimit = t.BuyLimit),
       (this.BoughtCount = t.BoughtCount),
       (this.Price.Id = t.PayId),
@@ -193,6 +203,10 @@ class PayShopGoodsData {
       (this.TabId = t.TabId),
       (this.StageImage = t.StageImage),
       (this.IFi = 1),
+      (this.SYa = t.IsRemind),
+      0 < t.BuyCondition &&
+        ((this.UnFinishedCondition = []),
+        this.UnFinishedCondition.push(t.BuyCondition)),
       ModelManager_1.ModelManager.RechargeModel.SetRechargeInfo(
         t.PayId,
         t.Amount,
@@ -212,30 +226,9 @@ class PayShopGoodsData {
   }
   GetGoodsName(t) {
     return (
-      this.ABn !== LanguageSystem_1.LanguageSystem.PackageLanguage &&
+      this.OBn !== LanguageSystem_1.LanguageSystem.PackageLanguage &&
         this.MFi(),
       this.he
-    );
-  }
-  CheckIfSame(t) {
-    return !!(
-      this.Id === t.J4n &&
-      this.ItemId === t.f8n &&
-      this.ItemCount === t.YVn &&
-      this.Locked === t.cBs &&
-      this.yFi === t.pBs &&
-      this.BuyLimit === t.sBs &&
-      this.BoughtCount === t.N7n &&
-      this.TFi(t) &&
-      this.LFi(this.BeginTime, t.nps ?? void 0) &&
-      this.LFi(this.EndTime, t.sps ?? void 0) &&
-      this.LFi(this.BeginPromotionTime, t.mBs ?? void 0) &&
-      this.LFi(this.EndPromotionTime, t.CBs ?? void 0) &&
-      this.LFi(this.UpdateTime, t.pxs ?? void 0) &&
-      Number(this.UpdateType) === t.UAs &&
-      Number(this.ShopItemType) === t.gBs &&
-      this.LFi(this.LabelBeginTime, t.fBs ?? void 0) &&
-      this.LFi(this.LabelEndTime, t.vBs ?? void 0)
     );
   }
   IfMayReSell() {
@@ -244,18 +237,6 @@ class PayShopGoodsData {
       if (Number(this.UpdateTime) < Number(this.EndTime)) return !0;
     }
     return !1;
-  }
-  LFi(t, i) {
-    return void 0 !== t && void 0 !== i
-      ? Number(t) === Number(i)
-      : !((void 0 === t && void 0 !== i) || (void 0 !== t && void 0 === i));
-  }
-  TFi(t) {
-    return (
-      this.Price.Id === t.dBs.J4n &&
-      this.Price.Count === t.dBs.o9n &&
-      this.Price.PromotionCount === t.dBs.uBs
-    );
   }
   InLabelShowTime() {
     var t = TimeUtil_1.TimeUtil.GetServerTime();
@@ -277,23 +258,11 @@ class PayShopGoodsData {
         : this
     ).Sort;
   }
-  ShopId() {
-    return ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
-      this.Id,
-    ).ShopId;
-  }
-  GetUpdateTime() {
-    if (0 === this.UpdateTime && this.IsWeeklyRefresh())
-      return ModelManager_1.ModelManager.PayShopModel.GetPayShopUpdateTime(
-        this.ShopId(),
-      );
-    return this.UpdateTime;
-  }
   IsWeeklyRefresh() {
     return 0 !== this.UpdateType && 4 !== this.UpdateType;
   }
   IfShowAfterSoldOut() {
-    return this.Ijs;
+    return this.Kjs;
   }
   HasDiscount() {
     var t, i;
@@ -334,32 +303,6 @@ class PayShopGoodsData {
   }
   GetNowPrice() {
     return this.HasDiscount() ? this.Price.PromotionCount : this.Price.Count;
-  }
-  GetConditionTextId() {
-    var t;
-    return 0 === this.IFi &&
-      0 !==
-        (t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
-          this.Id,
-        ).BuyConditionId)
-      ? LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
-          t,
-        ) ?? ""
-      : "";
-  }
-  Discount() {
-    var t;
-    return 0 === this.IFi
-      ? 0 !== this.PromotionShow
-        ? Math.ceil(this.PromotionShow / PayShopDefine_1.DISCOUNT_PERCENT)
-        : 0 !==
-            (t =
-              ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
-                this.Id,
-              )).PromotionShow
-          ? Math.ceil(t.PromotionShow / PayShopDefine_1.DISCOUNT_PERCENT)
-          : Math.ceil(this.GetDiscount())
-      : Math.ceil(this.GetDiscount());
   }
   GetPromotionText() {
     if (0 === this.IFi) {
@@ -413,6 +356,37 @@ class PayShopGoodsData {
     return ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
       this.ItemId,
     ).ItemType;
+  }
+  GetIfNeedRemind() {
+    var t = LocalStorage_1.LocalStorage.GetPlayer(
+      LocalStorageDefine_1.ELocalStoragePlayerKey.GoodsRemindMap,
+      void 0,
+    );
+    if (t) {
+      t = t.get(this.IFi);
+      if (t) {
+        t = t.get(this.Id);
+        if (void 0 !== t && 0 < t) return !1;
+      }
+    }
+    return this.SYa;
+  }
+  SaveRemindState(t) {
+    let i = LocalStorage_1.LocalStorage.GetPlayer(
+        LocalStorageDefine_1.ELocalStoragePlayerKey.GoodsRemindMap,
+        void 0,
+      ),
+      e = (i = i || new Map()).get(this.IFi);
+    e || ((e = new Map()), i.set(this.IFi, e));
+    var s = e.get(this.Id);
+    return void 0 !== s && 0 < s
+      ? -1
+      : (e.set(this.Id, t),
+        LocalStorage_1.LocalStorage.SetPlayer(
+          LocalStorageDefine_1.ELocalStoragePlayerKey.GoodsRemindMap,
+          i,
+        ),
+        0);
   }
 }
 exports.PayShopGoodsData = PayShopGoodsData;

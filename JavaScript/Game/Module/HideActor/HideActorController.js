@@ -58,7 +58,7 @@ class HideActorController extends ControllerBase_1.ControllerBase {
     }
   }
   static fti(t, e) {
-    t.Entity.GetComponent(33)?.CurrentSkill?.SetEffectHidden(e),
+    t.Entity.GetComponent(34)?.CurrentSkill?.SetEffectHidden(e),
       t.Entity.GetComponent(19)?.SetHidden(e);
   }
   static OnClear() {

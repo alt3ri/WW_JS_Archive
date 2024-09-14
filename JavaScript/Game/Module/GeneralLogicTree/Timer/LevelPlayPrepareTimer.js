@@ -51,7 +51,7 @@ class LevelPlayPrepareTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
       ));
   }
   GetRemainTime() {
-    return (this.MYt - TimeUtil_1.TimeUtil.GetServerTimeStamp()) / 1e3;
+    return (this.MYt - TimeUtil_1.TimeUtil.GetServerStopTimeStamp()) / 1e3;
   }
 }
 exports.LevelPlayPrepareTimer = LevelPlayPrepareTimer;

@@ -11,7 +11,7 @@ const UE = require("ue"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  GameSettingsDeviceRender_1 = require("../../GameSettings/GameSettingsDeviceRender"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   BlackScreenController_1 = require("../../Module/BlackScreen/BlackScreenController"),
@@ -280,9 +280,9 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
   OnBeforeShowImplement() {
     this.OnAddEventListener(),
       this.OnBeforeShowImplementImplement(),
-      GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-        .GetCurrentQualityInfo()
-        .ApplyPerformanceLimit(this.Info.Name);
+      GameSettingsDeviceRender_1.GameSettingsDeviceRender.ApplyPerformanceLimit(
+        this.Info.Name,
+      );
   }
   async OnShowAsyncImplementImplement() {
     this.Hur
@@ -311,9 +311,9 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
             ["SequenceName", this.UiViewSequence.ShowSequenceName],
           ),
         await this.zur(this.UiViewSequence.ShowSequenceName)),
-      GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-        .GetCurrentQualityInfo()
-        .ApplyPerformanceSeqLimit(this.Info.Name),
+      GameSettingsDeviceRender_1.GameSettingsDeviceRender.ApplyPerformanceSeqLimit(
+        this.Info.Name,
+      ),
       this.Info.IsFullScreen &&
         UE.LGUIBPLibrary.SetIsFullScreenUIRendering(this.GetRootActor(), !0),
       Log_1.Log.CheckInfo() &&
@@ -342,14 +342,14 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
         : this.Jur(this.UiViewSequence.ShowSequenceName);
   }
   OnAfterShowImplement() {
-    this.OpenPromise?.SetResult(void 0),
+    this.OpenPromise?.SetResult(!0),
       this.ShowPromise?.SetResult(void 0),
       this.HandleAllLoadingFinishOperation();
   }
   async OnHideAsyncImplementImplement() {
-    GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-      .GetCurrentQualityInfo()
-      .CancelPerformanceSeqLimit(this.Info.Name),
+    GameSettingsDeviceRender_1.GameSettingsDeviceRender.CancelPerformanceSeqLimit(
+      this.Info.Name,
+    ),
       this.Info.IsFullScreen &&
         UE.LGUIBPLibrary.SetIsFullScreenUIRendering(
           this.GetRootActor(),
@@ -364,9 +364,9 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       this.ReleaseScene();
   }
   OnHideAsyncImplementImplementCompatible() {
-    GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-      .GetCurrentQualityInfo()
-      .CancelPerformanceSeqLimit(this.Info.Name),
+    GameSettingsDeviceRender_1.GameSettingsDeviceRender.CancelPerformanceSeqLimit(
+      this.Info.Name,
+    ),
       this.Info.IsFullScreen &&
         UE.LGUIBPLibrary.SetIsFullScreenUIRendering(
           this.GetRootActor(),
@@ -387,9 +387,9 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
         EventDefine_1.EEventName.OnViewHidden,
         this.Info.Name,
       ),
-      GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-        .GetCurrentQualityInfo()
-        .CancelPerformanceLimit(this.Info.Name);
+      GameSettingsDeviceRender_1.GameSettingsDeviceRender.CancelPerformanceLimit(
+        this.Info.Name,
+      );
   }
   async OnDestroyAsyncImplementImplement() {
     return (

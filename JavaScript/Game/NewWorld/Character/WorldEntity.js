@@ -33,16 +33,20 @@ class WorldEntity extends Entity_1.Entity {
       }
     }
     switch (e) {
-      case Protocol_1.Aki.Protocol.wks.Proto_Player:
-      case Protocol_1.Aki.Protocol.wks.Proto_Vision:
+      case Protocol_1.Aki.Protocol.kks.Proto_Player:
+      case Protocol_1.Aki.Protocol.kks.Proto_Vision:
+      case Protocol_1.Aki.Protocol.kks.Proto_PlayerEntity:
         return GameBudgetAllocatorConfigCreator_1
           .GameBudgetAllocatorConfigCreator.TsPlayerAlwaysTickConfig;
-      case Protocol_1.Aki.Protocol.wks.Proto_Monster:
+      case Protocol_1.Aki.Protocol.kks.Proto_Monster:
         if (r instanceof WorldEntity) {
           if (0 < o)
-            return GameBudgetAllocatorConfigCreator_1
-              .GameBudgetAllocatorConfigCreator.TsPlayerAlwaysTickConfig;
-          if (r.GetComponent(202))
+            return 652000002 === r.GetComponent(0).GetPbDataId()
+              ? GameBudgetAllocatorConfigCreator_1
+                  .GameBudgetAllocatorConfigCreator.TsBossEntityGroupConfig
+              : GameBudgetAllocatorConfigCreator_1
+                  .GameBudgetAllocatorConfigCreator.TsPlayerAlwaysTickConfig;
+          if (r.GetComponent(204))
             return GameBudgetAllocatorConfigCreator_1
               .GameBudgetAllocatorConfigCreator.TsPlayerAlwaysTickConfig;
         }
@@ -51,7 +55,7 @@ class WorldEntity extends Entity_1.Entity {
               .TsBossEntityGroupConfig
           : GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator
               .TsCharacterEntityGroupConfig;
-      case Protocol_1.Aki.Protocol.wks.Proto_Npc:
+      case Protocol_1.Aki.Protocol.kks.Proto_Npc:
         return 2 === t
           ? GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator
               .TsCharacterEntityGroupConfig
@@ -60,7 +64,7 @@ class WorldEntity extends Entity_1.Entity {
                 .GameBudgetAllocatorConfigCreator.TsSimpleNpcEntityGroupConfig
             : GameBudgetAllocatorConfigCreator_1
                 .GameBudgetAllocatorConfigCreator.TsNormalNpcEntityGroupConfig;
-      case Protocol_1.Aki.Protocol.wks.Proto_Animal:
+      case Protocol_1.Aki.Protocol.kks.Proto_Animal:
         return GameBudgetAllocatorConfigCreator_1
           .GameBudgetAllocatorConfigCreator.TsCharacterEntityGroupConfig;
       default:
@@ -79,20 +83,24 @@ class WorldEntity extends Entity_1.Entity {
     return !0;
   }
   OnInitData(r) {
-    for (const t of this.Components) if (!t.InitData(r)) return !1;
-    var e;
+    for (const o of this.Components) if (!o.InitData(r)) return !1;
+    var e, t;
     return (
       r.RegisterToGameBudgetController &&
         this.RegisterToGameBudgetController(void 0, this),
       PerformanceController_1.PerformanceController.IsOpenCatchWorldEntity &&
         (e = this.GetComponent(0)) &&
-        (e = ModelManager_1.ModelManager.CreatureModel.GetEntityData(
+        e.GetEntityConfigType() === Protocol_1.Aki.Protocol.rLs.F6n &&
+        (t = ModelManager_1.ModelManager.CreatureModel.GetEntityData(
           e.GetPbDataId(),
         )) &&
-        ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(
-          e.BlueprintType,
-        ) &&
-        ((this.TickStatTdType = void 0),
+        (t = ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(
+          t.BlueprintType,
+        )) &&
+        ((this.TickStatTdType = Stats_1.Stat.Create(
+          `PbDataId: ${e.GetPbDataId()}, PrefabId: ${e.GetPrefabId()} ,BlueprintType: ` +
+            t.BlueprintType,
+        )),
         (this.AfterTickStatTdType = this.TickStatTdType)),
       !0
     );

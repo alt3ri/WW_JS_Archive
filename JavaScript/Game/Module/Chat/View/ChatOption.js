@@ -13,6 +13,7 @@ const UE = require("ue"),
   UiManager_1 = require("../../../Ui/UiManager"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
   FriendController_1 = require("../../Friend/FriendController"),
+  PersonalOptionController_1 = require("../../Personal/Model/PersonalOptionController"),
   ReportController_1 = require("../../Report/ReportController"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   ChatController_1 = require("../ChatController");
@@ -46,6 +47,16 @@ class ChatOption extends UiViewBase_1.UiViewBase {
         UiManager_1.UiManager.CloseView("ChatOption");
         var e = ModelManager_1.ModelManager.FriendModel.GetFriendById(this.j8);
         ReportController_1.ReportController.OpenReportView(e, 1);
+      }),
+      (this.WQa = () => {
+        UiManager_1.UiManager.CloseView("ChatOption"),
+          UiManager_1.UiManager.CloseView("ChatView");
+        var e = ModelManager_1.ModelManager.FriendModel,
+          e =
+            ((e.SelectedPlayerId = this.j8),
+            (e.ShowingView = "OnlineWorldHallView"),
+            PersonalOptionController_1.PersonalOptionController.GetPersonalData());
+        UiManager_1.UiManager.OpenView("PersonalRootView", e);
       });
   }
   OnRegisterComponent() {
@@ -59,12 +70,12 @@ class ChatOption extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [
         [3, this.ySt],
         [4, this.ISt],
+        [1, this.WQa],
       ]);
   }
   OnStart() {
     var e;
-    this.GetButton(1)?.RootUIComp.SetUIActive(!1),
-      (this.vSt = new ChatOptionButton(this.GetItem(2))),
+    (this.vSt = new ChatOptionButton(this.GetItem(2))),
       this.vSt.SetClickCallBack(this.SSt),
       (this.j8 = this.OpenParam),
       (this.pSt = ModelManager_1.ModelManager.FriendModel.GetFriendById(

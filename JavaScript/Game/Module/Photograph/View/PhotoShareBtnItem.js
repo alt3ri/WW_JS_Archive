@@ -29,15 +29,16 @@ class PhotoShareBtnItem extends GridProxyAbstract_1.GridProxyAbstract {
       });
   }
   OnRegisterComponent() {
-    this.ComponentRegisterInfos = [[0, UE.UISprite]];
+    (this.ComponentRegisterInfos = [
+      [0, UE.UISprite],
+      [1, UE.UIButtonComponent],
+    ]),
+      (this.BtnBindInfo = [[1, this.FWt]]);
   }
   OnStart() {
     (this.aTn = ConfigManager_1.ConfigManager.CommonConfig.GetShareGap()
       ? ConfigManager_1.ConfigManager.CommonConfig.GetShareGap()
       : 1),
-      this.GetRootActor()
-        .GetComponentByClass(UE.UIButtonComponent.StaticClass())
-        .OnPointUpCallBack.Bind(this.FWt),
       (this.vKi = this.GetSprite(0)
         .GetOwner()
         .GetComponentByClass(UE.UISpriteTransition.StaticClass()));

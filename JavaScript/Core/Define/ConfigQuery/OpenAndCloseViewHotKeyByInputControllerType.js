@@ -18,30 +18,45 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configOpenAndCloseViewHotKeyByInputControllerType.Init",
+  ),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configOpenAndCloseViewHotKeyByInputControllerType.GetConfigList",
+  ),
   CONFIG_LIST_STAT_PREFIX =
     "configOpenAndCloseViewHotKeyByInputControllerType.GetConfigList(";
 exports.configOpenAndCloseViewHotKeyByInputControllerType = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfigList: (o, e = !0) => {
-    var n;
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
+  GetConfigList: (o, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start();
+    var e = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${o})`),
+      t =
+        (e.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
+      if (n) {
         var i = KEY_PREFIX + `#${o})`;
         const r = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (r) return r;
+        if (r)
+          return (
+            e.Stop(),
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            r
+          );
       }
       if (
-        (n = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair))
+        (t = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair))
       ) {
         const r = new Array();
         for (;;) {
@@ -53,33 +68,44 @@ exports.configOpenAndCloseViewHotKeyByInputControllerType = {
             ])
           )
             break;
-          var t = void 0;
+          var C = void 0;
           if (
-            (([n, t] = ConfigCommon_1.ConfigCommon.GetValue(
+            (([t, C] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
               0,
               ...logPair,
               ["InputControllerType", o],
             )),
-            !n)
+            !t)
           )
-            return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
-          t =
-            OpenAndCloseViewHotKey_1.OpenAndCloseViewHotKey.getRootAsOpenAndCloseViewHotKey(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
+            return (
+              ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+              e.Stop(),
+              getConfigListStat.Stop(),
+              void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
             );
-          r.push(t);
+          C =
+            OpenAndCloseViewHotKey_1.OpenAndCloseViewHotKey.getRootAsOpenAndCloseViewHotKey(
+              new byte_buffer_1.ByteBuffer(new Uint8Array(C.buffer)),
+            );
+          r.push(C);
         }
         return (
-          e &&
+          n &&
             ((i = KEY_PREFIX + `#${o})`),
             ConfigCommon_1.ConfigCommon.SaveConfig(i, r, r.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+          e.Stop(),
+          getConfigListStat.Stop(),
+          ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
           r
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    e.Stop(),
+      getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=OpenAndCloseViewHotKeyByInputControllerType.js.map

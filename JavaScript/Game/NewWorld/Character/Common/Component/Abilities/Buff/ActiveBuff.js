@@ -1,22 +1,4 @@
 "use strict";
-var __decorate =
-  (this && this.__decorate) ||
-  function (t, i, e, s) {
-    var r,
-      h = arguments.length,
-      a =
-        h < 3
-          ? i
-          : null === s
-            ? (s = Object.getOwnPropertyDescriptor(i, e))
-            : s;
-    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      a = Reflect.decorate(t, i, e, s);
-    else
-      for (var f = t.length - 1; 0 <= f; f--)
-        (r = t[f]) && (a = (h < 3 ? r(a) : 3 < h ? r(i, e, a) : r(i, e)) || a);
-    return 3 < h && a && Object.defineProperty(i, e, a), a;
-  };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActiveBuffInternal = void 0);
 const Log_1 = require("../../../../../../../Core/Common/Log"),
@@ -42,7 +24,7 @@ class ActiveBuffInternal {
       (this.rQo = ActiveBuffConfigs_1.DEFAULT_GE_SERVER_ID),
       (this.DurationTimer = void 0),
       (this.y6o = 1),
-      (this.nQo = void 0),
+      (this.nQo = Stats_1.Stat.Create("ActiveBuff.ResetDurationTimer")),
       (this.CB = 0),
       (this.sQo = 0),
       (this.aQo = 1),
@@ -51,7 +33,7 @@ class ActiveBuffInternal {
       (this._Qo = 0),
       (this.PeriodInternal = 0),
       (this.uQo = void 0),
-      (this.cQo = void 0),
+      (this.cQo = Stats_1.Stat.Create("ActiveBuff.ResetPeriodTimer")),
       (this.mQo = !1),
       (this.StackCountInternal = 0),
       (this.jGi = 0),
@@ -66,19 +48,19 @@ class ActiveBuffInternal {
     t?.IsValid() && t.Destroy(),
       t && this.BuffPool.length < MAX_POOL_COUNT && this.BuffPool.push(t);
   }
-  AU(t, i, e, s, r, h, a, f, o, n) {
+  AU(t, i, s, e, h, r, a, o, f, n) {
     if (
       ((this.TAe = t),
       (this.tQo = i),
-      (this.InstigatorIdInternal = e ?? ActiveBuffConfigs_1.NULL_INSTIGATOR_ID),
-      (this.oQo = s),
-      (this.iQo = s?.GetDebugName() ?? "unknown"),
-      (this.rQo = r),
+      (this.InstigatorIdInternal = s ?? ActiveBuffConfigs_1.NULL_INSTIGATOR_ID),
+      (this.oQo = e),
+      (this.iQo = e?.GetDebugName() ?? "unknown"),
+      (this.rQo = h),
       (this.MessageId =
         a ?? ModelManager_1.ModelManager.CombatMessageModel.GenMessageId()),
-      (this.PreMessageId = h),
-      (this.jGi = f),
-      (this.StackCountInternal = o),
+      (this.PreMessageId = r),
+      (this.jGi = o),
+      (this.StackCountInternal = f),
       (this.mQo = !1),
       (this.hQo = !1),
       this.SetDuration(n),
@@ -98,7 +80,7 @@ class ActiveBuffInternal {
     if (this.IsActive()) {
       const i = this.GetOwnerBuffComponent()
         ?.GetExactEntity()
-        ?.CheckGetComponent(188);
+        ?.CheckGetComponent(190);
       i?.Valid &&
         this.Config.GrantedTags?.forEach((t) => {
           i.TagContainer.UpdateExactTag(2, t, -this.StackCount);
@@ -143,7 +125,7 @@ class ActiveBuffInternal {
     if (this.InstigatorId)
       return ModelManager_1.ModelManager.CreatureModel.GetEntity(
         this.InstigatorId,
-      )?.Entity?.GetComponent(159);
+      )?.Entity?.GetComponent(160);
   }
   GetInstigatorActorComponent() {
     if (this.InstigatorId)
@@ -155,10 +137,10 @@ class ActiveBuffInternal {
     if (this.InstigatorId)
       return ModelManager_1.ModelManager.CreatureModel.GetEntity(
         this.InstigatorId,
-      )?.Entity?.GetComponent(158);
+      )?.Entity?.GetComponent(159);
   }
   GetOwnerAttributeSet() {
-    return this.oQo?.GetEntity()?.GetComponent(158);
+    return this.oQo?.GetEntity()?.GetComponent(159);
   }
   get Id() {
     return this.Config.Id;
@@ -207,17 +189,17 @@ class ActiveBuffInternal {
   }
   SetDuration(t = void 0) {
     var i,
-      e,
       s,
-      r = this.Config;
-    let h = ActiveBuffConfigs_1.MIN_BUFF_PERIOD;
-    (h =
-      1 === r.DurationPolicy
+      e,
+      h = this.Config;
+    let r = ActiveBuffConfigs_1.MIN_BUFF_PERIOD;
+    (r =
+      1 === h.DurationPolicy
         ? -1
         : void 0 !== t
           ? t
-          : 0 === r.DurationMagnitude.length ||
-              0 === r.DurationCalculationPolicy.length
+          : 0 === h.DurationMagnitude.length ||
+              0 === h.DurationCalculationPolicy.length
             ? (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Character",
@@ -232,7 +214,7 @@ class ActiveBuffInternal {
                 this.Level,
                 0,
               )),
-              1 === (i = r.DurationCalculationPolicy)[0]
+              1 === (i = h.DurationCalculationPolicy)[0]
                 ? i.length < 4
                   ? (Log_1.Log.CheckError() &&
                       Log_1.Log.Error(
@@ -246,26 +228,26 @@ class ActiveBuffInternal {
                         ["释放者", this.InstigatorId],
                       ),
                     ActiveBuffConfigs_1.MIN_BUFF_PERIOD)
-                  : ((r = AbilityUtils_1.AbilityUtils.GetLevelValue(
-                      r.DurationMagnitude2,
+                  : ((h = AbilityUtils_1.AbilityUtils.GetLevelValue(
+                      h.DurationMagnitude2,
                       this.Level,
                       0,
                     )),
-                    ([, i, s, e] = i),
-                    (s =
-                      1 === s
+                    ([, i, e, s] = i),
+                    (e =
+                      1 === e
                         ? this.GetInstigatorAttributeSet()
                         : this.GetOwnerAttributeSet())
-                      ? ((s = AbilityUtils_1.AbilityUtils.GetAttrValue(
-                          s,
-                          i,
+                      ? ((e = AbilityUtils_1.AbilityUtils.GetAttrValue(
                           e,
+                          i,
+                          s,
                         )),
                         Math.max(
-                          s *
+                          e *
                             t *
                             CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND +
-                            r,
+                            h,
                           ActiveBuffConfigs_1.MIN_BUFF_PERIOD,
                         ))
                       : (Log_1.Log.CheckError() &&
@@ -281,8 +263,8 @@ class ActiveBuffInternal {
                           ),
                         ActiveBuffConfigs_1.MIN_BUFF_PERIOD))
                 : t)),
-      (this.y6o = h),
-      this.fQo(h);
+      (this.y6o = r),
+      this.fQo(r);
   }
   SetRemainDuration(t) {
     2 === this.Config.DurationPolicy &&
@@ -337,7 +319,7 @@ class ActiveBuffInternal {
     return this.PeriodInternal;
   }
   OnTimeScaleChanged(t, i) {
-    var e;
+    var s;
     i
       ? (t = 0)
       : this.Config.DurationAffectedByBulletTime
@@ -358,14 +340,14 @@ class ActiveBuffInternal {
         : (t = this.GetOwner()?.TimeDilation ?? 1),
       t !== this.aQo &&
         ((i = this.GetCurrentTime()),
-        (e = this.aQo),
+        (s = this.aQo),
         (this.aQo = t),
         0 < this.y6o &&
-          ((t = ((i - this.CB) * e) / CommonDefine_1.MILLIONSECOND_PER_SECOND),
+          ((t = ((i - this.CB) * s) / CommonDefine_1.MILLIONSECOND_PER_SECOND),
           (t = this.sQo - t),
           this.fQo(t)),
         0 < this.PeriodInternal) &&
-        ((t = ((i - this.lQo) * e) / CommonDefine_1.MILLIONSECOND_PER_SECOND),
+        ((t = ((i - this.lQo) * s) / CommonDefine_1.MILLIONSECOND_PER_SECOND),
         (i = this._Qo - t),
         this.ResetPeriodTimer(i));
   }
@@ -406,12 +388,12 @@ class ActiveBuffInternal {
     if (this.IsValid()) {
       var t = this.PeriodInternal,
         i = this.GetRemainPeriod(),
-        e = Math.floor(1 - i / t),
+        s = Math.floor(1 - i / t),
         i = ((i % t) + t) % t;
       if (this.IsActive()) {
         this.ResetPeriodTimer(i);
-        var s = this.GetOwnerBuffComponent();
-        for (let t = 0; t < e; t++) s?.ApplyPeriodExecution(this);
+        var e = this.GetOwnerBuffComponent();
+        for (let t = 0; t < s; t++) e?.ApplyPeriodExecution(this);
       } else this.ResetPeriodTimer(i);
     }
   }
@@ -428,7 +410,7 @@ class ActiveBuffInternal {
     this.mQo = t;
     const i = this.GetOwnerBuffComponent()
       ?.GetExactEntity()
-      ?.CheckGetComponent(188);
+      ?.CheckGetComponent(190);
     if (!i)
       return (
         Log_1.Log.CheckError() &&
@@ -473,16 +455,16 @@ class ActiveBuffInternal {
   }
   SetStackCount(i) {
     var t = this.Config;
-    const e = this.StackCountInternal,
-      s =
+    const s = this.StackCountInternal,
+      e =
         ((this.StackCountInternal = i),
-        this.GetOwnerBuffComponent()?.GetExactEntity()?.CheckGetComponent(188));
-    s
+        this.GetOwnerBuffComponent()?.GetExactEntity()?.CheckGetComponent(190));
+    e
       ? (0 === t.StackPeriodResetPolicy && this.SetPeriod(),
         this.ResetModifiers(),
         t.GrantedTags?.forEach((t) => {
           GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(t) &&
-            s.TagContainer.UpdateExactTag(2, t, i - e);
+            e.TagContainer.UpdateExactTag(2, t, i - s);
         }))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -499,7 +481,7 @@ class ActiveBuffInternal {
   }
   ClearModifiers() {
     this.StateModifiers.length = 0;
-    var t = this.GetOwner()?.GetComponent(157);
+    var t = this.GetOwner()?.GetComponent(158);
     if (0 < this.dQo.length && t) {
       for (const i of this.dQo) t.RemoveModifier(i[0], i[1]);
       this.dQo.length = 0;
@@ -518,14 +500,14 @@ class ActiveBuffInternal {
     switch (t.CalculationPolicy[0]) {
       case 4:
       case 2:
-        var [, i, e, s, r] = t.CalculationPolicy,
-          e =
-            1 === e
+        var [, i, s, e, h] = t.CalculationPolicy,
+          s =
+            1 === s
               ? this.GetInstigatorAttributeSet()
               : this.GetOwnerAttributeSet(),
-          r =
-            (r &&
-              !e &&
+          h =
+            (h &&
+              !s &&
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Battle",
@@ -536,12 +518,12 @@ class ActiveBuffInternal {
                 ["持有者", this.oQo?.GetDebugName()],
                 ["施加者", this.InstigatorId],
               ),
-            r
-              ? e
-                ? AbilityUtils_1.AbilityUtils.GetAttrValue(e, i, s)
+            h
+              ? s
+                ? AbilityUtils_1.AbilityUtils.GetAttrValue(s, i, e)
                 : 0
               : void 0);
-        this.StateModifiers.push([t, r]);
+        this.StateModifiers.push([t, h]);
         break;
       default:
         this.StateModifiers.push([t, void 0]);
@@ -549,26 +531,26 @@ class ActiveBuffInternal {
   }
   SetNonStateModifier(t) {
     var i = this.StackCountInternal ?? 1,
-      e = this.GetOwner().GetComponent(157);
-    let s = 0;
-    var r = t.AttributeId,
-      h = AbilityUtils_1.AbilityUtils.GetLevelValue(t.Value1, this.jGi, 0),
+      s = this.GetOwner().GetComponent(158);
+    let e = 0;
+    var h = t.AttributeId,
+      r = AbilityUtils_1.AbilityUtils.GetLevelValue(t.Value1, this.jGi, 0),
       a = AbilityUtils_1.AbilityUtils.GetLevelValue(t.Value2, this.jGi, 0);
     switch (t.CalculationPolicy[0]) {
       case 0:
       case 1:
       case 3:
-        s = e.AddModifier(r, { Type: t.CalculationPolicy[0], Value1: h * i });
+        e = s.AddModifier(h, { Type: t.CalculationPolicy[0], Value1: r * i });
         break;
       case 2:
       case 4:
-        var [, f, o, n, u, _, l, c] = t.CalculationPolicy,
+        var [, o, f, n, u, _, c, l] = t.CalculationPolicy,
           v =
-            1 === o
+            1 === f
               ? this.GetInstigatorAttributeSet()
               : this.GetOwnerAttributeSet(),
-          o = 1 === o ? this.InstigatorId : 0;
-        if (!v || void 0 === o)
+          f = 1 === f ? this.InstigatorId : 0;
+        if (!v || void 0 === f)
           return void (
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -579,22 +561,22 @@ class ActiveBuffInternal {
               ["handle", this.Handle],
               ["持有者", this.oQo?.GetDebugName()],
               ["施加者", this.InstigatorId],
-              ["attrId", r],
+              ["attrId", h],
             )
           );
-        s = e.AddModifier(r, {
+        e = s.AddModifier(h, {
           Type: t.CalculationPolicy[0],
-          Value1: h * i,
+          Value1: r * i,
           Value2: a * i,
-          SourceEntity: o,
-          SourceAttributeId: f,
+          SourceEntity: f,
+          SourceAttributeId: o,
           SourceCalculationType: n,
           SnapshotSource: u
-            ? AbilityUtils_1.AbilityUtils.GetAttrValue(v, f, n)
+            ? AbilityUtils_1.AbilityUtils.GetAttrValue(v, o, n)
             : void 0,
           Min: _,
-          Ratio: l,
-          Max: c,
+          Ratio: c,
+          Max: l,
         });
         break;
       case 5:
@@ -607,24 +589,24 @@ class ActiveBuffInternal {
             ["buffId", this.Id],
           );
     }
-    this.dQo.push([r, s]);
+    this.dQo.push([h, e]);
   }
-  static ModifyStateAttribute(e, s, r, t, i, h) {
-    var a = r.AttributeId;
+  static ModifyStateAttribute(s, e, h, t, i, r) {
+    var a = h.AttributeId;
     if (CharacterAttributeTypes_1.stateAttributeIds.has(a)) {
-      var f = AbilityUtils_1.AbilityUtils.GetLevelValue(r.Value1, t, 0),
-        o = AbilityUtils_1.AbilityUtils.GetLevelValue(r.Value2, t, 0);
-      switch (r.CalculationPolicy[0]) {
+      var o = AbilityUtils_1.AbilityUtils.GetLevelValue(h.Value1, t, 0),
+        f = AbilityUtils_1.AbilityUtils.GetLevelValue(h.Value2, t, 0);
+      switch (h.CalculationPolicy[0]) {
         case 0:
-          return void s.AddBaseValue(a, f);
+          return void e.AddBaseValue(a, o);
         case 1:
-          var n = s.GetBaseValue(a),
-            u = f * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND + 1;
-          return void s.SetBaseValue(a, n * u);
+          var n = e.GetBaseValue(a),
+            u = o * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND + 1;
+          return void e.SetBaseValue(a, n * u);
         case 2:
         case 4: {
-          var [, n, u, _, , l, c, v] = r.CalculationPolicy,
-            u = 1 === u ? e : s;
+          var [, n, u, _, , c, l, v] = h.CalculationPolicy,
+            u = 1 === u ? s : e;
           if (!u)
             return void (
               Log_1.Log.CheckError() &&
@@ -633,74 +615,31 @@ class ActiveBuffInternal {
                 a,
               ])
             );
-          let t = h ?? AbilityUtils_1.AbilityUtils.GetAttrValue(u, n, _);
-          if (l && (t -= l) <= 0) return;
-          c && (t /= c);
-          let i = f * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND * t + o;
+          let t = r ?? AbilityUtils_1.AbilityUtils.GetAttrValue(u, n, _);
+          if (c && (t -= c) <= 0) return;
+          l && (t /= l);
+          let i = o * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND * t + f;
           return (
             v && i > v && (i = v),
-            void (2 === r.CalculationPolicy[0]
-              ? s.AddBaseValue(a, i)
-              : s.SetBaseValue(a, i))
+            void (2 === h.CalculationPolicy[0]
+              ? e.AddBaseValue(a, i)
+              : e.SetBaseValue(a, i))
           );
         }
         case 3:
-          return void s.SetBaseValue(a, f);
+          return void e.SetBaseValue(a, o);
         case 5:
-          return void s.AddBaseValue(a, f * i);
+          return void e.AddBaseValue(a, o * i);
         case 6:
-          var [, u] = r.CalculationPolicy,
-            n = h ?? AbilityUtils_1.AbilityUtils.GetAttrValue(s, u, 0);
-          s.AddBaseValue(
+          var [, u] = h.CalculationPolicy,
+            n = r ?? AbilityUtils_1.AbilityUtils.GetAttrValue(e, u, 0);
+          e.AddBaseValue(
             a,
-            (f * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND * n + o) * i,
+            (o * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND * n + f) * i,
           );
       }
     }
   }
 }
-(ActiveBuffInternal.BuffPool = []),
-  __decorate(
-    [(0, Stats_1.statDecorator)("Buff_SetDuration")],
-    ActiveBuffInternal.prototype,
-    "SetDuration",
-    null,
-  ),
-  __decorate(
-    [(0, Stats_1.statDecorator)("Buff_SetPeriod")],
-    ActiveBuffInternal.prototype,
-    "SetPeriod",
-    null,
-  ),
-  __decorate(
-    [(0, Stats_1.statDecorator)("Buff_SetStateModifier")],
-    ActiveBuffInternal.prototype,
-    "SetStateModifier",
-    null,
-  ),
-  __decorate(
-    [(0, Stats_1.statDecorator)("Buff_SetNonStateModifier")],
-    ActiveBuffInternal.prototype,
-    "SetNonStateModifier",
-    null,
-  ),
-  __decorate(
-    [(0, Stats_1.statDecorator)("Buff_AllocBuff")],
-    ActiveBuffInternal,
-    "AllocBuff",
-    null,
-  ),
-  __decorate(
-    [(0, Stats_1.statDecorator)("Buff_ReleaseBuff")],
-    ActiveBuffInternal,
-    "ReleaseBuff",
-    null,
-  ),
-  __decorate(
-    [(0, Stats_1.statDecorator)("Buff_ModifyStateAttr")],
-    ActiveBuffInternal,
-    "ModifyStateAttribute",
-    null,
-  ),
-  (exports.ActiveBuffInternal = ActiveBuffInternal);
+(exports.ActiveBuffInternal = ActiveBuffInternal).BuffPool = [];
 //# sourceMappingURL=ActiveBuff.js.map

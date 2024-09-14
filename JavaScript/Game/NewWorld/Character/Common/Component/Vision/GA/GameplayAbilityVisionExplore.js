@@ -40,7 +40,7 @@ class GameplayAbilityVisionExplore extends GameplayAbilityVisionBase_1.GameplayA
       (this.jZo(),
       this.SkillComponent.PlaySkillMontage(!1, 0, "", 0, () => {
         this.SkillComponent.EndSkill(
-          this.SkillComponent.CurrentSkill.SkillId,
+          this.SkillComponent.CurrentSkill?.SkillId ?? 0,
           "GameplayAbilityVisionExplore.OnActivateAbility",
         );
       }),
@@ -51,11 +51,11 @@ class GameplayAbilityVisionExplore extends GameplayAbilityVisionBase_1.GameplayA
     return (
       (this.MZo = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
         this.VisionComponent.Entity,
-        Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantVision,
+        Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeConcomitantVision,
       )),
       !this.MZo.Entity.Active &&
         ((this.OZo = this.MZo.Entity.GetComponent(3)),
-        (this.kZo = this.MZo.Entity.GetComponent(33)),
+        (this.kZo = this.MZo.Entity.GetComponent(34)),
         !0)
     );
   }

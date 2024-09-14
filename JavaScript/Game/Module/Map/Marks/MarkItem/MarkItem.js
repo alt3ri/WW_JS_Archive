@@ -18,13 +18,13 @@ class MarkItem {
       (this.IsDestroy = !1),
       (this.IsIgnoreScaleShow = !1),
       (this.ConfigScale = 1),
+      (this.CornerScale = 1),
       (this.FDi = void 0),
       (this.WorldPositionVector = void 0),
       (this.VDi = !1),
       (this.GridId = 0),
       (this.MapId = 0),
       (this.NeedPlayShowOrHideSeq = void 0),
-      (this.pta = 1),
       (this.HDi = () => {
         this.VDi = !0;
       }),
@@ -58,12 +58,6 @@ class MarkItem {
         this.jDi,
       );
   }
-  get LogicWorldScale() {
-    return this.pta;
-  }
-  set LogicWorldScale(t) {
-    this.pta = t;
-  }
   get MarkScale() {
     return this.kDi;
   }
@@ -71,6 +65,12 @@ class MarkItem {
     return this.WorldPosition
       ? MapUtil_1.MapUtil.WorldPosition2UiPosition(this.WorldPosition, this.FDi)
       : Vector_1.Vector.ZeroVectorProxy;
+  }
+  IsMultiMap() {
+    return !1;
+  }
+  GetMultiMapId() {
+    return 0;
   }
   get IsViewCreate() {
     return !!this.InnerView && this.InnerView.IsShowOrShowing;
@@ -98,13 +98,17 @@ class MarkItem {
             this.TrackTarget.Y,
             0,
           )));
-    var t =
-      this.MapId === ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
+    var t = this.IsInCurrentInstance();
     return MapUtil_1.MapUtil.GetTrackPositionByTrackTarget(
       this.TrackTarget,
       !1,
       this.WorldPositionVector,
       t,
+    );
+  }
+  IsInCurrentInstance() {
+    return (
+      this.MapId === ModelManager_1.ModelManager.CreatureModel.GetInstanceId()
     );
   }
   UpdateCustomMapMarkPosition(t) {
@@ -226,6 +230,9 @@ class MarkItem {
   SetConfigScale(t) {
     this.ConfigScale = t;
   }
+  SetCornerScale(t) {
+    this.CornerScale = t;
+  }
   get JDi() {
     return ModelManager_1.ModelManager.MapModel.GetMarkForceVisible(
       this.MarkType,
@@ -256,6 +263,9 @@ class MarkItem {
   }
   OnLevelSequenceStop(t) {
     ("ShowView" !== t && "HideView" !== t) || (this.IsCanShowViewFinally = !1);
+  }
+  GetInteractiveFlag() {
+    return this.IsCanShowView ?? !1;
   }
 }
 exports.MarkItem = MarkItem;

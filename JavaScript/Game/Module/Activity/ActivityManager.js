@@ -6,14 +6,17 @@ const Log_1 = require("../../../Core/Common/Log"),
   FragmentMemoryActivityController_1 = require("../FragmentMemory/FragmentMemoryActivityController"),
   TowerDefenceController_1 = require("../TowerDefence/TowerDefenceController"),
   ActivityBeginnerBookController_1 = require("./ActivityContent/BeginnerBook/ActivityBeginnerBookController"),
+  ActivityBlackCoastController_1 = require("./ActivityContent/BlackCoast/ActivityBlackCoastController"),
   BossRushController_1 = require("./ActivityContent/BossRush/BossRushController"),
   ActivityCollectionController_1 = require("./ActivityContent/Collection/ActivityCollectionController"),
+  ActivityCorniceMeetingController_1 = require("./ActivityContent/CorniceMeeting/ActivityCorniceMeetingController"),
   ActivityDailyAdventureController_1 = require("./ActivityContent/DailyAdventure/ActivityDailyAdventureController"),
   ActivityDoubleRewardController_1 = require("./ActivityContent/DoubleReward/ActivityDoubleRewardController"),
   ActivityLongShanController_1 = require("./ActivityContent/LongShan/ActivityLongShanController"),
   ActivityLoopTowerController_1 = require("./ActivityContent/LoopTower/ActivityLoopTowerController"),
   ActivityMoonChasingController_1 = require("./ActivityContent/MoonChasing/Activity/ActivityMoonChasingController"),
   ActivityMowingController_1 = require("./ActivityContent/Mowing/ActivityMowingController"),
+  ActivityMowingRiskController_1 = require("./ActivityContent/MowingRisk/Controller/ActivityMowingRiskController"),
   ActivityNoviceJourneyController_1 = require("./ActivityContent/NoviceJourney/ActivityNoviceJourneyController"),
   ActivityPhantomCollectController_1 = require("./ActivityContent/PhantomCollect/ActivityPhantomCollectController"),
   ActivityRecallController_1 = require("./ActivityContent/Recall/ActivityRecallController"),
@@ -31,7 +34,7 @@ class ActivityManager {
   constructor() {}
   static Init() {
     this.G4e();
-    for (const o in Protocol_1.Aki.Protocol.oks) {
+    for (const o in Protocol_1.Aki.Protocol.uks) {
       var t = Number(o);
       isNaN(t) ||
         (t = this.N4e.get(t)) ||
@@ -42,100 +45,112 @@ class ActivityManager {
   }
   static G4e() {
     this.N4e.set(
-      Protocol_1.Aki.Protocol.oks.Proto_Parkour,
+      Protocol_1.Aki.Protocol.uks.Proto_Parkour,
       new ActivityRunController_1.ActivityRunController(),
     ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_GatherActivity,
+        Protocol_1.Aki.Protocol.uks.Proto_GatherActivity,
         new ActivityCollectionController_1.ActivityCollectionController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_Sign,
+        Protocol_1.Aki.Protocol.uks.Proto_Sign,
         new ActivitySevenDaySignController_1.ActivitySevenDaySignController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_NewBieCourse,
+        Protocol_1.Aki.Protocol.uks.Proto_NewBieCourse,
         new ActivityNoviceJourneyController_1.ActivityNoviceJourneyController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_PureUIActivity,
+        Protocol_1.Aki.Protocol.uks.Proto_PureUIActivity,
         new ActivityUniversalController_1.ActivityUniversalController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_TowerGuide,
+        Protocol_1.Aki.Protocol.uks.Proto_TowerGuide,
         new ActivityTowerGuideController_1.ActivityTowerGuideController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_WorldNewJourney,
+        Protocol_1.Aki.Protocol.uks.Proto_WorldNewJourney,
         new ActivityBeginnerBookController_1.ActivityBeginnerBookController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_RougeActivity,
+        Protocol_1.Aki.Protocol.uks.Proto_RougeActivity,
         new ActivityRogueController_1.ActivityRogueController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_RoleTrialActivity,
+        Protocol_1.Aki.Protocol.uks.Proto_RoleTrialActivity,
         new ActivityRoleTrialController_1.ActivityRoleTrialController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_Harvest,
+        Protocol_1.Aki.Protocol.uks.Proto_Harvest,
         new ActivityMowingController_1.ActivityMowingController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_DoubleInstanceRewardActivity,
+        Protocol_1.Aki.Protocol.uks.Proto_DoubleInstanceRewardActivity,
         new ActivityDoubleRewardController_1.ActivityDoubleRewardController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_NewRoleGuideActivity,
+        Protocol_1.Aki.Protocol.uks.Proto_NewRoleGuideActivity,
         new ActivityRoleGuideController_1.ActivityRoleGuideController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_PhantomCollect,
+        Protocol_1.Aki.Protocol.uks.Proto_PhantomCollect,
         new ActivityPhantomCollectController_1.ActivityPhantomCollectController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_DailyAdventureActivity,
+        Protocol_1.Aki.Protocol.uks.Proto_DailyAdventureActivity,
         new ActivityDailyAdventureController_1.ActivityDailyAdventureController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_LongShanMainActivity,
+        Protocol_1.Aki.Protocol.uks.Proto_LongShanMainActivity,
         new ActivityLongShanController_1.ActivityLongShanController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_BossRushActivity,
+        Protocol_1.Aki.Protocol.uks.Proto_BossRushActivity,
         new BossRushController_1.BossRushController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_TurnTableActivity,
+        Protocol_1.Aki.Protocol.uks.Proto_TurnTableActivity,
         new ActivityTurntableController_1.ActivityTurntableController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_TimePointRewardActivity,
+        Protocol_1.Aki.Protocol.uks.Proto_TimePointRewardActivity,
         new ActivityTimePointRewardController_1.ActivityTimePointRewardController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_PhotoMemoryActivity,
+        Protocol_1.Aki.Protocol.uks.Proto_PhotoMemoryActivity,
         new FragmentMemoryActivityController_1.FragmentMemoryActivityController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_TowerDefenceActivity,
+        Protocol_1.Aki.Protocol.uks.Proto_TowerDefenceActivity,
         new TowerDefenceController_1.TowerDefenseController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_TrackMoonActivity,
+        Protocol_1.Aki.Protocol.uks.Proto_TrackMoonActivity,
         new ActivityMoonChasingController_1.ActivityMoonChasingController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_TowerGuideNew,
+        Protocol_1.Aki.Protocol.uks.Proto_TowerGuideNew,
         new ActivityLoopTowerController_1.ActivityLoopTowerController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_CircumFluence,
+        Protocol_1.Aki.Protocol.uks.Proto_CircumFluence,
         new ActivityRecallController_1.ActivityRecallController(),
       ),
       this.N4e.set(
-        Protocol_1.Aki.Protocol.oks.Proto_TrackMoonPhase,
+        Protocol_1.Aki.Protocol.uks.Proto_TrackMoonPhase,
         new ActivityRoleGiveController_1.ActivityRoleGiveController(),
+      ),
+      this.N4e.set(
+        Protocol_1.Aki.Protocol.uks.Proto_CorniceMeeting,
+        new ActivityCorniceMeetingController_1.ActivityCorniceMeetingController(),
+      ),
+      this.N4e.set(
+        Protocol_1.Aki.Protocol.uks.Proto_RiskHarvest,
+        new ActivityMowingRiskController_1.ActivityMowingRiskController(),
+      ),
+      this.N4e.set(
+        Protocol_1.Aki.Protocol.uks.Proto_BlackCoastTheme,
+        new ActivityBlackCoastController_1.ActivityBlackCoastController(),
       );
   }
   static O4e() {

@@ -16,8 +16,10 @@ class RougePopularEntrie {
     return this.rate();
   }
   get Insts() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.instsLength(), (t) =>
-      this.insts(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.instsLength(),
+      this.insts,
+      this,
     );
   }
   get Icon() {
@@ -32,7 +34,8 @@ class RougePopularEntrie {
   get DescriptionParam() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.descriptionparamLength(),
-      (t) => this.descriptionparam(t),
+      this.descriptionparam,
+      this,
     );
   }
   __init(t, s) {

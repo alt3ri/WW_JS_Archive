@@ -29,7 +29,7 @@ class PhantomSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.Update(t);
   }
   Update(t) {
-    t.RoguelikeGainDataType === Protocol_1.Aki.Protocol.e8s.txs &&
+    t.RoguelikeGainDataType === Protocol_1.Aki.Protocol.a8s.hxs &&
       ((this.RogueGainEntry = t), this.RefreshPanel());
   }
   SetToggleStateChangeCallback(t) {

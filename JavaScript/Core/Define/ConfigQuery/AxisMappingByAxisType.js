@@ -17,31 +17,44 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0,
+const initStat = Stats_1.Stat.Create("configAxisMappingByAxisType.Init"),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configAxisMappingByAxisType.GetConfigList",
+  ),
   CONFIG_LIST_STAT_PREFIX = "configAxisMappingByAxisType.GetConfigList(";
 exports.configAxisMappingByAxisType = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfigList: (i, o = !0) => {
-    var n;
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (o) {
+  GetConfigList: (i, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start();
+    var o = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${i})`),
+      t =
+        (o.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
+      if (n) {
         var e = KEY_PREFIX + `#${i})`;
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (t) return t;
+        const a = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (a)
+          return (
+            o.Stop(),
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
-        (n = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, i, ...logPair))
+        (t = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, i, ...logPair))
       ) {
-        const t = new Array();
+        const a = new Array();
         for (;;) {
           if (
             1 !==
@@ -51,32 +64,43 @@ exports.configAxisMappingByAxisType = {
             ])
           )
             break;
-          var r = void 0;
+          var g = void 0;
           if (
-            (([n, r] = ConfigCommon_1.ConfigCommon.GetValue(
+            (([t, g] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
               0,
               ...logPair,
               ["AxisType", i],
             )),
-            !n)
+            !t)
           )
-            return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
-          r = AxisMapping_1.AxisMapping.getRootAsAxisMapping(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(r.buffer)),
+            return (
+              ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+              o.Stop(),
+              getConfigListStat.Stop(),
+              void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+            );
+          g = AxisMapping_1.AxisMapping.getRootAsAxisMapping(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(g.buffer)),
           );
-          t.push(r);
+          a.push(g);
         }
         return (
-          o &&
+          n &&
             ((e = KEY_PREFIX + `#${i})`),
-            ConfigCommon_1.ConfigCommon.SaveConfig(e, t, t.length)),
+            ConfigCommon_1.ConfigCommon.SaveConfig(e, a, a.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          t
+          o.Stop(),
+          getConfigListStat.Stop(),
+          ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+          a
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    o.Stop(),
+      getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=AxisMappingByAxisType.js.map

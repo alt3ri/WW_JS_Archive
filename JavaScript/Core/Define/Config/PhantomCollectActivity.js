@@ -11,8 +11,10 @@ class PhantomCollectActivity {
     return this.id();
   }
   get Phantoms() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.phantomsLength(), (t) =>
-      this.phantoms(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.phantomsLength(),
+      this.phantoms,
+      this,
     );
   }
   get PhantomReward() {
@@ -21,16 +23,30 @@ class PhantomCollectActivity {
   get PhantomDesc() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.phantomdescLength(),
-      (t) => this.phantomdesc(t)?.key(),
-      (t) => this.phantomdesc(t)?.value(),
+      this.phantomdescKey,
+      this.phantomdescValue,
+      this,
     );
+  }
+  phantomdescKey(t) {
+    return this.phantomdesc(t)?.key();
+  }
+  phantomdescValue(t) {
+    return this.phantomdesc(t)?.value();
   }
   get PhantomActivityImage() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.phantomactivityimageLength(),
-      (t) => this.phantomactivityimage(t)?.key(),
-      (t) => this.phantomactivityimage(t)?.value(),
+      this.phantomactivityimageKey,
+      this.phantomactivityimageValue,
+      this,
     );
+  }
+  phantomactivityimageKey(t) {
+    return this.phantomactivityimage(t)?.key();
+  }
+  phantomactivityimageValue(t) {
+    return this.phantomactivityimage(t)?.value();
   }
   get DataDockLevel() {
     return this.datadocklevel();
@@ -41,7 +57,8 @@ class PhantomCollectActivity {
   get PhantomSideQuest() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.phantomsidequestLength(),
-      (t) => this.phantomsidequest(t),
+      this.phantomsidequest,
+      this,
     );
   }
   get PhantomSideQuestReward() {

@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configShopFixedByShopIdAndId.Init"),
+  getConfigStat = Stats_1.Stat.Create("configShopFixedByShopIdAndId.GetConfig"),
   CONFIG_STAT_PREFIX = "configShopFixedByShopIdAndId.GetConfig(";
 exports.configShopFixedByShopIdAndId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, n, i = !0) => {
-    if (
-      (d = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${n})`),
+      t =
+        (e.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
       if (i) {
-        var e = KEY_PREFIX + `#${o}#${n})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (r) return r;
+        var d = KEY_PREFIX + `#${o}#${n})`;
+        const C = ConfigCommon_1.ConfigCommon.GetConfig(d);
+        if (C)
+          return (
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
+          );
       }
       if (
-        (d =
+        (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, n, ...logPair) &&
           0 <
@@ -50,32 +62,37 @@ exports.configShopFixedByShopIdAndId = {
               ["Id", n],
             ))
       ) {
-        var d,
-          e = void 0;
+        d = void 0;
         if (
-          (([d, e] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([t, d] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["ShopId", o],
             ["Id", n],
           )),
-          d)
+          t)
         ) {
-          const r = ShopFixed_1.ShopFixed.getRootAsShopFixed(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
+          const C = ShopFixed_1.ShopFixed.getRootAsShopFixed(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(d.buffer)),
           );
           return (
             i &&
-              ((d = KEY_PREFIX + `#${o}#${n})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(d, r)),
+              ((t = KEY_PREFIX + `#${o}#${n})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(t, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            r
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    e.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=ShopFixedByShopIdAndId.js.map

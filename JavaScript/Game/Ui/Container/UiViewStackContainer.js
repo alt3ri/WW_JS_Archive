@@ -21,6 +21,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
       (this.v9 = void 0),
       (this.Ncr = new Map()),
       (this.pjt = !1),
+      (this.bKa = void 0),
       (this.Ocr = new Array()),
       (this.kcr = new DoublyList_1.default(void 0)),
       (this.Fcr = new Map()),
@@ -376,7 +377,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
           : 1 === a.PendingType && a.View.Destroy();
       if (((this.Ocr = i), UiModel_1.UiModel.InNormalQueue)) this.Wcr(e, 4);
       else if (!this.v9.Empty) {
-        this.Ujt();
+        this.Ujt(), (this.bKa = new CustomPromise_1.CustomPromise());
         var t = e.Info.Name;
         const s = this.v9.Peek();
         if (s.Info.Name !== t) {
@@ -423,7 +424,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
                 e.Info.Name,
               ]);
         }
-        this.Jft();
+        this.bKa.SetResult(), (this.bKa = void 0), this.Jft();
       }
     }
   }
@@ -627,32 +628,47 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
   Ycr(e) {
     return this.Ncr.has(e);
   }
-  ClearContainer() {
-    var e = [];
-    for (const o of this.Fcr.values()) {
-      var i = o.Element;
-      (i.IsExistInLeaveLevel = !0),
-        i.Info.IsPermanent ||
-          (this.TryCatchViewDestroyCompatible(i),
-          this.kcr.Remove(o),
-          e.push(i));
-    }
-    for (const a of e)
-      this.Fcr.delete(a), UiManager_1.UiManager.RemoveView(a.GetViewId());
-    for (let e = this.Ocr.length - 1; 0 <= e; --e) {
-      var t = this.Ocr[e].View;
+  ClearContainer(e) {
+    var i = [];
+    for (const a of this.Fcr.values()) {
+      var t = a.Element;
       (t.IsExistInLeaveLevel = !0),
         t.Info.IsPermanent ||
-          (this.TryCatchViewDestroyCompatible(t), this.Ocr.pop());
+          (e && UiModel_1.UiModel.SeamlessStackWhileList.has(t.Info.Name)) ||
+          (this.TryCatchViewDestroyCompatible(t),
+          this.kcr.Remove(a),
+          i.push(t));
     }
-    e.length = 0;
-    for (const s of this.v9)
-      (s.IsExistInLeaveLevel = !0),
-        s.Info.IsPermanent ||
-          (this.TryCatchViewDestroyCompatible(s), e.push(s));
-    for (const r of e) this.Mcr(r);
+    for (const s of i)
+      this.Fcr.delete(s), UiManager_1.UiManager.RemoveView(s.GetViewId());
+    for (let e = this.Ocr.length - 1; 0 <= e; --e) {
+      var o = this.Ocr[e].View;
+      (o.IsExistInLeaveLevel = !0),
+        o.Info.IsPermanent ||
+          (o.OpenPromise?.SetResult(!1),
+          UiManager_1.UiManager.RemoveView(o.GetViewId()),
+          this.Ocr.pop(),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "UiCore",
+              11,
+              "[Clear] 清理缓存的界面数据",
+              ["Name", o.constructor.name],
+              ["ComponentId", o.ComponentId],
+            ));
+    }
+    i.length = 0;
+    for (const r of this.v9)
+      (r.IsExistInLeaveLevel = !0),
+        r.Info.IsPermanent ||
+          (e && UiModel_1.UiModel.SeamlessStackWhileList.has(r.Info.Name)) ||
+          (this.TryCatchViewDestroyCompatible(r), i.push(r));
+    for (const n of i) this.Mcr(n);
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("UiCore", 17, "ClearContainer 清栈");
+  }
+  async BeforeClearContainerAsync() {
+    this.bKa && (await this.bKa.Promise);
   }
   Wcr(e, i) {
     var t = new UiViewPending_1.UiViewPending(e, i);

@@ -35,22 +35,22 @@ class ItemDeliverView extends UiViewBase_1.UiViewBase {
                 for (const o of e)
                   if (o.HasItem()) {
                     var r = {
-                      P9n: [
+                      F9n: [
                         {
-                          T5n: 0,
-                          f8n: o.GetCurrentItemConfigId(),
-                          p8n: o.GetCurrentCount(),
+                          w5n: 0,
+                          L8n: o.GetCurrentItemConfigId(),
+                          D8n: o.GetCurrentCount(),
                         },
                       ],
-                      o9n: o.GetNeedCount(),
-                      B9n: Protocol_1.Aki.Protocol.B9n.Proto_ItemIds,
+                      m9n: o.GetNeedCount(),
+                      V9n: Protocol_1.Aki.Protocol.V9n.Proto_ItemIds,
                     };
                     switch (o.HandInType) {
                       case "ItemIds":
-                        r.B9n = Protocol_1.Aki.Protocol.B9n.Proto_ItemIds;
+                        r.V9n = Protocol_1.Aki.Protocol.V9n.Proto_ItemIds;
                         break;
                       case "ItemType":
-                        r.B9n = Protocol_1.Aki.Protocol.B9n.w9n;
+                        r.V9n = Protocol_1.Aki.Protocol.V9n.H9n;
                     }
                     i.push(r);
                   }

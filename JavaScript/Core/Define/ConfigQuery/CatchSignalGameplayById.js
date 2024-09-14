@@ -17,61 +17,80 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configCatchSignalGameplayById.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configCatchSignalGameplayById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configCatchSignalGameplayById.GetConfig(";
 exports.configCatchSignalGameplayById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, a = !0) => {
-    if (
-      (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (a) {
-        var n = KEY_PREFIX + `#${o})`;
-        const i = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (i) return i;
+  GetConfig: (n, o = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var a = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${n})`),
+      i =
+        (a.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
+      if (o) {
+        var t = KEY_PREFIX + `#${n})`;
+        const e = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (e)
+          return (
+            a.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
+          );
       }
       if (
-        (e =
-          ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
+        (i =
+          ConfigCommon_1.ConfigCommon.BindString(handleId, 1, n, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
               "Id",
-              o,
+              n,
             ]))
       ) {
-        var e,
-          n = void 0;
+        t = void 0;
         if (
-          (([e, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
-            ["Id", o],
+            ["Id", n],
           )),
-          e)
+          i)
         ) {
-          const i =
+          const e =
             CatchSignalGameplay_1.CatchSignalGameplay.getRootAsCatchSignalGameplay(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
             );
           return (
-            a &&
-              ((e = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(e, i)),
+            o &&
+              ((i = KEY_PREFIX + `#${n})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, e)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i
+            a.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    a.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=CatchSignalGameplayById.js.map

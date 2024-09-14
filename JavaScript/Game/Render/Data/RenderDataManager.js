@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RenderDataManager = void 0);
-const UE = require("ue"),
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
   AudioController_1 = require("../../../Core/Audio/AudioController"),
   AudioDefine_1 = require("../../../Core/Audio/AudioDefine"),
   Info_1 = require("../../../Core/Common/Info"),
@@ -10,10 +11,13 @@ const UE = require("ue"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
   RenderConfig_1 = require("../Config/RenderConfig"),
   RenderModuleConfig_1 = require("../Manager/RenderModuleConfig");
 class RenderDataManager {
@@ -30,10 +34,22 @@ class RenderDataManager {
       (this.CurrentCharacterForward = void 0),
       (this.CurrentCameraPosition = void 0),
       (this.CurrentCameraForward = void 0),
+      (this.CurrentPlayerMoveState = void 0),
       (this.SceneTime = -0),
       (this.TempColor = void 0),
       (this.WriteTimeToCollection = !1),
       (this.IsInUiScene = !1),
+      (this.GlobalFootstepMaterial = void 0),
+      (this.PlayerInGrass = !1),
+      (this.PlayerInCave = !1),
+      (this.PlayerVoxelStateDirty = !0),
+      (this.DDa = (e) => {
+        (this.GlobalFootstepMaterial = e),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.OnGlobalFootstepMaterialChange,
+            e,
+          );
+      }),
       (this.Xlr = 60),
       (this.$lr = 1),
       (this.Ylr = 0);
@@ -54,7 +70,10 @@ class RenderDataManager {
       (this.CurrentCameraPosition = Vector_1.Vector.Create()),
       (this.CurrentCameraForward = Vector_1.Vector.Create()),
       (this.TempColor = new UE.LinearColor()),
-      (this.WriteTimeToCollection = !0);
+      (this.WriteTimeToCollection = !0),
+      UE.KuroGlobalGI.BindEventGlobalFootstepMaterialUpdate(
+        (0, puerts_1.toManualReleaseDelegate)(this.DDa),
+      );
   }
   GetRainIntensity() {
     return GlobalData_1.GlobalData.World && this.GlobalShaderParameters
@@ -129,8 +148,27 @@ class RenderDataManager {
   GetEyesParameterMaterialParameterCollection() {
     return this.EyesParameterMaterialParameterCollection;
   }
+  GetPlayerInGrass() {
+    return this.Fza(), this.PlayerInGrass;
+  }
+  GetPlayerInCave() {
+    return this.Fza(), this.PlayerInCave;
+  }
+  Fza() {
+    var e;
+    this.PlayerVoxelStateDirty &&
+      ((e = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetGlobalGIActor(
+        GlobalData_1.GlobalData.World,
+      )),
+      (this.PlayerInGrass = e?.bPlayerInGrass),
+      (this.PlayerInCave = e?.bPlayerInCave),
+      (this.PlayerVoxelStateDirty = !1));
+  }
   GetSceneTime() {
     return this.SceneTime;
+  }
+  GetGlobalFootstepMaterial() {
+    return this.GlobalFootstepMaterial;
   }
   SetWriteTime(e) {
     this.WriteTimeToCollection = e;
@@ -138,77 +176,101 @@ class RenderDataManager {
   TickForce(e) {
     var t, i, r;
     this.Valid &&
-      ((t = GlobalData_1.GlobalData.World),
-      (r = Global_1.Global.CharacterCameraManager)) &&
-      r.IsValid() &&
-      ((i = r.K2_GetActorLocation()),
-      (r = r.GetActorForwardVector()),
-      this.CurrentCameraPosition.FromUeVector(i),
-      this.CurrentCameraForward.FromUeVector(r),
-      UE.KismetMaterialLibrary.SetVectorParameterValue(
-        t,
-        this.GlobalShaderParameters,
-        RenderConfig_1.RenderConfig.GlobalCameraPosAndRadius,
-        new UE.LinearColor(i.X, i.Y, i.Z, 0),
-      ),
-      (r =
-        Info_1.Info.IsGameRunning() &&
-        (GlobalData_1.GlobalData.IsUiSceneOpen ||
-          GlobalData_1.GlobalData.IsUiSceneLoading)) !== this.IsInUiScene) &&
-      ((this.IsInUiScene = r), this.MPn());
+      (RenderModuleConfig_1.RenderStats.StatRenderDataManagerTick.Start(),
+      (this.PlayerVoxelStateDirty = !0),
+      (t = GlobalData_1.GlobalData.World),
+      (r = Global_1.Global.CharacterCameraManager) &&
+        r.IsValid() &&
+        ((i = r.K2_GetActorLocation()),
+        (r = r.GetActorForwardVector()),
+        this.CurrentCameraPosition.FromUeVector(i),
+        this.CurrentCameraForward.FromUeVector(r),
+        UE.KismetMaterialLibrary.SetVectorParameterValue(
+          t,
+          this.GlobalShaderParameters,
+          RenderConfig_1.RenderConfig.GlobalCameraPosAndRadius,
+          new UE.LinearColor(i.X, i.Y, i.Z, 0),
+        ),
+        (r =
+          Info_1.Info.IsGameRunning() &&
+          (GlobalData_1.GlobalData.IsUiSceneOpen ||
+            GlobalData_1.GlobalData.IsUiSceneLoading)) !== this.IsInUiScene) &&
+        ((this.IsInUiScene = r), this.MPn()),
+      RenderModuleConfig_1.RenderStats.StatRenderDataManagerTick.Stop());
   }
   Tick(e) {
     var t, i, r;
     this.Valid &&
-      ((e = e * TimeUtil_1.TimeUtil.Millisecond),
+      (RenderModuleConfig_1.RenderStats.StatRenderDataManagerTick.Start(),
+      (e = e * TimeUtil_1.TimeUtil.Millisecond),
       (t = GlobalData_1.GlobalData.World),
-      (i = Global_1.Global.PawnOrSpectator)) &&
-      i.IsValid() &&
-      ((r = i.K2_GetActorLocation()),
-      (i = i.GetActorForwardVector()),
-      (this.PreviousCharacterPosition = this.CurrentCharacterPosition),
-      this.CurrentCharacterPosition.FromUeVector(r),
-      this.CurrentCharacterForward.FromUeVector(i),
-      this.Jlr(this.PreviousCharacterPosition),
-      UE.KismetMaterialLibrary.SetVectorParameterValue(
-        t,
-        this.GlobalShaderParameters,
-        RenderConfig_1.RenderConfig.GlobalCharacterPreviousWP,
-        this.TempColor,
-      ),
-      this.Jlr(this.CurrentCharacterPosition),
-      UE.KismetMaterialLibrary.SetVectorParameterValue(
-        t,
-        this.GlobalShaderParameters,
-        RenderConfig_1.RenderConfig.GlobalCharacterWorldPosition,
-        this.TempColor,
-      ),
-      this.Jlr(this.CurrentCharacterForward),
-      UE.KismetMaterialLibrary.SetVectorParameterValue(
-        t,
-        this.GlobalShaderParameters,
-        RenderConfig_1.RenderConfig.GlobalCharacterWorldForwardDirection,
-        this.TempColor,
-      ),
-      ModelManager_1.ModelManager.GameModeModel.InstanceType ===
-        Protocol_1.Aki.Protocol.XFs.Proto_BigWorldInstance &&
-        (this.SceneTime =
-          ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Minute),
-      this.WriteTimeToCollection &&
-        ((r = Math.floor(this.SceneTime / this.Xlr)),
-        UE.KismetMaterialLibrary.SetScalarParameterValue(
-          t,
-          this.GlobalShaderParameters,
-          RenderConfig_1.RenderConfig.GlobalTimeHour,
-          r,
+      (i = Global_1.Global.PawnOrSpectator) &&
+        i.IsValid() &&
+        ((r = i.K2_GetActorLocation()),
+        (i = i.GetActorForwardVector()),
+        this.PreviousCharacterPosition.Set(
+          this.CurrentCharacterPosition.X,
+          this.CurrentCharacterPosition.Y,
+          this.CurrentCharacterPosition.Z,
         ),
+        this.CurrentCharacterPosition.FromUeVector(r),
+        this.CurrentCharacterForward.FromUeVector(i),
+        (r =
+          Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity?.GetComponent(
+            161,
+          )),
+        (this.CurrentPlayerMoveState = r?.MoveState),
+        (i =
+          this.CurrentPlayerMoveState &&
+          this.CurrentPlayerMoveState <
+            CharacterUnifiedStateTypes_1.ECharMoveState.NormalClimb),
         UE.KismetMaterialLibrary.SetScalarParameterValue(
           t,
           this.GlobalShaderParameters,
-          RenderConfig_1.RenderConfig.GlobalTimeMinutes,
-          this.SceneTime - r * this.Xlr,
-        )),
-      this.SetAudioParameters(e));
+          RenderConfig_1.RenderConfig.GlobalCharacterOnGround,
+          i ? 1 : 0,
+        ),
+        this.Jlr(this.PreviousCharacterPosition),
+        UE.KismetMaterialLibrary.SetVectorParameterValue(
+          t,
+          this.GlobalShaderParameters,
+          RenderConfig_1.RenderConfig.GlobalCharacterPreviousWP,
+          this.TempColor,
+        ),
+        this.Jlr(this.CurrentCharacterPosition),
+        UE.KismetMaterialLibrary.SetVectorParameterValue(
+          t,
+          this.GlobalShaderParameters,
+          RenderConfig_1.RenderConfig.GlobalCharacterWorldPosition,
+          this.TempColor,
+        ),
+        this.Jlr(this.CurrentCharacterForward),
+        UE.KismetMaterialLibrary.SetVectorParameterValue(
+          t,
+          this.GlobalShaderParameters,
+          RenderConfig_1.RenderConfig.GlobalCharacterWorldForwardDirection,
+          this.TempColor,
+        ),
+        ModelManager_1.ModelManager.GameModeModel.InstanceType ===
+          Protocol_1.Aki.Protocol.i4s.Proto_BigWorldInstance &&
+          (this.SceneTime =
+            ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Minute),
+        this.WriteTimeToCollection &&
+          ((r = Math.floor(this.SceneTime / this.Xlr)),
+          UE.KismetMaterialLibrary.SetScalarParameterValue(
+            t,
+            this.GlobalShaderParameters,
+            RenderConfig_1.RenderConfig.GlobalTimeHour,
+            r,
+          ),
+          UE.KismetMaterialLibrary.SetScalarParameterValue(
+            t,
+            this.GlobalShaderParameters,
+            RenderConfig_1.RenderConfig.GlobalTimeMinutes,
+            this.SceneTime - r * this.Xlr,
+          )),
+        this.SetAudioParameters(e)),
+      RenderModuleConfig_1.RenderStats.StatRenderDataManagerTick.Stop());
   }
   LoadAssets() {
     ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -254,7 +316,9 @@ class RenderDataManager {
       },
     );
   }
-  Destroy() {}
+  Destroy() {
+    (0, puerts_1.releaseManualReleaseDelegate)(this.DDa);
+  }
   SetAudioParameters(e) {
     var t;
     (this.Ylr -= e),

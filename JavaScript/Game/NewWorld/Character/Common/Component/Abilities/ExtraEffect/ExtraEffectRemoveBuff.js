@@ -41,7 +41,8 @@ class RemoveBuff extends ExtraEffectBase_1.BuffEffect {
           );
           break;
         case 1:
-          EventSystem_1.EventSystem.Add(
+          EventSystem_1.EventSystem.AddWithTarget(
+            this.InstigatorEntity,
             EventDefine_1.EEventName.RemoveEntity,
             this.RXo,
           );
@@ -59,7 +60,8 @@ class RemoveBuff extends ExtraEffectBase_1.BuffEffect {
           );
           break;
         case 1:
-          EventSystem_1.EventSystem.Remove(
+          EventSystem_1.EventSystem.RemoveWithTarget(
+            this.InstigatorEntity,
             EventDefine_1.EEventName.RemoveEntity,
             this.RXo,
           );

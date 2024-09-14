@@ -21,11 +21,9 @@ class DynamicConfigMarkItem extends MarkItem_1.MarkItem {
   get IsFogUnlock() {
     return (
       1 === this.MarkConfig.FogShow ||
-      0 === this.MarkConfig.FogHide ||
-      (ModelManager_1.ModelManager.MapModel.CheckAreasUnlocked(
+      ModelManager_1.ModelManager.MapModel.CheckAreasUnlocked(
         this.MarkConfig.FogHide,
-      ) ??
-        !1)
+      )
     );
   }
   get MarkId() {

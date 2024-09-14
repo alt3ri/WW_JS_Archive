@@ -278,7 +278,7 @@ class BulletStaticFunction {
   }
   static PlayBulletEffect(t, e, i, o, s) {
     let l = void 0;
-    (0, RegisterComponent_1.isComponentInstance)(o.AttackerAudioComponent, 173)
+    (0, RegisterComponent_1.isComponentInstance)(o.AttackerAudioComponent, 174)
       ? (((a = new EffectAudioContext_1.EffectAudioContext()).FromPrimaryRole =
           "p1" === o.AttackerAudioComponent.Priority.State),
         (a.EntityId = o.Attacker ? o.Attacker.Id : void 0),
@@ -370,11 +370,11 @@ class HitStaticFunction {
   static CreateEffectContext(e, i = void 0) {
     if (e) {
       var o,
-        s = e.GetComponent(43),
+        s = e.GetComponent(44),
         l = e.GetComponent(1);
       let t = void 0;
       return (
-        (0, RegisterComponent_1.isComponentInstance)(s, 173)
+        (0, RegisterComponent_1.isComponentInstance)(s, 174)
           ? (((o =
               new EffectAudioContext_1.EffectAudioContext()).FromPrimaryRole =
               i ?? "p1" === s.Priority.State),

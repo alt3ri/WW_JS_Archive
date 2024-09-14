@@ -19,7 +19,7 @@ class UnopenedAreaCheck {
       (this.Ywe = new Map());
   }
   AreaInit(t) {
-    for (const e of t) this.Jwe(e.l6n, e.F4n ?? !1);
+    for (const e of t) this.Jwe(e.p6n, e.Y4n ?? !1);
     0 === t.length &&
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Map", 43, "初始化区域数量为零"),
@@ -27,14 +27,14 @@ class UnopenedAreaCheck {
       (this.IsSplineInit = !0);
   }
   AreaStatesChange(t) {
-    this.Jwe(t.PRs.l6n, t.PRs.F4n ?? !1),
+    this.Jwe(t.GRs.p6n, t.GRs.Y4n ?? !1),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Map",
           43,
           "AreaStatesChange更新区域边界状态",
-          ["AreaState.Proto_AreaId", t.PRs.l6n],
-          ["AreaState.Proto_State", t.PRs.F4n ?? !1],
+          ["AreaState.Proto_AreaId", t.GRs.p6n],
+          ["AreaState.Proto_State", t.GRs.Y4n ?? !1],
         );
   }
   Jwe(t, e) {

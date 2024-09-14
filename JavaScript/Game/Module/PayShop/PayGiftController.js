@@ -2,148 +2,197 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayGiftController = void 0);
 const Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
+  PlatformSdkManagerNew_1 = require("../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   KuroSdkReport_1 = require("../../KuroSdk/KuroSdkReport"),
+  SdkViewData_1 = require("../../KuroSdk/View/SdkViewData"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
   FeatureRestrictionTemplate_1 = require("../Common/FeatureRestrictionTemplate"),
   ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  LogReportDefine_1 = require("../LogReport/LogReportDefine"),
   PayItemController_1 = require("../PayItem/PayItemController"),
   PayShopDefine_1 = require("./PayShopDefine");
 class PayGiftController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(16212, PayGiftController.hFi);
+    Net_1.Net.Register(19970, PayGiftController.hFi);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(16212);
+    Net_1.Net.UnRegister(19970);
   }
   static OnShopInfoNotify(e) {
-    (ModelManager_1.ModelManager.PayGiftModel.Version = e.SBs.G7n),
-      ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.SBs.MBs);
+    (ModelManager_1.ModelManager.PayGiftModel.Version = e.DBs.K7n),
+      ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.DBs.RBs);
   }
   static OnShopInfoReceive(e) {
     e &&
-      ((ModelManager_1.ModelManager.PayGiftModel.Version = e.G7n),
-      ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.MBs));
+      ((ModelManager_1.ModelManager.PayGiftModel.Version = e.K7n),
+      ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.RBs));
   }
   static async SendPayGiftInfoRequestAsync() {
-    var e = Protocol_1.Aki.Protocol.$hs.create(),
+    var e = Protocol_1.Aki.Protocol.Yhs.create(),
       e =
-        ((e.G7n = ModelManager_1.ModelManager.PayGiftModel.Version),
-        await Net_1.Net.CallAsync(13863, e));
+        ((e.K7n = ModelManager_1.ModelManager.PayGiftModel.Version),
+        await Net_1.Net.CallAsync(23556, e));
+    if (!e) return !1;
     if (
-      e &&
-      (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+      (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          e.O4n,
-          1708,
+          e.Q4n,
+          21666,
         ),
-      e.G7n) &&
-      e.UUs
-    ) {
-      (ModelManager_1.ModelManager.PayGiftModel.Version = e.G7n),
-        ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.UUs);
-      var e = ModelManager_1.ModelManager.PayGiftModel.GetDataList(),
-        o = new Array();
-      for (const r of e) o.push(r.ProductId);
-      ControllerHolder_1.ControllerHolder.KuroSdkController.QueryProductByProductId(
-        o,
-      );
-    }
+      !e.K7n || !e.OUs)
+    )
+      return !1;
+    (ModelManager_1.ModelManager.PayGiftModel.Version = e.K7n),
+      ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.OUs);
+    var e = ModelManager_1.ModelManager.PayGiftModel.GetDataList(),
+      r = new Array();
+    for (const o of e) r.push(o.ProductId);
+    return (
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Pay", 28, "QueryProductInfoAsync", [
+          "resultArray",
+          e.length,
+        ]),
+      PayItemController_1.PayItemController.QueryProductInfoAsync(r)
+    );
   }
   static SendPayGiftInfoRequest() {
-    var e = Protocol_1.Aki.Protocol.$hs.create();
-    (e.G7n = ModelManager_1.ModelManager.PayGiftModel.Version),
-      Net_1.Net.Call(13863, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.Yhs.create();
+    (e.K7n = ModelManager_1.ModelManager.PayGiftModel.Version),
+      Net_1.Net.Call(23556, e, (e) => {
         if (
           e &&
-          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+          (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              1708,
+              e.Q4n,
+              21666,
             ),
-          e.G7n) &&
-          e.UUs
+          e.K7n) &&
+          e.OUs
         ) {
-          (ModelManager_1.ModelManager.PayGiftModel.Version = e.G7n),
-            ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.UUs);
+          (ModelManager_1.ModelManager.PayGiftModel.Version = e.K7n),
+            ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.OUs);
           var e = ModelManager_1.ModelManager.PayGiftModel.GetDataList(),
-            o = new Array();
-          for (const r of e) o.push(r.ProductId);
-          ControllerHolder_1.ControllerHolder.KuroSdkController.QueryProductByProductId(
-            o,
+            r = new Array();
+          for (const o of e) r.push(o.ProductId);
+          ControllerHolder_1.ControllerHolder.PayItemController.QueryProductInfoAsync(
+            r,
           );
         }
       });
   }
-  static SendPayGiftRequest(n) {
-    var e;
+  static _ka(a) {
+    var e = Protocol_1.Aki.Protocol.zhs.create();
+    (e.s5n = a),
+      (e.K7n = ModelManager_1.ModelManager.PayGiftModel.Version),
+      Net_1.Net.Call(18906, e, (e) => {
+        var r,
+          o,
+          t,
+          n = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(a);
+        e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
+          ? ((r = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(
+              n.GetGoodsData().ItemId,
+            )),
+            (o = ConfigManager_1.ConfigManager.ItemConfig.GetItemDesc(
+              n.GetGoodsData().ItemId,
+            )),
+            ((t =
+              new LogReportDefine_1.SdkPayGetServerBillEvent()).s_sdk_pay_order =
+              e.CBs),
+            ControllerHolder_1.ControllerHolder.LogReportController.LogReport(
+              t,
+            ),
+            ControllerHolder_1.ControllerHolder.KuroSdkController.SdkPay(
+              n.GetGetPayGiftData().PayId,
+              e.CBs,
+              r,
+              o,
+              e.gBs,
+            ))
+          : e.Q4n === Protocol_1.Aki.Protocol.Q4n.Proto_ErrPayShopDataChanged
+            ? this.SendPayGiftInfoRequest()
+            : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+                e.Q4n,
+                24032,
+              );
+      });
+  }
+  static SdkPay(e) {
+    var r, o;
     if (
       PayItemController_1.PayItemController.CurrentBlockBetaState &&
       ConfigManager_1.ConfigManager.CommonConfig?.GetBetaBlockRecharge()
     )
       return (
-        (e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(165)),
+        (r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(165)),
         void ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-          e,
+          r,
         )
       );
     FeatureRestrictionTemplate_1.FeatureRestrictionTemplate.TemplateForPioneerClient.Check() &&
-    n === PayShopDefine_1.MONTH_CARD_SHOP_ID
-      ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(165)),
+    e === PayShopDefine_1.MONTH_CARD_SHOP_ID
+      ? ((r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(165)),
         ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-          e,
+          r,
         ))
       : (PayItemController_1.PayItemController.CurrentBlockIosPayState &&
           1 === Info_1.Info.PlatformType &&
-          ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(134)),
+          ((r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(134)),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-            e,
-          )),
-        ((e = Protocol_1.Aki.Protocol.jhs.create()).J4n = n),
-        (e.G7n = ModelManager_1.ModelManager.PayGiftModel.Version),
-        Net_1.Net.Call(10370, e, (e) => {
-          var o,
             r,
-            t = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(n);
-          e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
-            ? ((o = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(
-                t.GetGoodsData().ItemId,
-              )),
-              (r = ConfigManager_1.ConfigManager.ItemConfig.GetItemDesc(
-                t.GetGoodsData().ItemId,
-              )),
-              ControllerHolder_1.ControllerHolder.KuroSdkController.SdkPay(
-                t.GetGetPayGiftData().PayId,
-                e.hBs,
-                o,
-                r,
-                e.lBs,
-              ))
-            : e.O4n === Protocol_1.Aki.Protocol.O4n.Proto_ErrPayShopDataChanged
-              ? this.SendPayGiftInfoRequest()
-              : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.O4n,
-                  28176,
-                );
-        }));
+          )),
+        PlatformSdkManagerNew_1.PlatformSdkManagerNew.IsSdkOn
+          ? (r =
+              ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(
+                e,
+              )?.GetGetPayGiftData()?.ProductId)
+            ? PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowSdkProductInfoBeforePay()
+              ? ((o =
+                  ModelManager_1.ModelManager.PayItemModel.GetProductInfoByGoodsId(
+                    r,
+                  )),
+                (o = SdkViewData_1.SdkPayProductInformationViewData.Create(
+                  o.Name,
+                  o.Desc,
+                  r,
+                  function (e) {
+                    PayItemController_1.PayItemController.SdkPayNew(e);
+                  },
+                )),
+                UiManager_1.UiManager.OpenView(
+                  "SdkPayProductInformationView",
+                  o,
+                ))
+              : PayItemController_1.PayItemController.SdkPayNew(r)
+            : Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Pay",
+                17,
+                "PayGiftController SdkPay failed, productId is null",
+              )
+          : this._ka(e));
   }
 }
 (exports.PayGiftController = PayGiftController).hFi = (e) => {
   ControllerHolder_1.ControllerHolder.KuroSdkController.CancelCurrentWaitPayItemTimer();
-  var o = { PayItemId: e.J4n, OrderId: e.hBs, ItemId: e.f8n, ItemCount: e.YVn };
-  ModelManager_1.ModelManager.PayGiftModel.GetPayGiftDataById(e._Bs.J4n).Phrase(
-    e._Bs,
+  var r = { PayItemId: e.s5n, OrderId: e.CBs, ItemId: e.L8n, ItemCount: e.n9n };
+  ModelManager_1.ModelManager.PayGiftModel.GetPayGiftDataById(e.fBs.s5n).Phrase(
+    e.fBs,
   ),
-    KuroSdkReport_1.KuroSdkReport.OnPayShopDirectBuy(e.J4n),
+    KuroSdkReport_1.KuroSdkReport.OnPayShopDirectBuy(e.s5n),
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnPayItemSuccess,
-      o,
+      r,
     );
 };
 //# sourceMappingURL=PayGiftController.js.map

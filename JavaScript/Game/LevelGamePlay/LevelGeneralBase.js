@@ -10,9 +10,9 @@ const Log_1 = require("../../Core/Common/Log"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
   GlobalData_1 = require("../GlobalData"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
   ModelManager_1 = require("../Manager/ModelManager"),
   WaitEntityTask_1 = require("../World/Define/WaitEntityTask"),
-  ControllerHolder_1 = require("../Manager/ControllerHolder"),
   EACH_WAIT_ENTITY_OVER_TIME = 3e4;
 class LevelEventBase {
   constructor(e) {
@@ -40,7 +40,6 @@ class LevelEventBase {
         ? this.ExecuteInGm(e, t, i)
         : this.ExecuteNew(e, t, i);
   }
-  Execute(e, t) {}
   ExecuteNew(e, t, i) {}
   ExecuteInGm(e, t, i) {
     this.ExecuteNew(e, t, i);
@@ -70,7 +69,6 @@ class LevelEventBase {
                 ]),
               this.FinishExecute(!1));
         },
-        !1,
         EACH_WAIT_ENTITY_OVER_TIME * t,
       );
   }
@@ -99,7 +97,6 @@ class LevelEventBase {
                 ]),
               this.FinishExecute(!1));
         },
-        !1,
         t * EACH_WAIT_ENTITY_OVER_TIME,
       );
   }

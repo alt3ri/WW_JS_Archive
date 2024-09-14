@@ -22,7 +22,8 @@ class InstanceDungeonEntrance {
   get InstanceDungeonList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.instancedungeonlistLength(),
-      (t) => this.instancedungeonlist(t),
+      this.instancedungeonlist,
+      this,
     );
   }
   get FlowId() {
@@ -43,7 +44,8 @@ class InstanceDungeonEntrance {
   get RegularReward() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.regularrewardLength(),
-      (t) => this.regularreward(t),
+      this.regularreward,
+      this,
     );
   }
   get PowerCostShow() {
@@ -122,10 +124,10 @@ class InstanceDungeonEntrance {
     return this.regularreward(t);
   }
   regularreward(t, i) {
-    var r = this.J7.__offset(this.z7, 24);
-    return r
+    var s = this.J7.__offset(this.z7, 24);
+    return s
       ? (i || new IntArray_1.IntArray()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
       : null;

@@ -79,7 +79,7 @@ let SceneItemPropertyComponent = class SceneItemPropertyComponent extends Entity
         )),
         (this.A1n = t?.LockConfig),
         this.A1n) &&
-        ((this.Xte = this.Entity?.GetComponent(180)),
+        ((this.Xte = this.Entity?.GetComponent(181)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnLevelTagChanged,
@@ -134,7 +134,7 @@ let SceneItemPropertyComponent = class SceneItemPropertyComponent extends Entity
   }
 };
 (SceneItemPropertyComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(117)],
+  [(0, RegisterComponent_1.RegisterComponent)(118)],
   SceneItemPropertyComponent,
 )),
   (exports.SceneItemPropertyComponent = SceneItemPropertyComponent);

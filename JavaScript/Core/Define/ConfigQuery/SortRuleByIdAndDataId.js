@@ -17,65 +17,82 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configSortRuleByIdAndDataId.Init"),
+  getConfigStat = Stats_1.Stat.Create("configSortRuleByIdAndDataId.GetConfig"),
   CONFIG_STAT_PREFIX = "configSortRuleByIdAndDataId.GetConfig(";
 exports.configSortRuleByIdAndDataId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, n, e = !0) => {
-    if (
-      (t = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
-        var i = KEY_PREFIX + `#${o}#${n})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (r) return r;
+  GetConfig: (o, t, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${t})`),
+      e =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
+      if (n) {
+        var a = KEY_PREFIX + `#${o}#${t})`;
+        const C = ConfigCommon_1.ConfigCommon.GetConfig(a);
+        if (C)
+          return (
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
+          );
       }
       if (
-        (t =
+        (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, n, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, t, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(
               handleId,
               !0,
               ...logPair,
               ["Id", o],
-              ["DataId", n],
+              ["DataId", t],
             ))
       ) {
-        var t,
-          i = void 0;
+        a = void 0;
         if (
-          (([t, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, a] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
-            ["DataId", n],
+            ["DataId", t],
           )),
-          t)
+          e)
         ) {
-          const r = SortRule_1.SortRule.getRootAsSortRule(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+          const C = SortRule_1.SortRule.getRootAsSortRule(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
           );
           return (
-            e &&
-              ((t = KEY_PREFIX + `#${o}#${n})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(t, r)),
+            n &&
+              ((e = KEY_PREFIX + `#${o}#${t})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(e, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            r
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=SortRuleByIdAndDataId.js.map

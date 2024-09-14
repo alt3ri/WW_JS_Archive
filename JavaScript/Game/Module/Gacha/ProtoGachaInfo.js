@@ -18,16 +18,16 @@ class ProtoGachaPoolInfo {
       (this.ShowIdList = []),
       (this.UpList = []),
       (this.PreviewIdList = []),
-      (this.Id = t.J4n),
-      (this.BeginTime = MathUtils_1.MathUtils.LongToNumber(t.nps)),
-      (this.EndTime = MathUtils_1.MathUtils.LongToNumber(t.sps)),
-      (this.Title = t.Qxs),
-      (this.Description = t.XLa),
-      (this.UiType = t.JLa),
-      (this.ThemeColor = t.zLa),
-      (this.ShowIdList = t.ZLa),
-      (this.UpList = t.eRa),
-      (this.PreviewIdList = t.tRa);
+      (this.Id = t.s5n),
+      (this.BeginTime = MathUtils_1.MathUtils.LongToNumber(t.cps)),
+      (this.EndTime = MathUtils_1.MathUtils.LongToNumber(t.dps)),
+      (this.Title = t.tbs),
+      (this.Description = t.urh),
+      (this.UiType = t.crh),
+      (this.ThemeColor = t.drh),
+      (this.ShowIdList = t.mrh),
+      (this.UpList = t.Crh),
+      (this.PreviewIdList = t.grh);
     t = ConfigManager_1.ConfigManager.GachaConfig.GetGachaPoolConfig(this.Id);
     t && (this.Sort = t.Sort);
   }
@@ -49,19 +49,19 @@ class ProtoGachaInfo {
       (this.ResourcesId = ""),
       (this.GroupId = 0),
       (this.Sort = 0),
-      (this.Id = t.J4n),
-      (this.TodayTimes = t.t9n),
-      (this.TotalTimes = t.i9n),
-      (this.ItemId = t.f8n),
-      (this.GachaConsumes = t.kUs),
-      (this.UsePoolId = t.NUs);
-    var i = t.FUs;
+      (this.Id = t.s5n),
+      (this.TodayTimes = t._9n),
+      (this.TotalTimes = t.u9n),
+      (this.ItemId = t.L8n),
+      (this.GachaConsumes = t.WUs),
+      (this.UsePoolId = t.KUs);
+    var i = t.QUs;
     if (i) for (const s of i) this.bKt.push(new ProtoGachaPoolInfo(s));
-    (this.BeginTime = MathUtils_1.MathUtils.LongToNumber(t.nps)),
-      (this.EndTime = MathUtils_1.MathUtils.LongToNumber(t.sps)),
-      (this.DailyLimitTimes = t.VUs),
-      (this.TotalLimitTimes = t.$Us),
-      (this.ResourcesId = t.HUs);
+    (this.BeginTime = MathUtils_1.MathUtils.LongToNumber(t.cps)),
+      (this.EndTime = MathUtils_1.MathUtils.LongToNumber(t.dps)),
+      (this.DailyLimitTimes = t.XUs),
+      (this.TotalLimitTimes = t.YUs),
+      (this.ResourcesId = t.JUs);
     i = ConfigManager_1.ConfigManager.GachaConfig.GetGachaConfig(this.Id);
     i && ((this.Sort = i.Sort), (this.GroupId = i.RuleGroupId));
   }

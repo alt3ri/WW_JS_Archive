@@ -17,11 +17,11 @@ class BulletLogicSuiGuang extends BulletLogicController_1.BulletLogicController 
           t.Entity.GetBulletInfo().HasTag(this.h7o.NeedTag) &&
           this.K7o(this.h7o.NewBulletId, t.Entity.Id)
         : t.Entity?.GetComponent(0)?.IsRole() &&
-          t.Entity.GetComponent(188)?.HasTag(this.h7o.NeedTag.TagId) &&
+          t.Entity.GetComponent(190)?.HasTag(this.h7o.NeedTag.TagId) &&
           this.K7o(this.h7o.NewBulletId, t.Entity.Id));
   }
   K7o(t, l) {
-    var e = this.Bullet.GetComponent(154).ActorTransform;
+    var e = this.Bullet.GetComponent(155).ActorTransform;
     BulletController_1.BulletController.CreateBulletCustomTarget(
       this.Bullet.GetBulletInfo().BulletInitParams.Owner,
       t,

@@ -9,8 +9,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   LauncherConfigLib_1 = require("../Define/LauncherConfigLib"),
   LauncherLog_1 = require("./LauncherLog"),
-  LauncherStorageLib_1 = require("./LauncherStorageLib"),
-  TEXTLANGUAGE = 51,
+  LauncherStorageLib_1 = require("./LauncherStorageLib");
+function objToMap(e) {
+  var a = new Map();
+  for (const L in e) {
+    var n = Number(L);
+    isNaN(n) || a.set(n, e[L]);
+  }
+  return a;
+}
+const TEXTLANGUAGE = 51,
   VOICELANGUAGE = 52,
   CHS = "zh-Hans",
   CHT = "zh-Hant",
@@ -79,9 +87,9 @@ const languageList = [
     ])),
     new Map()),
   languageCodeMap = new Map();
-for (const d of languageList)
-  languageTypeMap.set(d.LanguageType, d),
-    languageCodeMap.set(d.LanguageCode, d);
+for (const h of languageList)
+  languageTypeMap.set(h.LanguageType, h),
+    languageCodeMap.set(h.LanguageCode, h);
 class LauncherLanguageLib {
   static set HIr(e) {
     (LauncherLanguageLib.T8 = e),
@@ -92,12 +100,24 @@ class LauncherLanguageLib {
   static GetDefaultCulture(e) {
     return e.includes(CHINESE_ISO639_1) ? CHS : exports.ENGLISH_ISO639_1;
   }
+  static VJa() {
+    if (
+      void 0 ===
+      LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
+        LauncherStorageLib_1.ELauncherStorageGlobalKey.MenuData,
+      )
+    ) {
+      var e = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
+        LauncherStorageLib_1.ELauncherStorageGlobalKey.PlayMenuInfo,
+        "",
+      );
+      if (e && "" !== e) return objToMap(JSON.parse(e));
+    }
+  }
   static Initialize(a) {
     if (!this.gU) {
       this.gU = !0;
-      var n = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
-          LauncherStorageLib_1.ELauncherStorageGlobalKey.MenuData,
-        ),
+      var n = LauncherLanguageLib.VJa(),
         L = void 0 !== n;
       if (
         L ||

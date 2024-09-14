@@ -81,7 +81,7 @@ class MultiReviveView extends UiTickViewBase_1.UiTickViewBase {
                       ) && e
                   ? ControllerHolder_1.ControllerHolder.OnlineController.InviteRechallengeRequest()
                   : ControllerHolder_1.ControllerHolder.OnlineController.ApplyRechallengeRequest(
-                      Protocol_1.Aki.Protocol.J6s.Proto_Dead,
+                      Protocol_1.Aki.Protocol.o8s.Proto_Dead,
                     ))
             : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "CannotInvite",
@@ -94,7 +94,7 @@ class MultiReviveView extends UiTickViewBase_1.UiTickViewBase {
         e = this.X1i.get(e);
         e && this.Y1i(i, e);
       }),
-      (this.M7s = () => {
+      (this.t$s = () => {
         this.J1i();
       });
   }
@@ -128,7 +128,7 @@ class MultiReviveView extends UiTickViewBase_1.UiTickViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnTeamLivingStateChange,
-        this.M7s,
+        this.t$s,
       ));
   }
   OnRemoveEventListener() {
@@ -142,11 +142,11 @@ class MultiReviveView extends UiTickViewBase_1.UiTickViewBase {
       ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.OnTeamLivingStateChange,
-        this.M7s,
+        this.t$s,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnTeamLivingStateChange,
-          this.M7s,
+          this.t$s,
         );
   }
   OnBeforeShow() {
@@ -160,9 +160,9 @@ class MultiReviveView extends UiTickViewBase_1.UiTickViewBase {
         : (this.GetItem(3).SetUIActive(!1), this.kUn());
   }
   OnBeforeDestroy() {
-    this.oWs();
+    this.LWs();
   }
-  oWs() {
+  LWs() {
     (this.WFt = -1),
       (this.BUn = 0),
       (this.qUn = void 0),
@@ -231,7 +231,7 @@ class MultiReviveView extends UiTickViewBase_1.UiTickViewBase {
     ControllerHolder_1.ControllerHolder.DeadReviveController.ReviveRequest(
       e,
       (e) => {
-        e && this.oWs();
+        e && this.LWs();
       },
     );
   }

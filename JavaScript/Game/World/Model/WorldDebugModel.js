@@ -68,32 +68,32 @@ class WorldDebugModel extends ModelBase_1.ModelBase {
   AddEntity(t, e) {
     if (e)
       switch (t) {
-        case Protocol_1.Aki.Protocol.wks.Proto_Player:
+        case Protocol_1.Aki.Protocol.kks.Proto_Player:
           this.AddRoleEntity(e);
           break;
-        case Protocol_1.Aki.Protocol.wks.Proto_Monster:
+        case Protocol_1.Aki.Protocol.kks.Proto_Monster:
           this.AddMonsterEntity(e);
           break;
-        case Protocol_1.Aki.Protocol.wks.Proto_Npc:
+        case Protocol_1.Aki.Protocol.kks.Proto_Npc:
           this.AddNpcEntity(e);
           break;
-        case Protocol_1.Aki.Protocol.wks.Proto_Vision:
+        case Protocol_1.Aki.Protocol.kks.Proto_Vision:
           this.AddVisionEntity(e);
       }
   }
   RemoveEntity(t, e) {
     if (e)
       switch (t) {
-        case Protocol_1.Aki.Protocol.wks.Proto_Player:
+        case Protocol_1.Aki.Protocol.kks.Proto_Player:
           this.AoiRoleSet.delete(e), this.AoiTotalSet.delete(e);
           break;
-        case Protocol_1.Aki.Protocol.wks.Proto_Monster:
+        case Protocol_1.Aki.Protocol.kks.Proto_Monster:
           this.AoiMonsterSet.delete(e), this.AoiTotalSet.delete(e);
           break;
-        case Protocol_1.Aki.Protocol.wks.Proto_Npc:
+        case Protocol_1.Aki.Protocol.kks.Proto_Npc:
           this.AoiNpcSet.delete(e), this.AoiTotalSet.delete(e);
           break;
-        case Protocol_1.Aki.Protocol.wks.Proto_Vision:
+        case Protocol_1.Aki.Protocol.kks.Proto_Vision:
           this.AoiVisionSet.delete(e), this.AoiTotalSet.delete(e);
       }
   }

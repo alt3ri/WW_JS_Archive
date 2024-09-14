@@ -19,9 +19,16 @@ class GatherActivity {
   get SubmitItem() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.submititemLength(),
-      (t) => this.submititem(t)?.key(),
-      (t) => this.submititem(t)?.value(),
+      this.submititemKey,
+      this.submititemValue,
+      this,
     );
+  }
+  submititemKey(t) {
+    return this.submititem(t)?.key();
+  }
+  submititemValue(t) {
+    return this.submititem(t)?.value();
   }
   get Reward() {
     return this.reward();
@@ -35,9 +42,16 @@ class GatherActivity {
   get RewardItem() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.rewarditemLength(),
-      (t) => this.rewarditem(t)?.key(),
-      (t) => this.rewarditem(t)?.value(),
+      this.rewarditemKey,
+      this.rewarditemValue,
+      this,
     );
+  }
+  rewarditemKey(t) {
+    return this.rewarditem(t)?.key();
+  }
+  rewarditemValue(t) {
+    return this.rewarditem(t)?.value();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;

@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.exportVarConfig = exports.getVarConfigArray = void 0);
 const CsvRegistry_1 = require("../CsvConfig/CsvRegistry"),
-  VarConfigCsv_1 = require("../CsvConfig/VarConfigCsv");
+  VarConfigCsv_1 = require("../CsvConfig/VarConfigCsv"),
+  Util_1 = require("../Misc/Util");
 class VarConfigManager {
   constructor() {
     (this.Pe = []), this.Init();
@@ -20,24 +21,32 @@ class VarConfigManager {
     var r = CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
       VarConfigCsv_1.VarConfigCsv,
     );
-    const n = [];
+    const a = [];
     return (
       r.forEach((r) => {
-        n.push([r.Name, r.Type]);
+        a.push([r.Name, r.Type]);
       }),
-      n
+      a
     );
   }
   ExportVarConfig() {
     var r = CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
       VarConfigCsv_1.VarConfigCsv,
     );
-    const n = [];
+    const e = [];
     return (
       r.forEach((r) => {
-        n.push({ Id: r.Id, Name: r.Name, Type: r.Type.toString() });
+        var a;
+        r.HasDefaultValue &&
+          ((a = r.Type),
+          e.push({
+            Name: r.Name,
+            Type: a,
+            Value: (0, Util_1.parseVarValue)(a, r.DefaultValue),
+            Access: 2,
+          }));
       }),
-      { Items: n }
+      { Vars: e }
     );
   }
   get VarConfigArray() {

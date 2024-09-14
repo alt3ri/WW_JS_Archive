@@ -10,10 +10,10 @@ const EventDefine_1 = require("../../../Common/Event/EventDefine"),
 class PowerCurrencyItem extends CommonCurrencyItem_1.CommonCurrencyItem {
   constructor() {
     super(...arguments),
-      (this.wQs = 0),
-      (this.BQs = (e) => {
+      (this.JXs = 0),
+      (this.zXs = (e) => {
         var t, r, n;
-        this.wQs === e &&
+        this.JXs === e &&
           ((t = (e =
             ModelManager_1.ModelManager.PowerModel.GetPowerDataById(
               e,
@@ -34,24 +34,24 @@ class PowerCurrencyItem extends CommonCurrencyItem_1.CommonCurrencyItem {
   AddOverPowerEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnPowerChangedWithId,
-      this.BQs,
+      this.zXs,
     );
   }
   RemoveOverPowerEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnPowerChangedWithId,
-      this.BQs,
+      this.zXs,
     );
   }
   RefreshTemp(e, t) {
     this.ShowWithoutText(e);
   }
   ShowWithoutText(e) {
-    (this.wQs = e), super.ShowWithoutText(e), this.BQs(e);
+    (this.JXs = e), super.ShowWithoutText(e), this.zXs(e);
   }
   RefreshAddButtonActive() {
     this.SetButtonActive(
-      this.wQs === ItemDefines_1.EItemId.Power &&
+      this.JXs === ItemDefines_1.EItemId.Power &&
         !UiManager_1.UiManager.IsViewOpen("PowerView"),
     );
   }

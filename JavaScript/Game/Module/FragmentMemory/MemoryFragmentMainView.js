@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MemoryFragmentMainView = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
@@ -19,6 +20,7 @@ const UE = require("ue"),
   LoopScrollSmallItemGrid_1 = require("../Common/SmallItemGrid/LoopScrollSmallItemGrid"),
   MapDefine_1 = require("../Map/MapDefine"),
   PhotographController_1 = require("../Photograph/PhotographController"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
   GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
   GenericLayout_1 = require("../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../Util/LguiUtil"),
@@ -36,8 +38,8 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
       (this.bwn = !1),
       (this.qwn = !1),
       (this.SPe = void 0),
-      (this.pNn = 0),
-      (this.FGn = () => {
+      (this.DNn = 0),
+      (this.$Gn = () => {
         var e = this.xqe.GetDisplayGridStartIndex(),
           i = this.Bwn.GetCollectDataList();
         let r = 0;
@@ -46,36 +48,50 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
         var t = r !== this.b9i;
         (this.b9i = r), this.Og(), t && this.I3e();
       }),
-      (this.vNn = () => {
+      (this.UNn = () => {
+        var t = this.kwn().GetQuestList();
+        if (0 < t.length)
+          for (const r of t) {
+            var e =
+              ModelManager_1.ModelManager.QuestNewModel.CheckQuestFinished(r);
+            if (!e)
+              return ModelManager_1.ModelManager.QuestNewModel.GetQuest(r)
+                ? void UiManager_1.UiManager.OpenView("QuestView", r)
+                : void ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
+                    MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+                      "Text_FragmentQuest",
+                    ),
+                  );
+          }
         ModelManager_1.ModelManager.FragmentMemoryModel.TryRemoveCurrentTrackEntity(),
-          (this.pNn = 0);
+          (this.DNn = 0);
         var t = this.kwn().GetTraceEntityId(),
-          e = this.kwn().GetTraceMarkId(),
+          i = this.kwn().GetTraceMarkId(),
           t =
             ModelManager_1.ModelManager.CreatureModel.GetEntityData(t)
               ?.Transform?.Pos;
         t
           ? ((t = new MapDefine_1.DynamicMarkCreateInfo(
               Vector_1.Vector.Create(t.X ?? 0, t.Y ?? 0, t.Z ?? 0),
-              e,
+              i,
               7,
               void 0,
               void 0,
               !0,
             )),
-            0 === this.pNn &&
-              (this.pNn =
+            0 === this.DNn &&
+              (this.DNn =
                 ModelManager_1.ModelManager.MapModel.CreateMapMark(t)),
-            (e = { MarkId: this.pNn, MarkType: 7 }),
-            WorldMapController_1.WorldMapController.OpenView(2, !1, e),
+            (i = { MarkId: this.DNn, MarkType: 7 }),
+            WorldMapController_1.WorldMapController.OpenView(2, !1, i),
             (ModelManager_1.ModelManager.FragmentMemoryModel.CurrentTrackMapMarkId =
-              this.pNn),
+              this.DNn),
             (ModelManager_1.ModelManager.FragmentMemoryModel.CurrentTrackFragmentId =
               this.kwn().GetId()))
           : Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("FragmentMemory", 28, "没有找到实体");
       }),
-      (this.VGn = () => {
+      (this.YGn = () => {
         var e = this.xqe.GetDisplayGridEndIndex(),
           i = this.Bwn.GetCollectDataList();
         let r = e;
@@ -90,7 +106,7 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
         (this.b9i = r), this.Og(), e && this.I3e();
       }),
       (this.$Ge = () => {
-        this.Dbn();
+        this.qbn();
       }),
       (this.Gwn = () => {
         (this.Bwn =
@@ -162,9 +178,9 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
         [9, this.Nwn],
         [13, this.Fwn],
         [14, this.Vwn],
-        [15, this.FGn],
-        [16, this.VGn],
-        [17, this.vNn],
+        [15, this.$Gn],
+        [16, this.YGn],
+        [17, this.UNn],
       ]);
   }
   OnStart() {
@@ -186,7 +202,7 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
       this.GetButton(16)?.RootUIComp.SetUIActive(!1),
       (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
     var e = this.OpenParam;
-    if (((this.Bwn = e.FragmentMemoryTopicData), 0 < e.CurrentSelectId)) {
+    if ((e && (this.Bwn = e.FragmentMemoryTopicData), 0 < e?.CurrentSelectId)) {
       var i = this.Bwn.GetCollectDataList();
       for (let t = 0; t < i.length; t++)
         if (i[t].GetId() === e.CurrentSelectId) {
@@ -235,10 +251,10 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
     this.lqe?.SetTitleByTextIdAndArgNew(this.Bwn.GetConfig().Title),
       this.Og(),
       this.Nqe(),
-      this.SOn(),
+      this.ROn(),
       0 < this.b9i && this.xqe?.ScrollToGridIndex(this.b9i);
   }
-  SOn() {
+  ROn() {
     StringUtils_1.StringUtils.IsEmpty(
       ModelManager_1.ModelManager.FragmentMemoryModel
         .MemoryFragmentMainViewTryPlayAnimation,
@@ -251,7 +267,7 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
         ""));
   }
   OnAfterShow() {
-    this.Dbn();
+    this.qbn();
   }
   Og(t = !1) {
     this.Esi(t),
@@ -266,9 +282,9 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
       this.mKi(),
       this.Xwn(),
       this.H3i(),
-      this.Dbn();
+      this.qbn();
   }
-  Dbn() {
+  qbn() {
     this.kwn()?.GetIfUnlock()
       ? UE.LGUIBPLibrary.ResetGlobalBlurUIItem(
           GlobalData_1.GlobalData.GameInstance.GetWorld(),
@@ -350,13 +366,17 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
     void 0 !== t && this.GetItem(10)?.SetUIActive(t.GetIfGetReward());
   }
   Qwn() {
-    var e = this.kwn();
-    if (void 0 !== e) {
-      var i = !e.GetIfGetReward() && !e.GetIfUnlock();
-      let t = !1;
-      i && 0 < e.GetTraceEntityId() && (t = !0),
-        this.GetItem(11)?.SetUIActive(i && !t),
-        this.GetButton(17)?.RootUIComp.SetUIActive(i && t);
+    var i = this.kwn();
+    if (void 0 !== i) {
+      var r = !i.GetIfGetReward() && !i.GetIfUnlock();
+      let t = !1,
+        e = !1;
+      r &&
+        (0 < i.GetTraceEntityId() && (t = !0), 0 < i.GetQuestList().length) &&
+        (e = !0);
+      i = t || e;
+      this.GetItem(11)?.SetUIActive(r && !i),
+        this.GetButton(17)?.RootUIComp.SetUIActive(r && i);
     }
   }
   WTt() {
@@ -425,7 +445,7 @@ class TabItem extends GridProxyAbstract_1.GridProxyAbstract {
     super(...arguments),
       (this.Pe = void 0),
       (this.SPe = void 0),
-      (this.ekn = !1),
+      (this.lkn = !1),
       (this.$wn = () => {
         this.Pe.TabCallBack(this.GridIndex);
       });
@@ -443,7 +463,7 @@ class TabItem extends GridProxyAbstract_1.GridProxyAbstract {
     ]),
       (this.BtnBindInfo = [[0, this.$wn]]);
   }
-  tkn() {
+  _kn() {
     return (
       void 0 === this.SPe &&
         (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
@@ -469,22 +489,22 @@ class TabItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.BNe(),
       this.Ywn(),
       this.a9i(),
-      this.zBn(),
-      this.ekn !== r && this.ikn(s),
-      (this.ekn = r);
+      this.abn(),
+      this.lkn !== r && this.ukn(s),
+      (this.lkn = r);
   }
-  ikn(t) {
+  ukn(t) {
     var e,
       t = 1 === t ? "Select" : "Unselect";
     this.Pe?.NeedSwitchAnimation
-      ? (e = this.tkn()).GetCurrentSequence() === t
+      ? (e = this._kn()).GetCurrentSequence() === t
         ? e?.ReplaySequenceByKey(t)
         : e?.PlaySequencePurely(t)
-      : ((e = this.tkn())?.StopSequenceByKey("Select", !1, !1),
+      : ((e = this._kn())?.StopSequenceByKey("Select", !1, !1),
         e?.PlaySequencePurely(t),
         e.StopSequenceByKey(t, !1, !0));
   }
-  zBn() {
+  abn() {
     var t;
     this.Pe.FragmentCollectData.GetIfUnlock()
       ? ((t = (this.GridIndex + 1).toString().padStart(2, "0")),

@@ -1,34 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.FunctionItemViewTool =
-    exports.ImageConfigTool =
-    exports.MenuTool =
-      void 0);
+  (exports.FunctionItemViewTool = exports.MenuTool = void 0);
 const UE = require("ue"),
-  Application_1 = require("../../../Core/Application/Application"),
   Info_1 = require("../../../Core/Common/Info"),
   LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
   Log_1 = require("../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
-  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
-  ModelManager_1 = require("../../Manager/ModelManager"),
-  MenuDefine_1 = require("./MenuDefine");
+  BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
+  GameSettingsDeviceRender_1 = require("../../GameSettings/GameSettingsDeviceRender"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class MenuTool {
   static CheckPlatform(e) {
-    var a = ModelManager_1.ModelManager.MenuModel.SimulatedPlatform;
-    if (-1 !== a)
+    var r = ModelManager_1.ModelManager.MenuModel?.SimulatedPlatform;
+    if (-1 !== r && void 0 !== r)
       switch (e) {
         case 1:
-          return 1 === a;
+          return 1 === r;
         case 2:
-          return 2 === a || 4 === a || 3 === a;
+          return 2 === r || 4 === r || 3 === r;
         case 3:
-          return 2 === a || 3 === a;
+          return 2 === r || 3 === r;
         case 4:
-          return 2 === a || 4 === a;
+          return 2 === r || 4 === r;
         case 5:
-          return 5 === a;
+          return 5 === r;
         default:
           return !0;
       }
@@ -48,46 +45,53 @@ class MenuTool {
     }
   }
   static CheckDeviceVendor(e) {
-    var a =
-        GameQualitySettingsManager_1.GameQualitySettingsManager.IsDlssGpuDevice(),
-      n = UE.XeSSBlueprintLibrary.IsXeSSSupported(),
-      t = !a && !n,
-      r =
-        GameQualitySettingsManager_1.GameQualitySettingsManager.IsPWSDKDevice();
+    var r =
+        GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsDlssGpuDevice(),
+      t = UE.XeSSBlueprintLibrary.IsXeSSSupported(),
+      n = GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsFsrDevice(),
+      a = GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsPWSDKDevice();
     switch (e) {
       case 81:
-        return a;
+        return r;
       case 82:
         return !1;
       case 83:
       case 84:
       case 85:
-        return a;
-      case 87:
-        return t;
-      case 128:
         return r;
+      case 87:
+        return n;
+      case 128:
+        return a;
       case 127:
-        return GameQualitySettingsManager_1.GameQualitySettingsManager.IsMetalFxDevice();
+        return GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsMetalFxDevice();
       case 125:
       case 126:
-        return n;
+        return t;
       case 58:
         return (
-          !GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatformScreenBad() &&
-          !GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform()
+          !GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsAndroidPlatformScreenBad() &&
+          1 !== Info_1.Info.PlatformType
         );
       default:
         return !0;
     }
   }
+  static CheckIosReviewShield(e) {
+    return !(
+      !ConfigManager_1.ConfigManager.CommonConfig.GetIosReviewShieldMenuArray()?.includes(
+        e,
+      ) ||
+      !BaseConfigController_1.BaseConfigController.GetIosAuditFirstDownloadTip()
+    );
+  }
   static GetLanguageDefineData() {
     return LanguageSystem_1.LanguageSystem.GetAllLanguageDefines();
   }
   static GetAudioCodeById(e) {
-    var a = LanguageSystem_1.LanguageSystem.GetLanguageDefineByType(e);
-    return a
-      ? a.AudioCode
+    var r = LanguageSystem_1.LanguageSystem.GetLanguageDefineByType(e);
+    return r
+      ? r.AudioCode
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Menu", 31, "LanguageSystem 未定义此语种", [
             "非法值",
@@ -96,9 +100,9 @@ class MenuTool {
         CommonDefine_1.ENGLISH_ISO639_1);
   }
   static GetLanguageCodeById(e) {
-    var a = LanguageSystem_1.LanguageSystem.GetLanguageDefineByType(e);
-    return a
-      ? a.LanguageCode
+    var r = LanguageSystem_1.LanguageSystem.GetLanguageDefineByType(e);
+    return r
+      ? r.LanguageCode
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Menu", 11, "LanguageSystem 未定义此语种", [
             "非法值",
@@ -107,9 +111,9 @@ class MenuTool {
         CommonDefine_1.ENGLISH_ISO639_1);
   }
   static GetLanguageIdByCode(e) {
-    var a = LanguageSystem_1.LanguageSystem.GetLanguageDefineByCode(e);
-    return a
-      ? a.LanguageType
+    var r = LanguageSystem_1.LanguageSystem.GetLanguageDefineByCode(e);
+    return r
+      ? r.LanguageType
       : (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Menu", 11, "LanguageSystem 未定义此语种", [
             "非法值",
@@ -120,101 +124,17 @@ class MenuTool {
   static GetSpeechTypeByLanguageType(e) {
     return LanguageSystem_1.LanguageSystem.GetSpeechTypeByLanguageType(e);
   }
-  static IsExcludeLanguageSetting(e) {
-    return 4 === e && Application_1.Application.IsPublicationApp();
-  }
 }
 exports.MenuTool = MenuTool;
-class ImageConfigTool {
-  static ResetImageConfig(e) {
-    var a = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      n = a.GetCurrentQualityInfo();
-    for (const t of e.keys())
-      switch (t) {
-        case MenuDefine_1.EImageConfig.IMAGEQUALITY:
-          e.set(t, n.GetGameQualitySettingLevel());
-          break;
-        case MenuDefine_1.EImageConfig.HIGHESTFPS:
-          e.set(t, a.GetFrameIndexByList(n.GetFrameRate()));
-          break;
-        case MenuDefine_1.EImageConfig.SHADOWQUALITY:
-          e.set(t, n.ShadowQuality);
-          break;
-        case MenuDefine_1.EImageConfig.NIAGARAQUALITY:
-          e.set(t, n.NiagaraQuality);
-          break;
-        case MenuDefine_1.EImageConfig.IMAGEDETAIL:
-          e.set(t, n.ImageDetail);
-          break;
-        case MenuDefine_1.EImageConfig.ANTIALISING:
-          e.set(t, n.AntiAliasing);
-          break;
-        case MenuDefine_1.EImageConfig.SCENEAO:
-          e.set(t, n.SceneAo);
-          break;
-        case MenuDefine_1.EImageConfig.VOLUMEFOG:
-          e.set(t, n.VolumeFog);
-          break;
-        case MenuDefine_1.EImageConfig.VOLUMELIGHT:
-          e.set(t, n.VolumeLight);
-          break;
-        case MenuDefine_1.EImageConfig.MOTIONBLUR:
-          e.set(t, n.MotionBlur);
-          break;
-        case MenuDefine_1.EImageConfig.PCVSYNC:
-          e.set(t, n.PcVsync);
-          break;
-        case MenuDefine_1.EImageConfig.MOBILERESOLUTION:
-          e.set(t, n.MobileResolution);
-          break;
-        case MenuDefine_1.EImageConfig.SUPERRESOLUTION:
-          e.set(t, n.SuperResolution);
-          break;
-        case MenuDefine_1.EImageConfig.RESOLUTION:
-          e.set(t, a.GetResolutionIndexByList(n.PcScreenResolution));
-          break;
-        case MenuDefine_1.EImageConfig.DISPLAYMODE:
-          e.set(t, a.GetFullScreenModeIndexByList(n.PcFullScreenMode));
-          break;
-        case MenuDefine_1.EImageConfig.NPCDENSITY:
-          e.set(t, n.NpcDensity);
-          break;
-        case MenuDefine_1.EImageConfig.NVIDIADLSS:
-          e.set(t, n.NvidiaSuperSamplingEnable);
-          break;
-        case MenuDefine_1.EImageConfig.FSR:
-          e.set(t, n.FsrEnable);
-          break;
-        case MenuDefine_1.EImageConfig.XESS:
-          e.set(t, n.XessEnable);
-          break;
-        case MenuDefine_1.EImageConfig.XESS_QUALITY:
-          e.set(t, n.XessQuality);
-          break;
-        case MenuDefine_1.EImageConfig.METALFX:
-          e.set(t, n.MetalFxEnable);
-          break;
-        case MenuDefine_1.EImageConfig.IRX:
-          e.set(t, n.IrxEnable);
-          break;
-        case MenuDefine_1.EImageConfig.BLOOM:
-          e.set(t, n.BloomEnable);
-      }
-  }
-}
-exports.ImageConfigTool = ImageConfigTool;
 class FunctionItemViewTool {
-  static GetSliderPosition(e, a, n = 0) {
-    var t = e[0],
+  static GetSliderPosition(e, r, t = 0) {
+    var n = e[0],
       e = e[1],
-      t = MathUtils_1.MathUtils.GetRangePct(t, e, a);
-    return MathUtils_1.MathUtils.GetFloatPointFloor(t * e, n);
+      n = MathUtils_1.MathUtils.GetRangePct(n, e, r);
+    return MathUtils_1.MathUtils.GetFloatPointFloor(n * e, t);
   }
   static CheckNotice(e) {
-    return (
-      0 < e.MenuDataOptionsValueList?.length ||
-      0 < e.MenuDataRelationFuncIds.length
-    );
+    return 0 < e.OptionsValueList?.length || 0 < e.RelationFuncIds.length;
   }
 }
 exports.FunctionItemViewTool = FunctionItemViewTool;

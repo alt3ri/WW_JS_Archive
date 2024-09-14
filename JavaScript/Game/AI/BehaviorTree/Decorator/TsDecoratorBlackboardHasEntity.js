@@ -22,8 +22,8 @@ class TsDecoratorBlackboardHasEntity extends UE.BTDecorator_BlueprintBase {
       (this.TsBlackboardKey = this.BlackboardKey),
       (this.TsCompareValue = this.CompareValue));
   }
-  PerformConditionCheckAI(r, e) {
-    var t = r.AiController,
+  PerformConditionCheckAI(r, t) {
+    var e = r.AiController,
       o =
         ServerGmController_1.ServerGmController.AnimalDebug &&
         "NearerPlayerId" === this.BlackboardKey;
@@ -35,11 +35,11 @@ class TsDecoratorBlackboardHasEntity extends UE.BTDecorator_BlueprintBase {
           6,
           "AnimalDebug BlackboardHasEntity",
           ["Tree", this.TreeAsset?.GetName()],
-          ["aiController", !!t],
-          ["aiComp", !!t?.CharAiDesignComp],
-          ["SelfId", t?.CharActorComp?.Entity.Id],
+          ["aiController", !!e],
+          ["aiComp", !!e?.CharAiDesignComp],
+          ["SelfId", e?.CharActorComp?.Entity.Id],
         ),
-      !t)
+      !e)
     )
       return (
         Log_1.Log.CheckError() &&
@@ -49,10 +49,10 @@ class TsDecoratorBlackboardHasEntity extends UE.BTDecorator_BlueprintBase {
           ]),
         !1
       );
-    r = t.CharAiDesignComp;
+    r = e.CharAiDesignComp;
     if (!r) return !1;
     if ((this.InitTsVariables(), this.TsBlackboardKey)) {
-      t = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
+      e = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
         r.Entity.Id,
         this.TsBlackboardKey,
       );
@@ -61,11 +61,11 @@ class TsDecoratorBlackboardHasEntity extends UE.BTDecorator_BlueprintBase {
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("AI", 6, "AnimalDebug BlackboardHasEntity2", [
               "value",
-              t,
+              e,
             ]),
-          t) &&
+          e) &&
           ((o = EntitySystem_1.EntitySystem.GetComponent(
-            t,
+            e,
             3,
           )?.CreatureData.GetEntityType()),
           Log_1.Log.CheckInfo()) &&
@@ -78,11 +78,11 @@ class TsDecoratorBlackboardHasEntity extends UE.BTDecorator_BlueprintBase {
             [
               "MainAnims",
               r.Entity.GetComponent(
-                162,
+                163,
               )?.MainAnimInstance?.GetMainAnimsDebugText(),
             ],
           ),
-        t && 0 < t)
+        e && EntitySystem_1.EntitySystem.Get(e))
       )
         return this.TsCompareValue;
     }

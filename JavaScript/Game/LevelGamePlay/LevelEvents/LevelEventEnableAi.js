@@ -13,7 +13,7 @@ class LevelEventEnableAi extends LevelGeneralBase_1.LevelEventBase {
           var o =
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(a);
           o
-            ? (o = o.Entity.GetComponent(37)) && o.Valid
+            ? (o = o.Entity.GetComponent(38)) && o.Valid
               ? o.StopMove(!n.IsEnable)
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error(

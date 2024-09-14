@@ -14,8 +14,10 @@ class RogueBuffPool {
     return this.buffid();
   }
   get PerIds() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.peridsLength(), (t) =>
-      this.perids(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.peridsLength(),
+      this.perids,
+      this,
     );
   }
   get EffectId() {
@@ -30,9 +32,16 @@ class RogueBuffPool {
   get BuffElement() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.buffelementLength(),
-      (t) => this.buffelement(t)?.key(),
-      (t) => this.buffelement(t)?.value(),
+      this.buffelementKey,
+      this.buffelementValue,
+      this,
     );
+  }
+  buffelementKey(t) {
+    return this.buffelement(t)?.key();
+  }
+  buffelementValue(t) {
+    return this.buffelement(t)?.value();
   }
   get BuffIcon() {
     return this.bufficon();
@@ -43,7 +52,8 @@ class RogueBuffPool {
   get BuffDescParam() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.buffdescparamLength(),
-      (t) => this.buffdescparam(t),
+      this.buffdescparam,
+      this,
     );
   }
   get BuffDescSimple() {

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ElementPanel = void 0);
 const UE = require("ue"),
+  BuffById_1 = require("../../../../Core/Define/ConfigQuery/BuffById"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
@@ -17,22 +18,26 @@ class TipPanel extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIText],
     ];
   }
-  UpdateNum(e) {
-    this.GetText(1).SetText(e.toString()),
-      0 === e
-        ? LguiUtil_1.LguiUtil.SetLocalTextNew(
-            this.GetText(2),
-            "Roguelike_Yuansu_Empty",
-          )
-        : ((e =
-            ConfigManager_1.ConfigManager.RoguelikeConfig?.GetElementLevelConfigById(
-              e,
-            )),
-          LguiUtil_1.LguiUtil.SetLocalTextNew(
-            this.GetText(2),
-            e.TextId,
-            e.TextIdArgs,
-          ));
+  UpdateNum(i) {
+    if ((this.GetText(1).SetText(i.toString()), 0 === i))
+      LguiUtil_1.LguiUtil.SetLocalTextNew(
+        this.GetText(2),
+        "Roguelike_Yuansu_Empty",
+      );
+    else {
+      var t =
+        ConfigManager_1.ConfigManager.RoguelikeConfig?.GetElementLevelConfigById(
+          4,
+        );
+      if (t) {
+        let e = 0;
+        for (const n of t.AddBuffs) {
+          var s = BuffById_1.configBuffById.GetConfig(n);
+          s && (e += (s.ModifierMagnitude[0] * i) / 100);
+        }
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), t.TextId, e);
+      } else this.GetText(2).SetText("");
+    }
   }
 }
 class ElementPanel extends UiPanelBase_1.UiPanelBase {

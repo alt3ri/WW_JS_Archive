@@ -35,7 +35,7 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
       (this.CurrentHandle = 0);
   }
   OnStart() {
-    return (this.rJo = this.Entity.GetComponent(160)), !0;
+    return (this.rJo = this.Entity.GetComponent(161)), !0;
   }
   PreSwitchRemoteFightState(t) {
     var e = t >> 8,
@@ -171,7 +171,7 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
   }
 };
 (CharacterFightStateComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(47)],
+  [(0, RegisterComponent_1.RegisterComponent)(48)],
   CharacterFightStateComponent,
 )),
   (exports.CharacterFightStateComponent = CharacterFightStateComponent);

@@ -5,6 +5,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   InstanceDungeonEntranceAll_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonEntranceAll"),
   InstanceDungeonEntranceById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonEntranceById"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  InstanceDungeonEntranceFlowAttached_1 = require("./Define/InstanceDungeonEntranceFlowAttached"),
   InstanceDungeonEntranceFlowNormal_1 = require("./Define/InstanceDungeonEntranceFlowNormal"),
   InstanceDungeonEntranceFlowRoguelike_1 = require("./Define/InstanceDungeonEntranceFlowRoguelike"),
   InstanceDungeonEntranceFlowSkipEditFormation_1 = require("./Define/InstanceDungeonEntranceFlowSkipEditFormation"),
@@ -14,7 +15,15 @@ class InstanceDungeonEntranceConfig extends ConfigBase_1.ConfigBase {
     super(...arguments),
       (this.hhi = new Map()),
       (this.lhi = void 0),
-      (this.Gzs = void 0);
+      (this.XWa = void 0);
+  }
+  get YWa() {
+    if (!this.XWa) {
+      this.XWa = new Map();
+      for (const n of InstanceDungeonEntranceAll_1.configInstanceDungeonEntranceAll.GetConfigList())
+        for (const e of n.InstanceDungeonList) this.XWa.set(e, n);
+    }
+    return this.XWa;
   }
   OnInit() {
     return (
@@ -33,6 +42,10 @@ class InstanceDungeonEntranceConfig extends ConfigBase_1.ConfigBase {
       this.hhi.set(
         8,
         new InstanceDungeonEntranceFlowTowerDefence_1.InstanceDungeonEntranceFlowTowerDefense(),
+      ),
+      this.hhi.set(
+        9,
+        new InstanceDungeonEntranceFlowAttached_1.InstanceDungeonEntranceFlowAttached(),
       ),
       !0
     );
@@ -96,14 +109,21 @@ class InstanceDungeonEntranceConfig extends ConfigBase_1.ConfigBase {
     n = this.lhi.get(n);
     return !!n && 6 === this.GetConfig(n)?.FlowId;
   }
-  CheckInstanceIdIsTowerDefence(n) {
-    if (!this.Gzs) {
-      this.Gzs = new Map();
-      for (const e of InstanceDungeonEntranceAll_1.configInstanceDungeonEntranceAll.GetConfigList())
-        for (const n of e.InstanceDungeonList) this.Gzs.set(n, e);
-    }
-    const e = this.Gzs.get(n);
-    return !!e && 8 === e.FlowId;
+  CheckInstanceIdIsTowerDefense(n) {
+    n = this.YWa.get(n);
+    return !!n && 8 === n.FlowId;
+  }
+  GetEntranceIdByInstanceId(n) {
+    var e = this.YWa.get(n);
+    return void 0 === e
+      ? (Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "InstanceDungeon",
+            65,
+            "未找到副本入口，请检查副本表配置，instanceId: " + n,
+          ),
+        0)
+      : e.Id;
   }
 }
 exports.InstanceDungeonEntranceConfig = InstanceDungeonEntranceConfig;

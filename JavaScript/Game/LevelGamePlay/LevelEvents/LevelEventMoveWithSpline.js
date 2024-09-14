@@ -7,6 +7,7 @@ const UE = require("ue"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine"),
   Net_1 = require("../../../Core/Net/Net"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
@@ -17,6 +18,7 @@ const UE = require("ue"),
   GlobalData_1 = require("../../GlobalData"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
   SceneItemMoveComponent_1 = require("../../NewWorld/SceneItem/Common/Component/SceneItemMoveComponent"),
   LevelGameplayActionsDefine_1 = require("../LevelGameplayActionsDefine"),
   LevelGeneralBase_1 = require("../LevelGeneralBase"),
@@ -31,8 +33,15 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
       (this.YLe = !1),
       (this.xDe = void 0),
       (this.wDe = 0),
+      (this.xsa = (e, t) => {
+        t !== CharacterUnifiedStateTypes_1.ECharPositionState.Climb &&
+          (t = this.sDe.Entity.GetComponent(38)).IsMovingToLocation() &&
+          (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("AI", 43, "MoveWithSpline打断墙上移动"),
+          t.MoveToLocationEnd(2));
+      }),
       (this.BDe = () => {
-        var e = this.sDe.Entity.GetComponent(115);
+        var e = this.sDe.Entity.GetComponent(116);
         e?.Valid &&
           this.xDe &&
           (e.RemoveStopMoveCallback(this.BDe),
@@ -42,13 +51,13 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
             this.xDe.WaitTime,
             !1,
             !1,
-            !1,
+            this.gLe?.IsLookDir ?? !1,
             this.bDe,
           ),
           e.AddStopMoveCallback(this.qDe));
       }),
       (this.qDe = () => {
-        var e = this.sDe.Entity.GetComponent(115);
+        var e = this.sDe.Entity.GetComponent(116);
         e.RemoveStopMoveCallback(this.qDe), e.StopPatrol();
       }),
       (this.zpe = (e, t) => {
@@ -62,9 +71,20 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
           this.FinishExecute(!0);
       }),
       (this.GDe = (e) => {
-        var t, i;
+        var t, i, s;
         this.sDe?.Valid &&
-          ((i =
+          (this.gLe?.CheckClimb &&
+            EventSystem_1.EventSystem.HasWithTarget(
+              this.sDe.Entity,
+              EventDefine_1.EEventName.CharOnPositionStateChanged,
+              this.xsa,
+            ) &&
+            EventSystem_1.EventSystem.RemoveWithTarget(
+              this.sDe.Entity,
+              EventDefine_1.EEventName.CharOnPositionStateChanged,
+              this.xsa,
+            ),
+          (i =
             this.sDe.Entity.GetComponent(
               3,
             ))?.Actor.CapsuleComponent.SetCollisionResponseToChannel(
@@ -77,14 +97,19 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
               ActorSystem_1.ActorSystem.Put(this.Jie),
             i?.ClearInput(),
             this.YLe &&
-              ((i = this.sDe.Entity.GetComponent(37)) &&
-                (i.StopMove(!1),
-                (t = this.sDe.Entity.GetComponent(160)?.MoveState),
-                i.ResetMaxSpeed(t)),
-              (i = this.sDe.Entity.GetComponent(53))?.ClearMoveVectorCache(),
-              i?.SetActive(!0)),
-            (this.sDe.Entity.GetComponent(37).IsSpecialMove = !1),
-            this.FinishExecute(1 === e)));
+              ((i = this.sDe.Entity.GetComponent(38)),
+              (t = this.sDe.Entity.GetComponent(92)),
+              i && (i.StopMove(!1), (s = t?.MoveState), i.ResetMaxSpeed(s)),
+              this.gLe?.CheckClimb &&
+                (i = this.sDe.Entity.GetComponent(31)) &&
+                t &&
+                t.PositionState ===
+                  CharacterUnifiedStateTypes_1.ECharPositionState.Climb &&
+                i.KickWallExit(),
+              (s = this.sDe.Entity.GetComponent(54))?.ClearMoveVectorCache(),
+              s?.SetActive(!0)),
+            (this.sDe.Entity.GetComponent(38).IsSpecialMove = !1),
+            this.FinishExecute(!0)));
       }),
       (this.bDe = () => {
         this.IsAsync ||
@@ -92,7 +117,7 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
             ObjectUtils_1.ObjectUtils.IsValid(this.Jie) &&
             ActorSystem_1.ActorSystem.Put(this.Jie),
           this.sDe?.Valid &&
-            (this.sDe.Entity.GetComponent(115).RemoveStopMoveCallback(this.bDe),
+            (this.sDe.Entity.GetComponent(116).RemoveStopMoveCallback(this.bDe),
             this.FinishExecute(!0)));
       });
   }
@@ -140,7 +165,7 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
           this.zpe,
         ),
       this.sDe?.IsInit
-        ? ((e = this.sDe.Entity.GetComponent(39)),
+        ? ((e = this.sDe.Entity.GetComponent(40)),
           (i = this.sDe.Entity.GetComponent(1)),
           e?.IsAiDriver
             ? (Log_1.Log.CheckWarn() &&
@@ -231,41 +256,41 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
     const n = this.gLe.StartPointIndex
         ? MathUtils_1.MathUtils.Clamp(this.gLe.StartPointIndex, 0, s - 1)
         : 0,
-      r = this.gLe.EndPointIndex
+      h = this.gLe.EndPointIndex
         ? MathUtils_1.MathUtils.Clamp(this.gLe.EndPointIndex, 0, s - 1)
         : s - 1;
-    var h,
-      l = [];
-    for (let e = n; e <= r; ++e)
-      l.push(Vector_1.Vector.Create(t.GetWorldLocationAtSplinePoint(e)));
+    var r,
+      a = [];
+    for (let e = n; e <= h; ++e)
+      a.push(Vector_1.Vector.Create(t.GetWorldLocationAtSplinePoint(e)));
     this.gLe.IsForceToFirstPoint &&
-      ((s = l[0]),
-      (h = t.GetRotationAtSplinePoint(n, 1)),
+      ((s = a[0]),
+      (r = t.GetRotationAtSplinePoint(n, 1)),
       (s = {
         TelePortConfig: {
-          TargetPos: { X: s.X, Y: s.Y, Z: s.Z, A: h.Yaw },
+          TargetPos: { X: s.X, Y: s.Y, Z: s.Z, A: r.Yaw },
           Type: IAction_1.ETeleportType.FixedPos,
         },
       }),
-      ((h = new LevelGameplayActionsDefine_1.CommonActionInfo()).Name =
+      ((r = new LevelGameplayActionsDefine_1.CommonActionInfo()).Name =
         "SetPlayerPos"),
-      (h.Params = s),
-      i.push(h)),
+      (r.Params = s),
+      i.push(r)),
       this.YLe &&
         (this.sDe.Entity.GetComponent(3).ClearInput(),
-        (s = this.sDe.Entity.GetComponent(53)).ClearMoveVectorCache(),
+        (s = this.sDe.Entity.GetComponent(54)).ClearMoveVectorCache(),
         s.SetActive(!1),
-        (h = this.sDe.Entity.GetComponent(33))) &&
-        h.EndOwnerAndFollowSkills(),
+        (r = this.sDe.Entity.GetComponent(34))) &&
+        r.EndOwnerAndFollowSkills(),
       0 < i.length
         ? ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsNew(
             i,
             o,
             () => {
-              this.ODe(t, e, n, r);
+              this.ODe(t, e, n, h);
             },
           )
-        : this.ODe(t, e, n, r),
+        : this.ODe(t, e, n, h),
       !GlobalData_1.GlobalData.IsPlayInEditor &&
         ObjectUtils_1.ObjectUtils.IsValid(this.Jie) &&
         ActorSystem_1.ActorSystem.Put(this.Jie),
@@ -273,57 +298,86 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
   }
   ODe(e, t, i, s) {
     this.sDe.Entity.GetComponent(0).GetEntityType() ===
-    Protocol_1.Aki.Protocol.wks.Proto_SceneItem
+    Protocol_1.Aki.Protocol.kks.Proto_SceneItem
       ? this.kDe(e, t)
       : this.FDe(e, t, i, s);
   }
   FDe(t, i, s, o) {
-    var n = i && i?.Points.length,
-      r = [];
-    for (let e = s; e <= o; ++e)
-      r.push(Vector_1.Vector.Create(t.GetWorldLocationAtSplinePoint(e)));
-    var h = [];
-    for (let e = s; e <= o; ++e) {
-      var l,
-        a = e - s,
-        a = { Index: a, Position: r[a] };
-      n &&
-        ((l = i.Points[e])?.MoveSpeed && (a.MoveSpeed = l.MoveSpeed),
-        l?.MoveState) &&
-        (a.MoveState = l.MoveState),
-        h.push(a);
+    if (
+      this.gLe?.CheckClimb &&
+      this.sDe.Entity.GetComponent(92)?.PositionState !==
+        CharacterUnifiedStateTypes_1.ECharPositionState.Climb
+    ) {
+      var e = this.sDe.Entity.GetComponent(31);
+      if (e) {
+        var n = this.gLe.CheckClimb.Direction,
+          n = Rotator_1.Rotator.Create(n.Y ?? 0, n.Z ?? 0, n.X ?? 0),
+          h = Vector_1.Vector.Create(),
+          n = (n.Vector(h), e.DetectClimbWithDirect(!1, h.ToUeVector()));
+        if (!n)
+          return (
+            Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn("AI", 43, "MoveWithSpline上墙失败"),
+            void this.GDe(2)
+          );
+      }
     }
-    var e = {
-        Points: h,
-        Navigation: i?.IsNavigation ?? !1,
-        IsFly: this.gLe.IsFollowStrictly ?? i?.IsFloating ?? !1,
-        DebugMode: !0,
-        Loop: !1,
-        UseNearestPoint: !0,
-        Callback: this.GDe,
-        ReturnFalseWhenNavigationFailed: !1,
-      },
-      v =
-        (i?.CycleOption &&
-          i.CycleOption.Type === IComponent_1.EPatrolCycleMode.Loop &&
-          ((e.Loop = !0), (e.CircleMove = i.CycleOption.IsCircle)),
-        i?.TurnSpeed && (e.TurnSpeed = i.TurnSpeed),
-        this.sDe.Entity.GetComponent(37));
-    v.IsMovingToLocation() && v.MoveToLocationEnd(1),
+    var r = i && i?.Points.length,
+      a = [];
+    for (let e = s; e <= o; ++e)
+      a.push(Vector_1.Vector.Create(t.GetWorldLocationAtSplinePoint(e)));
+    var l = [];
+    for (let e = s; e <= o; ++e) {
+      var _,
+        v = e - s,
+        v = { Index: v, Position: a[v] };
+      r &&
+        ((_ = i.Points[e])?.MoveSpeed && (v.MoveSpeed = _.MoveSpeed),
+        _?.MoveState) &&
+        (v.MoveState = _.MoveState),
+        l.push(v);
+    }
+    (e = {
+      Points: l,
+      Navigation: i?.IsNavigation ?? !1,
+      IsFly: this.gLe.IsFollowStrictly ?? i?.IsFloating ?? !1,
+      DebugMode: !0,
+      Loop: !1,
+      UseNearestPoint: !0,
+      Callback: this.GDe,
+      ReturnFalseWhenNavigationFailed: !1,
+    }),
+      i?.CycleOption &&
+        i.CycleOption.Type === IComponent_1.EPatrolCycleMode.Loop &&
+        ((e.Loop = !0), (e.CircleMove = i.CycleOption.IsCircle)),
+      i?.TurnSpeed && (e.TurnSpeed = i.TurnSpeed),
+      (h = this.sDe.Entity.GetComponent(38));
+    h.IsMovingToLocation() && h.MoveToLocationEnd(1),
       this.sDe.Entity.GetComponent(
         3,
       )?.Actor.CapsuleComponent.SetCollisionResponseToChannel(
         QueryTypeDefine_1.KuroCollisionChannel.PawnPlayer,
         0,
       ),
-      v.MoveAlongPath(e);
+      h.MoveAlongPath(e),
+      this.gLe?.CheckClimb &&
+        !EventSystem_1.EventSystem.HasWithTarget(
+          this.sDe.Entity,
+          EventDefine_1.EEventName.CharOnPositionStateChanged,
+          this.xsa,
+        ) &&
+        EventSystem_1.EventSystem.AddWithTarget(
+          this.sDe.Entity,
+          EventDefine_1.EEventName.CharOnPositionStateChanged,
+          this.xsa,
+        );
   }
   kDe(e, t) {
-    var i = this.sDe.Entity.GetComponent(115);
+    var i = this.sDe.Entity.GetComponent(116);
     if (i?.Valid) {
       var s = UE.NewArray(UE.BuiltinFloat),
         o = UE.NewArray(UE.BuiltinFloat);
-      for (const r of t.Points) s.Add(r.MoveSpeed), o.Add(r.StayTime ?? -1);
+      for (const h of t.Points) s.Add(h.MoveSpeed), o.Add(h.StayTime ?? -1);
       this.xDe = { Spline: e, Speeds: s, WaitTime: o };
       var e = Vector_1.Vector.Create(e.GetWorldLocationAtSplinePoint(0)),
         n = Vector_1.Vector.Create(
@@ -370,14 +424,14 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
       );
     !this.YLe &&
       t &&
-      (((e = Protocol_1.Aki.Protocol._1s.create()).P4n =
+      (((e = Protocol_1.Aki.Protocol.f1s.create()).F4n =
         MathUtils_1.MathUtils.NumberToLong(t)),
-      Net_1.Net.Call(15806, e, (e) => {
+      Net_1.Net.Call(15934, e, (e) => {
         e &&
-          e.DEs !== Protocol_1.Aki.Protocol.O4n.NRs &&
+          e.BEs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.DEs,
-            4561,
+            e.BEs,
+            26913,
           );
       }));
   }

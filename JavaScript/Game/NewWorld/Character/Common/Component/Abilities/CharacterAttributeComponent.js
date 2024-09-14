@@ -44,7 +44,7 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
           [...CharacterAttributeTypes_1.attributeIdsWithMax.values()].some(
             (t) => t === e,
           )) &&
-          this.Gbr?.InternalApplyModToAttribute(e, 3, r);
+          this.Gbr?.InternalApplyModToAttribute(e, 3, t);
       }),
       (this.Gbr = void 0),
       (this.Nbr = (t, e, r) => {
@@ -75,31 +75,31 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
   }
   OnInitData() {
     return (
-      this.Pia(),
+      this.Koa(),
       this.AddListener(
         CharacterAttributeTypes_1.EAttributeId.Proto_Life,
         this.Nbr,
       ),
-      this.AddListener(CharacterAttributeTypes_1.EAttributeId.e5n, this.Obr),
+      this.AddListener(CharacterAttributeTypes_1.EAttributeId.l5n, this.Obr),
       this.AddListeners(energyAttrIds, this.kbr),
       this.AddGeneralListener(this.qbr),
       !0
     );
   }
   OnActivate() {
-    this.Pia();
+    this.Koa();
   }
-  Pia() {
+  Koa() {
     var t =
-      this.Entity.CheckGetComponent(0)?.ComponentDataMap.get("ZEs")?.ZEs?.sra;
+      this.Entity.CheckGetComponent(0)?.ComponentDataMap.get("sys")?.sys?.Mna;
     if (void 0 !== t) {
       var e = new Map(),
         r = [],
         i = this.Init();
       for (const n of t) {
-        var s = n.QMs,
-          o = n.ora,
-          a = n.nra ?? 0;
+        var s = n.tSs,
+          o = n.vna,
+          a = n.pna ?? 0;
         0 !== a ? e.set(s, a) : r.push(s),
           (this.BaseValues[s] = o),
           i || (this.CurrentValues[s] = o + a);
@@ -109,14 +109,14 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
     }
   }
   static AttributeChangedNotify(t, e) {
-    var r = MathUtils_1.MathUtils.LongToNumber(e.J4n),
+    var r = MathUtils_1.MathUtils.LongToNumber(e.s5n),
       r = ModelManager_1.ModelManager.CreatureModel.GetEntity(r),
-      i = r?.Entity?.GetComponent(158);
+      i = r?.Entity?.GetComponent(159);
     if (r && i) {
-      for (const s of e.PSs)
-        CharacterAttributeTypes_1.stateAttributeIds.has(s.QMs) &&
-          (s.d6n = s.KMs),
-          s.QMs && i.SyncValueFromServer(s.QMs, s.KMs, s.d6n);
+      for (const s of e.GSs)
+        CharacterAttributeTypes_1.stateAttributeIds.has(s.tSs) &&
+          (s.y6n = s.eSs),
+          s.tSs && i.SyncValueFromServer(s.tSs, s.eSs, s.y6n);
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnServerAttributeChange,
         r.Id,
@@ -125,29 +125,29 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
     }
   }
   static RecoverPropChangedNotify(t, e) {
-    var r = MathUtils_1.MathUtils.LongToNumber(e.J4n),
+    var r = MathUtils_1.MathUtils.LongToNumber(e.s5n),
       i =
         ModelManager_1.ModelManager.CreatureModel.GetEntity(
           r,
-        )?.Entity?.GetComponent(158);
+        )?.Entity?.GetComponent(159);
     if (i) {
       var s =
         FormationAttributeController_1.FormationAttributeController.GetPredictedServerStopTime() -
-        Number(MathUtils_1.MathUtils.LongToBigInt(e.c6n));
-      for (const o of e.PSs)
-        i.SyncRecoverPropFromServer(o.m6n, o.d6n, o.C6n, o.f6n, Number(s));
+        Number(MathUtils_1.MathUtils.LongToBigInt(e.S6n));
+      for (const o of e.GSs)
+        i.SyncRecoverPropFromServer(o.E6n, o.y6n, o.I6n, o.L6n, Number(s));
     }
   }
   OnInit() {
-    return (this.m1t = this.Entity.CheckGetComponent(159)), !0;
+    return (this.m1t = this.Entity.CheckGetComponent(160)), !0;
   }
   OnStart() {
-    this.Pia();
+    this.Koa();
     var t = this.Entity.CheckGetComponent(3);
     this.Gbr = t?.Actor.AbilitySystemComponent;
-    for (const e of CharacterAttributeTypes_1.stateAttributeIds.values())
+    for (const e of CharacterAttributeTypes_1.attributeIdsWithMax.values())
       this.Gbr?.InternalApplyModToAttribute(e, 3, this.GetCurrentValue(e));
-    for (const r of CharacterAttributeTypes_1.attributeIdsWithMax.values())
+    for (const r of CharacterAttributeTypes_1.stateAttributeIds.values())
       this.Gbr?.InternalApplyModToAttribute(r, 3, this.GetCurrentValue(r));
     return !0;
   }
@@ -157,7 +157,7 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
         CharacterAttributeTypes_1.EAttributeId.Proto_Life,
         this.Nbr,
       ),
-      this.RemoveListener(CharacterAttributeTypes_1.EAttributeId.e5n, this.Obr),
+      this.RemoveListener(CharacterAttributeTypes_1.EAttributeId.l5n, this.Obr),
       this.RemoveListeners(energyAttrIds, this.kbr),
       this.RemoveGeneralListener(this.qbr),
       !0
@@ -168,19 +168,19 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.SyncHandle("UFn")],
+  [CombatMessage_1.CombatNet.SyncHandle("OFn")],
   CharacterAttributeComponent,
   "AttributeChangedNotify",
   null,
 ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("_3n")],
+    [CombatMessage_1.CombatNet.SyncHandle("v3n")],
     CharacterAttributeComponent,
     "RecoverPropChangedNotify",
     null,
   ),
   (CharacterAttributeComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(158)],
+    [(0, RegisterComponent_1.RegisterComponent)(159)],
     CharacterAttributeComponent,
   )),
   (exports.CharacterAttributeComponent = CharacterAttributeComponent);

@@ -76,14 +76,14 @@ class CalabashRootView extends UiViewBase_1.UiViewBase {
           a = i === this.Lvt?.TabViewName ? this.Lvt?.Param : void 0;
         this.Tvt.ToggleCallBack(t, i, e, a),
           this.Lvt && (this.Lvt.Param = void 0);
-        let n = !1;
+        let s = !1;
         "CalabashLevelUpTabView" === i
-          ? ((this.t5e = CALABASH_LEVEL_UP_HELP_ID), (n = !0))
+          ? ((this.t5e = CALABASH_LEVEL_UP_HELP_ID), (s = !0))
           : "CalabashCollectTabView" === i
-            ? ((this.t5e = CALABASH_COLLECT_HELP_ID), (n = !0))
+            ? ((this.t5e = CALABASH_COLLECT_HELP_ID), (s = !0))
             : "VisionRecoveryTabView" === i &&
-              ((this.t5e = VISION_RECOVERY_HELP_ID), (n = !0)),
-          this.Ivt.SetHelpButtonShowState(n),
+              ((this.t5e = VISION_RECOVERY_HELP_ID), (s = !0)),
+          this.Ivt.SetHelpButtonShowState(s),
           this.GetItem(3)?.SetUIActive("CalabashCollectTabView" === i);
       }),
       (this.yqe = (e) => {
@@ -203,7 +203,11 @@ class CalabashRootView extends UiViewBase_1.UiViewBase {
     var e = this.yvt.findIndex(
       (e) => "CalabashLevelUpTabView" === e.ChildViewName,
     );
-    0 <= e && this.Ivt.GetTabItemByIndex(e)?.BindRedDot("CalabashTab");
+    0 <= e && this.Ivt.GetTabItemByIndex(e)?.BindRedDot("CalabashTab"),
+      0 <=
+        (e = this.yvt.findIndex(
+          (e) => "VisionRecoveryTabView" === e.ChildViewName,
+        )) && this.Ivt.GetTabItemByIndex(e)?.BindRedDot("VisionRecovery");
   }
   OnBeforeShow() {
     this.Dvt ? this.Nvt() : this.Tvt.SetCurrentTabViewState(!0),

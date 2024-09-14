@@ -15,7 +15,7 @@ class BpActorController extends ControllerBase_1.ControllerBase {
     r?.IsValid()
       ? o.op_Equality(Media_Actor_Group) &&
         (r
-          ? (r.SetActorTickEnabled(!1), this.Npa.add(r))
+          ? (r.SetActorTickEnabled(!1), this.NSa.add(r))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("World", 39, "MediaActor 只能放在Actor下实现接口"))
       : Log_1.Log.CheckError() &&
@@ -25,10 +25,10 @@ class BpActorController extends ControllerBase_1.ControllerBase {
     r?.IsValid()
       ? o.op_Equality(Media_Actor_Group) &&
         (r
-          ? (this.Npa.delete(r),
-            0 === this.Npa.size &&
-              this.Fpa &&
-              (this.Fpa.Stop(), (this.Fpa = void 0), Log_1.Log.CheckDebug()) &&
+          ? (this.NSa.delete(r),
+            0 === this.NSa.size &&
+              this.FSa &&
+              (this.FSa.Stop(), (this.FSa = void 0), Log_1.Log.CheckDebug()) &&
               Log_1.Log.Debug(
                 "World",
                 39,
@@ -44,16 +44,16 @@ class BpActorController extends ControllerBase_1.ControllerBase {
         Log_1.Log.Error("World", 39, "BpActorController sceneBp 是空的");
   }
   static OnTick(o) {
-    this.Vpa();
+    this.VSa();
   }
-  static Vpa() {
-    if (0 < this.Npa.size && (this.Hpa++, this.Hpa > MEDIA_ACTOR_TICK_FEQ)) {
-      let o = void (this.Hpa = 0);
+  static VSa() {
+    if (0 < this.NSa.size && (this.HSa++, this.HSa > MEDIA_ACTOR_TICK_FEQ)) {
+      let o = void (this.HSa = 0);
       var t,
         e,
         i = ControllerHolder_1.ControllerHolder.CameraController.CameraLocation;
       let r = Number.MAX_VALUE;
-      for (const _ of this.Npa) {
+      for (const _ of this.NSa) {
         var l = _,
           s = Vector_1.Vector.Create(),
           l =
@@ -66,17 +66,17 @@ class BpActorController extends ControllerBase_1.ControllerBase {
         (e = ((t = 0), puerts_1.$ref)(0)),
         o.GetAoiRange(e),
         (t = (0, puerts_1.$unref)(e)),
-        this.Fpa === o
+        this.FSa === o
           ? t &&
             t + AOI_OFFSET < r &&
-            (this.Fpa.Stop(), (this.Fpa = void 0), Log_1.Log.CheckDebug()) &&
+            (this.FSa.Stop(), (this.FSa = void 0), Log_1.Log.CheckDebug()) &&
             Log_1.Log.Debug(
               "World",
               39,
               "BpActorController MediaActor 超出Aoi 关掉当前",
             )
-          : (this.Fpa &&
-              (this.Fpa.Stop(), (this.Fpa = void 0), Log_1.Log.CheckDebug()) &&
+          : (this.FSa &&
+              (this.FSa.Stop(), (this.FSa = void 0), Log_1.Log.CheckDebug()) &&
               Log_1.Log.Debug(
                 "World",
                 39,
@@ -85,7 +85,7 @@ class BpActorController extends ControllerBase_1.ControllerBase {
             o &&
               t &&
               r < t &&
-              (o.Start(), (this.Fpa = o), Log_1.Log.CheckDebug()) &&
+              (o.Start(), (this.FSa = o), Log_1.Log.CheckDebug()) &&
               Log_1.Log.Debug(
                 "World",
                 39,
@@ -94,7 +94,7 @@ class BpActorController extends ControllerBase_1.ControllerBase {
     }
   }
 }
-((exports.BpActorController = BpActorController).Hpa = 0),
-  (BpActorController.Npa = new Set()),
-  (BpActorController.Fpa = void 0);
+((exports.BpActorController = BpActorController).HSa = 0),
+  (BpActorController.NSa = new Set()),
+  (BpActorController.FSa = void 0);
 //# sourceMappingURL=BpActorController.js.map

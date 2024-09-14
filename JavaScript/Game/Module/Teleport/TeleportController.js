@@ -2,7 +2,8 @@
 var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TeleportController = void 0);
-const puerts_1 = require("puerts"),
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
   UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
@@ -12,6 +13,8 @@ const puerts_1 = require("puerts"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   CameraController_1 = require("../../Camera/CameraController"),
   CameraUtility_1 = require("../../Camera/CameraUtility"),
@@ -22,6 +25,7 @@ const puerts_1 = require("puerts"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  RoleAudioController_1 = require("../../NewWorld/Character/Role/RoleAudioController"),
   PerfSightController_1 = require("../../PerfSight/PerfSightController"),
   ScreenEffectSystem_1 = require("../../Render/Effect/ScreenEffectSystem/ScreenEffectSystem"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
@@ -33,6 +37,8 @@ const puerts_1 = require("puerts"),
   LevelLoadingController_1 = require("../LevelLoading/LevelLoadingController"),
   PlotData_1 = require("../Plot/PlotData"),
   RoleController_1 = require("../RoleUi/RoleController"),
+  SeamlessTravelDefine_1 = require("../SeamlessTravel/SeamlessTravelDefine"),
+  SeamlessTravelTreadmill_1 = require("../SeamlessTravel/SeamlessTravelTreadmill"),
   TeleportDefine_1 = require("../Teleport/TeleportDefine"),
   VideoLauncher_1 = require("../Video/VideoLauncher"),
   DISTANCE_THRESHOLD_1 = 3e3,
@@ -41,17 +47,19 @@ const puerts_1 = require("puerts"),
 class TeleportController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      Net_1.Net.Register(27457, this.AIo),
-      Net_1.Net.Register(6459, this.PIo),
+      Net_1.Net.Register(26900, this.AIo),
+      Net_1.Net.Register(19660, this.PIo),
       !0
     );
   }
   static OnClear() {
-    return Net_1.Net.UnRegister(27457), Net_1.Net.UnRegister(6459), !0;
+    return Net_1.Net.UnRegister(26900), Net_1.Net.UnRegister(19660), !0;
   }
   static OnTick(e) {
-    ModelManager_1.ModelManager.TeleportModel.IsTeleport ||
-      (void 0 !== TeleportController.xIo && this.AIo(TeleportController.xIo));
+    ModelManager_1.ModelManager.TeleportModel.Treadmill &&
+      ModelManager_1.ModelManager.TeleportModel.Treadmill.Tick(e),
+      ModelManager_1.ModelManager.TeleportModel.IsTeleport ||
+        (void 0 !== TeleportController.xIo && this.AIo(TeleportController.xIo));
   }
   static CheckCanTeleport() {
     return !RoleController_1.RoleController.IsInRoleTrial();
@@ -96,10 +104,10 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         ));
     let l = t;
     return (((l = l || new TeleportDefine_1.TeleportContext())
-      .TeleportReason === Protocol_1.Aki.Protocol.u4s.Proto_Action ||
-      l.TeleportReason === Protocol_1.Aki.Protocol.u4s.Vvs) &&
+      .TeleportReason === Protocol_1.Aki.Protocol.v4s.brh ||
+      l.TeleportReason === Protocol_1.Aki.Protocol.v4s.Xvs) &&
       ModelManager_1.ModelManager.AutoRunModel.IsInLogicTreeGmMode()) ||
-      (l.TeleportReason === Protocol_1.Aki.Protocol.u4s.Proto_Gm &&
+      (l.TeleportReason === Protocol_1.Aki.Protocol.v4s.Proto_Gm &&
         ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot())
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
@@ -121,22 +129,22 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       ModelManager_1.ModelManager.GameModeModel.AddLoadMapHandle(
         "SendTeleportTransferRequestById",
       );
-    e = Protocol_1.Aki.Protocol.aCs.create({ J4n: e });
-    Net_1.Net.Call(12463, e, (e) => {
+    e = Protocol_1.Aki.Protocol.mCs.create({ s5n: e });
+    Net_1.Net.Call(15217, e, (e) => {
       ModelManager_1.ModelManager.GameModeModel.RemoveLoadMapHandle(
         "SendTeleportTransferRequestById",
       ),
         GlobalData_1.GlobalData.World
-          ? e.O4n !==
-              Protocol_1.Aki.Protocol.O4n
+          ? e.Q4n !==
+              Protocol_1.Aki.Protocol.Q4n
                 .Proto_ErrPlayerIsTeleportCanNotDoTeleport &&
-            e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+            e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             ((ModelManager_1.ModelManager.GameModeModel.IsTeleport = !1),
             (ModelManager_1.ModelManager.WorldMapModel.WaitToTeleportMarkItem =
               void 0),
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              16509,
+              e.Q4n,
+              15798,
             ))
           : ((ModelManager_1.ModelManager.GameModeModel.IsTeleport = !1),
             (ModelManager_1.ModelManager.WorldMapModel.WaitToTeleportMarkItem =
@@ -232,11 +240,14 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         ),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 15),
         ControllerHolder_1.ControllerHolder.CreatureController.CreateEntityFromPending(
-          Protocol_1.Aki.Protocol.xks.Proto_Normal,
+          Protocol_1.Aki.Protocol.Nks.Proto_Normal,
         ),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 16),
         n.ResetPromise(),
         (n.IsTeleport = !1),
+        RoleAudioController_1.RoleAudioController.SetUpdateAudioDynamicTrace(
+          !0,
+        ),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "无加载传送:处理完成事件(开始)"),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 1),
@@ -282,7 +293,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       "FakeTeleportToPositionImpl",
       async () => (
         r.CreatePromise(),
-        e.TeleportReason === Protocol_1.Aki.Protocol.u4s.Proto_Gm &&
+        e.TeleportReason === Protocol_1.Aki.Protocol.v4s.Proto_Gm &&
           (await LevelLoadingController_1.LevelLoadingController.WaitCloseLoading(
             7,
           )),
@@ -305,31 +316,31 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       t.Promise
     );
   }
-  static async BIo(o, e, r, t) {
-    var l = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    let a = void 0;
-    l && (a = l.Entity.GetComponent(3));
+  static async BIo(t, e, l, a) {
+    var o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    let r = void 0;
+    o && (r = o.Entity.GetComponent(3));
     const _ = ModelManager_1.ModelManager.TeleportModel;
     if (_.IsTeleport)
       return (
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Teleport", 30, "传送:重复调用,正在传送中", [
             "Reason",
-            r,
+            l,
           ]),
         !1
       );
     switch (
-      ((_.CallSource = t.TeleportCallSource),
-      a?.Valid &&
-        (_.StartPosition.DeepCopy(a.ActorLocationProxy),
-        _.StartRotation.DeepCopy(a.ActorRotationProxy)),
-      _.TargetPosition.DeepCopy(o),
+      ((_.CallSource = a.TeleportCallSource),
+      r?.Valid &&
+        (_.StartPosition.DeepCopy(r.ActorLocationProxy),
+        _.StartRotation.DeepCopy(r.ActorRotationProxy)),
+      _.TargetPosition.DeepCopy(t),
       e
         ? (_.TargetRotation.DeepCopy(e), (_.TargetRotation.Pitch = 0))
         : ((_.TargetRotation.Pitch = 0),
-          a?.Valid
-            ? (_.TargetRotation.Yaw = a.ActorRotationProxy.Yaw)
+          r?.Valid
+            ? (_.TargetRotation.Yaw = r.ActorRotationProxy.Yaw)
             : (_.TargetRotation.Yaw = 0)),
       (_.TargetRotation.Roll = 0),
       Log_1.Log.CheckInfo() &&
@@ -341,12 +352,12 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           ["目标位置", _.TargetPosition],
           ["开始角度", _.StartRotation.Yaw],
           ["目标角度", _.TargetRotation.Yaw],
-          ["原因", t.TeleportReason],
-          ["传送类型", t.CtxType],
-          ["Reason", r],
+          ["原因", a.TeleportReason],
+          ["传送类型", a.CtxType],
+          ["Reason", l],
         ),
       (_.IsTeleport = !0),
-      ModelManager_1.ModelManager.GameModeModel.SetBornInfo(o, e),
+      ModelManager_1.ModelManager.GameModeModel.SetBornInfo(t, e),
       (ModelManager_1.ModelManager.GameModeModel.IsTeleport = !0),
       (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 2),
       ModelManager_1.ModelManager.GameModeModel.AddLoadMapHandle(
@@ -356,46 +367,46 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Teleport", 30, "传送:处理开始事件(开始)", [
           "Reason",
-          r,
+          l,
         ]),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.TeleportStart,
         !0,
       ),
-      l?.Valid &&
+      o?.Valid &&
         EventSystem_1.EventSystem.EmitWithTarget(
-          l.Entity,
+          o.Entity,
           EventDefine_1.EEventName.TeleportStartEntity,
         ),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Teleport", 30, "传送:处理开始事件(完成)"),
       _.CreatePromise(),
       (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 3),
-      t.TeleportReason)
+      a.TeleportReason)
     ) {
-      case Protocol_1.Aki.Protocol.u4s.Proto_Fall:
-      case Protocol_1.Aki.Protocol.u4s.Proto_Rouge:
+      case Protocol_1.Aki.Protocol.v4s.Proto_Fall:
+      case Protocol_1.Aki.Protocol.v4s.Proto_Rouge:
         break;
-      case Protocol_1.Aki.Protocol.u4s.Proto_Action:
-      case Protocol_1.Aki.Protocol.u4s.Vvs:
-        if (t.Option)
-          switch (t.Option.l5n) {
-            case Protocol_1.Aki.Protocol.l5n.Proto_PlayMp4:
+      case Protocol_1.Aki.Protocol.v4s.brh:
+      case Protocol_1.Aki.Protocol.v4s.Xvs:
+        if (a.Option)
+          switch (a.Option.p5n) {
+            case Protocol_1.Aki.Protocol.p5n.Proto_PlayMp4:
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("Teleport", 46, "TransitionType.PlayMp4开始"),
-                this.FIo(t.Option.d5n);
+                this.FIo(a.Option.y5n);
               break;
-            case Protocol_1.Aki.Protocol.l5n.Proto_CenterText:
+            case Protocol_1.Aki.Protocol.p5n.Proto_CenterText:
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("Teleport", 46, "TransitionType.CenterText开始"),
-                this.TeleportWithCenterTextStart(t.Option.m5n);
+                this.TeleportWithCenterTextStart(a.Option.E5n);
               break;
-            case Protocol_1.Aki.Protocol.l5n.Proto_PlayEffect:
+            case Protocol_1.Aki.Protocol.p5n.Proto_PlayEffect:
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("Teleport", 46, "TransitionType.PlayEffect开始"),
-                "" !== t.Option.d5n &&
+                "" !== a.Option.y5n &&
                   ResourceSystem_1.ResourceSystem.LoadAsync(
-                    t.Option.d5n,
+                    a.Option.y5n,
                     UE.EffectScreenPlayData_C,
                     (e) => {
                       ScreenEffectSystem_1.ScreenEffectSystem.GetInstance().PlayScreenEffect(
@@ -404,6 +415,11 @@ class TeleportController extends ControllerBase_1.ControllerBase {
                     },
                     102,
                   );
+              break;
+            case Protocol_1.Aki.Protocol.p5n.Proto_Seamless:
+              Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info("Teleport", 51, "TransitionType.Seamless开始"),
+                this.SeamlessTeleportStart();
               break;
             default:
               await LevelLoadingController_1.LevelLoadingController.WaitOpenLoading(
@@ -425,7 +441,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
     }
     ResourceSystem_1.ResourceSystem.SetLoadModeInLoading(
       GlobalData_1.GlobalData.World,
-      r,
+      l,
     ),
       (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 4),
       (2 !== ModelManager_1.ModelManager.TeleportModel.TeleportMode &&
@@ -433,20 +449,71 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         ControllerHolder_1.ControllerHolder.WorldController.ForceGarbageCollection(
           !1,
         ),
-      this.qIo(),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnUpdateSceneTeam,
-        this.qIo,
-      );
+      4 !== _.TeleportMode &&
+        (this.qIo(),
+        EventSystem_1.EventSystem.Add(
+          EventDefine_1.EEventName.OnUpdateSceneTeam,
+          this.qIo,
+        ));
     e = new AsyncTask_1.AsyncTask("TeleportToPositionImpl", async () => {
-      PerfSightController_1.PerfSightController.StartPersistentOrDungeon(!1),
-        UE.PerfSightHelper.BeginExtTag("Teleport"),
-        UE.PerfSightHelper.BeginExtTag("Teleport.CheckVoxelStreaming"),
+      if (
+        (PerfSightController_1.PerfSightController.StartPersistentOrDungeon(!1),
+        cpp_1.FKuroPerfSightHelper.BeginExtTag("Teleport"),
+        cpp_1.FKuroPerfSightHelper.BeginExtTag("Teleport.CheckVoxelStreaming"),
         ControllerHolder_1.ControllerHolder.GameModeController.ForceDisableGamePaused(
           !0,
         ),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Teleport", 30, "传送:时停解除(开始)", ["Reason", r]);
+          Log_1.Log.Info("Teleport", 30, "传送:时停解除(开始)", ["Reason", l]),
+        4 === _.TeleportMode)
+      ) {
+        InputDistributeController_1.InputDistributeController.RefreshInputTag(),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Teleport", 51, "传送:等待特效铺满屏幕(开始)"),
+          await _.EffectFillScreen.Promise,
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Teleport", 51, "传送:等待特效铺满屏幕(结束)");
+        const o =
+          ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
+            3,
+          );
+        if (_.SeamlessConfig?.LeastTime) {
+          const r = MathUtils_1.MathUtils.CommonTempVector;
+          r.DeepCopy(o.ActorLocationProxy),
+            (r.Z +=
+              SeamlessTravelTreadmill_1.DEFAULT_SEAMLESS_TRANSITION_HEIGHT),
+            Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info("Teleport", 51, "传送:等待地板资产加载完成(开始)"),
+            await _.SeamlessAssetLoaded.Promise,
+            Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info("Teleport", 51, "传送:等待地板资产加载完成(结束)"),
+            Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info("Teleport", 51, "传送:地板显形(开始)"),
+            _.Treadmill.ResetLockOnLocation(r),
+            _.Treadmill.AppearEffect(() => {
+              Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info("Teleport", 51, "传送:地板显形(结束)"),
+                TimerSystem_1.TimerSystem.Delay(() => {
+                  Log_1.Log.CheckInfo() &&
+                    Log_1.Log.Info("Teleport", 51, "传送:地板隐形(开始)"),
+                    _.Treadmill.DisappearEffect(() => {
+                      Log_1.Log.CheckInfo() &&
+                        Log_1.Log.Info("Teleport", 51, "传送:地板隐形(结束)"),
+                        ModelManager_1.ModelManager.TeleportModel.TransitionMapUnloaded.SetResult(
+                          !0,
+                        );
+                    });
+                }, _.SeamlessConfig.LeastTime * MathUtils_1.MathUtils.SecondToMillisecond);
+            }),
+            TimerSystem_1.TimerSystem.Next(() => {
+              o.TeleportAndFindStandLocation(r),
+                CameraController_1.CameraController.FightCamera.LogicComponent.ResetFightCameraLogic(
+                  !1,
+                  !0,
+                );
+            });
+        }
+      }
       var e =
         2 === ModelManager_1.ModelManager.TeleportModel.TeleportMode ||
         1 === ModelManager_1.ModelManager.TeleportModel.TeleportMode;
@@ -459,14 +526,14 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         await this.HIo(!0),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:检测体素流送(完成)"),
-        UE.PerfSightHelper.EndExtTag("Teleport.CheckVoxelStreaming"),
-        UE.PerfSightHelper.BeginExtTag("Teleport.CheckStreaming"),
+        cpp_1.FKuroPerfSightHelper.EndExtTag("Teleport.CheckVoxelStreaming"),
+        cpp_1.FKuroPerfSightHelper.BeginExtTag("Teleport.CheckStreaming"),
         e &&
           ControllerHolder_1.ControllerHolder.WorldController.ForceGarbageCollection(
             !1,
           ),
         ControllerHolder_1.ControllerHolder.GameModeController.AddOrRemoveRenderAssetsQueryViewInfo(
-          o,
+          t,
           ResourceSystem_1.WAIT_RENDER_ASSET_DURATION,
         ),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 13),
@@ -476,8 +543,8 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 7, "传送:检测场景流送(完成)"),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 14),
-        UE.PerfSightHelper.EndExtTag("Teleport.CheckStreaming"),
-        UE.PerfSightHelper.BeginExtTag("Teleport.CheckRenderAssets"),
+        cpp_1.FKuroPerfSightHelper.EndExtTag("Teleport.CheckStreaming"),
+        cpp_1.FKuroPerfSightHelper.BeginExtTag("Teleport.CheckRenderAssets"),
         e &&
           (ControllerHolder_1.ControllerHolder.WorldController.ForceGarbageCollection(
             !1,
@@ -488,26 +555,34 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         ),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 15),
         ControllerHolder_1.ControllerHolder.CreatureController.CreateEntityFromPending(
-          Protocol_1.Aki.Protocol.xks.Proto_Normal,
+          Protocol_1.Aki.Protocol.Nks.Proto_Normal,
         ),
         await ControllerHolder_1.ControllerHolder.GameModeController.CheckRenderAssetsStreamingCompleted(
-          o,
+          t,
           "传送:",
         ),
-        UE.PerfSightHelper.EndExtTag("Teleport.CheckRenderAssets"),
-        UE.PerfSightHelper.BeginExtTag("Teleport.LoadTeam"),
+        cpp_1.FKuroPerfSightHelper.EndExtTag("Teleport.CheckRenderAssets"),
+        4 === _.TeleportMode &&
+          a.Option?.R$s?.A$s &&
+          (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Teleport", 51, "传送:等待地板卸载(开始)"),
+          await _.TransitionMapUnloaded.Promise,
+          Log_1.Log.CheckInfo()) &&
+          Log_1.Log.Info("Teleport", 51, "传送:等待地板卸载(结束)"),
+        cpp_1.FKuroPerfSightHelper.BeginExtTag("Teleport.LoadTeam"),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:等待编队加载(开始)"),
         await ModelManager_1.ModelManager.SceneTeamModel.LoadTeamPromise
           ?.Promise,
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:等待编队加载(完成)"),
-        UE.PerfSightHelper.EndExtTag("Teleport.LoadTeam"),
-        UE.PerfSightHelper.BeginExtTag("Teleport.CloseLoading"),
-        EventSystem_1.EventSystem.Remove(
-          EventDefine_1.EEventName.OnUpdateSceneTeam,
-          this.qIo,
-        ),
+        cpp_1.FKuroPerfSightHelper.EndExtTag("Teleport.LoadTeam"),
+        cpp_1.FKuroPerfSightHelper.BeginExtTag("Teleport.CloseLoading"),
+        4 !== _.TeleportMode &&
+          EventSystem_1.EventSystem.Remove(
+            EventDefine_1.EEventName.OnUpdateSceneTeam,
+            this.qIo,
+          ),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:设置角色状态(开始)"),
         TeleportController.GIo(),
@@ -515,9 +590,12 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           Log_1.Log.Info("Teleport", 30, "传送:设置角色状态(完成)"),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 16),
         (ModelManager_1.ModelManager.GameModeModel.IsTeleport = !1),
+        RoleAudioController_1.RoleAudioController.SetUpdateAudioDynamicTrace(
+          !0,
+        ),
         ResourceSystem_1.ResourceSystem.SetLoadModeInGame(
           GlobalData_1.GlobalData.World,
-          r,
+          l,
         ),
         e &&
           ControllerHolder_1.ControllerHolder.WorldController.ForceGarbageCollection(
@@ -527,18 +605,18 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           EventDefine_1.EEventName.FixBornLocation,
         ),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 19),
-        t.TeleportReason)
+        a.TeleportReason)
       ) {
-        case Protocol_1.Aki.Protocol.u4s.Proto_Fall:
+        case Protocol_1.Aki.Protocol.v4s.Proto_Fall:
           await LevelLoadingController_1.LevelLoadingController.WaitCloseLoading(
             1,
           );
           break;
-        case Protocol_1.Aki.Protocol.u4s.Proto_Action:
-        case Protocol_1.Aki.Protocol.u4s.Vvs:
-          if (t.Option)
-            switch (t.Option.l5n) {
-              case Protocol_1.Aki.Protocol.l5n.Proto_PlayMp4:
+        case Protocol_1.Aki.Protocol.v4s.brh:
+        case Protocol_1.Aki.Protocol.v4s.Xvs:
+          if (a.Option)
+            switch (a.Option.p5n) {
+              case Protocol_1.Aki.Protocol.p5n.Proto_PlayMp4:
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info("Teleport", 46, "传送:CG传送完成(开始)"),
                   await _.CgTeleportCompleted?.Promise,
@@ -550,7 +628,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
                   Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info("Teleport", 46, "传送:CG传送完成(完成)");
                 break;
-              case Protocol_1.Aki.Protocol.l5n.Proto_CenterText:
+              case Protocol_1.Aki.Protocol.p5n.Proto_CenterText:
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info("Teleport", 46, "传送:黑幕白字传送完成(开始)"),
                   await _.CgTeleportCompleted?.Promise,
@@ -566,13 +644,16 @@ class TeleportController extends ControllerBase_1.ControllerBase {
                       "传送:黑幕白字传送完成(完成)",
                     );
                 break;
-              case Protocol_1.Aki.Protocol.l5n.Proto_PlayEffect:
+              case Protocol_1.Aki.Protocol.p5n.Proto_PlayEffect:
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Teleport",
                     46,
                     "TransitionType.PlayEffect结束",
                   );
+                break;
+              case Protocol_1.Aki.Protocol.p5n.Proto_Seamless:
+                this.SeamlessTeleportEnd();
                 break;
               default:
                 await LevelLoadingController_1.LevelLoadingController.WaitCloseLoading(
@@ -591,27 +672,29 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       }
       return (
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 20),
-        UE.PerfSightHelper.EndExtTag("Teleport.CloseLoading"),
-        UE.PerfSightHelper.BeginExtTag("Teleport.TeleportFinishRequest"),
+        cpp_1.FKuroPerfSightHelper.EndExtTag("Teleport.CloseLoading"),
+        cpp_1.FKuroPerfSightHelper.BeginExtTag(
+          "Teleport.TeleportFinishRequest",
+        ),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:通知服务器传送完成(开始)"),
         this.kIo(),
         await _.TeleportFinishRequest.Promise,
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:通知服务器传送完成(完成)"),
-        UE.PerfSightHelper.EndExtTag("Teleport.TeleportFinishRequest"),
-        UE.PerfSightHelper.BeginExtTag("Teleport.TeleportFinish"),
+        cpp_1.FKuroPerfSightHelper.EndExtTag("Teleport.TeleportFinishRequest"),
+        cpp_1.FKuroPerfSightHelper.BeginExtTag("Teleport.TeleportFinish"),
         InputDistributeController_1.InputDistributeController.RefreshInputTag(),
         (_.IsTeleport = !1),
-        TeleportController.OIo(t.TeleportId),
+        TeleportController.OIo(a.TeleportId),
         _.ResetPromise(),
         PerfSightController_1.PerfSightController.MarkLevelLoadCompleted(),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:处理完成事件(开始)"),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.TeleportComplete,
-          t.TeleportCallSource,
-          t.TeleportReason,
+          a.TeleportCallSource,
+          a.TeleportReason,
         ),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:处理完成事件(完成)"),
@@ -621,12 +704,12 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           !1,
         ),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Teleport", 30, "传送:时停解除(完成)", ["Reason", r]),
+          Log_1.Log.Info("Teleport", 30, "传送:时停解除(完成)", ["Reason", l]),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Teleport", 30, "传送:完成", ["Reason", r]),
+          Log_1.Log.Info("Teleport", 30, "传送:完成", ["Reason", l]),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 1),
-        UE.PerfSightHelper.EndExtTag("Teleport.TeleportFinish"),
-        UE.PerfSightHelper.EndExtTag("Teleport"),
+        cpp_1.FKuroPerfSightHelper.EndExtTag("Teleport.TeleportFinish"),
+        cpp_1.FKuroPerfSightHelper.EndExtTag("Teleport"),
         !0
       );
     });
@@ -636,7 +719,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       e.Promise
     );
   }
-  static CKs(e, o) {
+  static zQs(e, o) {
     const r = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
         GlobalData_1.GlobalData.World,
         UE.WorldPartitionSubsystem.StaticClass(),
@@ -690,12 +773,12 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         (r = r.GetComponentByClass(
           UE.WorldPartitionStreamingSourceComponent.StaticClass(),
         )),
-        (t.CheckStreamingCompletedTimerId = this.CKs(r, o)),
+        (t.CheckStreamingCompletedTimerId = this.zQs(r, o)),
         await o.Promise,
         (t.CheckStreamingCompletedTimerId = void 0))
       : (e ? t.VoxelStreamingCompleted : t.StreamingCompleted).SetResult(!0);
   }
-  static gKs(o, r, t, l = !1) {
+  static ZQs(o, r, t, l = !1) {
     var e = o.TargetGrids;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
@@ -812,14 +895,14 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         t = t.GetComponentByClass(
           UE.WorldPartitionStreamingSourceComponent.StaticClass(),
         );
-      (r.CheckStreamingCompletedTimerId = this.gKs(t, a, o, !e)),
+      (r.CheckStreamingCompletedTimerId = this.ZQs(t, a, o, !e)),
         await a.Promise,
         (r.CheckStreamingCompletedTimerId = void 0);
     } else (e ? r.VoxelStreamingCompleted : r.StreamingCompleted).SetResult(!0);
   }
   static kIo() {
-    var e = new Protocol_1.Aki.Protocol.cCs();
-    Net_1.Net.Call(22302, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.pCs();
+    Net_1.Net.Call(25905, e, (e) => {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Teleport",
@@ -838,36 +921,74 @@ class TeleportController extends ControllerBase_1.ControllerBase {
     });
   }
   static GIo() {
-    var e,
-      o,
-      r = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    r?.Valid
-      ? ((e = r.Entity.GetComponent(3)),
-        (o = ModelManager_1.ModelManager.TeleportModel),
-        e.Actor.CharacterMovement?.SetMovementMode(
-          e.Actor.CharacterMovement?.DefaultLandMovementMode,
-        ),
-        e.TeleportAndFindStandLocation(o.TargetPosition),
-        e.SetInputRotator(o.TargetRotation),
-        e.SetActorRotation(
-          o.TargetRotation.ToUeRotator(),
-          "TeleportController",
-          !1,
-        ),
-        r.Entity.GetComponent(160)?.ResetCharState(),
-        r.Entity.GetComponent(162)?.MainAnimInstance?.SyncAnimStates(void 0),
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    if (e?.Valid) {
+      var o = e.Entity.GetComponent(3);
+      const l = ModelManager_1.ModelManager.TeleportModel;
+      4 !== l.TeleportMode
+        ? (o.Actor.CharacterMovement?.SetMovementMode(
+            o.Actor.CharacterMovement?.DefaultLandMovementMode,
+          ),
+          e.Entity.GetComponent(163)?.MainAnimInstance?.SyncAnimStates(void 0),
+          o.SetInputRotator(l.TargetRotation),
+          o.SetActorRotation(
+            l.TargetRotation.ToUeRotator(),
+            "TeleportController",
+            !1,
+          ),
+          e.Entity.GetComponent(161)?.ResetCharState(),
+          o.TeleportAndFindStandLocation(l.TargetPosition),
+          CameraController_1.CameraController.FightCamera.LogicComponent.SetRotation(
+            CameraUtility_1.CameraUtility.GetCameraDefaultFocusUeRotator(),
+          ),
+          CameraController_1.CameraController.FightCamera.LogicComponent.ResetFightCameraLogic())
+        : TimerSystem_1.TimerSystem.Next(() => {
+            var e,
+              o,
+              r,
+              t =
+                ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
+                  3,
+                );
+            t?.Valid
+              ? ((e = l.TargetRotation.Yaw - t.ActorRotationProxy.Yaw),
+                t.TeleportAndFindStandLocation(l.TargetPosition),
+                t.SetInputRotator(l.TargetRotation),
+                t.SetActorRotation(
+                  l.TargetRotation.ToUeRotator(),
+                  "TeleportController",
+                  !1,
+                ),
+                (o = t.ActorVelocityProxy),
+                (r = Vector_1.Vector.Create()),
+                Rotator_1.Rotator.Create(0, e, 0)
+                  .Quaternion()
+                  .RotateVector(o, r),
+                t.MoveComp.SetForceSpeed(r),
+                (o =
+                  CameraController_1.CameraController.FightCamera.LogicComponent
+                    .CameraRotation),
+                (t = MathUtils_1.MathUtils.WrapAngle(o.Yaw + e)),
+                (r = new UE.Rotator(o.Pitch, t, o.Roll)),
+                CameraController_1.CameraController.FightCamera.LogicComponent.SetRotation(
+                  r,
+                ),
+                CameraController_1.CameraController.FightCamera.LogicComponent.ResetFightCameraLogic(
+                  !1,
+                  !0,
+                ))
+              : Log_1.Log.CheckError() &&
+                Log_1.Log.Error("Teleport", 51, "无缝传送:失败,找不到当前实体");
+          }),
         (TeleportController.WIo = TimerSystem_1.TimerSystem.Delay(() => {
           (ModelManager_1.ModelManager.DeadReviveModel.SkipFallInjure = !1),
             (TeleportController.WIo = void 0);
         }, SKIP_FALL_INJURE_TIME)),
-        CameraController_1.CameraController.FightCamera.LogicComponent.SetRotation(
-          CameraUtility_1.CameraUtility.GetCameraDefaultFocusUeRotator(),
-        ),
-        CameraController_1.CameraController.FightCamera.LogicComponent.ResetFightCameraLogic(),
-        1 === o.CallSource &&
+        1 === l.CallSource &&
           DeadReviveController_1.DeadReviveController.PlayerReviveEnded(),
-        r.Entity.GetComponent(175)?.ResetDrowning())
-      : Log_1.Log.CheckError() &&
+        e.Entity.GetComponent(176)?.ResetDrowning();
+    } else
+      Log_1.Log.CheckError() &&
         Log_1.Log.Error("Teleport", 30, "传送:失败,找不到当前实体");
   }
   static KIo(e) {
@@ -947,7 +1068,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       (ModelManager_1.ModelManager.GameModeModel.UseShowCenterText = !0),
       e
         ? (ModelManager_1.ModelManager.PlotModel.PlayFlow =
-            new PlotData_1.PlotFlow(e._5n, e.u5n, e.c5n))
+            new PlotData_1.PlotFlow(e.v5n, e.M5n, e.S5n))
         : Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 46, "transitionFlow为空"),
       await LevelLoadingController_1.LevelLoadingController.WaitOpenLoading(
@@ -955,6 +1076,71 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         0,
       ),
       ModelManager_1.ModelManager.PlotModel.ShowCenterTextForTeleport();
+  }
+  static SeamlessTeleportStart() {
+    const r = ModelManager_1.ModelManager.TeleportModel;
+    r.IsInSeamlessTeleport &&
+      ((r.Treadmill = new SeamlessTravelTreadmill_1.SeamlessTravelTreadmill()),
+      r.Treadmill.Init(r.SeamlessConfig, (e) => {
+        r.SeamlessAssetLoaded?.SetResult(e);
+      }),
+      r.SeamlessConfig?.EffectPath
+        ? ResourceSystem_1.ResourceSystem.LoadAsync(
+            r.SeamlessConfig.EffectPath,
+            UE.EffectScreenPlayData_C,
+            (e, o) => {
+              e?.IsValid()
+                ? ((ModelManager_1.ModelManager.TeleportModel.SeamlessEffectData =
+                    e),
+                  ScreenEffectSystem_1.ScreenEffectSystem.GetInstance().PlayScreenEffect(
+                    e,
+                  ),
+                  TimerSystem_1.TimerSystem.Delay(
+                    () => {
+                      ModelManager_1.ModelManager.TeleportModel.EffectFillScreen.SetResult(
+                        !0,
+                      );
+                    },
+                    (r.SeamlessConfig?.EffectExpandTime ?? 1) *
+                      MathUtils_1.MathUtils.SecondToMillisecond,
+                  ))
+                : (Log_1.Log.CheckError() &&
+                    Log_1.Log.Error("Teleport", 51, "加载无缝传送特效失败", [
+                      "Path",
+                      o,
+                    ]),
+                  ModelManager_1.ModelManager.TeleportModel.EffectFillScreen.SetResult(
+                    !1,
+                  ));
+            },
+            102,
+          )
+        : (Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Teleport", 51, "没有配置无缝传送特效路径"),
+          ModelManager_1.ModelManager.TeleportModel.EffectFillScreen.SetResult(
+            !1,
+          )));
+  }
+  static SeamlessTeleportEnd() {
+    var e,
+      o = ModelManager_1.ModelManager.TeleportModel;
+    o.IsInSeamlessTeleport &&
+      ((e = o.SeamlessEffectData),
+      ScreenEffectSystem_1.ScreenEffectSystem.GetInstance().EndScreenEffect(e),
+      (o.SeamlessEndHandle = TimerSystem_1.TimerSystem.Delay(() => {
+        this.FinishSeamlessTeleport();
+      }, o.SeamlessConfig.EffectCollapseTime * MathUtils_1.MathUtils.SecondToMillisecond)));
+  }
+  static FinishSeamlessTeleport() {
+    var e = ModelManager_1.ModelManager.TeleportModel;
+    e.IsInSeamlessTeleport &&
+      (e.Treadmill.Destroy(),
+      (e.Treadmill = void 0),
+      (e.SeamlessEffectData = void 0),
+      (e.SeamlessEndHandle = void 0),
+      (e.IsInSeamlessTeleport = !1),
+      (e.SeamlessConfig = void 0),
+      InputDistributeController_1.InputDistributeController.RefreshInputTag());
   }
 }
 (exports.TeleportController = TeleportController),
@@ -974,22 +1160,22 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       e.Actor.CharacterMovement.SetMovementMode(0);
   }),
   (TeleportController.AIo = (e) => {
-    var o = e.nvs,
-      r = e.h5n,
+    var o = e.cvs,
+      r = e.f5n,
       t =
         ModelManager_1.ModelManager.WorldMapModel.WaitToTeleportMarkItem
           ?.MarkConfigId,
-      t =
+      l =
         ((ModelManager_1.ModelManager.LoadingModel.TargetTeleportId = t),
         new TeleportDefine_1.TeleportContext(
-          e.E9n,
+          e.x9n,
           t,
           void 0,
-          o ? o._vs : void 0,
+          o ? o.fvs : void 0,
           r,
         )),
-      l = new UE.Vector(e.p7n, e.v7n, e.f7n),
-      a = new UE.Rotator(0, e.$Ds, 0);
+      a = new UE.Vector(e.D7n, e.A7n, e.L7n),
+      t = new UE.Rotator(0, e.YDs, 0);
     let _ = "";
     try {
       _ = JSON.stringify(o);
@@ -1003,10 +1189,10 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           7,
           "服务端驱动执行行为组",
           ["Context", _],
-          ["PosX", e.p7n],
-          ["PosY", e.v7n],
-          ["PosZ", e.f7n],
-          ["Reason", e.E9n],
+          ["PosX", e.D7n],
+          ["PosY", e.A7n],
+          ["PosZ", e.L7n],
+          ["Reason", e.x9n],
         ),
       ModelManager_1.ModelManager.TeleportModel.IsTeleport)
     )
@@ -1032,34 +1218,58 @@ class TeleportController extends ControllerBase_1.ControllerBase {
               "目标角度",
               ModelManager_1.ModelManager.TeleportModel.TargetRotation.Yaw,
             ],
-            ["原因", t.TeleportReason],
+            ["原因", l.TeleportReason],
           );
     else {
-      switch (((TeleportController.xIo = void 0), t.TeleportReason)) {
-        case Protocol_1.Aki.Protocol.u4s.Proto_Action:
-        case Protocol_1.Aki.Protocol.u4s.Vvs:
-          r && r.l5n === Protocol_1.Aki.Protocol.l5n.Proto_CenterText
-            ? (ModelManager_1.ModelManager.TeleportModel.TeleportMode = 0)
-            : (ModelManager_1.ModelManager.TeleportModel.TeleportMode =
-                _a.KIo(l));
+      switch (((TeleportController.xIo = void 0), l.TeleportReason)) {
+        case Protocol_1.Aki.Protocol.v4s.brh:
+        case Protocol_1.Aki.Protocol.v4s.Xvs:
+          if (r)
+            switch (r.p5n) {
+              case Protocol_1.Aki.Protocol.p5n.Proto_CenterText:
+                ModelManager_1.ModelManager.TeleportModel.TeleportMode = 0;
+                break;
+              case Protocol_1.Aki.Protocol.p5n.Proto_Seamless:
+                (ModelManager_1.ModelManager.TeleportModel.TeleportMode = 4),
+                  (ModelManager_1.ModelManager.TeleportModel.IsInSeamlessTeleport =
+                    !0),
+                  ModelManager_1.ModelManager.TeleportModel.SeamlessEndHandle &&
+                    (TimerSystem_1.TimerSystem.Remove(
+                      ModelManager_1.ModelManager.TeleportModel
+                        .SeamlessEndHandle,
+                    ),
+                    (ModelManager_1.ModelManager.TeleportModel.SeamlessEndHandle =
+                      void 0)),
+                  (ModelManager_1.ModelManager.TeleportModel.SeamlessConfig =
+                    new SeamlessTravelDefine_1.SeamlessTravelContext()),
+                  ModelManager_1.ModelManager.TeleportModel.SeamlessConfig.ParseConfig(
+                    l.Option.R$s,
+                  );
+                break;
+              default:
+                ModelManager_1.ModelManager.TeleportModel.TeleportMode =
+                  _a.KIo(a);
+            }
+          else
+            ModelManager_1.ModelManager.TeleportModel.TeleportMode = _a.KIo(a);
           break;
-        case Protocol_1.Aki.Protocol.u4s.Proto_BtRollbackFailed:
-          r?.l5n === Protocol_1.Aki.Protocol.l5n.Proto_FadeInScreen
+        case Protocol_1.Aki.Protocol.v4s.Proto_BtRollbackFailed:
+          r?.p5n === Protocol_1.Aki.Protocol.p5n.Proto_FadeInScreen
             ? (ModelManager_1.ModelManager.TeleportModel.TeleportMode = 3)
             : (ModelManager_1.ModelManager.TeleportModel.TeleportMode =
-                _a.KIo(l));
+                _a.KIo(a));
           break;
-        case Protocol_1.Aki.Protocol.u4s.Proto_Drown:
+        case Protocol_1.Aki.Protocol.v4s.Proto_Drown:
           ModelManager_1.ModelManager.TeleportModel.TeleportMode = 2;
           break;
         default:
           ModelManager_1.ModelManager.TeleportModel.TeleportMode = 1;
       }
       TeleportController.TeleportToPosition(
-        l,
         a,
-        "OnTeleportNotify",
         t,
+        "OnTeleportNotify",
+        l,
       ).finally(() => {
         ModelManager_1.ModelManager.TeleportModel.TeleportMode = 1;
       }),

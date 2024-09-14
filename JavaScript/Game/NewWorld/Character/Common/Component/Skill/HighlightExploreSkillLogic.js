@@ -15,8 +15,24 @@ class HighlightExploreSkillLogic {
       (this.wmo = 1001),
       (this.pzo = !1),
       (this.vzo = !1),
+      (this.DYa = 0),
       (this.TDe = void 0),
       (this.Lie = void 0),
+      (this.tWr = () => {
+        this.DYa < 0 ||
+          (this.DYa > TimerSystem_1.MAX_TIME
+            ? ((this.DYa -= TimerSystem_1.MAX_TIME),
+              (this.TDe = TimerSystem_1.TimerSystem.Delay(
+                this.tWr,
+                TimerSystem_1.MAX_TIME,
+              )))
+            : this.DYa < TimerSystem_1.MIN_TIME
+              ? this.Mzo()
+              : (this.TDe = TimerSystem_1.TimerSystem.Delay(
+                  this.Mzo,
+                  this.DYa,
+                )));
+      }),
       (this.Mzo = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -39,8 +55,8 @@ class HighlightExploreSkillLogic {
             ),
           this.Ezo(!1));
       }),
-      (this.yzo = (e, t, i) => {
-        t === this.wmo - 1001 + 210001 &&
+      (this.yzo = (t, e, i) => {
+        e === this.wmo - 1001 + 210001 &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "LevelEvent",
@@ -51,23 +67,24 @@ class HighlightExploreSkillLogic {
           this.Ezo(this.pzo));
       });
   }
-  Init(e) {
-    this.Lie = e;
+  Init(t) {
+    this.Lie = t;
   }
   Clear() {
     this.vzo && this.Ezo(), (this.Lie = void 0);
   }
-  ShowHighlightExploreSkill(e, t, i) {
+  ShowHighlightExploreSkill(t, e, i) {
     this.vzo ||
-      ((this.wmo = e),
+      (1013 === t && ModelManager_1.ModelManager.GameModeModel.IsMulti) ||
+      ((this.wmo = t),
       (this.pzo = i ?? !1),
-      (e = t * TimeUtil_1.TimeUtil.InverseMillisecond),
+      (this.DYa = e * TimeUtil_1.TimeUtil.InverseMillisecond),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("LevelEvent", 43, "主动触发玩家探索技能高亮", [
           "Id",
           this.wmo,
         ]),
-      this.Izo(e));
+      this.Izo());
   }
   HideHighlightExploreSkill() {
     this.vzo &&
@@ -78,7 +95,7 @@ class HighlightExploreSkillLogic {
         ]),
       this.Ezo(this.pzo));
   }
-  Izo(e) {
+  Izo() {
     (this.vzo = !0),
       this.Lie && !this.Lie.HasTag(this.fzo) && this.Lie.AddTag(this.fzo),
       RouletteController_1.RouletteController.ExploreSkillSetRequest(this.wmo),
@@ -90,25 +107,25 @@ class HighlightExploreSkillLogic {
         EventDefine_1.EEventName.OnChangeSelectedExploreId,
         this.Szo,
       ),
-      (this.TDe = TimerSystem_1.TimerSystem.Delay(this.Mzo, e));
+      this.tWr();
   }
-  Ezo(t = !1) {
+  Ezo(e = !1) {
     if (
       ((this.vzo = !1),
       this.Lie && this.Lie.HasTag(this.fzo) && this.Lie.RemoveTag(this.fzo),
-      t)
+      e)
     ) {
-      let e = !0;
-      (e =
+      let t = !0;
+      (t =
         1013 === this.wmo &&
-        ((t = ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
-        (t =
+        ((e = ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
+        (e =
           ControllerHolder_1.ControllerHolder.FormationDataController.GetPlayerEntity(
-            t,
-          )?.GetComponent(204))) &&
-        t.IsFollowerEnable()
+            e,
+          )?.GetComponent(206))) &&
+        e.IsFollowerEnable()
           ? !1
-          : e) && RouletteController_1.RouletteController.SetLastSkillId();
+          : t) && RouletteController_1.RouletteController.SetLastSkillId();
     }
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.CharUseSkill,
@@ -120,7 +137,8 @@ class HighlightExploreSkillLogic {
       ),
       this.TDe &&
         TimerSystem_1.TimerSystem.Has(this.TDe) &&
-        (TimerSystem_1.TimerSystem.Remove(this.TDe), (this.TDe = void 0));
+        (TimerSystem_1.TimerSystem.Remove(this.TDe), (this.TDe = void 0)),
+      (this.DYa = 0);
   }
 }
 exports.HighlightExploreSkillLogic = HighlightExploreSkillLogic;

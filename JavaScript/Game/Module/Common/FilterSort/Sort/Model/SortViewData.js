@@ -49,6 +49,12 @@ class SortResultData {
       for (const e of this.fUt.values()) t.Append(e), t.Append(",");
     return t.RemoveLast(1), t.ToString();
   }
+  ConvertToStorageData() {
+    var t = { ConfigId: this.Mne, IsAscending: this.pUt },
+      e = this.GetSelectBaseSort(),
+      e = (e && (t.SelectBaseSort = e[0]), this.GetSelectAttributeSort());
+    return e && ((e = Array.from(e.keys())), (t.SelectAttributeSort = e)), t;
+  }
 }
 exports.SortResultData = SortResultData;
 //# sourceMappingURL=SortViewData.js.map

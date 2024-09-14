@@ -49,7 +49,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (t[(t.ExitClimb = 25)] = "ExitClimb"),
       (t[(t.NormalSki = 26)] = "NormalSki"),
       (t[(t.StandUp = 27)] = "StandUp"),
-      (t[(t.Soar = 28)] = "Soar");
+      (t[(t.Soar = 28)] = "Soar"),
+      (t[(t.Roll = 29)] = "Roll");
   })(
     (ECharMoveState = exports.ECharMoveState || (exports.ECharMoveState = {})),
   ),
@@ -106,6 +107,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
         ECharMoveState.Slide,
         ECharMoveState.Flying,
         ECharMoveState.Soar,
+        ECharMoveState.Roll,
       ]),
     ],
     [

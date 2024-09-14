@@ -177,7 +177,7 @@ let BasePerformComponent = class BasePerformComponent extends EntityComponent_1.
   }
 };
 (BasePerformComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(38)],
+  [(0, RegisterComponent_1.RegisterComponent)(39)],
   BasePerformComponent,
 )),
   (exports.BasePerformComponent = BasePerformComponent);
@@ -230,10 +230,10 @@ class PlayingMontageInfo {
       (this.RYo = s);
   }
   CheckPlayCondition() {
-    return !this.TYo || this.TYo();
+    return !this.TYo || this.TYo(this);
   }
   OnClearInfo() {
-    this.DYo && this.DYo(),
+    this.DYo && this.DYo(this),
       this.TimerHandle &&
         TimerSystem_1.TimerSystem.Has(this.TimerHandle) &&
         (TimerSystem_1.TimerSystem.Remove(this.TimerHandle),
@@ -244,7 +244,7 @@ class PlayingMontageInfo {
       (this.TYo = void 0);
   }
   PlayMontageLoop(t) {
-    this.LYo && this.LYo(), this.UYo(t);
+    this.LYo && this.LYo(this), this.UYo(t);
   }
   UYo(i) {
     if (this.MontageConfig.IsInfiniteLoop && this.MontageConfig.IsPlayLoop)

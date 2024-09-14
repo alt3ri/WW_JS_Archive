@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configRogueAffixById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configRogueAffixById.GetConfig"),
   CONFIG_STAT_PREFIX = "configRogueAffixById.GetConfig(";
 exports.configRogueAffixById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, e = !0) => {
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
-        var i = KEY_PREFIX + `#${o})`;
-        const f = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (f) return f;
+  GetConfig: (o, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      e =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
+      if (n) {
+        var f = KEY_PREFIX + `#${o})`;
+        const t = ConfigCommon_1.ConfigCommon.GetConfig(f);
+        if (t)
+          return (
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            t
+          );
       }
       if (
-        (n =
+        (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,31 +58,36 @@ exports.configRogueAffixById = {
               o,
             ]))
       ) {
-        var n,
-          i = void 0;
+        f = void 0;
         if (
-          (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, f] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
           )),
-          n)
+          e)
         ) {
-          const f = RogueAffix_1.RogueAffix.getRootAsRogueAffix(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+          const t = RogueAffix_1.RogueAffix.getRootAsRogueAffix(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(f.buffer)),
           );
           return (
-            e &&
-              ((n = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(n, f)),
+            n &&
+              ((e = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(e, t)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            f
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            t
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=RogueAffixById.js.map

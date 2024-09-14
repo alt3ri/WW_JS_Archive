@@ -25,7 +25,14 @@ class EntityComponentSystem {
   }
   static Destroy(t, e) {
     var n = e.Clear();
-    return !!n && (t.UsePool ? EntityComponentSystem.ClearComponent(e) : n);
+    return (
+      !!n &&
+      (t.UsePool &&
+        (EntityComponentSystem.PerformanceStateClearComponent.Start(),
+        (n = EntityComponentSystem.ClearComponent(e)),
+        EntityComponentSystem.PerformanceStateClearComponent.Stop()),
+      n)
+    );
   }
   static ClearComponent(t) {
     var e = EntityComponentSystem.ComponentTemplates.get(t.constructor.name);
@@ -80,5 +87,7 @@ class EntityComponentSystem {
 }
 ((exports.EntityComponentSystem = EntityComponentSystem).ComponentTemplates =
   new Map()),
-  (EntityComponentSystem.PerformanceStateClearComponent = void 0);
+  (EntityComponentSystem.PerformanceStateClearComponent = Stats_1.Stat.Create(
+    "PerformanceStateClearComponent",
+  ));
 //# sourceMappingURL=EntityComponentSystem.js.map

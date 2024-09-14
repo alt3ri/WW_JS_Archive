@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configAbpMontageDataById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configAbpMontageDataById.GetConfig"),
   CONFIG_STAT_PREFIX = "configAbpMontageDataById.GetConfig(";
 exports.configAbpMontageDataById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, n = !0) => {
-    if (
-      (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      a =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (a) {
       if (n) {
-        var a = KEY_PREFIX + `#${o})`;
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(a);
-        if (t) return t;
+        var e = KEY_PREFIX + `#${o})`;
+        const i = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (i)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            i
+          );
       }
       if (
-        (e =
+        (a =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,31 +58,36 @@ exports.configAbpMontageDataById = {
               o,
             ]))
       ) {
-        var e,
-          a = void 0;
+        e = void 0;
         if (
-          (([e, a] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([a, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
           )),
-          e)
+          a)
         ) {
-          const t = AbpMontageData_1.AbpMontageData.getRootAsAbpMontageData(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
+          const i = AbpMontageData_1.AbpMontageData.getRootAsAbpMontageData(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
           );
           return (
             n &&
-              ((e = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(e, t)),
+              ((a = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(a, i)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            i
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=AbpMontageDataById.js.map

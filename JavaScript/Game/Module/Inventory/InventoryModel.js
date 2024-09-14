@@ -8,7 +8,6 @@ const Log_1 = require("../../../Core/Common/Log"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
-  TimeUtil_1 = require("../../Common/TimeUtil"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
@@ -61,7 +60,7 @@ class InventoryModel extends ModelBase_1.ModelBase {
           "[InventoryRedDot]当前本地保存的常规道具红点",
           ["commonItemRedDotSet", r],
         ),
-      r)
+      r && 0 < r.size)
     ) {
       let e = !1;
       for (const a of r)
@@ -205,26 +204,21 @@ class InventoryModel extends ModelBase_1.ModelBase {
       if (e.IsOverTime())
         ControllerHolder_1.ControllerHolder.InventoryController.InvalidItemRemoveRequest();
       else {
-        const r = e.GetEndTime();
-        var t;
-        this.emi.has(r) ||
-          ((t = Math.max(
-            r - TimeUtil_1.TimeUtil.GetServerTimeStamp(),
-            TimerSystem_1.MIN_TIME,
-          )),
-          (e = StringUtils_1.StringUtils.Format(
+        const t = e.GetEndTime() + TimerSystem_1.MIN_TIME;
+        this.emi.has(t) ||
+          ((e = StringUtils_1.StringUtils.Format(
             CD_TIME_REASON,
             e.GetConfigId().toString(),
             e.GetUniqueId().toString(),
           )),
-          (t = TimerSystem_1.RealTimeTimerSystem.Delay(
+          (e = TimerSystem_1.RealTimeTimerSystem.EmitOnTime(
             () => {
-              this.lmi(r);
+              this.lmi(t);
             },
             t,
             void 0,
             e,
-          )) && (this.emi.add(r), this.tmi.set(r, t)));
+          )) && (this.emi.add(t), this.tmi.set(t, e)));
       }
   }
   lmi(e) {
@@ -387,20 +381,20 @@ class InventoryModel extends ModelBase_1.ModelBase {
     return t;
   }
   GetPhantomItemDataListByPhantomItem(e) {
-    const t = [];
+    const r = [];
     return (
       e.forEach((e) => {
-        e = new PhantomItemData_1.PhantomItemData(e.J4n, e.L9n, e.Bws, 3);
-        t.push(e);
+        var t = new PhantomItemData_1.PhantomItemData(e.s5n, e.b9n, e.Vws, 3);
+        t.SetFetterGroupId(e.Kws), r.push(t);
       }),
-      t
+      r
     );
   }
   GetPhantomItemDataListByAddCountItemInfo(e) {
     const t = [];
     return (
       e.forEach((e) => {
-        e = new PhantomItemData_1.PhantomItemData(e.J4n, e.L9n, 0, 3);
+        e = new PhantomItemData_1.PhantomItemData(e.s5n, e.b9n, 0, 3);
         t.push(e);
       }),
       t

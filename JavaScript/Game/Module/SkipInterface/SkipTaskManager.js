@@ -15,41 +15,41 @@ class SkipTaskManager {
   static CheckContainLimitViewName(e) {
     return this.EIo.has(e);
   }
-  static RunByConfigId(a) {
-    var i =
+  static RunByConfigId(a, i) {
+    var r =
       ConfigManager_1.ConfigManager.SkipInterfaceConfig.GetAccessPathConfig(a);
-    if (i) {
-      var r = i.SkipName;
-      if (void 0 === r)
+    if (r) {
+      var t = r.SkipName;
+      if (void 0 === t)
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "SkipInterface",
             8,
             "开始跳转任务时,没有在ESkipName中找到对应枚举",
-            ["skipTaskName", r],
+            ["skipTaskName", t],
           );
-      else if (-1 !== r) {
-        var t,
-          n,
-          o = ModelManager_1.ModelManager.FunctionModel;
-        for ([t, n] of i.FunctionOpenCheckMap)
-          if (!o.IsOpen(t))
+      else if (-1 !== t) {
+        var n,
+          o,
+          s = ModelManager_1.ModelManager.FunctionModel;
+        for ([n, o] of r.FunctionOpenCheckMap)
+          if (!s.IsOpen(n))
             return (
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "SkipInterface",
                   8,
                   "开始跳转任务时,对应功能未开启，不会跳转",
-                  ["skipTaskName", r],
-                  ["functionId", t],
+                  ["skipTaskName", t],
+                  ["functionId", n],
                 ),
               void ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
-                n,
+                o,
               )
             );
-        let e = this.SIo(r);
-        (e = e || this.yIo(r))
-          ? e.Run(i.Val1, i.Val2, i.Val3)
+        let e = this.SIo(t);
+        (e = e || this.yIo(t))
+          ? e.Run(r.Val1, r.Val2, r.Val3, i)
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "SkipInterface",

@@ -21,26 +21,34 @@ class TrailPhantomProp {
     return this.breachprop();
   }
   get SubProp() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.subpropLength(), (t) =>
-      this.subprop(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.subpropLength(),
+      this.subprop,
+      this,
     );
   }
   get MainProps() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.mainpropsLength(), (t) =>
-      this.mainprops(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.mainpropsLength(),
+      this.mainprops,
+      this,
     );
   }
   get MainPropGrowth() {
     return this.mainpropgrowth();
   }
   get SubProps() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.subpropsLength(), (t) =>
-      this.subprops(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.subpropsLength(),
+      this.subprops,
+      this,
     );
   }
   get SubPropList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.subproplistLength(), (t) =>
-      this.subproplist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.subproplistLength(),
+      this.subproplist,
+      this,
     );
   }
   get FetterGroupId() {

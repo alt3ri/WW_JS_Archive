@@ -17,21 +17,21 @@ class SkillTriggerGameplayTagHandle extends SkillTriggerBase_1.SkillTriggerBaseH
       (this.cBe = void 0),
       (this.pZo = void 0),
       (this.Xte = void 0),
-      (this.gVs = void 0),
-      (this.fVs = new Map()),
+      (this.vVs = void 0),
+      (this.MVs = new Map()),
       (this.Cer = []),
-      (this.pVs = (i) => {
+      (this.SVs = (i) => {
         var t;
         i &&
           (([i, t] = this.yzt(0, i.TagId)), i) &&
           this.cBe.BeginSkill(t, { Context: "技能触发器GameplayEvent" });
       }),
-      (this.vVs = (i, t) => {
+      (this.EVs = (i, t) => {
         t &&
           (([t, i] = this.yzt(1, i)), t) &&
           this.cBe.BeginSkill(i, { Context: "技能触发器OwnedTagAdded" });
       }),
-      (this.MVs = (i, t) => {
+      (this.yVs = (i, t) => {
         var [i, e] = this.yzt(2, i);
         i &&
           (t
@@ -40,12 +40,12 @@ class SkillTriggerGameplayTagHandle extends SkillTriggerBase_1.SkillTriggerBaseH
       });
   }
   Create() {
-    (this.cBe = this.Entity.CheckGetComponent(33)),
+    (this.cBe = this.Entity.CheckGetComponent(34)),
       (this.pZo = this.Entity.CheckGetComponent(17)),
-      (this.Xte = this.Entity.CheckGetComponent(188));
+      (this.Xte = this.Entity.CheckGetComponent(190));
   }
   Destroy() {
-    this.gVs && this.gVs.EndTask();
+    this.vVs && this.vVs.EndTask();
     for (const i of this.Cer) i.EndTask();
   }
   AddSkillTrigger(t, e, s) {
@@ -59,10 +59,10 @@ class SkillTriggerGameplayTagHandle extends SkillTriggerBase_1.SkillTriggerBaseH
         ["触发器", t.GetName()],
       );
     else {
-      var a = t.TriggerData.TriggerSource,
-        l = t.TriggerData.TriggerTag.TagId;
-      let i = this.fVs.get(a);
-      if ((i || ((i = new Map()), this.fVs.set(a, i)), i.has(l)))
+      var l = t.TriggerData.TriggerSource,
+        a = t.TriggerData.TriggerTag.TagId;
+      let i = this.MVs.get(l);
+      if ((i || ((i = new Map()), this.MVs.set(l, i)), i.has(a)))
         CombatLog_1.CombatLog.Error(
           "Skill",
           this.Entity,
@@ -72,15 +72,15 @@ class SkillTriggerGameplayTagHandle extends SkillTriggerBase_1.SkillTriggerBaseH
           ["触发器", t.GetName()],
         );
       else {
-        switch ((i.set(l, [e, t]), a)) {
+        switch ((i.set(a, [e, t]), l)) {
           case 0:
-            this.gVs || (this.gVs = this.pZo.CreateGameplayEventTask(this.pVs));
+            this.vVs || (this.vVs = this.pZo.CreateGameplayEventTask(this.SVs));
             break;
           case 1:
-            this.Cer.push(this.Xte.ListenForTagAddOrRemove(l, this.vVs));
+            this.Cer.push(this.Xte.ListenForTagAddOrRemove(a, this.EVs));
             break;
           case 2:
-            this.Cer.push(this.Xte.ListenForTagAddOrRemove(l, this.MVs));
+            this.Cer.push(this.Xte.ListenForTagAddOrRemove(a, this.yVs));
         }
         CombatLog_1.CombatLog.Info(
           "Skill",
@@ -95,13 +95,17 @@ class SkillTriggerGameplayTagHandle extends SkillTriggerBase_1.SkillTriggerBaseH
   }
   yzt(i, t) {
     var e,
-      i = this.fVs.get(i);
+      i = this.MVs.get(i);
     return (i = i && i.get(t))
       ? (([i, e] = i),
-        SkillBehaviorCondition_1.SkillBehaviorCondition.Satisfy(
+        SkillBehaviorCondition_1.SkillBehaviorCondition.SatisfyGroup(
           e.TriggerConditionGroup,
           e.TriggerConditionFormula,
-          { Entity: this.Entity, SkillComponent: this.cBe },
+          {
+            Entity: this.Entity,
+            SkillComponent: this.cBe,
+            Skill: this.cBe.GetSkill(i),
+          },
         )
           ? [!0, i]
           : (CombatLog_1.CombatLog.Info(

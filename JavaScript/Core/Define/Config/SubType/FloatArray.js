@@ -7,8 +7,10 @@ class FloatArray {
     (this.J7 = null), (this.z7 = 0);
   }
   get ArrayFloat() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.arrayfloatLength(), (t) =>
-      this.arrayfloat(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.arrayfloatLength(),
+      this.arrayfloat,
+      this,
     );
   }
   __init(t, r) {

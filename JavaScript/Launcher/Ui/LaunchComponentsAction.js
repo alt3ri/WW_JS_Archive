@@ -58,6 +58,9 @@ class LaunchComponentsAction {
   SetActive(t) {
     this.RootItem?.IsValid() && this.RootItem.SetUIActive(t);
   }
+  GetRootItem() {
+    return this.RootItem;
+  }
   AttachElement(t, e) {
     var i = this.Vyr(t);
     if (i)

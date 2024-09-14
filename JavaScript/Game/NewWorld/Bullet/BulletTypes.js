@@ -9,7 +9,7 @@ const UE = require("ue"),
   CharacterController_1 = require("../Character/CharacterController"),
   BulletDataMain_1 = require("./BulletConf/BulletDataMain");
 class HitInformation {
-  constructor(t, r, i, e, s, h, o, a, n, l, u, c, C = -1, _ = -1) {
+  constructor(t, r, i, e, s, h, o, a, l, n, u, c, C = -1, _ = -1) {
     (this.HitPosition = Vector_1.Vector.Create()),
       (this.HitEffectRotation = Rotator_1.Rotator.Create()),
       (this.CalculateType = -1),
@@ -20,11 +20,11 @@ class HitInformation {
       (this.Target = r),
       (this.HitPart = o),
       (this.BulletId = e),
-      (this.SkillLevel = n),
+      (this.SkillLevel = l),
       (this.Attacker = t),
       (this.IsShaking = h),
       (this.HitEffect = i),
-      (this.ReBulletData = l),
+      (this.ReBulletData = n),
       (this.BulletDataPreset = c),
       (this.BulletEntityId = C),
       (this.BulletRowName = u),
@@ -87,6 +87,7 @@ class KuroHitResultCache {
       (this.ImpactPointZ = new Array());
   }
   Append(t) {
+    KuroHitResultCache.MHo.Start();
     var r = t.GetHitCount(),
       i = ((this.HitCount += r), t.Actors),
       e = t.BoneNameArray,
@@ -103,7 +104,9 @@ class KuroHitResultCache {
         this.ImpactPointX.push(h.Get(t)),
         this.ImpactPointY.push(o.Get(t)),
         this.ImpactPointZ.push(a.Get(t));
+    KuroHitResultCache.MHo.Stop();
   }
 }
-(exports.KuroHitResultCache = KuroHitResultCache).MHo = void 0;
+(exports.KuroHitResultCache = KuroHitResultCache).MHo =
+  Stats_1.Stat.Create("KuroHitResultCache");
 //# sourceMappingURL=BulletTypes.js.map

@@ -16,9 +16,16 @@ class SkillCondition {
   get ConditionParam() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.conditionparamLength(),
-      (t) => this.conditionparam(t)?.key(),
-      (t) => this.conditionparam(t)?.value(),
+      this.conditionparamKey,
+      this.conditionparamValue,
+      this,
     );
+  }
+  conditionparamKey(t) {
+    return this.conditionparam(t)?.key();
+  }
+  conditionparamValue(t) {
+    return this.conditionparam(t)?.value();
   }
   get Description() {
     return this.description();
@@ -44,10 +51,10 @@ class SkillCondition {
     return this.conditionparam(t);
   }
   conditionparam(t, i) {
-    var s = this.J7.__offset(this.z7, 8);
-    return s
+    var n = this.J7.__offset(this.z7, 8);
+    return n
       ? (i || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + n) + 4 * t),
           this.J7,
         )
       : null;

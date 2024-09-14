@@ -1,16 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomUtil = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
-  DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
-  ConfigManager_1 = require("../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../Manager/ModelManager");
-var ESummonType = Protocol_1.Aki.Protocol.Summon.L3s;
 const Log_1 = require("../../../Core/Common/Log"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  PHANTOMSKILLIDSTART = 2e5,
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CombatLog_1 = require("../../Utils/CombatLog");
+var ESummonType = Protocol_1.Aki.Protocol.Summon.x3s;
+const PHANTOMSKILLIDSTART = 2e5,
   VISION_MORPH_SKILL_ID = 200001,
   VISION_MORPH_MULTI_SKILL_ID = 200003;
 class PhantomUtil {
@@ -19,10 +20,10 @@ class PhantomUtil {
     if (t === VISION_MORPH_SKILL_ID) {
       e = this.GetSummonedEntityByOwnerId(
         e,
-        Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantVision,
+        Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeConcomitantVision,
       );
       if (e?.Valid) {
-        e = e.Entity.GetComponent(34);
+        e = e.Entity.GetComponent(35);
         if (e?.IsInMultiSkill())
           return e?.CanSummonerStartNextMultiSkill()
             ? (Log_1.Log.CheckDebug() &&
@@ -88,22 +89,30 @@ class PhantomUtil {
       e.toString(),
     );
   }
-  static GetSummonedEntity(e, t, r = 0) {
-    var n = e.GetComponent(0);
-    let o = 0;
+  static GetSummonedEntity(e, t, r = 1) {
+    var o = e.GetComponent(0);
+    let n = 0;
     switch (t) {
       case ESummonType.Proto_ESummonTypeConcomitantCustom:
-        var a = n.CustomServerEntityIds;
-        if (r > a.length - 1) return;
-        o = a[r];
+        var i = o.CustomServerEntityIds;
+        if (0 === i.length) return;
+        if (r < 1 || r > i.length)
+          return void CombatLog_1.CombatLog.Error(
+            "Skill",
+            e,
+            "获取伴生物实体失败，位置参数错误",
+            ["position", r],
+            ["serverEntityIds", i],
+          );
+        n = i[r - 1];
         break;
       case ESummonType.Proto_ESummonTypeConcomitantVision:
-        o = n.VisionSkillServerEntityId;
+        n = o.VisionSkillServerEntityId;
         break;
       case ESummonType.Proto_ESummonTypeConcomitantPhantomRole:
-        o = n.VisionControlCreatureDataId ?? 0;
+        n = o.VisionControlCreatureDataId ?? 0;
     }
-    return ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
+    return ModelManager_1.ModelManager.CreatureModel.GetEntity(n);
   }
   static GetSummonedEntityByOwnerId(e, t, r = 0) {
     e = ModelManager_1.ModelManager.CharacterModel?.GetHandle(e);

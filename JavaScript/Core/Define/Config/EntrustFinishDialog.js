@@ -20,6 +20,12 @@ class EntrustFinishDialog {
   get UnchangedDialog() {
     return this.unchangeddialog();
   }
+  get UpDialogGirl() {
+    return this.updialoggirl();
+  }
+  get UnchangedDialogGirl() {
+    return this.unchangeddialoggirl();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -47,6 +53,14 @@ class EntrustFinishDialog {
   }
   unchangeddialog(t) {
     var i = this.J7.__offset(this.z7, 12);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
+  updialoggirl(t) {
+    var i = this.J7.__offset(this.z7, 14);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
+  unchangeddialoggirl(t) {
+    var i = this.J7.__offset(this.z7, 16);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }

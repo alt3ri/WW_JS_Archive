@@ -8,7 +8,7 @@ class CommonCurrencyItemListComponent {
   constructor(e) {
     (this.PTt = void 0), (this.xTt = void 0), (this.xTt = e);
   }
-  pQs(e) {
+  qXs(e) {
     return new (
       ModelManager_1.ModelManager.PowerModel.CheckItemIfPowerItem(e)
         ? PowerCurrencyItem_1.PowerCurrencyItem
@@ -20,7 +20,7 @@ class CommonCurrencyItemListComponent {
     let t = void 0;
     var o = [];
     for (let e = this.PTt.length; e < r.length; e++) {
-      const t = this.pQs(r[e]);
+      const t = this.qXs(r[e]);
       this.PTt.push(t);
       var n = t.CreateThenShowByResourceIdAsync(
         "UIItem_CommonCurrencyItem",

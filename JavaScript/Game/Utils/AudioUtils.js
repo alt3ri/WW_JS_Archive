@@ -18,7 +18,7 @@ class AudioUtils {
       (o = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
         e.PbDataId,
       )) &&
-      (e = o.Entity.GetComponent(118)) &&
+      (e = o.Entity.GetComponent(119)) &&
       e.PostAudioBoxEvent();
   }
 }

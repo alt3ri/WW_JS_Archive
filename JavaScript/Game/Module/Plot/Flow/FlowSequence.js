@@ -30,8 +30,8 @@ class FlowSequence {
       (this.L$i = 0),
       (this.D$i = void 0),
       (this.R$i = []),
-      (this.sjs = new Map()),
-      (this.ajs = new Map()),
+      (this.Djs = new Map()),
+      (this.Ajs = new Map()),
       (this.SubtitleActionPromise = void 0),
       (this.OptionActionPromise = void 0),
       (this.U$i = -1),
@@ -122,8 +122,8 @@ class FlowSequence {
       (this.L$i = void 0),
       (this.D$i = void 0),
       (this.R$i.length = 0),
-      this.sjs.clear(),
-      this.ajs.clear(),
+      this.Djs.clear(),
+      this.Ajs.clear(),
       (this.U$i = -1),
       (this.A$i = !1),
       Log_1.Log.CheckDebug() &&
@@ -232,11 +232,13 @@ class FlowSequence {
           (ModelManager_1.ModelManager.PlotModel.IsFadeIn = !0),
         this.D$i) &&
         ((t = t < this.D$i.length ? this.D$i[t] : void 0)
-          ? await TeleportController_1.TeleportController.TeleportToPositionNoLoading(
+          ? (Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug("Plot", 27, "SaveFinalPos", ["transform", t]),
+            await TeleportController_1.TeleportController.TeleportToPositionNoLoading(
               t.GetLocation().ToUeVector(),
               t.GetRotation().Rotator().ToUeRotator(),
               "FlowSequence.Stop",
-            )
+            ))
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Plot",
@@ -261,11 +263,11 @@ class FlowSequence {
         this.R$i.push(t);
       }),
       ModelManager_1.ModelManager.SequenceModel.FrameEvents.forEach((t, e) => {
-        this.ajs.set(e, t);
+        this.Ajs.set(e, t);
       }),
       ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.forEach(
         (t, e) => {
-          this.sjs.set(e, t);
+          this.Djs.set(e, t);
         },
       ),
       SequenceController_1.SequenceController.ManualFinish(),
@@ -373,27 +375,34 @@ class FlowSequence {
   OnSelectOption(t) {
     if (!this.IsInit) return !1;
     if (-1 !== this.nx.CurOptionId || this.I$i) return !1;
-    if (
-      ((this.I$i = !0),
+    (this.I$i = !0),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Plot", 27, "[FlowSequence] 选择选项", ["index", t]),
-      !this.S$i.Options || t >= this.S$i.Options.length)
-    )
-      return (
-        ControllerHolder_1.ControllerHolder.FlowController.LogError(
-          "[FlowSequence] 选项超出下标",
-        ),
-        !1
-      );
-    ControllerHolder_1.ControllerHolder.FlowController.SelectOption(
-      this.S$i.Id,
-      t,
-    );
-    t = this.S$i.Options[t];
+        Log_1.Log.Info("Plot", 27, "[FlowSequence] 选择选项", ["index", t]);
+    let e = 0,
+      i = void 0;
+    var s;
     return (
-      (this.OptionActionPromise = new CustomPromise_1.CustomPromise()),
-      this.G$i(t.Actions, this.B$i),
-      !0
+      (i =
+        "SystemOption" === this.S$i.Type
+          ? ((s = this.S$i),
+            t < (e = s.OptionConfig.SystemOptions.length)
+              ? s.OptionConfig.SystemOptions[t].Actions
+              : void 0)
+          : t < (e = this.S$i.Options?.length ?? 0)
+            ? this.S$i.Options[t].Actions
+            : void 0),
+      t >= e
+        ? (ControllerHolder_1.ControllerHolder.FlowController.LogError(
+            "[FlowSequence] 选项超出下标",
+          ),
+          !1)
+        : (ControllerHolder_1.ControllerHolder.FlowController.SelectOption(
+            this.S$i.Id,
+            t,
+          ),
+          (this.OptionActionPromise = new CustomPromise_1.CustomPromise()),
+          this.G$i(i, this.B$i),
+          !0)
     );
   }
   G$i(t, e) {
@@ -426,9 +435,9 @@ class FlowSequence {
   }
   RunSequenceFrameEventsWhenSkip(i) {
     let t = void 0;
-    (t = this.sjs.has(i) ? this.sjs.get(i) : t) &&
+    (t = this.Djs.has(i) ? this.Djs.get(i) : t) &&
       t.forEach((t) => {
-        var e = this.ajs.get(t);
+        var e = this.Ajs.get(t);
         e &&
           0 !== e.length &&
           (Log_1.Log.CheckInfo() &&

@@ -28,16 +28,30 @@ class ShopBankInfo {
   get OriginalPrice() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.originalpriceLength(),
-      (t) => this.originalprice(t)?.key(),
-      (t) => this.originalprice(t)?.value(),
+      this.originalpriceKey,
+      this.originalpriceValue,
+      this,
     );
+  }
+  originalpriceKey(t) {
+    return this.originalprice(t)?.key();
+  }
+  originalpriceValue(t) {
+    return this.originalprice(t)?.value();
   }
   get Price() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.priceLength(),
-      (t) => this.price(t)?.key(),
-      (t) => this.price(t)?.value(),
+      this.priceKey,
+      this.priceValue,
+      this,
     );
+  }
+  priceKey(t) {
+    return this.price(t)?.key();
+  }
+  priceValue(t) {
+    return this.price(t)?.value();
   }
   get Show() {
     return this.show();
@@ -82,10 +96,10 @@ class ShopBankInfo {
     return this.originalprice(t);
   }
   originalprice(t, i) {
-    var s = this.J7.__offset(this.z7, 16);
-    return s
+    var r = this.J7.__offset(this.z7, 16);
+    return r
       ? (i || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
           this.J7,
         )
       : null;
@@ -98,10 +112,10 @@ class ShopBankInfo {
     return this.price(t);
   }
   price(t, i) {
-    var s = this.J7.__offset(this.z7, 18);
-    return s
+    var r = this.J7.__offset(this.z7, 18);
+    return r
       ? (i || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
           this.J7,
         )
       : null;

@@ -59,7 +59,7 @@ class SettlementCamera {
       (this.Bme = RIGHT_YAW_RANGE_MIN),
       (this.bme = RIGHT_YAW_RANGE_MAX),
       (this.qme = MIN_VALID_YAW_RANGE),
-      (this.bzs = Vector_1.Vector.Create()),
+      (this.xea = Vector_1.Vector.Create()),
       (this.Gme = 0),
       (this.Nme = void 0),
       (this.Ome = new Rotator_1.Rotator()),
@@ -206,15 +206,18 @@ class SettlementCamera {
                 MIN_VALID_YAW_RANGE,
             ),
           (this.qme = MIN_VALID_YAW_RANGE)),
-        StringUtils_1.StringUtils.IsEmpty(this.Lme.Settings.Name) &&
+        StringUtils_1.StringUtils.IsEmpty(
+          this.Lme.Settings.ModifySettingsAdditional.Name,
+        ) &&
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
               58,
               "【结算镜头】没有配置CameraModifier名称，将自动修正为 SettlementCamera",
             ),
-          (this.Lme.Settings.Name = "SettlementCamera")),
-        this.bzs.DeepCopy(this.Tme.CharacterOffset))
+          (this.Lme.Settings.ModifySettingsAdditional.Name =
+            "SettlementCamera")),
+        this.xea.DeepCopy(this.Tme.CharacterOffset))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Camera", 58, "无结算镜头配置数据");
   }
@@ -251,10 +254,7 @@ class SettlementCamera {
           PROFILE_KEY,
         ),
         this.UpdateRotator(this.Fse.HitResult),
-        this.PlaySettlementCameraInternal(),
-        Macro_1.NOT_SHIPPING_ENVIRONMENT) &&
-        this.EnableDebugDraw &&
-        this.qzs());
+        this.PlaySettlementCameraInternal()));
   }
   UpdateRotator(t) {
     this.Jme(t), this.zme(t), this.Zme(), this.UpdateFinalRotator();
@@ -287,9 +287,9 @@ class SettlementCamera {
         this.Ome.Yaw,
         this.Ome.Roll,
       )),
-      (this.Lme.Settings.ArmOffset =
+      (this.Lme.Settings.ModifySettingsAdditional.ArmOffset =
         this.Hh.Character.CharacterActorComponent.ActorTransform.TransformVectorNoScale(
-          this.bzs.ToUeVector(),
+          this.xea.ToUeVector(),
         )),
       this.Hh.CameraModifyController.ApplyCameraModify(
         void 0,
@@ -310,7 +310,7 @@ class SettlementCamera {
     return (
       !!this.Hh.CameraModifyController.IsModified &&
       this.Hh.CameraModifyController.ModifySettings.Name ===
-        this.Lme.Settings.Name
+        this.Lme.Settings.ModifySettingsAdditional.Name
     );
   }
   Jme(i) {
@@ -639,10 +639,10 @@ class SettlementCamera {
       this.Lz.HeadingAngle() * MathUtils_1.MathUtils.RadToDeg
     );
   }
-  qzs() {
+  Pea() {
     var t =
       this.Hh.Character.CharacterActorComponent.ActorTransform.TransformPositionNoScale(
-        this.bzs.ToUeVector(),
+        this.xea.ToUeVector(),
       );
     UE.KismetSystemLibrary.DrawDebugSphere(
       GlobalData_1.GlobalData.World,

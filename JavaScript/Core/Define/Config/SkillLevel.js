@@ -22,9 +22,16 @@ class SkillLevel {
   get Consume() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.consumeLength(),
-      (t) => this.consume(t)?.key(),
-      (t) => this.consume(t)?.value(),
+      this.consumeKey,
+      this.consumeValue,
+      this,
     );
+  }
+  consumeKey(t) {
+    return this.consume(t)?.key();
+  }
+  consumeValue(t) {
+    return this.consume(t)?.value();
   }
   get Condition() {
     return this.condition();

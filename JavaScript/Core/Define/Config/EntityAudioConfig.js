@@ -24,7 +24,8 @@ class EntityAudioConfig {
   get BoneHiddenSwitch() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.bonehiddenswitchLength(),
-      (t) => this.bonehiddenswitch(t),
+      this.bonehiddenswitch,
+      this,
     );
   }
   __init(t, i) {

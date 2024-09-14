@@ -174,40 +174,40 @@ class WorldSkillCdData {
     for (const o of this.MultiSkillMap.values()) o.OnTick(t);
   }
   HandlePlayerSkillInfoPbNotify(t) {
-    if (t.Pqs) {
-      var i = t.Pqs.Dqs;
+    if (t.Gqs) {
+      var i = t.Gqs.Bqs;
       i && this.hQe(this.AllShareSkillCdData, i);
-      for (const e of t.Pqs.Aqs)
-        if (e.Rqs) {
-          let t = this.nQe(e.Lqs);
-          t || ((t = new SkillCdData()), this.OffRoleSkillCdMap.set(e.Lqs, t)),
-            this.hQe(t, e.Rqs);
+      for (const e of t.Gqs.qqs)
+        if (e.bqs) {
+          let t = this.nQe(e.xqs);
+          t || ((t = new SkillCdData()), this.OffRoleSkillCdMap.set(e.xqs, t)),
+            this.hQe(t, e.bqs);
         }
     }
   }
   hQe(t, i) {
     var e = Time_1.Time.ServerTimeStamp;
-    for (const r of i.Iqs)
-      this.lQe(r, e, t.ServerSkillCd, r.X4n), this._Qe(t, r, 0);
-    for (const l of i.Tqs) {
-      var o = l.yqs;
-      o && (this.lQe(o, e, t.ServerGroupSkillCd, l.Eqs), this._Qe(t, o, l.Eqs));
+    for (const r of i.Uqs)
+      this.lQe(r, e, t.ServerSkillCd, r.r5n), this._Qe(t, r, 0);
+    for (const l of i.wqs) {
+      var o = l.Pqs;
+      o && (this.lQe(o, e, t.ServerGroupSkillCd, l.Aqs), this._Qe(t, o, l.Aqs));
     }
   }
   _Qe(t, i, e = 0) {
-    var o = t.SkillId2GroupIdMap.get(i.X4n);
+    var o = t.SkillId2GroupIdMap.get(i.r5n);
     return (
       !!o &&
       !!(o = t.GroupSkillCdInfoMap.get(o)) &&
       (0 !== e
-        ? this.aQe(t.ServerSkillCd, e, o, i.X4n)
-        : this.aQe(t.ServerSkillCd, i.X4n, o, i.X4n),
+        ? this.aQe(t.ServerSkillCd, e, o, i.r5n)
+        : this.aQe(t.ServerSkillCd, i.r5n, o, i.r5n),
       !0)
     );
   }
   lQe(t, i, e, o) {
     var r = [];
-    for (const s of t.Sqs) {
+    for (const s of t.Dqs) {
       var l = MathUtils_1.MathUtils.LongToNumber(s);
       i < l && r.push(l);
     }

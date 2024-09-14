@@ -25,6 +25,7 @@ const UE = require("ue"),
   ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
   Log_1 = require("../../../Core/Common/Log"),
   EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
   FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
   Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
@@ -32,8 +33,8 @@ const UE = require("ue"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   GlobalData_1 = require("../../GlobalData"),
   LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
   ActorUtils_1 = require("../../Utils/ActorUtils"),
-  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
   TRIGGER_COMPONENT_TAG = new UE.FName("TriggerComponent");
 let SceneItemResetPositionComponent =
   (SceneItemResetPositionComponent_1 = class SceneItemResetPositionComponent extends (
@@ -50,21 +51,36 @@ let SceneItemResetPositionComponent =
         (this.EIe = void 0),
         (this.MMn = !1),
         (this.OnRemoveEntity = (t, e) => {
-          e = e.Entity.GetComponent(0)?.GetPbDataId() ?? 0;
-          this.EIe.GetPbDataId() === e
+          var i = e.Entity.GetComponent(0)?.GetPbDataId() ?? 0;
+          this.EIe.GetPbDataId() === i
             ? (this.MMn = !0)
-            : this.wS.includes(e) && this.vMn.push(e);
+            : this.wS.includes(i) &&
+              (this.vMn.push(i),
+              EventSystem_1.EventSystem.RemoveWithTargetUseKey(
+                this,
+                e,
+                EventDefine_1.EEventName.RemoveEntity,
+                this.OnRemoveEntity,
+              ));
         }),
         (this.GUe = (t, e, i) => {
-          var e = e.Entity.GetComponent(0)?.GetPbDataId() ?? 0;
-          this.vMn.includes(e) &&
-            ((e = this.vMn.indexOf(e)), this.vMn.splice(e, 1));
+          var o = e.Entity.GetComponent(0)?.GetPbDataId() ?? 0;
+          this.vMn.includes(o) &&
+            ((o = this.vMn.indexOf(o)),
+            this.vMn.splice(o, 1),
+            EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+              this,
+              e,
+              EventDefine_1.EEventName.RemoveEntity,
+              this.OnRemoveEntity,
+            ));
         }),
         (this.rtn = (t, e) => {
           var i;
           this.MMn ||
-            ((e = this.ftn(e))?.Valid &&
-              this.wS &&
+            !(e = this.ftn(e))?.Valid ||
+            ((i = e.Entity.GetComponent(187)) && !i.IsReadyForOverlap) ||
+            (this.wS &&
               ((i = e.Entity.GetComponent(0)?.GetPbDataId() ?? 0),
               this.wS.includes(i)) &&
               !this.vMn.includes(i) &&
@@ -78,8 +94,9 @@ let SceneItemResetPositionComponent =
         (this.itn = (t, e, i, o) => {
           var s;
           this.MMn ||
-            ((e = this.ftn(e))?.Valid &&
-              this.wS &&
+            !(e = this.ftn(e))?.Valid ||
+            ((s = e.Entity.GetComponent(187)) && !s.IsReadyForOverlap) ||
+            (this.wS &&
               ((s = e.Entity.GetComponent(0)?.GetPbDataId() ?? 0),
               this.wS.includes(s)) &&
               !this.vMn.includes(s) &&
@@ -147,21 +164,25 @@ let SceneItemResetPositionComponent =
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.AddEntity,
         this.GUe,
-      ),
-        EventSystem_1.EventSystem.Add(
-          EventDefine_1.EEventName.RemoveEntity,
-          this.OnRemoveEntity,
-        );
+      );
+      for (const e of this.wS) {
+        var t =
+          ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e);
+        t &&
+          EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+            this,
+            t,
+            EventDefine_1.EEventName.RemoveEntity,
+            this.OnRemoveEntity,
+          );
+      }
     }
     dSe() {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.AddEntity,
         this.GUe,
       ),
-        EventSystem_1.EventSystem.Remove(
-          EventDefine_1.EEventName.RemoveEntity,
-          this.OnRemoveEntity,
-        );
+        EventSystem_1.EventSystem.RemoveAllTargetUseKey(this);
     }
     _tn(t) {
       var e, i;
@@ -234,7 +255,7 @@ let SceneItemResetPositionComponent =
   });
 (SceneItemResetPositionComponent = SceneItemResetPositionComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(150)],
+    [(0, RegisterComponent_1.RegisterComponent)(151)],
     SceneItemResetPositionComponent,
   )),
   (exports.SceneItemResetPositionComponent = SceneItemResetPositionComponent);

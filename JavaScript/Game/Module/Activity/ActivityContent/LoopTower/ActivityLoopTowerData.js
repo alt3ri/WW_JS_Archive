@@ -9,9 +9,10 @@ class ActivityLoopTowerData extends ActivityData_1.ActivityBaseData {
   GetExDataRedPointShowState() {
     return (
       -1 !== ModelManager_1.ModelManager.TowerModel.CurrentSeason &&
-      (LocalStorage_1.LocalStorage.GetPlayer(
+      ((LocalStorage_1.LocalStorage.GetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.LoopTowerIsClickSeason,
-      ) ?? -1) < ModelManager_1.ModelManager.TowerModel.CurrentSeason
+      ) ?? -1) < ModelManager_1.ModelManager.TowerModel.CurrentSeason ||
+        ModelManager_1.ModelManager.TowerModel.CanGetReward())
     );
   }
 }

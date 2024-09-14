@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FragmentMemorySubView = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
   MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
   TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
@@ -32,7 +33,12 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       (this.YPn = void 0),
       (this.JPn = void 0),
       (this.zPn = () => {
-        if (this.ActivityBaseData.GetPreGuideQuestFinishState()) {
+        if (
+          (ModelManager_1.ModelManager.ActivityModel.SendActivityViewJumpClickLogData(
+            this.ActivityBaseData,
+          ),
+          this.ActivityBaseData.GetPreGuideQuestFinishState())
+        ) {
           var e =
             ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryActivityById(
               this.ActivityBaseData.Id,
@@ -41,25 +47,33 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
             ModelManager_1.ModelManager.FragmentMemoryModel.GetTopicDataById(
               e.TopicId,
             );
-          this.LevelSequencePlayer?.PlaySequencePurely("HideView01"),
-            UiLayer_1.UiLayer.SetShowMaskLayer(FRAGMENTMEMORYMASK, !0),
-            TimerSystem_1.TimerSystem.Delay(() => {
-              ModelManager_1.ModelManager.FragmentMemoryModel.MemoryFragmentMainViewTryPlayAnimation =
-                "Start02";
-              var e = new FragmentMemoryData_1.FragmentMemoryMainViewOpenData();
-              (e.FragmentMemoryTopicData = t),
-                UiManager_1.UiManager.OpenView("MemoryFragmentMainView", e),
-                UiLayer_1.UiLayer.SetShowMaskLayer(FRAGMENTMEMORYMASK, !1);
-            }, HIDEVIEW01DELAY);
+          t
+            ? (this.LevelSequencePlayer?.PlaySequencePurely("HideView01"),
+              UiLayer_1.UiLayer.SetShowMaskLayer(FRAGMENTMEMORYMASK, !0),
+              TimerSystem_1.TimerSystem.Delay(() => {
+                ModelManager_1.ModelManager.FragmentMemoryModel.MemoryFragmentMainViewTryPlayAnimation =
+                  "Start02";
+                var e =
+                  new FragmentMemoryData_1.FragmentMemoryMainViewOpenData();
+                (e.FragmentMemoryTopicData = t),
+                  UiManager_1.UiManager.OpenView("MemoryFragmentMainView", e),
+                  UiLayer_1.UiLayer.SetShowMaskLayer(FRAGMENTMEMORYMASK, !1);
+              }, HIDEVIEW01DELAY))
+            : Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info(
+                "FragmentMemory",
+                28,
+                "FragmentMemorySubView.OnFragmentMemoryButtonClick",
+                ["topicData is null", e.TopicId],
+              );
         } else
           (e = this.ActivityBaseData.GetUnFinishPreGuideQuestId()),
-            UiManager_1.UiManager.OpenView("QuestView", e),
-            ModelManager_1.ModelManager.ActivityModel.SendActivityViewJumpClickLogData(
-              this.ActivityBaseData,
-              1,
-            );
+            UiManager_1.UiManager.OpenView("QuestView", e);
       }),
       (this.ZPn = () => {
+        ModelManager_1.ModelManager.ActivityModel.SendActivityViewJumpClickLogData(
+          this.ActivityBaseData,
+        );
         const e =
           ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryActivityById(
             this.ActivityBaseData.Id,
@@ -93,7 +107,9 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       r =
         ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
         this.GetItem(3));
-    (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
+    (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(
+      this.ActivityBaseData,
+    )),
       await Promise.all([
         this.LNe.CreateThenShowByActorAsync(e.GetOwner()),
         this.DNe.CreateThenShowByActorAsync(t.GetOwner()),
@@ -109,7 +125,7 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
   OnSequenceClose(e) {}
   OnStart() {}
   OnBeforeShow() {
-    this.K8e(), this.kGn();
+    this.K8e(), this.XGn();
   }
   OnBeforeHide() {
     (ModelManager_1.ModelManager.FragmentMemoryModel.ActivitySubViewTryPlayAnimation =
@@ -124,15 +140,15 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       this.VNe(),
       this._Oe(),
       this.ZGe(),
-      this.OGn(),
-      this.NGn(),
-      this.kGn(),
+      this.KGn(),
+      this.QGn(),
+      this.XGn(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
         this.ActivityBaseData.Id,
       ));
   }
-  kGn() {
+  XGn() {
     StringUtils_1.StringUtils.IsEmpty(
       ModelManager_1.ModelManager.FragmentMemoryModel
         .ActivitySubViewTryPlayAnimation,
@@ -149,19 +165,25 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
           ""));
   }
   K8e() {
-    this.YPn?.UnBindRedDot(), this.YPn?.BindRedDot("FragmentMemoryEntrance");
+    this.YPn?.UnBindRedDot();
+    var e = this.ActivityBaseData;
+    this.YPn?.BindRedDot(
+      "FragmentMemoryTopicCollectRedDot",
+      e.GetCurrentTopicId(),
+    ),
+      this.JPn?.UnBindRedDot(),
+      this.JPn?.BindRedDot("FragmentMemoryEntrance");
   }
   _Dn() {
-    this.YPn?.UnBindRedDot();
+    this.YPn?.UnBindRedDot(), this.JPn?.UnBindRedDot();
   }
   _Oe() {
     var e = this.ActivityBaseData.IsUnLock();
     this.ANe.SetPanelConditionVisible(!e),
       e ||
-        this.ANe.SetLockTextByText(
-          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-            this.GetCurrentLockConditionText(),
-          ),
+        this.ANe.SetPerformanceConditionLock(
+          this.ActivityBaseData.ConditionGroupId,
+          this.ActivityBaseData.Id,
         );
   }
   ZGe() {
@@ -196,11 +218,11 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
     );
     this.ANe.FunctionButton.SetText(e);
   }
-  OGn() {
+  KGn() {
     var e = this.ActivityBaseData.IsUnLock();
     this.YPn?.SetActive(e);
   }
-  NGn() {
+  QGn() {
     var e = this.ActivityBaseData.GetPreGuideQuestFinishState(),
       t = this.ActivityBaseData.IsUnLock();
     this.JPn?.SetActive(t && e);

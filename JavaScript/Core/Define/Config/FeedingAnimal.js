@@ -10,14 +10,17 @@ class FeedingAnimal {
     return this.id();
   }
   get ItemIds() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.itemidsLength(), (t) =>
-      this.itemids(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.itemidsLength(),
+      this.itemids,
+      this,
     );
   }
   get GameplayTags() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.gameplaytagsLength(),
-      (t) => this.gameplaytags(t),
+      this.gameplaytags,
+      this,
     );
   }
   __init(t, i) {

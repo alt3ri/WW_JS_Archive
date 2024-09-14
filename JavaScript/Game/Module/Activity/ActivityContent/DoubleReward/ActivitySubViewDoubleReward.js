@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySubViewDoubleReward = void 0);
 const UE = require("ue"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
   ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
@@ -15,7 +16,15 @@ class ActivitySubViewDoubleReward extends ActivitySubViewBase_1.ActivitySubViewB
       (this.LNe = void 0),
       (this.DNe = void 0),
       (this.IOe = () => {
-        this.ActivityBaseData.JumpToDungeon();
+        ModelManager_1.ModelManager.ActivityModel.SendActivityViewJumpClickLogData(
+          this.ActivityBaseData,
+        ),
+          this.ActivityBaseData.JumpToDungeon();
+      }),
+      (this.wZa = () => {
+        ControllerHolder_1.ControllerHolder.ActivityController.OpenActivityConditionView(
+          this.ActivityBaseData.Id,
+        );
       });
   }
   OnRegisterComponent() {
@@ -27,8 +36,12 @@ class ActivitySubViewDoubleReward extends ActivitySubViewBase_1.ActivitySubViewB
       [4, UE.UIItem],
       [5, UE.UIItem],
       [6, UE.UIText],
+      [7, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[3, this.IOe]]);
+      (this.BtnBindInfo = [
+        [3, this.IOe],
+        [7, this.wZa],
+      ]);
   }
   OnSetData() {}
   async OnBeforeStartAsync() {
@@ -67,6 +80,7 @@ class ActivitySubViewDoubleReward extends ActivitySubViewBase_1.ActivitySubViewB
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), i[0], i[1], i[2]),
       this.GetItem(4).SetUIActive(t),
       this.GetItem(5).SetUIActive(!t),
+      this.GetButton(7).RootUIComp.SetUIActive(!t),
       t ||
         ((i = this.GetCurrentLockConditionText()),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(6), i)),

@@ -16,10 +16,10 @@ const UE = require("ue"),
   IMPOSTER_UPDATE_BATCH = "r.imp.UpdateBatch";
 class PlayerVelocityController extends ControllerBase_1.ControllerBase {
   static OnInit() {
-    return this.fva(), this.sCe(), super.OnInit();
+    return this.TEa(), this.sCe(), super.OnInit();
   }
-  static fva() {
-    this.pva = UE.KismetSystemLibrary.GetConsoleVariableIntValue(
+  static TEa() {
+    this.LEa = UE.KismetSystemLibrary.GetConsoleVariableIntValue(
       IMPOSTER_UPDATE_BATCH,
     );
   }
@@ -41,7 +41,7 @@ class PlayerVelocityController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TeleportComplete,
-        this.vva,
+        this.DEa,
       );
   }
   static aCe() {
@@ -59,83 +59,87 @@ class PlayerVelocityController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TeleportComplete,
-        this.vva,
+        this.DEa,
       );
   }
   static il() {
-    (this.Mva = !0), this.av();
+    (this.REa = !0), this.av();
   }
   static nl() {
-    this.Mva = !1;
+    this.REa = !1;
   }
   static av() {
-    this.Sva.DeepCopy(this.Eva()), this.yva();
+    this.BKs.DeepCopy(this.AEa()), this.UEa();
   }
-  static yva() {
-    this.Iva.Set(0, 0, 0);
+  static UEa() {
+    this.xEa.Set(0, 0, 0);
   }
   static OnTick(t) {
-    this.Mva && this.Tva(0.001 * t);
+    this.REa && this.PEa(0.001 * t);
   }
-  static Eva() {
+  static AEa() {
     var t =
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
         3,
       );
-    return t ? t.ActorLocationProxy : this.Sva;
+    return t ? t.ActorLocationProxy : this.BKs;
   }
-  static Tva(t) {
+  static PEa(t) {
     var e;
-    t <= 0
-      ? this.yva()
-      : t > MAX_DELTA_TIME
-        ? this.av()
-        : ((e = this.Eva()).Subtraction(this.Sva, this.Dva),
-          this.Dva.DivisionEqual(t),
-          this.Sva.DeepCopy(e),
-          (e = MathCommon_1.MathCommon.Clamp(100 * t, 0, 1)),
-          this.Iva.MultiplyEqual(1 - e),
-          this.Dva.MultiplyEqual(e),
-          this.Iva.AdditionEqual(this.Dva)),
-      this.Rva();
+    this.wEa.Start(),
+      t <= 0
+        ? this.UEa()
+        : t > MAX_DELTA_TIME
+          ? this.av()
+          : ((e = this.AEa()).Subtraction(this.BKs, this.BEa),
+            this.BEa.DivisionEqual(t),
+            this.BKs.DeepCopy(e),
+            (e = MathCommon_1.MathCommon.Clamp(100 * t, 0, 1)),
+            this.xEa.MultiplyEqual(1 - e),
+            this.BEa.MultiplyEqual(e),
+            this.xEa.AdditionEqual(this.BEa)),
+      this.bEa(),
+      this.wEa.Stop();
   }
-  static Rva() {
-    var t = this.Iva.SizeSquared() > HIGH_SPEED_SQUARED;
+  static bEa() {
+    var t = this.xEa.SizeSquared() > HIGH_SPEED_SQUARED;
     t !== this.tWo &&
       ((this.tWo = t),
-      this.Ava(),
+      this.qEa(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnHighSpeedModeChanged,
         this.tWo,
       ));
   }
-  static Ava() {
-    this.tWo ? this.Uva(Math.floor(this.pva / 2)) : this.Uva(this.pva);
+  static qEa() {
+    this.tWo ? this.GEa(Math.floor(this.LEa / 2)) : this.GEa(this.LEa);
   }
-  static Uva(t) {
-    (this.xva[0] = IMPOSTER_UPDATE_BATCH),
-      (this.xva[1] = t),
+  static GEa(t) {
+    (this.OEa[0] = IMPOSTER_UPDATE_BATCH),
+      (this.OEa[1] = t),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
-        this.xva.join(" "),
+        this.OEa.join(" "),
       );
   }
   static GetAvgVelocity() {
-    return this.Iva;
+    return this.xEa;
   }
   static IsHighSpeedMode() {
     return this.tWo;
   }
 }
 (exports.PlayerVelocityController = PlayerVelocityController),
-  ((_a = PlayerVelocityController).Mva = !1),
-  (PlayerVelocityController.Sva = Vector_1.Vector.Create(0, 0, 0)),
-  (PlayerVelocityController.Dva = Vector_1.Vector.Create(0, 0, 0)),
-  (PlayerVelocityController.Iva = Vector_1.Vector.Create(0, 0, 0)),
+  ((_a = PlayerVelocityController).REa = !1),
+  (PlayerVelocityController.BKs = Vector_1.Vector.Create(0, 0, 0)),
+  (PlayerVelocityController.BEa = Vector_1.Vector.Create(0, 0, 0)),
+  (PlayerVelocityController.xEa = Vector_1.Vector.Create(0, 0, 0)),
   (PlayerVelocityController.tWo = !1),
-  (PlayerVelocityController.pva = 128),
-  (PlayerVelocityController.xva = ["", 0]),
-  (PlayerVelocityController.Lva = void 0),
+  (PlayerVelocityController.LEa = 128),
+  (PlayerVelocityController.OEa = ["", 0]),
+  (PlayerVelocityController.wEa = Stats_1.Stat.Create(
+    "PlayerVelocityController.CalculateVelocity",
+  )),
   (PlayerVelocityController.nye = () => {
     _a.il();
   }),
@@ -145,7 +149,7 @@ class PlayerVelocityController extends ControllerBase_1.ControllerBase {
   (PlayerVelocityController.bpr = () => {
     _a.nl();
   }),
-  (PlayerVelocityController.vva = () => {
+  (PlayerVelocityController.DEa = () => {
     _a.il();
   });
 //# sourceMappingURL=PlayerVelocityController.js.map

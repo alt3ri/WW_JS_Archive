@@ -16,23 +16,23 @@ class RewardTargetTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
       (this.TabLayout = void 0),
-      (this.dla = -1),
+      (this.Cua = -1),
       (this.LoopScroll = void 0),
       (this.ypt = []),
-      (this.GIa = !0),
-      (this.nOn = (e) => {
+      (this.txa = !0),
+      (this.dOn = (e) => {
         ModelManager_1.ModelManager.MoonChasingRewardModel.GetTaskDataById(e) &&
-          (this.TabLayout.GetLayoutItemByIndex(this.dla).RefreshRedDot(),
-          this.Sla(this.dla));
+          (this.TabLayout.GetLayoutItemByIndex(this.Cua).RefreshRedDot(),
+          this.Eua(this.Cua));
       }),
-      (this.sOn = () => new TaskItem_1.TaskItem()),
+      (this.COn = () => new TaskItem_1.TaskItem()),
       (this.fqe = () => new RewardTargetTabItem_1.RewardTargetTabItem()),
       (this.Wwn = (e) => {
-        this.dla !== e &&
-          -1 !== this.dla &&
-          this.TabLayout.GetLayoutItemByIndex(this.dla)?.SetToggleState(!1, !1),
-          (this.dla = e),
-          this.Sla(this.dla);
+        this.Cua !== e &&
+          -1 !== this.Cua &&
+          this.TabLayout.GetLayoutItemByIndex(this.Cua)?.SetToggleState(!1, !1),
+          (this.Cua = e),
+          this.Eua(this.Cua);
       });
   }
   OnRegisterComponent() {
@@ -44,7 +44,7 @@ class RewardTargetTabView extends UiTabViewBase_1.UiTabViewBase {
     ];
   }
   OnStart() {
-    (this.GIa = this.ExtraParams ?? !0),
+    (this.txa = this.ExtraParams ?? !0),
       (this.TabLayout = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(0),
         this.fqe,
@@ -52,28 +52,28 @@ class RewardTargetTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.LoopScroll = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(2),
         this.GetItem(3).GetOwner(),
-        this.sOn,
+        this.COn,
       ));
   }
-  rOn(t) {
+  cOn(t) {
     var i = [];
     for (let e = 0; e < t.length; e++) {
-      var s = new MoonChasingRewardDefine_1.RewardTabData();
-      (s.NameTextId = t[e].Name),
-        (s.Index = e),
-        (s.ClickedCallback = this.Wwn),
-        (s.RefreshRedDot = (e) =>
+      var r = new MoonChasingRewardDefine_1.RewardTabData();
+      (r.NameTextId = t[e].Name),
+        (r.Index = e),
+        (r.ClickedCallback = this.Wwn),
+        (r.RefreshRedDot = (e) =>
           ModelManager_1.ModelManager.MoonChasingRewardModel.GetTaskDataRedDotStateByTabId(
             e,
           )),
-        i.push(s);
+        i.push(r);
     }
     return i;
   }
   async OnBeforeShowAsyncImplement() {
     var e =
       ModelManager_1.ModelManager.MoonChasingRewardModel.GetRewardTargetTabList();
-    await this.TabLayout.RefreshByDataAsync(this.rOn(e)),
+    await this.TabLayout.RefreshByDataAsync(this.cOn(e)),
       this.TabLayout.GetLayoutItemByIndex(0).SetToggleState(!0, !0);
   }
   OnBeforeShow() {
@@ -84,21 +84,25 @@ class RewardTargetTabView extends UiTabViewBase_1.UiTabViewBase {
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.TakenRewardTargetData,
-      this.nOn,
+      this.dOn,
     );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.TakenRewardTargetData,
-      this.nOn,
+      this.dOn,
     );
   }
-  Sla(e) {
+  GetGuideUiItemAndUiItemForShowEx(e) {
+    var t = this.LoopScroll.GetGrid(0);
+    if (void 0 !== t) return [t, t];
+  }
+  Eua(e) {
     this.ypt.length = 0;
     e = ModelManager_1.ModelManager.MoonChasingRewardModel.GetTaskDataByTabId(
       e + 1,
     ).sort(ModelManager_1.ModelManager.MoonChasingRewardModel.SortTaskData);
-    if (this.GIa) this.ypt = e;
+    if (this.txa) this.ypt = e;
     else
       for (const i of e) {
         var t = i.DeepCopy(i);

@@ -42,15 +42,15 @@ class UiNavigationModeModule {
     let s = 0,
       n = Number.MAX_VALUE,
       h = Number.MAX_VALUE,
-      v = !1,
-      M = void 0,
+      M = !1,
+      v = void 0,
       d = 0,
       l = Number.MIN_VALUE,
       u = void 0;
     var _ = Vector_1.Vector.Create(),
       g = Vector_1.Vector.Create();
-    for (let i = 0, t = e.Num(); i < t; ++i) {
-      var U = e.Get(i);
+    for (let i = 0, t = e.length; i < t; ++i) {
+      var U = e[i];
       if (U.GetNavigationComponent().CheckFindOpposite(this.Nxo)) {
         this.qBo(U).Subtraction(r, _);
         var N = _.Size(),
@@ -76,7 +76,7 @@ class UiNavigationModeModule {
                 p && N < n && (i = !0);
                 break;
               case 0:
-                (t = this.xBo(_, o, U)) && v
+                (t = this.xBo(_, o, U)) && M
                   ? MathUtils_1.MathUtils.IsNearlyEqual(c, h, 1)
                     ? this.wBo(N, n) && (i = !0)
                     : c < h && (i = !0)
@@ -85,10 +85,18 @@ class UiNavigationModeModule {
               case 2:
                 p ? (!m || N < n) && (i = !0) : !m && N < n && (i = !0);
             }
-            i && ((s = f), (n = N), (M = U), (h = c), (v = t));
+            i && ((s = f), (n = N), (v = U), (h = c), (M = t));
           } else {
-            var C = MathUtils_1.MathUtils.IsNearlyEqual(f, -1),
-              V = MathUtils_1.MathUtils.IsNearlyEqual(d, -1);
+            var C = MathUtils_1.MathUtils.IsNearlyEqual(
+                f,
+                -1,
+                MathUtils_1.MathUtils.KindaSmallNumber,
+              ),
+              V = MathUtils_1.MathUtils.IsNearlyEqual(
+                d,
+                -1,
+                MathUtils_1.MathUtils.KindaSmallNumber,
+              );
             C
               ? (!V || N > l) && ((d = f), (l = N), (u = U))
               : !V &&
@@ -102,7 +110,7 @@ class UiNavigationModeModule {
       ? !this.Nxo.HasDynamicScrollView() && 1 === i
         ? u?.GetSelectableComponent()
         : void 0
-      : M?.GetSelectableComponent();
+      : v?.GetSelectableComponent();
   }
   GBo(i, t, e) {
     let a = void 0;
@@ -115,13 +123,13 @@ class UiNavigationModeModule {
             i,
           )
         : a) ||
-        ((o = this.Nxo.GetNavigationGroup()?.ListenerList),
-        (a = this.bBo(o, i, t, e))),
-      !a && this.Nxo.HasDynamicScrollView() && this.Y2n(this.Nxo, e),
+        ((o = this.Nxo.GetNavigationGroup()),
+        (a = this.bBo(o.ListenerList, i, t, e))),
+      !a && this.Nxo.HasDynamicScrollView() && this.nNn(this.Nxo, e),
       a
     );
   }
-  Y2n(i, t) {
+  nNn(i, t) {
     i = i.ScrollView;
     i.Vertical === t &&
       (t
@@ -139,18 +147,18 @@ class UiNavigationModeModule {
       );
       if (i) return i;
     }
-    var t = this.Nxo.GetNavigationGroup()?.ListenerList,
-      e = t.Num();
+    var t = this.Nxo.GetNavigationGroup().ListenerList,
+      e = t.length;
     if (e <= 0) return this.Nxo.GetSelectableComponent();
-    var a = t.FindIndex(this.Nxo);
+    var a = t.indexOf(this.Nxo);
     if (-1 !== a) {
       for (let i = a + 1; i < e; i++) {
-        var o = t.Get(i);
+        var o = t[i];
         if (o.IsCanFocus()) return o.GetSelectableComponent();
       }
       if (!this.Nxo?.HasDynamicScrollView())
         for (let i = 0; i < a; i++) {
-          var r = t.Get(i);
+          var r = t[i];
           if (r.IsCanFocus()) return r.GetSelectableComponent();
         }
     }
@@ -165,18 +173,18 @@ class UiNavigationModeModule {
       );
       if (t) return t;
     }
-    var e = this.Nxo.GetNavigationGroup()?.ListenerList,
-      t = e.Num();
+    var e = this.Nxo.GetNavigationGroup().ListenerList,
+      t = e.length;
     if (t <= 0) return this.Nxo.GetSelectableComponent();
-    var a = e.FindIndex(this.Nxo);
+    var a = e.indexOf(this.Nxo);
     if (-1 !== a) {
       for (let i = a - 1; 0 <= i; i--) {
-        var o = e.Get(i);
+        var o = e[i];
         if (o.IsCanFocus()) return o.GetSelectableComponent();
       }
       if (!this.Nxo?.HasDynamicScrollView())
         for (let i = t - 1; i > a; i--) {
-          var r = e.Get(i);
+          var r = e[i];
           if (r.IsCanFocus()) return r.GetSelectableComponent();
         }
     }

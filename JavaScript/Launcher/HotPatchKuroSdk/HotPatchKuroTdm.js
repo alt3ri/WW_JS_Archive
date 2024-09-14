@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HotPatchKuroTdm = void 0);
 const UE = require("ue"),
   BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
+  Platform_1 = require("../Platform/Platform"),
   LauncherLog_1 = require("../Util/LauncherLog"),
   HotPatchKuroSdk_1 = require("./HotPatchKuroSdk"),
   GLOBALROUTORADDRESS = "https://sg.tdatamaster.com:8013/tdm/v1/route",
@@ -17,7 +18,7 @@ class HotPatchKuroTdm {
   static Init() {
     if (this.IfCanUseTdm()) {
       if (UE.KuroLauncherLibrary.IsFirstIntoLauncher()) {
-        "IOS" === UE.GameplayStatics.GetPlatformName() &&
+        Platform_1.Platform.IsIOSPlatform() &&
           UE.TDMStaticLibrary.RegisterLifeCycle();
         let e = "kuro";
         HotPatchKuroSdk_1.HotPatchKuroSdk.CanUseSdk() &&

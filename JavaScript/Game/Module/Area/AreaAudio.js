@@ -55,29 +55,17 @@ class AreaAudio {
       (this.hWe = () => {
         this.nWe();
       }),
+      (this.bwa = (t) => {
+        for (const e of t) this.lWe(e);
+      }),
+      (this.qwa = (t) => {
+        for (const e of t) this.cWe(e);
+      }),
       (this.lWe = (t) => {
-        this.oWe.add(t),
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Audio",
-              4,
-              "[BGM]仇恨添加OnAggroAdd：",
-              ["entityId", t],
-              ["AggroSetSize", this.oWe.size],
-            ),
-          this._We(),
-          this.nWe() || this.uWe();
+        this.oWe.add(t), this._We(), this.nWe() || this.uWe();
       }),
       (this.cWe = (t) => {
-        this.oWe.delete(t),
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Audio",
-              4,
-              "[BGM]仇恨删除OnAggroRemoved：",
-              ["entityId", t],
-              ["AggroSetSize", this.oWe.size],
-            );
+        this.oWe.delete(t);
       }),
       (this.mWe = () => {
         this.dWe();
@@ -85,6 +73,12 @@ class AreaAudio {
       (this.OnRemoveEntity = (t, e) => {
         this.iWe.has(e.Id) &&
           (this.iWe.delete(e.Id),
+          EventSystem_1.EventSystem.RemoveWithTargetUseKey(
+            this,
+            e,
+            EventDefine_1.EEventName.RemoveEntity,
+            this.OnRemoveEntity,
+          ),
           EventSystem_1.EventSystem.RemoveWithTarget(
             e.Entity,
             EventDefine_1.EEventName.CharDamage,
@@ -278,10 +272,6 @@ class AreaAudio {
       this.AreaChanged,
     ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.RemoveEntity,
-        this.OnRemoveEntity,
-      ),
-      EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBattleStateChanged,
         this.yK,
       ),
@@ -299,11 +289,11 @@ class AreaAudio {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAggroAdd,
-        this.lWe,
+        this.bwa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAggroRemoved,
-        this.cWe,
+        this.qwa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PlotNetworkEnd,
@@ -315,10 +305,7 @@ class AreaAudio {
       EventDefine_1.EEventName.ChangeArea,
       this.AreaChanged,
     ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.RemoveEntity,
-        this.OnRemoveEntity,
-      ),
+      EventSystem_1.EventSystem.RemoveAllTargetUseKey(this),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBattleStateChanged,
         this.yK,
@@ -337,11 +324,11 @@ class AreaAudio {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAggroAdd,
-        this.lWe,
+        this.bwa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAggroRemoved,
-        this.cWe,
+        this.qwa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PlotNetworkEnd,
@@ -356,6 +343,12 @@ class AreaAudio {
       !0,
     ))
       this.iWe.add(t.Id),
+        EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+          this,
+          t,
+          EventDefine_1.EEventName.RemoveEntity,
+          this.OnRemoveEntity,
+        ),
         EventSystem_1.EventSystem.AddWithTarget(
           t.Entity,
           EventDefine_1.EEventName.CharDamage,
@@ -367,11 +360,17 @@ class AreaAudio {
       for (const e of this.iWe) {
         var t = ModelManager_1.ModelManager.CharacterModel.GetHandle(e);
         t?.Valid &&
-          EventSystem_1.EventSystem.RemoveWithTarget(
+          (EventSystem_1.EventSystem.RemoveWithTarget(
             t.Entity,
             EventDefine_1.EEventName.CharDamage,
             this.CWe,
-          );
+          ),
+          EventSystem_1.EventSystem.RemoveWithTargetUseKey(
+            this,
+            t,
+            EventDefine_1.EEventName.RemoveEntity,
+            this.OnRemoveEntity,
+          ));
       }
       this.iWe.clear();
     }
@@ -387,7 +386,7 @@ class AreaAudio {
   vWe(t) {
     var e,
       i = t.GetComponent(3)?.CreatureData;
-    i.GetLivingStatus() !== Protocol_1.Aki.Protocol.HEs.Proto_Dead &&
+    i.GetLivingStatus() !== Protocol_1.Aki.Protocol.JEs.Proto_Dead &&
       ((e = i.GetAttributeComponent()).FightMusic &&
         ((this.$je = e.FightMusic), Log_1.Log.CheckInfo()) &&
         Log_1.Log.Info(

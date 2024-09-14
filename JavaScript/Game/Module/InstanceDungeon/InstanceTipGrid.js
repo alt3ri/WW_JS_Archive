@@ -48,34 +48,38 @@ class InstanceTipGrid extends GridProxyAbstract_1.GridProxyAbstract {
         ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivity(
           t.CustomTypes,
         ),
-      i =
+      t =
         (this.GetItem(4).SetUIActive(void 0 !== t),
         ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetInstanceRewardId(
           this.NUe,
         )),
       t =
         ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardPreviewRewardList(
-          i,
+          t,
         ),
-      e =
+      i =
         ((this.sOe = t),
         (this.a_i = this.sOe && 0 < this.sOe.length),
         this.GetItem(2).GetOwner()),
-      r = this.GetItem(1);
-    let s = 0;
-    var o = ModelManager_1.ModelManager.ExchangeRewardModel.IsFinishInstance(
-      this.NUe,
-    );
-    for (const a of this.sOe) {
-      let t = this.h_i[s++];
+      e = this.GetItem(1);
+    let r = 0;
+    var s =
+      ModelManager_1.ModelManager.ExchangeRewardModel.IsFinishInstance(
+        this.NUe,
+      ) ||
+      ModelManager_1.ModelManager.ExchangeRewardModel.IsFinishInstanceCompatible(
+        this.NUe,
+      );
+    for (const o of this.sOe) {
+      let t = this.h_i[r++];
       t ||
         ((t =
           new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()).Initialize(
-          LguiUtil_1.LguiUtil.DuplicateActor(e, r),
+          LguiUtil_1.LguiUtil.DuplicateActor(i, e),
         ),
         this.h_i.push(t)),
-        t.Refresh(a),
-        i || t.SetReceivedVisible(o),
+        t.Refresh(o),
+        t.SetReceivedVisible(s),
         t.SetActive(!0);
     }
     for (let t = this.sOe.length; t < this.h_i.length; ++t)

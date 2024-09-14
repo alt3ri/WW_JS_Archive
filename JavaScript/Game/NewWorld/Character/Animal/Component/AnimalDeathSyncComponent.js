@@ -38,7 +38,7 @@ let AnimalDeathSyncComponent = class AnimalDeathSyncComponent extends BaseDeathC
         e.ReBulletData.Base.DamageId === BigInt(0) ||
           this.Xte.HasTag(501201e3) ||
           this.Xte.HasTag(1008164187) ||
-          (this.Entity.GetComponent(39)?.DisableAi("动物死亡"),
+          (this.Entity.GetComponent(40)?.DisableAi("动物死亡"),
           this.Xte?.AddTag(1008164187),
           ControllerHolder_1.ControllerHolder.CreatureController.AnimalDieRequest(
             this.Entity.GetComponent(0).GetCreatureDataId(),
@@ -90,8 +90,8 @@ let AnimalDeathSyncComponent = class AnimalDeathSyncComponent extends BaseDeathC
   }
   OnStart() {
     return (
-      (this.Xte = this.Entity.CheckGetComponent(188)),
-      (this.HBr = this.Entity.CheckGetComponent(91)),
+      (this.Xte = this.Entity.CheckGetComponent(190)),
+      (this.HBr = this.Entity.CheckGetComponent(92)),
       (this.MontageComponent = this.Entity.CheckGetComponent(22)),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
@@ -99,7 +99,7 @@ let AnimalDeathSyncComponent = class AnimalDeathSyncComponent extends BaseDeathC
         this.gne,
       ),
       this.Entity.CheckGetComponent(0).GetLivingStatus() ===
-        Protocol_1.Aki.Protocol.HEs.Proto_Dead &&
+        Protocol_1.Aki.Protocol.JEs.Proto_Dead &&
         TimerSystem_1.TimerSystem.Next(this.ExecuteDeath),
       !0
     );
@@ -116,7 +116,7 @@ let AnimalDeathSyncComponent = class AnimalDeathSyncComponent extends BaseDeathC
   }
 };
 (AnimalDeathSyncComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(155)],
+  [(0, RegisterComponent_1.RegisterComponent)(156)],
   AnimalDeathSyncComponent,
 )),
   (exports.AnimalDeathSyncComponent = AnimalDeathSyncComponent);

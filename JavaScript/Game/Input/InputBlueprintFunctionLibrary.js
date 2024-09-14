@@ -48,7 +48,7 @@ class InputBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
             0 !== t &&
             (e =
               Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()?.GetComponent(
-                53,
+                54,
               )) &&
             (e.QueryInputAxis(InputEnums_1.EInputAxis.MoveForward) ||
               e.QueryInputAxis(InputEnums_1.EInputAxis.MoveRight))))

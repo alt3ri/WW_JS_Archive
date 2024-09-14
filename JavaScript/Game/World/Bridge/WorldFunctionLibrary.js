@@ -55,7 +55,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static ActorHasSceneItemTag(t, e) {
     return ActorUtils_1.ActorUtils.GetEntityByActor(t)
-      .Entity.GetComponent(180)
+      .Entity.GetComponent(181)
       .HasTag(e);
   }
   static GetControlVisionEntityId(t) {
@@ -63,7 +63,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
     if (e) {
       e = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
         e,
-        Protocol_1.Aki.Protocol.Summon.L3s
+        Protocol_1.Aki.Protocol.Summon.x3s
           .Proto_ESummonTypeConcomitantPhantomRole,
       );
       if (e) return e.Id;
@@ -80,7 +80,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
     if (e) {
       e = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
         e,
-        Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantVision,
+        Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeConcomitantVision,
       );
       if (e) return e.Id;
     } else
@@ -108,25 +108,25 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static SetCustomEntityEnable(t, e, r, a, o) {
-    var l, n;
+    var n, l;
     a?.IsValid()
       ? ((a = `[蓝图:${a.GetName()}] ` + o),
-        (l = EntitySystem_1.EntitySystem.Get(t))
-          ? e > (l = l.GetComponent(0).CustomServerEntityIds).length || 0 === e
+        (n = EntitySystem_1.EntitySystem.Get(t))
+          ? e > (n = n.GetComponent(0).CustomServerEntityIds).length || 0 === e
             ? Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Battle",
                 4,
                 "pos不合法！",
                 ["pos", e],
-                ["serverEntityIds", l],
+                ["serverEntityIds", n],
                 ["Reason", a],
               )
-            : (n = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-                  l[e - 1],
+            : (l = ModelManager_1.ModelManager.CreatureModel.GetEntity(
+                  n[e - 1],
                 ))
               ? (ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
-                  n.Entity,
+                  l.Entity,
                   r,
                   "WorldFunctionLibrary.SetCustomEntityEnable",
                   !0,
@@ -137,8 +137,8 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
                     4,
                     "设置伴生物状态",
                     ["ownerEntityId", t],
-                    ["customServerEntityIds", l],
-                    ["customEntity", n.Id],
+                    ["customServerEntityIds", n],
+                    ["customEntity", l.Id],
                     ["enable", r],
                     ["Reason", a],
                   ))
@@ -149,7 +149,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
                   "无法找到伴生物实体",
                   ["ownerEntityId", t],
                   ["pos", e],
-                  ["customServerEntityIds", l],
+                  ["customServerEntityIds", n],
                 )
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("Battle", 4, "无法找到幻象拥有者实体", [
@@ -179,7 +179,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetVisionId(t) {
     var e = EntitySystem_1.EntitySystem.Get(t);
     return e?.Valid
-      ? e.GetComponent(0).GetVisionComponent()?.VisionId ?? 0
+      ? (e.GetComponent(0).GetVisionComponent()?.VisionId ?? 0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Battle", 29, "幻象实体已销毁！", [
             "visionEntityId",
@@ -244,7 +244,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
         e = t?.GetComponent(0);
       if (e) {
         if (
-          e.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player &&
+          e.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player &&
           !t.GetComponent(3).IsAutonomousProxy
         )
           return !1;
@@ -254,7 +254,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
           (e = EntitySystem_1.EntitySystem.Get(e)?.GetComponent(0));
         if (
           e &&
-          e.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player &&
+          e.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player &&
           !t.GetComponent(3).IsAutonomousProxy
         )
           return !1;
@@ -311,7 +311,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetEntityDestructible(t) {
     var e = EntitySystem_1.EntitySystem.Get(t);
     return e
-      ? void 0 !== e.GetComponent(92)
+      ? void 0 !== e.GetComponent(93)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Battle", 40, "无法找到实体", ["entityId", t]),
         !1);
@@ -523,9 +523,9 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
     var a = new Array(),
       o = (0, puerts_1.$unref)(r);
     for (let t = 0; t < o.Num(); ++t) {
-      var l = o.Get(t),
-        l = WorldGlobal_1.WorldGlobal.ToTsVector(l);
-      a.push(l);
+      var n = o.Get(t),
+        n = WorldGlobal_1.WorldGlobal.ToTsVector(n);
+      a.push(n);
     }
     BlackboardController_1.BlackboardController.SetVectorValuesByEntity(
       t,
@@ -566,9 +566,9 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
     var a = new Array(),
       o = (0, puerts_1.$unref)(r);
     for (let t = 0; t < o.Num(); ++t) {
-      var l = o.Get(t),
-        l = WorldGlobal_1.WorldGlobal.ToTsRotator(l);
-      a.push(l);
+      var n = o.Get(t),
+        n = WorldGlobal_1.WorldGlobal.ToTsRotator(n);
+      a.push(n);
     }
     BlackboardController_1.BlackboardController.SetRotatorValuesByEntity(
       t,
@@ -696,37 +696,30 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static IsOpenWorld() {
     return (
       ModelManager_1.ModelManager.GameModeModel.InstanceType ===
-      Protocol_1.Aki.Protocol.XFs.Proto_BigWorldInstance
+      Protocol_1.Aki.Protocol.i4s.Proto_BigWorldInstance
     );
   }
   static GetBattleMode() {
-    var t = Protocol_1.Aki.Protocol.D4s.zDs;
+    var t = Protocol_1.Aki.Protocol.B4s.nAs;
     return BattleSetting_1.BattleSetting.IsModuleClientControl(t);
   }
   static SwitchBattleMode() {
-    var t = Protocol_1.Aki.Protocol.D4s.zDs;
+    var t = Protocol_1.Aki.Protocol.B4s.nAs;
     BattleSetting_1.BattleSetting.RequestSetModuleNetworkState(
       t,
       !BattleSetting_1.BattleSetting.IsModuleClientControl(t),
     );
   }
   static GetBuffSyncMode() {
-    var t = Protocol_1.Aki.Protocol.D4s.Proto_GameplayEffect;
-    return BattleSetting_1.BattleSetting.IsModuleClientControl(t);
+    return !1;
   }
-  static SwitchBuffSyncMode() {
-    var t = Protocol_1.Aki.Protocol.D4s.Proto_GameplayEffect;
-    BattleSetting_1.BattleSetting.RequestSetModuleNetworkState(
-      t,
-      !BattleSetting_1.BattleSetting.IsModuleClientControl(t),
-    );
-  }
+  static SwitchBuffSyncMode() {}
   static GetServerLogMode() {
-    var t = Protocol_1.Aki.Protocol.D4s.yAs;
+    var t = Protocol_1.Aki.Protocol.B4s.PAs;
     return BattleSetting_1.BattleSetting.IsModuleClientControl(t);
   }
   static SwitchServerLogMode() {
-    var t = Protocol_1.Aki.Protocol.D4s.yAs;
+    var t = Protocol_1.Aki.Protocol.B4s.PAs;
     BattleSetting_1.BattleSetting.RequestSetModuleNetworkState(
       t,
       !BattleSetting_1.BattleSetting.IsModuleClientControl(t),
@@ -746,16 +739,16 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static TestSpawnTemplateEntityPush(t, e, r, a, o) {
-    var l = Protocol_1.Aki.Protocol.tes.create();
-    (l.J4n = MathUtils_1.MathUtils.NumberToLong(Number(t))),
-      (l.P6n = r),
-      (l._9n = e),
-      (l.e8n = WorldGlobal_1.WorldGlobal.ToTsVector(a.GetLocation())),
-      (l.t8n = WorldGlobal_1.WorldGlobal.ToTsRotator(
+    var n = Protocol_1.Aki.Protocol.hes.create();
+    (n.s5n = MathUtils_1.MathUtils.NumberToLong(Number(t))),
+      (n.F6n = r),
+      (n.v9n = e),
+      (n.l8n = WorldGlobal_1.WorldGlobal.ToTsVector(a.GetLocation())),
+      (n._8n = WorldGlobal_1.WorldGlobal.ToTsRotator(
         a.GetRotation().Rotator(),
       )),
-      (l.oKn = o),
-      Net_1.Net.Send(6135, l);
+      (n.mKn = o),
+      Net_1.Net.Send(16365, n);
   }
   static GetTestSpawnTemplateEntityString() {
     var t = UE.NewArray(UE.BuiltinString);
@@ -785,15 +778,15 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
           (o = (0, puerts_1.$unref)(o)),
           JSON.parse(o));
       for (const i of o.Templates) a.set(i.BlueprintType, i.Id);
-      var l,
-        n,
+      var n,
+        l,
         o = (0, puerts_1.$ref)(""),
         o =
           (UE.KuroStaticLibrary.LoadFileToString(o, r),
           (o = (0, puerts_1.$unref)(o)),
           JSON.parse(o));
-      for ([l, n] of Object.entries(o.BlueprintConfig))
-        t.Add(n.Name + "|" + a.get(l));
+      for ([n, l] of Object.entries(o.BlueprintConfig))
+        t.Add(l.Name + "|" + a.get(n));
     } else
       for (const s of TemplateConfigAll_1.configTemplateConfigAll.GetConfigList())
         t.Add(s.Name + "|" + s.Id);
@@ -805,15 +798,15 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static ChangeSubLevel(t, e, r, a, o) {
     var t = (0, puerts_1.$unref)(t),
       e = (0, puerts_1.$unref)(e),
-      l = new Array(),
       n = new Array(),
+      l = new Array(),
       t =
-        (WorldGlobal_1.WorldGlobal.ToTsArray(t, l),
-        WorldGlobal_1.WorldGlobal.ToTsArray(e, n),
+        (WorldGlobal_1.WorldGlobal.ToTsArray(t, n),
+        WorldGlobal_1.WorldGlobal.ToTsArray(e, l),
         Vector_1.Vector.Create(a));
     ControllerHolder_1.ControllerHolder.GameModeController.ChangeSubLevel(
-      l,
       n,
+      l,
       r,
       t,
       o,
@@ -1091,8 +1084,8 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       GlobalData_1.GlobalData.GameInstance,
       t,
     );
-    var e = Protocol_1.Aki.Protocol.PCs.create();
-    (e.nKn = t), Net_1.Net.Send(25430, e);
+    var e = Protocol_1.Aki.Protocol.GCs.create();
+    (e.dKn = t), Net_1.Net.Send(15359, e);
   }
   static GetTimeDilation() {
     return GlobalData_1.GlobalData.GameInstance
@@ -1104,16 +1097,16 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetEntitiesInRange(t, e) {
     var r = [],
       a = [];
-    ModelManager_1.ModelManager.CreatureModel.GetEntitiesInRange(t, 2, r);
-    for (const l of r) {
-      var o = l.Entity.GetComponent(0).GetEntityCamp();
+    ModelManager_1.ModelManager.CreatureModel.GetEntitiesInRange(t, 62, r);
+    for (const n of r) {
+      var o = n.Entity.GetComponent(0).GetEntityCamp();
       CampUtils_1.CampUtils.GetCampRelationship(o, 0) === e &&
-        a.push(l.Entity.Id);
+        a.push(n.Entity.Id);
     }
     t = UE.NewArray(UE.BuiltinInt);
     return WorldGlobal_1.WorldGlobal.ToUeInt32Array(a, t), t;
   }
-  static AttachToActor(t, e, r, a, o, l, n, i, s, c, _) {
+  static AttachToActor(t, e, r, a, o, n, l, i, s, c, _) {
     return t?.IsValid()
       ? ((t = `[蓝图:${t.GetName()}] ` + o),
         ControllerHolder_1.ControllerHolder.AttachToActorController.AttachToActor(
@@ -1121,8 +1114,8 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
           r,
           a,
           t,
-          l,
           n,
+          l,
           i,
           s,
           c,
@@ -1135,7 +1128,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
           ]),
         !1);
   }
-  static AttachToComponent(t, e, r, a, o, l, n, i, s, c, _) {
+  static AttachToComponent(t, e, r, a, o, n, l, i, s, c, _) {
     return t?.IsValid()
       ? ((t = `[蓝图:${t.GetName()}] ` + o),
         ControllerHolder_1.ControllerHolder.AttachToActorController.AttachToComponent(
@@ -1143,8 +1136,8 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
           r,
           a,
           t,
-          l,
           n,
+          l,
           i,
           s,
           c,
@@ -1157,7 +1150,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
           ]),
         !1);
   }
-  static DetachActor(t, e, r, a, o, l, n) {
+  static DetachActor(t, e, r, a, o, n, l) {
     return t?.IsValid()
       ? ((t = `[蓝图:${t.GetName()}] ` + a),
         ControllerHolder_1.ControllerHolder.AttachToActorController.DetachActor(
@@ -1165,8 +1158,8 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
           r,
           t,
           o,
-          l,
           n,
+          l,
         ))
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Entity", 3, "callObject无效, DetachActor失败。", [
@@ -1181,7 +1174,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
         ControllerHolder_1.ControllerHolder.FormationDataController.GetPlayerEntity(
           t,
         )
-          ?.GetComponent(204)
+          ?.GetComponent(206)
           ?.GetFollower()?.Id;
     return t || 0;
   }
@@ -1191,7 +1184,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       ControllerHolder_1.ControllerHolder.FormationDataController.GetPlayerEntity(
         t,
       )
-        ?.GetComponent(204)
+        ?.GetComponent(206)
         ?.IsFollowerEnable() ?? !1
     );
   }
@@ -1200,7 +1193,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
     ControllerHolder_1.ControllerHolder.FormationDataController.GetPlayerEntity(
       e,
     )
-      ?.GetComponent(204)
+      ?.GetComponent(206)
       ?.SetFollowerEnable(t);
   }
   static IsPlayerFollowerNeedInput(t, e) {
@@ -1209,7 +1202,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       ControllerHolder_1.ControllerHolder.FormationDataController.GetPlayerEntity(
         r,
       )
-        ?.GetComponent(204)
+        ?.GetComponent(206)
         ?.IsFollowerNeedInput(t, e) ?? !1
     );
   }

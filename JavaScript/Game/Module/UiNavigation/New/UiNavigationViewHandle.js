@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiNavigationViewHandle = void 0);
-const UE = require("ue"),
-  Log_1 = require("../../../../Core/Common/Log"),
+const Log_1 = require("../../../../Core/Common/Log"),
   Stats_1 = require("../../../../Core/Common/Stats"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   GamepadControlMouse_1 = require("../Module/GamepadControlMouse"),
@@ -26,24 +25,24 @@ class UiNavigationViewHandle {
       (this.dbo = void 0),
       (this.Cbo = "None"),
       (this.gbo = !1),
-      (this.fbo = void 0),
+      (this.fbo = Stats_1.Stat.Create("UiNavigationViewHandle")),
       (this.pbo = !1),
       (this.vbo = !1),
       (this.Mbo = !1),
       (this.Ebo = !1),
-      (this.KCa = void 0),
-      (this.CSa = void 0),
+      (this.$fa = void 0),
+      (this.wIa = void 0),
       (this.TagId = i),
       (this.ViewName = t.ViewName),
       (this.MainPanel = t),
       (this.lbo = t),
       (this.dbo = new NavigationScrollbarData_1.NavigationScrollbarData()),
-      this.gSa();
+      this.BIa();
   }
   set State(i) {
     this.Cbo !== i &&
-      Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+      Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "UiNavigation",
         11,
         "当前界面句柄状态发生变更",
@@ -152,7 +151,7 @@ class UiNavigationViewHandle {
         (this.ubo = void 0),
         this.FindSuitableNavigation(!1)),
       t.SetViewHandle(void 0),
-      this.Dbo(t.ScrollBarGroup));
+      this.Dbo(t.TsScrollBarGroup));
   }
   GetPanelConfigMap() {
     return this.hbo;
@@ -165,7 +164,7 @@ class UiNavigationViewHandle {
     return this.lbo;
   }
   ClearPanelConfig() {
-    this.hbo.clear(), this.CSa?.Clear(), (this.lbo = void 0);
+    this.hbo.clear(), this.wIa?.Clear(), (this.lbo = void 0);
   }
   SetCurrentAddPanel(i) {
     (this._bo = i),
@@ -183,7 +182,7 @@ class UiNavigationViewHandle {
   }
   Rbo() {
     this.dbo.ResumeLastListener();
-    var i = this.rXn();
+    var i = this.cXn();
     i
       ? ((this.State = "HasNavigation"),
         UiNavigationNewController_1.UiNavigationNewController.SwitchNavigationFocus(
@@ -191,13 +190,13 @@ class UiNavigationViewHandle {
         ))
       : ((this.State = "None"), (this.ubo = void 0));
   }
-  rXn() {
+  cXn() {
     if (this.ubo?.IsValid()) {
       if (this.ubo.IsInScrollOrLayoutCanFocus()) return this.ubo;
       var e = this.ubo.GetNavigationGroup(),
         a = this.ubo.GetScrollOrLayoutActor();
-      for (let i = 0, t = e.ListenerList.Num(); i < t; ++i) {
-        var s = e.ListenerList.Get(i);
+      for (let i = 0, t = e.ListenerList.length; i < t; ++i) {
+        var s = e.ListenerList[i];
         if (
           s.IsScrollOrLayoutActor() &&
           (!a || s.GetScrollOrLayoutActor() === a) &&
@@ -272,12 +271,12 @@ class UiNavigationViewHandle {
   MarkRefreshScrollDataDirty() {
     this.pbo = !0;
   }
-  XCa() {
+  Hfa() {
     if (this.pbo) {
       this.pbo = !1;
-      var i = UE.NewArray(UE.SNavigationGroup);
+      var i = [];
       for (const t of this.hbo.values())
-        t.ScrollBarGroup && i.Add(t.ScrollBarGroup);
+        t.TsScrollBarGroup && i.push(t.TsScrollBarGroup);
       this.Abo(i), this.MarkRefreshHotKeyDirty();
     }
   }
@@ -356,20 +355,20 @@ class UiNavigationViewHandle {
   MarkRefreshNavigationDirty() {
     this.Ebo = !0;
   }
-  YCa() {
-    void 0 !== this.KCa &&
-      (this.KCa.IsValid() &&
+  jfa() {
+    void 0 !== this.$fa &&
+      (this.$fa.IsValid() &&
         UiNavigationNewController_1.UiNavigationNewController.SwitchNavigationFocus(
-          this.KCa,
+          this.$fa,
         ),
-      (this.KCa = void 0));
+      (this.$fa = void 0));
   }
   MarkSwitchNavigationFocusDirty(i) {
-    this.KCa = i;
+    this.$fa = i;
   }
-  gSa() {
+  BIa() {
     this.HasGamepadControlMouse() &&
-      ((this.CSa = new GamepadControlMouse_1.GamepadControlMouse(
+      ((this.wIa = new GamepadControlMouse_1.GamepadControlMouse(
         this.MainPanel.GamepadMouseItem,
         this,
       )),
@@ -381,26 +380,36 @@ class UiNavigationViewHandle {
         ["ViewName", this.ViewName],
       );
   }
-  fSa() {
-    this.CSa?.Tick();
+  bIa() {
+    this.wIa?.Tick();
   }
   HasGamepadControlMouse() {
     return this.MainPanel?.IsGamepadControlMouse ?? !1;
   }
   CanOverridePositionByGamepad(i) {
-    this.CSa?.CanOverridePosition(i);
+    this.wIa?.CanOverridePosition(i);
   }
   SetGamepadMouseMoveForward(i) {
-    this.CSa?.MoveForwardByGamepad(i);
+    this.wIa?.MoveForwardByGamepad(i);
   }
   SetGamepadMouseMoveRight(i) {
-    this.CSa?.MoveRightByGamepad(i);
+    this.wIa?.MoveRightByGamepad(i);
   }
   SetGamepadMouseTrigger(i) {
-    this.CSa?.TriggerByGamepad(i);
+    this.wIa?.TriggerByGamepad(i);
+  }
+  UpdateMousePositionByItem(i) {
+    this.wIa?.UpdateMousePositionByItem(i);
   }
   TickViewHandle() {
-    this.wbo(), this.Pbo(), this.xbo(), this.XCa(), this.YCa(), this.fSa();
+    this.fbo.Start(),
+      this.wbo(),
+      this.Pbo(),
+      this.xbo(),
+      this.Hfa(),
+      this.jfa(),
+      this.bIa(),
+      this.fbo.Stop();
   }
 }
 exports.UiNavigationViewHandle = UiNavigationViewHandle;

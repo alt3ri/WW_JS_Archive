@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiManager = void 0);
-const ue_1 = require("ue"),
+const cpp_1 = require("cpp"),
   CustomPromise_1 = require("../../Core/Common/CustomPromise"),
+  Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
   Stats_1 = require("../../Core/Common/Stats"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
@@ -90,33 +91,41 @@ class UiManager {
     var a = !!i && i?.IsMultipleView;
     if (UiManager.iVe(e, a, i)) {
       a = UiManager.BCr(e);
-      if (a)
-        return (
-          !0 === a.Info?.IsFullScreen
-            ? ue_1.PerfSightHelper.BeginExtTag(
-                `UiViewInFullScreen[${a.Info.Name}]`,
-              )
-            : !1 === a.Info?.IsFullScreen &&
-              ue_1.PerfSightHelper.BeginExtTag(
-                `UiViewInWindow[${a.Info.Name}]`,
-              ),
-          (a.OpenParam = i),
-          (a.OpenPromise = new CustomPromise_1.CustomPromise()),
-          await Promise.all([
-            UiManager.bCr.get(a.Info.Type).OpenViewAsync(a),
-            a.OpenPromise.Promise,
-          ]),
-          (a.OpenPromise = void 0),
-          a.TryEmitInterruptOpExitView(),
-          a.GetViewId()
-        );
-      Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "UiCore",
-          17,
-          "[OpenViewAsync]打开界面失败, 注册界面失败",
-          ["name", e],
-        );
+      if (a) {
+        (a.OpenParam = i),
+          (a.OpenPromise = new CustomPromise_1.CustomPromise());
+        i = await Promise.all([
+          UiManager.bCr.get(a.Info.Type).OpenViewAsync(a),
+          a.OpenPromise.Promise,
+        ]);
+        if (((a.OpenPromise = void 0), i[1]))
+          return (
+            a.TryEmitInterruptOpExitView(),
+            !0 === a.Info?.IsFullScreen
+              ? cpp_1.FKuroPerfSightHelper.BeginExtTag(
+                  `UiViewInFullScreen[${a.Info.Name}]`,
+                )
+              : !1 === a.Info?.IsFullScreen &&
+                cpp_1.FKuroPerfSightHelper.BeginExtTag(
+                  `UiViewInWindow[${a.Info.Name}]`,
+                ),
+            a.GetViewId()
+          );
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "UiCore",
+            17,
+            "[OpenViewAsync]打开界面失败, 界面在缓存队列中被清理",
+            ["name", e],
+          );
+      } else
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "UiCore",
+            17,
+            "[OpenViewAsync]打开界面失败, 注册界面失败",
+            ["name", e],
+          );
     } else
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -235,7 +244,7 @@ class UiManager {
           ["界面名称", i.Name],
           ["ViewId", e.GetViewId()],
         ),
-      e.OpenPromise && e.OpenPromise.SetResult(void 0),
+      e.OpenPromise && e.OpenPromise.SetResult(!0),
       e.ClosePromise || (e.ClosePromise = new CustomPromise_1.CustomPromise()),
       await UiManager.bCr.get(i.Type).CloseViewAsync(e),
       await e.ClosePromise?.Promise,
@@ -249,9 +258,13 @@ class UiManager {
           ["ViewId", e.GetViewId()],
         ),
       !0 === e.Info?.IsFullScreen
-        ? ue_1.PerfSightHelper.EndExtTag(`UiViewInFullScreen[${e.Info.Name}]`)
+        ? cpp_1.FKuroPerfSightHelper.EndExtTag(
+            `UiViewInFullScreen[${e.Info.Name}]`,
+          )
         : !1 === e.Info?.IsFullScreen &&
-          ue_1.PerfSightHelper.EndExtTag(`UiViewInWindow[${e.Info.Name}]`),
+          cpp_1.FKuroPerfSightHelper.EndExtTag(
+            `UiViewInWindow[${e.Info.Name}]`,
+          ),
       !0
     );
   }
@@ -452,6 +465,11 @@ class UiManager {
     if (e) for (const i of e) if (i.IsDestroying) return !0;
     return !1;
   }
+  static IsViewHide(e) {
+    e = UiManager.Ncr.get(e);
+    if (e) for (const i of e) if (i.IsHideOrHiding) return !0;
+    return !1;
+  }
   static OCr() {
     UiManager.bCr.clear(),
       UiManager.bCr.set(
@@ -495,7 +513,7 @@ class UiManager {
           UiModel_1.UiModel.NetWorkList,
         ),
       ),
-      ue_1.KuroStaticLibrary.IsBuildShipping() ||
+      Info_1.Info.IsBuildShipping ||
         UiManager.bCr.set(
           UiLayerType_1.ELayerType.Debug,
           new UiViewSetContainer_1.UiViewSetContainer(
@@ -686,41 +704,44 @@ class UiManager {
   static get IsLockOpen() {
     return UiManager.QCr;
   }
-  static async ClearAsync() {
+  static async ClearAsync(e) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("UiCore", 17, "[UIManager.ClearAsync] 清理UIManager 开始");
-    for (var [e, i] of UiManager.bCr)
-      0 < (e & UiLayerType_1.NORMAL_CONTAINER_TYPE) || i.ClearContainer();
-    var a = [];
-    for (const n of UiManager.qCr.values())
-      n.Info?.IsPermanent ||
-        0 < (n.Info.Type & UiLayerType_1.NORMAL_CONTAINER_TYPE) ||
+    for (var [i, a] of UiManager.bCr)
+      0 < (i & UiLayerType_1.NORMAL_CONTAINER_TYPE) || a.ClearContainer(e);
+    var r = [];
+    for (const t of UiManager.qCr.values())
+      t.Info?.IsPermanent ||
+        0 < (t.Info.Type & UiLayerType_1.NORMAL_CONTAINER_TYPE) ||
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
             11,
             "[UIManager.ClearAsync] 需要等待销毁的界面-非stack容器",
-            ["Name", n.constructor.name],
-            ["ComponentId", n.ComponentId],
+            ["Name", t.constructor.name],
+            ["ComponentId", t.ComponentId],
           ),
-        a.push(n.DeadPromise?.Promise));
-    await Promise.all(a),
-      UiManager.hPn(),
-      UiManager.bCr.get(UiLayerType_1.ELayerType.Normal)?.ClearContainer();
-    var r = [];
-    for (const o of UiManager.qCr.values())
-      o.Info?.IsPermanent ||
-        (o.Info.Type & UiLayerType_1.NORMAL_CONTAINER_TYPE) <= 0 ||
+        r.push(t.DeadPromise?.Promise));
+    await Promise.all(r), UiManager.hPn();
+    var n = UiManager.bCr.get(UiLayerType_1.ELayerType.Normal),
+      o = (await n.BeforeClearContainerAsync(), n.ClearContainer(e), []);
+    for (const g of UiManager.qCr.values())
+      g.Info.IsPermanent ||
+        (g.Info.Type & UiLayerType_1.NORMAL_CONTAINER_TYPE) <= 0 ||
+        (e && UiModel_1.UiModel.SeamlessStackWhileList.has(g.Info.Name)) ||
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
             11,
             "[UIManager.ClearAsync] 需要等待销毁的界面-stack容器",
-            ["Name", o.constructor.name],
-            ["ComponentId", o.ComponentId],
+            ["Name", g.constructor.name],
+            ["ComponentId", g.ComponentId],
           ),
-        r.push(o.DeadPromise?.Promise));
-    await Promise.all(r),
+        o.push(g.DeadPromise?.Promise));
+    await Promise.all(o),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnUiManagerClearAsync,
+      ),
       UiActorPool_1.UiActorPool.ClearPool(),
       UiSceneManager_1.UiSceneManager.Clear();
     try {
@@ -747,8 +768,9 @@ class UiManager {
       Log_1.Log.Info("UiCore", 17, "[UIManager.ClearAsync] 清理UIManager 完成");
   }
   static Tick(e) {
+    UiManager.fbo.Start();
     for (const i of this.jCr) i.Tick(e);
-    UiActorPool_1.UiActorPool.Tick(e);
+    UiActorPool_1.UiActorPool.Tick(e), UiManager.fbo.Stop();
   }
   static AfterTick(e) {
     for (const i of this.jCr) i.AfterTick(e);
@@ -890,11 +912,14 @@ class UiManager {
       (i = UiManager.Ncr.get(e))) &&
       (i.delete(a), i.size || UiManager.Ncr.delete(e));
   }
+  static GmClearFloatContainer() {
+    UiManager.bCr.get(UiLayerType_1.ELayerType.Float).ClearContainer();
+  }
 }
 ((exports.UiManager = UiManager).Ife = 0),
   (UiManager.bCr = new Map()),
   (UiManager.$Cr = new Map()),
-  (UiManager.fbo = void 0),
+  (UiManager.fbo = Stats_1.Stat.Create("UiManger")),
   (UiManager.qCr = new Map()),
   (UiManager.Ncr = new Map()),
   (UiManager.jCr = new Set()),

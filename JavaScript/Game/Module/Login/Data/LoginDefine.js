@@ -1,8 +1,9 @@
 "use strict";
-var ELoginStatus, ELoginSex, ECleanFailCountWay;
+var ELoginStatus, ELoginSex, ECleanFailCountWay, ESdkLoginCode;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoginQueueConfig =
     exports.DEFAULTPORT =
+    exports.ESdkLoginCode =
     exports.ECleanFailCountWay =
     exports.ELoginSex =
     exports.ELoginStatus =
@@ -24,7 +25,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e[(e.CreateReq = 13)] = "CreateReq"),
       (e[(e.CreateRet = 14)] = "CreateRet"),
       (e[(e.EnterGameReq = 15)] = "EnterGameReq"),
-      (e[(e.EnterGameRet = 16)] = "EnterGameRet");
+      (e[(e.EnterGameRet = 16)] = "EnterGameRet"),
+      (e[(e.PatchVerifyFail = 17)] = "PatchVerifyFail");
   })((ELoginStatus = exports.ELoginStatus || (exports.ELoginStatus = {}))),
   (function (e) {
     (e[(e.Girl = 0)] = "Girl"), (e[(e.Boy = 1)] = "Boy");
@@ -37,10 +39,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     (ECleanFailCountWay =
       exports.ECleanFailCountWay || (exports.ECleanFailCountWay = {})),
   ),
+  (function (e) {
+    (e[(e.LoginFailed = 0)] = "LoginFailed"),
+      (e[(e.LoginSuccess = 1)] = "LoginSuccess");
+  })((ESdkLoginCode = exports.ESdkLoginCode || (exports.ESdkLoginCode = {}))),
   (exports.DEFAULTPORT = "5500");
 class LoginQueueConfig {
   constructor() {
-    (this.G9n = 0), (this.O9n = 0);
+    (this.K9n = 0), (this.Q9n = 0);
   }
 }
 exports.LoginQueueConfig = LoginQueueConfig;

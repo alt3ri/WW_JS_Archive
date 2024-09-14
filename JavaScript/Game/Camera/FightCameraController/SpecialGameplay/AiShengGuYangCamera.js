@@ -375,11 +375,11 @@ class AiShengGuYangCamera {
         TsBaseCharacter_1.default &&
       ((this.qce = t),
       this.qce.CharacterMovement?.SetMovementMode(5, 0),
-      (this.Gce = i.Entity?.GetComponent(37)),
+      (this.Gce = i.Entity?.GetComponent(38)),
       this.Gce?.Valid && (this.Gce.CanMoveFromInput = !1),
-      (this.Lie = i.Entity?.GetComponent(188)),
+      (this.Lie = i.Entity?.GetComponent(190)),
       this.Lie?.Valid) &&
-      ((this.Nce = i.Entity?.GetComponent(53)), this.Nce?.Valid) &&
+      ((this.Nce = i.Entity?.GetComponent(54)), this.Nce?.Valid) &&
       (this.Mme.Set(
         Vector_1.Vector.ZeroVectorProxy,
         Quat_1.Quat.Create(),

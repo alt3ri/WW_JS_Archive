@@ -17,60 +17,77 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configDigitalScreenById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configDigitalScreenById.GetConfig"),
   CONFIG_STAT_PREFIX = "configDigitalScreenById.GetConfig(";
 exports.configDigitalScreenById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (e, i = !0) => {
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (i) {
-        var o = KEY_PREFIX + `#${e})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(o);
-        if (r) return r;
+  GetConfig: (i, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var o = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${i})`),
+      e =
+        (o.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
+      if (n) {
+        var t = KEY_PREFIX + `#${i})`;
+        const g = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (g)
+          return (
+            o.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
+          );
       }
       if (
-        (n =
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
+        (e =
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, i, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
               "Id",
-              e,
+              i,
             ]))
       ) {
-        var n,
-          o = void 0;
+        t = void 0;
         if (
-          (([n, o] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
-            ["Id", e],
+            ["Id", i],
           )),
-          n)
+          e)
         ) {
-          const r = DigitalScreen_1.DigitalScreen.getRootAsDigitalScreen(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(o.buffer)),
+          const g = DigitalScreen_1.DigitalScreen.getRootAsDigitalScreen(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
-            i &&
-              ((n = KEY_PREFIX + `#${e})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(n, r)),
+            n &&
+              ((e = KEY_PREFIX + `#${i})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(e, g)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            r
+            o.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    o.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=DigitalScreenById.js.map

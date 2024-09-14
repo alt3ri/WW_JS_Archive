@@ -27,7 +27,6 @@ const UE = require("ue"),
 class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.gfo = 0),
       (this.ffo = 0),
       (this.pfo = void 0),
       (this.vfo = void 0),
@@ -49,7 +48,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
         var t = 0 === this.Afo ? 1 : 0;
         this.Afo = t;
       }),
-      (this.Ffa = () => {
+      (this._Ea = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Phantom", 38, "检测到输入设备变化,切换装配界面表现", [
             "新输入类型",
@@ -224,39 +223,38 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
             t,
           );
       }),
-      (this.QMa = (t) => {
+      (this.hIa = (t) => {
         t = 1 === t ? 1 : 0;
         ModelManager_1.ModelManager.RouletteModel.SaveRouletteSelectConfig(t);
       });
   }
   OnRegisterComponent() {
-    (this.gfo = Info_1.Info.OperationType),
-      (this.ComponentRegisterInfos = [
-        [0, UE.UIItem],
-        [1, UE.UIItem],
-        [2, UE.UIItem],
-        [3, UE.UIExtendToggle],
-        [4, UE.UIExtendToggle],
-        [5, UE.UILoopScrollViewComponent],
-        [6, UE.UIItem],
-        [7, UE.UIItem],
-        [8, UE.UIItem],
-        [9, UE.UIItem],
-        [10, UE.UIItem],
-        [11, UE.UIExtendToggle],
-        [12, UE.UIItem],
-        [13, UE.UIText],
-      ]),
+    (this.ComponentRegisterInfos = [
+      [0, UE.UIItem],
+      [1, UE.UIItem],
+      [2, UE.UIItem],
+      [3, UE.UIExtendToggle],
+      [4, UE.UIExtendToggle],
+      [5, UE.UILoopScrollViewComponent],
+      [6, UE.UIItem],
+      [7, UE.UIItem],
+      [8, UE.UIItem],
+      [9, UE.UIItem],
+      [10, UE.UIItem],
+      [11, UE.UIExtendToggle],
+      [12, UE.UIItem],
+      [13, UE.UIText],
+    ]),
       (this.BtnBindInfo = [
         [3, this.Ffo],
         [4, this.Vfo],
-        [11, this.QMa],
+        [11, this.hIa],
       ]);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.InputControllerMainTypeChange,
-      this.Ffa,
+      this._Ea,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRouletteItemSelect,
@@ -274,7 +272,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.InputControllerMainTypeChange,
-      this.Ffa,
+      this._Ea,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRouletteItemSelect,
@@ -414,7 +412,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
     this.pfo.RefreshRouletteType();
   }
   Zfo() {
-    this.pfo.RefreshRoulettePlatformType(this.gfo);
+    this.pfo.RefreshRoulettePlatformType();
   }
   zfo() {
     this.pfo.RefreshRouletteInputType();
@@ -428,11 +426,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
             : 0),
         this.GetExtendToggle(11).SetToggleState(t, !1),
         (t = this.GetText(13)),
-        LguiUtil_1.LguiUtil.SetLocalTextNew(
-          t,
-          "Text_ExploreToolsClose_Text",
-          ModelManager_1.ModelManager.RouletteModel.GetRouletteKeyRichText(),
-        ));
+        LguiUtil_1.LguiUtil.SetLocalTextNew(t, "Text_ExploreToolsClose_Text"));
   }
   xfo() {
     this.zfo(), this.tpo(), (this.Afo = 0), this.opo();
@@ -604,12 +598,12 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
           t.Id,
         )),
       (e.NeedItemMap = i.Cost);
-    const s = [];
+    const s = new Set();
     return (
       i.Authorization.forEach((t, e) => {
-        s.push(t);
+        s.add(t);
       }),
-      (e.Authorization = s),
+      (e.Authorization = Array.from(s)),
       e
     );
   }
@@ -634,7 +628,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
             Text: s?.Description,
             SortIndex: s?.SortIndex,
             Function: () => {
-              SkipTaskManager_1.SkipTaskManager.RunByConfigId(h);
+              SkipTaskManager_1.SkipTaskManager.RunByConfigId(h, t.Id);
             },
           }),
           e.GetWayData.push(s));

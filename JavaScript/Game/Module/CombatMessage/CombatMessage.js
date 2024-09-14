@@ -71,30 +71,30 @@ class CombatNet {
     return CombatNet.zyt < 32767 ? ++CombatNet.zyt : (CombatNet.zyt = 0);
   }
   static RemovePendingCall(e) {
-    this.H2n.delete(e);
+    this.z2n.delete(e);
   }
   static Call(t, o, a, r, i, e, n, s) {
     i &&
-      this.H2n.has(i) &&
-      ((_ = this.H2n.get(i)),
+      this.z2n.has(i) &&
+      ((_ = this.z2n.get(i)),
       CombatNet.RequestMap.set(_[0], _[1]),
-      ModelManager_1.ModelManager.CombatMessageModel.MessagePack.S5n.push(_[2]),
-      this.H2n.delete(i));
+      ModelManager_1.ModelManager.CombatMessageModel.MessagePack.R5n.push(_[2]),
+      this.z2n.delete(i));
     var _ = NetDefine_1.ECombatRequestDataMessage[t],
       l = CombatNet.GenerateRpcId(),
       e = e ?? ModelManager_1.ModelManager.CombatMessageModel.GenMessageId(),
-      m = Protocol_1.Aki.Protocol.CombatMessage.bFs.create(),
+      m = Protocol_1.Aki.Protocol.CombatMessage.FFs.create(),
       n =
-        ((m.q8n = l),
-        (m.G8n = CombatNet.CreateCombatCommon(o, n, i, e)),
+        ((m.W8n = l),
+        (m.K8n = CombatNet.CreateCombatCommon(o, n, i, e)),
         (m[_] = a),
-        Protocol_1.Aki.Protocol.CombatMessage.BFs.create());
+        Protocol_1.Aki.Protocol.CombatMessage.VFs.create());
     if (
-      ((n.E5n = m),
+      ((n.x5n = m),
       s
-        ? this.H2n.set(e, [l, r, n])
+        ? this.z2n.set(e, [l, r, n])
         : (CombatNet.RequestMap.set(l, r),
-          ModelManager_1.ModelManager.CombatMessageModel.MessagePack.S5n.push(
+          ModelManager_1.ModelManager.CombatMessageModel.MessagePack.R5n.push(
             n,
           )),
       Info_1.Info.IsBuildDevelopmentOrDebug)
@@ -133,13 +133,13 @@ class CombatNet {
   }
   static Send(e, t, o, a, r, i) {
     var e = NetDefine_1.ECombatPushDataMessage[e],
-      n = Protocol_1.Aki.Protocol.CombatMessage.UFs.create(),
+      n = Protocol_1.Aki.Protocol.CombatMessage.OFs.create(),
       t =
-        ((n.G8n = CombatNet.CreateCombatCommon(t, i, a, r)),
+        ((n.K8n = CombatNet.CreateCombatCommon(t, i, a, r)),
         (n[e] = o),
-        Protocol_1.Aki.Protocol.CombatMessage.BFs.create());
-    (t.O8n = n),
-      ModelManager_1.ModelManager.CombatMessageModel.MessagePack.S5n.push(t);
+        Protocol_1.Aki.Protocol.CombatMessage.VFs.create());
+    (t.Q8n = n),
+      ModelManager_1.ModelManager.CombatMessageModel.MessagePack.R5n.push(t);
   }
   static CreateCombatCommon(e, t, o, a) {
     e =
@@ -148,15 +148,15 @@ class CombatNet {
             e?.GetComponent(0)?.GetCreatureDataId() ?? 0,
           )
         : MathUtils_1.MathUtils.NumberToLong(e ?? 0);
-    return Protocol_1.Aki.Protocol.G8n.create({
-      P4n: e,
-      N8n: o ? MathUtils_1.MathUtils.BigIntToLong(o) : 0,
-      k8n: MathUtils_1.MathUtils.BigIntToLong(
+    return Protocol_1.Aki.Protocol.K8n.create({
+      F4n: e,
+      X8n: o ? MathUtils_1.MathUtils.BigIntToLong(o) : 0,
+      $8n: MathUtils_1.MathUtils.BigIntToLong(
         a ?? ModelManager_1.ModelManager.CombatMessageModel.GenMessageId(),
       ),
-      F8n: ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
-      V8n: Time_1.Time.NowSeconds,
-      H8n: t ?? !1,
+      Y8n: ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
+      J8n: Time_1.Time.NowSeconds,
+      z8n: t ?? !1,
     });
   }
 }
@@ -165,5 +165,5 @@ class CombatNet {
   (CombatNet.PreNotifyMap = new Map()),
   (CombatNet.zyt = 0),
   (CombatNet.RequestMap = new Map()),
-  (CombatNet.H2n = new Map());
+  (CombatNet.z2n = new Map());
 //# sourceMappingURL=CombatMessage.js.map

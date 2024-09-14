@@ -10,6 +10,7 @@ const UE = require("ue"),
   GlobalData_1 = require("../../../GlobalData"),
   UiNavigationUtil_1 = require("../UiNavigationUtil"),
   FindNavigationResult_1 = require("./FindNavigationResult"),
+  NavigationGroup_1 = require("./NavigationGroup"),
   NavigationPanelHandleCreator_1 = require("./PanelHandle/NavigationPanelHandleCreator");
 class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
   constructor() {
@@ -24,6 +25,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
       (this.ScrollBarGroup = void 0),
       (this.AllowNavigateInKeyBoard = !1),
       (this.InteractiveTag = ""),
+      (this.TsScrollBarGroup = void 0),
       (this.ViewHandle = void 0),
       (this.IsInActive = !1),
       (this.PanelHandle = void 0),
@@ -96,17 +98,22 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
   GetGroupMap() {
     var e = new Map();
     for (let i = 0, t = this.NormalGroup.Num(); i < t; ++i) {
-      var s = this.NormalGroup.Get(i);
-      (s.GroupType = 0), e.set(s.GroupName, s);
+      var s = this.NormalGroup.Get(i),
+        a = ((s.GroupType = 0), new NavigationGroup_1.NavigationGroup(s));
+      e.set(s.GroupName, a);
     }
     for (let i = 0, t = this.BookmarkGroup.Num(); i < t; ++i) {
-      var a = this.BookmarkGroup.Get(i);
-      (a.GroupType = 1), e.set(a.GroupName, a);
+      var o = this.BookmarkGroup.Get(i),
+        n = ((o.GroupType = 1), new NavigationGroup_1.NavigationGroup(o));
+      e.set(o.GroupName, n);
     }
     return (
       this.ScrollBarGroup &&
         ((this.ScrollBarGroup.GroupType = 2),
-        e.set(this.ScrollBarGroup.GroupName, this.ScrollBarGroup)),
+        (this.TsScrollBarGroup = new NavigationGroup_1.NavigationGroup(
+          this.ScrollBarGroup,
+        )),
+        e.set(this.ScrollBarGroup.GroupName, this.TsScrollBarGroup)),
       e
     );
   }
@@ -148,13 +155,13 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
                 ["导航组名字", i.GroupName],
                 ["DisplayName", i.RootUIComp.displayName],
               ),
-            t.ListenerList.Add(i),
+            t.AddListener(i),
             2 === t.GroupType &&
               this.HandleViewHandleFunction(() => {
                 this.ViewHandle?.MarkRefreshScrollDataDirty();
               }))
-          : Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
+          : Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
               "UiNavigation",
               11,
               "导航监听组件找不到对应的导航组",
@@ -184,8 +191,8 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
               ["导航组名字", i.GroupName],
               ["ViewName", this.ViewName],
             )
-        : Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
+        : Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
             "UiNavigation",
             11,
             "导航监听组件找不到对应的导航组",
@@ -197,9 +204,9 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
     this.PanelHandle.DeleteListener(e);
     var s = this.PanelHandle.GetNavigationGroup(e.GroupName);
     if (s)
-      for (let i = 0, t = s.ListenerList.Num(); i < t; ++i)
-        if (s.ListenerList.Get(i).GetOwner() === e.GetOwner()) {
-          s.ListenerList.RemoveAt(i);
+      for (let i = 0, t = s.ListenerList.length; i < t; ++i)
+        if (s.ListenerList[i].GetOwner() === e.GetOwner()) {
+          s.RemoveListenerByIndex(i);
           break;
         }
   }
@@ -231,7 +238,10 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
               var e = this.PanelHandle.GetLoopOrLayoutListener(s);
               if (!e) continue;
               i = e;
-            }
+            } else
+              s.GetNavigationGroup()?.SuitableListenerByNoDynamic &&
+                (e = this.PanelHandle.GetSuitableListenerWithoutLayout(s)) &&
+                (i = e);
             if (i.IsCanFocus()) {
               if (!i.IsRegisterToPanelConfig()) {
                 t.Result = 5;
@@ -249,7 +259,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
   CheckReFindCondition() {
     return !(
       !this.ViewHandle ||
-      (!this.RootUIComp.bIsUIActive && this.Independent
+      (!this.IsInActive && this.Independent
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiNavigation",

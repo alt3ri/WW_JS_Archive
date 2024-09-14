@@ -12,7 +12,6 @@ class ScenePlayerData {
   constructor(e) {
     (this.j8 = 0),
       (this.UAe = void 0),
-      (this.ControlCreatureDataId = 0),
       (this.bvr = !1),
       (this.qvr = void 0),
       (this.j8 = e),
@@ -21,7 +20,6 @@ class ScenePlayerData {
   Clear() {
     (this.j8 = 0),
       (this.UAe = void 0),
-      (this.ControlCreatureDataId = 0),
       this.qvr && TimerSystem_1.TimerSystem.Remove(this.qvr);
   }
   SetTimerStart() {
@@ -71,9 +69,6 @@ class ScenePlayerData {
             .ActorLocationProxy
         : void 0
       : this.UAe;
-  }
-  ControlRole(e) {
-    this.ControlCreatureDataId = e;
   }
 }
 exports.ScenePlayerData = ScenePlayerData;

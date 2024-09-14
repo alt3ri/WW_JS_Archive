@@ -29,12 +29,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
     return this.Pool.Clear(), !0;
   }
   static OnLeaveLevel() {
-    return (
-      UiManager_1.UiManager.IsViewOpen("BattleView") &&
-        UiManager_1.UiManager.CloseView("BattleView"),
-      this.Pool.Clear(),
-      !0
-    );
+    return this.Pool.Clear(), !0;
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.WorldDone, this.nye),
@@ -56,7 +51,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ShowTypeChange,
-        this.N0a,
+        this.aEa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFunctionOpenSet,
@@ -105,6 +100,10 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPlayerFollowerDestroy,
         this.dDn,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnPlayerFollowerEnableChange,
+        this.Nza,
       );
     var e =
         ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetActionNames(),
@@ -150,7 +149,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ShowTypeChange,
-        this.N0a,
+        this.aEa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFunctionOpenSet,
@@ -199,6 +198,10 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPlayerFollowerDestroy,
         this.dDn,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnPlayerFollowerEnableChange,
+        this.Nza,
       );
     var e =
         ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetActionNames(),
@@ -296,7 +299,9 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
   }
 }
 (exports.BattleUiControl = BattleUiControl),
-  ((_a = BattleUiControl).kQe = void 0),
+  ((_a = BattleUiControl).kQe = Stats_1.Stat.Create(
+    "[ChangeRole]BattleUiControl",
+  )),
   (BattleUiControl.Model = BattleUiModel_1.BattleUiModel),
   (BattleUiControl.Pool = new BattleUiPool_1.BattleUiPool()),
   (BattleUiControl.OQe = 0),
@@ -305,7 +310,9 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.BattleUiModel.OnWorldDone();
   }),
   (BattleUiControl.xie = (e, t) => {
-    ModelManager_1.ModelManager.BattleUiModel.OnChangeRole(e, t);
+    BattleUiControl.kQe.Start(),
+      ModelManager_1.ModelManager.BattleUiModel.OnChangeRole(e, t),
+      BattleUiControl.kQe.Stop();
   }),
   (BattleUiControl.GUe = (e, t) => {
     ModelManager_1.ModelManager.BattleUiModel.OnAddEntity(t);
@@ -324,8 +331,9 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       n,
     );
   }),
-  (BattleUiControl.N0a = (e, t) => {
+  (BattleUiControl.aEa = (e, t) => {
     UiManager_1.UiManager.IsViewOpen("BattleView") &&
+      !Info_1.Info.IsMobilePlatform() &&
       UiManager_1.UiManager.CloseView("BattleView", () => {
         UiManager_1.UiManager.OpenView("BattleView");
       });
@@ -394,6 +402,11 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
   }),
   (BattleUiControl.dDn = () => {
     ModelManager_1.ModelManager.BattleUiModel.FormationData.RemoveFollower();
+  }),
+  (BattleUiControl.Nza = (e) => {
+    ModelManager_1.ModelManager.BattleUiModel.FormationData.ChangePlayerFollowerEnable(
+      e,
+    );
   }),
   (BattleUiControl.bMe = (e, t) => {
     ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.InputAction(

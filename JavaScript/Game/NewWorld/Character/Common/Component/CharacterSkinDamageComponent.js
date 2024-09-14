@@ -202,7 +202,7 @@ let CharacterSkinDamageComponent = class CharacterSkinDamageComponent extends En
   }
 };
 (CharacterSkinDamageComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(193)],
+  [(0, RegisterComponent_1.RegisterComponent)(195)],
   CharacterSkinDamageComponent,
 )),
   (exports.CharacterSkinDamageComponent = CharacterSkinDamageComponent);

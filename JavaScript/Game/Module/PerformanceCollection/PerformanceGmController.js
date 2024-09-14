@@ -5,6 +5,8 @@ const cpp_1 = require("cpp"),
   puerts_1 = require("puerts"),
   UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
   PerformanceController_1 = require("../../../Core/Performance/PerformanceController"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
@@ -18,17 +20,17 @@ const cpp_1 = require("cpp"),
 class PerformanceGmController {
   static s5i() {
     let r = 0,
-      a = 0;
-    var t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
-    for (let e = t.length - 1; 0 <= e; e--) {
-      var o = t[e],
-        l = o.Entity.GetComponent(3)?.Owner;
+      t = 0;
+    var o = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
+    for (let e = o.length - 1; 0 <= e; e--) {
+      var a = o[e],
+        l = a.Entity.GetComponent(3)?.Owner;
       if (l !== Global_1.Global.BaseCharacter) {
-        ++a,
+        ++t,
           (r += PerformanceController_1.PerformanceController.ConsumeTickTime(
-            "EntityTick" + o.Id,
+            "EntityTick" + a.Id,
           ));
-        l = o.Entity.GetComponent(0);
+        l = a.Entity.GetComponent(0);
         if (
           !ControllerHolder_1.ControllerHolder.CreatureController.RemoveEntity(
             l.GetCreatureDataId(),
@@ -38,18 +40,18 @@ class PerformanceGmController {
           return -1;
       }
     }
-    return 0 < a ? r / a : 0;
+    return 0 < t ? r / t : 0;
   }
   static ClearEntityButRole() {
     var r = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     for (let e = r.length - 1; 0 <= e; e--) {
-      var a = r[e];
-      a.Entity.GetComponent(3)?.Owner !== Global_1.Global.BaseCharacter &&
-        ((a = a.Entity.GetComponent(0).GetCreatureDataId()),
-        ControllerHolder_1.ControllerHolder.CreatureController.RemoveEntity(
-          a,
-          "EntityPerformanceTest",
-        ));
+      var t,
+        o = r[e];
+      o.Entity.GetComponent(3)?.Owner !== Global_1.Global.BaseCharacter &&
+        ((o = o.Entity.GetComponent(0).GetCreatureDataId()),
+        ((t = new Protocol_1.Aki.Protocol.Gzn()).VVn = 0),
+        (t.P8n = "@GmRemoveMonster " + o),
+        Net_1.Net.Call(29319, t, () => {}));
     }
     return !0;
   }
@@ -92,7 +94,7 @@ class PerformanceGmController {
     var e = Global_1.Global.BaseCharacter;
     return (
       !!e &&
-      !!(e = e.CharacterActorComponent.Entity.GetComponent(159)) &&
+      !!(e = e.CharacterActorComponent.Entity.GetComponent(160)) &&
       (e.AddBuff(CharacterBuffIds_1.buffId.IgnoreHateBuff, {
         InstigatorId: e.CreatureDataId,
         Reason: "IgnoreBattle",
@@ -130,10 +132,10 @@ class PerformanceGmController {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Performance", 36, "忽略战斗失效"));
     var r = Global_1.Global.BaseCharacter.GetTransform();
-    const a = ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(
+    const t = ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(
       Number(e[0]),
     );
-    if (!a) return !1;
+    if (!t) return !1;
     this.ClearEntityButRole(),
       cpp_1.FKuroGameBudgetAllocatorInterface.SetUpdateCompensateEnable(0),
       PerformanceController_1.PerformanceController.SetEntityTickPerformanceTest(
@@ -144,7 +146,7 @@ class PerformanceGmController {
         BigInt(
           ControllerHolder_1.ControllerHolder.CreatureController.GenUniqueId(),
         ),
-        a.Id,
+        t.Id,
         1,
         r,
         0,
@@ -158,8 +160,8 @@ class PerformanceGmController {
             "Performance",
             36,
             "EntityPerformanceTestSingle",
-            ["CId", a.Id],
-            ["Name", a.Name],
+            ["CId", t.Id],
+            ["Name", t.Name],
             ["Score", 100 * e],
           ),
           PerformanceController_1.PerformanceController.SetEntityTickPerformanceTest(
@@ -168,6 +170,11 @@ class PerformanceGmController {
           cpp_1.FKuroGameBudgetAllocatorInterface.SetUpdateCompensateEnable(1);
       }, e),
       !0
+    );
+  }
+  static SetPlayerPerformanceTestMode(e) {
+    PerformanceController_1.PerformanceController.SetPlayerTickPerformanceTest(
+      e,
     );
   }
   static EntityPerformanceTestMode(e) {
@@ -194,20 +201,20 @@ class PerformanceGmController {
         ),
         ModelManager_1.ModelManager.CreatureModel.GetAllEntities());
     for (let e = r.length - 1; 0 <= e; e--)
-      r[e].Entity.GetComponent(101)?.SetTakeOverTick(!0);
+      r[e].Entity.GetComponent(102)?.SetTakeOverTick(!0);
     return !0;
   }
   static GetEntityTemplateList(e) {
     var e = Number(e[0]),
       r = this.a5i(e),
-      a = [];
-    for (const t of ModelManager_1.ModelManager.CreatureModel.GetAllEntityTemplate(
+      t = [];
+    for (const o of ModelManager_1.ModelManager.CreatureModel.GetAllEntityTemplate(
       !0,
     ).values())
-      t.BlueprintType.includes(r) && a.push(t.Id);
+      o.BlueprintType.includes(r) && t.push(o.Id);
     return (
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Performance", 36, "实体模板id列表", ["list", a]),
+        Log_1.Log.Info("Performance", 36, "实体模板id列表", ["list", t]),
       !0
     );
   }

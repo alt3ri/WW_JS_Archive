@@ -37,7 +37,7 @@ class RoguelikeActivityView extends UiTickViewBase_1.UiTickViewBase {
               (i = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData) &&
             ((i =
               ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-                i.MHn,
+                i.UHn,
               )),
             ((e = new PayShopViewData_1.PayShopViewData()).ShowShopIdList = [
               i.ShopId,
@@ -67,7 +67,7 @@ class RoguelikeActivityView extends UiTickViewBase_1.UiTickViewBase {
             )
           : (e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData) &&
             RoguelikeController_1.RoguelikeController.OpenRoguelikeSkillView(
-              e.MHn,
+              e.UHn,
             );
       }),
       (this.OnBtnDoorClick = () => {
@@ -91,17 +91,17 @@ class RoguelikeActivityView extends UiTickViewBase_1.UiTickViewBase {
       (this.RefreshUi = () => {
         var e,
           i,
-          t = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData;
-        t &&
+          o = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData;
+        o &&
           ((e =
             ModelManager_1.ModelManager.RoguelikeModel.GetParamConfigBySeasonId()
               ?.WeekTokenMaxCount ?? 1),
-          (i = t.gqs / e),
+          (i = o.yqs / e),
           this.GetSprite(8)?.SetFillAmount(i),
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(7),
             "Roguelike_ActivityMain_Score",
-            t.gqs,
+            o.yqs,
             e,
           )),
           this.RefreshRemainTime();
@@ -134,13 +134,19 @@ class RoguelikeActivityView extends UiTickViewBase_1.UiTickViewBase {
       ]);
   }
   async OnBeforeStartAsync() {
+    var e;
     (this.Fho =
       ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData()),
       void 0 === this.Fho
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("Activity", 59, "RoguelikeActivityView没有活动数据")
-        : 1 === this.Fho.GetRogueActivityState() &&
-          (await RoguelikeController_1.RoguelikeController.RoguelikeLastInfoRequestAsync());
+        : ((e =
+            await RoguelikeController_1.RoguelikeController.RoguelikeSeasonDataRequest()),
+          await RoguelikeController_1.RoguelikeController.RoguelikeTalentInfoRequest(
+            e.UHn,
+          ),
+          1 === this.Fho.GetRogueActivityState() &&
+            (await RoguelikeController_1.RoguelikeController.RoguelikeLastInfoRequestAsync()));
   }
   OnStart() {
     (this.CaptionItem = new PopupCaptionItem_1.PopupCaptionItem(
@@ -197,30 +203,30 @@ class RoguelikeActivityView extends UiTickViewBase_1.UiTickViewBase {
   RefreshRemainTime() {
     var e,
       i = this.GetButton(4),
-      t = this.GetItem(15),
-      o = this.GetText(9),
+      o = this.GetItem(15),
+      t = this.GetText(9),
       r = this.GetText(14),
       n = this.Fho.GetRogueActivityState();
     0 === n
       ? (i.RootUIComp.SetUIActive(!0),
-        t.SetUIActive(!1),
         o.SetUIActive(!1),
+        t.SetUIActive(!1),
         (e = this.Fho.EndOpenTime - TimeUtil_1.TimeUtil.GetServerTime()),
         (e = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat3(e)),
         r.SetText(e.CountDownText))
       : (1 === n
           ? (i.RootUIComp.SetUIActive(!1),
-            t.SetUIActive(!0),
             o.SetUIActive(!0),
+            t.SetUIActive(!0),
             (e =
               this.Fho.ReceiveEndOpenTime -
               TimeUtil_1.TimeUtil.GetServerTime()),
             (n = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat3(e)),
-            o.SetText(n.CountDownText))
+            t.SetText(n.CountDownText))
           : (i.RootUIComp.SetUIActive(!1),
-            t.SetUIActive(!0),
             o.SetUIActive(!0),
-            LguiUtil_1.LguiUtil.SetLocalText(o, "Rogue_Function_End_Tip")),
+            t.SetUIActive(!0),
+            LguiUtil_1.LguiUtil.SetLocalText(t, "Rogue_Function_End_Tip")),
         LguiUtil_1.LguiUtil.SetLocalText(r, "Rogue_Function_End_Tip"));
   }
 }

@@ -18,25 +18,41 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configTrainRoleDialogByRoleIdAndTrainType.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configTrainRoleDialogByRoleIdAndTrainType.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configTrainRoleDialogByRoleIdAndTrainType.GetConfig(";
 exports.configTrainRoleDialogByRoleIdAndTrainType = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, n, i = !0) => {
-    if (
-      (a = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${n})`),
+      a =
+        (e.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (a) {
       if (i) {
-        var e = KEY_PREFIX + `#${o}#${n})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (r) return r;
+        var t = KEY_PREFIX + `#${o}#${n})`;
+        const g = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (g)
+          return (
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
+          );
       }
       if (
         (a =
@@ -51,10 +67,9 @@ exports.configTrainRoleDialogByRoleIdAndTrainType = {
               ["TrainType", n],
             ))
       ) {
-        var a,
-          e = void 0;
+        t = void 0;
         if (
-          (([a, e] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([a, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -63,20 +78,26 @@ exports.configTrainRoleDialogByRoleIdAndTrainType = {
           )),
           a)
         ) {
-          const r = TrainRoleDialog_1.TrainRoleDialog.getRootAsTrainRoleDialog(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
+          const g = TrainRoleDialog_1.TrainRoleDialog.getRootAsTrainRoleDialog(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
             i &&
               ((a = KEY_PREFIX + `#${o}#${n})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(a, r)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(a, g)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            r
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    e.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=TrainRoleDialogByRoleIdAndTrainType.js.map

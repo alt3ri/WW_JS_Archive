@@ -79,7 +79,9 @@ class TipsWeaponComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
         this.GetText(1).SetText(t.WeaponLevel.toString() + "/"),
         this.GetText(2).SetText(t.WeaponLimitLevel.toString()),
         this.jxt(t.BreachLevel, t.BreachMaxLevel),
-        t.IncId && this.wxt.Refresh(t.IncId, t.CanClickLockButton),
+        t.IncId &&
+          (this.wxt.Refresh(t.IncId, t.CanClickLockButton),
+          this.wxt.SetDeprecateToggleVisible(t.CanDeprecate())),
         this.wxt.SetUiActive(0 < t.IncId),
         this.Bxt.RebuildLayoutByDataNew(t.AttributeData),
         LguiUtil_1.LguiUtil.SetLocalTextNew(

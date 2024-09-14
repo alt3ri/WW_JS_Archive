@@ -69,7 +69,7 @@ let CommonNpcPerformComponent =
         (this.$tn = void 0),
         (this.Ytn = void 0),
         (this.Jtn = void 0),
-        (this.Zea = void 0),
+        (this.cra = void 0),
         (this.ztn = void 0),
         (this.htr = void 0),
         (this.Ztn = -1),
@@ -147,8 +147,8 @@ let CommonNpcPerformComponent =
       var i = this.Entity.GetComponent(0),
         i =
           ((this.Mne = i.GetPbDataId()),
-          (this.Y8e = this.Entity.GetComponent(105)),
-          (this.Lie = this.Entity.GetComponent(180)),
+          (this.Y8e = this.Entity.GetComponent(106)),
+          (this.Lie = this.Entity.GetComponent(181)),
           ModelManager_1.ModelManager.CreatureModel.GetEntity(
             i.GetCreatureDataId(),
           ));
@@ -187,7 +187,7 @@ let CommonNpcPerformComponent =
         (this.Ytn = this.Lle.GetState(3)),
         (this.Jtn = this.Lle.GetState(7)),
         (this.ztn = this.Lle.GetState(5)),
-        (this.Zea = this.Lle.GetState(8)),
+        (this.cra = this.Lle.GetState(8)),
         (this.Lo = t),
         !0
       );
@@ -208,7 +208,7 @@ let CommonNpcPerformComponent =
             this.oin) &&
             (this.Lo.IsShowStrike || this.Lo.NpcHitShow) &&
             t.HitCollision.OnComponentBeginOverlap.Add(this.rin),
-          (this.jBr = this.Entity.GetComponent(106)),
+          (this.jBr = this.Entity.GetComponent(107)),
           this.jBr && this.jBr.SetSightRange(DEFAULT_SIGHT_RANGE),
           this.Ore()),
         !0
@@ -221,6 +221,7 @@ let CommonNpcPerformComponent =
         (this.MaterialController =
           new NpcMaterialController_1.NpcMaterialController(this.Entity)),
         this.HandleBornPerform(),
+        super.OnActivate(),
         (this.PerformGroupController =
           new NpcPerformGroupController_1.PerformGroupController()),
         this.PerformGroupController.Init(this.Entity),
@@ -234,6 +235,8 @@ let CommonNpcPerformComponent =
       return (
         this.htr?.Dispose(),
         this.MaterialController?.Dispose(),
+        this.ExpressionController?.Dispose(),
+        super.OnEnd(),
         this.oin && (this.fin(), this.kre()),
         !0
       );
@@ -250,7 +253,7 @@ let CommonNpcPerformComponent =
         (this.Ytn = void 0),
         (this.Jtn = void 0),
         (this.ztn = void 0),
-        (this.Zea = void 0);
+        (this.cra = void 0);
     }
     Ore() {
       this.$Br ||
@@ -273,13 +276,13 @@ let CommonNpcPerformComponent =
     Cin() {
       (this.Xtn.NpcMontageController = this.GetMontageController()),
         (this.Xtn.NpcTurnActionController = this.htr),
-        (this.Xtn.NpcMoveComp = this.Entity.GetComponent(37)),
+        (this.Xtn.NpcMoveComp = this.Entity.GetComponent(38)),
         (this.$tn.NpcMontageController = this.GetMontageController()),
         (this.Ytn.NpcMontageController = this.GetMontageController()),
         this.Ytn.SetDefaultDirect(this.ActorComp.ActorForwardProxy),
         (this.Jtn.NpcMontageController = this.GetMontageController()),
-        (this.Zea.ActorComp = this.ActorComp),
-        (this.Zea.PerformComp = this);
+        (this.cra.ActorComp = this.ActorComp),
+        (this.cra.PerformComp = this);
     }
     OnMonsterNearby() {
       return (
@@ -297,12 +300,12 @@ let CommonNpcPerformComponent =
           (i.OnExitSensoryRange = (t) =>
             !(!i.CheckInRange() && 7 === this.Lle.CurrentState) ||
             this.Lle.Switch(1)),
-          (this.Ztn = this.Entity.GetComponent(107).AddSensoryInfo(i));
+          (this.Ztn = this.Entity.GetComponent(108).AddSensoryInfo(i));
       }
     }
     fin() {
       0 <= this.Ztn &&
-        (this.Entity.GetComponent(107).RemoveSensoryInfo(this.Ztn),
+        (this.Entity.GetComponent(108).RemoveSensoryInfo(this.Ztn),
         (this.Ztn = -1));
     }
     OnPlayerAttack() {
@@ -401,9 +404,7 @@ let CommonNpcPerformComponent =
     }
     OnTick(t) {
       this.AnimComp &&
-        (this.PerformGroupController?.Tick(t),
-        this.IsPendingDestroy || this.TrySetNpcDither(),
-        this.oin) &&
+        (this.PerformGroupController?.Tick(t), this.oin) &&
         (this.Lle.Update(t),
         this.NeedLookAtCamera || 5 === this.Lle.CurrentState
           ? (this.ein.DeepCopy(
@@ -484,7 +485,7 @@ let CommonNpcPerformComponent =
             for (const h of e) {
               var r = s.GetEntityByPbDataId(h);
               r?.Valid &&
-                (r = r.Entity.GetComponent(171))?.Valid &&
+                (r = r.Entity.GetComponent(172))?.Valid &&
                 r.SetUiOpenPerformance(t, i);
             }
           }
@@ -517,7 +518,7 @@ let CommonNpcPerformComponent =
     nin() {
       var t =
         Global_1.Global.BaseCharacter.CharacterActorComponent.Entity.GetComponent(
-          188,
+          190,
         );
       return (
         !!t &&
@@ -572,14 +573,14 @@ let CommonNpcPerformComponent =
     }
     ResumeAi(t) {
       2 === this._in
-        ? this.Entity.GetComponent(64).Resume(t)
-        : 1 === this._in && this.Entity.GetComponent(39).EnableAi(t),
+        ? this.Entity.GetComponent(65).Resume(t)
+        : 1 === this._in && this.Entity.GetComponent(40).EnableAi(t),
         (this.cin = !1);
     }
     PauseAi(t) {
       2 === this._in
-        ? this.Entity.GetComponent(64).Pause(t)
-        : 1 === this._in && this.Entity.GetComponent(39).DisableAi(t),
+        ? this.Entity.GetComponent(65).Pause(t)
+        : 1 === this._in && this.Entity.GetComponent(40).DisableAi(t),
         (this.cin = !0);
     }
     OnNpcInPlot(t) {
@@ -590,10 +591,7 @@ let CommonNpcPerformComponent =
       return this.lin;
     }
     HandleBornPerform() {
-      this.HandleBornMaterial(),
-        this.HandleBornEffect(),
-        this.SetNpcShowState(!1, "默认出生隐藏"),
-        this.ActorComp?.Actor.DitherEffectController?.ForceResetDither();
+      this.HandleBornMaterial(), this.HandleBornEffect();
     }
     HandleBornMaterial() {
       var t;
@@ -617,12 +615,17 @@ let CommonNpcPerformComponent =
         this.MaterialController.LoadAndSetHolographicEffect();
     }
     HandlePendingDestroy() {
-      (this.IsPendingDestroy = !0), this.Lle?.Switch(8);
+      this.Lle
+        ? ((this.IsPendingDestroy = !0), this.Lle.Switch(8))
+        : EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.DelayRemoveEntityFinished,
+            this.Entity,
+          );
     }
   });
 (CommonNpcPerformComponent = CommonNpcPerformComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(171)],
+    [(0, RegisterComponent_1.RegisterComponent)(172)],
     CommonNpcPerformComponent,
   )),
   (exports.CommonNpcPerformComponent = CommonNpcPerformComponent);

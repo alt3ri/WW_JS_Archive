@@ -36,7 +36,7 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
       (this.qAt = () => {
         var e;
         this.IsEnoughMoney() && this.GoodsData.IfPayGift()
-          ? (ControllerHolder_1.ControllerHolder.PayGiftController.SendPayGiftRequest(
+          ? (ControllerHolder_1.ControllerHolder.PayGiftController.SdkPay(
               this.GoodsData.Id,
             ),
             this.CloseMe())
@@ -178,13 +178,13 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeShow() {
     this.i4i.HidePackageViewElement(),
-      this.BGn(),
+      this.VGn(),
       this.i4i.Refresh(this.Goods, !1, 0),
       this.SetInteractionGroup(),
       this.P3i(),
       this.ITt();
   }
-  BGn() {
+  VGn() {
     var e = ConfigManager_1.ConfigManager.PayShopConfig.GetMonthCardShopId();
     this.Goods?.GetGoodsId() === e && this.i4i.SetLeftTimeTextShowState(!0);
   }

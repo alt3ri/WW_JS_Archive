@@ -10,8 +10,10 @@ class MonsterBattleConf {
     return this.id();
   }
   get ExecutionId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.executionidLength(), (t) =>
-      this.executionid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.executionidLength(),
+      this.executionid,
+      this,
     );
   }
   get ExecutionRadius() {

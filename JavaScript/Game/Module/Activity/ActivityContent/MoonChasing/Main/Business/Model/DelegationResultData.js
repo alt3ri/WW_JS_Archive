@@ -12,13 +12,15 @@ class DelegationResultData {
       (this.Hke = 0),
       (this.Gold = 0),
       (this.BaseGold = 0),
+      (this.CostGold = 0),
+      (this.OriginGold = 0),
       (this.Wish = 0),
       (this.BaseWish = 0),
       (this.Ratio = 0),
       (this.IsInvestSuccess = !1),
       (this.IsBest = !1),
       (this.jke = new Map()),
-      (this.Rya = []),
+      (this.tDa = []),
       (this.Wke = []),
       (this.Kke = []),
       (this.LastPopularity = 0);
@@ -27,28 +29,28 @@ class DelegationResultData {
     for (const i of e) {
       var s = [],
         s =
-          (s.push(i.PGs),
-          s.push(i.UGs),
-          s.push(i.wGs),
+          (s.push(i.GGs),
+          s.push(i.OGs),
+          s.push(i.kGs),
           {
-            SuccessResult: Protocol_1.Aki.Protocol.IRa.Proto_Normal,
+            SuccessResult: Protocol_1.Aki.Protocol.moh.Proto_Normal,
             CharacterValueList: s,
           });
-      this.jke.set(i.O6n, s);
+      this.jke.set(i.Q6n, s);
     }
-    for (const r of t) this.jke.get(r.O6n).SuccessResult = r.b7n;
+    for (const a of t) this.jke.get(a.Q6n).SuccessResult = a.j7n;
   }
   SaveInvestProperData(t) {
     let e = 0,
       s = 0,
       i = 0;
-    for (const r of t) (e += r.PGs), (s += r.UGs), (i += r.wGs);
-    this.Rya.push(e), this.Rya.push(s), this.Rya.push(i);
+    for (const a of t) (e += a.GGs), (s += a.OGs), (i += a.kGs);
+    this.tDa.push(e), this.tDa.push(s), this.tDa.push(i);
   }
   UseInvestProperData() {
-    this.Kke[0].SetCurrentValue(this.Rya[0]),
-      this.Kke[1].SetCurrentValue(this.Rya[1]),
-      this.Kke[2].SetCurrentValue(this.Rya[2]);
+    this.Kke[0].SetCurrentValue(this.tDa[0]),
+      this.Kke[1].SetCurrentValue(this.tDa[1]),
+      this.Kke[2].SetCurrentValue(this.tDa[2]);
   }
   SetRoleIdList(t) {
     this.Wke = t;
@@ -73,15 +75,21 @@ class DelegationResultData {
   }
   GetRoleDialog() {
     var t =
-      ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustFinishDialogByIdAndLevel(
-        this.EntrustId,
-        this.EvaluationLevel,
-      );
-    return 0 <
-      ModelManager_1.ModelManager.MoonChasingModel.GetPopularityValue() -
-        this.LastPopularity
-      ? t.UpDialog
-      : t.UnchangedDialog;
+        ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustFinishDialogByIdAndLevel(
+          this.EntrustId,
+          this.EvaluationLevel,
+        ),
+      e =
+        ModelManager_1.ModelManager.MoonChasingModel.GetPopularityValue() -
+        this.LastPopularity,
+      s = 1 === ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
+    return 0 < e
+      ? s
+        ? t.UpDialog
+        : t.UpDialogGirl
+      : s
+        ? t.UnchangedDialog
+        : t.UnchangedDialogGirl;
   }
 }
 exports.DelegationResultData = DelegationResultData;

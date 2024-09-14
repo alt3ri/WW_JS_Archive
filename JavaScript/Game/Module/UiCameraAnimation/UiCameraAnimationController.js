@@ -27,7 +27,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ResetModuleAfterResetToBattleView,
-        this.LMa,
+        this.Nya,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ActiveBattleView,
@@ -73,7 +73,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ResetModuleAfterResetToBattleView,
-        this.LMa,
+        this.Nya,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ActiveBattleView,
@@ -239,7 +239,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
   (UiCameraAnimationController.SYi = () => {
     UiCameraAnimationManager_1.UiCameraAnimationManager.ClearDisplay();
   }),
-  (UiCameraAnimationController.LMa = () => {
+  (UiCameraAnimationController.Nya = () => {
     UiCameraAnimationController.VAo(),
       UiCameraAnimationManager_1.UiCameraAnimationManager.ClearDisplay(),
       CameraController_1.CameraController.ExitCameraMode(2);

@@ -135,7 +135,7 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
           if (
             (this.NavigationPath || (this.NavigationPath = new Array()),
             this.CacheVector.DeepCopy(r.ActorLocationProxy),
-            r.Entity.GetComponent(91)?.PositionState ===
+            r.Entity.GetComponent(92)?.PositionState ===
               CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
               (this.CacheVector.Z -= r.HalfHeight),
             (this.FoundPath =
@@ -162,7 +162,7 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
           (this.CurrentNavigationIndex = 1),
             (this.NavigationEndTime =
               Time_1.Time.WorldTime + this.TsMaxNavigationMillisecond);
-          var a = r.Entity.CheckGetComponent(91);
+          var a = r.Entity.CheckGetComponent(92);
           if (a.Valid)
             switch (this.MoveStateActural) {
               case 1:
@@ -469,7 +469,7 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
     );
   }
   UseSkill(i, t) {
-    var i = i.Entity.GetComponent(33);
+    var i = i.Entity.GetComponent(34);
     i.Valid
       ? ((i = i.BeginSkill(t.MoveStateGA, {
           Context: "TsTaskWander.UseSkill",

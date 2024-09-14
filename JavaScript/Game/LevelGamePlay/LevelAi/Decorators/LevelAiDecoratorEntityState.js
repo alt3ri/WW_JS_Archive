@@ -45,7 +45,7 @@ class LevelAiDecoratorEntityState extends LevelAiDecorator_1.LevelAiDecorator {
       !!(t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
         r.EntityId,
       ))?.Valid &&
-      !!(t = t.Entity.GetComponent(180)) &&
+      !!(t = t.Entity.GetComponent(181)) &&
       ((t = t.ContainsTagByName(r.State)), "Eq" === r.Compare ? t : !t)
     );
   }

@@ -16,7 +16,7 @@ class AnimalPerformIdleState extends AnimalPerformStateBase_1.AnimalPerformState
   OnUpdate(e) {}
   OnExit(e) {
     this.EcologicalInterface?.IsValid() &&
-      (this.Owner.GetComponent(181)?.SetInteractionState(
+      (this.Owner.GetComponent(182)?.SetInteractionState(
         !0,
         "AnimalPerformIdleState OnExit",
       ),

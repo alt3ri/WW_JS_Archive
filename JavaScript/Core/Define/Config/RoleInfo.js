@@ -29,8 +29,10 @@ class RoleInfo {
     return this.introduction();
   }
   get Tag() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.tagLength(), (t) =>
-      this.tag(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.tagLength(),
+      this.tag,
+      this,
     );
   }
   get ParentId() {
@@ -45,7 +47,8 @@ class RoleInfo {
   get ShowProperty() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.showpropertyLength(),
-      (t) => this.showproperty(t),
+      this.showproperty,
+      this,
     );
   }
   get ElementId() {
@@ -78,9 +81,16 @@ class RoleInfo {
   get SpilloverItem() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.spilloveritemLength(),
-      (t) => this.spilloveritem(t)?.key(),
-      (t) => this.spilloveritem(t)?.value(),
+      this.spilloveritemKey,
+      this.spilloveritemValue,
+      this,
     );
+  }
+  spilloveritemKey(t) {
+    return this.spilloveritem(t)?.key();
+  }
+  spilloveritemValue(t) {
+    return this.spilloveritem(t)?.value();
   }
   get MeshId() {
     return this.meshid();
@@ -133,9 +143,16 @@ class RoleInfo {
   get ExchangeConsume() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.exchangeconsumeLength(),
-      (t) => this.exchangeconsume(t)?.key(),
-      (t) => this.exchangeconsume(t)?.value(),
+      this.exchangeconsumeKey,
+      this.exchangeconsumeValue,
+      this,
     );
+  }
+  exchangeconsumeKey(t) {
+    return this.exchangeconsume(t)?.key();
+  }
+  exchangeconsumeValue(t) {
+    return this.exchangeconsume(t)?.value();
   }
   get InitWeaponItemId() {
     return this.initweaponitemid();
@@ -186,8 +203,10 @@ class RoleInfo {
     return this.showinbag();
   }
   get WeaponScale() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.weaponscaleLength(), (t) =>
-      this.weaponscale(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.weaponscaleLength(),
+      this.weaponscale,
+      this,
     );
   }
   get Intervene() {
@@ -209,9 +228,14 @@ class RoleInfo {
     return this.reddotdisablerule();
   }
   get SkinDamage() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.skindamageLength(), (t) =>
-      this.skindamage(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.skindamageLength(),
+      this.skindamage,
+      this,
     );
+  }
+  get HideHuLu() {
+    return this.hidehulu();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
@@ -557,6 +581,10 @@ class RoleInfo {
   skindamageLength() {
     var t = this.J7.__offset(this.z7, 128);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  hidehulu() {
+    var t = this.J7.__offset(this.z7, 130);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }
 exports.RoleInfo = RoleInfo;

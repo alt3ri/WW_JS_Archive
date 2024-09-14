@@ -50,55 +50,55 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(14571, (e) => {
-      e && ModelManager_1.ModelManager.WeaponModel.WeaponRoleLoadEquip(e.Pxs);
+    Net_1.Net.Register(22158, (e) => {
+      e && ModelManager_1.ModelManager.WeaponModel.WeaponRoleLoadEquip(e.Gxs);
     }),
-      Net_1.Net.Register(8599, (e) => {
-        var o = MathUtils_1.MathUtils.LongToNumber(e.P4n),
+      Net_1.Net.Register(24359, (e) => {
+        var o = MathUtils_1.MathUtils.LongToNumber(e.F4n),
           o =
             ModelManager_1.ModelManager.CreatureModel.GetEntity(
               o,
-            ).Entity.GetComponent(71);
+            ).Entity.GetComponent(72);
         o && o.OnEquipWeaponForRoleNotify(e);
       });
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(14571), Net_1.Net.UnRegister(8599);
+    Net_1.Net.UnRegister(22158), Net_1.Net.UnRegister(24359);
   }
   static SendPbWeaponLevelUpRequest(e, o) {
-    var t = Protocol_1.Aki.Protocol.M0s.create();
-    t.T5n = e;
+    var t = Protocol_1.Aki.Protocol.R0s.create();
+    t.w5n = e;
     for (const a of o) {
-      var r = Protocol_1.Aki.Protocol.V8s.create();
-      (r.o9n = a.SelectedCount),
-        (r.T5n = a.IncId),
-        (r.f8n = a.ItemId),
-        t.K7n.push(r);
+      var r = Protocol_1.Aki.Protocol.X8s.create();
+      (r.m9n = a.SelectedCount),
+        (r.w5n = a.IncId),
+        (r.L8n = a.ItemId),
+        t.tHn.push(r);
     }
-    Net_1.Net.Call(29101, t, (e) => {
+    Net_1.Net.Call(29897, t, (e) => {
       e &&
-        (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
+        (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
           ? ModelManager_1.ModelManager.WeaponModel.WeaponLevelUpResponse(e)
           : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              26619,
+              e.Q4n,
+              23392,
             ));
     });
   }
   static SendPbWeaponBreachRequest(t, r) {
-    var e = Protocol_1.Aki.Protocol.E0s.create();
-    (e.T5n = t),
-      Net_1.Net.Call(5805, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.A0s.create();
+    (e.w5n = t),
+      Net_1.Net.Call(18438, e, (e) => {
         var o;
         e &&
-          (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
-            ? ((o = e.ijn),
+          (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
+            ? ((o = e.ujn),
               ModelManager_1.ModelManager.WeaponModel.SetWeaponBreachData(t, o),
               r(o),
               UiManager_1.UiManager.OpenView("WeaponBreachSuccessView", t))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.O4n,
-                15967,
+                e.Q4n,
+                26039,
               ));
       });
   }
@@ -106,18 +106,18 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
     if (
       !RoleController_1.RoleController.CheckCharacterInBattleTagAndShowTips()
     ) {
-      var t = Protocol_1.Aki.Protocol.I0s.create();
-      (t.T5n = o), (t.rjn = e);
+      var t = Protocol_1.Aki.Protocol.U0s.create();
+      (t.w5n = o), (t.cjn = e);
       const r =
         ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
           o,
         ).GetResonanceLevel();
-      Net_1.Net.Call(5842, t, (e) => {
+      Net_1.Net.Call(28258, t, (e) => {
         e &&
-          (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
+          (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
             ? (ModelManager_1.ModelManager.WeaponModel.SetWeaponResonanceData(
-                e.T5n,
-                e.tOs,
+                e.w5n,
+                e.hOs,
               ),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.WeaponResonanceSuccess,
@@ -125,8 +125,8 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
                 r,
               ))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.O4n,
-                16492,
+                e.Q4n,
+                15909,
               ));
       });
     }
@@ -136,18 +136,18 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
     RoleController_1.RoleController.CheckCharacterInBattleTagAndShowTips() ||
       !e ||
       e <= 0 ||
-      (((r = Protocol_1.Aki.Protocol.nss.create()).S5n =
-        Protocol_1.Aki.Protocol.u6s.create()),
-      (r.S5n.ojn = e),
-      (r.S5n.e8n = o),
-      (r.S5n.njn = t),
-      Net_1.Net.Call(4652, r, (e) => {
+      (((r = Protocol_1.Aki.Protocol.css.create()).R5n =
+        Protocol_1.Aki.Protocol.v5s.create()),
+      (r.R5n.mjn = e),
+      (r.R5n.l8n = o),
+      (r.R5n.djn = t),
+      Net_1.Net.Call(22517, r, (e) => {
         e &&
-          (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
-            ? ModelManager_1.ModelManager.WeaponModel.WeaponRoleLoadEquip(e.Pxs)
+          (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
+            ? ModelManager_1.ModelManager.WeaponModel.WeaponRoleLoadEquip(e.Gxs)
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.O4n,
-                5632,
+                e.Q4n,
+                15941,
               ));
       }));
   }

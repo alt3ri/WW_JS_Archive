@@ -52,8 +52,7 @@ class UpWeaponGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
     var e, i;
     this.IsDestroyOrDestroying ||
       (this.mWt.Update(t),
-      (t = UE.Color.FromHex(this.GachaViewInfo.ThemeColor)),
-      this.GetTexture(2).SetColor(t),
+      this.SetTextureByPath(this.GachaViewInfo.TextTexture, this.GetTexture(2)),
       (t = this.GetItem(0)),
       (e = this.GachaViewInfo.WeaponPrefabPath),
       (i = this.dWt.get(e)) && i === this.CWt) ||

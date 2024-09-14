@@ -34,7 +34,7 @@ let CharacterPartScanComponent = class CharacterPartScanComponent extends Entity
   }
   OnInit() {
     return (
-      (this.ljr = this.Entity.GetComponent(60)),
+      (this.ljr = this.Entity.GetComponent(61)),
       (this.n$t = this.Entity.GetComponent(3)),
       (this._jr = this.n$t.Actor.CharRenderingComponent),
       !0
@@ -71,7 +71,7 @@ let CharacterPartScanComponent = class CharacterPartScanComponent extends Entity
   }
 };
 (CharacterPartScanComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(61)],
+  [(0, RegisterComponent_1.RegisterComponent)(62)],
   CharacterPartScanComponent,
 )),
   (exports.CharacterPartScanComponent = CharacterPartScanComponent);

@@ -130,17 +130,17 @@ let SceneItemBuffProducerComponent =
               e.AddBuffMode.BulletOffset.Z ?? 0,
             ));
       }
-      t = this.Entity.GetComponent(0)?.ComponentDataMap.get("Fys");
-      return (this.JUn = MathUtils_1.MathUtils.LongToBigInt(t?.Fys?.tVn)), !0;
+      t = this.Entity.GetComponent(0)?.ComponentDataMap.get("Qys");
+      return (this.JUn = MathUtils_1.MathUtils.LongToBigInt(t?.Qys?._Vn)), !0;
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(185)),
+        (this.Hte = this.Entity.GetComponent(187)),
         this.Hte
           ? ((this.Mne = this.Hte.CreatureData.GetPbDataId()),
-            (this.wsn = this.Entity.GetComponent(180)),
+            (this.wsn = this.Entity.GetComponent(181)),
             this.wsn
-              ? ((this.mBe = this.Entity.GetComponent(119)),
+              ? ((this.mBe = this.Entity.GetComponent(120)),
                 this.mBe
                   ? ((this.b1n = !0),
                     (this._Mr = !0),
@@ -148,7 +148,7 @@ let SceneItemBuffProducerComponent =
                     ModelManager_1.ModelManager.PlayerInfoModel.GetId() !==
                       ModelManager_1.ModelManager.CreatureModel.GetWorldOwner()
                       ? !(this._Mr = !1)
-                      : ((this.vtn = this.Entity.GetComponent(76)),
+                      : ((this.vtn = this.Entity.GetComponent(77)),
                         this.vtn &&
                           ((this.b1n = !1),
                           this.vtn.AddOnPlayerOverlapCallback(this.gdn)),
@@ -242,10 +242,10 @@ let SceneItemBuffProducerComponent =
       var t = Global_1.Global.BaseCharacter;
       if (!t) return !1;
       var t = t.CharacterActorComponent.Entity,
-        e = t.CheckGetComponent(159);
+        e = t.CheckGetComponent(160);
       if (!e) return !1;
       let i = 0 < e.GetBuffTotalStackById(this.eHr);
-      e = t.CheckGetComponent(174);
+      e = t.CheckGetComponent(175);
       return (
         e &&
           (i ||=
@@ -260,7 +260,7 @@ let SceneItemBuffProducerComponent =
         ((this.ddn = !0),
         SceneItemBuffController_1.SceneItemBuffController.BuffOperate(
           this.Entity.Id,
-          Protocol_1.Aki.Protocol.K3s.Proto_UndoBuff,
+          Protocol_1.Aki.Protocol.eFs.Proto_UndoBuff,
           this.adn,
         ));
     }
@@ -270,7 +270,7 @@ let SceneItemBuffProducerComponent =
         ((this.ddn = !0),
         SceneItemBuffController_1.SceneItemBuffController.BuffOperate(
           this.Entity.Id,
-          Protocol_1.Aki.Protocol.K3s.Proto_AddBuff,
+          Protocol_1.Aki.Protocol.eFs.Proto_AddBuff,
           this.adn,
         ));
     }
@@ -335,7 +335,7 @@ let SceneItemBuffProducerComponent =
   });
 (SceneItemBuffProducerComponent = SceneItemBuffProducerComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(131)],
+    [(0, RegisterComponent_1.RegisterComponent)(132)],
     SceneItemBuffProducerComponent,
   )),
   (exports.SceneItemBuffProducerComponent = SceneItemBuffProducerComponent);

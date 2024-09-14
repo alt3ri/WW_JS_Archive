@@ -17,54 +17,73 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0;
+const initStat = Stats_1.Stat.Create("configTowerDefenceMapMarkAll.Init"),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configTowerDefenceMapMarkAll.GetConfigList",
+  );
 exports.configTowerDefenceMapMarkAll = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfigList: (e = !0) => {
-    var o;
+  GetConfigList: (o = !0) => {
+    var e;
     if (
-      (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
+      (ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start(),
+      (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair)))
     ) {
-      if (e) {
+      if (o) {
         var n = KEY_PREFIX + ")";
         const i = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (i) return i;
+        if (i)
+          return (
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            i
+          );
       }
       const i = new Array();
       for (;;) {
         if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        var r = void 0;
+        var t = void 0;
         if (
-          (([o, r] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
           )),
-          !o)
+          !e)
         )
-          return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
-        r =
-          TowerDefenceMapMark_1.TowerDefenceMapMark.getRootAsTowerDefenceMapMark(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(r.buffer)),
+          return (
+            ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            getConfigListStat.Stop(),
+            void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
           );
-        i.push(r);
+        t =
+          TowerDefenceMapMark_1.TowerDefenceMapMark.getRootAsTowerDefenceMapMark(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
+          );
+        i.push(t);
       }
       return (
-        e &&
+        o &&
           ((n = KEY_PREFIX + ")"),
           ConfigCommon_1.ConfigCommon.SaveConfig(n, i, i.length)),
         ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+        getConfigListStat.Stop(),
+        ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
         i
       );
     }
+    getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=TowerDefenceMapMarkAll.js.map

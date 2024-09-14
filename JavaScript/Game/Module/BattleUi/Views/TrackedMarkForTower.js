@@ -21,13 +21,13 @@ class TrackedMarkForTower extends TrackedMark_1.TrackedMark {
   constructor() {
     super(...arguments),
       (this.$te = void 0),
-      (this.Cra = void 0),
+      (this.Jna = void 0),
       (this.Hnt = new Map()),
-      (this.gra = Number.MAX_VALUE),
-      (this.fra = () => {
-        this.Cra?.Kill(), (this.Cra = void 0), this.Gnt(5);
+      (this.zna = Number.MAX_VALUE),
+      (this.Zna = () => {
+        this.Jna?.Kill(), (this.Jna = void 0), this.Gnt(5);
       }),
-      (this.pra = (t) => {
+      (this.esa = (t) => {
         this.GetSprite(2).SetFillAmount(t), this.GetSprite(3).SetFillAmount(t);
       });
   }
@@ -67,7 +67,7 @@ class TrackedMarkForTower extends TrackedMark_1.TrackedMark {
   OnBeforeDestroy() {
     super.OnBeforeDestroy(),
       (this.$te = void 0),
-      this.fra(),
+      this.Zna(),
       this.Gnt(4),
       this.Gnt(5),
       this.Gnt(6),
@@ -80,7 +80,7 @@ class TrackedMarkForTower extends TrackedMark_1.TrackedMark {
           ((this.CurShowTime += t / CommonDefine_1.MILLIONSECOND_PER_SECOND),
           this.RootItem.SetUIActive(!0),
           this.UpdatePositionAndRotation(t),
-          this.vra())
+          this.tsa())
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Map",
@@ -135,30 +135,30 @@ class TrackedMarkForTower extends TrackedMark_1.TrackedMark {
             ),
             this.DirectionComp.SetUIActive(!0)));
   }
-  vra() {
+  tsa() {
     if (!this.$te) {
       var t = this.TrackTarget,
         t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t);
       if (!t) return;
       t = t.Entity;
       if (!t) return;
-      if (((this.$te = t.GetComponent(158)), !this.$te)) return;
+      if (((this.$te = t.GetComponent(159)), !this.$te)) return;
     }
     var i,
       e,
       t = this.$te.GetCurrentValue(
         CharacterAttributeTypes_1.EAttributeId.Proto_Life,
       );
-    t >= this.gra ||
+    t >= this.zna ||
       ((i =
         t /
-        this.$te.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.e5n)),
+        this.$te.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.l5n)),
       this.GetSprite(0).SetFillAmount(i),
       this.bnt(5),
       (e = this.GetSprite(3).GetFillAmount()),
-      this.fra(),
-      this.Mra(e, i),
-      (this.gra = t));
+      this.Zna(),
+      this.isa(e, i),
+      (this.zna = t));
   }
   Qnt() {
     this.Est(4), this.Est(5), this.Est(6);
@@ -180,14 +180,14 @@ class TrackedMarkForTower extends TrackedMark_1.TrackedMark {
     t = this.Hnt.get(t);
     if (t) for (const i of t) i.Stop();
   }
-  Mra(t, i) {
-    (this.Cra = UE.LTweenBPLibrary.FloatTo(
+  isa(t, i) {
+    (this.Jna = UE.LTweenBPLibrary.FloatTo(
       this.RootActor,
-      (0, puerts_1.toManualReleaseDelegate)(this.pra),
+      (0, puerts_1.toManualReleaseDelegate)(this.esa),
       t,
       i,
     )),
-      this.Cra.OnCompleteCallBack.Bind(this.fra);
+      this.Jna.OnCompleteCallBack.Bind(this.Zna);
   }
 }
 exports.TrackedMarkForTower = TrackedMarkForTower;

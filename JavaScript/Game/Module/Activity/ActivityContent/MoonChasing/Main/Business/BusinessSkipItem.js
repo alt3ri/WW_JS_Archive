@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BusinessSkipItem = void 0);
 const UE = require("ue"),
-  ConfigManager_1 = require("../../../../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../../../../Ui/Base/UiPanelBase"),
@@ -10,15 +9,15 @@ const UE = require("ue"),
 class BusinessSkipItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.zGn = void 0),
-      (this.vIa = void 0),
-      (this.Bra = () => {
-        1 === this.vIa[0]
-          ? this.zGn?.SkipToBuild()
-          : 0 === this.vIa[0] &&
+      (this.aOn = void 0),
+      (this.nRa = void 0),
+      (this.fsa = () => {
+        1 === this.nRa[0]
+          ? this.aOn?.SkipToBuild()
+          : 0 === this.nRa[0] &&
             ControllerHolder_1.ControllerHolder.MoonChasingController.OpenTaskView(
               2,
-              this.vIa[1],
+              this.nRa[1],
             );
       });
   }
@@ -28,36 +27,18 @@ class BusinessSkipItem extends UiPanelBase_1.UiPanelBase {
       [1, UE.UITexture],
       [2, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[2, this.Bra]]);
+      (this.BtnBindInfo = [[2, this.fsa]]);
   }
   RegisterViewController(e) {
-    this.zGn = e;
+    this.aOn = e;
   }
   Refresh() {
-    var r,
-      t = ModelManager_1.ModelManager.MoonChasingModel.GetFirstUnlockData();
-    if (t) {
-      let e = "",
-        i = "";
-      1 === (this.vIa = t)[0]
-        ? ((r = ConfigManager_1.ConfigManager.BuildingConfig.GetBuildingById(
-            t[1],
-          )),
-          (r = ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustRoleById(
-            r.AssociateRole,
-          )),
-          (i = r.SmallHeadIcon),
-          (e = "Moonfiesta_PartnerTip2"))
-        : 0 === t[0] &&
-          ((r = ConfigManager_1.ConfigManager.TaskConfig.GetBranchLineTaskById(
-            t[1],
-          )),
-          (t = ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustRoleById(
-            r.AssociateRole,
-          )),
-          (i = t.SmallHeadIcon),
-          (e = "Moonfiesta_PartnerTip1")),
-        this.SetTextureByPath(i, this.GetTexture(1)),
+    var i = ModelManager_1.ModelManager.MoonChasingModel.GetFirstUnlockData();
+    if (i) {
+      let e = "";
+      1 === (this.nRa = i)[0]
+        ? (e = "Moonfiesta_PartnerTip2")
+        : 0 === i[0] && (e = "Moonfiesta_PartnerTip1"),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e);
     }
   }

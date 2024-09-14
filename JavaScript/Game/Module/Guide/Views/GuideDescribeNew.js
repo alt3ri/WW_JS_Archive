@@ -13,7 +13,7 @@ class GuideDescribeNew {
   constructor(t) {
     (this.Uzt = void 0),
       (this.Azt = 1.6),
-      (this.LTa = new InputKeyDisplayData_1.InputKeyDisplayData()),
+      (this.dwa = new InputKeyDisplayData_1.InputKeyDisplayData()),
       (this.Uzt = t),
       this.Uzt.SetRichText(!0);
   }
@@ -53,22 +53,22 @@ class GuideDescribeNew {
             n = void 0;
           if (
             ((InputSettingsManager_1.InputSettingsManager.GetActionKeyDisplayData(
-              this.LTa,
+              this.dwa,
               t,
             ) ||
               InputSettingsManager_1.InputSettingsManager.GetAxisKeyDisplayData(
-                this.LTa,
+                this.dwa,
                 t,
               )) &&
-              ((r = this.LTa.GetDisplayKeyNameList(e)),
-              (n = this.LTa.GetDisplayKeyIconPathList(e))),
+              ((r = this.dwa.GetDisplayKeyNameList(e)),
+              (n = this.dwa.GetDisplayKeyIconPathList(e))),
             void 0 === r || void 0 === n)
           )
             return;
           1 === r.length
-            ? (i = this.DTa(r[0], n[0]))
+            ? (i = this.Cwa(r[0], n[0]))
             : 2 === r.length &&
-              (i = "" + this.DTa(r[0], n[0]) + LINKER + this.DTa(r[1], n[1])),
+              (i = "" + this.Cwa(r[0], n[0]) + LINKER + this.Cwa(r[1], n[1])),
             a.push(i);
         }
         const g = r.split("\n").length - 1;
@@ -78,7 +78,7 @@ class GuideDescribeNew {
       }
     }
   }
-  DTa(t, e) {
+  Cwa(t, e) {
     return StringUtils_1.StringUtils.IsEmpty(e) ? `(${t})` : `<texture=${e}/>`;
   }
 }

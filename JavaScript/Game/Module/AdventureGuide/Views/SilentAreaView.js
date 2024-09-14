@@ -10,6 +10,7 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
   CommonCurrencyItem_1 = require("../../Common/CommonCurrencyItem"),
@@ -18,10 +19,8 @@ const UE = require("ue"),
   GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
   LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
   WorldMapController_1 = require("../../WorldMap/WorldMapController"),
-  AdventureDefine_1 = require("../AdventureDefine"),
   AdventureGuideController_1 = require("../AdventureGuideController"),
   SilentAreaItem_1 = require("./SilentAreaItem"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   SILENT_HELP = 18;
 class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
@@ -181,8 +180,7 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
             5,
             "点击无音区探测按钮 SilentAreaView",
           ),
-          ModelManager_1.ModelManager.CreatureModel.GetInstanceId() !==
-          AdventureDefine_1.BigWorldID
+          ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
             ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "DungeonDetection",
               )
@@ -194,7 +192,7 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
                 !0,
               ),
               ControllerHolder_1.ControllerHolder.AdventureGuideController.RequestForDetection(
-                Protocol_1.Aki.Protocol.X6n.Proto_SilentArea,
+                Protocol_1.Aki.Protocol.r8n.Proto_SilentArea,
                 e.Conf.LevelPlayList,
                 this.$8e,
               ));

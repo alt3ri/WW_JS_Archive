@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RepeatKeyTipsView = void 0);
 const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   LguiUtil_1 = require("../../Util/LguiUtil");
 class RepeatKeyTipsView extends UiViewBase_1.UiViewBase {
@@ -36,27 +37,24 @@ class RepeatKeyTipsView extends UiViewBase_1.UiViewBase {
       ]);
   }
   OnStart() {
-    var i,
-      t,
-      s,
-      h = this.OpenParam,
-      h =
-        ((this.Qxi = h.CurrentKeySettingRowData),
-        (this.Xxi = h.RepeatKeySettingRowData),
-        (this.oxi = h.InputControllerType),
-        (this.$xi = h.OnCloseCallback),
-        this.Qxi.GetCurrentKeyName(this.oxi));
-    h &&
-      ((h = this.Qxi.GetSettingName()),
-      (i = this.Qxi.GetCurrentKeyNameRichText(this.oxi)),
-      (t = this.Xxi.GetSettingName()),
-      (s = this.Xxi.GetCurrentKeyNameRichText(this.oxi)),
-      this.GetText(1)?.SetText(i),
-      this.GetText(4)?.SetText(s),
-      this.GetText(5)?.SetText(i),
-      this.GetText(2)?.SetText(s),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), h),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), t));
+    var i = this.OpenParam,
+      i =
+        ((this.Qxi = i.CurrentKeySettingRowData),
+        (this.Xxi = i.RepeatKeySettingRowData),
+        (this.oxi = i.InputControllerType),
+        (this.$xi = i.OnCloseCallback),
+        this.Qxi.GetSettingName()),
+      t = this.Qxi.GetCurrentKeyNameRichText(this.oxi),
+      s = this.Xxi.GetSettingName(),
+      e = this.Xxi.GetCurrentKeyNameRichText(this.oxi);
+    StringUtils_1.StringUtils.IsBlank(t)
+      ? (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), "NoneText"),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), "NoneText"))
+      : (this.GetText(1)?.SetText(t), this.GetText(5)?.SetText(t)),
+      this.GetText(4)?.SetText(e),
+      this.GetText(2)?.SetText(e),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), i),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), s);
   }
   OnBeforeDestroy() {
     this.$xi && this.$xi(this.Yxi),

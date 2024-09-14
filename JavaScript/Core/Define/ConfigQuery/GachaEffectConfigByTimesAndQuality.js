@@ -18,48 +18,63 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configGachaEffectConfigByTimesAndQuality.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configGachaEffectConfigByTimesAndQuality.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configGachaEffectConfigByTimesAndQuality.GetConfig(";
 exports.configGachaEffectConfigByTimesAndQuality = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, i, n = !0) => {
-    if (
-      (f = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (n) {
-        var e = KEY_PREFIX + `#${o}#${i})`;
+  GetConfig: (o, n, i = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${n})`),
+      f =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (f) {
+      if (i) {
+        var e = KEY_PREFIX + `#${o}#${n})`;
         const a = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (a) return a;
+        if (a)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
         (f =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, i, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, n, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(
               handleId,
               !0,
               ...logPair,
               ["Times", o],
-              ["Quality", i],
+              ["Quality", n],
             ))
       ) {
-        var f,
-          e = void 0;
+        e = void 0;
         if (
           (([f, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Times", o],
-            ["Quality", i],
+            ["Quality", n],
           )),
           f)
         ) {
@@ -68,16 +83,22 @@ exports.configGachaEffectConfigByTimesAndQuality = {
               new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
             );
           return (
-            n &&
-              ((f = KEY_PREFIX + `#${o}#${i})`),
+            i &&
+              ((f = KEY_PREFIX + `#${o}#${n})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(f, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=GachaEffectConfigByTimesAndQuality.js.map

@@ -58,7 +58,7 @@ let AnimalStateMachineComponent =
       var t = this.Entity.GetComponent(0),
         t =
           ((this.Mne = t.GetPbDataId()),
-          (this.oRe = this.Entity.GetComponent(162)),
+          (this.oRe = this.Entity.GetComponent(163)),
           this.oRe?.MainAnimInstance);
       return (
         t &&

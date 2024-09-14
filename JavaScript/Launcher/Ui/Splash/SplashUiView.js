@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   BaseConfigController_1 = require("../../BaseConfig/BaseConfigController"),
   LauncherConfigLib_1 = require("../../Define/LauncherConfigLib"),
+  Platform_1 = require("../../Platform/Platform"),
   LauncherLanguageLib_1 = require("../../Util/LauncherLanguageLib"),
   LauncherLog_1 = require("../../Util/LauncherLog"),
   LauncherResourceLib_1 = require("../../Util/LauncherResourceLib"),
@@ -35,7 +36,7 @@ class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
   }
   async InitAsync(i) {
     var t;
-    "Windows" !== UE.GameplayStatics.GetPlatformName() &&
+    Platform_1.Platform.IsWindowsPlatform() ||
       ((t = UE.GameUserSettings.GetGameUserSettings()).SetFrameRateLimit(30),
       t.ApplySettings(!0),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
@@ -87,14 +88,14 @@ class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       this.GetTexture(5).SetTexture(this.$yr),
       this.GetTexture(5).SetSizeFromTexture();
   }
-  cYs() {
+  szs() {
     return (
       "CN" !==
       BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea")
     );
   }
   tIr() {
-    var i = this.cYs();
+    var i = this.szs();
     LauncherLog_1.LauncherLog.Info("TsSplash", ["ifglobal", i]);
     let t = this.iIr(this.Kyr, "SplashCautionTitle"),
       s =
@@ -147,7 +148,7 @@ class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
     (this.Yyr = await this.nIr(this.xyr + this.Kyr)),
       void 0 === this.Yyr && (this.Yyr = await this.nIr(this.xyr + this.Qyr));
     let i = this.Xyr + this.Kyr;
-    this.cYs() && (i = ENCOMPANYNAME),
+    this.szs() && (i = ENCOMPANYNAME),
       (this.$yr = await this.nIr(i)),
       void 0 === this.$yr && (this.$yr = await this.nIr(this.Xyr + this.Qyr));
   }

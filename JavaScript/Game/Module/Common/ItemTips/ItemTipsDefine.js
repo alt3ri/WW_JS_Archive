@@ -40,12 +40,23 @@ class ItemTipsData {
             Text: s?.Description,
             SortIndex: s?.SortIndex,
             Function: () => {
-              SkipTaskManager_1.SkipTaskManager.RunByConfigId(r);
+              SkipTaskManager_1.SkipTaskManager.RunByConfigId(r, t);
             },
           }),
           a.push(s));
       }
     this.GetWayData = a;
+  }
+  CanDeprecate() {
+    var t;
+    return (
+      !(this.IncId <= 0) &&
+      void 0 !==
+        (t = ModelManager_1.ModelManager.InventoryModel?.GetAttributeItemData(
+          this.IncId,
+        )) &&
+      t.CanDeprecate()
+    );
   }
 }
 class TipsMaterialData extends (exports.ItemTipsData = ItemTipsData) {
@@ -94,6 +105,8 @@ class TipsMaterialData extends (exports.ItemTipsData = ItemTipsData) {
         return i.RechargeBuffSpritePath;
       case 5:
         return i.ResurrectionBuffSpritePath;
+      case 6:
+        return i.ExploreBuffSpritePath;
     }
   }
 }

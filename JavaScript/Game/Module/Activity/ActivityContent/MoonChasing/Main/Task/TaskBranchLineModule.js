@@ -24,7 +24,7 @@ class BranchLineItem extends GridProxyAbstract_1.GridProxyAbstract {
           this.Pe.TaskId,
         );
         0 === e
-          ? this.Xga(this.Pe.JumpBuildingId)
+          ? this.Hpa(this.Pe.JumpBuildingId)
           : 1 === e
             ? ControllerHolder_1.ControllerHolder.QuestNewController.TryTrackAndOpenWorldMap(
                 this.Pe.TaskId,
@@ -50,7 +50,7 @@ class BranchLineItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnBeforeShow() {
     this.BNe();
   }
-  Xga(e) {
+  Hpa(e) {
     if (
       3 ===
       ModelManager_1.ModelManager.QuestNewModel.GetQuestState(this.Pe.TaskId)
@@ -108,12 +108,17 @@ class BranchLineItem extends GridProxyAbstract_1.GridProxyAbstract {
   Refresh(e, i, r) {
     (this.Pe = e), this._Oe(), this.Aqe(), this.P5e(), this.BNe();
   }
+  GetKey(e, i) {
+    return e.Id;
+  }
 }
 class TaskBranchLineModule extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.qUt = void 0),
-      (this.k0a = 0),
+      (this.hMa = 0),
+      (this.tue = []),
+      (this.Lbt = !0),
       (this.DAn = () => new BranchLineItem());
   }
   OnRegisterComponent() {
@@ -122,42 +127,44 @@ class TaskBranchLineModule extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIItem],
     ];
   }
-  OnStart() {
+  async OnBeforeStartAsync() {
     this.qUt = new GenericScrollViewNew_1.GenericScrollViewNew(
       this.GetScrollViewWithScrollbar(0),
       this.DAn,
       this.GetItem(1).GetOwner(),
     );
+    var e = ConfigManager_1.ConfigManager.TaskConfig.GetAllBranchLineTask();
+    (this.tue = [...e]),
+      await this.qUt.RefreshByDataAsync(
+        this.tue.sort((e, i) => {
+          var r = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
+              e.TaskId,
+            ),
+            t = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
+              i.TaskId,
+            );
+          return 2 === r && 2 !== t
+            ? -1
+            : 2 !== r && 2 === t
+              ? 1
+              : 0 === r && 0 !== t
+                ? -1
+                : 0 !== r && 0 === t
+                  ? 1
+                  : e.TaskId - i.TaskId;
+        }),
+      );
   }
-  async OnBeforeShowAsyncImplement() {
-    var e = [
-        ...ConfigManager_1.ConfigManager.TaskConfig.GetAllBranchLineTask(),
-      ],
-      e =
-        (await this.qUt.RefreshByDataAsync(
-          e.sort((e, i) => {
-            var r = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
-                e.TaskId,
-              ),
-              t = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
-                i.TaskId,
-              );
-            return 2 === r && 2 !== t
-              ? -1
-              : 2 !== r && 2 === t
-                ? 1
-                : 0 === r && 0 !== t
-                  ? -1
-                  : 0 !== r && 0 === t
-                    ? 1
-                    : e.TaskId - i.TaskId;
-          }),
-        ),
-        e.findIndex((e) => e.Id === this.k0a));
-    0 <= e && ((e = this.qUt.GetItemByIndex(e)), this.qUt.ScrollTo(e));
+  OnBeforeShow() {
+    this.qUt.BindLateUpdate((e) => {
+      this.Lbt
+        ? (this.Lbt = !1)
+        : (0 !== this.hMa && this.qUt.ScrollToLeft(this.hMa),
+          this.qUt.UnBindLateUpdate());
+    });
   }
   SetSelectTaskId(e) {
-    this.k0a = e;
+    this.hMa = e;
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     if (void 0 !== this.qUt) {

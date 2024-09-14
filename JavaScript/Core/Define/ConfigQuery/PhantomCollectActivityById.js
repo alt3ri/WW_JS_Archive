@@ -17,61 +17,80 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configPhantomCollectActivityById.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configPhantomCollectActivityById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configPhantomCollectActivityById.GetConfig(";
 exports.configPhantomCollectActivityById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, t = !0) => {
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (t) {
-        var i = KEY_PREFIX + `#${o})`;
-        const e = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (e) return e;
+  GetConfig: (t, o = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${t})`),
+      n =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (n) {
+      if (o) {
+        var e = KEY_PREFIX + `#${t})`;
+        const C = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (C)
+          return (
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
+          );
       }
       if (
         (n =
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, t, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
               "Id",
-              o,
+              t,
             ]))
       ) {
-        var n,
-          i = void 0;
+        e = void 0;
         if (
-          (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
-            ["Id", o],
+            ["Id", t],
           )),
           n)
         ) {
-          const e =
+          const C =
             PhantomCollectActivity_1.PhantomCollectActivity.getRootAsPhantomCollectActivity(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
             );
           return (
-            t &&
-              ((n = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(n, e)),
+            o &&
+              ((n = KEY_PREFIX + `#${t})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(n, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            e
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=PhantomCollectActivityById.js.map

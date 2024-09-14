@@ -29,6 +29,7 @@ class ActivityBaseData {
       (this.w4e = 0),
       (this.B4e = new Array()),
       (this.b4e = 0),
+      (this.x4a = []),
       (this.q4e = ""),
       (this.LocalConfig = void 0);
   }
@@ -65,6 +66,12 @@ class ActivityBaseData {
   get ConditionGroupId() {
     return this.b4e;
   }
+  get FinishedConditionIdList() {
+    return this.x4a;
+  }
+  IsActivityConditionFinished(t) {
+    return !!this.IsUnLock() || this.x4a.includes(t);
+  }
   CheckIfInShowTime() {
     return this.CheckIfInTimeInterval(this.U4e, this.EndShowTimeInternal);
   }
@@ -86,20 +93,22 @@ class ActivityBaseData {
     );
   }
   GetPreviewReward(t = this.LocalConfig.PreviewDrop) {
-    var e =
+    var e = [];
+    if (0 !== t) {
+      var i =
         ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(
           t,
-        )?.DropPreview,
-      i = [];
-    if (e)
-      for (var [r, s] of e) {
-        r = [{ IncId: 0, ItemId: r }, s];
-        i.push(r);
-      }
-    else
-      Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Activity", 28, "找不到奖励配置", ["id", t]);
-    return i;
+        )?.DropPreview;
+      if (i)
+        for (var [r, s] of i) {
+          r = [{ IncId: 0, ItemId: r }, s];
+          e.push(r);
+        }
+      else
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Activity", 28, "找不到奖励配置", ["id", t]);
+    }
+    return e;
   }
   GetTitle() {
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -118,7 +127,7 @@ class ActivityBaseData {
     for (let t = 0; t < i; t++)
       if (
         ModelManager_1.ModelManager.QuestNewModel.GetQuestState(e[t]) <
-        Protocol_1.Aki.Protocol.tTs.Proto_Finish
+        Protocol_1.Aki.Protocol.hTs.Proto_Finish
       )
         return !1;
     return !!this.P4e;
@@ -129,7 +138,7 @@ class ActivityBaseData {
     for (let t = 0; t < i; t++)
       if (
         ModelManager_1.ModelManager.QuestNewModel.GetQuestState(e[t]) <
-        Protocol_1.Aki.Protocol.tTs.Proto_Finish
+        Protocol_1.Aki.Protocol.hTs.Proto_Finish
       )
         return e[t];
     return 0;
@@ -144,10 +153,10 @@ class ActivityBaseData {
         i.push(r[t]);
     s = i.length;
     for (let t = 0; t < s; t++) {
-      var n = PublicUtil_1.PublicUtil.GetConfigTextByKey(
+      var h = PublicUtil_1.PublicUtil.GetConfigTextByKey(
         ModelManager_1.ModelManager.QuestNewModel.GetQuestConfig(i[t]).TidName,
       );
-      e.Append(n), t !== s - 1 && e.Append(",");
+      e.Append(h), t !== s - 1 && e.Append(",");
     }
     return e.ToString();
   }
@@ -175,32 +184,48 @@ class ActivityBaseData {
         this.FFe,
       );
   }
-  Phrase(t) {
-    (this.FFe = t.J4n),
-      (this.R4e = t.Z4n),
-      (this.U4e = Number(MathUtils_1.MathUtils.LongToBigInt(t.Tps))),
-      (this.EndShowTimeInternal = Number(
-        MathUtils_1.MathUtils.LongToBigInt(t.Lps),
-      )),
-      (this.WFe = Number(MathUtils_1.MathUtils.LongToBigInt(t.yps))),
-      (this.EndOpenTimeInternal = Number(
-        MathUtils_1.MathUtils.LongToBigInt(t.Ips),
-      )),
-      (this.P4e = t.G6n),
-      (this.x4e = t.Dps),
+  Init(t) {
+    (this.FFe = t.s5n),
+      (this.R4e = t.h5n),
       (this.LocalConfig =
         ConfigManager_1.ConfigManager.ActivityConfig.GetActivityConfig(
           this.FFe,
         )),
-      (this.b4e = this.LocalConfig.PreConditionGroupId),
-      (this.w4e = this.LocalConfig.Sort),
-      (this.B4e = this.LocalConfig.PreShowGuideQuest),
+      this.LocalConfig &&
+        ((this.b4e = this.LocalConfig.PreConditionGroupId),
+        (this.w4e = this.LocalConfig.Sort),
+        (this.B4e = this.LocalConfig.PreShowGuideQuest)),
       ModelManager_1.ModelManager.QuestNewModel.SetActivityQuestData(
         this.FFe,
-        this.B4e,
-      );
+        this.B4e ?? [],
+      ),
+      (this.U4e = Number(MathUtils_1.MathUtils.LongToBigInt(t.wps))),
+      (this.EndShowTimeInternal = Number(
+        MathUtils_1.MathUtils.LongToBigInt(t.xps),
+      )),
+      (this.WFe = Number(MathUtils_1.MathUtils.LongToBigInt(t.Pps))),
+      (this.EndOpenTimeInternal = Number(
+        MathUtils_1.MathUtils.LongToBigInt(t.Ups),
+      )),
+      (this.P4e = t.K6n),
+      (this.x4e = t.qps),
+      (this.x4a = t.sih),
+      this.OnInit(t);
+  }
+  Phrase(t) {
+    (this.U4e = Number(MathUtils_1.MathUtils.LongToBigInt(t.wps))),
+      (this.EndShowTimeInternal = Number(
+        MathUtils_1.MathUtils.LongToBigInt(t.xps),
+      )),
+      (this.WFe = Number(MathUtils_1.MathUtils.LongToBigInt(t.Pps))),
+      (this.EndOpenTimeInternal = Number(
+        MathUtils_1.MathUtils.LongToBigInt(t.Ups),
+      )),
+      (this.P4e = t.K6n),
+      (this.x4e = t.qps),
+      (this.x4a = t.sih);
     var e = new StringBuilder_1.StringBuilder();
-    e.Append(t.J4n),
+    e.Append(t.s5n),
       e.Append("_"),
       e.Append(this.WFe),
       (this.q4e = e.ToString()),
@@ -222,6 +247,7 @@ class ActivityBaseData {
         this.FFe,
       );
   }
+  OnInit(t) {}
   PhraseEx(t) {}
   NeedSelfControlFirstRedPoint() {
     return !1;

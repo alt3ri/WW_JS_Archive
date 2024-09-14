@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ParkourBehaviorNode = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+const IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ParkourController_1 = require("../../../../LevelGamePlay/Parkour/ParkourController"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
@@ -33,7 +34,7 @@ class ParkourBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
       !!super.OnCreate(e) &&
       ((e = e.Condition),
       (this.TrackTextRuleInner = 2),
-      "Parkour" === e.Type) &&
+      e.Type === IQuest_1.EChildQuest.Parkour) &&
       ((this.s$t = e.SplineEntityId), (this.a$t = e.MatchRoleOption), !0)
     );
   }

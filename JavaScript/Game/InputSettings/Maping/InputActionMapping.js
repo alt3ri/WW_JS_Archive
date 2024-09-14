@@ -45,6 +45,9 @@ class InputActionMapping {
   GetActionBinding(t) {
     return this.WEe.get(t);
   }
+  GetActionBindingMap() {
+    return this.WEe;
+  }
   GetActionBindingByConfigId(t) {
     return this.KEe.get(t);
   }

@@ -3,10 +3,10 @@ var CharacterDamageComponent_1,
   __decorate =
     (this && this.__decorate) ||
     function (e, t, a, r) {
-      var i,
-        o = arguments.length,
+      var o,
+        i = arguments.length,
         s =
-          o < 3
+          i < 3
             ? t
             : null === r
               ? (r = Object.getOwnPropertyDescriptor(t, a))
@@ -15,9 +15,9 @@ var CharacterDamageComponent_1,
         s = Reflect.decorate(e, t, a, r);
       else
         for (var n = e.length - 1; 0 <= n; n--)
-          (i = e[n]) &&
-            (s = (o < 3 ? i(s) : 3 < o ? i(t, a, s) : i(t, a)) || s);
-      return 3 < o && s && Object.defineProperty(t, a, s), s;
+          (o = e[n]) &&
+            (s = (i < 3 ? o(s) : 3 < i ? o(t, a, s) : o(t, a)) || s);
+      return 3 < i && s && Object.defineProperty(t, a, s), s;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterDamageComponent =
@@ -107,14 +107,14 @@ let CharacterDamageComponent =
     }
     OnStart() {
       return (
-        (this.$te = this.Entity.CheckGetComponent(158)),
-        (this.Xte = this.Entity.CheckGetComponent(188)),
-        (this.m1t = this.Entity.CheckGetComponent(159)),
-        (this.$br = this.Entity.CheckGetComponent(52)),
-        (this.Ybr = this.Entity.CheckGetComponent(48)),
-        (this.Jbr = this.Entity.GetComponent(85)),
-        (this.tRr = this.Entity.CheckGetComponent(33)),
-        (this.HBr = this.Entity.CheckGetComponent(160)),
+        (this.$te = this.Entity.CheckGetComponent(159)),
+        (this.Xte = this.Entity.CheckGetComponent(190)),
+        (this.m1t = this.Entity.CheckGetComponent(160)),
+        (this.$br = this.Entity.CheckGetComponent(53)),
+        (this.Ybr = this.Entity.GetComponent(49)),
+        (this.Jbr = this.Entity.GetComponent(86)),
+        (this.tRr = this.Entity.CheckGetComponent(34)),
+        (this.HBr = this.Entity.GetComponent(161)),
         (this.ActorComponent = this.Entity.CheckGetComponent(3)),
         (this.u1t = this.Entity.CheckGetComponent(0)),
         (this.eqr = this.oqr()),
@@ -130,25 +130,26 @@ let CharacterDamageComponent =
         : (this.tqr = 0);
     }
     ExecuteBulletDamage(e, t, a) {
-      var r,
-        e = EntitySystem_1.EntitySystem.Get(e),
-        i = e.GetBulletInfo(),
+      var e = EntitySystem_1.EntitySystem.Get(e),
+        r = e.GetBulletInfo(),
         o = DamageById_1.configDamageById.GetConfig(t.DamageDataId);
-      return o
-        ? (((r = new ExtraEffectBaseTypes_1.RequirementPayload()).BulletId =
-            BigInt(i.BulletRowName)),
-          (r.SkillId = Number(i.BulletInitParams.SkillId)),
-          (r.BulletTags = i.Tags ?? []),
-          (r.PartId = t.PartId),
-          0 <= r.PartId &&
-            (r.PartTag = this.Entity.GetComponent(60).GetPartByIndex(
-              r.PartId,
+      if (!o) return { DamageResult: 0, ToughResult: 0 };
+      CharacterDamageComponent_1.nqr.Start();
+      var i = new ExtraEffectBaseTypes_1.RequirementPayload(),
+        r =
+          ((i.BulletId = BigInt(r.BulletRowName)),
+          (i.SkillId = Number(r.BulletInitParams.SkillId)),
+          (i.BulletTags = r.Tags ?? []),
+          (i.PartId = t.PartId),
+          0 <= i.PartId &&
+            (i.PartTag = this.Entity.GetComponent(61).GetPartByIndex(
+              i.PartId,
             ).PartTag?.TagId),
-          (i = {
+          {
             ...t,
             DamageData: o,
             Attacker: t.Attacker.CheckGetComponent(18),
-            SourceType: Protocol_1.Aki.Protocol.VAs.Proto_FromBullet,
+            SourceType: Protocol_1.Aki.Protocol.XAs.Proto_FromBullet,
             IsReaction: o.PayloadId !== damageDataPayloadIdDefault,
             Accumulation:
               ExtraEffectDamageAccumulation_1.DamageAccumulation.GetAccumulation(
@@ -158,23 +159,28 @@ let CharacterDamageComponent =
             RandomSeed:
               ModelManager_1.ModelManager.PlayerInfoModel.GetRandomSeed(),
           }),
-          this.aqr(i),
-          this.ProcessDamage(r, i, a))
-        : { DamageResult: 0, ToughResult: 0 };
+        o =
+          (CharacterDamageComponent_1.nqr.Stop(),
+          CharacterDamageComponent_1.sqr.Start(),
+          this.aqr(r),
+          CharacterDamageComponent_1.sqr.Stop(),
+          CharacterDamageComponent_1.hqr.Start(),
+          this.ProcessDamage(i, r, a));
+      return CharacterDamageComponent_1.hqr.Stop(), o;
     }
     ExecuteBuffDamage(e, t, a) {
       e.Attacker =
-        e.Attacker?.GetComponent(48)?.GetAttributeHolder() ?? e.Attacker;
+        e.Attacker?.GetComponent(49)?.GetAttributeHolder() ?? e.Attacker;
       var r,
-        i,
-        o = DamageById_1.configDamageById.GetConfig(e.DamageDataId);
-      o &&
+        o,
+        i = DamageById_1.configDamageById.GetConfig(e.DamageDataId);
+      i &&
         ((r = new ExtraEffectBaseTypes_1.RequirementPayload()).PartialAssign(t),
-        (i = {
+        (o = {
           ...e,
-          DamageData: o,
+          DamageData: i,
           Attacker: e.Attacker.CheckGetComponent(18),
-          SourceType: Protocol_1.Aki.Protocol.VAs.Proto_FromEffect,
+          SourceType: Protocol_1.Aki.Protocol.XAs.Proto_FromEffect,
           IsAddEnergy: !1,
           IsCounterAttack: !1,
           ForceCritical: !1,
@@ -186,26 +192,26 @@ let CharacterDamageComponent =
           RandomSeed:
             ModelManager_1.ModelManager.PlayerInfoModel.GetRandomSeed(),
         }),
-        this.aqr(i),
-        this?.ProcessDamage(r, i, a),
+        this.aqr(o),
+        this?.ProcessDamage(r, o, a),
         ExtraEffectDamageShare_1.DamageShare.ApplyBuffShare(
           this.Entity,
-          o,
+          i,
           e,
           t,
           a,
         ));
     }
     ExecuteBuffShareDamage(e, t, a, r) {
-      var i,
-        o = DamageById_1.configDamageById.GetConfig(e.DamageDataId);
-      o &&
-        ((i = new ExtraEffectBaseTypes_1.RequirementPayload()).PartialAssign(t),
+      var o,
+        i = DamageById_1.configDamageById.GetConfig(e.DamageDataId);
+      i &&
+        ((o = new ExtraEffectBaseTypes_1.RequirementPayload()).PartialAssign(t),
         (t = {
           ...e,
-          DamageData: o,
+          DamageData: i,
           Attacker: e.Attacker.CheckGetComponent(18),
-          SourceType: Protocol_1.Aki.Protocol.VAs.Proto_FromEffect,
+          SourceType: Protocol_1.Aki.Protocol.XAs.Proto_FromEffect,
           IsAddEnergy: !1,
           IsCounterAttack: !1,
           ForceCritical: !1,
@@ -218,21 +224,23 @@ let CharacterDamageComponent =
             ModelManager_1.ModelManager.PlayerInfoModel.GetRandomSeed(),
         }),
         this.aqr(t),
-        this.ProcessDamage(i, t, r));
+        this.ProcessDamage(o, t, r));
     }
     ProcessDamage(t, a, e) {
       if (this.Xte.HasTag(1918148596) && 0 === a.DamageData.ImmuneType)
         return { DamageResult: 0, ToughResult: 0 };
       var r = a.Attacker;
       0 < t.SkillId &&
-        ((o = r.tRr.GetSkillInfo(t.SkillId)?.SkillGenre), (t.SkillGenre = o)),
-        (t.DamageGenre = a.DamageData.Type),
-        (t.CalculateType = a.DamageData.CalculateType);
-      const i = this._qr(r);
-      var o = this.GetLocalDamage(t, a, i);
+        ((i = r.tRr.GetSkillInfo(t.SkillId)?.SkillGenre), (t.SkillGenre = i)),
+        (t.DamageType = a.DamageData.Type),
+        (t.DamageSubTypes = a.DamageData.SubType),
+        (t.CalculateType = a.DamageData.CalculateType),
+        CharacterDamageComponent_1.lqr.Start();
+      const o = this._qr(r);
+      var i = this.GetLocalDamage(t, a, o);
       let s = void 0;
       0 <= a.PartId &&
-        (s = this.Entity.GetComponent(60)?.GetPartByIndex(a.PartId));
+        (s = this.Entity.GetComponent(61)?.GetPartByIndex(a.PartId));
       (r =
         (5 === t.SkillGenre
           ? this.GetExtraToughRate("ToughRateOnCounter")
@@ -245,78 +253,85 @@ let CharacterDamageComponent =
             this.Entity?.Valid &&
               a.Attacker?.Entity?.Valid &&
               (this.uqr(e, a, t),
-              this.cqr(e, a, t, i),
+              this.cqr(e, a, t, o),
               s?.OnDamage(e.Damage, a.ForceCritical, a.Attacker.Entity, !1));
           },
           e,
         ),
-        (e = this.mqr(a, i, r));
-      return { DamageResult: o.Damage, ToughResult: e };
+        (e = this.mqr(a, o, r));
+      return (
+        CharacterDamageComponent_1.lqr.Stop(),
+        { DamageResult: i.Damage, ToughResult: e }
+      );
     }
     static OnDamageExecuteNotify(e, t) {
       ModelManager_1.ModelManager.CreatureModel.GetEntity(
-        MathUtils_1.MathUtils.LongToNumber(t.gVn),
+        MathUtils_1.MathUtils.LongToNumber(t.TVn),
       )
         ?.Entity?.GetComponent(18)
         ?.ProcessRemoteDamage(t);
     }
     ProcessRemoteDamage(e) {
       var t,
-        a = e.Rjn ?? {},
+        a = e.Njn ?? {},
         r = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-          MathUtils_1.MathUtils.LongToNumber(e.xjn),
+          MathUtils_1.MathUtils.LongToNumber(e.kjn),
         ),
-        i = DamageById_1.configDamageById.GetConfig(
-          MathUtils_1.MathUtils.LongToBigInt(e.Pjn),
+        o = DamageById_1.configDamageById.GetConfig(
+          MathUtils_1.MathUtils.LongToBigInt(e.Fjn),
         ),
-        o = r?.Entity?.GetComponent(18);
-      i && r && o
+        i = r?.Entity?.GetComponent(18);
+      o && r && i
         ? ((r = {
             ...e,
-            ShieldCoverDamage: e.tAs,
-            DamageData: i,
-            Damage: -e.zDs,
+            ShieldCoverDamage: e.hAs,
+            DamageData: o,
+            Damage: -e.nAs,
             IsCounterAttack: !1,
             IsReaction: !1,
-            IsCritical: e.ZDs,
-            IsTargetKilled: e.eAs,
+            IsCritical: e.sAs,
+            IsTargetKilled: e.aAs,
             IsBlocked: !1,
-            SourceType: a.Bjn ?? Protocol_1.Aki.Protocol.VAs.Proto_FromEffect,
+            SourceType: a.Vjn ?? Protocol_1.Aki.Protocol.XAs.Proto_FromEffect,
             IsImmune:
-              e.iAs ===
-              Protocol_1.Aki.Protocol.P4s.Proto_EDamageImmune_BuffEffectElement,
+              e.lAs ===
+              Protocol_1.Aki.Protocol.G4s.Proto_EDamageImmune_BuffEffectElement,
           }),
           ((t = new ExtraEffectBaseTypes_1.RequirementPayload()).BulletId =
-            MathUtils_1.MathUtils.LongToBigInt(a.ujn ?? -1)),
-          (t.SkillId = a.X4n),
-          (t.BulletTags = [...(a.wjn ?? [])]),
-          (t.PartId = e.bjn),
-          (t.DamageGenre = i.Type),
-          (t.CalculateType = i.CalculateType),
+            MathUtils_1.MathUtils.LongToBigInt(a.Mjn ?? -1)),
+          (t.SkillId = a.r5n),
+          (t.BulletTags = [...(a.Hjn ?? [])]),
+          (t.PartId = e.jjn),
+          (t.DamageType = o.Type),
+          (t.DamageSubTypes = o.SubType),
+          (t.CalculateType = o.CalculateType),
           (t.IsTargetKilled = r.IsTargetKilled),
           0 < t.SkillId &&
-            (t.SkillGenre = o.tRr.GetSkillInfo(t.SkillId)?.SkillGenre ?? -1),
+            (t.SkillGenre = i.tRr.GetSkillInfo(t.SkillId)?.SkillGenre ?? -1),
           0 <= t.PartId &&
-            ((a = this.Entity.GetComponent(60)),
+            ((a = this.Entity.GetComponent(61)),
             (t.PartTag = a?.GetPartByIndex(t.PartId).PartTag?.TagId)),
           (t.IsCritical = r.IsCritical),
           (t.IsImmune = r.IsImmune),
-          (i = this.ActorComponent.ActorLocation),
-          this.uqr(r, { Attacker: o, HitPosition: i }, t),
-          this.dqr(r, o, t))
+          (o = this.ActorComponent.ActorLocation),
+          this.uqr(r, { Attacker: i, HitPosition: o }, t),
+          this.dqr(r, i, t))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Battle",
             20,
             "Error when process remote damage: Unexpected damageId or invalid target/attacker.",
-            ["DamageId", e.Pjn],
-            ["attackerCreatureId", e.xjn],
-            ["targetCreatureId", e.gVn],
+            ["DamageId", e.Fjn],
+            ["attackerCreatureId", e.kjn],
+            ["targetCreatureId", e.TVn],
           );
     }
     _qr(e) {
-      var t = e.Ybr.GetAttributeHolder().CheckGetComponent(158).TakeSnapshot(),
-        a = this.Ybr.GetAttributeHolder().CheckGetComponent(158).TakeSnapshot();
+      var t = e.Ybr.GetAttributeHolder().CheckGetComponent(159).TakeSnapshot(),
+        a =
+          this.Ybr?.GetAttributeHolder()
+            .CheckGetComponent(159)
+            .TakeSnapshot() ?? this.$te.TakeSnapshot();
       return {
         Attacker: this.Cqr(e),
         AttackerSnapshot: t,
@@ -328,45 +343,47 @@ let CharacterDamageComponent =
       return GameplayAbilityVisionControl_1.GameplayAbilityVisionControl
         .VisionControlHandle &&
         e.u1t.SummonType ===
-          Protocol_1.Aki.Protocol.Summon.L3s
+          Protocol_1.Aki.Protocol.Summon.x3s
             .Proto_ESummonTypeConcomitantPhantomRole
         ? ModelManager_1.ModelManager.CreatureModel.GetEntity(
             e.u1t.GetSummonerId(),
           ).Entity?.GetComponent(18)
         : e;
     }
-    gqr(e, t, a, r, i) {
-      var o,
-        s = e.DamageData,
-        n = e.SkillLevel,
-        h = AbilityUtils_1.AbilityUtils.GetLevelValue(s.RateLv, n, 0),
+    gqr(e, t, a, r, o) {
+      var i = e.DamageData,
+        s = e.SkillLevel,
+        n = AbilityUtils_1.AbilityUtils.GetLevelValue(i.RateLv, s, 0),
         m = e.ExtraRate;
       if (e.IsReaction)
-        return (o = DamagePayloadById_1.configDamagePayloadById.GetConfig(
-          s.PayloadId,
+        return (c = DamagePayloadById_1.configDamagePayloadById.GetConfig(
+          i.PayloadId,
         ))
           ? CharacterDamageCalculations_1.Calculation.ReactionDamageRateCalculation(
               t.AttackerSnapshot,
               t.TargetSnapshot,
-              h,
-              s.Element,
-              o,
+              n,
+              i.Element,
+              c,
               t.AttackerSnapshot.CurrentValues.Proto_ReactionEfficiency,
               a,
             )
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error("Character", 20, "找不到结算参数表对应id", [
                 "id",
-                s.PayloadId,
+                i.PayloadId,
               ]),
             0);
-      let l = 1;
-      h = this.Entity.GetComponent(0);
+      let h = 1;
+      var c,
+        n = this.Entity.GetComponent(0);
       return (
-        ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-          h.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Monster &&
-          (l =
-            ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamSize() <= 2
+        !ModelManager_1.ModelManager.GameModeModel.IsMulti ||
+          n.GetEntityType() !== Protocol_1.Aki.Protocol.kks.Proto_Monster ||
+          (c = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamSize()) <=
+            1 ||
+          (h =
+            c <= 2
               ? CommonParamById_1.configCommonParamById.GetFloatConfig(
                   "MutiWorldDamageRatio2",
                 )
@@ -376,26 +393,26 @@ let CharacterDamageComponent =
         CharacterDamageCalculations_1.Calculation.CalculateFormula(
           e,
           t,
+          i,
           s,
-          n,
           a,
           m,
           r,
-          i,
-          l,
+          o,
+          h,
         )
       );
     }
     yQo(e, t) {
       var a = e.DamageData,
         r = e.SkillLevel,
-        i = e.ExtraRate;
-      let o = 1;
+        o = e.ExtraRate;
+      let i = 1;
       var s = this.Entity.GetComponent(0);
       return (
         ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-          s.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Monster &&
-          (o =
+          s.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Monster &&
+          (i =
             ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamSize() <= 2
               ? CommonParamById_1.configCommonParamById.GetFloatConfig(
                   "MutiWorldDamageRatio2",
@@ -409,28 +426,33 @@ let CharacterDamageComponent =
           a,
           r,
           !1,
-          i,
-          0,
-          0,
           o,
+          0,
+          0,
+          i,
         )
       );
     }
     fqr(e, t, a) {
+      CharacterDamageComponent_1.pqr.Start();
       var r = t.DamageData,
-        i =
+        o =
           a.Attacker.Jbr?.GetWeaponType() ??
           ExtraEffectBaseTypes_1.DEFAULT_WEAPON_TYPE_NOT_PASS,
         r =
           (e.PartialAssign({
             SmashType: r.SmashType,
             ElementType: r.Element,
-            WeaponType: i,
+            WeaponType: o,
           }),
           this.vqr(e, t, a),
           ExtraEffectSnapModifier_1.SnapModifier.PreCriticalModify(e, a),
           this.JudgeCritical(t, a.AttackerSnapshot));
-      return ExtraEffectSnapModifier_1.SnapModifier.PostCriticalModify(e, a), r;
+      return (
+        ExtraEffectSnapModifier_1.SnapModifier.PostCriticalModify(e, a),
+        CharacterDamageComponent_1.pqr.Stop(),
+        r
+      );
     }
     JudgeCritical(e, t) {
       switch (e.DamageData.CalculateType) {
@@ -462,17 +484,17 @@ let CharacterDamageComponent =
     }
     GetLocalHurt(e, t, a) {
       var r = this.fqr(e, t, a),
-        i = ExtraEffectDamageAugment_1.DamageAugment.ApplyEffects(e, a),
-        o =
+        o = ExtraEffectDamageAugment_1.DamageAugment.ApplyEffects(e, a),
+        i =
           ExtraEffectSnapModifier_1.DamageAmplifyOnHit.ApplyEffects(e, a) +
           ExtraEffectSnapModifier_1.DamageAmplifyOnBeHit.ApplyEffects(e, a);
-      let s = this.gqr(t, a, r, i, o);
-      i = ExtraEffectDamageModifier_1.DamageModifier.ApplyEffects(e, a);
-      s = i.IsSuccessful ? i.Result : s;
+      let s = this.gqr(t, a, r, o, i);
+      o = ExtraEffectDamageModifier_1.DamageModifier.ApplyEffects(e, a);
+      s = o.IsSuccessful ? o.Result : s;
       let n = !1;
       ExtraEffectDamageImmune_1.DamageImmune.ApplyEffects(e, t, a) &&
         ((n = !0), (s = 0));
-      o = {
+      i = {
         ...t,
         Damage: s,
         ShieldCoverDamage: 0,
@@ -486,12 +508,12 @@ let CharacterDamageComponent =
             "Battle",
             20,
             "本地伤害计算",
-            ["伤害值", o.Damage],
+            ["伤害值", i.Damage],
             ["结算id", t.DamageData.Id],
             ["是否弹刀", t.IsCounterAttack],
             ["弹刀对应技能MessageId", t.CounterSkillMessageId],
           ),
-        o
+        i
       );
     }
     GetLocalHeal(e, t, a) {
@@ -511,67 +533,67 @@ let CharacterDamageComponent =
         a
       );
     }
-    GetServerDamage(a, r, i, e) {
+    GetServerDamage(a, r, o, e) {
       var t = a.Attacker;
-      const o = a.DamageData,
-        s = Protocol_1.Aki.Protocol.M3n.create({
-          Pjn: MathUtils_1.MathUtils.BigIntToLong(o.Id),
-          qjn: a.SkillLevel,
-          xjn: MathUtils_1.MathUtils.NumberToLong(
+      const i = a.DamageData,
+        s = Protocol_1.Aki.Protocol.U3n.create({
+          Fjn: MathUtils_1.MathUtils.BigIntToLong(i.Id),
+          Wjn: a.SkillLevel,
+          kjn: MathUtils_1.MathUtils.NumberToLong(
             t.Entity.GetComponent(0).GetCreatureDataId(),
           ),
-          gVn: MathUtils_1.MathUtils.NumberToLong(
+          TVn: MathUtils_1.MathUtils.NumberToLong(
             this.Entity.GetComponent(0).GetCreatureDataId(),
           ),
-          Gjn: a.IsAddEnergy,
-          Ojn: a.IsCounterAttack,
-          Njn: a.ForceCritical,
-          kjn: a.IsBlocked,
-          bjn: a.PartId,
-          Fjn: a.CounterSkillMessageId
+          Kjn: a.IsAddEnergy,
+          Qjn: a.IsCounterAttack,
+          Xjn: a.ForceCritical,
+          $jn: a.IsBlocked,
+          jjn: a.PartId,
+          Yjn: a.CounterSkillMessageId
             ? MathUtils_1.MathUtils.BigIntToLong(a.CounterSkillMessageId)
             : 0,
-          Rjn: {
-            Bjn: a.SourceType,
-            ujn: MathUtils_1.MathUtils.BigIntToLong(r.BulletId ?? BigInt(-1)),
-            wjn: r.BulletTags.filter((e) => void 0 !== e),
-            X4n: r.SkillId,
+          Njn: {
+            Vjn: a.SourceType,
+            Mjn: MathUtils_1.MathUtils.BigIntToLong(r.BulletId ?? BigInt(-1)),
+            Hjn: r.BulletTags.filter((e) => void 0 !== e),
+            r5n: r.SkillId,
           },
-          eHn: ModelManager_1.ModelManager.PlayerInfoModel.AdvanceRandomSeed(0),
+          lHn: ModelManager_1.ModelManager.PlayerInfoModel.AdvanceRandomSeed(0),
         });
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Battle",
           20,
           "伤害Request",
-          ["攻击方", MathUtils_1.MathUtils.LongToBigInt(s.xjn)],
-          ["受击方", MathUtils_1.MathUtils.LongToBigInt(s.gVn)],
-          ["结算id", MathUtils_1.MathUtils.LongToBigInt(s.Pjn)],
-          ["isBlocked", s.kjn],
-          ["skillLevel", s.qjn],
-          ["是否弹刀", s.Ojn],
-          ["部位Id", s.bjn],
+          ["攻击方", MathUtils_1.MathUtils.LongToBigInt(s.kjn)],
+          ["受击方", MathUtils_1.MathUtils.LongToBigInt(s.TVn)],
+          ["结算id", MathUtils_1.MathUtils.LongToBigInt(s.Fjn)],
+          ["isBlocked", s.$jn],
+          ["skillLevel", s.Wjn],
+          ["是否弹刀", s.Qjn],
+          ["部位Id", s.jjn],
           ["弹刀对应技能MessageId", a.CounterSkillMessageId],
-          ["RandomSeed", s.eHn],
+          ["RandomSeed", s.lHn],
         ),
         CombatMessage_1.CombatNet.Call(
-          26217,
+          22663,
           this.Entity,
           s,
           (e) => {
             var t;
             e &&
-              e.iAs !==
-                Protocol_1.Aki.Protocol.P4s.Proto_EDamageImmune_Invincible &&
+              e.lAs !==
+                Protocol_1.Aki.Protocol.G4s.Proto_EDamageImmune_Invincible &&
               ((t = {
                 ...a,
-                Damage: -e.zDs,
-                ShieldCoverDamage: e.tAs,
-                IsCritical: e.ZDs,
-                IsTargetKilled: e.eAs,
+                Damage: -e.nAs,
+                ShieldCoverDamage: e.hAs,
+                IsCritical: e.sAs,
+                IsTargetKilled: e.aAs,
                 IsImmune:
-                  e.iAs ===
-                  Protocol_1.Aki.Protocol.P4s
+                  e.lAs ===
+                  Protocol_1.Aki.Protocol.G4s
                     .Proto_EDamageImmune_BuffEffectElement,
               }),
               (r.IsCritical = t.IsCritical),
@@ -582,15 +604,15 @@ let CharacterDamageComponent =
                   "Battle",
                   20,
                   "伤害Response",
-                  ["攻击方", MathUtils_1.MathUtils.LongToBigInt(s.xjn)],
-                  ["受击方", MathUtils_1.MathUtils.LongToBigInt(s.gVn)],
-                  ["结算id", o.Id],
+                  ["攻击方", MathUtils_1.MathUtils.LongToBigInt(s.kjn)],
+                  ["受击方", MathUtils_1.MathUtils.LongToBigInt(s.TVn)],
+                  ["结算id", i.Id],
                   ["伤害值", t.Damage],
                   ["killed", t.IsTargetKilled],
-                  ["errorCode", e.O4n],
+                  ["errorCode", e.Q4n],
                 ),
-              0 === e.O4n) &&
-              i(t);
+              0 === e.Q4n) &&
+              o(t);
           },
           e,
           void 0,
@@ -601,100 +623,119 @@ let CharacterDamageComponent =
     }
     uqr(e, t, a) {
       var r = t.Attacker.Entity,
-        i = this.Entity,
-        o = e.Damage,
+        o = this.Entity,
+        i = (CharacterDamageComponent_1.Eqr.Start(), e.Damage),
         s = e.DamageData,
-        o = [r, i, o, s, a, e, t.HitPosition];
+        i = [r, o, i, s, a, e, t.HitPosition];
       1 === s.CalculateType &&
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.FormationPanelUIShowRoleHeal,
-          i,
+          o,
         ),
         SceneTeamController_1.SceneTeamController.EmitEvent(
-          i,
+          o,
           EventDefine_1.EEventName.CharBeDamage,
-          ...o,
+          ...i,
         ),
         SceneTeamController_1.SceneTeamController.EmitEvent(
           r,
           EventDefine_1.EEventName.CharDamage,
-          ...o,
+          ...i,
         ),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.GlobalCharDamage,
-          ...o,
-        );
+          ...i,
+        ),
+        CharacterDamageComponent_1.Eqr.Stop();
     }
     dqr(e, t, a) {
       var r = t.m1t;
-      e.SourceType !== Protocol_1.Aki.Protocol.VAs.Proto_FromEffect &&
-        (t?.m1t.TriggerEvents(0, this.m1t, a), this.m1t.TriggerEvents(1, r, a)),
-        e.IsTargetKilled && t?.m1t.TriggerEvents(6, r, a),
+      e.SourceType !== Protocol_1.Aki.Protocol.XAs.Proto_FromEffect &&
+        (CharacterDamageComponent_1.Sqr.Start(),
+        t?.m1t.TriggerEvents(0, this.m1t, a),
+        this.m1t.TriggerEvents(1, r, a),
+        CharacterDamageComponent_1.Sqr.Stop()),
+        e.IsTargetKilled &&
+          (CharacterDamageComponent_1.yqr.Start(),
+          t?.m1t.TriggerEvents(6, r, a),
+          CharacterDamageComponent_1.yqr.Stop()),
+        CharacterDamageComponent_1.Iqr.Start(),
         ExtraEffectDamageAccumulation_1.DamageAccumulation.ApplyEffects(
           e,
           a,
           t,
           this,
-        );
+        ),
+        CharacterDamageComponent_1.Iqr.Stop();
     }
     Mqr(e, t) {
       var a = e.Attacker?.$te;
       if (a && e.IsAddEnergy) {
         var r,
-          i,
-          o = e.SkillLevel,
+          o,
+          i = e.SkillLevel,
           e = e.DamageData;
-        for ([r, i] of [
+        for ([r, o] of [
           e.SpecialEnergy1,
           e.SpecialEnergy2,
           e.SpecialEnergy3,
           e.SpecialEnergy4,
         ].entries()) {
           var s = CharacterAttributeTypes_1.specialEnergyIds[r],
-            n = AbilityUtils_1.AbilityUtils.GetLevelValue(i, o, 0);
+            n = AbilityUtils_1.AbilityUtils.GetLevelValue(o, i, 0);
           a.AddBaseValue(s, n);
         }
       }
     }
     mqr(t, e, a = 1) {
       var r = t.Attacker,
-        i = e.AttackerSnapshot,
+        o = e.AttackerSnapshot,
         e = e.TargetSnapshot,
-        t = AbilityUtils_1.AbilityUtils.GetLevelValue(
-          t.DamageData.ToughLv,
-          t.SkillLevel,
-          0,
-        ),
-        i = CharacterDamageCalculations_1.Calculation.ToughCalculation(
-          i,
-          e,
-          t * a,
-        );
-      if (0 !== i) {
+        t =
+          (CharacterDamageComponent_1.Tqr.Start(),
+          AbilityUtils_1.AbilityUtils.GetLevelValue(
+            t.DamageData.ToughLv,
+            t.SkillLevel,
+            0,
+          )),
+        o =
+          (CharacterDamageComponent_1.Tqr.Stop(),
+          CharacterDamageComponent_1.Lqr.Start(),
+          CharacterDamageCalculations_1.Calculation.ToughCalculation(
+            o,
+            e,
+            t * a,
+          ));
+      if ((CharacterDamageComponent_1.Lqr.Stop(), 0 !== o)) {
+        CharacterDamageComponent_1.Dqr.Start();
         let e = 1;
         t = this.Entity.GetComponent(0);
         ModelManager_1.ModelManager.GameModeModel.IsMulti &&
           t.IsMonster() &&
-          (e =
-            ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamSize() <= 2
-              ? CommonParamById_1.configCommonParamById.GetFloatConfig(
-                  "MutiWorldToughRatio2",
-                )
-              : CommonParamById_1.configCommonParamById.GetFloatConfig(
-                  "MutiWorldToughRatio3",
-                )),
+          ((a = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamSize()) <=
+            1 ||
+            (e =
+              a <= 2
+                ? CommonParamById_1.configCommonParamById.GetFloatConfig(
+                    "MutiWorldToughRatio2",
+                  )
+                : CommonParamById_1.configCommonParamById.GetFloatConfig(
+                    "MutiWorldToughRatio3",
+                  ))),
           this.$te.AddBaseValue(
             CharacterAttributeTypes_1.EAttributeId.Proto_Tough,
-            -i * e,
-          );
+            -o * e,
+          ),
+          CharacterDamageComponent_1.Dqr.Stop();
       }
       return (
+        CharacterDamageComponent_1.Rqr.Start(),
         0 <
         this.$te.GetCurrentValue(
           CharacterAttributeTypes_1.EAttributeId.Proto_Tough,
         )
           ? 0 < e.CurrentValues.Proto_ToughRecoverDelayTime &&
-            0 !== i &&
+            0 !== o &&
             this.m1t.AddBuff(CharacterBuffIds_1.buffId.ToughRecoverDelay, {
               InstigatorId:
                 r.u1t?.GetCreatureDataId() ??
@@ -706,31 +747,32 @@ let CharacterDamageComponent =
           : !this.Xte.HasTag(-1112841587) &&
             0 < e.CurrentValues.Proto_WeakTime &&
             (this.Uqr(!0),
-            (a = this.$te.GetCurrentValue(
+            (t = this.$te.GetCurrentValue(
               CharacterAttributeTypes_1.EAttributeId.Proto_WeakTime,
             )),
             (this.Zbr = TimerSystem_1.TimerSystem.Delay(() => {
               this.Xte &&
                 (this.Xte.HasTag(31862857) ? this.Aqr() : this.Uqr(!1)),
                 (this.Zbr = void 0);
-            }, a)),
+            }, t)),
             this.$te.SetBaseValue(
               CharacterAttributeTypes_1.EAttributeId.Proto_ToughRecover,
               0,
             )),
-        i
+        CharacterDamageComponent_1.Rqr.Stop(),
+        o
       );
     }
     Uqr(e) {
       e
         ? this.Xte.AddTag(-1112841587)
         : (this.Xte.RemoveTag(-1112841587), this.zbr?.EndTask());
-      var t = Protocol_1.Aki.Protocol.g4n.create();
-      (t.P4n = this.Entity.GetComponent(0).GetCreatureDataId()),
-        (t.$4n = e),
-        CombatMessage_1.CombatNet.Call(16858, this.Entity, t, (e) => {
+      var t = Protocol_1.Aki.Protocol.T4n.create();
+      (t.F4n = this.Entity.GetComponent(0).GetCreatureDataId()),
+        (t.o5n = e),
+        CombatMessage_1.CombatNet.Call(17463, this.Entity, t, (e) => {
           e &&
-            e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+            e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             (this.Zbr &&
               (TimerSystem_1.TimerSystem.Remove(this.Zbr), (this.Zbr = void 0)),
             this.Xte.RemoveTag(-1112841587));
@@ -752,7 +794,7 @@ let CharacterDamageComponent =
     }
     aqr(e) {
       var t = e.Attacker.Jbr?.GetSkillLevelByDamageId(e.DamageData.Id),
-        a = e.Attacker.Entity.GetComponent(35)?.GetVisionLevelByDamageId(
+        a = e.Attacker.Entity.GetComponent(36)?.GetVisionLevelByDamageId(
           e.DamageData.Id,
         );
       t && 0 < t ? (e.SkillLevel = t) : a && 0 < a && (e.SkillLevel = a);
@@ -781,7 +823,7 @@ let CharacterDamageComponent =
     FallInjure() {
       var e, t, a, r;
       this.Xte.HasTag(1918148596) ||
-        !this.HBr.IsInGame ||
+        !this.HBr?.IsInGame ||
         ModelManager_1.ModelManager.DeadReviveModel.SkipFallInjure ||
         this.Xte.HasTag(560942831) ||
         ((e =
@@ -793,7 +835,7 @@ let CharacterDamageComponent =
         (t = this.tqr ? Time_1.Time.WorldTimeSeconds - this.tqr : 0),
         (a = Math.ceil(this.xqr(-e, -a, r, t))) <= 0) ||
         ((r = this.u1t.GetCreatureDataId()),
-        this.Entity.GetComponent(59).CollectSampleAndSend(),
+        this.Entity.GetComponent(60).CollectSampleAndSend(),
         ControllerHolder_1.ControllerHolder.CreatureController.LandingDamageRequest(
           r,
           e,
@@ -809,23 +851,23 @@ let CharacterDamageComponent =
         (this.$br.NeedCalculateFallInjure = !1));
     }
     xqr(e, t, a, r) {
-      let i = 0;
-      var o = this.$te.GetCurrentValue(
-        CharacterAttributeTypes_1.EAttributeId.e5n,
+      let o = 0;
+      var i = this.$te.GetCurrentValue(
+        CharacterAttributeTypes_1.EAttributeId.l5n,
       );
-      return (i = this.u1t.IsRealMonster()
+      return (o = this.u1t.IsRealMonster()
         ? CharacterDamageCalculations_1.Calculation.LandingDamageCalculationMonster(
             a,
-            o,
+            i,
           )
         : CharacterDamageCalculations_1.Calculation.LandingDamageCalculationRole(
             e,
             t,
             r,
-            o,
+            i,
           )) <= 0
         ? 0
-        : i;
+        : o;
     }
     Pqr() {
       var e, t;
@@ -841,21 +883,21 @@ let CharacterDamageComponent =
       )[1];
     }
   });
-(CharacterDamageComponent.nqr = void 0),
-  (CharacterDamageComponent.sqr = void 0),
-  (CharacterDamageComponent.hqr = void 0),
-  (CharacterDamageComponent.lqr = void 0),
-  (CharacterDamageComponent.pqr = void 0),
-  (CharacterDamageComponent.Eqr = void 0),
-  (CharacterDamageComponent.Sqr = void 0),
-  (CharacterDamageComponent.yqr = void 0),
-  (CharacterDamageComponent.Iqr = void 0),
-  (CharacterDamageComponent.Tqr = void 0),
-  (CharacterDamageComponent.Lqr = void 0),
-  (CharacterDamageComponent.Dqr = void 0),
-  (CharacterDamageComponent.Rqr = void 0),
+(CharacterDamageComponent.nqr = Stats_1.Stat.Create("ExecuteBulletDamage1")),
+  (CharacterDamageComponent.sqr = Stats_1.Stat.Create("ExecuteBulletDamage2")),
+  (CharacterDamageComponent.hqr = Stats_1.Stat.Create("ExecuteBulletDamage3")),
+  (CharacterDamageComponent.lqr = Stats_1.Stat.Create("ProcessDamage")),
+  (CharacterDamageComponent.pqr = Stats_1.Stat.Create("PreDamageCalculation")),
+  (CharacterDamageComponent.Eqr = Stats_1.Stat.Create("EventCharDamage")),
+  (CharacterDamageComponent.Sqr = Stats_1.Stat.Create("PostExecDamageResult1")),
+  (CharacterDamageComponent.yqr = Stats_1.Stat.Create("PostExecDamageResult2")),
+  (CharacterDamageComponent.Iqr = Stats_1.Stat.Create("PostExecDamageResult3")),
+  (CharacterDamageComponent.Tqr = Stats_1.Stat.Create("ExecToughReduce1")),
+  (CharacterDamageComponent.Lqr = Stats_1.Stat.Create("ExecToughReduce2")),
+  (CharacterDamageComponent.Dqr = Stats_1.Stat.Create("ExecToughReduce3")),
+  (CharacterDamageComponent.Rqr = Stats_1.Stat.Create("ExecToughReduce4")),
   __decorate(
-    [CombatMessage_1.CombatNet.Listen("mFn", !1)],
+    [CombatMessage_1.CombatNet.Listen("EFn", !1)],
     CharacterDamageComponent,
     "OnDamageExecuteNotify",
     null,

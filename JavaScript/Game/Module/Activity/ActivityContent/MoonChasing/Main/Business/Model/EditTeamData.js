@@ -36,10 +36,10 @@ class EditTeamData {
     return this.CharacterDataList;
   }
   SetCharacterDataList(e) {
-    this.CharacterDataList[0].SetCurrentValue(e.PGs),
-      this.CharacterDataList[1].SetCurrentValue(e.UGs),
-      this.CharacterDataList[2].SetCurrentValue(e.wGs),
-      (this.jGi = e.P6n);
+    this.CharacterDataList[0].SetCurrentValue(e.GGs),
+      this.CharacterDataList[1].SetCurrentValue(e.OGs),
+      this.CharacterDataList[2].SetCurrentValue(e.kGs),
+      (this.jGi = e.F6n);
   }
   SetCharacterDataByEditTeamData(e) {
     this.CharacterDataList[0].SetCurrentValue(

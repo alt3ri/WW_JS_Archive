@@ -16,8 +16,8 @@ class CombatLog {
       ? (i = t)
       : ((n = t?.GetComponent(0)) &&
           ((i = n.GetCreatureDataId()),
-          (c = Protocol_1.Aki.Protocol.wks[n.GetEntityType()])),
-        (n = t?.GetComponent(3))?.Actor && (_ = n.Actor.GetName()));
+          (c = Protocol_1.Aki.Protocol.kks[n.GetEntityType()])),
+        (n = t?.GetComponent(3))?.Actor?.IsValid() && (_ = n.Actor.GetName()));
     var n,
       g = `[${r}][EntityId:${i}:${c}:${_}] ` + e;
     switch (o) {

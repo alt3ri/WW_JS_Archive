@@ -16,7 +16,7 @@ class BulletLogicFreezeController extends BulletLogicController_1.BulletLogicCon
     if (l || !(0 < r)) {
       for (let t = 0; t < r; ++t)
         if (
-          !l.GetComponent(188).HasTag(this.h7o.Tags.GameplayTags.Get(t)?.TagId)
+          !l.GetComponent(190).HasTag(this.h7o.Tags.GameplayTags.Get(t)?.TagId)
         )
           return;
       BulletUtil_1.BulletUtil.FrozenBulletTime(this.a7o, this.h7o.FreezeTime);

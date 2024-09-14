@@ -1,14 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemConfig = void 0);
-const BackgroundCard_1 = require("../../../Core/Define/Config/BackgroundCard"),
-  ItemInfo_1 = require("../../../Core/Define/Config/ItemInfo"),
-  PhantomItem_1 = require("../../../Core/Define/Config/PhantomItem"),
-  PreviewItem_1 = require("../../../Core/Define/Config/PreviewItem"),
-  RogueCurrency_1 = require("../../../Core/Define/Config/RogueCurrency"),
-  RoleInfo_1 = require("../../../Core/Define/Config/RoleInfo"),
-  WeaponConf_1 = require("../../../Core/Define/Config/WeaponConf"),
-  ModelUtil_1 = require("../../../Core/Utils/ModelUtil"),
+const ModelUtil_1 = require("../../../Core/Utils/ModelUtil"),
   ConfigManager_1 = require("../../Manager/ConfigManager");
 class ItemConfig {
   constructor() {
@@ -26,39 +19,54 @@ class ItemConfig {
       (this.IconSmall = void 0),
       (this.Mesh = void 0),
       (this.QualityId = 0),
-      (this.ItemAccess = void 0),
+      (this.ItemAccess = []),
       (this.SortIndex = 0),
       (this.RedDotDisableRule = 0),
       (this.Parameters = new Map()),
       (this.ItemBuffType = 0),
-      (this.ShowTypes = void 0);
+      (this.ShowTypes = []);
   }
-  Refresh(i) {
-    (this.Icon = i.Icon),
+  Refresh(i, s) {
+    switch (
+      ((this.Icon = i.Icon),
       (this.QualityId = i.QualityId),
       (this.AttributesDescription = i.AttributesDescription),
-      i instanceof PreviewItem_1.PreviewItem ||
-        ((this.ShowInBag = i.ShowInBag),
-        (this.ObtainedShowDescription = i.ObtainedShowDescription)),
-      i instanceof ItemInfo_1.ItemInfo
-        ? this.Cmi(i)
-        : i instanceof PhantomItem_1.PhantomItem
-          ? this.gmi(i)
-          : i instanceof WeaponConf_1.WeaponConf
-            ? this.fmi(i)
-            : (i instanceof RoleInfo_1.RoleInfo && this.pmi(i),
-              i instanceof BackgroundCard_1.BackgroundCard && this.vmi(i),
-              i instanceof PreviewItem_1.PreviewItem && this.Mmi(i),
-              i instanceof RogueCurrency_1.RogueCurrency && this.Emi(i));
+      s)
+    ) {
+      case 0:
+      case 5:
+        this.Cmi(i);
+        break;
+      case 3:
+      case 4:
+        this.gmi(i);
+        break;
+      case 2:
+        this.fmi(i);
+        break;
+      case 1:
+        this.pmi(i);
+        break;
+      case 6:
+        this.vmi(i);
+        break;
+      case 7:
+        this.Mmi(i);
+        break;
+      case 8:
+        this.Emi(i);
+    }
   }
   Cmi(i) {
     (this.ItemDataType = 0),
       (this.ItemType = i.ItemType),
       (this.MainTypeId = i.MainTypeId),
       (this.Name = i.Name),
-      (this.ItemBuffType = i.ItemBuffType);
-    var t,
-      s,
+      (this.ItemBuffType = i.ItemBuffType),
+      (this.ShowInBag = i.ShowInBag),
+      (this.ObtainedShowDescription = i.ObtainedShowDescription);
+    var s,
+      t,
       h = i.ShowTypes[0];
     h
       ? (h =
@@ -73,7 +81,7 @@ class ItemConfig {
       (this.ItemAccess = i.ItemAccess),
       (this.RedDotDisableRule = i.RedDotDisableRule),
       this.Parameters.clear();
-    for ([t, s] of i.Parameters) this.Parameters.set(t, s);
+    for ([s, t] of i.Parameters) this.Parameters.set(s, t);
     (this.SortIndex = i.SortIndex), (this.ShowTypes = i.ShowTypes);
   }
   gmi(i) {
@@ -89,7 +97,9 @@ class ItemConfig {
       this.Parameters.clear(),
       (this.SortIndex = i.SortIndex),
       (this.RedDotDisableRule = i.RedDotDisableRule),
-      (this.ItemBuffType = 0);
+      (this.ItemBuffType = 0),
+      (this.ShowInBag = i.ShowInBag),
+      (this.ObtainedShowDescription = i.ObtainedShowDescription);
   }
   Emi(i) {
     (this.ItemDataType = 8),
@@ -105,7 +115,9 @@ class ItemConfig {
       (this.SortIndex = i.SortIndex),
       (this.RedDotDisableRule = i.RedDotDisableRule),
       (this.ItemBuffType = 0),
-      (this.Name = i.Title);
+      (this.Name = i.Title),
+      (this.ShowInBag = i.ShowInBag),
+      (this.ObtainedShowDescription = i.ObtainedShowDescription);
   }
   fmi(i) {
     (this.ItemDataType = 2),
@@ -121,10 +133,12 @@ class ItemConfig {
       this.Parameters.clear(),
       (this.SortIndex = i.SortIndex),
       (this.RedDotDisableRule = i.RedDotDisableRule),
-      (this.ItemBuffType = 0);
+      (this.ItemBuffType = 0),
+      (this.ShowInBag = i.ShowInBag),
+      (this.ObtainedShowDescription = i.ObtainedShowDescription);
   }
   pmi(i) {
-    var t = ModelUtil_1.ModelUtil.GetModelConfig(i.MeshId);
+    var s = ModelUtil_1.ModelUtil.GetModelConfig(i.MeshId);
     (this.ItemDataType = 1),
       (this.ItemType = void 0),
       (this.MainTypeId = 1),
@@ -134,12 +148,14 @@ class ItemConfig {
       (this.IconMiddle = i.RoleHeadIconBig),
       (this.IconSmall = i.RoleHeadIcon),
       (this.Icon = i.RoleHeadIconLarge),
-      (this.Mesh = t?.网格体.ToAssetPathName()),
+      (this.Mesh = s?.网格体.ToAssetPathName()),
       (this.ItemAccess = void 0),
       this.Parameters.clear(),
       (this.SortIndex = 0),
       (this.RedDotDisableRule = i.RedDotDisableRule),
-      (this.ItemBuffType = 0);
+      (this.ItemBuffType = 0),
+      (this.ShowInBag = i.ShowInBag),
+      (this.ObtainedShowDescription = i.ObtainedShowDescription);
   }
   vmi(i) {
     (this.ItemDataType = 6),
@@ -155,19 +171,21 @@ class ItemConfig {
       this.Parameters.clear(),
       (this.SortIndex = 0),
       (this.RedDotDisableRule = i.RedDotDisableRule),
-      (this.ItemBuffType = 0);
+      (this.ItemBuffType = 0),
+      (this.ShowInBag = i.ShowInBag),
+      (this.ObtainedShowDescription = i.ObtainedShowDescription);
   }
   Mmi(i) {
     (this.ItemDataType = 7),
       (this.ItemType = 9),
       (this.MainTypeId = 3),
       (this.Name = i.Name);
-    var t = i.ShowTypes[0];
-    t
-      ? (t =
+    var s = i.ShowTypes[0];
+    s
+      ? (s =
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemShowTypeConfig(
-            t,
-          )) && (this.TypeDescription = t.Name)
+            s,
+          )) && (this.TypeDescription = s.Name)
       : (this.TypeDescription = void 0),
       (this.BgDescription = i.BgDescription),
       (this.IconMiddle = i.IconMiddle),

@@ -15,7 +15,8 @@ class ResonanceAmplification {
   get LifeSeatBoostFactor() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.lifeseatboostfactorLength(),
-      (t) => this.lifeseatboostfactor(t),
+      this.lifeseatboostfactor,
+      this,
     );
   }
   __init(t, s) {

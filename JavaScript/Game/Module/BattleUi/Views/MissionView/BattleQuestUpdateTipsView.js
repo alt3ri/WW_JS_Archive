@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleQuestUpdateTipsView = void 0);
 const ue_1 = require("ue"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   Log_1 = require("../../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
@@ -13,8 +14,7 @@ const ue_1 = require("ue"),
   GeneralLogicTreeController_1 = require("../../../GeneralLogicTree/GeneralLogicTreeController"),
   QuestController_1 = require("../../../QuestNew/Controller/QuestController"),
   BattleChildView_1 = require("../BattleChildView/BattleChildView"),
-  CombineKeyItem_1 = require("../KeyItem/CombineKeyItem"),
-  Info_1 = require("../../../../../Core/Common/Info");
+  CombineKeyItem_1 = require("../KeyItem/CombineKeyItem");
 class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
@@ -24,8 +24,8 @@ class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
       (this.Jut = 0),
       (this.zut = !1),
       (this.oct = !1),
-      (this.mxn = !1),
-      (this.dxn = !1),
+      (this._xn = !1),
+      (this.uxn = !1),
       (this.lct = () => {
         this.$ut &&
           (Log_1.Log.CheckInfo() &&
@@ -77,11 +77,11 @@ class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
           this.Yut &&
           this.Jut &&
           ((this.oct = !0),
-          this.dxn ||
+          this.uxn ||
             (EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.QuestUpdateTipsClickTrack,
             ),
-            (this.dxn = !0)),
+            (this.uxn = !0)),
           QuestController_1.QuestNewController.RequestTrackQuest(
             this.Yut,
             !0,
@@ -120,7 +120,11 @@ class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
   }
   OnBeforeDestroy() {
     this.GetText(0).OnSelfLanguageChange.Unbind(),
-      this.GetText(1).OnSelfLanguageChange.Unbind();
+      this.GetText(1).OnSelfLanguageChange.Unbind(),
+      InputDistributeController_1.InputDistributeController.UnBindAction(
+        InputMappingsDefine_1.actionMappings.任务追踪,
+        this.bMe,
+      );
   }
   OnPanelShow() {}
   OnPanelHide() {}
@@ -140,24 +144,31 @@ class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
       InputMappingsDefine_1.actionMappings.任务追踪,
       this.bMe,
     ),
-      (this.mxn = !0);
+      (this._xn = !0);
   }
   OnAfterPlayHideSequence() {
-    (this.mxn = !1),
-      this.dxn ||
+    InputDistributeController_1.InputDistributeController.UnBindAction(
+      InputMappingsDefine_1.actionMappings.任务追踪,
+      this.bMe,
+    ),
+      (this._xn = !1),
+      this.uxn ||
         QuestController_1.QuestNewController.TryChangeTrackedQuest(
           ModelManager_1.ModelManager.QuestNewModel.CurShowUpdateTipsQuest,
         ),
       (ModelManager_1.ModelManager.QuestNewModel.CurShowUpdateTipsQuest =
-        void 0);
+        void 0),
+      (this.$ut = void 0),
+      (this.Yut = 0),
+      (this.Jut = 0);
   }
   UpdateData(e) {
     (ModelManager_1.ModelManager.QuestNewModel.CurShowUpdateTipsQuest =
       e.ShowBridge.TreeConfigId),
-      (this.dxn = !1),
+      (this.uxn = !1),
       this.RefreshUi(e),
       (this.zut = e.ShowBridge.IsNewQuest),
-      this.Cxn();
+      this.cxn();
   }
   RefreshUi(e) {
     (this.Jut = e.NodeId),
@@ -185,7 +196,7 @@ class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
         (e = this.GetSprite(2)),
         this.SetSpriteByPath(t, e, !1));
   }
-  Cxn() {
+  cxn() {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.MissionUpdate,
       this.$ut,
@@ -199,7 +210,7 @@ class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
         UiManager_1.UiManager.OpenView("NewMissionTips", this.$ut.TreeConfigId);
   }
   IsClosing() {
-    return this.mxn;
+    return this._xn;
   }
 }
 exports.BattleQuestUpdateTipsView = BattleQuestUpdateTipsView;

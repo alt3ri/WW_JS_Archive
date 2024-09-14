@@ -6,11 +6,11 @@ const ConfigManager_1 = require("../../../Manager/ConfigManager"),
   RoguelikeDefine_1 = require("./RoguelikeDefine");
 class AffixEntry {
   constructor(e) {
-    (this.Id = e.J4n ?? void 0),
-      (this.IsUnlock = e.G6n ?? void 0),
+    (this.Id = e.s5n ?? void 0),
+      (this.IsUnlock = e.K6n ?? void 0),
       (this.ElementDict = new Map());
-    for (const n of Object.keys(e.L2s ?? {})) {
-      var r = e.L2s[n] ?? 0;
+    for (const n of Object.keys(e.x2s ?? {})) {
+      var r = e.x2s[n] ?? 0;
       r && this.ElementDict.set(Number(n), r);
     }
   }
@@ -27,8 +27,8 @@ class AffixEntry {
       this.Id,
     );
     return 0 === ModelManager_1.ModelManager.RoguelikeModel?.GetDescModel()
-      ? e?.AffixDescSimple ?? ""
-      : e?.AffixDesc ?? "";
+      ? (e?.AffixDescSimple ?? "")
+      : (e?.AffixDesc ?? "");
   }
 }
 exports.AffixEntry = AffixEntry;

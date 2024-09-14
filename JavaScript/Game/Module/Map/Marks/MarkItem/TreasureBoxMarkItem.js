@@ -49,6 +49,9 @@ class TreasureBoxMarkItem extends ServerMarkItem_1.ServerMarkItem {
     );
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.MarkDesc);
   }
+  GetInteractiveFlag() {
+    return !1;
+  }
 }
 exports.TreasureBoxMarkItem = TreasureBoxMarkItem;
 //# sourceMappingURL=TreasureBoxMarkItem.js.map

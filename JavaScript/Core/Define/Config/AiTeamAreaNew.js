@@ -17,8 +17,10 @@ class AiTeamAreaNew {
     return this.reactiontime();
   }
   get CharTypes() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.chartypesLength(), (t) =>
-      this.chartypes(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.chartypesLength(),
+      this.chartypes,
+      this,
     );
   }
   get AreaAngle() {

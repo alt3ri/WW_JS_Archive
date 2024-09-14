@@ -13,6 +13,7 @@ const puerts_1 = require("puerts"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   SceneInteractionManager_1 = require("../../../Render/Scene/Interaction/SceneInteractionManager"),
+  PortalUtils_1 = require("../../../Utils/PortalUtils"),
   ManipulateCursorUnit_1 = require("../HudUnit/ManipulateCursorUnit"),
   HudUnitHandleBase_1 = require("./HudUnitHandleBase"),
   COMPLETE_ANIM_TIME = 500,
@@ -38,8 +39,8 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       (this.fHe = (t, i) => {
         (this.X9e = t),
           (this.dri = this.X9e.Entity.GetComponent(1)),
-          (this.Cri = this.X9e.Entity.GetComponent(56)),
-          (this.fri = t.Entity.GetComponent(188)),
+          (this.Cri = this.X9e.Entity.GetComponent(57)),
+          (this.fri = t.Entity.GetComponent(190)),
           this.Eri();
         for (const s of this.pri) {
           var e = this.fri.ListenForTagAddOrRemove(
@@ -72,9 +73,6 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       (this.sri = () => {
         this.yri(0);
       }),
-      (this.XBo = () => {
-        this.hri?.RefreshKeyVisible();
-      }),
       (this.zoi = (t, i, e) => {
         (this.rii = e),
           t
@@ -93,12 +91,13 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   }
   OnInitialize() {
     if (
-      ((this.X9e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
+      (this.InitCursorAxis(),
+      (this.X9e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
       this.X9e?.Valid)
     ) {
-      (this.fri = this.X9e.Entity.GetComponent(188)),
+      (this.fri = this.X9e.Entity.GetComponent(190)),
         (this.dri = this.X9e.Entity.GetComponent(1)),
-        (this.Cri = this.X9e.Entity.GetComponent(56)),
+        (this.Cri = this.X9e.Entity.GetComponent(57)),
         (this.gri =
           CameraController_1.CameraController.FightCamera.GetComponent(5));
       var t = CommonParamById_1.configCommonParamById.GetStringConfig(
@@ -153,10 +152,6 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.HiddenManipulateUI,
         this.sri,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.InputControllerChange,
-        this.XBo,
       );
   }
   OnRemoveEvents() {
@@ -191,11 +186,13 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.HiddenManipulateUI,
         this.sri,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.InputControllerChange,
-        this.XBo,
       );
+  }
+  OnInputControllerChanged(t, i) {
+    !this.hri ||
+      t === i ||
+      (5 !== t && 5 !== i) ||
+      (this.DestroyHudUnit(this.hri), (this.hri = void 0), this.Uri());
   }
   OnAfterTick(t) {
     this.bl();
@@ -221,7 +218,7 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   foi(t) {
     (this.lri = t),
       (this._ri = t.GetComponent(1)),
-      ((0, RegisterComponent_1.isComponentInstance)(this._ri, 185) &&
+      ((0, RegisterComponent_1.isComponentInstance)(this._ri, 187) &&
         ((this.cri =
           SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
             this._ri.GetSceneInteractionLevelHandleId(),
@@ -268,22 +265,31 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     if (this.lri?.Valid && this.cri?.IsValid()) {
       this.cri.GetActorBounds(!1, this.mri, void 0);
       let t = Vector_1.Vector.Create((0, puerts_1.$unref)(this.mri));
-      var i =
-          ModelManager_1.ModelManager.ManipulaterModel.GetTargetPartLocation(),
+      var i = this.lri.GetComponent(143),
+        i =
+          (void 0 !== i &&
+            0 !== i.GetPassThroughPortalType() &&
+            PortalUtils_1.PortalUtils.GetMappingPosToOtherPortal(
+              t,
+              i.GetPassThroughPortalId(),
+              1 === i.GetPassThroughPortalType(),
+              t,
+            ),
+          ModelManager_1.ModelManager.ManipulaterModel.GetTargetPartLocation()),
         i =
           (i !== Vector_1.Vector.ZeroVectorProxy && (t = i),
-          this.lri.GetComponent(134)),
+          this.lri.GetComponent(135)),
         i =
           (void 0 !== i && this.rii && (t = i.GetHitPoint()),
-          this.lri.GetComponent(147)),
+          this.lri.GetComponent(148)),
         i =
           (void 0 !== i &&
             this.rii &&
             (t = i.GetSocketLocation(this.Cri.GetHoldingEntity())),
-          this.lri.GetComponent(126)),
+          this.lri.GetComponent(127)),
         i =
           (void 0 !== i && this.rii && (t = i.GetHitPoint()),
-          this.lri.GetComponent(136));
+          this.lri.GetComponent(137));
       return (t = void 0 !== i ? i.Location : t);
     }
   }
@@ -337,5 +343,6 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     }
   }
 }
-(exports.ManipulateCursorHandle = ManipulateCursorHandle).SYe = void 0;
+(exports.ManipulateCursorHandle = ManipulateCursorHandle).SYe =
+  Stats_1.Stat.Create("[ManipulateCursorHandle]ListenTag");
 //# sourceMappingURL=ManipulateCursorHandle.js.map

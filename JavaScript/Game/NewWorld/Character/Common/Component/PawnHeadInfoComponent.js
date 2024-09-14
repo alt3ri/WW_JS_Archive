@@ -2,20 +2,20 @@
 var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, n) {
-    var o,
-      r = arguments.length,
-      s =
-        r < 3
+    var s,
+      o = arguments.length,
+      r =
+        o < 3
           ? e
           : null === n
             ? (n = Object.getOwnPropertyDescriptor(e, i))
             : n;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      s = Reflect.decorate(t, e, i, n);
+      r = Reflect.decorate(t, e, i, n);
     else
       for (var h = t.length - 1; 0 <= h; h--)
-        (o = t[h]) && (s = (r < 3 ? o(s) : 3 < r ? o(e, i, s) : o(e, i)) || s);
-    return 3 < r && s && Object.defineProperty(e, i, s), s;
+        (s = t[h]) && (r = (o < 3 ? s(r) : 3 < o ? s(e, i, r) : s(e, i)) || r);
+    return 3 < o && r && Object.defineProperty(e, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnHeadInfoComponent = void 0);
@@ -46,22 +46,23 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
       (this.hor = void 0),
       (this.qJr = !1),
       (this.GJr = !1),
-      (this.Jia = !0),
+      (this.cna = !0),
       (this.e8 = 0),
       (this.NJr = !1),
-      (this.j$s = () => {
+      (this.R$a = !1),
+      (this.NYs = () => {
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharBornFinished,
-          this.j$s,
+          this.NYs,
         ),
-          this.W$s();
+          this.FYs();
       }),
       (this.OJr = () => {
         this.kJr(), this.FJr();
       }),
       (this.OnEntityWasRecentlyRenderedOnScreenChange = (t) => {
-        if (this.VJr() === Protocol_1.Aki.Protocol.wks.Proto_SceneItem) {
+        if (this.VJr() === Protocol_1.Aki.Protocol.kks.Proto_SceneItem) {
           var e = this.Hte;
           if (
             !e ||
@@ -79,50 +80,27 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
         this.hor?.SetRootItemState(!1);
       }),
       (this.WJr = () => {
-        if (this.hor)
-          if (this.BJr) {
-            var e = this.BJr.GetInteractController();
-            if (e) {
-              e = e.Options.find(
-                (t) =>
-                  !!t.Context &&
-                  (2 === t.Context.Type || 6 === t.Context.Type) &&
-                  ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckConditionNew(
-                    t.Condition,
-                    this.Hte.Owner,
-                  ),
-              );
-              if (e) {
-                var i = e.Context;
-                let t = void 0;
-                switch (i.Type) {
-                  case 2:
-                    var n = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
-                      i.QuestId,
-                    );
-                    n && !n.HideAcceptQuestMark && (t = n.QuestMarkId);
-                    break;
-                  case 6:
-                    var o,
-                      n =
-                        ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-                          i.TreeIncId,
-                        );
-                    n &&
-                      n.BtType ===
-                        Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
-                      (o = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
-                        i.TreeConfigId,
-                      )) &&
-                      4 === o.Type &&
-                      (o = n.GetNode(i.NodeId)) &&
-                      o.ContainTag(0) &&
-                      (t = n.GetTrackIconId());
+        if (this.hor) {
+          var e = this.BJr?.GetInteractController();
+          if (e && e.Options.length) {
+            let t = !1;
+            for (const n of e.Options)
+              if (n.Context) {
+                var i = this.U$a(n.Context);
+                if (void 0 !== i) {
+                  if (
+                    ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckConditionNew(
+                      n.Condition,
+                      this.Hte.Owner,
+                    )
+                  )
+                    return this.hor.SetNpcQuest(i), void (this.R$a = !1);
+                  t = !0;
                 }
-                this.hor.SetNpcQuest(t);
-              } else this.hor.SetNpcQuest();
-            }
+              }
+            t && (this.R$a = !0);
           } else this.hor.SetNpcQuest();
+        }
       });
   }
   static get Dependencies() {
@@ -130,19 +108,29 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
   }
   OnStart() {
     return (
-      (this.xJr = this.Entity.GetComponent(104)),
+      (this.xJr = this.Entity.GetComponent(105)),
       (this.Hte = this.Entity.GetComponent(1)),
-      (this.wJr = this.Entity.GetComponent(106)),
-      (this.BJr = this.Entity.GetComponent(181)),
+      (this.wJr = this.Entity.GetComponent(107)),
+      (this.BJr = this.Entity.GetComponent(182)),
       (this.bJr = Vector_1.Vector.Create()),
       this.pie(),
       this.Hte instanceof CharacterActorComponent_1.CharacterActorComponent
         ? EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharBornFinished,
-            this.j$s,
+            this.NYs,
           )
-        : this.W$s(),
+        : this.FYs(),
+      EventSystem_1.EventSystem.AddWithTarget(
+        this.Entity,
+        EventDefine_1.EEventName.OnAddDynamicOption,
+        this.WJr,
+      ),
+      EventSystem_1.EventSystem.AddWithTarget(
+        this.Entity,
+        EventDefine_1.EEventName.OnRemoveDynamicOption,
+        this.WJr,
+      ),
       !0
     );
   }
@@ -150,7 +138,7 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
     var t = this.Hte.CreatureData;
     t && ((t = t.GetBaseInfo()), (this.GJr = t?.IsShowNameOnHead ?? !1));
   }
-  W$s() {
+  FYs() {
     this.xJr?.GetMessageId()
       ? this.FJr()
       : (this.NJr = EventSystem_1.EventSystem.AddWithTarget(
@@ -192,12 +180,42 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
           this.jJr,
         ),
         this.hor.Destroy()),
+      EventSystem_1.EventSystem.HasWithTarget(
+        this.Entity,
+        EventDefine_1.EEventName.CharBornFinished,
+        this.NYs,
+      ) &&
+        EventSystem_1.EventSystem.RemoveWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.CharBornFinished,
+          this.NYs,
+        ),
+      EventSystem_1.EventSystem.HasWithTarget(
+        this.Entity,
+        EventDefine_1.EEventName.OnAddDynamicOption,
+        this.WJr,
+      ) &&
+        EventSystem_1.EventSystem.RemoveWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.OnAddDynamicOption,
+          this.WJr,
+        ),
+      EventSystem_1.EventSystem.HasWithTarget(
+        this.Entity,
+        EventDefine_1.EEventName.OnRemoveDynamicOption,
+        this.WJr,
+      ) &&
+        EventSystem_1.EventSystem.RemoveWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.OnRemoveDynamicOption,
+          this.WJr,
+        ),
       !0
     );
   }
   CreateCharacterIconComponentView() {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("HudUnit", 51, "开始角色头顶组件初始化", [
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("HudUnit", 51, "开始角色头顶组件初始化", [
         "PbDataId",
         this.Hte?.CreatureData.GetPbDataId(),
       ]),
@@ -212,7 +230,7 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
     this.SetCharacterIconLocation(),
       this.HJr(),
       this.SetCharacterSecondName(),
-      this.hor.SetNpcQuest();
+      this.WJr();
   }
   SetCharacterIconLocation() {
     this.hor?.SetCharacterIconLocation();
@@ -235,9 +253,33 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
   }
   OnTick(t) {
     super.OnTick(t),
-      (this.e8 += t),
-      this.e8 > CHECK_QUEST_ICON_INTERVAL &&
+      this.R$a &&
+        ((this.e8 += t), this.e8 > CHECK_QUEST_ICON_INTERVAL) &&
         ((this.e8 -= CHECK_QUEST_ICON_INTERVAL), this.WJr());
+  }
+  U$a(t) {
+    let e = void 0;
+    switch (t.Type) {
+      case 2:
+        var i = ModelManager_1.ModelManager.QuestNewModel.GetQuest(t.QuestId);
+        i && !i.HideAcceptQuestMark && (e = i.QuestMarkId);
+        break;
+      case 6:
+        var n,
+          i = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+            t.TreeIncId,
+          );
+        i &&
+          i.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
+          (n = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
+            t.TreeConfigId,
+          )) &&
+          4 === n.Type &&
+          (n = i.GetNode(t.NodeId)) &&
+          n.ContainTag(0) &&
+          (e = i.GetTrackIconId());
+    }
+    return e;
   }
   SetDialogueText(t, e = -1, i = !1) {
     t =
@@ -252,7 +294,7 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
     return this.Hte.ActorLocationProxy;
   }
   GetAttachToMeshComponent() {
-    return this.VJr() === Protocol_1.Aki.Protocol.wks.Proto_SceneItem
+    return this.VJr() === Protocol_1.Aki.Protocol.kks.Proto_SceneItem
       ? this.Hte.GetStaticMeshComponent()
       : this.Hte.SkeletalMesh;
   }
@@ -295,7 +337,7 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
   CanTick() {
     return (
       !!this.wJr &&
-      (this.Jia &&
+      (this.cna &&
       !ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot() &&
       UiModel_1.UiModel.IsInMainView
         ? (this.hor?.SetRootItemState(!0), !0)
@@ -306,11 +348,11 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
     var n = this.Entity.GetComponent(0)?.GetPbDataId(),
       n = ModelManager_1.ModelManager.TrackModel.IsTargetTracking(n);
     if (n && 1 !== n.TrackSource) {
-      var o = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
-      if (o)
+      var s = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
+      if (s)
         return (
           this.bJr.DeepCopy(this.GetSelfLocation()),
-          Vector_1.Vector.DistSquared(o, this.bJr) <
+          Vector_1.Vector.DistSquared(s, this.bJr) <
             n.TrackHideDis * n.TrackHideDis * 100 * 100
         );
     }
@@ -320,11 +362,11 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
     return !!this.hor?.GetRootItemState();
   }
   EnableHeadInfo(t) {
-    this.Jia !== t && (this.Jia = t);
+    this.cna !== t && (this.cna = t);
   }
 };
 (PawnHeadInfoComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(72)],
+  [(0, RegisterComponent_1.RegisterComponent)(73)],
   PawnHeadInfoComponent,
 )),
   (exports.PawnHeadInfoComponent = PawnHeadInfoComponent);

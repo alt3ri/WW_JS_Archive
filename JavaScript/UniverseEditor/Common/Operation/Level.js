@@ -14,6 +14,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.levelIdToName =
     exports.isWpLevelByLevelId =
     exports.isWpLevel =
+    exports.isLevelMapById =
     exports.isLevelMap =
     exports.getLevelConfig =
     exports.getAllLevelExportPaths =
@@ -159,7 +160,10 @@ function getLevelConfig(e) {
   return getLevelConfigByName(e);
 }
 function isLevelMap(e) {
-  return !!getLevelConfigByName(e);
+  return void 0 !== getLevelConfigByName(e);
+}
+function isLevelMapById(e) {
+  return void 0 !== getLevelConfigById(e);
 }
 function isWpLevel(e) {
   return !!getLevelConfig(e)?.IsPartition;
@@ -240,6 +244,7 @@ function getSetEntityVisibleWhiteList() {
   (exports.getAllLevelExportPaths = getAllLevelExportPaths),
   (exports.getLevelConfig = getLevelConfig),
   (exports.isLevelMap = isLevelMap),
+  (exports.isLevelMapById = isLevelMapById),
   (exports.isWpLevel = isWpLevel),
   (exports.isWpLevelByLevelId = isWpLevelByLevelId),
   (exports.levelIdToName = levelIdToName),

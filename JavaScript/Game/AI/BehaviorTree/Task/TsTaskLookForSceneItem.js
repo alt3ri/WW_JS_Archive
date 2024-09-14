@@ -65,7 +65,7 @@ class TsTaskLookForSceneItem extends TsTaskAbortImmediatelyBase_1.default {
                   !(t =
                     this.TsBotanyItem &&
                     "Botany" === n &&
-                    _.Entity.GetComponent(181)?.IsOnlyCollectOption()
+                    _.Entity.GetComponent(182)?.IsOnlyCollectOption()
                       ? !0
                       : t) &&
                   this.TsMineralItem &&

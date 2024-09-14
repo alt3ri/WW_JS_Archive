@@ -8,8 +8,8 @@ class UiBehaviorLevelSequence {
     (this.rcr = void 0),
       (this.ncr = "Start"),
       (this.scr = "Close"),
-      (this.i0a = "ShowView"),
-      (this.r0a = "HideView"),
+      (this.pva = "ShowView"),
+      (this.Mva = "HideView"),
       (this.acr = new Map()),
       (this.hcr = new Map()),
       (this.lcr = ""),
@@ -37,16 +37,16 @@ class UiBehaviorLevelSequence {
     return this.scr;
   }
   get ShowSequenceName() {
-    return this.i0a;
+    return this.pva;
   }
   set ShowSequenceName(e) {
-    this.i0a = e;
+    this.pva = e;
   }
   get HideSequenceName() {
-    return this.r0a;
+    return this.Mva;
   }
   set HideSequenceName(e) {
-    this.r0a = e;
+    this.Mva = e;
   }
   OnAfterUiStart() {
     (this.rcr = new UiSequencePlayer_1.UiSequencePlayer(

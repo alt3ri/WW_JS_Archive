@@ -21,7 +21,7 @@ const UE = require("ue"),
   FormationOnlineItem_1 = require("./FormationOnlineItem"),
   FormationTrialItem_1 = require("./FormationTrialItem"),
   CombineKeyItem_1 = require("./KeyItem/CombineKeyItem");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 const Info_1 = require("../../../../Core/Common/Info"),
   CharacterBuffIds_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds"),
   REFRESH_COOLDOWN_INTERVAL = 100,
@@ -54,6 +54,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       (this.wat = !1),
       (this.Bat = !1),
       (this.bat = !1),
+      (this.iZa = !1),
       (this.qat = (t) => {
         2 === Info_1.Info.OperationType &&
           ((t = t * TimeUtil_1.TimeUtil.InverseMillisecond), this.Gat(t, t));
@@ -103,7 +104,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
         this.Yat();
       }),
       (this.o$e = (t) => {
-        t === this.EntityId && this.KSa();
+        t === this.EntityId && this.vTa();
       }),
       (this.r$e = (t, i, e) => {
         t === this.EntityId && this.RefreshElementVisible();
@@ -168,7 +169,8 @@ class FormationItem extends BattleChildView_1.BattleChildView {
         ));
     t = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(i);
     this.xat.SetOnlineNumber(t?.PlayerNumber ?? -1),
-      this.xat.SetNameText(t?.Name ?? ""),
+      this.xat.SetNameText(t?.GetFormationName() ?? ""),
+      this.xat.RefreshPlayStationItem(t?.PlayerDetails.hwa ?? ""),
       this.xat.SetIsGrayByOtherControl(!e),
       this.SetActive(!0);
   }
@@ -317,8 +319,8 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       ),
       this.FormationIns?.IsMyRole()
         ? this.wat &&
-          ((i = t.GetComponent(188)), this.d$e(i, 1414093614, this.jat))
-        : ((i = t.GetComponent(188)), this.d$e(i, 166024319, this.Vat));
+          ((i = t.GetComponent(190)), this.d$e(i, 1414093614, this.jat))
+        : ((i = t.GetComponent(190)), this.d$e(i, 166024319, this.Vat));
   }
   RemoveEntityEvents(t) {
     EventSystem_1.EventSystem.RemoveWithTarget(
@@ -413,7 +415,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
           ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData()
             ?.EntityHandle,
         s = this.FormationIns?.EntityHandle;
-      e && s && (t = e.Entity.GetComponent(88).IsQteReady(s)),
+      e && s && (t = e.Entity.GetComponent(89).IsQteReady(s)),
         this.hht(t, i, !0);
     }
   }
@@ -436,7 +438,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       this._ht();
   }
   tht() {
-    var t = this.RoleData?.EntityHandle?.Entity?.GetComponent(83);
+    var t = this.RoleData?.EntityHandle?.Entity?.GetComponent(84);
     !t || (t = t.GetChangeRoleCoolDown()) <= 0 || this.Gat(t, t);
   }
   uht(t) {
@@ -545,9 +547,9 @@ class FormationItem extends BattleChildView_1.BattleChildView {
         let t = "";
         (t = this.FormationIns.IsMyRole()
           ? ModelManager_1.ModelManager.RoleModel.GetRoleName(i)
-          : ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
+          : (ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
               this.FormationIns.GetPlayerId(),
-            )?.Name ?? ""),
+            )?.Name ?? "")),
           this.Pat.SetNameText(t);
       }
     }
@@ -582,16 +584,28 @@ class FormationItem extends BattleChildView_1.BattleChildView {
   }
   aht() {
     var t;
-    this.vat <= 0 ||
+    this.iZa ||
+      this.vat <= 0 ||
       ((t = this.Eat / this.vat), this.GetTexture(2).SetFillAmount(t));
   }
   sht() {
-    this.GetText(3)?.SetText(
-      (this.Sat * TimeUtil_1.TimeUtil.Millisecond).toFixed(1),
-    );
+    this.iZa ||
+      this.GetText(3)?.SetText(
+        (this.Sat * TimeUtil_1.TimeUtil.Millisecond).toFixed(1),
+      );
   }
   rht(t) {
-    this.GetItem(1)?.SetUIActive(t);
+    this.iZa || this.GetItem(1)?.SetUIActive(t);
+  }
+  RefreshCoolDownExternal(t, i) {
+    var e = this.GetItem(1);
+    void 0 === t || void 0 === i
+      ? this.iZa && ((this.iZa = !1), e?.SetUIActive(!1))
+      : ((this.iZa = !0),
+        e?.SetUIActive(!0),
+        this.GetText(3)?.SetText(t.toFixed(1)),
+        (e = t / i),
+        this.GetTexture(2).SetFillAmount(e));
   }
   Jat() {
     var t;
@@ -662,7 +676,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
           EAttributeId.Proto_Life,
         ) ?? 1),
       (i =
-        this.RoleData?.AttributeComponent?.GetCurrentValue(EAttributeId.e5n) ??
+        this.RoleData?.AttributeComponent?.GetCurrentValue(EAttributeId.l5n) ??
         1),
       (e = this.RoleData?.ShieldComponent.ShieldTotal ?? 0),
       t <= 0 || i <= 0
@@ -729,7 +743,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
           ((this.Iat = this.RoleData.ElementType),
           (this.Tat = this.RoleData.ElementConfig),
           this.Jst(this.Tat, this.Iat)),
-        this.KSa(),
+        this.vTa(),
         this.RefreshElementVisible())
       : this.GetItem(14).SetUIActive(!1);
   }
@@ -761,7 +775,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       s.SetColor(this.RoleData.ElementColor),
       e.SetColor(this.RoleData.ElementColor);
   }
-  KSa() {
+  vTa() {
     this.GetSprite(16).SetFillAmount(this.GetElementPercent());
   }
   GetElementPercent() {
@@ -779,16 +793,22 @@ class FormationItem extends BattleChildView_1.BattleChildView {
           t.GetPlayerId(),
         )) && this.RefreshPlayerPingState(i.PingState),
         t.IsMyRole()
-          ? (this.xat.SetOnlineNumber(-1), this.xat.SetNameText(""))
+          ? (this.xat.SetOnlineNumber(-1),
+            this.xat.SetNameText(""),
+            this.xat.RefreshPlayStationItem(
+              ModelManager_1.ModelManager.PlayerInfoModel.GetThirdPartyUserId() ??
+                "",
+            ))
           : (this.xat.SetOnlineNumber(i?.PlayerNumber ?? -1),
-            this.xat.SetNameText(i?.Name ?? ""),
+            this.xat.SetNameText(i?.GetFormationName() ?? ""),
+            this.xat.RefreshPlayStationItem(i?.PlayerDetails.hwa ?? ""),
             this.xat.SetIsGrayByOtherControl(!t.IsControl())))
       : (this.xat?.Destroy(), (this.xat = void 0));
   }
   RefreshPlayerPingState(t) {
-    t === Protocol_1.Aki.Protocol.Y8s.Proto_POOR
+    t === Protocol_1.Aki.Protocol.r7s.Proto_POOR
       ? (this.xat.SetNetWeak(!0), this.xat.SetNetDisconnect(!1))
-      : t === Protocol_1.Aki.Protocol.Y8s.Proto_UNKNOWN
+      : t === Protocol_1.Aki.Protocol.r7s.Proto_UNKNOWN
         ? (this.xat.SetNetDisconnect(!0), this.xat.SetNetWeak(!1))
         : (this.xat.SetNetWeak(!1), this.xat.SetNetDisconnect(!1));
   }

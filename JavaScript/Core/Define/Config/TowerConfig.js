@@ -34,45 +34,57 @@ class TowerConfig {
   get RecommendElement() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.recommendelementLength(),
-      (t) => this.recommendelement(t),
+      this.recommendelement,
+      this,
     );
   }
   get ShowMonsters() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.showmonstersLength(),
-      (t) => this.showmonsters(t),
+      this.showmonsters,
+      this,
     );
   }
   get ShowMonstersAndLevel() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.showmonstersandlevelLength(),
-      (t) => this.showmonstersandlevel(t),
+      this.showmonstersandlevel,
+      this,
     );
   }
   get ShowBuffs() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.showbuffsLength(), (t) =>
-      this.showbuffs(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.showbuffsLength(),
+      this.showbuffs,
+      this,
     );
   }
   get RoleBuff() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.rolebuffLength(), (t) =>
-      this.rolebuff(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.rolebuffLength(),
+      this.rolebuff,
+      this,
     );
   }
   get MonsterBuff() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.monsterbuffLength(), (t) =>
-      this.monsterbuff(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.monsterbuffLength(),
+      this.monsterbuff,
+      this,
     );
   }
   get Target() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.targetLength(), (t) =>
-      this.target(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.targetLength(),
+      this.target,
+      this,
     );
   }
   get TargetConfig() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.targetconfigLength(),
-      (t) => this.targetconfig(t),
+      this.targetconfig,
+      this,
     );
   }
   get BgPath() {

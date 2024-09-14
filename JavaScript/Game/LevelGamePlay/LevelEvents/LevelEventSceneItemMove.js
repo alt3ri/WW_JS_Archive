@@ -2,36 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSceneItemMove = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
-  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  SceneItemMoveComponent_1 = require("../../NewWorld/SceneItem/Common/Component/SceneItemMoveComponent"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
       (this.OPt = void 0),
-      (this.dRe = !1),
       (this.CRe = void 0),
-      (this.TDe = void 0),
-      (this.LDe = () => {
-        this.CRe?.Valid
-          ? this.CRe.IsMoving ||
-            this.dRe ||
-            (TimerSystem_1.TimerSystem.Remove(this.TDe),
-            (this.TDe = void 0),
-            (this.dRe = !0),
-            this.FinishExecute(!0))
-          : (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Event", 40, "SceneItemMove过程中MoveComp失效"),
-            this.FinishExecute(!1));
-      }),
       (this.nIn = (e) => {
-        e.GetComponent(115)?.RemoveStopMoveCallbackWithEntity(this.nIn),
+        e.GetComponent(116)?.RemoveStopMoveCallbackWithEntity(this.nIn),
           EventSystem_1.EventSystem.HasWithTarget(
             e,
             EventDefine_1.EEventName.OnSceneItemMoveEventBroken,
@@ -66,7 +50,7 @@ class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
       var e = this.OPt.EntityId,
         t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e);
       if (t?.Valid) {
-        var i = t.Entity.GetComponent(115);
+        var i = t.Entity.GetComponent(116);
         switch (((this.CRe = i), this.OPt.MoveConfig.Type)) {
           case IAction_1.EMoveSceneItemType.MoveToPoint:
             this.sIn(this.OPt, t);
@@ -82,29 +66,40 @@ class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
   }
   sIn(e, t) {
     var i,
-      s = e.MoveConfig;
-    s &&
+      n = e.MoveConfig;
+    n &&
       (this.CRe?.Valid
-        ? (e.StopBeforeMove && this.CRe.StopMove(),
-          s.MoveMotion?.Type === IAction_1.EMoveMotion.VariableMotion
-            ? ((i = Vector_1.Vector.Create(
-                s.Point.X ?? 0,
-                s.Point.Y ?? 0,
-                s.Point.Z ?? 0,
-              )),
-              this.CRe.AddMoveTarget(
-                new SceneItemMoveComponent_1.MoveTarget(
-                  i,
-                  -1,
-                  -1,
-                  s.MoveMotion.MaxSpeed ?? -1,
-                  s.MoveMotion.Acceleration ?? -1,
-                ),
-              ))
-            : this.CRe.AddMoveTarget(s),
+        ? (e.StopBeforeMove &&
+            (this.CRe.StopMove(),
+            EventSystem_1.EventSystem.EmitWithTarget(
+              t.Entity,
+              EventDefine_1.EEventName.OnSceneItemMoveEventBroken,
+              t.Entity,
+            )),
+          EventSystem_1.EventSystem.AddWithTarget(
+            t.Entity,
+            EventDefine_1.EEventName.OnSceneItemMoveEventBroken,
+            this.nIn,
+          ),
+          (i = [
+            Vector_1.Vector.Create(t.Entity.GetComponent(1).ActorLocationProxy),
+            n.Point,
+          ]),
+          (n = n.MoveMotion ?? {
+            Type: IAction_1.EMoveMotion.UniformMotion,
+            Time: 0,
+          }),
+          ControllerHolder_1.ControllerHolder.SceneItemMoveController.AddSceneItemMove(
+            t.Entity,
+            i,
+            !1,
+            n,
+            0,
+          ),
           this.IsAsync
             ? this.FinishExecute(!0)
-            : (this.TDe = TimerSystem_1.TimerSystem.Forever(this.LDe, 1e3)))
+            : (this.CRe.ClearStopMoveCallbackWithEntity(),
+              this.CRe.AddStopMoveCallbackWithEntity(this.nIn)))
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error("Event", 32, "Entity找不到SceneItemMoveComponent", [
               "entityId",
@@ -147,10 +142,7 @@ class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
           this.FinishExecute(!1)));
   }
   OnReset() {
-    (this.dRe = !1),
-      (this.CRe = void 0),
-      (this.OPt = void 0) !== this.TDe &&
-        (TimerSystem_1.TimerSystem.Remove(this.TDe), (this.TDe = void 0));
+    (this.CRe = void 0), (this.OPt = void 0);
   }
 }
 exports.LevelEventSceneItemMove = LevelEventSceneItemMove;

@@ -8,12 +8,12 @@ const EventDefine_1 = require("../../../Common/Event/EventDefine"),
 class TowerDefenseRewardRedDot extends RedDotBase_1.RedDotBase {
   constructor() {
     super(...arguments),
-      (this.QJs = [
+      (this.VZs = [
         EventDefine_1.EEventName.RefreshCommonActivityRewardPopUpView,
       ]);
   }
   OnGetEvents() {
-    return this.QJs;
+    return this.VZs;
   }
   OnCheck(e) {
     return TowerDefenceController_1.TowerDefenseController.CheckHasReward();
@@ -23,12 +23,12 @@ exports.TowerDefenseRewardRedDot = TowerDefenseRewardRedDot;
 class TowerDefenseInstanceRedDot extends RedDotBase_1.RedDotBase {
   constructor() {
     super(...arguments),
-      (this.QJs = [
+      (this.VZs = [
         EventDefine_1.EEventName.TowerDefenseOnInstanceInfoUpdateNotify,
       ]);
   }
   OnGetEvents() {
-    return this.QJs;
+    return this.VZs;
   }
   OnCheck(e) {
     return TowerDefenceController_1.TowerDefenseController.CheckHasNewStage();

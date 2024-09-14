@@ -250,8 +250,8 @@ class Formula {
       (this.Params = void 0),
       (this.lDt = void 0),
       (this.$gr = new Map()),
-      (this.jQn = ""),
-      (this.WQn = new Set()),
+      (this.JQn = ""),
+      (this.zQn = new Set()),
       (this.Rgr = r);
     var e = new Lexer(r).Tokenize(),
       e = new Parser(e);
@@ -322,9 +322,9 @@ class Formula {
             case "<=":
               return s <= n;
             case "==":
-              return s === n;
+              return s == n;
             case "!=":
-              return s !== n;
+              return s != n;
             case "&&":
               return s && n;
             case "||":
@@ -402,7 +402,7 @@ class Formula {
     }
   }
   GetLastResult() {
-    return this.jQn;
+    return this.JQn;
   }
 }
 exports.Formula = Formula;

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRecallAreaActivityInfoPanel = void 0);
 const UE = require("ue"),
   StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
   UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
   MapController_1 = require("../../../../Map/Controller/MapController"),
   ActivityDescriptionTypeB_1 = require("../../UniversalComponents/Content/ActivityDescriptionTypeB"),
@@ -13,15 +14,21 @@ const UE = require("ue"),
 class ActivityRecallAreaActivityInfoPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.n_a = void 0),
-      (this.s_a = void 0),
-      (this.a_a = void 0),
-      (this.h_a = void 0),
-      (this.l_a = void 0),
-      (this.__a = () => {
+      (this.gda = void 0),
+      (this.fda = void 0),
+      (this.vda = void 0),
+      (this.pda = void 0),
+      (this.Mda = void 0),
+      (this.Sda = () => {
         ActivityRecallHelper_1.ActivityRecallHelper.ReportRecallLog1024(3);
-        var i = this.n_a.ArgId[0];
-        MapController_1.MapController.OpenMapViewAndFocusMark(5, i, void 0, !1);
+        var i = this.gda.ArgId[0],
+          t = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(i);
+        MapController_1.MapController.OpenMapViewAndFocusMark(
+          t.ObjectType,
+          i,
+          void 0,
+          !1,
+        );
       });
   }
   OnRegisterComponent() {
@@ -35,42 +42,42 @@ class ActivityRecallAreaActivityInfoPanel extends UiPanelBase_1.UiPanelBase {
   async OnBeforeStartAsync() {
     var i = this.GetItem(0),
       t =
-        ((this.s_a = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
+        ((this.fda = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
         this.GetItem(1)),
       e =
-        ((this.a_a = new ActivityDescriptionTypeB_1.ActivityDescriptionTypeB()),
+        ((this.vda = new ActivityDescriptionTypeB_1.ActivityDescriptionTypeB()),
         this.GetItem(2)),
       s =
         (e.SetUIActive(!1),
-        (this.h_a = new ActivityRewardList_1.ActivityRewardList()),
+        (this.pda = new ActivityRewardList_1.ActivityRewardList()),
         this.GetItem(3));
-    (this.l_a = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
+    (this.Mda = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(void 0)),
       await Promise.all([
-        this.s_a.CreateThenShowByActorAsync(i.GetOwner()),
-        this.a_a.CreateThenShowByActorAsync(t.GetOwner()),
-        this.h_a.CreateByActorAsync(e.GetOwner()),
-        this.l_a.CreateThenShowByActorAsync(s.GetOwner()),
+        this.fda.CreateThenShowByActorAsync(i.GetOwner()),
+        this.vda.CreateThenShowByActorAsync(t.GetOwner()),
+        this.pda.CreateByActorAsync(e.GetOwner()),
+        this.Mda.CreateThenShowByActorAsync(s.GetOwner()),
       ]);
   }
   OnStart() {
-    this.l_a.FunctionButton.BindCallback(this.__a),
-      this.l_a.FunctionButton.RefreshTextNew("RecallActivity_Go"),
-      this.h_a.InitGridLayout(this.h_a.InitCommonGridItem),
-      this.s_a.SetTimeTextVisible(!1);
+    this.Mda.FunctionButton.SetFunction(this.Sda),
+      this.Mda.FunctionButton.SetLocalTextNew("RecallActivity_Go"),
+      this.pda.InitGridLayout(this.pda.InitCommonGridItem),
+      this.fda.SetTimeTextVisible(!1);
   }
   RefreshByData(i) {
-    (this.n_a = i), this.mGe(), this.Pqe(), this.jqe();
+    (this.gda = i), this.mGe(), this.Pqe(), this.jqe();
   }
   mGe() {
-    this.s_a.SetTitleByTextId(this.n_a.Title);
+    this.fda.SetTitleByTextId(this.gda.Title);
   }
   Pqe() {
-    var i = this.n_a.SubTitle,
-      t = this.n_a.Description,
+    var i = this.gda.SubTitle,
+      t = this.gda.Description,
       e = !StringUtils_1.StringUtils.IsEmpty(i);
-    this.s_a.SetSubTitleVisible(e),
-      e && this.s_a.SetSubTitleByTextId(i),
-      this.a_a.SetContentByTextId(t);
+    this.fda.SetSubTitleVisible(e),
+      e && this.fda.SetSubTitleByTextId(i),
+      this.vda.SetContentByTextId(t);
   }
   jqe() {}
 }

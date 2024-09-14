@@ -45,7 +45,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
                 ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
                   a.EntityId,
                 );
-              a.BeforeHide && o?.Entity?.GetComponent(188)?.AddTag(447365096);
+              a.BeforeHide && o?.Entity?.GetComponent(190)?.AddTag(447365096);
             }
             this.CreateWaitEntityTask(i),
               Log_1.Log.CheckInfo() &&
@@ -126,7 +126,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
         ["EntityId", t],
         ["TagName", i],
       );
-    e = e.Entity.GetComponent(188);
+    e = e.Entity.GetComponent(190);
     e
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -150,7 +150,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
         ["EntityId", t],
         ["TagName", i],
       );
-    e = e.Entity.GetComponent(188);
+    e = e.Entity.GetComponent(190);
     e
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -176,7 +176,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
             Log_1.Log.Error("Event", 32, "被通知Entity不合法", ["ID", s]),
           void this.FinishExecute(!1)
         );
-      o = o.Entity.GetComponent(39);
+      o = o.Entity.GetComponent(40);
       if (!o?.Valid)
         return (
           Log_1.Log.CheckError() &&
@@ -262,37 +262,44 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
   LRe(t, e) {
     if (0 !== t.StandbyTags.length && 1 === e.Type) {
       e = EntitySystem_1.EntitySystem.Get(e.EntityId);
-      if (e && e.GetComponent(39)?.AiController?.AiPatrol) {
+      if (e && e.GetComponent(40)?.AiController?.AiPatrol) {
         const o = e.GetComponent(1);
-        var e = e.GetComponent(40),
-          i = Math.floor(
+        e = e.GetComponent(41);
+        if (e && -1 !== e.GetLastPointRawIndex()) {
+          var i = Math.floor(
             MathUtils_1.MathUtils.GetRandomFloatNumber(0, t.StandbyTags.length),
           );
-        const a = Protocol_1.Aki.Protocol.dgs.create();
-        (a.P4n = MathUtils_1.MathUtils.NumberToLong(
-          o.CreatureData.GetCreatureDataId(),
-        )),
-          (a.i5n = e?.GetCurrentPatrolSplineId() ?? 0),
-          (a.r5n = e?.GetLastPointRawIndex() ?? -1),
-          (a.o5n =
-            GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
+          const a = Protocol_1.Aki.Protocol.Mgs.create();
+          (a.F4n = MathUtils_1.MathUtils.NumberToLong(
+            o.CreatureData.GetCreatureDataId(),
+          )),
+            (a.u5n = e.GetCurrentPatrolSplineId()),
+            (a.c5n = e.GetLastPointRawIndex()),
+            (a.m5n = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
               t.StandbyTags[i],
-            ) ?? 0),
-          Net_1.Net.Call(20156, a, (t) => {
-            t &&
-              t.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
-              Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn(
-                "AI",
-                51,
-                "请求状态机切换生态表演失败",
-                ["CreatureId", a.P4n],
-                ["PbDataId", o.CreatureData.GetPbDataId()],
-                ["SplineId", a.i5n],
-                ["Index", a.r5n],
-                ["Tag", a.o5n],
-              );
-          });
+            )),
+            Net_1.Net.Call(27459, a, (t) => {
+              t &&
+                t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
+                Log_1.Log.CheckWarn() &&
+                Log_1.Log.Warn(
+                  "AI",
+                  51,
+                  "请求状态机切换生态表演失败",
+                  ["CreatureId", a.F4n],
+                  ["PbDataId", o.CreatureData.GetPbDataId()],
+                  ["SplineId", a.u5n],
+                  ["Index", a.c5n],
+                  ["Tag", a.m5n],
+                );
+            });
+        } else
+          Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "LevelEvent",
+              51,
+              "[NotifyMonsterStandByTags] 获取不到巡逻组件，无法通知怪物切换表演状态",
+            );
       }
     }
     this.FinishExecute(!0);

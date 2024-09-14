@@ -31,13 +31,22 @@ class SummonCfg {
   get InheritSummonerAttribute() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.inheritsummonerattributeLength(),
-      (t) => this.inheritsummonerattribute(t)?.key(),
-      (t) => this.inheritsummonerattribute(t)?.value(),
+      this.inheritsummonerattributeKey,
+      this.inheritsummonerattributeValue,
+      this,
     );
   }
+  inheritsummonerattributeKey(t) {
+    return this.inheritsummonerattribute(t)?.key();
+  }
+  inheritsummonerattributeValue(t) {
+    return this.inheritsummonerattribute(t)?.value();
+  }
   get BornBuffId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.bornbuffidLength(), (t) =>
-      this.bornbuffid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.bornbuffidLength(),
+      this.bornbuffid,
+      this,
     );
   }
   __init(t, i) {

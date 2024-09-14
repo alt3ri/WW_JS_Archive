@@ -40,36 +40,43 @@ class LevelEventTeleportDungeon extends LevelGeneralBase_1.LevelEventBase {
     else {
       const r = e;
       r
-        ? r.DungeonId
-          ? ControllerHolder_1.ControllerHolder.ConfirmBoxController.CheckIsConfirmBoxOpen()
-            ? this.FinishExecute(!0)
-            : ((e =
-                ModelManager_1.ModelManager.InstanceDungeonEntranceModel
-                  .InstanceId),
-              (e =
-                ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-                  e,
-                )) && e.InstType
-                ? r.IsNeedSecondaryConfirmation
-                  ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
-                      164,
-                    )).FunctionMap.set(2, () => {
-                      var e = r.DungeonId,
-                        o =
-                          ((ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId =
-                            e),
-                          this.XRe(r));
-                      this.TeleportDungeonRequest(e, r.LocationEntityId, o);
-                    }),
-                    e.FunctionMap.set(1, () => {
-                      ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView(),
-                        this.EDe();
-                    }),
-                    ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                      e,
-                    ))
-                  : this.$Re(r)
-                : this.FinishExecute(!1))
+        ? (e = r.DungeonId)
+          ? ControllerHolder_1.ControllerHolder.InstanceDungeonController.IsForbidDungeon(
+              e,
+            )
+            ? (ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                "PhantomFormationEnterInstanceTip",
+              ),
+              this.FinishExecute(!1))
+            : ControllerHolder_1.ControllerHolder.ConfirmBoxController.CheckIsConfirmBoxOpen()
+              ? this.FinishExecute(!0)
+              : ((e =
+                  ModelManager_1.ModelManager.InstanceDungeonEntranceModel
+                    .InstanceId),
+                (e =
+                  ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+                    e,
+                  )) && e.InstType
+                  ? r.IsNeedSecondaryConfirmation
+                    ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+                        164,
+                      )).FunctionMap.set(2, () => {
+                        var e = r.DungeonId,
+                          o =
+                            ((ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId =
+                              e),
+                            this.XRe(r));
+                        this.TeleportDungeonRequest(e, r.LocationEntityId, o);
+                      }),
+                      e.FunctionMap.set(1, () => {
+                        ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView(),
+                          this.EDe();
+                      }),
+                      ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+                        e,
+                      ))
+                    : this.$Re(r)
+                  : this.FinishExecute(!1))
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "InstanceDungeon",
@@ -91,9 +98,9 @@ class LevelEventTeleportDungeon extends LevelGeneralBase_1.LevelEventBase {
         (ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId =
           o),
         ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(o)),
-      t = t.InstType === Protocol_1.Aki.Protocol.XFs.Proto_BigWorldInstance;
+      t = t.InstType === Protocol_1.Aki.Protocol.i4s.Proto_BigWorldInstance;
     r.InstType,
-      Protocol_1.Aki.Protocol.XFs.Proto_BigWorldInstance,
+      Protocol_1.Aki.Protocol.i4s.Proto_BigWorldInstance,
       t ? this.EDe() : this.YRe(e.IsRegroup, o, e.LocationEntityId);
   }
   YRe(e, o, r) {
@@ -120,18 +127,18 @@ class LevelEventTeleportDungeon extends LevelGeneralBase_1.LevelEventBase {
       );
   }
   async TeleportDungeonRequest(e, o = 0, r) {
-    var t = Protocol_1.Aki.Protocol.fCs.create(),
+    var t = Protocol_1.Aki.Protocol.ICs.create(),
       e =
-        ((t.n5n = e),
-        (t.s5n =
+        ((t.d5n = e),
+        (t.C5n =
           ModelManager_1.ModelManager.InstanceDungeonModel.LastEnterRoleList),
-        (t.a5n = o),
-        (t.h5n = r),
-        await Net_1.Net.CallAsync(11750, t));
-    return e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+        (t.g5n = o),
+        (t.f5n = r),
+        await Net_1.Net.CallAsync(28094, t));
+    return e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
       ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          e.O4n,
-          15889,
+          e.Q4n,
+          15723,
         ),
         !1)
       : (EventSystem_1.EventSystem.Emit(
@@ -145,26 +152,26 @@ class LevelEventTeleportDungeon extends LevelGeneralBase_1.LevelEventBase {
     switch (r?.Type) {
       case IAction_1.ETeleportTransitionType.CenterText:
         var t = r,
-          n = Protocol_1.Aki.Protocol.QFs.create(),
+          n = Protocol_1.Aki.Protocol.t4s.create(),
           l =
-            ((n.l5n = Protocol_1.Aki.Protocol.l5n.Proto_CenterText),
-            Protocol_1.Aki.Protocol.d4s.create());
-        (l._5n = t.CenterTextFlow.FlowListName),
-          (l.u5n = t.CenterTextFlow.FlowId),
-          (l.c5n = t.CenterTextFlow.StateId),
-          (n.m5n = l),
+            ((n.p5n = Protocol_1.Aki.Protocol.p5n.Proto_CenterText),
+            Protocol_1.Aki.Protocol.M4s.create());
+        (l.v5n = t.CenterTextFlow.FlowListName),
+          (l.M5n = t.CenterTextFlow.FlowId),
+          (l.S5n = t.CenterTextFlow.StateId),
+          (n.E5n = l),
           (o = n);
         break;
       case IAction_1.ETeleportTransitionType.PlayEffect:
-        (t = r), (l = Protocol_1.Aki.Protocol.QFs.create());
-        (l.l5n = Protocol_1.Aki.Protocol.l5n.Proto_PlayEffect),
-          (l.d5n = t.EffectDaPath),
+        (t = r), (l = Protocol_1.Aki.Protocol.t4s.create());
+        (l.p5n = Protocol_1.Aki.Protocol.p5n.Proto_PlayEffect),
+          (l.y5n = t.EffectDaPath),
           (o = l);
         break;
       case IAction_1.ETeleportTransitionType.PlayMp4:
-        (n = r), (t = Protocol_1.Aki.Protocol.QFs.create());
-        (t.l5n = Protocol_1.Aki.Protocol.l5n.Proto_PlayMp4),
-          (t.d5n = n.Mp4Path),
+        (n = r), (t = Protocol_1.Aki.Protocol.t4s.create());
+        (t.p5n = Protocol_1.Aki.Protocol.p5n.Proto_PlayMp4),
+          (t.y5n = n.Mp4Path),
           (o = t),
           n.IsFadeInScreenAfterTeleport &&
             LevelLoadingController_1.LevelLoadingController.OpenLoading(

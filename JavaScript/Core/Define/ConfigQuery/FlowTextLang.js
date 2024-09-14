@@ -17,32 +17,46 @@ const LanguageSystem_1 = require("../../Common/LanguageSystem"),
     ["语句", COMMAND],
   ],
   langCache = new Map(),
-  initStat = void 0,
-  getLocalTextStat = void 0,
+  initStat = Stats_1.Stat.Create("configFlowTextLang.Init"),
+  getLocalTextStat = Stats_1.Stat.Create("configFlowTextLang.GetLocalText"),
   LOCAL_TEXT_STAT_PREFIX = "configFlowTextLang.GetLocalText(";
 exports.configFlowTextLang = {
   Init: () => {
-    ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND);
+    initStat.Start(),
+      ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND),
+      initStat.Stop();
   },
-  GetLocalText: (o, e = void 0) => {
-    if (LanguageSystem_1.LanguageSystem.GmShowLanguageKey)
+  GetLocalText: (o, t = void 0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getLocalTextStat.Start();
+    var e = Stats_1.Stat.Create("" + LOCAL_TEXT_STAT_PREFIX + o + `, ${t})`);
+    if ((e.Start(), LanguageSystem_1.LanguageSystem.GmShowLanguageKey))
       return (
-        (n = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(e)),
-        TABLE + `|${o}|` + n
+        (i = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(t)),
+        e.Stop(),
+        getLocalTextStat.Stop(),
+        ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+        TABLE + `|${o}|` + i
       );
-    let i = langCache.get(o);
-    i || ((i = new Map()), langCache.set(o, i));
-    var n = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(e);
-    let t = i.get(n);
-    if (t) return t;
+    let n = langCache.get(o);
+    n || ((n = new Map()), langCache.set(o, n));
+    var i = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(t);
+    let a = n.get(i);
+    if (a)
+      return (
+        e.Stop(),
+        getLocalTextStat.Stop(),
+        ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+        a
+      );
     var g = ConfigCommon_1.ConfigCommon.GetLangStatementId(
       TABLE,
       DB,
       COMMAND,
-      n,
+      i,
     );
     if (
-      (a =
+      (m =
         ConfigCommon_1.ConfigCommon.CheckStatement(g) &&
         ConfigCommon_1.ConfigCommon.BindInt(g, 1, o, ...logPair, ["Id", o]) &&
         0 <
@@ -50,51 +64,57 @@ exports.configFlowTextLang = {
             g,
             !0,
             ...logPair,
-            ["传入语言", e],
-            ["查询语言", n],
+            ["传入语言", t],
+            ["查询语言", i],
             ["文本Id", o],
           ))
     ) {
-      var r = void 0;
+      var C = void 0;
       if (
-        (([a, r] = ConfigCommon_1.ConfigCommon.GetValue(
+        (([m, C] = ConfigCommon_1.ConfigCommon.GetValue(
           g,
           0,
           ...logPair,
-          ["传入语言", e],
-          ["查询语言", n],
+          ["传入语言", t],
+          ["查询语言", i],
           ["文本Id", o],
         )),
-        a)
+        m)
       ) {
-        var a = DeserializeConfig_1.DeserializeConfig.ParseStringRange(
-          r,
+        var m = DeserializeConfig_1.DeserializeConfig.ParseStringRange(
+          C,
           0,
-          r.byteLength,
+          C.byteLength,
           ...logPair,
-          ["传入语言", e],
-          ["查询语言", n],
+          ["传入语言", t],
+          ["查询语言", i],
           ["文本Id", o],
         );
-        if (a.Success)
+        if (m.Success)
           return (
-            (t = a.Value),
+            (a = m.Value),
             ConfigCommon_1.ConfigCommon.Reset(g),
-            StringUtils_1.StringUtils.IsEmpty(t) &&
-              e !== CommonDefine_1.CHS &&
-              ((r = exports.configFlowTextLang.GetLocalText(
+            e.Stop(),
+            getLocalTextStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            StringUtils_1.StringUtils.IsEmpty(a) &&
+              t !== CommonDefine_1.CHS &&
+              ((C = exports.configFlowTextLang.GetLocalText(
                 o,
                 CommonDefine_1.CHS,
               )),
-              StringUtils_1.StringUtils.IsEmpty(r) ||
-                ((a = void 0 === e ? "" : "|" + e),
-                (t = TEXTNOTFOUNT + "|" + o + a))),
-            i.set(n, t),
-            t
+              StringUtils_1.StringUtils.IsEmpty(C) ||
+                ((m = void 0 === t ? "" : "|" + t),
+                (a = TEXTNOTFOUNT + "|" + o + m))),
+            n.set(i, a),
+            a
           );
       }
     }
-    ConfigCommon_1.ConfigCommon.Reset(g);
+    ConfigCommon_1.ConfigCommon.Reset(g),
+      e.Stop(),
+      getLocalTextStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=FlowTextLang.js.map

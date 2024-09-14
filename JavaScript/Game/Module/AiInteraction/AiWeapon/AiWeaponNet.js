@@ -11,33 +11,33 @@ const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   MAX_SPEED_SIZE = 600;
 class AiWeaponNet {
   RegisterNet() {
-    Net_1.Net.Register(19372, (e) => {
+    Net_1.Net.Register(29224, (e) => {
       this.yje(e);
     });
   }
   UnRegisterNet() {
-    Net_1.Net.UnRegister(19372);
+    Net_1.Net.UnRegister(29224);
   }
   yje(e) {
-    var t = MathUtils_1.MathUtils.LongToNumber(e.P4n),
+    var t = MathUtils_1.MathUtils.LongToNumber(e.F4n),
       t = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
     t &&
-      (t = t.Entity.GetComponent(71)) &&
-      (0 !== e.zLs
-        ? (t.RegisterCharacterDropWeaponEvent(e.zLs),
-          t.ChangeWeaponByWeaponByConfigId(e.zLs))
+      (t = t.Entity.GetComponent(72)) &&
+      (0 !== e.nRs
+        ? (t.RegisterCharacterDropWeaponEvent(e.nRs),
+          t.ChangeWeaponByWeaponByConfigId(e.nRs))
         : t.ClearWeaponForAi());
   }
   SendHoldWeaponPushOnSafe(e, t) {
     var r = EntitySystem_1.EntitySystem.Get(t);
     return (
-      !!r && !!r.GetComponent(130).CanBeUsed() && this.SendHoldWeaponPush(e, t)
+      !!r && !!r.GetComponent(131).CanBeUsed() && this.SendHoldWeaponPush(e, t)
     );
   }
   SendHoldWeaponPush(e, t) {
-    var r = new Protocol_1.Aki.Protocol.Hcs();
+    var r = new Protocol_1.Aki.Protocol.Jcs();
     return (
-      (r.P4n = this.Ije(e)), (r.n8n = this.Ije(t)), Net_1.Net.Send(26972, r), !0
+      (r.F4n = this.Ije(e)), (r.d8n = this.Ije(t)), Net_1.Net.Send(29346, r), !0
     );
   }
   SendDiscardWeaponPush(e) {
@@ -47,10 +47,10 @@ class AiWeaponNet {
       e.Entity,
     );
     if (!t) return !1;
-    var r = new Protocol_1.Aki.Protocol.Wcs(),
-      o = new Protocol_1.Aki.Protocol.s8n(),
-      a = ((r.P4n = this.Ije(e.Entity.Id)), e.Entity.GetComponent(3)),
-      e = e.Entity.GetComponent(52);
+    var r = new Protocol_1.Aki.Protocol.Zcs(),
+      o = new Protocol_1.Aki.Protocol.C8n(),
+      a = ((r.F4n = this.Ije(e.Entity.Id)), e.Entity.GetComponent(3)),
+      e = e.Entity.GetComponent(53);
     let i = void 0;
     e.GetHitData()
       ? (i = Vector_1.Vector.Create(e.GetHitData().HitPosition))
@@ -67,17 +67,17 @@ class AiWeaponNet {
       (t = Rotator_1.Rotator.Create());
     return (
       e.Rotation(t),
-      (o.y5n = a),
-      (o.a8n = new Protocol_1.Aki.Protocol.S2s()),
-      (o.a8n.Roll = t.Roll),
-      (o.a8n.Pitch = t.Pitch),
-      (o.a8n.Yaw = t.Yaw),
-      (o.h8n = new Protocol_1.Aki.Protocol.Pks()),
-      (o.h8n.X = e.X),
-      (o.h8n.Y = e.Y),
-      (o.h8n.Z = e.Z),
-      (r.s8n = o),
-      Net_1.Net.Call(13168, r, (e) => {}),
+      (o.P5n = a),
+      (o.g8n = new Protocol_1.Aki.Protocol.D2s()),
+      (o.g8n.Roll = t.Roll),
+      (o.g8n.Pitch = t.Pitch),
+      (o.g8n.Yaw = t.Yaw),
+      (o.f8n = new Protocol_1.Aki.Protocol.Gks()),
+      (o.f8n.X = e.X),
+      (o.f8n.Y = e.Y),
+      (o.f8n.Z = e.Z),
+      (r.C8n = o),
+      Net_1.Net.Call(25591, r, (e) => {}),
       !0
     );
   }

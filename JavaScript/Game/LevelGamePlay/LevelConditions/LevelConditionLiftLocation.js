@@ -15,7 +15,7 @@ class LevelConditionLiftLocation extends LevelGeneralBase_1.LevelConditionBase {
             e.EntityId,
           )),
       !!t?.Valid &&
-        !!(r = t.Entity.GetComponent(125)) &&
+        !!(r = t.Entity.GetComponent(126)) &&
         ((r = r.CurLiftFloor === e.Location), "Eq" === e.Compare ? r : !r)
     );
   }

@@ -16,7 +16,7 @@ class TsAnimNotifyStateWeaponHang extends UE.KuroAnimNotifyState {
     return (
       t instanceof TsBaseCharacter_1.default &&
       (t?.CharacterActorComponent?.Entity?.GetComponent(
-        71,
+        72,
       )?.ChangeWeaponHangState(
         this.Id,
         this.新的挂载点名,
@@ -29,7 +29,7 @@ class TsAnimNotifyStateWeaponHang extends UE.KuroAnimNotifyState {
   K2_NotifyEnd(t, e) {
     t = t.GetOwner();
     if (t instanceof TsBaseCharacter_1.default) {
-      t = t?.CharacterActorComponent?.Entity?.GetComponent(71);
+      t = t?.CharacterActorComponent?.Entity?.GetComponent(72);
       if (!t?.Valid) return !1;
       if (t._Pr === this.Id)
         return (

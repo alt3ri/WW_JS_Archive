@@ -33,62 +33,66 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
   E2e(t) {
     let [e, i] = ["", 0];
     switch (t) {
-      case Protocol_1.Aki.Protocol.jps.j6n:
+      case Protocol_1.Aki.Protocol.zps.Z6n:
         (e = "PrefabTextItem_1443074454_Text"), (i = 2);
         break;
-      case Protocol_1.Aki.Protocol.jps.hMs:
+      case Protocol_1.Aki.Protocol.zps.CMs:
         (e = "CollectActivity_state_CanRecive"), (i = 1);
         break;
-      case Protocol_1.Aki.Protocol.jps.Jfs:
+      case Protocol_1.Aki.Protocol.zps.ovs:
         (e = "CollectActivity_state_recived"), (i = 3);
     }
     let r = "";
     return [
       (r =
         "" !== e
-          ? MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e) ?? ""
+          ? (MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e) ?? "")
           : r),
       i,
     ];
   }
   PhraseEx(t) {
-    if (t.xps) {
+    if (t.Fps) {
       (this.f2e = []),
         (this.p2e = []),
         (this.M2e = new Map()),
         (this.v2e = new Map()),
         (this.MowingLevelInfoDict = new Map());
-      for (const r of t.xps.gps) {
+      for (const r of t.Fps.Ips) {
         var e =
           KillMonstersScoresByInstanceID_1.configKillMonstersScoresByInstanceID.GetConfig(
-            r.J4n,
+            r.s5n,
           );
         if (e) {
-          this.MowingLevelInfoDict.set(r.J4n, r);
+          this.MowingLevelInfoDict.set(r.s5n, r);
           const t = this.S2e(r, e);
-          this.M2e.set(r.J4n, t), this.p2e.push(t);
+          this.M2e.set(r.s5n, t), this.p2e.push(t);
         }
       }
-      for (const n of t.xps.Cps) {
-        var i = ScoreRewardById_1.configScoreRewardById.GetConfig(n.J4n);
+      for (const n of t.Fps.yps) {
+        var i = ScoreRewardById_1.configScoreRewardById.GetConfig(n.s5n);
         const t = this.y2e(n, i);
-        this.f2e.push(t), this.v2e.set(n.J4n, t);
+        this.f2e.push(t), this.v2e.set(n.s5n, t);
       }
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.ActivityViewRefreshCurrent,
+        this.Id,
+      );
     } else (this.f2e = []), (this.p2e = []);
   }
   y2e(t, e) {
     const i = ActivityManager_1.ActivityManager.GetActivityController(
       this.Type,
     );
-    var [r] = this.E2e(t.F4n);
+    var [r] = this.E2e(t.Y4n);
     return {
-      Id: t.J4n,
+      Id: t.s5n,
       NameText: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Desc),
       RewardList: this.I2e(e.Reward),
       RewardButtonText: r,
-      RewardState: t.F4n,
+      RewardState: t.Y4n,
       ClickFunction: () => {
-        i.RequestGetPointReward(this.Id, t.J4n);
+        i.RequestGetPointReward(this.Id, t.s5n);
       },
     };
   }
@@ -96,15 +100,15 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
     const i = ActivityManager_1.ActivityManager.GetActivityController(
       this.Type,
     );
-    var [r] = this.E2e(t.F4n);
+    var [r] = this.E2e(t.Y4n);
     return {
-      Id: t.J4n,
+      Id: t.s5n,
       NameText: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Desc),
       RewardList: this.I2e(e.Reward),
-      RewardState: t.F4n,
+      RewardState: t.Y4n,
       RewardButtonText: r,
       ClickFunction: () => {
-        i.RequestGetLevelReward(this.Id, e.InstanceID, t.J4n);
+        i.RequestGetLevelReward(this.Id, e.InstanceID, t.s5n);
       },
     };
   }
@@ -124,12 +128,12 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
   IsNewInstanceOpen() {
     if (this.IsUnLock() && this.GetPreGuideQuestFinishState())
       for (var [, t] of this.MowingLevelInfoDict.entries()) {
-        var e = t.cps <= TimeUtil_1.TimeUtil.GetServerTime();
+        var e = t.Mps <= TimeUtil_1.TimeUtil.GetServerTime();
         if (
           !ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
             this.Id,
             0,
-            t.J4n,
+            t.s5n,
             0,
             0,
           ) &&
@@ -141,10 +145,10 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
   }
   ReadNewInstance() {
     for (var [, t] of this.MowingLevelInfoDict.entries())
-      t.cps <= TimeUtil_1.TimeUtil.GetServerTime() &&
+      t.Mps <= TimeUtil_1.TimeUtil.GetServerTime() &&
         ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
           this.Id,
-          t.J4n,
+          t.s5n,
           0,
           0,
           1,
@@ -218,7 +222,7 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
       t = this.M2e.get(t);
     t &&
       ((t.RewardState = 2),
-      ([e] = this.E2e(Protocol_1.Aki.Protocol.jps.Jfs)),
+      ([e] = this.E2e(Protocol_1.Aki.Protocol.zps.ovs)),
       (t.RewardState = 2),
       (t.RewardButtonText = e));
   }
@@ -226,43 +230,43 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
     var e,
       t = this.v2e.get(t);
     t &&
-      (([e] = this.E2e(Protocol_1.Aki.Protocol.jps.Jfs)),
+      (([e] = this.E2e(Protocol_1.Aki.Protocol.zps.ovs)),
       (t.RewardState = 2),
       (t.RewardButtonText = e));
   }
   GetInstanceCurrentPoint(t) {
-    return this.MowingLevelInfoDict.get(t)?.mps ?? 0;
+    return this.MowingLevelInfoDict.get(t)?.Eps ?? 0;
   }
   SetInstanceCurrentSelectedDiff(t, e) {
     t = this.MowingLevelInfoDict.get(t);
-    t && (t.H6n = e);
+    t && (t.z6n = e);
   }
   UpdatePointRewards(t) {
-    for (const r of t.Kps) {
-      var e = ScoreRewardById_1.configScoreRewardById.GetConfig(r.J4n),
+    for (const r of t.eMs) {
+      var e = ScoreRewardById_1.configScoreRewardById.GetConfig(r.s5n),
         e = this.y2e(r, e),
-        i = this.v2e.get(r.J4n);
+        i = this.v2e.get(r.s5n);
       (i.RewardButtonText = e.RewardButtonText),
         (i.RewardState = e.RewardState);
     }
   }
   UpdateLevelRewards(t) {
-    for (const r of t.gps) {
+    for (const r of t.Ips) {
       var e, i;
-      this.MowingLevelInfoDict.get(r.J4n)
-        ? (this.MowingLevelInfoDict?.set(r.J4n, r),
+      this.MowingLevelInfoDict.get(r.s5n)
+        ? (this.MowingLevelInfoDict?.set(r.s5n, r),
           (e = r),
           (i =
             KillMonstersScoresByInstanceID_1.configKillMonstersScoresByInstanceID.GetConfig(
-              e.J4n,
+              e.s5n,
             )),
           (e = this.S2e(e, i)),
-          ((i = this.M2e.get(r.J4n)).RewardState = e.RewardState),
+          ((i = this.M2e.get(r.s5n)).RewardState = e.RewardState),
           (i.RewardButtonText = e.RewardButtonText))
         : Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Activity", 50, "后端推了一个不存在的割草副本数据", [
             "id",
-            r.J4n.toString(),
+            r.s5n.toString(),
           ]);
     }
   }
@@ -271,7 +275,7 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
     return e
       ? KillMonstersScoresByInstanceID_1.configKillMonstersScoresByInstanceID
           .GetConfig(t)
-          .DifficultyOptions.indexOf(e.H6n)
+          .DifficultyOptions.indexOf(e.z6n)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Activity",
@@ -283,26 +287,27 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
   GetLevelDiffRecommendLevel(t) {
     t = this.MowingLevelInfoDict.get(t);
     return t
-      ? TakeWeedsDifficultyById_1.configTakeWeedsDifficultyById.GetConfig(t.H6n)
-          ?.RecommendedLevel ?? 0
+      ? (TakeWeedsDifficultyById_1.configTakeWeedsDifficultyById.GetConfig(
+          t.z6n,
+        )?.RecommendedLevel ?? 0)
       : 0;
   }
   GetTotalPoint() {
     let t = 0;
-    for (var [, e] of this.MowingLevelInfoDict) t += e.mps;
+    for (var [, e] of this.MowingLevelInfoDict) t += e.Eps;
     return t;
   }
   GetLevelMaxPoint(t) {
     t = this.MowingLevelInfoDict.get(t);
-    return t ? t.mps : 0;
+    return t ? t.Eps : 0;
   }
   GetActivityLevelUnlockState(t) {
     t = this.MowingLevelInfoDict?.get(t);
-    return !!t && t.cps <= TimeUtil_1.TimeUtil.GetServerTime();
+    return !!t && t.Mps <= TimeUtil_1.TimeUtil.GetServerTime();
   }
   GetActivityLevelCountdownText(t) {
     t =
-      (this.MowingLevelInfoDict?.get(t)).cps -
+      (this.MowingLevelInfoDict?.get(t)).Mps -
       TimeUtil_1.TimeUtil.GetServerTime();
     return t <= 0 ? "" : this.L2e(t);
   }

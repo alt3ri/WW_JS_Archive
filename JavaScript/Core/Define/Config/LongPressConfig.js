@@ -10,13 +10,17 @@ class LongPressConfig {
     return this.id();
   }
   get PressTime() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.presstimeLength(), (t) =>
-      this.presstime(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.presstimeLength(),
+      this.presstime,
+      this,
     );
   }
   get TriggerTime() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.triggertimeLength(), (t) =>
-      this.triggertime(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.triggertimeLength(),
+      this.triggertime,
+      this,
     );
   }
   __init(t, s) {

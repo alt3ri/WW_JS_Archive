@@ -50,13 +50,13 @@ class AiStateMachineCondition {
     this.OnTick(),
       this.CheckForClient &&
         this.Result !== this.LastResult &&
-        (((t = Protocol_1.Aki.Protocol.t4n.create()).k4n =
+        (((t = Protocol_1.Aki.Protocol._4n.create()).$4n =
           this.Node.RootNode.Uuid),
-        (t.V4n = this.Transition.From),
-        (t.H4n = this.Transition.To),
-        (t.K4n = this.Index),
-        (t.W4n = this.Result),
-        CombatMessage_1.CombatNet.Call(28981, this.Node.Entity, t, (t) => {})),
+        (t.J4n = this.Transition.From),
+        (t.z4n = this.Transition.To),
+        (t.t5n = this.Index),
+        (t.e5n = this.Result),
+        CombatMessage_1.CombatNet.Call(26085, this.Node.Entity, t, (t) => {})),
       (this.LastResult = this.Result);
   }
   OnTick() {}

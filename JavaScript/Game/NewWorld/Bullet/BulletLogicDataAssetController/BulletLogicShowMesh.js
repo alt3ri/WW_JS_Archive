@@ -92,7 +92,7 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
   V7o() {
     var t = this.Bullet.GetBulletInfo().Target;
     if (t) {
-      var e = t.GetComponent(71);
+      var e = t.GetComponent(72);
       if (e) {
         (e = e.GetWeaponMesh()),
           (t = t.GetComponent(0).GetRoleConfig().WeaponScale);

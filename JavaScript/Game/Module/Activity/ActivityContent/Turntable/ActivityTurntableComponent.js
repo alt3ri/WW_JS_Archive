@@ -28,18 +28,18 @@ class ActivityTurntableComponent extends UiPanelBase_1.UiPanelBase {
       (this.QAn = 0),
       (this.XAn = new UE.Rotator()),
       (this.Activate = !0),
-      (this.B2n = 0),
+      (this.V2n = 0),
       (this.$An = (t) => {
         t === TURNTABLE_ROTATE_PARAM && this.Activate && this.YAn(this.QAn);
       }),
       (this.JAn = (t, e) => {
         this.uCo += t;
-        t = Math.min(this.uCo / this.B2n, 1);
+        t = Math.min(this.uCo / this.V2n, 1);
         (this.XAn.Pitch = 0),
           (this.XAn.Roll = 0),
           (this.XAn.Yaw = t * e),
           this.GetItem(8).SetUIRelativeRotation(this.XAn),
-          this.uCo >= this.B2n && this.zAn();
+          this.uCo >= this.V2n && this.zAn();
       });
   }
   OnRegisterComponent() {
@@ -63,7 +63,7 @@ class ActivityTurntableComponent extends UiPanelBase_1.UiPanelBase {
       (this.LevelSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.RootItem,
       )),
-      (this.B2n =
+      (this.V2n =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "TurntableActivitytRotateLoopTime",
         ) ?? ROTATE_LOOP_ANIMATION_TIME);
@@ -173,7 +173,7 @@ class ActivityTurntableGrid extends UiPanelBase_1.UiPanelBase {
       (this.IsGoldenQuality = !1),
       (this.IsSpecial = !1),
       (this.ETt = 0),
-      (this.nWs = () => {
+      (this.DWs = () => {
         this.ETt &&
           ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
             this.ETt,
@@ -189,7 +189,7 @@ class ActivityTurntableGrid extends UiPanelBase_1.UiPanelBase {
       [4, UE.UIItem],
       [5, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[5, this.nWs]]);
+      (this.BtnBindInfo = [[5, this.DWs]]);
   }
   async Refresh(t) {
     (this.RewardId = t.Id), (this.IsSpecial = t.IsSpecial);

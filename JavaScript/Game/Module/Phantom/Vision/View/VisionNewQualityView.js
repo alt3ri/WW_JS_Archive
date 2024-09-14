@@ -76,7 +76,7 @@ class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
       this.GetButton(2).RootUIComp.SetRaycastTarget(
         !GameModeController_1.GameModeController.IsInInstance(),
       ),
-      this.jXs();
+      this.kJs();
   }
   OnBeforeShow() {
     this.Og();
@@ -90,11 +90,11 @@ class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
         )),
       this.Og();
   }
-  jXs() {
+  kJs() {
     this.GetText(0)?.SetUIActive(!1), this.GetText(9)?.SetUIActive(!1);
   }
   Og() {
-    this.jXs(), this.WXs()?.SetUIActive(!0);
+    this.kJs(), this.FJs()?.SetUIActive(!0);
     var e =
         ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
           this.NMt.PhantomItem.MonsterId,
@@ -104,7 +104,7 @@ class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
       ),
       e =
         ((this.GMt = ConfigManager_1.ConfigManager.CalabashConfig.MaxTipCd),
-        this.WXs().ShowTextNew(e.Name),
+        this.FJs().ShowTextNew(e.Name),
         {
           Data: this.NMt.PhantomItem.ItemId,
           Type: 4,
@@ -114,19 +114,19 @@ class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
     this.sft.Apply(e),
       this.aqe(),
       this.HMt(),
-      this.FXs(),
-      this.QXs(),
-      this.KXs();
+      this.GJs(),
+      this.VJs(),
+      this.HJs();
   }
-  WXs() {
+  FJs() {
     var e = 0 === this.jji.SkinId ? 0 : 9;
     return this.GetText(e);
   }
-  KXs() {
+  HJs() {
     var e = 0 === this.jji.SkinId;
     this.GetItem(7)?.SetUIActive(e);
   }
-  QXs() {
+  VJs() {
     var e = 0 !== this.jji.SkinId;
     this.GetItem(8)?.SetUIActive(e);
   }
@@ -138,7 +138,7 @@ class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityConfig(
           e,
         ).DropColor),
-      this.WXs().SetColor(UE.Color.FromHex(e)));
+      this.FJs().SetColor(UE.Color.FromHex(e)));
   }
   aqe() {
     var e = 0 === this.jji.SkinId,
@@ -150,7 +150,7 @@ class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
     for (let e = 0; e < i - 1; e++) t.push(e);
     this.eGe?.RefreshByData(t);
   }
-  FXs() {
+  GJs() {
     var e =
       0 === this.jji.SkinId ? "UnLockNewVisionQuality" : "UnLockNewVisionSkin";
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(6), e);

@@ -10,9 +10,9 @@ class TsAnimNotifyEndSkill extends UE.KuroAnimNotify {
     if (e instanceof TsBaseCharacter_1.default) {
       e = e.CharacterActorComponent?.Entity;
       if (!e?.Valid) return !1;
-      var t = e.GetComponent(188),
-        a = e.GetComponent(33),
-        i = e.GetComponent(159);
+      var t = e.GetComponent(190),
+        a = e.GetComponent(34),
+        i = e.GetComponent(160);
       if (!t?.Valid || !a?.Valid || !i?.Valid) return !1;
       r = UE.KismetSystemLibrary.GetPathName(r);
       if (

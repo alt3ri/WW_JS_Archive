@@ -14,14 +14,15 @@ var _a,
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
         l = Reflect.decorate(e, o, t, a);
       else
-        for (var i = e.length - 1; 0 <= i; i--)
-          (r = e[i]) &&
+        for (var n = e.length - 1; 0 <= n; n--)
+          (r = e[n]) &&
             (l = (s < 3 ? r(l) : 3 < s ? r(o, t, l) : r(o, t)) || l);
       return 3 < s && l && Object.defineProperty(o, t, l), l;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CombatMessageController = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   LogAnalyzer_1 = require("../../../Core/Common/LogAnalyzer"),
@@ -34,6 +35,8 @@ const UE = require("ue"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
   StatDefine_1 = require("../../Common/StatDefine"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
@@ -44,14 +47,13 @@ const UE = require("ue"),
   WaitEntityTask_1 = require("../../World/Define/WaitEntityTask"),
   WorldGlobal_1 = require("../../World/WorldGlobal"),
   CombatMessage_1 = require("./CombatMessage"),
-  cpp_1 = require("cpp"),
   notifyMessageCacheSet = new Set([
-    NetDefine_1.ECombatNotifyDataMessage.pFn,
-    NetDefine_1.ECombatNotifyDataMessage.fFn,
-    NetDefine_1.ECombatNotifyDataMessage.vFn,
-    NetDefine_1.ECombatNotifyDataMessage.TFn,
-    NetDefine_1.ECombatNotifyDataMessage.yFn,
-    NetDefine_1.ECombatNotifyDataMessage.IFn,
+    NetDefine_1.ECombatNotifyDataMessage.DFn,
+    NetDefine_1.ECombatNotifyDataMessage.LFn,
+    NetDefine_1.ECombatNotifyDataMessage.AFn,
+    NetDefine_1.ECombatNotifyDataMessage.wFn,
+    NetDefine_1.ECombatNotifyDataMessage.PFn,
+    NetDefine_1.ECombatNotifyDataMessage.BFn,
   ]),
   MAX_AI_INFO_COUNT = 100,
   IS_WITH_EDITOR = cpp_1.FKuroUtilityForPuerts.IsWithEditor() ? 1 : void 0;
@@ -60,31 +62,44 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
     return ModelManager_1.ModelManager.CombatMessageModel;
   }
   static OnInit() {
-    Net_1.Net.Register(10106, CombatMessageController.Zyt),
-      Net_1.Net.Register(4850, CombatMessageController.eIt),
-      Net_1.Net.Register(24476, CombatMessageController.tIt),
-      Net_1.Net.Register(27816, CombatMessageController.X0a),
-      Net_1.Net.Register(27544, CombatMessageController.oIt),
+    Net_1.Net.Register(18486, CombatMessageController.Zyt),
+      Net_1.Net.Register(19482, CombatMessageController.eIt),
+      Net_1.Net.Register(26301, CombatMessageController.tIt),
+      Net_1.Net.Register(19122, CombatMessageController.fMa),
+      Net_1.Net.Register(16891, CombatMessageController.oIt),
       Net_1.Net.Register(
-        29647,
+        27077,
         CombatMessageController.PreAiControlSwitchNotify,
       ),
-      Net_1.Net.Register(11926, this.rIt);
+      Net_1.Net.Register(15830, this.rIt);
     for (const e of CombatMessage_1.CombatNet.SyncNotifyMap.keys())
       this.Register(e, this.nIt(e, CombatMessage_1.CombatNet.SyncNotifyMap));
-    return !0;
+    return (
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.AddEntity,
+        this.RegisterMonster,
+      ),
+      !0
+    );
   }
   static OnClear() {
-    Net_1.Net.UnRegister(10106),
-      Net_1.Net.UnRegister(4850),
-      Net_1.Net.UnRegister(24476),
-      Net_1.Net.UnRegister(27816),
-      Net_1.Net.UnRegister(27544),
-      Net_1.Net.UnRegister(29647),
-      Net_1.Net.UnRegister(11926);
+    Net_1.Net.UnRegister(18486),
+      Net_1.Net.UnRegister(19482),
+      Net_1.Net.UnRegister(26301),
+      Net_1.Net.UnRegister(19122),
+      Net_1.Net.UnRegister(16891),
+      Net_1.Net.UnRegister(27077),
+      Net_1.Net.UnRegister(15830);
     for (const e of CombatMessage_1.CombatNet.SyncNotifyMap.keys())
       this.UnRegister(e);
-    return !0;
+    return (
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.AddEntity,
+        this.RegisterMonster,
+      ),
+      EventSystem_1.EventSystem.RemoveAllTargetUseKey(this),
+      !0
+    );
   }
   static nIt(t, a) {
     return (e, o) => {
@@ -93,50 +108,55 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
   }
   static sIt(e) {
     let o = this.aIt.get(e);
-    return o || ((o = void 0), this.aIt.set(e, o)), o;
+    return (
+      o ||
+        ((o = Stats_1.Stat.Create(e, "", StatDefine_1.BATTLESTAT_GROUP)),
+        this.aIt.set(e, o)),
+      o
+    );
   }
   static hIt(e, o) {
-    const t = MathUtils_1.MathUtils.LongToNumber(e.P4n);
+    const t = MathUtils_1.MathUtils.LongToNumber(e.F4n);
     var a = ModelManager_1.ModelManager.CreatureModel.GetEntity(t),
-      r = NetDefine_1.ECombatNotifyDataMessage[o.wFs];
+      r = NetDefine_1.ECombatNotifyDataMessage[o.kFs];
     if (!a || a.IsInit || notifyMessageCacheSet.has(r)) {
       CombatDebugController_1.CombatDebugController.CombatInfoMessage(
         "Notify",
-        o.wFs,
+        o.kFs,
         e,
       );
       var s = a?.Entity;
       if (CombatMessage_1.CombatNet.SyncNotifyMap.has(r)) {
-        const t = MathUtils_1.MathUtils.LongToNumber(e.F8n);
+        const t = MathUtils_1.MathUtils.LongToNumber(e.Y8n);
         var l,
-          i = CombatMessageController.Model?.GetMessageBuffer(t);
-        i && ModelManager_1.ModelManager.GameModeModel.IsMulti
+          n = CombatMessageController.Model?.GetMessageBuffer(t);
+        n && ModelManager_1.ModelManager.GameModeModel.IsMulti
           ? ((l = CombatMessage_1.CombatNet.PreNotifyMap.get(r)) &&
-              !l(s, o[o.wFs], e)) ||
-            i.Push(r, s, o.G8n, o[o.wFs])
-          : CombatMessage_1.CombatNet.SyncNotifyMap.get(r)?.(s, o[o.wFs], e);
+              !l(s, o[o.kFs], e)) ||
+            n.Push(r, s, o.K8n, o[o.kFs])
+          : CombatMessage_1.CombatNet.SyncNotifyMap.get(r)?.(s, o[o.kFs], e);
       } else
         CombatMessage_1.CombatNet.NotifyMap.has(r)
-          ? CombatMessage_1.CombatNet.NotifyMap.get(r)?.(s, o[o.wFs], e)
+          ? CombatMessage_1.CombatNet.NotifyMap.get(r)?.(s, o[o.kFs], e)
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "MultiplayerCombat",
               20,
               "Unexpected combat notify message type",
-              ["MessageKey", o.wFs],
+              ["MessageKey", o.kFs],
               ["MessageId", r],
             );
       Info_1.Info.IsBuildDevelopmentOrDebug &&
         ((l = NetDefine_1.messageDefine[r].encode(o).finish()),
-        (s = (i = a?.Entity?.GetComponent(0))?.GetPbDataId()),
-        (a = i?.GetEntityType()),
-        (i = i?.GetCreatureDataId()),
+        (s = (n = a?.Entity?.GetComponent(0))?.GetPbDataId()),
+        (a = n?.GetEntityType()),
+        (n = n?.GetCreatureDataId()),
         0 < l.length) &&
-        ((i = {
+        ((n = {
           scene_id: ModelManager_1.ModelManager.CreatureModel.GetSceneId(),
           instance_id:
             ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-          creature_id: i,
+          creature_id: n,
           pb_data_id: s,
           entity_type: a,
           msg_id: r,
@@ -146,7 +166,7 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
           ed: IS_WITH_EDITOR,
           br: LogAnalyzer_1.LogAnalyzer.GetBranch(),
         }),
-        (s = JSON.stringify(i)),
+        (s = JSON.stringify(n)),
         CombatDebugController_1.CombatDebugController.DataReport(
           "COMBAT_MESSAGE_INFO",
           s,
@@ -156,16 +176,16 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
         "Notify",
         t,
         "协议丢弃，实体未加载完成",
-        ["Message", o.wFs],
+        ["Message", o.kFs],
         ["CombatCommon", e],
       );
   }
   static lIt(e, o) {
     var t = CombatMessage_1.CombatNet.RequestMap,
-      a = o.q8n;
+      a = o.W8n;
     if (t.has(a)) {
       var r = t.get(a),
-        s = o[o.wFs];
+        s = o[o.kFs];
       if ((t.delete(a), s))
         try {
           r?.(s);
@@ -177,7 +197,7 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
                 15,
                 "战斗协议执行response异常",
                 e,
-                ["response", o.wFs],
+                ["response", o.kFs],
                 ["error", e.message],
               )
             : Log_1.Log.CheckError() &&
@@ -185,7 +205,7 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
                 "CombatInfo",
                 15,
                 "战斗协议执行response异常",
-                ["response", o.wFs],
+                ["response", o.kFs],
                 ["stack", e],
               );
         }
@@ -195,7 +215,7 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
             "MultiplayerCombat",
             20,
             "unexpected null combat response",
-            ["messageType", o.wFs],
+            ["messageType", o.kFs],
           );
     } else
       Log_1.Log.CheckError() &&
@@ -203,7 +223,7 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
           "MultiplayerCombat",
           20,
           "unexpected response RPC id from server",
-          ["messageType", o.wFs],
+          ["messageType", o.kFs],
         );
   }
   static Register(r, s) {
@@ -214,7 +234,7 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
           a = e;
         a
           ? a.CombatCommon
-            ? ((o = MathUtils_1.MathUtils.LongToNumber(a.CombatCommon.P4n)),
+            ? ((o = MathUtils_1.MathUtils.LongToNumber(a.CombatCommon.F4n)),
               (t =
                 ModelManager_1.ModelManager.CreatureModel.GetEntity(o)?.Entity),
               ModelManager_1.ModelManager.GameModeModel.IsMulti
@@ -225,9 +245,9 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
                       15,
                       "[CombatMessageController.ReceiveNotify]",
                       ["id", r],
-                      ["MessageId", a.CombatCommon.k8n],
-                      ["Originator", a.CombatCommon.F8n],
-                      ["TimeStamp", a.CombatCommon.V8n],
+                      ["MessageId", a.CombatCommon.$8n],
+                      ["Originator", a.CombatCommon.Y8n],
+                      ["TimeStamp", a.CombatCommon.J8n],
                     ),
                   CombatMessageController.Model.GetMessageBuffer(o)?.Push(
                     r,
@@ -334,7 +354,9 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
       var o,
         t,
         a = e * MathUtils_1.MathUtils.MillisecondToSecond;
+      this.uIt.Start();
       for (const r of this.Model.CombatMessageBufferMap.values()) r.OnTick(a);
+      this.uIt.Stop();
       for ([o, t] of this.Y7)
         try {
           o.Entity?.Valid && t(e);
@@ -394,97 +416,107 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
         }
       if (
         Time_1.Time.NowSeconds > this.mIt + this.dIt ||
-        0 <
-          BlackboardController_1.BlackboardController.PendingBlackboardParams
-            .size ||
         this.Model.AnyHateChange
       ) {
+        this.CIt.Start();
         let e = !1;
-        for (const b of ModelManager_1.ModelManager.CreatureModel.GetAllEntities() ??
-          [])
+        for (const b of this.y5a)
           if (b.IsInit) {
-            e || ((a = b.Entity.GetComponent(160)), (e = a?.IsInFightState()));
-            var a = Protocol_1.Aki.Protocol.Ai.V3n.create(),
-              r = b.Entity.GetComponent(1);
-            if (
-              r &&
-              r.CreatureData.GetEntityType() ===
-                Protocol_1.Aki.Protocol.wks.Proto_Monster
-            ) {
-              var s,
-                l,
-                i = Protocol_1.Aki.Protocol.Ai.Yks.create(),
-                r = r.CreatureData.GetCreatureDataId(),
-                n =
-                  BlackboardController_1.BlackboardController.PendingBlackboardParams.get(
-                    r,
+            e || ((l = b.Entity.GetComponent(161)), (e = l?.IsInFightState()));
+            var a,
+              r,
+              s = Protocol_1.Aki.Protocol.Ai.o4n.create(),
+              l =
+                ModelManager_1.ModelManager.GameModeModel.IsMulti ||
+                this.Model.AnyHateChange;
+            if (l)
+              for ([a, r] of b.Entity.GetComponent(
+                40,
+              ).AiController.AiHateList.GetHatredMap()) {
+                var n = Protocol_1.Aki.Protocol.Ai.eNs.create();
+                (n.F4n = MathUtils_1.MathUtils.NumberToLong(
+                  ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(
+                    a,
                   ),
-                n =
-                  (n &&
-                    ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-                    (i.W8n = [...n.values()]),
-                  ModelManager_1.ModelManager.GameModeModel.IsMulti ||
-                    this.Model.AnyHateChange ||
-                    0 < i.W8n.length);
-              if (n)
-                for ([s, l] of b.Entity.GetComponent(
-                  39,
-                ).AiController.AiHateList.GetHatredMap()) {
-                  var _ = Protocol_1.Aki.Protocol.Ai.Kks.create();
-                  (_.P4n = MathUtils_1.MathUtils.NumberToLong(
-                    ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(
-                      s,
-                    ),
-                  )),
-                    (_.j8n = l.HatredValue),
-                    i.fSs.push(_);
-                }
-              i.W8n.length > MAX_AI_INFO_COUNT &&
-                Log_1.Log.CheckError() &&
-                Log_1.Log.Error(
-                  "MultiplayerCombat",
-                  20,
-                  "黑板数据过大",
-                  ["CreatureData", r],
-                  ["AiBlackboards", i.W8n.length],
-                ),
-                i.fSs.length > MAX_AI_INFO_COUNT &&
-                  Log_1.Log.CheckError() &&
-                  Log_1.Log.Error(
-                    "MultiplayerCombat",
-                    20,
-                    "仇恨数据过大",
-                    ["CreatureData", r],
-                    ["HateList", i.fSs.length],
-                  ),
-                (a.K8n = i),
-                n && CombatMessage_1.CombatNet.Call(20191, r, a, () => {});
-            }
+                )),
+                  (n.Z8n = r.HatredValue),
+                  s.ISs.push(n);
+              }
+            s.ISs.length > MAX_AI_INFO_COUNT &&
+              Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "MultiplayerCombat",
+                20,
+                "仇恨数据过大",
+                ["CreatureData", b.CreatureDataId],
+                ["HateList", s.ISs.length],
+              ),
+              l &&
+                CombatMessage_1.CombatNet.Call(
+                  15659,
+                  b.CreatureDataId,
+                  s,
+                  () => {},
+                );
           }
-        (this.Model.AnyEntityInFight = e),
-          BlackboardController_1.BlackboardController.PendingBlackboardParams.clear(),
-          (this.mIt = Time_1.Time.NowSeconds);
+        (this.mIt = Time_1.Time.NowSeconds), this.CIt.Stop();
       }
       if (
         ((this.Model.AnyHateChange = !1),
+        ModelManager_1.ModelManager.GameModeModel.IsMulti &&
+          0 <
+            BlackboardController_1.BlackboardController.PendingBlackboardParams
+              .size)
+      ) {
+        for (const c of this.y5a) {
+          var i, _;
+          c.IsInit &&
+            ((i = Protocol_1.Aki.Protocol.Ai.i4n.create()),
+            (_ =
+              BlackboardController_1.BlackboardController.PendingBlackboardParams.get(
+                c.CreatureDataId,
+              )) &&
+              ((i.eVn = [..._.values()]),
+              CombatMessage_1.CombatNet.Call(
+                26497,
+                c.CreatureDataId,
+                i,
+                () => {},
+              )),
+            i.eVn.length > MAX_AI_INFO_COUNT) &&
+            Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "MultiplayerCombat",
+              20,
+              "黑板数据过大",
+              ["CreatureData", c.CreatureDataId],
+              ["AiBlackboards", i.eVn.length],
+            );
+        }
+        BlackboardController_1.BlackboardController.PendingBlackboardParams.clear();
+      }
+      if (
         (!ModelManager_1.ModelManager.CombatMessageModel.MoveSyncUdpMode ||
           !ModelManager_1.ModelManager.GameModeModel.IsMulti) &&
-          ModelManager_1.ModelManager.CombatMessageModel.NeedPushMove)
+        ModelManager_1.ModelManager.CombatMessageModel.NeedPushMove
       ) {
-        var C = Protocol_1.Aki.Protocol.$us.create();
-        for (const c of ModelManager_1.ModelManager.CombatMessageModel
+        var C = Protocol_1.Aki.Protocol.Yus.create();
+        C.qZa = ModelManager_1.ModelManager.GameModeModel.IsMulti
+          ? ModelManager_1.ModelManager.OnlineModel.OwnerId
+          : ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
+        for (const f of ModelManager_1.ModelManager.CombatMessageModel
           .MoveSyncSet) {
-          var g = c.CollectPendingMoveInfos();
-          g && C.kRs.push(g);
+          var g = f.CollectPendingMoveInfos();
+          g && C.WRs.push(g);
         }
-        0 < C.kRs.length && Net_1.Net.Send(28674, C),
+        0 < C.WRs.length && Net_1.Net.Send(28450, C),
           Info_1.Info.IsBuildDevelopmentOrDebug &&
             ((m = {
               scene_id: ModelManager_1.ModelManager.CreatureModel.GetSceneId(),
               instance_id:
                 ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-              msg_id: 28674,
-              sub_count: C.kRs.length,
+              msg_id: 28450,
+              sub_count: C.WRs.length,
               is_multi: ModelManager_1.ModelManager.GameModeModel.IsMulti,
               ed: IS_WITH_EDITOR,
               br: LogAnalyzer_1.LogAnalyzer.GetBranch(),
@@ -498,7 +530,7 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
       }
       var M = [],
         m = this.Model.MessagePack;
-      if (0 < m.S5n.length)
+      if (0 < m.R5n.length)
         if (
           ModelManager_1.ModelManager.CombatMessageModel
             .CombatMessageSendPendingTime
@@ -510,16 +542,16 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
               ModelManager_1.ModelManager.CombatMessageModel
                 .CombatMessageSendInterval
           ) {
-            for (const f of m.S5n)
-              f.E5n &&
+            for (const d of m.R5n)
+              d.x5n &&
                 (CombatDebugController_1.CombatDebugController.CombatContextInfoMessage(
                   "Request",
-                  f.E5n.wFs,
-                  f.E5n,
+                  d.x5n.kFs,
+                  d.x5n,
                 ),
-                M.push(f.E5n.wFs));
-            Net_1.Net.Call(25867, m, (e) => {
-              e.VLs && this.rIt(e.VLs);
+                M.push(d.x5n.kFs));
+            Net_1.Net.Call(15879, m, (e) => {
+              e.XLs && this.rIt(e.XLs);
             }),
               Info_1.Info.IsBuildDevelopmentOrDebug &&
                 ((m = {
@@ -527,8 +559,8 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
                     ModelManager_1.ModelManager.CreatureModel.GetSceneId(),
                   instance_id:
                     ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-                  msg_id: 25867,
-                  sub_count: m.S5n.length,
+                  msg_id: 15879,
+                  sub_count: m.R5n.length,
                   is_multi: ModelManager_1.ModelManager.GameModeModel.IsMulti,
                   sub_msg: M,
                   frame: Time_1.Time.Frame,
@@ -541,7 +573,7 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
                   m,
                 )),
               (this.Model.MessagePack =
-                Protocol_1.Aki.Protocol.CombatMessage.Zzn.create()),
+                Protocol_1.Aki.Protocol.CombatMessage.sZn.create()),
               (ModelManager_1.ModelManager.CombatMessageModel.CombatMessageSendPendingTime = 0);
           }
         } else
@@ -549,43 +581,41 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
             Time_1.Time.NowSeconds;
     }
   }
-  static Oda(e) {
+  static pga(e) {
     var o,
-      t = MathUtils_1.MathUtils.LongToNumber(e.P4n),
+      t = MathUtils_1.MathUtils.LongToNumber(e.F4n),
       t = ModelManager_1.ModelManager.CreatureModel.GetEntity(t),
-      a = WorldGlobal_1.WorldGlobal.ToUeVector(e.EDs),
+      a = Vector_1.Vector.Create(e.ADs),
       r = CharacterController_1.CharacterController.GetActorComponent(t),
-      r =
-        (r.SetActorLocation(a, "CombatMessageController.位置重置", !1),
-        e.yDs &&
-          ((o = WorldGlobal_1.WorldGlobal.ToUeRotator(e.a8n)),
-          r.SetActorRotation(o, "CombatMessageController.位置重置")),
-        t.Entity.GetComponent(163)?.SetForceSpeed(
-          Vector_1.Vector.ZeroVectorProxy,
-        ),
-        t.Entity.GetComponent(59));
-    r
-      ? r.ClearReplaySamples()
-      : (o = t.Entity.GetComponent(59)) && o?.ClearReplaySamples(),
-      e.IDs &&
-        ((r = t.Entity.GetComponent(0)),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "Entity",
-            3,
-            "ResetLocationForZRangeNotify 重置出生点",
-            ["CreatureDataId", r.GetCreatureDataId()],
-            ["PbDataId", r.GetPbDataId()],
-            ["EntityId", t.Entity.Id],
-          ),
-        r.SetInitLocation(a),
-        (o = t.Entity.GetComponent(3))?.SetInitLocation(a),
-        o?.FixBornLocation("重置出生点.修正角色地面位置", !0, void 0, !1));
+      s =
+        (r.SetActorLocation(a.ToUeVector(), "ResetLocationForZRangeNotify", !1),
+        t.Entity.GetComponent(3));
+    s?.FixBornLocation("ResetLocationForZRangeNotify", !0, void 0, !1),
+      e.PDs &&
+        ((o = WorldGlobal_1.WorldGlobal.ToUeRotator(e.g8n)),
+        r.SetActorRotation(o, "ResetLocationForZRangeNotify")),
+      t.Entity.GetComponent(164)?.SetForceSpeed(
+        Vector_1.Vector.ZeroVectorProxy,
+      ),
+      t.Entity.GetComponent(59)?.ClearReplaySamples(),
+      e.UDs &&
+        (t.Entity.GetComponent(0).SetInitLocation(a), s?.SetInitLocation(a)),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "Entity",
+          15,
+          "ResetLocationForZRangeNotify 重置实体位置",
+          ["CreatureDataId", t.CreatureDataId],
+          ["PbDataId", t.PbDataId],
+          ["EntityId", t.Entity.Id],
+          ["ChangeInitPos", e.UDs],
+          ["Location", a.ToString()],
+        );
   }
   static gIt(e) {
-    var o = MathUtils_1.MathUtils.LongToNumber(e.P4n),
+    var o = MathUtils_1.MathUtils.LongToNumber(e.F4n),
       t = ModelManager_1.ModelManager.CreatureModel.GetEntity(o),
-      a = MathUtils_1.MathUtils.LongToNumber(e.F8n);
+      a = MathUtils_1.MathUtils.LongToNumber(e.Y8n);
     if (
       (CombatMessageController.IsDebugMessageLog &&
         Log_1.Log.CheckDebug() &&
@@ -597,7 +627,7 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
         ),
       t)
     )
-      if (e.Q8n.length <= 0)
+      if (e.iVn.length <= 0)
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "MultiplayerCombat",
@@ -606,7 +636,7 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
             ["Originator", a],
           );
       else {
-        var r = e.Q8n[0].V8n;
+        var r = e.iVn[0].J8n;
         if (t.Entity.Active) {
           var s,
             l = CombatMessageController.Model.GetMessageBuffer(a);
@@ -614,9 +644,9 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
             ((s = t.Entity.GetComponent(0)),
             CombatMessageController.Model.SetEntityMap(t.Id, a),
             l.RecordMessageTime(r, s.GetPbDataId(), !0));
-          const i = t.Entity.GetComponent(58);
-          i
-            ? i.ReceiveMoveInfos(e.Q8n, Number(a), r)
+          const n = t.Entity.GetComponent(59);
+          n
+            ? n.ReceiveMoveInfos(e.iVn, Number(a), r)
             : CombatLog_1.CombatLog.Warn(
                 "Move",
                 t.Entity,
@@ -625,17 +655,17 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
               );
         } else {
           if (!t.IsInit) return;
-          const i = t.Entity.GetComponent(58);
-          l = e.Q8n[e.Q8n.length - 1];
-          CombatMessageController.fIt(l.y5n, CombatMessageController.pIt),
-            CombatMessageController.vIt(l.a8n, CombatMessageController.MIt),
+          const n = t.Entity.GetComponent(59);
+          l = e.iVn[e.iVn.length - 1];
+          CombatMessageController.fIt(l.P5n, CombatMessageController.pIt),
+            CombatMessageController.vIt(l.g8n, CombatMessageController.MIt),
             t.Entity.GetComponent(3)?.SetActorLocationAndRotation(
               CombatMessageController.pIt,
               CombatMessageController.MIt,
               "MoveInfosHandle",
               !1,
             ),
-            void i?.ClearReplaySamples();
+            void n?.ClearReplaySamples();
         }
       }
   }
@@ -644,34 +674,34 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
       (e.IsInit
         ? (CombatLog_1.CombatLog.Info("Actor", e, "Entity通知设置显隐", [
             "v",
-            o.X8n,
+            o.rVn,
           ]),
           ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
             e,
-            o.X8n,
+            o.rVn,
             "CombatMessageController.EntityIsVisibleNotify",
           ))
-        : e.GetComponent(0)?.SetVisible(o.X8n));
+        : e.GetComponent(0)?.SetVisible(o.rVn));
   }
   static ActorIsVisibleNotify(e, o) {
     e &&
       (CombatLog_1.CombatLog.Info("Actor", e, "Actor通知设置显隐", [
         "v",
-        o.$8n,
+        o.oVn,
       ]),
       ControllerHolder_1.ControllerHolder.CreatureController.SetActorVisible(
         e,
-        o.$8n,
-        o.$8n,
-        o.$8n,
+        o.oVn,
+        o.oVn,
+        o.oVn,
         "ActorIsVisibleNotify",
       ));
   }
   static EIt(e) {
-    var o = MathUtils_1.MathUtils.LongToNumber(e.P4n),
+    var o = MathUtils_1.MathUtils.LongToNumber(e.F4n),
       t = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
     t
-      ? (t = t.Entity.GetComponent(39))
+      ? (t = t.Entity.GetComponent(40))
         ? t.OnSyncAiInformation(e)
         : CombatLog_1.CombatLog.Warn(
             "Ai",
@@ -681,27 +711,27 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
       : CombatLog_1.CombatLog.Warn("Ai", o, "OnSyncAiInformation 不存在实体");
   }
   static EntityLoadCompleteNotify(e, o) {
-    var t = o.q5n;
-    for (const r of o.ySs) {
+    var t = o.W5n;
+    for (const r of o.PSs) {
       var a = MathUtils_1.MathUtils.LongToNumber(r),
         a = ModelManager_1.ModelManager.CreatureModel.GetEntity(a);
-      a && a.Entity.GetComponent(39)?.SetLoadCompletePlayer(t);
+      a && a.Entity.GetComponent(40)?.SetLoadCompletePlayer(t);
     }
   }
   static PlayerRebackSceneNotify(e, o) {
-    (o = MathUtils_1.MathUtils.LongToNumber(o.xDs)),
+    (o = MathUtils_1.MathUtils.LongToNumber(o.NDs)),
       (o = ModelManager_1.ModelManager.CreatureModel.GetEntity(o));
-    o && o.Entity.GetComponent(59).ClearReplaySamples();
+    o && o.Entity.GetComponent(60).ClearReplaySamples();
   }
   static MaterialNotify(e, o) {
-    if (o.J8n.Y8n.length <= 0 || "None" === o.J8n.Y8n)
+    if (o.sVn.nVn.length <= 0 || "None" === o.sVn.nVn)
       CombatLog_1.CombatLog.Warn("Material", e, "材质同步失败，参数非法");
     else {
       const t = e?.GetComponent(2)?.Actor;
       t
-        ? o.J8n.z8n
+        ? o.sVn.aVn
           ? ResourceSystem_1.ResourceSystem.LoadAsync(
-              o.J8n.Y8n,
+              o.sVn.nVn,
               UE.PD_CharacterControllerDataGroup_C,
               (e) => {
                 e
@@ -709,12 +739,12 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
                   : Log_1.Log.CheckError() &&
                     Log_1.Log.Error("Battle", 4, "无法找到材质效果", [
                       "data.MaterialInfo.AssetName",
-                      o.J8n.Y8n,
+                      o.sVn.nVn,
                     ]);
               },
             )
           : ResourceSystem_1.ResourceSystem.LoadAsync(
-              o.J8n.Y8n,
+              o.sVn.nVn,
               UE.PD_CharacterControllerData_C,
               (e) => {
                 e
@@ -722,7 +752,7 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
                   : Log_1.Log.CheckError() &&
                     Log_1.Log.Error("Battle", 4, "无法找到材质效果组", [
                       "data!.MaterialInfo.AssetName",
-                      o.J8n.Y8n,
+                      o.sVn.nVn,
                     ]);
               },
             )
@@ -745,32 +775,77 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
   (CombatMessageController.StateData = 0),
   (CombatMessageController.StateDataCount = 0),
   (CombatMessageController.sX = new Map()),
-  (CombatMessageController.SIt = void 0),
+  (CombatMessageController.SIt = Stats_1.Stat.Create(
+    "CombatPackNotify.CombatReceivePackNotifyStat",
+    "",
+    StatDefine_1.BATTLESTAT_GROUP,
+  )),
   (CombatMessageController.aIt = new Map()),
   (CombatMessageController.rIt = (e) => {
-    for (const a of e.S5n) {
+    _a.SIt.Start();
+    for (const r of e.R5n) {
       var o,
-        t = a.wFs,
-        t = a[t];
-      a.NLs
-        ? ((o = a.NLs), _a.sIt(o.wFs), _a.hIt(t.G8n, o))
-        : a.FLs && ((o = a.FLs), _a.sIt(o.wFs), _a.lIt(t.G8n, o));
+        t,
+        a = r.kFs,
+        a = r[a];
+      r.KLs
+        ? ((o = r.KLs), (t = _a.sIt(o.kFs)).Start(), _a.hIt(a.K8n, o), t.Stop())
+        : r.QLs &&
+          ((o = r.QLs),
+          (t = _a.sIt(o.kFs)).Start(),
+          _a.lIt(a.K8n, o),
+          t.Stop());
     }
+    _a.SIt.Stop();
   }),
   (CombatMessageController.mIt = 0),
   (CombatMessageController.dIt = 1),
-  (CombatMessageController.uIt = void 0),
-  (CombatMessageController.CIt = void 0),
+  (CombatMessageController.uIt = Stats_1.Stat.Create("CombatMessageBuffer")),
+  (CombatMessageController.CIt = Stats_1.Stat.Create("CombatMessageHatred")),
   (CombatMessageController.Y7 = new Map()),
   (CombatMessageController._It = new Map()),
+  (CombatMessageController.y5a = new Set()),
+  (CombatMessageController.RegisterMonster = (e, o, t) => {
+    o.EntityType === Protocol_1.Aki.Protocol.kks.Proto_Monster &&
+      (_a.y5a.has(o)
+        ? Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn(
+            "CombatInfo",
+            15,
+            "[CombatMessageController.RegisterMonster] 当前已经注册过Monster",
+          )
+        : (_a.y5a.add(o),
+          EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+            _a,
+            o,
+            EventDefine_1.EEventName.RemoveEntity,
+            _a.UnregisterMonster,
+          )));
+  }),
+  (CombatMessageController.UnregisterMonster = (e, o) => {
+    o.EntityType === Protocol_1.Aki.Protocol.kks.Proto_Monster &&
+      (_a.y5a.delete(o)
+        ? EventSystem_1.EventSystem.RemoveWithTargetUseKey(
+            _a,
+            o,
+            EventDefine_1.EEventName.RemoveEntity,
+            _a.UnregisterMonster,
+          )
+        : Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn(
+            "CombatInfo",
+            15,
+            "[CombatMessageController.RegisterMonster] 当前Monster未被注册",
+          ));
+  }),
   (CombatMessageController.cIt = new Set()),
   (CombatMessageController.Zyt = (o) => {
-    const t = MathUtils_1.MathUtils.LongToNumber(o.P4n);
+    const t = MathUtils_1.MathUtils.LongToNumber(o.F4n);
     WaitEntityTask_1.WaitEntityTask.Create(
       t,
       (e) => {
         e
-          ? CombatMessageController.Oda(o)
+          ? CombatMessageController.pga(o)
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Level",
@@ -779,30 +854,29 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
               ["id", t],
             );
       },
-      !1,
       -1,
     );
   }),
   (CombatMessageController.eIt = (e) => {
-    for (const o of e.kRs) _a.gIt(o);
+    for (const o of e.WRs) _a.gIt(o);
   }),
   (CombatMessageController.tIt = (e) => {
-    for (const o of e.kRs) _a.gIt(o);
+    for (const o of e.WRs) _a.gIt(o);
   }),
-  (CombatMessageController.X0a = (e) => {
-    var o = MathUtils_1.MathUtils.LongToNumber(e.dda.P4n),
+  (CombatMessageController.fMa = (e) => {
+    var o = MathUtils_1.MathUtils.LongToNumber(e.g0a.F4n),
       o = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
-    o && (o = o.Entity.GetComponent(115)) && o.HandleMoveToTarget(e);
+    o && (o = o.Entity.GetComponent(116)) && o.HandleMoveToTarget(e);
   }),
   (CombatMessageController.oIt = (e) => {
-    for (const o of e.ESs) CombatMessageController.EIt(o);
+    for (const o of e.ASs) CombatMessageController.EIt(o);
   }),
   (CombatMessageController.PreAiControlSwitchNotify = (e) => {
-    for (const a of e.ySs) {
+    for (const a of e.PSs) {
       var o = MathUtils_1.MathUtils.LongToNumber(a),
         t = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
       t
-        ? (t = t.Entity.GetComponent(39)) && t.AiController.PreSwitchControl()
+        ? (t = t.Entity.GetComponent(40)) && t.AiController.PreSwitchControl()
         : CombatLog_1.CombatLog.Warn(
             "Ai",
             o,
@@ -814,31 +888,31 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
   (CombatMessageController.pIt = new UE.Vector()),
   (CombatMessageController.MIt = new UE.Rotator()),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("IFn")],
+    [CombatMessage_1.CombatNet.SyncHandle("BFn")],
     CombatMessageController,
     "EntityIsVisibleNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("l3n")],
+    [CombatMessage_1.CombatNet.SyncHandle("p3n")],
     CombatMessageController,
     "ActorIsVisibleNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.Handle("MFn")],
+    [CombatMessage_1.CombatNet.Handle("UFn")],
     CombatMessageController,
     "EntityLoadCompleteNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.Handle("LFn")],
+    [CombatMessage_1.CombatNet.Handle("bFn")],
     CombatMessageController,
     "PlayerRebackSceneNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("yFn")],
+    [CombatMessage_1.CombatNet.SyncHandle("PFn")],
     CombatMessageController,
     "MaterialNotify",
     null,

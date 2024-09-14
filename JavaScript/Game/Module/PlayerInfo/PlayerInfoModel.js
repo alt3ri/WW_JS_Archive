@@ -13,7 +13,11 @@ const Log_1 = require("../../../Core/Common/Log"),
   ItemDefines_1 = require("../Item/Data/ItemDefines");
 class PlayerInfoModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.RandomSeed = 0);
+    super(...arguments),
+      (this.tMi = void 0),
+      (this.GNa = void 0),
+      (this.ONa = void 0),
+      (this.RandomSeed = 0);
   }
   GetId() {
     return this.xe;
@@ -76,11 +80,11 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
   }
   GetPlayerMoney(e) {
     return e === ItemDefines_1.EItemId.Gold
-      ? this.GetNumberPropById(2) ?? 0
+      ? (this.GetNumberPropById(2) ?? 0)
       : e === ItemDefines_1.EItemId.BlackCard
-        ? this.GetNumberPropById(3) ?? 0
+        ? (this.GetNumberPropById(3) ?? 0)
         : e === ItemDefines_1.EItemId.PayGold
-          ? this.GetNumberPropById(13) ?? 0
+          ? (this.GetNumberPropById(13) ?? 0)
           : e === ItemDefines_1.EItemId.Power
             ? ModelManager_1.ModelManager.PowerModel.GetPowerDataById(
                 ItemDefines_1.EItemId.Power,
@@ -157,6 +161,18 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
     return (
       (this.RandomSeed = RandomSystem_1.default.IterateRandomSeed(t, e)), t
     );
+  }
+  InitThirdPartyId(e, t, r) {
+    (this.tMi = e), (this.GNa = t), (this.ONa = r);
+  }
+  GetThirdPartyUserId() {
+    return this.tMi;
+  }
+  GetThirdPartyOnlineId() {
+    return this.GNa;
+  }
+  GetThirdPartyAccountId() {
+    return this.ONa;
   }
 }
 exports.PlayerInfoModel = PlayerInfoModel;

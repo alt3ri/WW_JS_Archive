@@ -13,8 +13,10 @@ class RogueDeliveryRule {
     return this.type();
   }
   get Insts() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.instsLength(), (t) =>
-      this.insts(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.instsLength(),
+      this.insts,
+      this,
     );
   }
   __init(t, s) {

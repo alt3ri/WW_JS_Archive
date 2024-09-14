@@ -52,8 +52,8 @@ class ParkourController extends ControllerBase_1.ControllerBase {
               l = o.get(1),
               l = (l ? o.set(1, ++l) : o.set(1, 1), a.Points[r]);
             if (l?.ModifiedTime && t.ParkourContext) {
-              let e = Protocol_1.Aki.Protocol.ZNs.Proto_Add;
-              l.ModifiedTime < 0 && (e = Protocol_1.Aki.Protocol.ZNs.Proto_Sub),
+              let e = Protocol_1.Aki.Protocol.s3s.Proto_Add;
+              l.ModifiedTime < 0 && (e = Protocol_1.Aki.Protocol.s3s.Proto_Sub),
                 GeneralLogicTreeController_1.GeneralLogicTreeController.RequestSetTimerInfo(
                   t.ParkourContext.TreeIncId,
                   t.ParkourContext.NodeId,
@@ -73,7 +73,7 @@ class ParkourController extends ControllerBase_1.ControllerBase {
               l?.BuffId &&
                 (o = Global_1.Global.BaseCharacter)?.IsValid() &&
                 (r = o?.CharacterActorComponent.Entity)?.Valid &&
-                ((a = r.GetComponent(159))
+                ((a = r.GetComponent(160))
                   ? a.AddBuff(BigInt(l.BuffId), {
                       InstigatorId: a.CreatureDataId,
                       Reason: "Parkour",

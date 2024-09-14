@@ -143,30 +143,35 @@ class DailyActivityView extends UiTabViewBase_1.UiTabViewBase {
   OnTickUiTabViewBase(e) {
     this.E2t.OnTickRefresh(e), this.B2t();
   }
-  B2t(e = !1) {
-    var i,
-      t,
-      n = ModelManager_1.ModelManager.DailyActivityModel.DayEndTime;
-    0 === n && "" !== this.y2t
-      ? (this.y2t = "")
-      : ((i = TimeUtil_1.TimeUtil.GetServerTime()),
+  B2t(t = !1) {
+    var r = ModelManager_1.ModelManager.DailyActivityModel.DayEndTime;
+    if (0 === r && "" !== this.y2t) this.y2t = "";
+    else {
+      var s,
+        n = TimeUtil_1.TimeUtil.GetServerTime(),
+        r = Math.max(r - n, 0);
+      let e = "",
+        i = "";
+      r =
         (i =
-          (n = Math.max(n - i, TimeUtil_1.TimeUtil.TimeDeviation)) >=
-          CommonDefine_1.SECOND_PER_HOUR
-            ? 2
-            : 1),
-        (t = n >= CommonDefine_1.SECOND_PER_HOUR ? 1 : 0),
-        (n = TimeUtil_1.TimeUtil.GetCountDownDataFormat2(
-          n,
+          r <= TimeUtil_1.TimeUtil.Minute
+            ? "Text_RefreshText_Text01"
+            : ((n = r >= CommonDefine_1.SECOND_PER_HOUR ? 2 : 1),
+              (s = r >= CommonDefine_1.SECOND_PER_HOUR ? 1 : 0),
+              (e =
+                TimeUtil_1.TimeUtil.GetCountDownDataFormat2(r, n, s)
+                  .CountDownText ?? ""),
+              "Text_RefreshText_Text")) +
+        "_" +
+        e;
+      (this.y2t === r && !t) ||
+        ((this.y2t = r),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.DailyActivityCountDownUpdate,
+          e,
           i,
-          t,
-        ).CountDownText),
-        (this.y2t === n && !e) ||
-          ((this.y2t = n),
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.DailyActivityCountDownUpdate,
-            n,
-          )));
+        ));
+    }
   }
   D2t() {
     (this.qkt =
@@ -199,11 +204,11 @@ class DailyActivityView extends UiTabViewBase_1.UiTabViewBase {
       var i = String(e[0]),
         t = Number(e[1]);
       if ("Task" === i) {
-        var n = this.M2t.GetGridByDisplayIndex(t);
-        if (n) return [n, n];
+        var r = this.M2t.GetGridByDisplayIndex(t);
+        if (r) return [r, r];
       } else if ("Gift" === i) {
-        n = this.E2t.GetRewardItemByIndex(t);
-        if (n) return [n, n];
+        r = this.E2t.GetRewardItemByIndex(t);
+        if (r) return [r, r];
       }
     }
     Log_1.Log.CheckError() &&

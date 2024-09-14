@@ -20,7 +20,7 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
       (this.Lo = void 0),
       (this.iqt = void 0),
       (this.gZt = !0),
-      (this.QVs = void 0),
+      (this.m9s = void 0),
       (this.fZt = (e) => {
         InputDistributeController_1.InputDistributeController.RefreshInputTag(),
           e &&
@@ -28,7 +28,7 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
             UiManager_1.UiManager.IsViewShow("BattleView") &&
             this.GuideStepInfo.Config.TimeScale < 1 &&
             (e = Global_1.Global.CharacterController) &&
-            ((e.bShowMouseCursor = !1), this.$Vs());
+            ((e.bShowMouseCursor = !1), this.d9s());
       }),
       (this.mZt = (e, i) => {
         (e &&
@@ -102,7 +102,7 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
     var e = this.GetItem(3);
     this.UiViewSequence.StopSequenceByKey("Start"),
       e.SetUIActive(!1),
-      this.XVs(),
+      this.C9s(),
       this.IsFinished &&
         !this.TimeTicker &&
         (this.GetItem(1).SetUIActive(!0),
@@ -123,21 +123,21 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
       ? this.UiViewSequence.PlaySequence("AutoLoop1")
       : this.UiViewSequence.StopSequenceByKey("AutoLoop1");
   }
-  $Vs() {
+  d9s() {
     var e = Global_1.Global.CharacterController;
-    this.QVs ||
-      UE.KuroInputFunctionLibrary.HasInputModeReply(this.QVs) ||
-      (this.QVs = UE.KuroInputFunctionLibrary.SetGameOnlyInputMode(
+    this.m9s ||
+      UE.KuroInputFunctionLibrary.HasInputModeReply(this.m9s) ||
+      (this.m9s = UE.KuroInputFunctionLibrary.SetGameOnlyInputMode(
         e,
         "GuideTipsView设置输入模式",
       ));
   }
-  XVs() {
+  C9s() {
     var e;
-    this.QVs &&
+    this.m9s &&
       ((e = Global_1.Global.CharacterController),
-      UE.KuroInputFunctionLibrary.ReplyInputMode(e, this.QVs),
-      (this.QVs = void 0));
+      UE.KuroInputFunctionLibrary.ReplyInputMode(e, this.m9s),
+      (this.m9s = void 0));
   }
   OnDurationChange(e) {
     this.iqt && this.iqt.OnDurationChange(e);

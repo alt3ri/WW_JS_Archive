@@ -97,13 +97,13 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
       );
   }
   SetInstanceData(t) {
-    var n = t.J4n;
+    var n = t.s5n;
     if (n) {
       let e = this.jhi.get(n);
       e ||
         ((e = new InstanceDungeonData_1.InstanceDungeonData(n)),
         this.jhi.set(n, e)),
-        (e.ChallengedTimes = t.uws);
+        (e.ChallengedTimes = t.vws);
     }
   }
   get MatchingTime() {

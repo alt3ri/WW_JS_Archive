@@ -27,16 +27,16 @@ class SkipTaskPayShop extends SkipTask_1.SkipTask {
                   ? StringUtils_1.StringUtils.IsEmpty(o) || 0 === Number(o)
                     ? (e =
                         ModelManager_1.ModelManager.ItemTipsModel.GetCurrentItemTipsData()) &&
-                      (e =
-                        ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfigByItemConfigId(
-                          e.ConfigId,
-                        ))
-                      ? ModelManager_1.ModelManager.PayShopModel.CheckGoodIfShowInTab(
-                          4,
-                          e.Id,
-                        )
+                      ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfigByItemConfigId(
+                        e.ConfigId,
+                      )
+                      ? (e =
+                          ModelManager_1.ModelManager.PayShopModel.GetGoodsInTab(
+                            4,
+                            e.ConfigId,
+                          ))
                         ? ControllerHolder_1.ControllerHolder.PayShopController.OpenExchangePopView(
-                            e.Id,
+                            e.GetGoodsId(),
                           )
                         : (ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
                             MultiTextLang_1.configMultiTextLang.GetLocalTextNew(

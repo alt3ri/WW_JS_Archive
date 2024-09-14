@@ -175,7 +175,7 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
       this.KGt(),
       this.QGt(),
       this.sqe(),
-      this.eVs();
+      this.rVs();
   }
   qIi() {
     var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
@@ -283,7 +283,7 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
         CommonManager_1.CommonManager.GetComposeMaxLevel(),
     );
   }
-  eVs() {
+  rVs() {
     CommonManager_1.CommonManager.GetCurrentRewardLevel() ===
     CommonManager_1.CommonManager.GetSelectedLevel()
       ? RedDotController_1.RedDotController.BindRedDot(

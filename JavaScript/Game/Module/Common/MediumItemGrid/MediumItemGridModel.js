@@ -12,7 +12,8 @@ class MediumItemGridModel extends ModelBase_1.ModelBase {
       (this.DefenseBuffSpritePath = ""),
       (this.RestoreHealthBuffSpritePath = ""),
       (this.RechargeBuffSpritePath = ""),
-      (this.ResurrectionBuffSpritePath = "");
+      (this.ResurrectionBuffSpritePath = ""),
+      (this.ExploreBuffSpritePath = "");
   }
   OnInit() {
     return (
@@ -39,6 +40,10 @@ class MediumItemGridModel extends ModelBase_1.ModelBase {
       (this.ResurrectionBuffSpritePath =
         ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
           "SP_ItemIconRecover",
+        )),
+      (this.ExploreBuffSpritePath =
+        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+          "T_Iconpropertyabsorbup_UI",
         )),
       !0
     );

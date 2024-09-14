@@ -18,7 +18,7 @@ class UiNavigationModel extends ModelBase_1.ModelBase {
   }
   InputControllerModeChange() {
     for (const t of this.Nqo.values()) for (const e of t) e.RefreshMode();
-    for (const o of this.Oqo.values()) for (const i of o) i.RefreshMode();
+    for (const i of this.Oqo.values()) for (const o of i) o.RefreshMode();
     for (const r of this.kqo) r.ChangeAlpha();
   }
   OnClear() {
@@ -64,34 +64,50 @@ class UiNavigationModel extends ModelBase_1.ModelBase {
     return e || ((e = new Set()), this.AddActionHotKeyComponent(t, e)), e;
   }
   Vqo(t, e) {
-    var o = [];
+    var i = [];
     InputSettingsManager_1.InputSettingsManager.GetActionBinding(
       t,
-    ).GetCurrentPlatformKeyNameList(o);
-    for (const i of o) if (e.has(i)) return i;
+    ).GetCurrentPlatformKeyNameList(i);
+    for (const o of i) if (e.has(o)) return o;
+  }
+  mGa(t, e) {
+    var i = [];
+    InputSettingsManager_1.InputSettingsManager.GetAxisBinding(
+      t,
+    ).GetCurrentPlatformKeyNameList(i);
+    for (const o of i) if (e.has(o)) return o;
   }
   Hqo(t) {
-    var e = InputSettingsManager_1.InputSettingsManager.GetActionBinding(t);
-    if (e) return e.GetCurrentPlatformKeyNameList((e = [])), e;
-    InputSettingsManager_1.InputSettingsManager.GetCombinationActionBindingByActionName(
-      t,
-    );
+    var e =
+      InputSettingsManager_1.InputSettingsManager.GetCombinationActionBindingByActionName(
+        t,
+      );
+    if (e) {
+      var i = [];
+      if ((e.GetGamepadKeyNameList(i), 0 < i.length)) return i;
+    }
+    e = InputSettingsManager_1.InputSettingsManager.GetActionBinding(t);
+    if (e) {
+      i = [];
+      if ((e.GetCurrentPlatformKeyNameList(i), 0 < i.length)) return i;
+    }
   }
-  CheckKeyNameListInNavigation(t) {
+  dGa(t) {
+    var t = InputSettingsManager_1.InputSettingsManager.GetAxisBinding(t);
+    if (t) return t.GetCurrentPlatformKeyNameList((t = [])), t;
+  }
+  CheckActionNameListInNavigation(t) {
     var e = this.Hqo(t);
     if (e) {
-      var o,
-        i,
+      var i,
+        o,
         r = new Set(e);
-      for ([o, i] of this.Nqo)
-        if (t !== o) {
-          var s = this.Vqo(o, r);
-          if (s)
-            for (const n of i)
-              if (
-                n.IsHotKeyActive() &&
-                "ShowOnly" !== n.GetHotKeyFunctionType()
-              )
+      for ([i, o] of this.Nqo)
+        if (t !== i) {
+          var n = this.Vqo(i, r);
+          if (n)
+            for (const s of o)
+              if (s.IsHotKeyActive() && s.IsOccupancyFightInput())
                 return (
                   Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug(
@@ -99,12 +115,30 @@ class UiNavigationModel extends ModelBase_1.ModelBase {
                       11,
                       "非导航输入被导航输入占用",
                       ["非导航输入", t],
-                      ["导航输入", o],
-                      ["交集的KeyName", s],
+                      ["导航输入", i],
+                      ["交集的KeyName", n],
                     ),
                   !0
                 );
         }
+    }
+    return !1;
+  }
+  CheckAxisNameListInNavigation(t) {
+    var e = this.dGa(t);
+    if (e) {
+      var i,
+        o,
+        r = new Set(e);
+      for ([i, o] of this.Oqo)
+        if (t !== i)
+          if (this.mGa(i, r))
+            for (const n of o)
+              if (
+                n.IsHotKeyActive() &&
+                "ShowOnly" !== n.GetHotKeyFunctionType()
+              )
+                return !0;
     }
     return !1;
   }

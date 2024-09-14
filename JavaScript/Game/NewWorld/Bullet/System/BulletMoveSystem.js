@@ -30,7 +30,8 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
     super(...arguments), (this.mie = 0);
   }
   OnTick(t) {
-    this.mie = t / TimeUtil_1.TimeUtil.InverseMillisecond;
+    BulletMoveSystem.gW.Start(),
+      (this.mie = t / TimeUtil_1.TimeUtil.InverseMillisecond);
     let e = 0;
     for (const r of ModelManager_1.ModelManager.BulletModel.GetBulletEntityMap().values()) {
       PerformanceController_1.PerformanceController
@@ -46,9 +47,12 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
           );
           continue;
         }
-        StatDefine_1.BATTLESTAT_ENABLED;
+        StatDefine_1.BATTLESTAT_ENABLED &&
+          BulletController_1.BulletController.GetBulletMoveTickStat(
+            o.BulletRowName,
+          ).Start();
         try {
-          this.YKs(o, t),
+          this.dXs(o, t),
             o.BulletDataMain.Execution.MovementReplaced
               ? o.ActionLogicComponent.ActionTickMovement(t)
               : (this.NWo(o),
@@ -82,7 +86,10 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
                 ["error", t],
               );
         }
-        StatDefine_1.BATTLESTAT_ENABLED;
+        StatDefine_1.BATTLESTAT_ENABLED &&
+          BulletController_1.BulletController.GetBulletMoveTickStat(
+            o.BulletRowName,
+          ).Stop();
       }
       PerformanceController_1.PerformanceController
         .IsEntityTickPerformanceTest &&
@@ -94,8 +101,9 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
           o.BornFrameCount,
         );
     }
+    BulletMoveSystem.gW.Stop();
   }
-  YKs(e, l) {
+  dXs(e, l) {
     if (0 !== e.CreateFrame && e.CreateFrame !== Time_1.Time.Frame) {
       var o = e.Actor,
         r = e.Entity.TimeDilation,
@@ -175,7 +183,7 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
     a?.Valid &&
       ((e = BulletPool_1.BulletPool.CreateVector()),
       r.FollowTargetBottom
-        ? ((l = (o = a.Entity.GetComponent(163)).ActorComp.ActorLocation),
+        ? ((l = (o = a.Entity.GetComponent(164)).ActorComp.ActorLocation),
           e.Set(
             l.X,
             l.Y,
@@ -224,7 +232,7 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
         t,
       );
     o &&
-      (l?.Entity.GetComponent(188)?.HasTag(1008164187)
+      (l?.Entity.GetComponent(190)?.HasTag(1008164187)
         ? t.OnTargetInValid()
         : (l = t.BulletDataMain.Move).TrackParams.length <= 0 ||
           (0 !== l.TrackParams[0].X
@@ -547,12 +555,12 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
             )),
             (o =
               ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e)),
-            ((r = Protocol_1.Aki.Protocol.q3n.create()).vjn = {
-              G8n: void 0,
-              iVn: l,
-              sVn: MathUtils_1.MathUtils.NumberToLong(o),
+            ((r = Protocol_1.Aki.Protocol.W3n.create()).Ajn = {
+              K8n: void 0,
+              uVn: l,
+              CVn: MathUtils_1.MathUtils.NumberToLong(o),
             }),
-            CombatMessage_1.CombatNet.Call(26976, t.Attacker, r),
+            CombatMessage_1.CombatNet.Call(21995, t.Attacker, r),
             Log_1.Log.CheckDebug()) &&
             Log_1.Log.Debug(
               "Bullet",
@@ -564,5 +572,6 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
           (t.TargetIdLast = e)));
   }
 }
-(exports.BulletMoveSystem = BulletMoveSystem).gW = void 0;
+(exports.BulletMoveSystem = BulletMoveSystem).gW =
+  Stats_1.Stat.Create("BulletMoveTick");
 //# sourceMappingURL=BulletMoveSystem.js.map

@@ -9,13 +9,13 @@ const UE = require("ue"),
 class ExploreProgressItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.jHs = void 0),
-      (this.WHs = () => {
-        this.jHs &&
-          UiManager_1.UiManager.OpenView("ExploreMissionView", this.jHs.AreaId);
+      (this.ijs = void 0),
+      (this.rjs = () => {
+        this.ijs &&
+          UiManager_1.UiManager.OpenView("ExploreMissionView", this.ijs.AreaId);
       }),
-      (this.KHs = () => {
-        var e = this.jHs?.GetPhantomSkillHelpId();
+      (this.ojs = () => {
+        var e = this.ijs?.GetPhantomSkillHelpId();
         e && HelpController_1.HelpController.OpenHelpById(e);
       });
   }
@@ -31,12 +31,12 @@ class ExploreProgressItem extends UiPanelBase_1.UiPanelBase {
       [7, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [4, this.WHs],
-        [6, this.KHs],
+        [4, this.rjs],
+        [6, this.ojs],
       ]);
   }
   Refresh(i) {
-    var s = (this.jHs = i).GetProgress();
+    var s = (this.ijs = i).GetProgress();
     if (
       (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), i.GetNameId()),
       this.GetSprite(2).SetFillAmount(s / 100),

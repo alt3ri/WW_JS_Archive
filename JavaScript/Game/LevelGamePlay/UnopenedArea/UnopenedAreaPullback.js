@@ -42,7 +42,7 @@ class UnopenedAreaPullback {
         this.hBe &&
           (this.CBe(t), this.sBe) &&
           (e?.Valid &&
-            (e.Entity.GetComponent(163).StopMoveToLocation(), this.gBe(e, !1)),
+            (e.Entity.GetComponent(164).StopMoveToLocation(), this.gBe(e, !1)),
           this.gBe(t, !0),
           this.fBe(t));
       });
@@ -158,7 +158,7 @@ class UnopenedAreaPullback {
   }
   fBe(t) {
     this.DBe(t);
-    var t = t.Entity.GetComponent(163),
+    var t = t.Entity.GetComponent(164),
       e = { Index: 0, Position: this._Be };
     t.MoveAlongPath({
       Points: e,
@@ -174,7 +174,7 @@ class UnopenedAreaPullback {
     });
   }
   DBe(t) {
-    t.Entity?.CheckGetComponent(160)?.PositionState ===
+    t.Entity?.CheckGetComponent(161)?.PositionState ===
       CharacterUnifiedStateTypes_1.ECharPositionState.Climb &&
       t.Entity?.GetComponent(31)?.ClimbPress(!0);
   }
@@ -186,19 +186,19 @@ class UnopenedAreaPullback {
       this.UBe());
   }
   UBe() {
-    Net_1.Net.Call(10826, Protocol_1.Aki.Protocol.CCs.create(), (t) => {
-      t.O4n !==
-        Protocol_1.Aki.Protocol.O4n.Proto_ErrPlayerIsTeleportCanNotDoTeleport &&
-        t.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+    Net_1.Net.Call(25547, Protocol_1.Aki.Protocol.ECs.create(), (t) => {
+      t.Q4n !==
+        Protocol_1.Aki.Protocol.Q4n.Proto_ErrPlayerIsTeleportCanNotDoTeleport &&
+        t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          t.O4n,
-          11301,
+          t.Q4n,
+          15573,
         );
     });
   }
   TBe(t) {
-    var e = t.Entity.GetComponent(163),
-      e = (e.StopMove(!1), e.MoveToLocationEnd(1), t.Entity.GetComponent(53));
+    var e = t.Entity.GetComponent(164),
+      e = (e.StopMove(!1), e.MoveToLocationEnd(1), t.Entity.GetComponent(54));
     e.ClearMoveVectorCache(),
       e.SetActive(!0),
       this.gBe(t, !1),
@@ -216,9 +216,9 @@ class UnopenedAreaPullback {
       this.cBe &&
         this.cBe.CurrentSkill &&
         (this.cBe.EndOwnerAndFollowSkills(),
-        this.ABe(this.dBe.Entity.GetComponent(37), 0, 0)),
+        this.ABe(this.dBe.Entity.GetComponent(38), 0, 0)),
       this.Hte.ClearInput();
-    var t = this.dBe.Entity.GetComponent(53);
+    var t = this.dBe.Entity.GetComponent(54);
     t.ClearMoveVectorCache(),
       t.SetActive(!1),
       this.gBe(this.dBe, !0),
@@ -231,11 +231,11 @@ class UnopenedAreaPullback {
           Global_1.Global.BaseCharacter.EntityId,
         )),
       (this.Hte = this.dBe.Entity.GetComponent(3)),
-      (this.cBe = this.dBe.Entity.GetComponent(33)),
-      (this.mBe = this.dBe.Entity.GetComponent(160));
+      (this.cBe = this.dBe.Entity.GetComponent(34)),
+      (this.mBe = this.dBe.Entity.GetComponent(161));
   }
   ABe(t, e, i) {
-    var s = t.Entity.GetComponent(188);
+    var s = t.Entity.GetComponent(190);
     0 === e || s?.HasTag(-2100129479)
       ? t.CharacterMovement.SetMovementMode(1, i)
       : t.CharacterMovement.SetMovementMode(e, i);
@@ -281,11 +281,11 @@ class UnopenedAreaPullback {
     t &&
       t.Valid &&
       (e &&
-        ((i = t.Entity.GetComponent(188))?.AddTag(-1697149502),
+        ((i = t.Entity.GetComponent(190))?.AddTag(-1697149502),
         i?.AddTag(-541178966),
         i?.AddTag(-542518289)),
       e ||
-        ((i = t.Entity.GetComponent(188))?.RemoveTag(-1697149502),
+        ((i = t.Entity.GetComponent(190))?.RemoveTag(-1697149502),
         i?.RemoveTag(-541178966),
         i?.RemoveTag(-542518289)));
   }

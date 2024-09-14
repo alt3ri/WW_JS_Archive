@@ -22,8 +22,10 @@ class DebugEntranceConfig {
     return this.keywords();
   }
   get Commands() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.commandsLength(), (t) =>
-      this.commands(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.commandsLength(),
+      this.commands,
+      this,
     );
   }
   get UiEssential() {

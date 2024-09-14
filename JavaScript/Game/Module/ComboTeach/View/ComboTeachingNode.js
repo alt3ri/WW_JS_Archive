@@ -11,7 +11,7 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
-  CommonKeyItem_1 = require("../../BattleUi/Views/KeyItem/CommonKeyItem"),
+  InputMultiKeyItem_1 = require("../../Common/InputKey/InputMultiKeyItem"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   ComboTeachingController_1 = require("../ComboTeachingController"),
@@ -81,7 +81,7 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
   async OnBeforeStartAsync() {
     (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       this.GetItem(9).SetUIActive(Info_1.Info.IsInKeyBoard()),
-      (this.KeyComponent = new CommonKeyItem_1.CommonKeyItem()),
+      (this.KeyComponent = new InputMultiKeyItem_1.InputMultiKeyItem()),
       Info_1.Info.IsInTouch()
         ? await this.KeyComponent.CreateByActorAsync(this.GetItem(9).GetOwner())
         : await this.KeyComponent.CreateThenShowByActorAsync(
@@ -97,7 +97,7 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
       ConfigManager_1.ConfigManager.ComboTeachingConfig.GetComboTeachingConditionConfig(
         t.CommandID[i],
       );
-    var s, n;
+    var s, n, h;
     (this.GuideGroupIdList = t.guideID),
       (this.SuccessCondition =
         ComboTeachingController_1.ComboTeachingController.GetSuccessChecker(
@@ -125,24 +125,25 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
       0 === t.KeyID[i]?.length || void 0 === t.KeyID[i]
         ? this.RootItem.SetAlpha(0)
         : ((s = t.KeyID[i].split(";")[1]),
-          (n = t.KeyID[i].split(";")[0]),
-          (this.VIt = KeyMap.get(n.split("#")[0])),
-          this.KeyComponent?.RefreshAction(ActionMap.get(n.split("#")[0])),
-          (this.IsHoldAction = n.includes("#")),
+          (h = t.KeyID[i].split(";")[0]),
+          (this.VIt = KeyMap.get(h.split("#")[0])),
+          (n = { ActionOrAxisName: ActionMap.get(h.split("#")[0]) }),
+          this.KeyComponent?.RefreshByActionOrAxis(n),
+          (this.IsHoldAction = h.includes("#")),
           (this.IsShowTag =
             t.IconTagText.length > i && "" !== t.IconTagText[i]),
           this.IsHoldAction &&
-            ((this.HoldTotalTime = Number(n.split("#")[1])),
+            ((this.HoldTotalTime = Number(h.split("#")[1])),
             this.SPe.PlayLevelSequenceByName("AutoLoop")),
           this.SPe.StopCurrentSequence(),
           this.SPe.PlayLevelSequenceByName("Start"),
           s &&
             ((n = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
-            (n = EntitySystem_1.EntitySystem.Get(n)
-              .GetComponent(33)
+            (h = EntitySystem_1.EntitySystem.Get(n)
+              .GetComponent(34)
               .GetSkillInfo(Number(s)))) &&
             this.SetSpriteByPath(
-              n.SkillIcon?.AssetPathName?.toString(),
+              h.SkillIcon?.AssetPathName?.toString(),
               this.GetSprite(0),
               !1,
               "ComboTeachingView",

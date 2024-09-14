@@ -35,7 +35,7 @@ class ExecutionPanel extends UiPanelBase_1.UiPanelBase {
         var t;
         this.sDe?.Valid
           ? (this.lat?.OnInputAction(),
-            (t = this.sDe.Entity.GetComponent(105))?.IsPawnInteractive() &&
+            (t = this.sDe.Entity.GetComponent(106))?.IsPawnInteractive() &&
               t.InteractPawn())
           : (this.m$e(), (this.sDe = void 0), this.Hide());
       }),

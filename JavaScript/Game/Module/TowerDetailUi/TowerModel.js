@@ -81,23 +81,23 @@ class TowerModel extends ModelBase_1.ModelBase {
       this.YLo(TowerData_1.VARIATION_RISK_DIFFICULTY, void 0);
   }
   RefreshTowerInfo(t) {
-    (this.TowerBeginTime = t.nps),
-      (this.TowerEndTime = t.sps),
-      this.CurrentSeason !== t.CGs &&
+    (this.TowerBeginTime = t.cps),
+      (this.TowerEndTime = t.dps),
+      this.CurrentSeason !== t.EGs &&
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.RefreshCommonActivityRedDot,
           TOWER_LOOP_ACTIVITY_ID,
         ),
-      (this.CurrentSeason = t.CGs),
-      (this.DataSeason = t.gGs),
-      this.RefreshTowerInfoByDifficulty(t.fGs);
+      (this.CurrentSeason = t.EGs),
+      (this.DataSeason = t.yGs),
+      this.RefreshTowerInfoByDifficulty(t.IGs);
   }
   RefreshTowerInfoByFloor(t) {
     for (const e of t) this.JLo(e);
   }
   RefreshTowerInfoByDifficulty(t) {
     for (const e of t)
-      this.YLo(e.ejn, e.C9n), this.zLo(e.vGs), this.XLo.set(e.ejn, e.pGs);
+      this.YLo(e.ljn, e.I9n), this.zLo(e.TGs), this.XLo.set(e.ljn, e.LGs);
   }
   DeleteVariationTowerInfo() {
     for (var [t, e] of this.jLo)
@@ -183,24 +183,24 @@ class TowerModel extends ModelBase_1.ModelBase {
     }
   }
   zLo(t) {
-    for (const e of t) for (const r of e.SGs) this.JLo(r);
+    for (const e of t) for (const r of e.DGs) this.JLo(r);
   }
   JLo(t) {
-    let e = this.jLo.get(t.ZHn);
+    let e = this.jLo.get(t.hjn);
     if (e) {
-      (e.Star = t.Yws), (e.StarIndex = t.EGs);
+      (e.Star = t.rxs), (e.StarIndex = t.AGs);
       for (const r of e.Formation)
-        this.ReduceRoleFormationCost(r.O6n, e.Difficulties, e.Cost);
-      e.Formation = t.zHn;
+        this.ReduceRoleFormationCost(r.Q6n, e.Difficulties, e.Cost);
+      e.Formation = t.ajn;
     } else
-      (e = new TowerData_1.TowerFloorInfo(t.ZHn, t.Yws, t.zHn, t.EGs)),
-        this.jLo.set(t.ZHn, e),
+      (e = new TowerData_1.TowerFloorInfo(t.hjn, t.rxs, t.ajn, t.AGs)),
+        this.jLo.set(t.hjn, e),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnTowerRecordUpdate,
-          t.ZHn,
+          t.hjn,
           e.Difficulties,
         );
-    for (const i of e.Formation) this.ZLo(i.O6n, e.Difficulties, e.Cost);
+    for (const i of e.Formation) this.ZLo(i.Q6n, e.Difficulties, e.Cost);
   }
   ZLo(t, e, r) {
     let i = this.RoleDifficultyFormationMap.get(t);
@@ -268,7 +268,7 @@ class TowerModel extends ModelBase_1.ModelBase {
   }
   GetFloorIncludeRole(t, e) {
     e = this.jLo.get(e);
-    if (e) for (const r of e.Formation) if (r.O6n === t) return !0;
+    if (e) for (const r of e.Formation) if (r.Q6n === t) return !0;
     return !1;
   }
   OpenTowerFormationView(t) {
@@ -296,7 +296,7 @@ class TowerModel extends ModelBase_1.ModelBase {
   GetFloorFormation(t) {
     var e = [],
       t = this.jLo.get(t);
-    if (t && t.Formation) for (const r of t.Formation) e.push(r.O6n);
+    if (t && t.Formation) for (const r of t.Formation) e.push(r.Q6n);
     return e;
   }
   SaveNeedOpenConfirmView() {

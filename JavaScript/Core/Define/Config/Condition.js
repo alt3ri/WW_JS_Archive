@@ -19,22 +19,39 @@ class Condition {
   get LimitParams() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.limitparamsLength(),
-      (t) => this.limitparams(t)?.key(),
-      (t) => this.limitparams(t)?.value(),
+      this.limitparamsKey,
+      this.limitparamsValue,
+      this,
     );
+  }
+  limitparamsKey(t) {
+    return this.limitparams(t)?.key();
+  }
+  limitparamsValue(t) {
+    return this.limitparams(t)?.value();
   }
   get LimitParamsOpe() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.limitparamsopeLength(),
-      (t) => this.limitparamsope(t)?.key(),
-      (t) => this.limitparamsope(t)?.value(),
+      this.limitparamsopeKey,
+      this.limitparamsopeValue,
+      this,
     );
+  }
+  limitparamsopeKey(t) {
+    return this.limitparamsope(t)?.key();
+  }
+  limitparamsopeValue(t) {
+    return this.limitparamsope(t)?.value();
   }
   get IsClient() {
     return this.isclient();
   }
   get Description() {
     return this.description();
+  }
+  get AccessId() {
+    return this.accessid();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
@@ -96,6 +113,10 @@ class Condition {
   description(t) {
     var i = this.J7.__offset(this.z7, 16);
     return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
+  accessid() {
+    var t = this.J7.__offset(this.z7, 18);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.Condition = Condition;

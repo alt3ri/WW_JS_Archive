@@ -9,7 +9,7 @@ const UE = require("ue"),
 class PersonalCardPreviewView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.isa = void 0),
+      (this.Gha = void 0),
       (this.Jvt = () => {
         this.CloseMe();
       });
@@ -30,9 +30,9 @@ class PersonalCardPreviewView extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [[0, this.Jvt]]);
   }
   OnStart() {
-    (this.isa = this.OpenParam),
-      this.isa
-        ? this.Hqe(this.isa)
+    (this.Gha = this.OpenParam),
+      this.Gha
+        ? this.Hqe(this.Gha)
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Personal",

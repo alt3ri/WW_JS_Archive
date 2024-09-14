@@ -11,36 +11,51 @@ const UE = require("ue"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
-  TowerDefenceController_1 = require("../TowerDefenceController");
+  TowerDefenceController_1 = require("../TowerDefenceController"),
+  TowerDefenceDefine_1 = require("../TowerDefenceDefine");
 class TowerDefensePhantomView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.qJs = void 0),
-      (this.GJs = void 0),
+      (this.PZs = void 0),
+      (this.wZs = void 0),
       (this.p9t = void 0),
-      (this.o1a = void 0),
-      (this.OJs = void 0),
+      (this.nca = void 0),
+      (this.BZs = void 0),
       (this.I5t = () => {
         this.CloseMe();
       }),
-      (this.NJs = (e) => {
+      (this.bZs = (e) => {
         TowerDefenceController_1.TowerDefenseController.SetCurrentTowerDefensePhantomIdInUiTemp(
           e,
         ),
-          this.kJs(!1),
-          this.FJs(),
-          this.VJs();
+          this.qZs(!1),
+          this.GZs(),
+          this.OZs();
       }),
-      (this.HJs = () => {
-        var e = this.OJs.RoleCfgId;
+      (this.NZs = () => {
+        var e = this.BZs.RoleCfgId;
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.TowerDefenseSelfPhantomConfirm,
           e,
         ),
           this.CloseMe();
       }),
-      (this.n1a = () => {
+      (this.YYa = () => {
+        var e = this.BZs.RoleCfgId;
+        TowerDefenceController_1.TowerDefenseController.SetCurrentTowerDefensePhantomIdInUiTemp(
+          TowerDefenceDefine_1.DEFAULT_ID,
+        ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.TowerDefenseSelfPhantomConfirm,
+            e,
+          ),
+          this.CloseMe();
+      }),
+      (this.sca = () => {
         this.CloseMe();
+      }),
+      (this.oZa = () => {
+        this.qZs(!1), this.OZs();
       });
   }
   OnRegisterComponent() {
@@ -62,78 +77,108 @@ class TowerDefensePhantomView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.TowerDefenseOnClickOnePhantom,
-      this.NJs,
+      this.bZs,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DissolvePrewar,
-        this.n1a,
+        this.sca,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.TowerDefensePhantomChanged,
+        this.oZa,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.TowerDefenseOnClickOnePhantom,
-      this.NJs,
+      this.bZs,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.DissolvePrewar,
-        this.n1a,
+        this.sca,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.TowerDefensePhantomChanged,
+        this.oZa,
       );
   }
   async OnBeforeStartAsync() {
     var e = new TowerDefensePhantomLockItem();
     await e.CreateByActorAsync(this.GetItem(10).GetOwner()),
       e.SetText("TowerDefence_lock"),
-      (this.o1a = e);
+      (this.nca = e);
   }
   OnStart() {
-    (this.OJs = this.OpenParam),
+    (this.BZs = this.OpenParam),
       TowerDefenceController_1.TowerDefenseController.ResetCurrentTowerDefensePhantomIdInUiTemp(),
       this.GetItem(9).SetUIActive(!0),
-      (this.qJs = new LoopScrollView_1.LoopScrollView(
+      (this.PZs = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(1),
         this.GetItem(2).GetOwner(),
         TowerDefenceController_1.TowerDefenseController.BuildPhantomIconItem,
       )),
-      this.kJs(!0),
-      (this.GJs = new GenericLayout_1.GenericLayout(
+      this.qZs(!0),
+      (this.wZs = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(6),
         TowerDefenceController_1.TowerDefenseController.BuildPhantomSkillItem,
       )),
-      this.FJs(),
+      this.GZs(),
       (this.p9t = new ButtonItem_1.ButtonItem(this.GetItem(8))),
-      this.p9t.SetFunction(this.HJs),
-      this.p9t.SetLocalTextNew("TowerDefence_confirm"),
-      this.VJs(),
+      this.OZs(),
       TowerDefenceController_1.TowerDefenseController.SetPhantomViewOpened(!0);
   }
   OnBeforeDestroy() {
-    this.OJs = void 0;
+    this.BZs = void 0;
   }
-  kJs(e) {
-    e =
-      TowerDefenceController_1.TowerDefenseController.BuildPhantomIconScrollData(
-        e,
-      );
-    this.qJs.RefreshByData(e);
+  qZs(e) {
+    var t =
+      TowerDefenceController_1.TowerDefenseController.BuildPhantomIconScrollData();
+    TowerDefenceController_1.TowerDefenseController.MarkPhantomIconScrollDataChosen(
+      t,
+      e,
+      this.BZs.RoleCfgId,
+    ),
+      this.PZs.RefreshByData(t);
   }
-  FJs() {
+  GZs() {
     var e =
       TowerDefenceController_1.TowerDefenseController.BuildPhantomSkillLayoutData();
-    this.GJs.RefreshByData(e);
+    this.wZs.RefreshByData(e);
   }
-  VJs() {
+  M3e(e) {
+    e
+      ? (this.p9t.SetUiActive(!1),
+        this.p9t.SetLocalTextNew("TowerDefence_lock"))
+      : TowerDefenceController_1.TowerDefenseController.CheckCurrentPhantomIsOccupiedInUi()
+        ? TowerDefenceController_1.TowerDefenseController.CheckSelfPhantomCancelAble(
+            this.BZs.RoleCfgId,
+          )
+          ? (this.p9t.SetUiActive(!0),
+            this.p9t.SetEnableClick(!0),
+            this.p9t.SetLocalTextNew("Text_GoDownText_Text"),
+            this.p9t.SetFunction(this.YYa))
+          : (this.p9t.SetUiActive(!0),
+            this.p9t.SetEnableClick(!1),
+            this.p9t.SetLocalTextNew("PrefabTextItem_266690258_Text"))
+        : (this.p9t.SetUiActive(!0),
+          this.p9t.SetEnableClick(!0),
+          this.p9t.SetFunction(this.NZs),
+          this.p9t.SetLocalTextNew("TowerDefence_confirm"));
+  }
+  OZs() {
     var e =
         TowerDefenceController_1.TowerDefenseController.BuildPhantomOtherData(),
       t = e.IsLocked;
     this.p9t.SetUiActive(!t),
-      this.o1a.SetUiActive(t),
+      this.M3e(t),
+      this.nca.SetUiActive(t),
       this.SetSpriteByPath(e.TypeIconPath, this.GetSprite(4), !1),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), e.TypeTextId),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), e.NameTextId);
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    if (this.qJs) {
-      var t = this.qJs.GetGrid(0);
+    if (this.PZs) {
+      var t = this.PZs.GetGrid(0);
       if (t) return [t, t];
     }
   }

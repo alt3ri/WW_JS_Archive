@@ -46,7 +46,7 @@ class ResonanceChainView extends UiTabViewBase_1.UiTabViewBase {
         const s = this.kco[i];
         s &&
           (s.PlayActivateSequence(() => {
-            s.SetActive(!1);
+            s.SetActive(!1), s.SetSelectState(!1);
           }),
           (e = this.Wco(i)),
           (t = this.d1o.GetCurSelectRoleId()),

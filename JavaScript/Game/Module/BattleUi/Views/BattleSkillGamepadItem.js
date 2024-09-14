@@ -1,18 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleSkillGamepadItem = void 0);
-const InputEnums_1 = require("../../../Input/InputEnums"),
-  InputSettingsManager_1 = require("../../../InputSettings/InputSettingsManager"),
-  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+const UE = require("ue"),
+  InputEnums_1 = require("../../../Input/InputEnums"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   BattleSkillItem_1 = require("./BattleSkillItem"),
-  BattleSkillSecondCdItem_1 = require("./BattleSkillSecondCdItem"),
-  MAIN_KEY_NUM = 4;
+  BattleSkillSecondCdItem_1 = require("./BattleSkillSecondCdItem");
 class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
   constructor() {
     super(...arguments),
       (this.GamepadData = void 0),
-      (this.IsMainButton = !1),
+      (this.ButtonAreaType = 0),
+      (this.IsSecondButton = !1),
       (this.HEe = ""),
       (this.eit = !1),
       (this.tit = void 0),
@@ -20,8 +19,33 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
       (this.iit = !1),
       (this.oit = void 0);
   }
+  get IsMainButton() {
+    return 0 === this.ButtonAreaType;
+  }
+  get IsSubButton() {
+    return 2 === this.ButtonAreaType;
+  }
+  get IsLeftButton() {
+    return 1 === this.ButtonAreaType;
+  }
   Initialize(t) {
-    super.Initialize(t), (this.IsMainButton = t < MAIN_KEY_NUM);
+    super.Initialize(t),
+      t < 4
+        ? (this.ButtonAreaType = 0)
+        : t < 8
+          ? ((this.ButtonAreaType = 0),
+            (this.IsSecondButton = !0),
+            (this.CdFixedPoint = 0),
+            this.CoolDownUiText?.SetUIItemScale(new UE.Vector(1.667, 1.667, 1)),
+            (this.IsHideNumComp = !0))
+          : t < 12
+            ? ((this.ButtonAreaType = 1),
+              (this.CdFixedPoint = 0),
+              this.CoolDownUiText?.SetUIItemScale(
+                new UE.Vector(1.667, 1.667, 1),
+              ),
+              (this.IsHideNumComp = !0))
+            : ((this.ButtonAreaType = 2), (this.CdFixedPoint = 1));
   }
   async InitializeAsync() {
     await super.InitializeAsync(),
@@ -34,19 +58,27 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
         ));
   }
   SetKeyName(t) {
-    this.HEe = t;
+    (this.HEe = t),
+      this.IsMainButton || this.IsLeftButton
+        ? this.KeyItem.SetActive(!1)
+        : ((t = { KeyName: this.HEe }),
+          this.KeyItem.RefreshByKeyList(t),
+          this.KeyItem.SetActive(!0));
   }
   Tick(t) {
     super.Tick(t), this.oit?.Tick(t);
   }
   Refresh(t) {
-    var i = void 0 !== this.SkillButtonData || void 0 !== this.tit;
-    (this.tit = void 0),
-      t
-        ? (this.SkillButtonData !== t &&
-            (this.OnCoolDownFinishedCallback = void 0),
-          super.Refresh(t))
-        : (!i && this.eit) || ((this.eit = !0), this.rit());
+    var i;
+    !t && this.IsSecondButton
+      ? this.Deactivate()
+      : ((i = void 0 !== this.SkillButtonData || void 0 !== this.tit),
+        (this.tit = void 0),
+        t
+          ? (this.SkillButtonData !== t &&
+              (this.OnCoolDownFinishedCallback = void 0),
+            super.Refresh(t))
+          : (!i && this.eit) || ((this.eit = !0), this.rit()));
   }
   rit() {
     this.IsMainButton
@@ -134,34 +166,9 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
     this.SPe?.Clear(), (this.SPe = void 0), super.Reset();
   }
   RefreshKey() {
-    if (this.IsMainButton) this.KeyItem.SetActive(!1);
-    else {
-      let i = void 0;
-      if (this.tit)
-        (i = this.tit.ActionName),
-          this.KeyActionName !== i &&
-            ((s = { ActionOrAxisName: i }),
-            this.KeyItem.RefreshByActionOrAxis(s),
-            this.KeyItem.SetActive(!0),
-            (this.KeyActionName = i));
-      else if (
-        ((i = this.SkillButtonData.GetActionName()), this.KeyActionName !== i)
-      ) {
-        let t = 0;
-        i === InputMappingsDefine_1.actionMappings.攻击 &&
-          "Gamepad_RightTrigger" === this.HEe &&
-          (s =
-            InputSettingsManager_1.InputSettingsManager.GetActionBinding(i)) &&
-          (s.GetGamepadKeyNameList((s = [])), s) &&
-          0 < s.length &&
-          (t = s.indexOf(this.HEe)) < 0 &&
-          (t = 0);
-        var s = { ActionOrAxisName: i, Index: t };
-        this.KeyItem.RefreshByActionOrAxis(s),
-          this.KeyItem.SetActive(!0),
-          (this.KeyActionName = i);
-      }
-    }
+    this.IsMainButton || this.IsLeftButton
+      ? this.KeyItem.SetActive(!1)
+      : this.KeyItem.SetActive(!0);
   }
   OnInputAction(t = !1) {
     this.tit
@@ -188,9 +195,6 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
   nit() {
     this.SPe ||
       (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
-  }
-  RefreshSecondCd(t) {
-    this.oit?.RefreshSkillCoolDown(t);
   }
 }
 exports.BattleSkillGamepadItem = BattleSkillGamepadItem;

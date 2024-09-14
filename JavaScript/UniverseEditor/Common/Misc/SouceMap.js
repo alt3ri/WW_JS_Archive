@@ -29,20 +29,21 @@ function jsToSource(r, e, o, t) {
 function getErrorLocation(r, e) {
   r = r.stack;
   if (!r) throw new Error("stack is undefined");
-  r = r.split("\n");
-  if (r.length <= e + 1) throw new Error("stack is too short");
-  var o,
-    t,
-    r = r[e + 1],
-    e = /[(]*(?<jsFile>\S+):(?<jsLine>\d+):(?<jsColumn>\d+)/.exec(r);
-  if (e && e.groups)
+  var o = r.split("\n");
+  if (o.length <= e + 1) throw new Error("stack is too short");
+  let t = e + 1,
+    n = o[t];
+  for (; n.includes("<anonymous>"); ) n = o[++t];
+  var u,
+    r = /[(]*(?<jsFile>\S+):(?<jsLine>\d+):(?<jsColumn>\d+)/.exec(n);
+  if (r && r.groups)
     return (
-      (o = e.groups.jsFile),
-      (t = e.groups.jsLine),
-      (e = e.groups.jsColumn),
-      jsToSource(o, Number.parseInt(t, 10), Number.parseInt(e, 10))
+      (e = r.groups.jsFile),
+      (u = r.groups.jsLine),
+      (r = r.groups.jsColumn),
+      jsToSource(e, Number.parseInt(u, 10), Number.parseInt(r, 10))
     );
-  throw new Error(`line: ${r} is not match`);
+  throw new Error(`line: ${n} is not match`);
 }
 function getCallerLocation(r) {
   return getErrorLocation(new Error(), r + 1);

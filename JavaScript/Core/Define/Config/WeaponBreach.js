@@ -25,18 +25,25 @@ class WeaponBreach {
   get Consume() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.consumeLength(),
-      (t) => this.consume(t)?.key(),
-      (t) => this.consume(t)?.value(),
+      this.consumeKey,
+      this.consumeValue,
+      this,
     );
+  }
+  consumeKey(t) {
+    return this.consume(t)?.key();
+  }
+  consumeValue(t) {
+    return this.consume(t)?.value();
   }
   get GoldConsume() {
     return this.goldconsume();
   }
-  __init(t, i) {
-    return (this.z7 = t), (this.J7 = i), this;
+  __init(t, e) {
+    return (this.z7 = t), (this.J7 = e), this;
   }
-  static getRootAsWeaponBreach(t, i) {
-    return (i || new WeaponBreach()).__init(
+  static getRootAsWeaponBreach(t, e) {
+    return (e || new WeaponBreach()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -61,14 +68,14 @@ class WeaponBreach {
     var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  GetConsumeAt(t, i) {
+  GetConsumeAt(t, e) {
     return this.consume(t);
   }
-  consume(t, i) {
-    var e = this.J7.__offset(this.z7, 14);
-    return e
-      ? (i || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + e) + 4 * t),
+  consume(t, e) {
+    var i = this.J7.__offset(this.z7, 14);
+    return i
+      ? (e || new DicIntInt_1.DicIntInt()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
           this.J7,
         )
       : null;

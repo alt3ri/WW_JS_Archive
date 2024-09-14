@@ -10,7 +10,7 @@ class DynamicScrollView {
       (this.XGo = void 0),
       (this.$Go = void 0),
       (this.YGo = new Map()),
-      (this.JCa = new Map()),
+      (this.Wfa = new Map()),
       (this.r7 = void 0),
       (this.JGo = void 0),
       (this.cGo = void 0),
@@ -41,8 +41,8 @@ class DynamicScrollView {
       }),
       (this.rNo = (t, i) => {
         this.YGo.delete(t);
-        var s = this.JCa.get(t);
-        s && (s(), this.JCa.delete(t));
+        var s = this.Wfa.get(t);
+        s && (s(), this.Wfa.delete(t));
       }),
       (this.nNo = () => {
         this.sNo();
@@ -112,7 +112,7 @@ class DynamicScrollView {
     this.XGo.SetInAnimation(!1);
   }
   RefreshByData(t, i = !1) {
-    (this.r7 = t), this.YGo.clear(), this.JCa.clear();
+    (this.r7 = t), this.YGo.clear(), this.Wfa.clear();
     var s = this.JGo.GetOwner();
     this.JGo.SetUIActive(!0),
       this.XGo.RefreshByData(s, t.length, i),
@@ -156,14 +156,22 @@ class DynamicScrollView {
     this.LateUpdateCallBack = void 0;
   }
   AddListenerOnItemClear(t, i) {
-    this.YGo.has(t) && this.JCa.set(t, i);
+    this.YGo.has(t) && this.Wfa.set(t, i);
   }
   ClearChildren() {
     for (const t of this.YGo.values()) t.ClearItem();
-    this.YGo.clear(), this.JCa.clear(), this.cGo?.Clear();
+    this.YGo.clear(), this.Wfa.clear(), this.cGo?.Clear();
   }
   async ScrollToItemIndex(t, i = !0) {
     await this.uNo(t, i);
+  }
+  ScrollToBottom(t) {
+    this.XGo.ScrollToBottom(
+      (0, puerts_1.$ref)(
+        new UE.Vector2D(this.XGo.ContentUIItem.RelativeLocation),
+      ),
+      t,
+    );
   }
   async uNo(t, i = !0) {
     await Promise.all(this.ZGo.values()),

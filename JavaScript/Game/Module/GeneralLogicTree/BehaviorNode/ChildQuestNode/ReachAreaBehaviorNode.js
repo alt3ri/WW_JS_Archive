@@ -5,6 +5,7 @@ const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
   Transform_1 = require("../../../../../Core/Utils/Math/Transform"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
   ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   SceneTeamController_1 = require("../../../SceneTeam/SceneTeamController"),
@@ -29,6 +30,7 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
       (this.f$t = void 0),
       (this.p$t = 0),
       (this.v$t = 0),
+      (this.gXa = !1),
       (this.OnAfterSubmit = (e) => {
         this.u$t = !1;
       });
@@ -37,7 +39,7 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   OnCreate(e) {
     if (!super.OnCreate(e)) return !1;
     e = e.Condition;
-    if ("ReachArea" !== e.Type) return !1;
+    if (e.Type !== IQuest_1.EChildQuest.ReachArea) return !1;
     (this.IntervalTime = 500),
       (this.E0 = e.EntityId),
       (this.a$t = e.MatchRoleOption),
@@ -49,7 +51,10 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
             e.RangeEntityId,
           )
         : void 0;
-    if (t) {
+    if (
+      ((this.gXa = void 0 !== e.RangeEntities && 0 < e.RangeEntities?.length),
+      t)
+    ) {
       this._$t = e.Range;
       var i = (0, IComponent_1.getComponent)(
           t.ComponentsData,
@@ -111,6 +116,7 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
         this.u$t ||
         (!this.Blackboard.IsTracking && this.wY % 2 != 0) ||
         ModelManager_1.ModelManager.SceneTeamModel.IsAllDid() ||
+        this.gXa ||
         (this.M$t() && this.SubmitNode());
   }
   M$t() {

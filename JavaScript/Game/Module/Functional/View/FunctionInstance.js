@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FunctionInstance = void 0);
 class FunctionInstance {
-  constructor(t, s) {
-    (this.ige = t), (this.w7t = s);
+  constructor(t, e) {
+    (this.ija = !1), (this.ige = t), (this.w7t = e);
   }
   GetFunctionId() {
     return this.w7t;
@@ -19,6 +19,12 @@ class FunctionInstance {
   }
   SetFlag(t) {
     this.ige = t;
+  }
+  SetIsLockByBehaviorTree(t) {
+    this.ija = t;
+  }
+  GetIsLockByBehaviorTree() {
+    return this.ija;
   }
 }
 exports.FunctionInstance = FunctionInstance;

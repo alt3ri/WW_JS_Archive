@@ -28,9 +28,16 @@ class RoleQualityInfo {
   get SpiloverCompensate() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.spilovercompensateLength(),
-      (t) => this.spilovercompensate(t)?.key(),
-      (t) => this.spilovercompensate(t)?.value(),
+      this.spilovercompensateKey,
+      this.spilovercompensateValue,
+      this,
     );
+  }
+  spilovercompensateKey(t) {
+    return this.spilovercompensate(t)?.key();
+  }
+  spilovercompensateValue(t) {
+    return this.spilovercompensate(t)?.value();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
@@ -69,10 +76,10 @@ class RoleQualityInfo {
     return this.spilovercompensate(t);
   }
   spilovercompensate(t, i) {
-    var s = this.J7.__offset(this.z7, 16);
-    return s
+    var e = this.J7.__offset(this.z7, 16);
+    return e
       ? (i || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + e) + 4 * t),
           this.J7,
         )
       : null;

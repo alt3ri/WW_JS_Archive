@@ -53,7 +53,7 @@ class AiPatrolController {
     return !!this.$ie && !!this.Zie && 0 !== this.Xie.length;
   }
   ResetPatrol(t) {
-    var i = this.Hte.Entity.GetComponent(39),
+    var i = this.Hte.Entity.GetComponent(40),
       i = ConfigManager_1.ConfigManager.AiConfig.LoadAiPatrolConfig(
         i.AiController.AiBase,
         t,
@@ -81,14 +81,14 @@ class AiPatrolController {
             t.Patrol.IsCircle
               ? ((this.Yie.Loop = !0), (this.Yie.CirclePatrol = !0))
               : (this.Yie.CirclePatrol = !1),
-            ((t = Protocol_1.Aki.Protocol.Ves.create()).P4n =
+            ((t = Protocol_1.Aki.Protocol.Xes.create()).F4n =
               MathUtils_1.MathUtils.NumberToLong(
                 this.Hte.CreatureData.GetCreatureDataId(),
               )),
-            Net_1.Net.Call(10803, t, () => {}))
+            Net_1.Net.Call(15110, t, () => {}))
           : (this.Yie.Id = 0)),
       0 !== this.Yie.Id) &&
-      (t = this.Hte.Entity.GetComponent(188)) &&
+      (t = this.Hte.Entity.GetComponent(190)) &&
       !t.HasTag((i = 2003306528)) &&
       t.AddTag(i);
   }
@@ -103,7 +103,7 @@ class AiPatrolController {
           this.HC(t),
           void 0 !==
             (t =
-              this.Hte.CreatureData.ComponentDataMap.get("wys")?.wys?.B4n)) &&
+              this.Hte.CreatureData.ComponentDataMap.get("kys")?.kys?.V4n)) &&
           (this.StartWithInversePath = !t))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -296,7 +296,7 @@ class AiPatrolController {
         i?.IsMain &&
           (this.ChangeMoveSpeed(e, r, i.MoveSpeed),
           (s = this.Hte).SkeletalMesh?.SetVisibility(!i.IsHide),
-          (o = s.Entity.GetComponent(188))) &&
+          (o = s.Entity.GetComponent(190))) &&
           ((e = -841499802),
           i.IsHide
             ? o.HasTag(e) || o.AddTag(e)
@@ -346,7 +346,7 @@ class AiPatrolController {
     this.eoe || (this.eoe = new Array());
     for (let t = 0, i = e.length; t < i; t++) this.eoe.push(e[t]);
     var t,
-      i = this.Hte.Entity.GetComponent(188);
+      i = this.Hte.Entity.GetComponent(190);
     i && !i.HasTag((t = -1645015979)) && i.AddTag(t);
   }
   GetNextPerformanceTag() {

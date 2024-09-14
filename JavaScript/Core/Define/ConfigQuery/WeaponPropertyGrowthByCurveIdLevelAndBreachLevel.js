@@ -18,70 +18,91 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configWeaponPropertyGrowthByCurveIdLevelAndBreachLevel.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configWeaponPropertyGrowthByCurveIdLevelAndBreachLevel.GetConfig",
+  ),
   CONFIG_STAT_PREFIX =
     "configWeaponPropertyGrowthByCurveIdLevelAndBreachLevel.GetConfig(";
 exports.configWeaponPropertyGrowthByCurveIdLevelAndBreachLevel = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (e, o, r, n = !0) => {
-    if (
-      (t = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (n) {
-        var i = KEY_PREFIX + `#${e}#${o}#${r})`;
-        const a = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (a) return a;
+  GetConfig: (o, e, n, r = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${e}#${n})`),
+      i =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
+      if (r) {
+        var C = KEY_PREFIX + `#${o}#${e}#${n})`;
+        const a = ConfigCommon_1.ConfigCommon.GetConfig(C);
+        if (a)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
-        (t =
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 3, r, ...logPair) &&
+        (i =
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, e, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 3, n, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(
               handleId,
               !0,
               ...logPair,
-              ["CurveId", e],
-              ["Level", o],
-              ["BreachLevel", r],
+              ["CurveId", o],
+              ["Level", e],
+              ["BreachLevel", n],
             ))
       ) {
-        var t,
-          i = void 0;
+        C = void 0;
         if (
-          (([t, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, C] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
-            ["CurveId", e],
-            ["Level", o],
-            ["BreachLevel", r],
+            ["CurveId", o],
+            ["Level", e],
+            ["BreachLevel", n],
           )),
-          t)
+          i)
         ) {
           const a =
             WeaponPropertyGrowth_1.WeaponPropertyGrowth.getRootAsWeaponPropertyGrowth(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(C.buffer)),
             );
           return (
-            n &&
-              ((t = KEY_PREFIX + `#${e}#${o}#${r})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(t, a)),
+            r &&
+              ((i = KEY_PREFIX + `#${o}#${e}#${n})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=WeaponPropertyGrowthByCurveIdLevelAndBreachLevel.js.map

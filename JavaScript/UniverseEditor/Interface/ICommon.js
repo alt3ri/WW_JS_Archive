@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.npcPerformStateConfig = {
     幽灵态: ["常态", "幽灵"],
     禁锢态: ["常态", "禁锢"],
+    库洛洛异色态: ["常态", "异色"],
   });
 const npcPerformStatesMap = new Map();
 function getNpcPerformStateMap() {

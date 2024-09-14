@@ -41,14 +41,16 @@ class LoadingShowData {
     const o = ModelManager_1.ModelManager.GameModeModel.MapId;
     let n = ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId();
     0 !== ModelManager_1.ModelManager.LoadingModel.TargetTeleportId &&
-      ((t =
-        ConfigManager_1.ConfigManager.WorldMapConfig.GetTeleportEntityConfigId(
-          ModelManager_1.ModelManager.LoadingModel.TargetTeleportId,
-        )),
+      ((t = ConfigManager_1.ConfigManager.MapConfig.GetTeleportConfigById(
+        ModelManager_1.ModelManager.LoadingModel.TargetTeleportId,
+      )),
       (ModelManager_1.ModelManager.LoadingModel.TargetTeleportId = 0),
       t) &&
       void 0 !==
-        (t = ModelManager_1.ModelManager.CreatureModel?.GetEntityData(t)) &&
+        (t = ModelManager_1.ModelManager.CreatureModel?.GetEntityData(
+          t.TeleportEntityConfigId,
+          t.MapId,
+        )) &&
       (n = t.AreaId);
     var t = e.filter((e) => {
         var t, r, a;

@@ -58,7 +58,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
       t instanceof TsAiController_1.default &&
         ((t = t.AiController),
         this.TsWalkOff ||
-          t.CharActorComp.Entity.GetComponent(163)?.SetWalkOffLedgeRecord(!1),
+          t.CharActorComp.Entity.GetComponent(164)?.SetWalkOffLedgeRecord(!1),
         t.AiWanderInfos?.AiBattleWanderGroups?.length
           ? ((this.EndTime =
               Time_1.Time.WorldTime +
@@ -134,7 +134,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
     this.AIOwner instanceof TsAiController_1.default &&
       ((t =
         this.AIOwner.AiController.CharActorComp.Entity.GetComponent(
-          37,
+          38,
         ))?.MoveController.StopMoveToLocation(),
       this.LastDestination?.Reset(),
       AiContollerLibrary_1.AiControllerLibrary.ClearInput(this.AIOwner),
@@ -156,7 +156,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
         ((this.DistanceIndex = this.FindDistanceIndexByDistance(i, e)),
         this.FindDirectByWeights(i),
         this.CheckNavigationAndAllyBlock(t, this.TmpOffset, e),
-        t.CharAiDesignComp.Entity.GetComponent(160));
+        t.CharAiDesignComp.Entity.GetComponent(161));
     if (h.Valid)
       switch (this.TsMoveState) {
         case 1:
@@ -248,9 +248,9 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
       this.DirectIndex,
     )
       ? ((this.DirectIndex = 4), t.ClearInput())
-      : ((i = t.Entity.GetComponent(37)) &&
+      : ((i = t.Entity.GetComponent(38)) &&
           i.MoveController.IsMovingToLocation()) ||
-        (t.Entity.GetComponent(91)?.MoveState !==
+        (t.Entity.GetComponent(92)?.MoveState !==
         CharacterUnifiedStateTypes_1.ECharMoveState.Walk
           ? (AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
               t,
@@ -269,7 +269,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
             ));
   }
   StopMoveToLocation(t) {
-    t = t.Entity.GetComponent(37);
+    t = t.Entity.GetComponent(38);
     t &&
       t.MoveController.IsMovingToLocation() &&
       t?.MoveController.StopMoveToLocation(),
@@ -278,7 +278,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
   SetMoveToLocation(t, i, s, e) {
     this.TmpVector2.DeepCopy(t),
       this.TmpVector2.AdditionEqual(i.ActorLocationProxy);
-    t = i.Entity.GetComponent(37);
+    t = i.Entity.GetComponent(38);
     if (!t) return !1;
     if (
       (!this.LastDestination.IsNearlyZero() ||

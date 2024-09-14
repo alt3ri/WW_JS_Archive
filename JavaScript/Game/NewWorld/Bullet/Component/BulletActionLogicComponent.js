@@ -251,15 +251,9 @@ let BulletActionLogicComponent = class BulletActionLogicComponent extends Entity
                                       : void 0;
   }
 };
-__decorate(
-  [(0, PerformanceDecorators_1.TickPerformanceEx)("Bullet", !1)],
-  BulletActionLogicComponent.prototype,
-  "OnTick",
-  null,
-),
-  (BulletActionLogicComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(13)],
-    BulletActionLogicComponent,
-  )),
+(BulletActionLogicComponent = __decorate(
+  [(0, RegisterComponent_1.RegisterComponent)(13)],
+  BulletActionLogicComponent,
+)),
   (exports.BulletActionLogicComponent = BulletActionLogicComponent);
 //# sourceMappingURL=BulletActionLogicComponent.js.map

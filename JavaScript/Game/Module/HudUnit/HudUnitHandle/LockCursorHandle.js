@@ -21,7 +21,7 @@ const UE = require("ue"),
 class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
-      (this.Uua = new Vector2D_1.Vector2D()),
+      (this.Nma = new Vector2D_1.Vector2D()),
       (this.Poi = void 0),
       (this.v$e = !1),
       (this.xoi = !1),
@@ -32,7 +32,7 @@ class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
           (0 === e ? (this.woi = void 0 !== this.Poi) : (this.xoi = !0)),
           this.Poi &&
             !ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
-              188,
+              190,
             )?.HasTag(-2140742267) &&
             (0 === e ? this.qoi() : this.Goi());
       }),
@@ -79,8 +79,8 @@ class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     this.Poi &&
       ((e = (t =
         ModelManager_1.ModelManager.SceneTeamModel
-          .GetCurrentEntity).Entity.GetComponent(188)),
-      (t = t.Entity.GetComponent(53)),
+          .GetCurrentEntity).Entity.GetComponent(190)),
+      (t = t.Entity.GetComponent(54)),
       e.HasTag(-1150819426)) &&
       ((e =
         t.BpInputComp.UnlockLongPressTime *
@@ -107,14 +107,14 @@ class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         (e = this.GetWorldLocation()) &&
         HudUnitUtils_1.HudUnitUtils.PositionUtil.ProjectWorldToScreen(
           e,
-          this.Uua,
+          this.Nma,
         )
           ? (this.Activate(),
             this.Poi &&
               (this.Poi.UpdateShowTargetState(t.ShowTarget),
               this.Poi.RefreshManualLockVisible(),
               this.Poi.GetRootItem().SetAnchorOffset(
-                this.Uua.ToUeVector2D(!0),
+                this.Nma.ToUeVector2D(!0),
               )))
           : this.Deactivate());
   }
@@ -122,7 +122,7 @@ class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     return (
       !!t?.Valid &&
-      t.Entity.GetComponent(160)?.DirectionState ===
+      t.Entity.GetComponent(161)?.DirectionState ===
         CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection
     );
   }

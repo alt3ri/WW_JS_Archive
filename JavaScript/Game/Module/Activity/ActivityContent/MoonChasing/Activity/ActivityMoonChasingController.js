@@ -14,13 +14,20 @@ const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
 class ActivityMoonChasingController extends ActivityControllerBase_1.ActivityControllerBase {
   OnGetIsOpeningActivityRelativeView() {
     for (const t of ModelManager_1.ModelManager.ActivityModel.GetActivitiesByType(
-      Protocol_1.Aki.Protocol.oks.Proto_TrackMoonActivity,
+      Protocol_1.Aki.Protocol.uks.Proto_TrackMoonActivity,
     )) {
       var o = t;
       let e = [];
       for (const i of (e =
         0 === o.ActivityFlowState
-          ? ["MoonChasingMainView", "RewardMainView", "MoonChasingHandbookView"]
+          ? [
+              "MoonChasingMainView",
+              "RewardMainView",
+              "MoonChasingHandbookView",
+              "BusinessMainView",
+              "BusinessHelperView",
+              "MoonChasingTaskView",
+            ]
           : [
               "MoonChasingMemoryView",
               "MoonChasingMemoryDetailView",
@@ -39,7 +46,12 @@ class ActivityMoonChasingController extends ActivityControllerBase_1.ActivityCon
     return new ActivitySubViewMoonChasing_1.ActivitySubViewMoonChasing();
   }
   OnCreateActivityData(e) {
-    return new ActivityMoonChasingData_1.ActivityMoonChasingData();
+    return (
+      ActivityMoonChasingController.y8a ||
+        (ActivityMoonChasingController.E8a(),
+        (ActivityMoonChasingController.y8a = !0)),
+      new ActivityMoonChasingData_1.ActivityMoonChasingData()
+    );
   }
   OnActivityFirstUnlock(e) {
     0 === e.ActivityFlowState &&
@@ -47,7 +59,7 @@ class ActivityMoonChasingController extends ActivityControllerBase_1.ActivityCon
   }
   static RefreshActivityRedDot() {
     ModelManager_1.ModelManager.ActivityModel.GetCurrentActivitiesByType(
-      Protocol_1.Aki.Protocol.oks.Proto_TrackMoonActivity,
+      Protocol_1.Aki.Protocol.uks.Proto_TrackMoonActivity,
     ).forEach((e) => {
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
@@ -56,21 +68,34 @@ class ActivityMoonChasingController extends ActivityControllerBase_1.ActivityCon
     });
   }
   static TrackMoonActivityTargetRewardRequest(o, t) {
-    var e = new Protocol_1.Aki.Protocol.s$s();
-    (e.J4n = t),
-      (e.T6n = o),
-      Net_1.Net.Call(19345, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.M$s();
+    (e.s5n = t),
+      (e.w6n = o),
+      Net_1.Net.Call(19734, e, (e) => {
         e &&
-          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+          (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.O4n,
-                25931,
+                e.Q4n,
+                16368,
               )
             : (e =
                 ModelManager_1.ModelManager.ActivityModel.GetActivityById(o)) &&
               e.SetRewardState(t, 2));
       });
   }
+  static CheckIsActivityClose() {
+    for (const e of ModelManager_1.ModelManager.ActivityModel.GetActivitiesByType(
+      Protocol_1.Aki.Protocol.uks.Proto_TrackMoonActivity,
+    ))
+      if (e.CheckIfClose()) {
+        ControllerHolder_1.ControllerHolder.ActivityController.ShowActivityRefreshAndBackToBattleView();
+        break;
+      }
+  }
+  static E8a() {
+    ControllerHolder_1.ControllerHolder.MoonChasingController.TrackMoonAllDataRequest();
+  }
 }
-exports.ActivityMoonChasingController = ActivityMoonChasingController;
+(exports.ActivityMoonChasingController = ActivityMoonChasingController).y8a =
+  !1;
 //# sourceMappingURL=ActivityMoonChasingController.js.map

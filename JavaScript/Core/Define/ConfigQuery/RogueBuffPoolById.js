@@ -17,25 +17,37 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configRogueBuffPoolById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configRogueBuffPoolById.GetConfig"),
   CONFIG_STAT_PREFIX = "configRogueBuffPoolById.GetConfig(";
 exports.configRogueBuffPoolById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, e = !0) => {
-    if (
-      (f = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
-        var n = KEY_PREFIX + `#${o})`;
-        const i = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (i) return i;
+  GetConfig: (o, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      f =
+        (e.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (f) {
+      if (n) {
+        var i = KEY_PREFIX + `#${o})`;
+        const t = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (t)
+          return (
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            t
+          );
       }
       if (
         (f =
@@ -46,10 +58,9 @@ exports.configRogueBuffPoolById = {
               o,
             ]))
       ) {
-        var f,
-          n = void 0;
+        i = void 0;
         if (
-          (([f, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([f, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -57,20 +68,26 @@ exports.configRogueBuffPoolById = {
           )),
           f)
         ) {
-          const i = RogueBuffPool_1.RogueBuffPool.getRootAsRogueBuffPool(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+          const t = RogueBuffPool_1.RogueBuffPool.getRootAsRogueBuffPool(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
           );
           return (
-            e &&
+            n &&
               ((f = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(f, i)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(f, t)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            t
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    e.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=RogueBuffPoolById.js.map

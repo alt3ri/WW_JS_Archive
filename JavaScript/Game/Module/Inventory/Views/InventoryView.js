@@ -27,8 +27,6 @@ const UE = require("ue"),
   TabComponentWithCaptionItem_1 = require("../../Common/TabComponent/TabComponentWithCaptionItem"),
   CommonTabItem_1 = require("../../Common/TabComponent/TabItem/CommonTabItem"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
-  PowerController_1 = require("../../Power/PowerController"),
-  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
   SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
@@ -130,21 +128,8 @@ class InventoryView extends UiViewBase_1.UiViewBase {
           ModelManager_1.ModelManager.InventoryModel.GetSelectedItemData();
         t && SkipTaskManager_1.SkipTaskManager.Run(5, t.GetUniqueId());
       }),
-      (this.Pdi = () => {
-        var t = ModelManager_1.ModelManager.PowerModel.GetPowerItemInfos(10800);
-        ModelManager_1.ModelManager.PowerModel.PowerCount + t.RenewValue >
-        ConfigManager_1.ConfigManager.PowerConfig.GetPowerChargeLimit()
-          ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-              "PowerBound",
-            )
-          : PowerController_1.PowerController.ExchangePower(t, 1);
-      }),
-      (this.xdi = (t, e) => {
-        var i = ModelManager_1.ModelManager.PowerModel.GetPowerItemInfos(10800);
-        ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-          "PowerBuySucceed",
-          i.RenewValue,
-        );
+      (this.o4a = () => {
+        ControllerHolder_1.ControllerHolder.FragmentMemoryController.OpenFragmentMemoryView();
       }),
       (this.Vgt = () => {
         UiManager_1.UiManager.CloseView("InventoryView"),
@@ -186,12 +171,17 @@ class InventoryView extends UiViewBase_1.UiViewBase {
       (this.zze = () => {
         this.Fdi();
       }),
-      (this.Vdi = (e, i) => {
-        if (ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(e))
+      (this.SNa = (e) => {
+        var i =
+          ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(e);
+        if (i)
           for (let t = 0; t < this.cdi.length; t++) {
             var s = this.cdi[t];
             if (s.GetUniqueId() === e) {
-              s.SetIsLock(i), s.RemoveNewItem(), this.JPt.RefreshGridProxy(t);
+              s.SetIsLock(i.GetIsLock()),
+                s.SetIsDeprecate(i.GetIsDeprecated()),
+                s.RemoveNewItem(),
+                this.JPt.RefreshGridProxy(t);
               break;
             }
           }
@@ -261,7 +251,7 @@ class InventoryView extends UiViewBase_1.UiViewBase {
             );
           else {
             let i = !1;
-            const o = [];
+            const h = [];
             var s = Array.from(this.Zdi.values()),
               r = (s.sort(this.SortViewDataConfigId), s.length);
             for (let e = 0; e < r; e++) {
@@ -276,16 +266,16 @@ class InventoryView extends UiViewBase_1.UiViewBase {
               )
                 (t += s[e].GetSelectNum()), e++;
               var n = {
-                f8n: s[e].GetConfigId(),
-                L9n: s[e].GetUniqueId(),
-                o9n: t + s[e].GetSelectNum(),
+                L8n: s[e].GetConfigId(),
+                b9n: s[e].GetUniqueId(),
+                m9n: t + s[e].GetSelectNum(),
               };
-              o.push(n), !i && 4 <= s[e].GetQuality() && (i = !0);
+              h.push(n), !i && 4 <= s[e].GetQuality() && (i = !0);
             }
             var t,
               e = () => {
                 ControllerHolder_1.ControllerHolder.InventoryController.ItemDestructPreviewRequest(
-                  o,
+                  h,
                 );
               };
             ModelManager_1.ModelManager.InventoryModel.IsConfirmDestruction ||
@@ -394,6 +384,11 @@ class InventoryView extends UiViewBase_1.UiViewBase {
         Function: this.OnClickedVisionCultivateButton,
         Text: "Text_BagFosterButton_Text",
         Index: 0,
+      }),
+      this.TipsButtonRelationMap.set(4, {
+        Function: this.o4a,
+        Text: "Text_FragmentMemoryButton_Text",
+        Index: 0,
       });
   }
   async OnBeforeStartAsync() {
@@ -496,8 +491,8 @@ class InventoryView extends UiViewBase_1.UiViewBase {
         this.Ndi,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnItemLock,
-        this.Vdi,
+        EventDefine_1.EEventName.OnItemFuncValueChange,
+        this.SNa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnUseBuffItem,
@@ -518,14 +513,6 @@ class InventoryView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSpecialItemUpdate,
         this.$di,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.BoughtItem,
-        this.xdi,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.PowerShopReady,
-        this.Pdi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.NotifyInvalidItem,
@@ -554,8 +541,8 @@ class InventoryView extends UiViewBase_1.UiViewBase {
         this.Ndi,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnItemLock,
-        this.Vdi,
+        EventDefine_1.EEventName.OnItemFuncValueChange,
+        this.SNa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnUseBuffItem,
@@ -576,14 +563,6 @@ class InventoryView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSpecialItemUpdate,
         this.$di,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.BoughtItem,
-        this.xdi,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.PowerShopReady,
-        this.Pdi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.NotifyInvalidItem,
@@ -666,15 +645,34 @@ class InventoryView extends UiViewBase_1.UiViewBase {
         ? this.Udi(0, t.HasRedDot())
         : this.Udi(0, !1);
   }
-  dCi() {
-    ModelManager_1.ModelManager.RouletteModel.IsExploreRouletteOpen() &&
-      (this.mCi([1]), this.Ydi());
-  }
-  CCi() {
-    this.mCi([2]);
-  }
-  gCi() {
-    this.mCi([3]);
+  n4a(t) {
+    var e = new Array();
+    if (this.Kci)
+      switch (this.Kci.GetItemType()) {
+        case 13:
+          var i = ConfigManager_1.ConfigManager.SpecialItemConfig.GetConfig(
+            t.GetConfigId(),
+          );
+          if (0 < i.UseButtonAdditionParam.length)
+            for (const s of i.UseButtonAdditionParam)
+              (1 === s &&
+                !ModelManager_1.ModelManager.RouletteModel.IsExploreRouletteOpen()) ||
+                e.push(s);
+          else
+            ModelManager_1.ModelManager.RouletteModel.IsExploreRouletteOpen() &&
+              0 === i.SpecialItemType &&
+              e.push(1);
+          break;
+        case 2:
+          e.push(2);
+          break;
+        case 9:
+          e.push(3);
+          break;
+        default:
+          t.GetConfig().ShowUseButton && e.push(0);
+      }
+    return e;
   }
   Ydi() {
     if (this.Kci) {
@@ -722,7 +720,8 @@ class InventoryView extends UiViewBase_1.UiViewBase {
     this.ECi(s, e), this.SCi(t, e);
   }
   ECi(t, e) {
-    this.adi.UpdateData(t, e);
+    var i = 0 === this.gdi ? 1 : 2;
+    this.adi.UpdateDataWithConfig(t, i, e);
   }
   Hdi() {
     var t = ModelManager_1.ModelManager.InventoryModel.GetSelectedTypeIndex(),
@@ -846,54 +845,57 @@ class InventoryView extends UiViewBase_1.UiViewBase {
     var e,
       i,
       s = ModelManager_1.ModelManager.InventoryModel;
-    for (const h of s.GetItemDataBaseByMainType(t))
-      if (0 !== h.GetType()) {
-        if (h instanceof CommonItemData_1.CommonItemData) {
-          var r = h.GetMaxStackCount();
+    for (const a of s.GetItemDataBaseByMainType(t))
+      if (0 !== a.GetType()) {
+        if (a instanceof CommonItemData_1.CommonItemData) {
+          var r = a.GetMaxStackCount();
           if (r <= 0) continue;
-          var n = h.GetConfig();
+          var n = a.GetConfig();
           if (!n) continue;
-          var o = h.GetConfigId();
+          var h = a.GetConfigId();
           this.DCi(
             n.Id,
-            h.GetCount(),
+            a.GetCount(),
             r,
             n.QualityId,
             !1,
-            s.IsNewCommonItem(o),
-            s.IsCommonItemHasRedDot(o),
-            h,
+            !1,
+            s.IsNewCommonItem(h),
+            s.IsCommonItemHasRedDot(h),
+            a,
           );
         }
-        h instanceof WeaponItemData_1.WeaponItemData
-          ? (r = h.GetConfig()) &&
-            ((n = h.GetUniqueId()),
-            (o = {
+        a instanceof WeaponItemData_1.WeaponItemData
+          ? (r = a.GetConfig()) &&
+            ((n = a.GetUniqueId()),
+            (h = {
               ConfigId: r.ItemId,
               Count: 1,
               QualityId: r.QualityId,
-              IsLock: h.GetIsLock(),
+              IsLock: a.GetIsLock(),
+              IsDeprecate: a.GetIsDeprecated(),
               IsNewItem: s.IsNewAttributeItem(n),
               ItemDataType: 2,
-              ItemDataBase: h,
+              ItemDataBase: a,
               HasRedDot: s.IsAttributeItemHasRedDot(n),
               ItemOperationMode: this.gdi,
               IsSelectOn: !1,
               SelectOnNum: 0,
               StackId: 0,
             }),
-            this.RCi(o))
-          : h instanceof PhantomItemData_1.PhantomItemData &&
-            (i = h.GetConfig()) &&
-            ((e = h.GetUniqueId()),
+            this.RCi(h))
+          : a instanceof PhantomItemData_1.PhantomItemData &&
+            (i = a.GetConfig()) &&
+            ((e = a.GetUniqueId()),
             (i = {
               ConfigId: i.ItemId,
               Count: 1,
               QualityId: i.QualityId,
-              IsLock: h.GetIsLock(),
+              IsLock: a.GetIsLock(),
+              IsDeprecate: a.GetIsDeprecated(),
               IsNewItem: s.IsNewAttributeItem(e),
               ItemDataType: 3,
-              ItemDataBase: h,
+              ItemDataBase: a,
               HasRedDot: s.IsAttributeItemHasRedDot(e),
               ItemOperationMode: this.gdi,
               IsSelectOn: !1,
@@ -910,14 +912,14 @@ class InventoryView extends UiViewBase_1.UiViewBase {
   aCi() {
     if (this.ddi) {
       var t = [];
-      for (const h of this.ddi) {
+      for (const a of this.ddi) {
         var e =
             ModelManager_1.ModelManager.InventoryModel.GetInventoryItemGridCountByMainType(
-              h.Id,
+              a.Id,
             ),
           i =
             ConfigManager_1.ConfigManager.InventoryConfig.GetItemMainTypeConfig(
-              h.Id,
+              a.Id,
             ),
           s = i.PackageId;
         ConfigManager_1.ConfigManager.InventoryConfig.GetPackageConfig(s)
@@ -929,15 +931,15 @@ class InventoryView extends UiViewBase_1.UiViewBase {
       var r = 0 < t.length;
       if (!this.vdi && r) {
         var n = new StringBuilder_1.StringBuilder();
-        for (const a of t) n.Append(a);
-        var o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(173);
-        o.SetTextArgs(n.ToString()),
+        for (const o of t) n.Append(o);
+        var h = new ConfirmBoxDefine_1.ConfirmBoxDataNew(173);
+        h.SetTextArgs(n.ToString()),
           (this.vdi = !0),
-          o.FunctionMap.set(1, () => {
+          h.FunctionMap.set(1, () => {
             this.vdi = !1;
           }),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-            o,
+            h,
           );
       }
       this.Mdi !== r && this.UCi(r), (this.Mdi = r);
@@ -963,42 +965,44 @@ class InventoryView extends UiViewBase_1.UiViewBase {
   ACi(t) {
     return this.mdi.get(t);
   }
-  DCi(i, s, r, n, o, h, a, _) {
+  DCi(i, s, r, n, h, a, o, _, m) {
     if (!(r <= 0)) {
       let t = s,
         e = 0;
-      const m = {
+      const v = {
         ConfigId: i,
         Count: r,
         QualityId: n,
-        IsLock: o,
-        IsNewItem: h,
+        IsLock: h,
+        IsDeprecate: a,
+        IsNewItem: o,
         ItemDataType: 0,
-        ItemDataBase: _,
-        HasRedDot: a,
+        ItemDataBase: m,
+        HasRedDot: _,
         ItemOperationMode: this.gdi,
         IsSelectOn: !1,
         SelectOnNum: 0,
         StackId: 0,
       };
       for (; 0 < t - r; ) {
-        const m = {
+        const v = {
           ConfigId: i,
           Count: r,
           QualityId: n,
-          IsLock: o,
-          IsNewItem: h,
+          IsLock: h,
+          IsDeprecate: a,
+          IsNewItem: o,
           ItemDataType: 0,
-          ItemDataBase: _,
-          HasRedDot: a,
+          ItemDataBase: m,
+          HasRedDot: _,
           ItemOperationMode: this.gdi,
           IsSelectOn: !1,
           SelectOnNum: 0,
           StackId: 0,
         };
-        (m.Count = r), (m.StackId = e), this.RCi(m), (t -= r), e++;
+        (v.Count = r), (v.StackId = e), this.RCi(v), (t -= r), e++;
       }
-      (m.Count = t), (m.StackId = e), this.RCi(m);
+      (v.Count = t), (v.StackId = e), this.RCi(v);
     }
   }
   Xpt(t) {
@@ -1082,20 +1086,13 @@ class InventoryView extends UiViewBase_1.UiViewBase {
   }
   RefreshItemTipsFunction(t) {
     var e = this.Kci.GetItemType(),
-      i = t.GetItemDataBase();
-    switch ((this.vxt.ClearButtonList(), e)) {
-      case 13:
-        this.dCi();
-        break;
-      case 9:
-        this.gCi();
-        break;
-      case 2:
-        this.CCi();
-        break;
-      default:
-        this.cCi(i);
-    }
+      t = t.GetItemDataBase(),
+      i = (this.vxt.ClearButtonList(), this.n4a(t));
+    this.mCi(i),
+      13 === e
+        ? ModelManager_1.ModelManager.RouletteModel.IsExploreRouletteOpen() &&
+          this.Ydi()
+        : 9 !== e && 2 !== e && this.cCi(t);
   }
   RefreshItemDescription(t) {
     var t = t.GetItemDataBase(),
@@ -1158,8 +1155,8 @@ class InventoryView extends UiViewBase_1.UiViewBase {
       s = this.GetButton(20),
       r = this.GetExtendToggle(18),
       n = this.GetItem(15),
-      o = this.GetText(16),
-      h = this.GetText(17),
+      h = this.GetText(16),
+      a = this.GetText(17),
       t =
         (e !== this.gdi && this.pCi(e),
         (this.Ivt.NeedCaptionSwitchWithToggle = 0 === this.gdi),
@@ -1175,8 +1172,8 @@ class InventoryView extends UiViewBase_1.UiViewBase {
           s.RootUIComp.SetUIActive(!1),
           this.WGe.SetUiActive(!1),
           n.SetUIActive(!1),
-          o.SetUIActive(!1),
-          h.SetUIActive(!1);
+          h.SetUIActive(!1),
+          a.SetUIActive(!1);
         break;
       case 1:
         this.Ivt.SetTitle(
@@ -1184,18 +1181,18 @@ class InventoryView extends UiViewBase_1.UiViewBase {
             "Text_ItemRecycle_text",
           ),
         );
-        var a =
+        var o =
           ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
             "SP_DestroyModeIcon",
           );
-        this.Ivt.SetTitleIcon(a),
+        this.Ivt.SetTitleIcon(o),
           this.Ivt.SetCloseBtnShowState(!1),
           i.RootUIComp.SetUIActive(!0),
           this.vxt.SetButtonPanelVisible(!1),
           s.RootUIComp.SetUIActive(!0),
           n.SetUIActive(!0),
           this.bCi(),
-          h.SetUIActive(!0);
+          a.SetUIActive(!0);
     }
     e !== this.gdi &&
       this.UiViewSequence.PlaySequence(

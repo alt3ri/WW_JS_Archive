@@ -21,6 +21,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.Ymr = []),
+      (this.M4a = []),
       (this.Jmr = new Set()),
       (this.zmr = []),
       (this.Zmr = new Map()),
@@ -32,6 +33,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       (this.ndr = new Set()),
       (this.sdr = void 0),
       (this.hdr = void 0),
+      (this.S4a = new Map()),
       (this.ldr = 0);
   }
   OnInit() {
@@ -57,7 +59,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     for (const i of this.odr.values()) i.Reset();
     this.odr.clear();
     for (const e of this.tdr.values()) e.Reset();
-    return this.tdr.clear(), !0;
+    return this.tdr.clear(), this.S4a.clear(), !0;
   }
   Cdr() {
     for (const i of InputDistributeSetupDefine_1.inputDistributeSetups) {
@@ -109,7 +111,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     } else {
       var n = t.GetInputDistributeTag();
       if (n && !this.IsTagMatchAnyCurrentInputTag(n)) return !1;
-      if (!this.Edr(i, n)) return !1;
+      if (!this.CGa(i, n)) return !1;
     }
     return (
       t.InputAction(e),
@@ -120,7 +122,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       !0
     );
   }
-  Edr(t, i) {
+  CGa(t, i) {
     var i = this.Sdr(i);
     return (
       !i ||
@@ -134,7 +136,25 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
             .NavigationTag,
         ) &&
         (i = ModelManager_1.ModelManager.UiNavigationModel) &&
-        i.CheckKeyNameListInNavigation(t)
+        i.CheckActionNameListInNavigation(t)
+      )
+    );
+  }
+  gGa(t, i) {
+    var i = this.Sdr(i);
+    return (
+      !i ||
+      !(
+        !i.MatchTag(
+          InputDistributeDefine_1.inputDistributeTagDefine.UiInputRoot
+            .MouseInputTag,
+        ) &&
+        !i.MatchTag(
+          InputDistributeDefine_1.inputDistributeTagDefine.UiInputRoot
+            .NavigationTag,
+        ) &&
+        (i = ModelManager_1.ModelManager.UiNavigationModel) &&
+        i.CheckAxisNameListInNavigation(t)
       )
     );
   }
@@ -158,6 +178,12 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       } else {
         var n = e.GetInputDistributeTag();
         if (n && !this.IsTagMatchAnyCurrentInputTag(n))
+          return void (
+            Info_1.Info.AxisInputOptimize &&
+            0 !== e.GetCacheAxisValue() &&
+            e.InputAxis(0)
+          );
+        if (!this.gGa(t, n))
           return void (
             Info_1.Info.AxisInputOptimize &&
             0 !== e.GetCacheAxisValue() &&
@@ -421,7 +447,8 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnInputDistributeTagChanged,
         this.Ymr,
-      ));
+      ),
+      this.xMe());
   }
   Rdr(t) {
     t = this.Sdr(t);
@@ -439,7 +466,8 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnInputDistributeTagChanged,
         this.Ymr,
-      ));
+      ),
+      this.xMe());
   }
   SetInputDistributeTags(t) {
     this.ClearInputDistributeTag();
@@ -452,7 +480,8 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnInputDistributeTagChanged,
         this.Ymr,
-      );
+      ),
+      this.xMe();
   }
   RemoveInputDistributeTag(t, i = !1) {
     var e = this.Sdr(t);
@@ -471,6 +500,51 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
   }
   ClearInputDistributeTag() {
     this.Ymr.length = 0;
+  }
+  xMe() {
+    for (const n of this.S4a.keys()) {
+      var t = this.S4a.get(n);
+      if (!t || 0 === t.size) return;
+      var i = this.IsTagMatchAnyInputDistributeTags(n, this.M4a),
+        e = this.IsTagMatchAnyInputDistributeTags(n, this.Ymr);
+      i !== e && this.E4a(t, n, e);
+    }
+    this.M4a = this.Ymr;
+  }
+  E4a(t, i, e) {
+    for (const n of t)
+      try {
+        n(i, e);
+      } catch (t) {
+        t instanceof Error
+          ? Log_1.Log.CheckError() &&
+            Log_1.Log.ErrorWithStack(
+              "Input",
+              38,
+              "[InputDistribute]Tag事件回调执行异常",
+              t,
+              ["tag", i],
+              ["error", t.message],
+            )
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Input",
+              38,
+              "[InputDistribute]Tag事件回调执行异常",
+              ["tag", i],
+              ["error", t],
+            );
+      }
+  }
+  AddInputDistributeTagChangedListener(i, e) {
+    if (i && e) {
+      let t = this.S4a.get(i);
+      t || this.S4a.set(i, (t = new Set())), t.has(e) || t.add(e);
+    }
+  }
+  RemoveInputDistributeTagChangedListener(t, i) {
+    var e = this.S4a.get(t);
+    e && (e.delete(i), 0 === e.size) && this.S4a.delete(t);
   }
   IsAllowFightInput() {
     return this.IsAnyInputDistributeTagsMatchTag(

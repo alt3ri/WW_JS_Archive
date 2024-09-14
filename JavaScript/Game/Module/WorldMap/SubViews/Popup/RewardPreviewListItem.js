@@ -24,26 +24,29 @@ class RewardItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
         this.ConfigId,
       )
     ) {
-      var o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+      var a = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
         this.ConfigId,
       );
-      const a = {
+      const o = {
         Data: e,
         Type: 2,
         ItemConfigId: this.ConfigId,
         BottomText: i && 0 < i ? "" + i : "",
-        QualityId: o.QualityId,
+        QualityId: a.QualityId,
       };
-      void this.Apply(a);
+      void this.Apply(o);
     } else {
-      const a = {
+      const o = {
         Data: e,
         Type: 4,
         ItemConfigId: this.ConfigId,
         BottomText: i && 0 < i ? "" + i : "",
       };
-      this.Apply(a);
+      this.Apply(o);
     }
+  }
+  OnCanExecuteChange() {
+    return !1;
   }
   OnExtendToggleClicked() {
     ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
@@ -81,14 +84,14 @@ class RewardPreviewListItem extends UiPanelBase_1.UiPanelBase {
     var e = this.X2o[0],
       i = this.X2o[1],
       i = DropPackageById_1.configDropPackageById.GetConfig(i),
-      o = e === ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
-      a =
+      a = e === ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
+      o =
         (LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(0),
           "World_Level_Text",
           e,
         ),
-        this.GetItem(1).SetUIActive(o),
+        this.GetItem(1).SetUIActive(a),
         []),
       e = ModelManager_1.ModelManager.CalabashModel.GetCalabashLevel(),
       s =
@@ -103,9 +106,9 @@ class RewardPreviewListItem extends UiPanelBase_1.UiPanelBase {
       (n &&
         n.ShowTypes.includes(ItemDefines_1.CALABASH_ITEM_SHOW_TYPE) &&
         l <= 0) ||
-        a.push(d);
+        o.push(d);
     }
-    a.sort((e, t) => e[0] - t[0]), this.$2o?.RefreshByData(a);
+    o.sort((e, t) => e[0] - t[0]), this.$2o?.RefreshByData(o);
   }
   Clear() {}
   OnSelected(e) {}

@@ -5,6 +5,7 @@ const UE = require("ue"),
   CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
@@ -14,9 +15,12 @@ const UE = require("ue"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
   CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
-  BattlePassController_1 = require("./BattlePassController");
+  BattlePassController_1 = require("./BattlePassController"),
+  PLAYSTATIONICONPOSITION = 0,
+  CHECKSDKGAP = 500;
 class BattlePassPayView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -26,11 +30,17 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
       (this.Jki = void 0),
       (this.Eki = 0),
       (this.TDe = void 0),
+      (this.PNa = void 0),
       (this.zki = () => {
         this.Zki();
       }),
       (this.DSi = () => {
         this.CloseMe();
+      }),
+      (this.wNa = () => {
+        PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.ShowPlayStationStoreIcon(
+          PLAYSTATIONICONPOSITION,
+        );
       }),
       (this.e2i = () => {
         BattlePassController_1.BattlePassController.PayPrimaryBattlePass();
@@ -95,6 +105,10 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnQueryProductInfo,
         this.zki,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.SdkPayEnd,
+        this.wNa,
       );
   }
   OnRemoveEventListener() {
@@ -105,6 +119,10 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnQueryProductInfo,
         this.zki,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.SdkPayEnd,
+        this.wNa,
       );
   }
   OnStart() {
@@ -141,9 +159,63 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
       e = ModelManager_1.ModelManager.PayGiftModel.GetPayGiftDataById(e);
       t.push(e.ProductId.toString());
     }),
-      ControllerHolder_1.ControllerHolder.KuroSdkController.QueryProductByProductId(
+      ControllerHolder_1.ControllerHolder.PayItemController.QueryProductInfoAsync(
         t,
+      ),
+      this.BNa(),
+      PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.ShowPlayStationStoreIcon(
+        PLAYSTATIONICONPOSITION,
       );
+  }
+  BNa() {
+    var e =
+      PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedConfirmSdkProductInfo();
+    if (e)
+      for (const i of this.o2i()) {
+        var t =
+            ModelManager_1.ModelManager.PayGiftModel.GetPayGiftDataById(
+              i,
+            ).ProductId,
+          t =
+            ModelManager_1.ModelManager.PayItemModel.GetProductInfoByGoodsId(t);
+        if (!t)
+          return (
+            (t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(213)).FunctionMap.set(
+              1,
+              () => {
+                UiManager_1.UiManager.CloseView("BattlePassPayView");
+              },
+            ),
+            (t.IsEscViewTriggerCallBack = !1),
+            ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+              t,
+            ),
+            this.bNa(),
+            !1
+          );
+      }
+    return !0;
+  }
+  async bNa() {
+    (await PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().OpenMessageBox(
+      ModelManager_1.ModelManager.PlayerInfoModel.GetThirdPartyUserId(),
+      3,
+      0,
+    )) &&
+      (this.qNa(),
+      (this.PNa = TimerSystem_1.TimerSystem.Forever(() => {
+        PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetMessageBoxCurrentState(
+          (e) => {
+            3 === e &&
+              (this.qNa(),
+              PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().TerminateMessageBox());
+          },
+        );
+      }, CHECKSDKGAP)));
+  }
+  qNa() {
+    this.PNa &&
+      (TimerSystem_1.TimerSystem.Remove(this.PNa), (this.PNa = void 0));
   }
   o2i() {
     return [
@@ -160,22 +232,24 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
       (this.Xki = void 0),
       (this.$ki = void 0),
       this.TDe.Remove(),
-      (this.TDe = void 0);
+      (this.TDe = void 0),
+      this.qNa(),
+      PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().HidePlayStationStoreIcon();
   }
   Zki() {
     var e,
       t = ModelManager_1.ModelManager.BattlePassModel.PayType;
-    this.GetItem(9).SetUIActive(t === Protocol_1.Aki.Protocol.yNs.Proto_NoPaid),
+    this.GetItem(9).SetUIActive(t === Protocol_1.Aki.Protocol.PNs.Proto_NoPaid),
       this.GetItem(11).SetUIActive(
-        t !== Protocol_1.Aki.Protocol.yNs.Proto_NoPaid,
+        t !== Protocol_1.Aki.Protocol.PNs.Proto_NoPaid,
       ),
       this.GetItem(10).SetUIActive(
-        t !== Protocol_1.Aki.Protocol.yNs.Proto_Advanced,
+        t !== Protocol_1.Aki.Protocol.PNs.Proto_Advanced,
       ),
       this.GetItem(12).SetUIActive(
-        t === Protocol_1.Aki.Protocol.yNs.Proto_Advanced,
+        t === Protocol_1.Aki.Protocol.PNs.Proto_Advanced,
       ),
-      t === Protocol_1.Aki.Protocol.yNs.Proto_NoPaid
+      t === Protocol_1.Aki.Protocol.PNs.Proto_NoPaid
         ? ((e = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(
             ModelManager_1.ModelManager.BattlePassModel.GetPrimaryBattlePassGoodsId(),
           )?.GetDirectPriceText()),
@@ -184,7 +258,7 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
             ModelManager_1.ModelManager.BattlePassModel.GetHighBattlePassGoodsId(),
           )?.GetDirectPriceText()),
           this.GetText(5).SetText(e ?? ""))
-        : t === Protocol_1.Aki.Protocol.yNs.Proto_Paid &&
+        : t === Protocol_1.Aki.Protocol.PNs.Proto_Paid &&
           ((e = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(
             ModelManager_1.ModelManager.BattlePassModel.GetSupplyBattlePassGoodsId(),
           )?.GetDirectPriceText()),

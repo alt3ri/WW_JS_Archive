@@ -17,61 +17,78 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configSkillButtonIndexById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configSkillButtonIndexById.GetConfig"),
   CONFIG_STAT_PREFIX = "configSkillButtonIndexById.GetConfig(";
 exports.configSkillButtonIndexById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, n = !0) => {
-    if (
-      (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (n) {
-        var i = KEY_PREFIX + `#${o})`;
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (t) return t;
+  GetConfig: (n, o = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${n})`),
+      i =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
+      if (o) {
+        var e = KEY_PREFIX + `#${n})`;
+        const C = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (C)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
+          );
       }
       if (
-        (e =
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
+        (i =
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, n, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
               "Id",
-              o,
+              n,
             ]))
       ) {
-        var e,
-          i = void 0;
+        e = void 0;
         if (
-          (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
-            ["Id", o],
+            ["Id", n],
           )),
-          e)
+          i)
         ) {
-          const t =
+          const C =
             SkillButtonIndex_1.SkillButtonIndex.getRootAsSkillButtonIndex(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
             );
           return (
-            n &&
-              ((e = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(e, t)),
+            o &&
+              ((i = KEY_PREFIX + `#${n})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=SkillButtonIndexById.js.map

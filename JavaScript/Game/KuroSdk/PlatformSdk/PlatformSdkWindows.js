@@ -142,13 +142,13 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
         (e = ModelManager_1.ModelManager.LoginModel),
         (o = ModelManager_1.ModelManager.FunctionModel),
         (r = ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
-          ? e.GetSdkLoginConfig()?.Token ?? "0"
+          ? (e.GetSdkLoginConfig()?.Token ?? "0")
           : "0"),
         (t = ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
-          ? e.GetSdkLoginConfig()?.Uid ?? "0"
+          ? (e.GetSdkLoginConfig()?.Uid ?? "0")
           : "0"),
         (n = e.GetSdkLoginConfig()?.UserName
-          ? e.GetSdkLoginConfig()?.UserName ?? ""
+          ? (e.GetSdkLoginConfig()?.UserName ?? "")
           : ""),
         (_ = StringUtils_1.StringUtils.Format(
           this.FeedBackSt,

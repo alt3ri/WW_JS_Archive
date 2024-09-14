@@ -209,7 +209,7 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
         this.UQi(!0),
           UiManager_1.UiManager.IsViewOpen("PhotographSetupView") &&
             UiManager_1.UiManager.CloseView("PhotographSetupView"),
-          Net_1.Net.Send(2709, Protocol_1.Aki.Protocol.rZn.create()),
+          Net_1.Net.Send(20793, Protocol_1.Aki.Protocol._Zn.create()),
           PhotographController_1.PhotographController.ScreenShot({
             ScreenShot: !0,
             IsHiddenBattleView: !1,
@@ -281,14 +281,14 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
     var t =
       ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity?.Entity;
     t?.Valid &&
-      t.GetComponent(101)?.SetLodBias(PhotographDefine_1.MAX_LOD_BIAS);
+      t.GetComponent(102)?.SetLodBias(PhotographDefine_1.MAX_LOD_BIAS);
   }
   OnAfterDestroy() {
     GlobalData_1.GlobalData.BpEventManager.OnExitPhotograph.Broadcast();
     var t =
       ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity?.Entity;
     t?.Valid &&
-      t.GetComponent(101)?.SetLodBias(PhotographDefine_1.DEFAULT_LOD_BIAS);
+      t.GetComponent(102)?.SetLodBias(PhotographDefine_1.DEFAULT_LOD_BIAS);
   }
   OnAddEventListener() {
     var t = this.GetButton(0),

@@ -53,7 +53,6 @@ let FightCameraDisplayComponent = class FightCameraDisplayComponent extends Enti
   }
   OnInit() {
     return (
-      (this.uPr = CameraController_1.CameraController.SpawnCameraActor()),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDone,
         this.nye,

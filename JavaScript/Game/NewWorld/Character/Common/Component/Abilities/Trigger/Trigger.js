@@ -6,6 +6,7 @@ const EntitySystem_1 = require("../../../../../../../Core/Entity/EntitySystem"),
   Vector_1 = require("../../../../../../../Core/Utils/Math/Vector"),
   EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../../../Manager/ModelManager"),
   FormationAttributeController_1 = require("../../../../../../Module/Abilities/FormationAttributeController"),
   SceneTeamEvent_1 = require("../../../../../../Module/SceneTeam/SceneTeamEvent"),
   CombatLog_1 = require("../../../../../../Utils/CombatLog"),
@@ -13,12 +14,13 @@ const EntitySystem_1 = require("../../../../../../../Core/Entity/EntitySystem"),
   CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
   TriggerType_1 = require("./TriggerType");
 class Trigger {
-  constructor(e, t, i, s, r) {
+  constructor(e, t, i, s, n, r) {
     if (
       ((this.Config = e),
       (this.Handle = t),
       (this.OwnerTriggerComp = i),
-      (this.Callback = r),
+      (this.Callback = n),
+      (this.Checker = r),
       (this.Formula = void 0),
       (this.TriggerType = void 0),
       (this.dce = !1),
@@ -31,8 +33,8 @@ class Trigger {
       void 0 === this.TriggerType)
     )
       throw new Error("找不到对应的Trigger触发器类型");
-    (t = e.Formula), (r = e.Params?.length ? JSON.parse(e.Params) : {});
-    (r.Owner = i.Entity),
+    (t = e.Formula), (n = e.Params?.length ? JSON.parse(e.Params) : {});
+    (n.Owner = i.Entity),
       (this.Formula = new ConditionFormula_1.Formula(t)
         .SetBuiltinFunctions(s)
         .AddBuiltinFunction(
@@ -40,7 +42,7 @@ class Trigger {
           (e, t, i = !0) =>
             !!i && ((this.fYo += e), this.fYo >= t) && !(this.fYo = 0),
         )
-        .SetDefaultParams(r));
+        .SetDefaultParams(n));
   }
   OnInitParams(e) {}
   SetActive(e) {
@@ -81,6 +83,10 @@ class Trigger {
         return GlobalDamageTrigger;
       case TriggerType_1.ETriggerEvent.GameplayEventTrigger:
         return GameplayEventTrigger;
+      case TriggerType_1.ETriggerEvent.QteGoBattleTrigger:
+        return QteGoBattleTrigger;
+      case TriggerType_1.ETriggerEvent.QteGoDownTrigger:
+        return QteGoDownTrigger;
     }
   }
 }
@@ -157,15 +163,16 @@ class BeHitTrigger extends (exports.Trigger = Trigger) {
       );
   }
   OnEvent(e) {
-    e = {
-      Attacker: e.Attacker,
-      Victim: e.Target,
-      SkillID: e.SkillId,
-      SkillType: e.SkillGenre,
-      BulletID: Number(e.BulletId),
-      CounterType: e.CounterAttackType,
-    };
-    this.Formula.Evaluate(e) && this?.Callback(this.Formula.Params, e);
+    (this.Checker && !this.Checker()) ||
+      ((e = {
+        Attacker: e.Attacker,
+        Victim: e.Target,
+        SkillID: e.SkillId,
+        SkillType: e.SkillGenre,
+        BulletID: Number(e.BulletId),
+        CounterType: e.CounterAttackType,
+      }),
+      this.Formula.Evaluate(e) && this?.Callback(this.Formula.Params, e));
   }
 }
 class HitTrigger extends Trigger {
@@ -231,15 +238,16 @@ class HitTrigger extends Trigger {
       );
   }
   OnEvent(e) {
-    e = {
-      Attacker: e.Attacker,
-      Victim: e.Target,
-      SkillID: e.SkillId,
-      SkillType: e.SkillGenre,
-      BulletID: Number(e.BulletId),
-      CounterType: e.CounterAttackType,
-    };
-    this.Formula.Evaluate(e) && this?.Callback(this.Formula.Params, e);
+    (this.Checker && !this.Checker()) ||
+      ((e = {
+        Attacker: e.Attacker,
+        Victim: e.Target,
+        SkillID: e.SkillId,
+        SkillType: e.SkillGenre,
+        BulletID: Number(e.BulletId),
+        CounterType: e.CounterAttackType,
+      }),
+      this.Formula.Evaluate(e) && this?.Callback(this.Formula.Params, e));
   }
 }
 class HitTriggerIncludingVision extends Trigger {
@@ -247,15 +255,16 @@ class HitTriggerIncludingVision extends Trigger {
     super(...arguments),
       (this.TargetType = 0),
       (this.OnEvent = (e, t) => {
-        t = {
-          Attacker: t.Attacker,
-          Victim: t.Target,
-          SkillID: t.SkillId,
-          SkillType: t.SkillGenre,
-          BulletID: Number(t.BulletId),
-          CounterType: t.CounterAttackType,
-        };
-        this.Formula.Evaluate(t) && this?.Callback(this.Formula.Params, t);
+        (this.Checker && !this.Checker()) ||
+          ((t = {
+            Attacker: t.Attacker,
+            Victim: t.Target,
+            SkillID: t.SkillId,
+            SkillType: t.SkillGenre,
+            BulletID: Number(t.BulletId),
+            CounterType: t.CounterAttackType,
+          }),
+          this.Formula.Evaluate(t) && this?.Callback(this.Formula.Params, t));
       });
   }
   OnInitParams(e) {
@@ -307,10 +316,10 @@ class AttributeChangedTrigger extends Trigger {
       (this.AttributeId =
         CharacterAttributeTypes_1.EAttributeId.Proto_EAttributeType_None),
       (this.OnEvent = (e, t, i) => {
-        t = { NewValue: t, OldValue: i };
-        this.Formula.Evaluate(t) &&
-          this.Callback &&
-          this.Callback(this.Formula.Params, t);
+        (this.Checker && !this.Checker()) ||
+          (this.Formula.Evaluate((t = { NewValue: t, OldValue: i })) &&
+            this.Callback &&
+            this.Callback(this.Formula.Params, t));
       });
   }
   OnInitParams(e) {
@@ -318,15 +327,16 @@ class AttributeChangedTrigger extends Trigger {
       (this.AttributeId = Number(e[1] ?? 0));
   }
   OnActive() {
+    var e, t;
     0 === this.TargetType &&
-      this.OwnerTriggerComp.Entity.GetComponent(158)?.AddListener(
-        this.AttributeId,
-        this.OnEvent,
-      );
+      (e = this.OwnerTriggerComp.Entity.GetComponent(159)) &&
+      ((t = e.GetCurrentValue(this.AttributeId)),
+      this.OnEvent(this.AttributeId, t, t),
+      e.AddListener(this.AttributeId, this.OnEvent));
   }
   OnInactive() {
     0 === this.TargetType &&
-      this.OwnerTriggerComp?.Entity.GetComponent(158)?.RemoveListener(
+      this.OwnerTriggerComp?.Entity.GetComponent(159)?.RemoveListener(
         this.AttributeId,
         this.OnEvent,
       );
@@ -337,20 +347,33 @@ class TeamAttributeChangedTrigger extends Trigger {
     super(...arguments),
       (this.AttributeId = 1),
       (this.OnEvent = (e, t, i) => {
-        t = { NewValue: t, OldValue: i };
-        this.Formula.Evaluate(t) &&
-          this.Callback &&
-          this.Callback(this.Formula.Params, t);
+        (this.Checker && !this.Checker()) ||
+          ((t = {
+            NewValue: t,
+            OldValue: i,
+            MaxValue:
+              FormationAttributeController_1.FormationAttributeController.GetMax(
+                e,
+              ),
+          }),
+          this.Formula.Evaluate(t) &&
+            this.Callback &&
+            this.Callback(this.Formula.Params, t));
       });
   }
   OnInitParams(e) {
     this.AttributeId = Number(e[0] ?? 0);
   }
   OnActive() {
-    FormationAttributeController_1.FormationAttributeController.AddValueListener(
-      this.AttributeId,
-      this.OnEvent,
-    );
+    var e =
+      FormationAttributeController_1.FormationAttributeController.GetValue(
+        this.AttributeId,
+      );
+    this.OnEvent(this.AttributeId, e, e),
+      FormationAttributeController_1.FormationAttributeController.AddValueListener(
+        this.AttributeId,
+        this.OnEvent,
+      );
   }
   OnInactive() {
     FormationAttributeController_1.FormationAttributeController.RemoveValueListener(
@@ -365,10 +388,12 @@ class TagTrigger extends Trigger {
       (this.CheckRemove = !1),
       (this.TagId = 0),
       (this.OnEvent = (e, t) => {
-        var i = {};
-        t !== this.CheckRemove &&
-          this.Formula.Evaluate(i) &&
-          this?.Callback(this.Formula.Params, i);
+        var i;
+        (this.Checker && !this.Checker()) ||
+          ((i = {}),
+          t !== this.CheckRemove &&
+            this.Formula.Evaluate(i) &&
+            this?.Callback(this.Formula.Params, i));
       });
   }
   OnInitParams(e) {
@@ -387,13 +412,13 @@ class TagTrigger extends Trigger {
   OnActive() {
     void 0 !== this.TagId &&
       this.OwnerTriggerComp?.Entity.GetComponent(
-        188,
+        190,
       )?.AddTagAddOrRemoveListener(this.TagId, this.OnEvent);
   }
   OnInactive() {
     void 0 !== this.TagId &&
       this.OwnerTriggerComp?.Entity.GetComponent(
-        188,
+        190,
       )?.RemoveTagAddOrRemoveListener(this.TagId, this.OnEvent);
   }
 }
@@ -402,16 +427,17 @@ class LimitDodgeTrigger extends Trigger {
     super(...arguments),
       (this.TargetType = 0),
       (this.OnEvent = (e, t, i, s) => {
-        t = {
-          Attacker: e,
-          Victim: t,
-          SkillID: i,
-          SkillType: EntitySystem_1.EntitySystem.Get(e.Id)
-            ?.GetComponent(33)
-            ?.GetSkillInfo(i)?.SkillGenre,
-          BulletID: s,
-        };
-        this.Formula.Evaluate(t) && this?.Callback(this.Formula.Params, t);
+        (this.Checker && !this.Checker()) ||
+          ((t = {
+            Attacker: e,
+            Victim: t,
+            SkillID: i,
+            SkillType: EntitySystem_1.EntitySystem.Get(e.Id)
+              ?.GetComponent(34)
+              ?.GetSkillInfo(i)?.SkillGenre,
+            BulletID: s,
+          }),
+          this.Formula.Evaluate(t) && this?.Callback(this.Formula.Params, t));
       });
   }
   OnInitParams(e) {
@@ -473,15 +499,18 @@ class SkillTrigger extends Trigger {
       (this.SkillId = void 0),
       (this.CheckEnd = !1),
       (this.OnSelfEvent = (e, t) => {
-        if (!(this.SkillId && 0 <= this.SkillId && t !== this.SkillId)) {
+        if (
+          (!this.Checker || this.Checker()) &&
+          !(this.SkillId && 0 <= this.SkillId && t !== this.SkillId)
+        ) {
           var i = EntitySystem_1.EntitySystem.Get(e)
-            ?.GetComponent(33)
+            ?.GetComponent(34)
             ?.GetSkillInfo(t);
           if (i) {
             var s = [];
             for (let e = 0; e < i.SkillTag.Num(); e++) {
-              var r = i?.SkillTag.Get(e)?.TagName;
-              void 0 !== r && s.push(r);
+              var n = i?.SkillTag.Get(e)?.TagName;
+              void 0 !== n && s.push(n);
             }
             e = { SkillType: i?.SkillGenre, SkillTags: s, SkillID: t };
             this.Formula.Evaluate(e) &&
@@ -520,16 +549,26 @@ class SkillTrigger extends Trigger {
             EventDefine_1.EEventName.OnSkillEnd,
             this.OnSelfEvent,
           )
-        : EventSystem_1.EventSystem.HasWithTarget(
+        : (EventSystem_1.EventSystem.HasWithTarget(
             e,
             EventDefine_1.EEventName.CharUseSkill,
             this.OnSelfEvent,
           ) ||
-          EventSystem_1.EventSystem.AddWithTarget(
+            EventSystem_1.EventSystem.AddWithTarget(
+              e,
+              EventDefine_1.EEventName.CharUseSkill,
+              this.OnSelfEvent,
+            ),
+          EventSystem_1.EventSystem.HasWithTarget(
             e,
-            EventDefine_1.EEventName.CharUseSkill,
+            EventDefine_1.EEventName.CharUseSkillRemote,
             this.OnSelfEvent,
-          ));
+          ) ||
+            EventSystem_1.EventSystem.AddWithTarget(
+              e,
+              EventDefine_1.EEventName.CharUseSkillRemote,
+              this.OnSelfEvent,
+            )));
   }
   OnInactive() {
     let e = void 0;
@@ -572,21 +611,23 @@ class DamageTrigger extends Trigger {
     super(...arguments),
       (this.TargetType = 0),
       (this.CalculateType = 0),
-      (this.OnEvent = (e, t, i, s, r) => {
-        s.CalculateType === this.CalculateType &&
-          ((e = {
-            Attacker: e,
-            Victim: t,
-            SkillID: r?.SkillId ?? 0,
-            SkillType: r?.SkillGenre,
-            DamageType: s.Type,
-            DamageSubType: s.SubType,
-            ElementType: s.Element,
-            DamageValue: -i,
-            IsCritical: r.IsCritical,
-          }),
-          this.Formula.Evaluate(e)) &&
-          this?.Callback(this.Formula.Params, e);
+      (this.OnEvent = (e, t, i, s, n) => {
+        (this.Checker && !this.Checker()) ||
+          (s.CalculateType === this.CalculateType &&
+            ((e = {
+              Attacker: e,
+              Victim: t,
+              DamageID: s.Id,
+              SkillID: n?.SkillId ?? 0,
+              SkillType: n?.SkillGenre,
+              DamageType: s.Type,
+              DamageSubType: s.SubType,
+              ElementType: s.Element,
+              DamageValue: -i,
+              IsCritical: n.IsCritical,
+            }),
+            this.Formula.Evaluate(e)) &&
+            this?.Callback(this.Formula.Params, e));
       });
   }
   OnInitParams(e) {
@@ -647,29 +688,33 @@ class GlobalDamageTrigger extends Trigger {
     super(...arguments),
       (this.CalculateType = 0),
       (this.DistSquared = 0),
-      (this.OnEvent = (e, t, i, s, r) => {
-        var n, a;
-        s.CalculateType === this.CalculateType &&
-          this.OwnerTriggerComp?.Entity.Valid &&
-          ((a =
-            this.OwnerTriggerComp?.Entity.GetComponent(3)?.ActorLocationProxy),
-          (n = t.GetComponent(3)?.ActorLocationProxy),
-          a) &&
-          n &&
-          (Vector_1.Vector.DistSquared(a, n) > this.DistSquared ||
-            ((a = {
-              Attacker: e,
-              Victim: t,
-              SkillID: r?.SkillId ?? 0,
-              SkillType: r?.SkillGenre,
-              DamageType: s.Type,
-              DamageSubType: s.SubType,
-              ElementType: s.Element,
-              DamageValue: -i,
-              IsCritical: r.IsCritical,
-            }),
-            this.Formula.Evaluate(a) &&
-              this?.Callback(this.Formula.Params, a)));
+      (this.OnEvent = (e, t, i, s, n) => {
+        var r, h;
+        (this.Checker && !this.Checker()) ||
+          (s.CalculateType === this.CalculateType &&
+            this.OwnerTriggerComp?.Entity.Valid &&
+            ((h =
+              this.OwnerTriggerComp?.Entity.GetComponent(
+                3,
+              )?.ActorLocationProxy),
+            (r = t.GetComponent(3)?.ActorLocationProxy),
+            h) &&
+            r &&
+            (Vector_1.Vector.DistSquared(h, r) > this.DistSquared ||
+              ((h = {
+                Attacker: e,
+                Victim: t,
+                DamageID: s.Id,
+                SkillID: n?.SkillId ?? 0,
+                SkillType: n?.SkillGenre,
+                DamageType: s.Type,
+                DamageSubType: s.SubType,
+                ElementType: s.Element,
+                DamageValue: -i,
+                IsCritical: n.IsCritical,
+              }),
+              this.Formula.Evaluate(h) &&
+                this?.Callback(this.Formula.Params, h))));
       });
   }
   OnInitParams(e) {
@@ -695,21 +740,23 @@ class BeDamageTrigger extends Trigger {
     super(...arguments),
       (this.TargetType = 0),
       (this.CalculateType = 0),
-      (this.OnEvent = (e, t, i, s, r) => {
-        s.CalculateType === this.CalculateType &&
-          ((e = {
-            Attacker: e,
-            Victim: t,
-            SkillID: r?.SkillId ?? 0,
-            SkillType: r?.SkillGenre,
-            DamageType: s.Type,
-            DamageSubType: s.SubType,
-            ElementType: s.Element,
-            DamageValue: -i,
-            IsCritical: r.IsCritical,
-          }),
-          this.Formula.Evaluate(e)) &&
-          this?.Callback(this.Formula.Params, e);
+      (this.OnEvent = (e, t, i, s, n) => {
+        (this.Checker && !this.Checker()) ||
+          (s.CalculateType === this.CalculateType &&
+            ((e = {
+              Attacker: e,
+              Victim: t,
+              DamageID: s.Id,
+              SkillID: n?.SkillId ?? 0,
+              SkillType: n?.SkillGenre,
+              DamageType: s.Type,
+              DamageSubType: s.SubType,
+              ElementType: s.Element,
+              DamageValue: -i,
+              IsCritical: n.IsCritical,
+            }),
+            this.Formula.Evaluate(e)) &&
+            this?.Callback(this.Formula.Params, e));
       });
   }
   OnInitParams(e) {
@@ -770,8 +817,10 @@ class GameplayEventTrigger extends Trigger {
     super(...arguments),
       (this.TagId = 0),
       (this.OnEvent = (e) => {
-        var t = {};
-        this.Formula.Evaluate(t) && this?.Callback(this.Formula.Params, t);
+        var t;
+        (this.Checker && !this.Checker()) ||
+          (this.Formula.Evaluate((t = {})) &&
+            this?.Callback(this.Formula.Params, t));
       });
   }
   OnInitParams(e) {
@@ -798,6 +847,138 @@ class GameplayEventTrigger extends Trigger {
       this.OwnerTriggerComp?.Entity.GetComponent(
         17,
       )?.RemoveGameplayEventListener(this.TagId, this.OnEvent);
+  }
+}
+class QteGoBattleTrigger extends Trigger {
+  constructor() {
+    super(...arguments),
+      (this.TargetType = 0),
+      (this.OnEvent = (e, t) => {
+        if (!this.Checker || this.Checker()) {
+          switch (this.TargetType) {
+            case 0:
+              if (e !== this.OwnerTriggerComp?.Entity.Id) return;
+              break;
+            case 1:
+              var i = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
+                e,
+                { ParamType: 1 },
+              );
+              if (i && i.IsMyRole()) break;
+              return;
+          }
+          t = {
+            GoBattleEntity: EntitySystem_1.EntitySystem.Get(e),
+            GoDownEntity: EntitySystem_1.EntitySystem.Get(t),
+          };
+          this.Formula.Evaluate(t) && this?.Callback(this.Formula.Params, t);
+        }
+      });
+  }
+  OnInitParams(e) {
+    this.TargetType = Number(e[0] ?? 0);
+  }
+  OnActive() {
+    EventSystem_1.EventSystem.Has(
+      EventDefine_1.EEventName.CharExecuteQte,
+      this.OnEvent,
+    ) ||
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.CharExecuteQte,
+        this.OnEvent,
+      ),
+      EventSystem_1.EventSystem.Has(
+        EventDefine_1.EEventName.CharExecuteMultiQte,
+        this.OnEvent,
+      ) ||
+        EventSystem_1.EventSystem.Add(
+          EventDefine_1.EEventName.CharExecuteMultiQte,
+          this.OnEvent,
+        );
+  }
+  OnInactive() {
+    EventSystem_1.EventSystem.Has(
+      EventDefine_1.EEventName.CharExecuteQte,
+      this.OnEvent,
+    ) &&
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.CharExecuteQte,
+        this.OnEvent,
+      ),
+      EventSystem_1.EventSystem.Has(
+        EventDefine_1.EEventName.CharExecuteMultiQte,
+        this.OnEvent,
+      ) &&
+        EventSystem_1.EventSystem.Add(
+          EventDefine_1.EEventName.CharExecuteMultiQte,
+          this.OnEvent,
+        );
+  }
+}
+class QteGoDownTrigger extends Trigger {
+  constructor() {
+    super(...arguments),
+      (this.TargetType = 0),
+      (this.OnEvent = (e, t) => {
+        if (!this.Checker || this.Checker()) {
+          switch (this.TargetType) {
+            case 0:
+              if (t !== this.OwnerTriggerComp?.Entity.Id) return;
+              break;
+            case 1:
+              var i = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
+                t,
+                { ParamType: 1 },
+              );
+              if (i && i.IsMyRole()) break;
+              return;
+          }
+          e = {
+            GoBattleEntity: EntitySystem_1.EntitySystem.Get(e),
+            GoDownEntity: EntitySystem_1.EntitySystem.Get(t),
+          };
+          this.Formula.Evaluate(e) && this?.Callback(this.Formula.Params, e);
+        }
+      });
+  }
+  OnInitParams(e) {
+    this.TargetType = Number(e[0] ?? 0);
+  }
+  OnActive() {
+    EventSystem_1.EventSystem.Has(
+      EventDefine_1.EEventName.CharExecuteQte,
+      this.OnEvent,
+    ) ||
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.CharExecuteQte,
+        this.OnEvent,
+      ),
+      EventSystem_1.EventSystem.Has(
+        EventDefine_1.EEventName.CharExecuteMultiQte,
+        this.OnEvent,
+      ) ||
+        EventSystem_1.EventSystem.Add(
+          EventDefine_1.EEventName.CharExecuteMultiQte,
+          this.OnEvent,
+        );
+  }
+  OnInactive() {
+    EventSystem_1.EventSystem.Has(
+      EventDefine_1.EEventName.CharExecuteQte,
+      this.OnEvent,
+    ) &&
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.CharExecuteQte,
+        this.OnEvent,
+      ),
+      EventSystem_1.EventSystem.Has(
+        EventDefine_1.EEventName.CharExecuteMultiQte,
+        this.OnEvent,
+      ) &&
+        EventSystem_1.EventSystem.Add(
+          EventDefine_1.EEventName.CharExecuteMultiQte,
+          this.OnEvent,
+        );
   }
 }
 //# sourceMappingURL=Trigger.js.map

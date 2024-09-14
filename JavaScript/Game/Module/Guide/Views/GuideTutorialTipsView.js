@@ -94,13 +94,13 @@ class GuideTutorialTipsView extends UiTickViewBase_1.UiTickViewBase {
         this.GetSprite(3).SetFillAmount(1),
         this.UiViewSequence.AddSequenceFinishEvent("StartTips", this.cZt),
         this.UiViewSequence.AddSequenceFinishEvent("CloseTips", this.yZt),
-        GuideTutorialTipsView.Tla ||
-          ((GuideTutorialTipsView.Tla = !0),
+        GuideTutorialTipsView.Lua ||
+          ((GuideTutorialTipsView.Lua = !0),
           TutorialController_1.TutorialController.OnTutorialTipExistChanged(
             !0,
           )),
-        GuideTutorialTipsView.Lla?.Remove(),
-        (GuideTutorialTipsView.Lla = void 0))
+        GuideTutorialTipsView.Dua?.Remove(),
+        (GuideTutorialTipsView.Dua = void 0))
       : this.WaitToDestroy || this.IZt();
   }
   OnAfterShow() {
@@ -110,11 +110,11 @@ class GuideTutorialTipsView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnBeforeDestroy() {
     0 === this.TutorialInfo.TipState
-      ? (GuideTutorialTipsView.Lla = TimerSystem_1.TimerSystem.Delay(
-          GuideTutorialTipsView.Dla,
-          GuideTutorialTipsView.Ala,
+      ? (GuideTutorialTipsView.Dua = TimerSystem_1.TimerSystem.Delay(
+          GuideTutorialTipsView.Aua,
+          GuideTutorialTipsView.Rua,
         ))
-      : GuideTutorialTipsView.Dla();
+      : GuideTutorialTipsView.Aua();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.HideHUD, this.TZt),
@@ -147,14 +147,14 @@ class GuideTutorialTipsView extends UiTickViewBase_1.UiTickViewBase {
     });
   }
 }
-((exports.GuideTutorialTipsView = GuideTutorialTipsView).Tla = !1),
-  (GuideTutorialTipsView.Ala = 5e3),
-  (GuideTutorialTipsView.Lla = void 0),
-  (GuideTutorialTipsView.Dla = () => {
-    GuideTutorialTipsView.Tla &&
+((exports.GuideTutorialTipsView = GuideTutorialTipsView).Lua = !1),
+  (GuideTutorialTipsView.Rua = 5e3),
+  (GuideTutorialTipsView.Dua = void 0),
+  (GuideTutorialTipsView.Aua = () => {
+    GuideTutorialTipsView.Lua &&
       (TutorialController_1.TutorialController.OnTutorialTipExistChanged(!1),
-      (GuideTutorialTipsView.Tla = !1)),
-      GuideTutorialTipsView.Lla?.Remove(),
-      (GuideTutorialTipsView.Lla = void 0);
+      (GuideTutorialTipsView.Lua = !1)),
+      GuideTutorialTipsView.Dua?.Remove(),
+      (GuideTutorialTipsView.Dua = void 0);
   });
 //# sourceMappingURL=GuideTutorialTipsView.js.map

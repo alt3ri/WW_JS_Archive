@@ -88,7 +88,15 @@ class LguiUtil {
     );
   }
   static DuplicateActor(e, t) {
-    return Stats_1.Stat.Enable && 0, UE.LGUIBPLibrary.DuplicateActor(e, t);
+    var r, o;
+    return Stats_1.Stat.Enable
+      ? ((r = Stats_1.Stat.Create(
+          "LGUI DuplicateActor " + LguiUtil.GetActorFullPath(e),
+        )).Start(),
+        (o = UE.LGUIBPLibrary.DuplicateActor(e, t)),
+        r.Stop(),
+        o)
+      : UE.LGUIBPLibrary.DuplicateActor(e, t);
   }
   static SetLocalText(e, t, ...r) {
     t = ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(t);

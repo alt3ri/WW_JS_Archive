@@ -147,10 +147,12 @@ class NpcIconComponentView extends UiPanelBase_1.UiPanelBase {
   }
   SetTrackEffectState(t) {
     this.Xqi !== t &&
-      ((this.Xqi = t), EffectSystem_1.EffectSystem.IsValid(this.ymt)) &&
-      EffectSystem_1.EffectSystem.GetEffectActor(this.ymt).SetActorHiddenInGame(
+      ((this.Xqi = t),
+      EffectSystem_1.EffectSystem.SetEffectHidden(
+        this.ymt,
         t,
-      );
+        "NpcIconComponentView",
+      ));
   }
   SetHeadInfoNameState(t) {
     this.Wqi !== t &&

@@ -24,6 +24,8 @@ class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
       (this.HasNewItems = !1),
       (this.LevelSequencePlayer = void 0),
       (this.GachaBP = void 0),
+      (this.IsFirstShow = !0),
+      (this.IsFireEndGacha = !1),
       (this.InitGachaBp = (e, i) => {
         let t = 0;
         1 === e
@@ -73,47 +75,41 @@ class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.OnEndGacha = () => {
         (this.IsShowTips = !0),
-          this.GachaBP.IsSkip
-            ? BlackScreenController_1.BlackScreenController.AddBlackScreenAsync(
-                "Start",
-                "GachaSkip",
-              ).finally(() => {
-                if (5 === this.MaxQuality || this.HasNewItems) {
-                  let e = this.OpenParam;
-                  e
-                    ? (e.IsOnlyShowGold = !0)
-                    : (e = {
-                        SkipOnLoadResourceFinish: !1,
-                        ResultViewHideExtraReward: !1,
-                        IsOnlyShowGold: !0,
-                      }),
-                    UiManager_1.UiManager.OpenView("GachaScanView", e, () => {
-                      BlackScreenController_1.BlackScreenController.RemoveBlackScreen(
-                        "Close",
-                        "GachaSkip",
-                      ),
+          this.IsFireEndGacha ||
+            (this.GachaBP.IsSkip
+              ? BlackScreenController_1.BlackScreenController.AddBlackScreenAsync(
+                  "Start",
+                  "GachaSkip",
+                ).finally(() => {
+                  if (5 === this.MaxQuality || this.HasNewItems) {
+                    let e = this.OpenParam;
+                    e
+                      ? (e.IsOnlyShowGold = !0)
+                      : (e = {
+                          SkipOnLoadResourceFinish: !1,
+                          ResultViewHideExtraReward: !1,
+                          IsOnlyShowGold: !0,
+                        }),
+                      UiManager_1.UiManager.OpenView("GachaScanView", e, () => {
                         UiManager_1.UiManager.CloseView(this.Info.Name);
-                    });
-                } else
-                  UiManager_1.UiManager.OpenView(
-                    "GachaResultView",
-                    this.OpenParam,
-                    () => {
-                      BlackScreenController_1.BlackScreenController.RemoveBlackScreen(
-                        "Close",
-                        "GachaSkip",
-                      ),
+                      });
+                  } else
+                    UiManager_1.UiManager.OpenView(
+                      "GachaResultView",
+                      this.OpenParam,
+                      () => {
                         UiManager_1.UiManager.CloseView(this.Info.Name);
-                    },
-                  );
-              })
-            : UiManager_1.UiManager.OpenView(
-                "GachaScanView",
-                this.OpenParam,
-                () => {
-                  UiManager_1.UiManager.CloseView(this.Info.Name);
-                },
-              );
+                      },
+                    );
+                })
+              : UiManager_1.UiManager.OpenView(
+                  "GachaScanView",
+                  this.OpenParam,
+                  () => {
+                    UiManager_1.UiManager.CloseView(this.Info.Name);
+                  },
+                ),
+            (this.IsFireEndGacha = !0));
       }),
       (this.OnGachaInteractFinish = () => {
         (this.IsEnd = !0), this.IsShowTips;
@@ -134,14 +130,16 @@ class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
   async OnBeforeStartAsync() {
     var e = [];
     for (const i of ModelManager_1.ModelManager.GachaModel.CurGachaResult)
-      e.push(i.WVn.f8n);
+      e.push(i.e9n.L8n);
     await ModelManager_1.ModelManager.GachaModel.PreloadGachaSequence(e);
   }
   OnBeforeShow() {
-    var e = ModelManager_1.ModelManager.GachaModel.CurGachaResult.length,
-      i = ModelManager_1.ModelManager.GachaModel.CurGachaResult.reduce(
+    var e, i;
+    this.IsFirstShow &&
+      ((e = ModelManager_1.ModelManager.GachaModel.CurGachaResult.length),
+      (i = ModelManager_1.ModelManager.GachaModel.CurGachaResult.reduce(
         (e, i) => {
-          var t = i.WVn.f8n,
+          var t = i.e9n.L8n,
             t =
               ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t)
                 ?.QualityId ?? 0;
@@ -151,8 +149,10 @@ class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
           );
         },
         0,
-      );
-    this.InitGachaBp(e, i), this.InitAudioState(e, i);
+      )),
+      this.InitGachaBp(e, i),
+      this.InitAudioState(e, i),
+      (this.IsFirstShow = !1));
   }
   OnStart() {
     this.GetButton(1).RootUIComp.SetUIActive(!0),
@@ -194,6 +194,11 @@ class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
         EventDefine_1.EEventName.GachaInteractFinish,
         this.OnGachaInteractFinish,
       );
+  }
+  OnBeforeDestroyImplement() {
+    this.GachaBP?.IsValid() &&
+      (this.GachaBP?.EndGachaSequence(),
+      this.GachaBP?.LevelSequenceShow?.SequencePlayer?.Stop());
   }
 }
 exports.DrawMainViewNew = DrawMainViewNew;

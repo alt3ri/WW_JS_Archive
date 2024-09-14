@@ -64,6 +64,12 @@ class SpecialPanelHandleBase {
   GetLoopOrLayoutListener(t) {
     return this.OnGetLoopOrLayoutListener(t);
   }
+  GetSuitableListenerWithoutLayout(t) {
+    t = this.GetNavigationGroup(t.GroupName);
+    return UiNavigationNewController_1.UiNavigationNewController.FindSuitableListenerWithoutLayout(
+      t,
+    );
+  }
   ResetGroupConfigMemory() {
     for (const t of this.Npo.values())
       t.SelectableMemory && (t.LastSelectListener = void 0);

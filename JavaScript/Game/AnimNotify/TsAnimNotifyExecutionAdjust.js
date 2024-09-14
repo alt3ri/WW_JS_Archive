@@ -16,7 +16,7 @@ class TsAnimNotifyExecutionAdjust extends UE.KuroAnimNotify {
   K2_Notify(e, t) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
-      var o = e.CharacterActorComponent.Entity.GetComponent(44);
+      var o = e.CharacterActorComponent.Entity.GetComponent(45);
       if (o) {
         o = o.PendingCaughtList.get(this.CaughtId);
         if (o) {
@@ -46,7 +46,7 @@ class TsAnimNotifyExecutionAdjust extends UE.KuroAnimNotify {
               }
             t &&
               (n = o[0].GetComponent(0))?.GetEntityType() ===
-                Protocol_1.Aki.Protocol.wks.Proto_Monster &&
+                Protocol_1.Aki.Protocol.kks.Proto_Monster &&
               ((n = Vector_1.Vector.Create(n?.GetInitLocation())),
               (r = Vector_1.Vector.Create(r)),
               (i = Vector_1.Vector.Create()),

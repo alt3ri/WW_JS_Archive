@@ -32,9 +32,9 @@ class VisionEquipmentDropDownTitleItem extends TitleItemBase_1.TitleItemBase {
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             e.FetterGroupName,
           ) ?? "")
-        : MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+        : (MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             "Text_FilterTextAllVisionFetter_Text",
-          ) ?? ""),
+          ) ?? "")),
       this.GetText(0).SetText(r);
     e = i
       ? ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupById(i)

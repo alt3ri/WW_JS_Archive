@@ -1,8 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RedDotBase = exports.RedDotData = void 0);
-const Log_1 = require("../../Core/Common/Log"),
+const cpp_1 = require("cpp"),
+  Log_1 = require("../../Core/Common/Log"),
   Stats_1 = require("../../Core/Common/Stats"),
+  Time_1 = require("../../Core/Common/Time"),
+  Macro_1 = require("../../Core/Preprocessor/Macro"),
   StringBuilder_1 = require("../../Core/Utils/StringBuilder"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
   ModelManager_1 = require("../Manager/ModelManager"),
@@ -81,7 +84,8 @@ class RedDotBase {
               RedDotSystem_1.RedDotSystem.PushToEventQueue(this.war, e));
       }),
       (this.war = (t = 0) => {
-        STAT_MODE;
+        (RedDotBase.ae = cpp_1.KuroTime.GetMicroseconds64()),
+          STAT_MODE && RedDotBase.fbo.Start();
         var e = this.OnCheck(t),
           i = this.ANo(t);
         i
@@ -97,7 +101,19 @@ class RedDotBase {
                 ["uId", t],
                 ["result", e],
               ),
-            STAT_MODE)
+            STAT_MODE && RedDotBase.fbo.Stop(),
+            1 === ModelManager_1.ModelManager.GameModeModel?.LoadingPhase &&
+              ((i = cpp_1.KuroTime.GetMicroseconds64() - RedDotBase.ae),
+              RedDotBase.m5i !== Time_1.Time.Frame
+                ? (0 < RedDotBase.m5i &&
+                    cpp_1.FKuroPerfSightHelper.PostValueFloat1(
+                      "RedDot",
+                      "RedDotCostPerFrame",
+                      RedDotBase.O5t,
+                    ),
+                  (RedDotBase.m5i = Time_1.Time.Frame),
+                  (RedDotBase.O5t = i))
+                : (RedDotBase.O5t += i)))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RedDot",
@@ -221,16 +237,16 @@ class RedDotBase {
       r = new StringBuilder_1.StringBuilder();
     for ([t, e] of this.NQ) {
       r.Clear();
-      for (const n of e.GetUiItemSet()) r.Append(n.GetDisplayName() + ", ");
+      for (const a of e.GetUiItemSet()) r.Append(a.GetDisplayName() + ", ");
       s.Append(
         `{uid:${t}, stateCount:${e.StateCount} uiItem:[${r.ToString()}] }`,
       );
     }
-    var h,
-      o = new StringBuilder_1.StringBuilder();
-    for ([h] of this.Gar.ChildMap) o.Append(h.Name + ", ");
+    var o,
+      h = new StringBuilder_1.StringBuilder();
+    for ([o] of this.Gar.ChildMap) h.Append(o.Name + ", ");
     return (
-      i.Append(`[红点:${this.Name} 父红点:${this.Gar.Parent?.Element.Name} 子红点:{${o.ToString()}}  数据:{ ${s.ToString()} }]
+      i.Append(`[红点:${this.Name} 父红点:${this.Gar.Parent?.Element.Name} 子红点:{${h.ToString()}}  数据:{ ${s.ToString()} }]
 `),
       i.ToString()
     );
@@ -267,5 +283,8 @@ class RedDotBase {
       ]);
   }
 }
-(exports.RedDotBase = RedDotBase).fbo = void 0;
+((exports.RedDotBase = RedDotBase).fbo = Stats_1.Stat.Create("RedDot")),
+  (RedDotBase.m5i = 0),
+  (RedDotBase.O5t = 0),
+  (RedDotBase.ae = 0);
 //# sourceMappingURL=RedDotBase.js.map

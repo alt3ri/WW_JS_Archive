@@ -4,7 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.DEFAULT_PASSIVE_BUFF_ADD_TIMES =
     exports.DEFAULT_PASSIVE_BULLET_TIMES =
       void 0);
-const ExtraEffectBase_1 = require("./ExtraEffectBase");
+const Macro_1 = require("../../../../../../../Core/Preprocessor/Macro"),
+  ExtraEffectBase_1 = require("./ExtraEffectBase");
 (exports.DEFAULT_PASSIVE_BULLET_TIMES = 1),
   (exports.DEFAULT_PASSIVE_BUFF_ADD_TIMES = 0);
 class PassiveEffects extends ExtraEffectBase_1.BuffEffect {
@@ -39,9 +40,9 @@ class PassiveEffects extends ExtraEffectBase_1.BuffEffect {
     }
   }
   GetBuffHolderSkillTarget() {
-    var t =
-      this.OwnerBuffComponent?.GetEntity()?.CheckGetComponent(33)?.SkillTarget;
-    return t ? t.Entity.CheckGetComponent(192) : this.OwnerBuffComponent;
+    var e =
+      this.OwnerBuffComponent?.GetEntity()?.CheckGetComponent(34)?.SkillTarget;
+    return e ? e.Entity.CheckGetComponent(194) : this.OwnerBuffComponent;
   }
 }
 exports.PassiveEffects = PassiveEffects;

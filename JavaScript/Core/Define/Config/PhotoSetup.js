@@ -20,8 +20,10 @@ class PhotoSetup {
     return this.type();
   }
   get Options() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.optionsLength(), (t) =>
-      this.options(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.optionsLength(),
+      this.options,
+      this,
     );
   }
   get DefaultOptionIndex() {
@@ -30,13 +32,22 @@ class PhotoSetup {
   get SubOptions() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.suboptionsLength(),
-      (t) => this.suboptions(t)?.key(),
-      (t) => this.suboptions(t)?.value(),
+      this.suboptionsKey,
+      this.suboptionsValue,
+      this,
     );
   }
+  suboptionsKey(t) {
+    return this.suboptions(t)?.key();
+  }
+  suboptionsValue(t) {
+    return this.suboptions(t)?.value();
+  }
   get ValueRange() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.valuerangeLength(), (t) =>
-      this.valuerange(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.valuerangeLength(),
+      this.valuerange,
+      this,
     );
   }
   get IsReverseSet() {

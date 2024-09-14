@@ -8,7 +8,11 @@ const UE = require("ue"),
   MarkItemView_1 = require("./MarkItemView");
 class ConfigMarkItemView extends MarkItemView_1.MarkItemView {
   constructor(e) {
-    super(e), (this.dRi = void 0), (this.CRi = void 0);
+    super(e),
+      (this.MarkConfig = void 0),
+      (this.dRi = void 0),
+      (this.CRi = void 0),
+      (this.MarkConfig = e.MarkConfig);
   }
   OnInitialize() {
     super.OnInitialize(),

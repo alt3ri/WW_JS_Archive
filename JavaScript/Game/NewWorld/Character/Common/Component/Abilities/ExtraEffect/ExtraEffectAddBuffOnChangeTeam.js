@@ -18,7 +18,7 @@ class AddBuffOnChangeTeam extends ExtraEffectBase_1.BuffEffect {
             ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities()).forEach(
             (e) => {
               if (!this.WQo.includes(e.Id)) {
-                var t = e.Entity.GetComponent(159);
+                var t = e.Entity.GetComponent(160);
                 for (const s of this.jQo)
                   t?.AddIterativeBuff(
                     s,

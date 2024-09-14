@@ -8,8 +8,8 @@ class HandBookQuestPlotItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.PlotNodeItem = void 0),
-      (this.Hxn = void 0),
-      (this.bBn = void 0);
+      (this.kxn = void 0),
+      (this.jBn = void 0);
   }
   async Init(t) {
     await super.CreateByActorAsync(t.GetOwner(), void 0, !0), await this.WZt();
@@ -19,7 +19,7 @@ class HandBookQuestPlotItem extends UiPanelBase_1.UiPanelBase {
       this.AddChild(this.PlotNodeItem),
       this.GetItem(0).SetUIActive(!1),
       await this.PlotNodeItem.CreateByActorAsync(this.GetItem(1).GetOwner()),
-      this.PlotNodeItem.BindClickCallback(this.Hxn);
+      this.PlotNodeItem.BindClickCallback(this.kxn);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -32,7 +32,7 @@ class HandBookQuestPlotItem extends UiPanelBase_1.UiPanelBase {
   }
   Update(t, e) {
     this.PlotNodeItem.SetUiActive(!0),
-      this.PlotNodeItem.Update(t.TidText, this.qBn(t.TidText));
+      this.PlotNodeItem.Update(t.TidText, this.WBn(t.TidText));
   }
   GetNodeToggle() {
     return this.PlotNodeItem.GetNodeToggle();
@@ -44,13 +44,13 @@ class HandBookQuestPlotItem extends UiPanelBase_1.UiPanelBase {
     this.Destroy();
   }
   BindClickCallback(t) {
-    this.Hxn = t;
+    this.kxn = t;
   }
-  qBn(t) {
-    return !!this.bBn && this.bBn(t);
+  WBn(t) {
+    return !!this.jBn && this.jBn(t);
   }
   BindIsSelectFunction(t) {
-    this.bBn = t;
+    this.jBn = t;
   }
   GetTidText() {
     return this.PlotNodeItem?.GetTidText();
@@ -63,11 +63,11 @@ exports.HandBookQuestPlotItem = HandBookQuestPlotItem;
 class PlotNodeItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.Hxn = void 0),
+      (this.kxn = void 0),
       (this.$Ve = void 0),
       (this.os = ""),
       (this.OnClickExtendToggle = (t) => {
-        1 === t && this.Hxn && this.Hxn(this.os, this.$Ve);
+        1 === t && this.kxn && this.kxn(this.os, this.$Ve);
       });
   }
   OnRegisterComponent() {
@@ -82,7 +82,7 @@ class PlotNodeItem extends UiPanelBase_1.UiPanelBase {
     (this.$Ve = this.GetExtendToggle(0)), this.$Ve.SetToggleState(0);
   }
   BindClickCallback(t) {
-    this.Hxn = t;
+    this.kxn = t;
   }
   Update(t, e) {
     this.os = t;

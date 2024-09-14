@@ -41,13 +41,15 @@ class EffectSpec {
       (this.dfe = -0),
       (this.Cfe = -0),
       (this.gW = void 0),
+      (this.uJa = void 0),
       (this.gfe = void 0),
       (this.ffe = void 0),
       (this.pfe = void 0),
-      (this.Visible = !0),
+      (this.Visible = !1),
+      (this.O7a = !0),
       (this.Enable = !0),
-      (this.$Gn = !1),
-      (this.YGn = !1);
+      (this.oOn = !1),
+      (this.nOn = !1);
   }
   GetHandle() {
     return this.Handle;
@@ -122,10 +124,21 @@ class EffectSpec {
             this.bge < MAX_WAIT_TIME_SCALE_VALUE &&
             this.Handle?.IsRoot &&
             this.LifeTime.UnregisterWaitMiniTimeScale()),
+      EffectEnvironment_1.EffectEnvironment.UseLog &&
+        Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "RenderEffect",
+          37,
+          "特效框架:Spec SetTimeScale",
+          ["句柄Id", this.Handle?.Id],
+          ["Path", this.Handle?.Path],
+          ["timeScale", t],
+        ),
       (this.bge = t));
   }
   OnGlobalTimeScaleChange() {
     this.Handle?.StoppingTime ||
+      this.GetIgnoreTimeScale() ||
       (this.LifeTime.SetTimeScale(this.bge * this.GetGlobalTimeScale()),
       this.SetTimeScale(this.bge, !0));
   }
@@ -195,21 +208,22 @@ class EffectSpec {
   GetIgnoreTimeScale() {
     return this.cfe;
   }
-  vfe() {
-    (this.BodyEffectOpacity = 1), (this.BodyEffectVisible = !0);
+  Gba() {
     let t = void 0;
-    var i = this.Handle?.GetEffectActor()?.GetAttachParentActor(),
+    var i = this.Handle?.GetSureEffectActor()?.GetAttachParentActor(),
       s = this.Handle.GetContext(),
       e = s;
-    (0 < this.EffectModel.LoopTime || this.EffectModel.NeedDisableWithActor) &&
-      (e &&
-        ((e = e.SkeletalMeshComp?.GetOwner()),
-        (t = e?.GetComponentByClass(
-          UE.CharRenderingComponent_C.StaticClass(),
-        ))),
-      (t =
-        t ||
-        i?.GetComponentByClass(UE.CharRenderingComponent_C.StaticClass()))),
+    return (
+      (0 < this.EffectModel.LoopTime ||
+        this.EffectModel.NeedDisableWithActor) &&
+        (e &&
+          ((e = e.SkeletalMeshComp?.GetOwner()),
+          (t = e?.GetComponentByClass(
+            UE.CharRenderingComponent_C.StaticClass(),
+          ))),
+        (t =
+          t ||
+          i?.GetComponentByClass(UE.CharRenderingComponent_C.StaticClass()))),
       t ||
         !this.EffectModel.NeedDisableWithActor ||
         ((e = s?.SourceObject),
@@ -222,7 +236,23 @@ class EffectSpec {
           (t = e.GetComponentByClass(
             UE.CharRenderingComponent_C.StaticClass(),
           ))),
-      t && t.RegisterBodyEffect(this.Handle);
+      t
+    );
+  }
+  ShouldRegisterBodyEffect() {
+    return !0;
+  }
+  RegisterBodyEffect() {
+    var t;
+    this.ShouldRegisterBodyEffect() &&
+      ((this.BodyEffectOpacity = 1),
+      (this.BodyEffectVisible = !0),
+      (t = this.Gba())) &&
+      t.RegisterBodyEffect(this.Handle);
+  }
+  UnregisterBodyEffect() {
+    var t = this.Gba();
+    t && t.UnregisterBodyEffect(this.Handle);
   }
   UpdateBodyEffect(t, i) {
     Info_1.Info.IsInCg() ||
@@ -230,7 +260,7 @@ class EffectSpec {
       this.Handle.IsRoot() &&
         this.BodyEffectVisible !== i &&
         ((this.BodyEffectVisible = i),
-        this.Handle.GetSureEffectActor().SetActorHiddenInGame(!i)),
+        this.Handle.SetHidden(!i, "UpdateBodyEffect")),
       i && this.OnBodyEffectChanged(this.BodyEffectOpacity));
   }
   GetHideOnBurstSkill() {
@@ -241,10 +271,22 @@ class EffectSpec {
       ((this.ige |= 1),
       (this.EffectModel = t),
       Stats_1.Stat.Enable &&
-        ((this.gW = void 0),
-        (this.gfe = void 0),
-        (this.ffe = void 0),
-        (this.pfe = void 0)),
+        ((this.gW = Stats_1.Stat.Create(
+          "[EffectSpec.Tick] Path:" + this.Handle.Path,
+        )),
+        (this.uJa = Stats_1.Stat.Create(
+          "[EffectSpec.AlwaysTick] Path:" + this.Handle.Path,
+        )),
+        (this.gfe = Stats_1.Stat.Create(
+          "[EffectSpec.Tick.RefreshTime] Path:" + this.Handle.Path,
+        )),
+        (this.ffe = Stats_1.Stat.Create(
+          "[EffectSpec.LiftTick] Path:" + this.Handle.Path,
+        )),
+        (this.pfe = Stats_1.Stat.Create(
+          "[EffectSpec.OnTickStat] Path:" + this.Handle.Path,
+        ))),
+      (this.cfe = t.IgnoreTimeDilation),
       !this.Handle.IsRoot())
     ) {
       if (t.IsA(UE.EffectModelGroup_C.StaticClass()))
@@ -263,7 +305,6 @@ class EffectSpec {
         this.SetTimeScale(this.Handle.Parent.GetTimeScale());
     }
     return (
-      (this.cfe = t.IgnoreTimeDilation),
       (this.mfe = t.HideOnBurstSkill),
       (this.ae = t.StartTime),
       (this.dfe = t.LoopTime),
@@ -279,42 +320,53 @@ class EffectSpec {
   Start() {
     return (this.ige |= 2), !!this.OnStart();
   }
+  AlwaysTick(t) {
+    this.uJa?.Start(),
+      this.NeedVisibilityTest() &&
+        this.IsPlaying() &&
+        (!this.oOn &&
+          this.LifeTime.IsAfterStart &&
+          ((this.oOn = !0),
+          this.VisibilityChanged(!this.Handle || this.Handle.HandleVisible)),
+        !this.nOn) &&
+        this.HasBounds() &&
+        ((this.nOn = !0),
+        this.VisibilityChanged(!this.Handle || this.Handle.HandleVisible)),
+      this.uJa?.Stop();
+  }
   Tick(i) {
-    if (this.IsPlaying()) {
+    if ((this.gW?.Start(), this.IsPlaying())) {
       if (
         this.Handle?.GetRoot()?.StoppingTime &&
         this.Handle?.GetGlobalStoppingTime()
       ) {
-        if (this.StoppingTimeInternal) return;
+        if (this.StoppingTimeInternal) return void this.gW?.Stop();
         this.LifeTime.IsAfterStart &&
           this.LifeTime.TotalPassTime >=
             this.Handle.GetGlobalStoppingPlayTime() &&
-          this.LUn();
+          (this.LUn(), this.gW?.Stop());
       }
       let t = i;
       var s, e;
-      !this.GetIgnoreTimeScale() &&
-        ((s = this.GetGlobalTimeScale()),
-        (e = this.GetTimeScale()),
-        s < SMALLER_ONE ||
-          s > LARGER_ONE ||
-          e < SMALLER_ONE ||
-          e > LARGER_ONE) &&
-        (t = i * s * e),
-        this._fe && this.OnTick(t),
-        !this.$Gn &&
-          this.LifeTime.IsAfterStart &&
-          ((this.$Gn = !0),
-          this.VisibilityChanged(!this.Handle || this.Handle.HandleVisible)),
-        !this.YGn &&
-          this.HasBounds() &&
-          ((this.YGn = !0),
-          this.VisibilityChanged(!this.Handle || this.Handle.HandleVisible)),
-        this.LifeTime.Tick(t);
+      this.gfe?.Start(),
+        !this.GetIgnoreTimeScale() &&
+          ((s = this.GetGlobalTimeScale()),
+          (e = this.GetTimeScale()),
+          s < SMALLER_ONE ||
+            s > LARGER_ONE ||
+            e < SMALLER_ONE ||
+            e > LARGER_ONE) &&
+          (t = i * s * e),
+        this.gfe?.Stop(),
+        this._fe && (this.pfe?.Start(), this.OnTick(t), this.pfe?.Stop()),
+        this.ffe?.Start(),
+        this.LifeTime.Tick(t),
+        this.ffe?.Stop();
     }
+    this.gW?.Stop();
   }
   IsVisible() {
-    return this.Visible;
+    return !this.HasBounds() || !this.LifeTime.IsAfterStart || this.Visible;
   }
   IsEnable() {
     return this.Enable;
@@ -323,9 +375,11 @@ class EffectSpec {
     Info_1.Info.IsGameRunning() &&
       !this.Handle?.IgnoreVisibilityOptimize &&
       this.LifeTime.IsAfterStart &&
-      (t || this.HasBounds()) &&
-      this.Visible !== t &&
-      ((this.Visible = t), this.OnVisibilityChanged(t));
+      this.HasBounds() &&
+      (this.O7a
+        ? ((this.O7a = !1), (this.Visible = t), this.OnVisibilityChanged(t))
+        : this.Visible !== t &&
+          ((this.Visible = t), this.OnVisibilityChanged(t)));
   }
   HasBounds() {
     return !0;
@@ -412,11 +466,12 @@ class EffectSpec {
       (this.ige &= EEffectFlag_1.RESET_PRESTOP_FLAG),
       (this.bge = 1),
       this.LifeTime.OnReplay(),
-      (this.Visible = !0),
+      (this.Visible = !1),
+      (this.O7a = !0),
       (this.Enable = !0),
       (this.StoppingTimeInternal = !1),
-      (this.$Gn = !1),
-      (this.YGn = !1),
+      (this.oOn = !1),
+      (this.nOn = !1),
       this.OnReplay();
   }
   Play(t) {
@@ -424,6 +479,7 @@ class EffectSpec {
       this.IsValid() &&
         (this.LifeTime.SetTime(this.ae, this.dfe, this.Cfe),
         this.Handle?.StoppingTime ||
+          this.GetIgnoreTimeScale() ||
           this.LifeTime.SetTimeScale(this.bge * this.GetGlobalTimeScale()),
         (this.LastPlayTime =
           EffectEnvironment_1.EffectEnvironment.GameTimeInSeconds),
@@ -439,7 +495,7 @@ class EffectSpec {
           t,
         ),
         this.Handle.IsRoot()) &&
-        this.vfe();
+        this.RegisterBodyEffect();
   }
   CanStop() {
     return this.OnCanStop();
@@ -500,6 +556,10 @@ class EffectSpec {
   }
   OnEnterFreeze() {}
   OnExitFreeze() {}
+  OnModifyEffectModel() {}
+  GetDebugErrorCode() {
+    return 0;
+  }
 }
 exports.EffectSpec = EffectSpec;
 //# sourceMappingURL=EffectSpec.js.map

@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configSoundBoxMarkByMarkId.Init"),
+  getConfigStat = Stats_1.Stat.Create("configSoundBoxMarkByMarkId.GetConfig"),
   CONFIG_STAT_PREFIX = "configSoundBoxMarkByMarkId.GetConfig(";
 exports.configSoundBoxMarkByMarkId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, n = !0) => {
-    if (
-      (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      t =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
       if (n) {
-        var r = KEY_PREFIX + `#${o})`;
-        const i = ConfigCommon_1.ConfigCommon.GetConfig(r);
-        if (i) return i;
+        var a = KEY_PREFIX + `#${o})`;
+        const e = ConfigCommon_1.ConfigCommon.GetConfig(a);
+        if (e)
+          return (
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
+          );
       }
       if (
-        (e =
+        (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,31 +58,36 @@ exports.configSoundBoxMarkByMarkId = {
               o,
             ]))
       ) {
-        var e,
-          r = void 0;
+        a = void 0;
         if (
-          (([e, r] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([t, a] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["MarkId", o],
           )),
-          e)
+          t)
         ) {
-          const i = SoundBoxMark_1.SoundBoxMark.getRootAsSoundBoxMark(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(r.buffer)),
+          const e = SoundBoxMark_1.SoundBoxMark.getRootAsSoundBoxMark(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
           );
           return (
             n &&
-              ((e = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(e, i)),
+              ((t = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(t, e)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=SoundBoxMarkByMarkId.js.map

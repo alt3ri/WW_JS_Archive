@@ -17,25 +17,37 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configChatById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configChatById.GetConfig"),
   CONFIG_STAT_PREFIX = "configChatById.GetConfig(";
 exports.configChatById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, n = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      i =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
       if (n) {
-        var e = KEY_PREFIX + `#${o})`;
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (t) return t;
+        var C = KEY_PREFIX + `#${o})`;
+        const e = ConfigCommon_1.ConfigCommon.GetConfig(C);
+        if (e)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
+          );
       }
       if (
         (i =
@@ -46,10 +58,9 @@ exports.configChatById = {
               o,
             ]))
       ) {
-        var i,
-          e = void 0;
+        C = void 0;
         if (
-          (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, C] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -57,20 +68,26 @@ exports.configChatById = {
           )),
           i)
         ) {
-          const t = Chat_1.Chat.getRootAsChat(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
+          const e = Chat_1.Chat.getRootAsChat(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(C.buffer)),
           );
           return (
             n &&
               ((i = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(i, t)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, e)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=ChatById.js.map

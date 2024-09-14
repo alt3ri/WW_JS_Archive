@@ -13,8 +13,10 @@ class BackgroundCard {
     return this.qualityid();
   }
   get ItemAccess() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.itemaccessLength(), (t) =>
-      this.itemaccess(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.itemaccessLength(),
+      this.itemaccess,
+      this,
     );
   }
   get SortIndex() {

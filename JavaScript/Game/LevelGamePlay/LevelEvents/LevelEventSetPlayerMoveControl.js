@@ -1,22 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSetPlayerMoveControl = void 0);
-const StringUtils_1 = require("../../../Core/Utils/StringUtils"),
-  EventDefine_1 = require("../../Common/Event/EventDefine"),
+const EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   InputController_1 = require("../../Input/InputController"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventSetPlayerMoveControl extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments), (this.xRe = !1);
-  }
-  Execute(e, t) {
-    var n = e.get("Front") === StringUtils_1.ONE_STRING,
-      r = e.get("Back") === StringUtils_1.ONE_STRING,
-      l = e.get("Left") === StringUtils_1.ONE_STRING,
-      e = e.get("Right") === StringUtils_1.ONE_STRING;
-    (this.xRe = n && r && l && e),
-      InputController_1.InputController.SetMoveControlEnabled(n, r, l, e);
   }
   ExecuteNew(e, t) {
     e &&

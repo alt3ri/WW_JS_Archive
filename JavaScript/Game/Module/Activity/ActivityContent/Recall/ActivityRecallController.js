@@ -18,47 +18,47 @@ const LanguageSystem_1 = require("../../../../../Core/Common/LanguageSystem"),
 class ActivityRecallController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
-      (this.I1a = !1),
-      (this.T1a = new Map()),
+      (this.Bca = !1),
+      (this.qca = new Map()),
       (this.nye = () => {
-        this.T1a.set(
+        this.qca.set(
           ActivityRecallDefine_1.ERecallStartCondition.WorldDone,
           !0,
         ),
-          this.L1a();
+          this.Oca();
       }),
       (this.itt = () => {
         var e =
             ActivityRecallHelper_1.ActivityRecallHelper.IsActivityRecallReady,
           e =
-            (this.T1a.set(
+            (this.qca.set(
               ActivityRecallDefine_1.ERecallStartCondition.RecallReady,
               e,
             ),
-            ModelManager_1.ModelManager.ActivityRecallModel
+            ActivityRecallHelper_1.ActivityRecallHelper
               .ActivityRecallFirstShow),
           e =
-            (this.T1a.set(
+            (this.qca.set(
               ActivityRecallDefine_1.ERecallStartCondition.FirstShow,
               e,
             ),
             ModelManager_1.ModelManager.ActivityRecallModel
               .ActivityRecallForbidStart),
           e =
-            (this.T1a.set(
+            (this.qca.set(
               ActivityRecallDefine_1.ERecallStartCondition.UnForbidStart,
               !e,
             ),
-            ActivityRecallHelper_1.ActivityRecallHelper.ActivityRecallData.IsActivityOpen());
-        this.T1a.set(ActivityRecallDefine_1.ERecallStartCondition.IsOpen, e),
-          this.L1a();
+            ActivityRecallHelper_1.ActivityRecallHelper.IsActivityOpen);
+        this.qca.set(ActivityRecallDefine_1.ERecallStartCondition.IsOpen, e),
+          this.Oca();
       }),
       (this.JDe = () => {
-        this.T1a.set(
+        this.qca.set(
           ActivityRecallDefine_1.ERecallStartCondition.ActivateBattle,
           !0,
         ),
-          this.L1a();
+          this.Oca();
       });
   }
   OnInit() {
@@ -95,14 +95,14 @@ class ActivityRecallController extends ActivityControllerBase_1.ActivityControll
       );
   }
   OnClear() {
-    return this.T1a.clear(), !(this.I1a = !1);
+    return this.qca.clear(), !(this.Bca = !1);
   }
   OnGetActivityResource(e) {
     return "UiItem_ActivityCircumfluenceMain";
   }
   OnCreateActivityData(e) {
     return (
-      (ModelManager_1.ModelManager.ActivityRecallModel.ActivityId = e.J4n),
+      (ModelManager_1.ModelManager.ActivityRecallModel.ActivityId = e.s5n),
       new ActivityRecallData_1.ActivityRecallData()
     );
   }
@@ -113,20 +113,20 @@ class ActivityRecallController extends ActivityControllerBase_1.ActivityControll
     return !1;
   }
   RequestClaimSignReward(e) {
-    this.D1a([e], Protocol_1.Aki.Protocol.Wua.Proto_SignReward);
+    this.kca([e], Protocol_1.Aki.Protocol.bca.Proto_SignReward);
   }
   RequestClaimScoreReward(e) {
-    this.D1a(e, Protocol_1.Aki.Protocol.Wua.Proto_ScoreReward);
+    this.kca(e, Protocol_1.Aki.Protocol.bca.Proto_ScoreReward);
   }
   RequestClaimTaskReward(e) {
-    this.D1a([e], Protocol_1.Aki.Protocol.Wua.Proto_TaskReward);
+    this.kca([e], Protocol_1.Aki.Protocol.bca.Proto_TaskReward);
   }
-  D1a(e, t) {
+  kca(e, t) {
     var i = ModelManager_1.ModelManager.ActivityRecallModel.ActivityId,
-      r = Protocol_1.Aki.Protocol.bua.create();
-    (r.IVn = e ?? []),
-      (r.T6n = i),
-      (r.x6n = t),
+      r = Protocol_1.Aki.Protocol.Lca.create();
+    (r.BVn = e ?? []),
+      (r.w6n = i),
+      (r.k6n = t),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "ActivityRecall",
@@ -134,36 +134,36 @@ class ActivityRecallController extends ActivityControllerBase_1.ActivityControll
           "[回流活动]ActivityRecallController->RequestRecallReward",
           ["请求领取回流活动奖励, request", r],
         ),
-      Net_1.Net.Call(15936, r, (e) => {
+      Net_1.Net.Call(17423, r, (e) => {
         e &&
-          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+          e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.O4n,
-            16068,
+            e.Q4n,
+            18443,
           );
       });
   }
   async RequestGachaInfo() {
-    var e = Protocol_1.Aki.Protocol.Vrs.create(),
+    var e = Protocol_1.Aki.Protocol.Xrs.create(),
       e =
-        ((e.XVn = LanguageSystem_1.LanguageSystem.GetLanguageDefineByCode(
+        ((e.r9n = LanguageSystem_1.LanguageSystem.GetLanguageDefineByCode(
           LanguageSystem_1.LanguageSystem.PackageLanguage,
         ).LanguageType),
-        await Net_1.Net.CallAsync(12155, e));
+        await Net_1.Net.CallAsync(23720, e));
     e
-      ? e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+      ? e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
         ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.O4n,
-            16631,
+            e.Q4n,
+            15989,
           )
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Gacha", 64, "抽卡服务端数据:", [
               "Result",
               JSON.stringify(e),
             ]),
-          ModelManager_1.ModelManager.GachaModel.InitGachaInfoMap(e.jUs),
-          (ModelManager_1.ModelManager.GachaModel.TodayResultCount = e.WUs),
-          (ModelManager_1.ModelManager.GachaModel.RecordId = e.KUs))
+          ModelManager_1.ModelManager.GachaModel.InitGachaInfoMap(e.zUs),
+          (ModelManager_1.ModelManager.GachaModel.TodayResultCount = e.ZUs),
+          (ModelManager_1.ModelManager.GachaModel.RecordId = e.ews))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "ActivityRecall",
@@ -171,28 +171,20 @@ class ActivityRecallController extends ActivityControllerBase_1.ActivityControll
           "[回流活动]ActivityRecallController.RequestGachaInfo 请求抽卡数据失败",
         );
   }
-  L1a() {
-    let e = !0,
-      t = void 0;
-    for (const r in ActivityRecallDefine_1.ERecallStartCondition) {
-      var i = Number(r);
-      if (!isNaN(i))
-        if (!(this.T1a.get(i) ?? !1)) {
-          (e = !1), (t = ActivityRecallDefine_1.ERecallStartCondition[i]);
+  Oca() {
+    let e = !0;
+    for (const i in ActivityRecallDefine_1.ERecallStartCondition) {
+      var t = Number(i);
+      if (!isNaN(t))
+        if (!(this.qca.get(t) ?? !1)) {
+          e = !1;
           break;
         }
     }
-    e
-      ? this.I1a ||
-        ((this.I1a = !0),
-        UiManager_1.UiManager.OpenView("ActivityRecallStartView"))
-      : Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug(
-          "ActivityRecall",
-          64,
-          "[回流活动]不播放回流开场领奖,ActivityRecallController.CheckIfStart->",
-          ["未满足启动的条件", t],
-        );
+    e &&
+      !this.Bca &&
+      ((this.Bca = !0),
+      UiManager_1.UiManager.OpenView("ActivityRecallStartView"));
   }
 }
 exports.ActivityRecallController = ActivityRecallController;

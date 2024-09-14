@@ -194,8 +194,10 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
     return this.CharRenderingComponent.AddComponent("OtherCase" + e, t), t;
   }
   wwr() {
-    if (this.ChildMeshComponentList)
+    if (this.ChildMeshComponentList) {
       for (const e of this.ChildMeshComponentList) this.Bwr(e);
+      this.ChildMeshComponentList.length = 0;
+    }
   }
   Bwr(e) {
     e.K2_DestroyComponent(this.Actor);

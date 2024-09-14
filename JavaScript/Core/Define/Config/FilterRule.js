@@ -16,8 +16,10 @@ class FilterRule {
     return this.title();
   }
   get IdList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.idlistLength(), (t) =>
-      this.idlist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.idlistLength(),
+      this.idlist,
+      this,
     );
   }
   get NeedChangeColor() {

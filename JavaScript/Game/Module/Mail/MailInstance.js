@@ -5,6 +5,7 @@ const UE = require("ue"),
   LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
   Log_1 = require("../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   ScrollViewDataBase_1 = require("../Util/ScrollView/ScrollViewDataBase");
@@ -37,7 +38,8 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
       (this.Uyi = !1),
       (this.Ayi = !1),
       (this.Pyi = ""),
-      (this.zHs = !0);
+      (this.vjs = !0),
+      (this.xja = !1);
   }
   GetAttachmentStatus() {
     return this.pyi;
@@ -114,13 +116,15 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
                           : e[t].includes("wenjuanPass=")
                             ? (this.Pyi = e[t].replace("wenjuanPass=", ""))
                             : e[t].includes("is_orientation=")
-                              ? (this.zHs =
+                              ? (this.vjs =
                                   "landscape" ===
                                   e[t].replace("is_orientation=", ""))
-                              : (this.Eyi = this.Eyi.concat(e[t]));
+                              : e[t].includes("needPlayerInfo")
+                                ? (this.xja = !0)
+                                : (this.Eyi = this.Eyi.concat(e[t]));
   }
   GetIfLandscape() {
-    return this.zHs;
+    return this.vjs;
   }
   GetUseDefaultBrowser() {
     return this.Ayi;
@@ -169,7 +173,31 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
     );
   }
   GetSubUrl() {
-    return this.Dyi;
+    let t = this.Dyi;
+    var e, i, s, r, a, n, h;
+    return (
+      this.xja &&
+        ((h =
+          CommonParamById_1.configCommonParamById.GetStringConfig(
+            "mail_question_key",
+          )),
+        (e = ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
+        (i = ModelManager_1.ModelManager.FunctionModel.GetPlayerName()),
+        (s = ModelManager_1.ModelManager.LoginModel.GetServerId()),
+        (n =
+          (r = ModelManager_1.ModelManager.LoginModel?.GetSdkLoginConfig())
+            ?.Token ?? ""),
+        (r = r?.Uid ?? ""),
+        (a = TimeUtil_1.TimeUtil.GetServerTime()),
+        (h =
+          e + `;${s};${(n = UE.KuroStaticLibrary.Base64Encode(n))};${a};` + h),
+        (h = UE.KuroStaticLibrary.HashStringWithSHA1(h)),
+        (t =
+          t +
+          `?playerId=${e}&playerName=${i}&serverId=${s}&token=${n}&timestamp=${a}&sign=${h}&playerUid=` +
+          r)),
+      t
+    );
   }
   GetSubTitle() {
     return this.Lyi;

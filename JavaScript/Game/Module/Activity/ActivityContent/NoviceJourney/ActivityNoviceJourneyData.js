@@ -14,8 +14,8 @@ class ActivityNoviceJourneyData extends ActivityData_1.ActivityBaseData {
     return this.b2e();
   }
   PhraseEx(e) {
-    e = e.Ups;
-    this.SetReceiveData(e.vps);
+    e = e.kps;
+    this.SetReceiveData(e.Tps);
   }
   b2e() {
     for (const e of ConfigManager_1.ConfigManager.ActivityNoviceJourneyConfig.GetNoticeJourneyConfigList())

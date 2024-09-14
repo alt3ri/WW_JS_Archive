@@ -37,7 +37,8 @@ class TrialRoleInfo {
   get UnlockSkillNodeList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.unlockskillnodelistLength(),
-      (t) => this.unlockskillnodelist(t),
+      this.unlockskillnodelist,
+      this,
     );
   }
   get TrailWeapon() {
@@ -46,7 +47,8 @@ class TrialRoleInfo {
   get PhantomEquipList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.phantomequiplistLength(),
-      (t) => this.phantomequiplist(t),
+      this.phantomequiplist,
+      this,
     );
   }
   __init(t, i) {

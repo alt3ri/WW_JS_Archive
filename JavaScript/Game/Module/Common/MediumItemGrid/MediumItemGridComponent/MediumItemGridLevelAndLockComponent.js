@@ -11,6 +11,7 @@ class MediumItemGridLevelAndLockComponent extends MediumItemGridComponent_1.Medi
       [2, UE.UIText],
       [3, UE.UIItem],
       [4, UE.UIText],
+      [5, UE.UISprite],
     ];
   }
   OnActivate() {
@@ -21,6 +22,7 @@ class MediumItemGridLevelAndLockComponent extends MediumItemGridComponent_1.Medi
     e
       ? (this.SetLevel(e.Level, e.IsUseVision),
         this.SetLock(e.IsLockVisible),
+        this.SetDeprecate(e.IsDeprecate),
         (t = this.GetText(2)).SetChangeColor(
           e.IsLevelUseChangeColor,
           t.changeColor,
@@ -30,6 +32,9 @@ class MediumItemGridLevelAndLockComponent extends MediumItemGridComponent_1.Medi
   }
   SetLock(e) {
     this.GetSprite(0).SetUIActive(e ?? !1);
+  }
+  SetDeprecate(e) {
+    this.GetSprite(5).SetUIActive(e ?? !1);
   }
   SetLevel(e, t) {
     t ? (this.Twt(void 0), this.Lwt(e)) : (this.Lwt(void 0), this.Twt(e));

@@ -26,7 +26,7 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
       (this.vEo = void 0),
       (this.MEo = void 0),
       (this.EEo = void 0),
-      (this._Bn = void 0),
+      (this.sBn = void 0),
       (this.LevelSequencePlayer = void 0),
       (this.ac = 0);
   }
@@ -36,7 +36,7 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
       (this.vEo = UE.Color.FromHex("E8CD74")),
       (this.EEo = UE.Color.FromHex("FF6A6A")),
       (this.MEo = UE.Color.FromHex("9DED87")),
-      (this._Bn = UE.Color.FromHex("FF6827"));
+      (this.sBn = UE.Color.FromHex("FF6827"));
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -64,7 +64,7 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
       this.CEo.SetFillAmount(0);
     var t = ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType;
     let i = 2 === t ? this.MEo : this.vEo;
-    3 === t && ((i = this._Bn), this.i0o.SetColor(i)),
+    3 === t && ((i = this.sBn), this.i0o.SetColor(i)),
       this.CEo.SetColor(i),
       this.i0o.SetAlpha(1),
       this.CEo.SetUIActive(!1),

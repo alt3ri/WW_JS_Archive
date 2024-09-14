@@ -44,9 +44,9 @@ class SceneItemHitUtils {
       !!(
         (a = e.Attacker?.GetComponent(0))?.IsRole() ||
         a?.IsVision() ||
-        ((a = e.Attacker?.GetComponent(48)?.RoleId) &&
+        ((a = e.Attacker?.GetComponent(49)?.RoleId) &&
           EntitySystem_1.EntitySystem.GetComponent(a, 0)?.IsRole()) ||
-        e.Attacker?.GetComponent(202)?.Valid
+        e.Attacker?.GetComponent(204)?.Valid
       )
     );
   }

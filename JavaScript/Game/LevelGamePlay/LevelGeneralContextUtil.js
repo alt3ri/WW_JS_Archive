@@ -9,94 +9,94 @@ class LevelGeneralContextUtil {
   static CreateByServerContext(t) {
     if (t) {
       let e = void 0;
-      switch (t._vs) {
-        case Protocol_1.Aki.Protocol.vOs.cvs:
-          e = LevelGeneralContextUtil.UUe(t._vs, t.cvs);
+      switch (t.fvs) {
+        case Protocol_1.Aki.Protocol.TOs.pvs:
+          e = LevelGeneralContextUtil.UUe(t.fvs, t.pvs);
           break;
-        case Protocol_1.Aki.Protocol.vOs.dvs:
-          e = LevelGeneralContextUtil.UUe(t._vs, t.dvs.Kvs);
+        case Protocol_1.Aki.Protocol.TOs.Mvs:
+          e = LevelGeneralContextUtil.UUe(t.fvs, t.Mvs.eps);
           break;
-        case Protocol_1.Aki.Protocol.vOs.mvs:
-          e = LevelGeneralContextUtil.UUe(t._vs, t.mvs.Kvs);
+        case Protocol_1.Aki.Protocol.TOs.Svs:
+          e = LevelGeneralContextUtil.UUe(t.fvs, t.Svs.eps);
           break;
-        case Protocol_1.Aki.Protocol.vOs.Cvs:
-          e = LevelGeneralContextUtil.UUe(t._vs, t.Cvs.Kvs);
+        case Protocol_1.Aki.Protocol.TOs.Evs:
+          e = LevelGeneralContextUtil.UUe(t.fvs, t.Evs.eps);
           break;
-        case Protocol_1.Aki.Protocol.vOs.Proto_EntityStateChangeAction:
-          e = LevelGeneralContextUtil.UUe(t._vs, t.gvs.Kvs);
+        case Protocol_1.Aki.Protocol.TOs.Proto_EntityStateChangeAction:
+          e = LevelGeneralContextUtil.UUe(t.fvs, t.yvs.eps);
           break;
-        case Protocol_1.Aki.Protocol.vOs.fvs:
-          e = LevelGeneralContextUtil.UUe(t._vs, t.fvs.Kvs);
+        case Protocol_1.Aki.Protocol.TOs.Ivs:
+          e = LevelGeneralContextUtil.UUe(t.fvs, t.Ivs.eps);
           break;
-        case Protocol_1.Aki.Protocol.vOs.vvs:
-          e = LevelGeneralContextUtil.UUe(t._vs, t.vvs.Kvs);
+        case Protocol_1.Aki.Protocol.TOs.Tvs:
+          e = LevelGeneralContextUtil.UUe(t.fvs, t.Tvs.eps);
           break;
-        case Protocol_1.Aki.Protocol.vOs.Proto_EntityLeaveTrigger:
-          e = LevelGeneralContextUtil.UUe(t._vs, t.pvs.Kvs);
+        case Protocol_1.Aki.Protocol.TOs.Proto_EntityLeaveTrigger:
+          e = LevelGeneralContextUtil.UUe(t.fvs, t.Lvs.eps);
           break;
-        case Protocol_1.Aki.Protocol.vOs.Mvs:
-          e = LevelGeneralContextUtil.UUe(t._vs, t.Mvs.Kvs);
+        case Protocol_1.Aki.Protocol.TOs.Rvs:
+          e = LevelGeneralContextUtil.UUe(t.fvs, t.Rvs.eps);
           break;
-        case Protocol_1.Aki.Protocol.vOs.Svs:
-          e = LevelGeneralContextUtil.UUe(t._vs, t.Svs.Kvs);
+        case Protocol_1.Aki.Protocol.TOs.Dvs:
+          e = LevelGeneralContextUtil.UUe(t.fvs, t.Dvs.eps);
           break;
-        case Protocol_1.Aki.Protocol.vOs.wvs:
-          e = LevelGeneralContextUtil.UUe(t._vs, t.wvs.Kvs);
+        case Protocol_1.Aki.Protocol.TOs.kvs:
+          e = LevelGeneralContextUtil.UUe(t.fvs, t.kvs.eps);
           break;
-        case Protocol_1.Aki.Protocol.vOs.Evs:
+        case Protocol_1.Aki.Protocol.TOs.Avs:
           e = LevelGeneralContextDefine_1.LevelPlayContext.Create(
-            t.Evs.rps,
-            t._vs,
+            t.Avs._ps,
+            t.fvs,
           );
           break;
-        case Protocol_1.Aki.Protocol.vOs.yvs:
+        case Protocol_1.Aki.Protocol.TOs.Pvs:
           e = LevelGeneralContextDefine_1.LevelPlayContext.Create(
-            t.yvs.rps,
-            t._vs,
+            t.Pvs._ps,
+            t.fvs,
           );
           break;
-        case Protocol_1.Aki.Protocol.vOs.Ivs:
-          e = LevelGeneralContextDefine_1.QuestContext.Create(t.Ivs.I5n, t._vs);
+        case Protocol_1.Aki.Protocol.TOs.Uvs:
+          e = LevelGeneralContextDefine_1.QuestContext.Create(t.Uvs.B5n, t.fvs);
           break;
-        case Protocol_1.Aki.Protocol.vOs.Tvs:
-          e = LevelGeneralContextDefine_1.QuestContext.Create(t.Tvs.I5n, t._vs);
+        case Protocol_1.Aki.Protocol.TOs.wvs:
+          e = LevelGeneralContextDefine_1.QuestContext.Create(t.wvs.B5n, t.fvs);
           break;
-        case Protocol_1.Aki.Protocol.vOs.Lvs:
-          e = LevelGeneralContextDefine_1.QuestContext.Create(t.Lvs.I5n, t._vs);
+        case Protocol_1.Aki.Protocol.TOs.xvs:
+          e = LevelGeneralContextDefine_1.QuestContext.Create(t.xvs.B5n, t.fvs);
           break;
-        case Protocol_1.Aki.Protocol.vOs.Rvs:
-          e = LevelGeneralContextUtil.AUe(t._vs, t.Rvs.ops);
+        case Protocol_1.Aki.Protocol.TOs.bvs:
+          e = LevelGeneralContextUtil.AUe(t.fvs, t.bvs.ups);
           break;
-        case Protocol_1.Aki.Protocol.vOs.Dvs:
-          e = LevelGeneralContextUtil.AUe(t._vs, t.Dvs.ops);
+        case Protocol_1.Aki.Protocol.TOs.Bvs:
+          e = LevelGeneralContextUtil.AUe(t.fvs, t.Bvs.ups);
           break;
-        case Protocol_1.Aki.Protocol.vOs.Uvs:
-          e = LevelGeneralContextUtil.AUe(t._vs, t.Uvs.ops);
+        case Protocol_1.Aki.Protocol.TOs.Ovs:
+          e = LevelGeneralContextUtil.AUe(t.fvs, t.Ovs.ups);
           break;
-        case Protocol_1.Aki.Protocol.vOs.xvs:
-          e = LevelGeneralContextUtil.AUe(t._vs, t.xvs.ops);
+        case Protocol_1.Aki.Protocol.TOs.Nvs:
+          e = LevelGeneralContextUtil.AUe(t.fvs, t.Nvs.ups);
           break;
-        case Protocol_1.Aki.Protocol.vOs.bvs:
-          e = LevelGeneralContextUtil.AUe(t._vs, t.bvs.ops);
+        case Protocol_1.Aki.Protocol.TOs.Fvs:
+          e = LevelGeneralContextUtil.AUe(t.fvs, t.Fvs.ups);
           break;
-        case Protocol_1.Aki.Protocol.vOs.Bvs:
-          e = LevelGeneralContextUtil.AUe(t._vs, t.Bvs.ops);
+        case Protocol_1.Aki.Protocol.TOs.Vvs:
+          e = LevelGeneralContextUtil.AUe(t.fvs, t.Vvs.ups);
       }
       return e;
     }
   }
   static AUe(e, t) {
-    var o = MathUtils_1.MathUtils.LongToBigInt(t.T5n);
+    var o = MathUtils_1.MathUtils.LongToBigInt(t.w5n);
     return LevelGeneralContextDefine_1.GeneralLogicTreeContext.Create(
-      Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest,
+      Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest,
       o,
-      t.ips,
-      t.L5n,
+      t.lps,
+      t.b5n,
       e,
     );
   }
   static UUe(e, t) {
-    (t = MathUtils_1.MathUtils.LongToNumber(t.T5n)),
+    (t = MathUtils_1.MathUtils.LongToNumber(t.w5n)),
       (t = ModelManager_1.ModelManager.CreatureModel.GetEntity(t));
     return LevelGeneralContextDefine_1.EntityContext.Create(t?.Id, e);
   }

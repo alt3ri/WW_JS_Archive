@@ -9,20 +9,21 @@ const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   Pool_1 = require("../../../Core/Container/Pool"),
   KeySettingById_1 = require("../../../Core/Define/ConfigQuery/KeySettingById"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Platform_1 = require("../../../Launcher/Platform/Platform"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  GameSettingsManager_1 = require("../../GameSettings/GameSettingsManager"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  MobileSwitchInputController_1 = require("../../Ui/Input/Moblie/MobileSwitchInputController"),
   UiManager_1 = require("../../Ui/UiManager"),
   CommonTabComponentData_1 = require("../Common/TabComponent/CommonTabComponentData"),
   CommonTabData_1 = require("../Common/TabComponent/CommonTabData"),
   CommonTabTitleData_1 = require("../Common/TabComponent/CommonTabTitleData"),
   TabComponentWithCaptionItem_1 = require("../Common/TabComponent/TabComponentWithCaptionItem"),
   CommonTabItem_1 = require("../Common/TabComponent/TabItem/CommonTabItem"),
-  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
   LguiUtil_1 = require("../Util/LguiUtil"),
   DynScrollView_1 = require("../Util/ScrollView/DynScrollView"),
   PcAndGamepadKeySettingPanel_1 = require("./KeySettingsView/PcAndGamepadKeySettingPanel"),
@@ -75,6 +76,9 @@ class MenuView extends UiViewBase_1.UiViewBase {
       (this.bwi = []),
       (this.qwi = void 0),
       (this.Gwi = new MenuViewData()),
+      (this.Xpt = void 0),
+      (this.CVa = void 0),
+      (this.EYa = void 0),
       (this.Ivt = void 0),
       (this.xqe = void 0),
       (this.Nwi = void 0),
@@ -83,21 +87,30 @@ class MenuView extends UiViewBase_1.UiViewBase {
       (this.kwi = () => {
         this.Fwi();
       }),
-      (this.Vwi = () => {
-        var e;
-        (GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform() ||
-          GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform()) &&
-          (80 <
-            (e =
-              GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetGameQualityLoadInfo())
-              .Percentage &&
-            ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
-              "PictureConfigOverload",
-            ),
-          this.Hwi(e.Percentage, e.BarColor),
-          this.jwi(e.Desc));
+      (this.o9a = (e) => {
+        e && this.GetUIDynScrollViewComponent(0).StopMovement();
       }),
-      (this.ksa = (t) => {
+      (this.Vwi = () => {
+        var e, t, i;
+        Platform_1.Platform.IsMobilePlatform() &&
+          (80 <
+            (i = (t = (e =
+              ModelManager_1.ModelManager.MenuModel).GetGameQualityLoadInfo())
+              .Percentage) &&
+            (!e.IsOpenedImageOverloadConfirmBox ||
+              e.QualityInfoPercentage < 80) &&
+            (MenuController_1.MenuController.OpenImageOverloadConfirmBox(),
+            (e.IsOpenedImageOverloadConfirmBox = !0)),
+          (e.QualityInfoPercentage = i),
+          this.Hwi(t.Percentage, t.BarColor),
+          this.jwi(t.Desc));
+      }),
+      (this._7a = () => {
+        Platform_1.Platform.IsMobilePlatform() &&
+          Info_1.Info.IsInGamepad() &&
+          MobileSwitchInputController_1.MobileSwitchInputController.SwitchToTouch();
+      }),
+      (this.Rla = (t) => {
         if (t.length < 2)
           Log_1.Log.CheckError() &&
             Log_1.Log.Error("Guide", 65, "引导配置MenuView时参数不足", [
@@ -126,7 +139,7 @@ class MenuView extends UiViewBase_1.UiViewBase {
             ]);
         }
       }),
-      (this.Fsa = (e) => {
+      (this.xla = (e) => {
         if (e.length < 2)
           Log_1.Log.CheckError() &&
             Log_1.Log.Error("Guide", 65, "引导配置MenuView时参数不足", [
@@ -149,40 +162,79 @@ class MenuView extends UiViewBase_1.UiViewBase {
               );
         }
       }),
-      (this.Nsa = new Map([
-        ["TabType", this.ksa],
-        ["KeySetting", this.Fsa],
+      (this.rKa = !1),
+      (this.oKa = (e) => {
+        if (e.length < 2)
+          Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Guide", 65, "引导配置MenuView时参数不足", [
+              "ForMenuConfig应有2个参数，但是实际只有",
+              e.length,
+            ]);
+        else {
+          const t = Number(e[1]);
+          var e = this.bwi.findIndex((e) => e.Data?.FunctionId === t);
+          if (!(e < 0))
+            return (
+              this.rKa ||
+                ((this.rKa = !0),
+                this.xqe.ScrollToItemIndex(e, !1).finally(() => {
+                  this.rKa = !1;
+                })),
+              (e = this.xqe.GetGrid(e)) ? [e, e] : void 0
+            );
+        }
+      }),
+      (this.Ula = new Map([
+        ["TabType", this.Rla],
+        ["KeySetting", this.xla],
+        ["MenuConfig", this.oKa],
       ])),
       (this.Wwi = (e, t, i) => {
-        return new MenuScrollSettingContainerItem_1.MenuScrollSettingContainerItem();
+        var n =
+          new MenuScrollSettingContainerItem_1.MenuScrollSettingContainerItem();
+        return n.BindOnToggleStateChangedCallback(this.gVa), n;
+      }),
+      (this.gVa = (e, t) => {
+        var i;
+        0 !== e.Type &&
+          (i = e.GetMenuData()) &&
+          (0 === t
+            ? this.fVa()
+            : (this.IYa(),
+              this.Xpt?.SetSelected(!1),
+              this.Xpt?.SetDetailVisible(!1),
+              e.SetDetailVisible(!i.GetIsDetailTextVisible()),
+              (this.Xpt = e),
+              (this.CVa = i),
+              (t = e.MenuScrollItemData) &&
+                this.bwi.indexOf(t) >= this.bwi.length - 1 &&
+                (this.EYa = TimerSystem_1.TimerSystem.Next(() => {
+                  this.xqe.ScrollToBottom(e.GetRootItem());
+                }))));
       }),
       (this.R6e = (e, t) => {
         return new CommonTabItem_1.CommonTabItem();
       }),
-      (this.Kwi = (e) => {
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error("TowerDefense", 65, "OnClickedItem");
-        var e = this.Bwi[e],
+      (this.Kwi = (t) => {
+        var t = this.Bwi[t],
           t =
-            ((this.Gwi.MenuViewDataCurMainType = e),
+            ((this.Gwi.MenuViewDataCurMainType = t),
             ConfigManager_1.ConfigManager.MenuBaseConfig.GetMainTypeConfigById(
-              e,
+              t,
             )),
           i = this.GetItem(5),
           n = this.GetItem(4);
         if (t) {
           let e = t.TabPanelType;
-          switch (Info_1.Info.PlatformType) {
-            case 3:
-              e = t.PcTabPanelType;
-              break;
-            case 6:
-              e = t.XboxTabPanelType;
-              break;
-            case 7:
-              e = t.PsTabPanelType;
-          }
-          switch (e) {
+          switch (
+            (Platform_1.Platform.IsPcPlatform()
+              ? (e = t.PcTabPanelType)
+              : (Platform_1.Platform.IsPs5Platform() ||
+                  (Platform_1.Platform.IsMobilePlatform() &&
+                    Info_1.Info.IsInGamepad())) &&
+                (e = t.PsTabPanelType),
+            e)
+          ) {
             case 1:
               this.Qwi(), i.SetUIActive(!0), n.SetUIActive(!1);
               break;
@@ -192,6 +244,7 @@ class MenuView extends UiViewBase_1.UiViewBase {
             default:
               i.SetUIActive(!1), n.SetUIActive(!1);
           }
+          this.fVa();
         } else i.SetUIActive(!1), n.SetUIActive(!1);
       }),
       (this.yqe = (e) => {
@@ -206,40 +259,30 @@ class MenuView extends UiViewBase_1.UiViewBase {
         this.xqe.UnBindLateUpdate();
       }),
       (this.$Ge = () => {
-        var e;
         MenuController_1.MenuController.BeforeViewClose(),
-          MenuController_1.MenuController.CheckRestartMap()
-            ? (MenuController_1.MenuController.ClearRestartMap(),
-              (e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
-                47,
-              )).FunctionMap.set(1, () => {
-                UiManager_1.UiManager.CloseView("MenuView");
-              }),
-              e.FunctionMap.set(2, () => {
-                Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug("Menu", 8, "重启游戏，使设置生效"),
-                  ControllerHolder_1.ControllerHolder.KuroSdkController.PostKuroSdkEvent(
-                    5,
-                  );
-              }),
-              ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                e,
-              ))
-            : UiManager_1.UiManager.CloseView("MenuView");
+          UiManager_1.UiManager.CloseView("MenuView");
       });
   }
   get MenuViewDataExternal() {
     return this.Gwi;
   }
   OnRegisterComponent() {
-    this.ComponentRegisterInfos = [
+    (this.ComponentRegisterInfos = [
       [0, UE.UIDynScrollViewComponent],
       [1, UE.UIItem],
       [2, UE.UIItem],
       [3, UE.UIItem],
       [4, UE.UIItem],
       [5, UE.UIItem],
-    ];
+      [6, UE.UIButtonComponent],
+    ]),
+      (this.BtnBindInfo = [[6, this._7a]]);
+  }
+  OnStart() {
+    this.Ivt.SelectToggleByIndex(0, !0),
+      this.GetButton(6)?.RootUIComp.SetUIActive(
+        Platform_1.Platform.IsMobilePlatform() && Info_1.Info.IsInGamepad(),
+      );
   }
   OnBeforeDestroy() {
     this.Ivt && (this.Ivt.Destroy(), (this.Ivt = void 0)),
@@ -249,12 +292,16 @@ class MenuView extends UiViewBase_1.UiViewBase {
       this.qwi && (this.qwi = void 0);
     var e = ModelManager_1.ModelManager.MenuModel;
     e.IsEdited &&
-      (e.SaveLocalConfig(),
-      MenuController_1.MenuController.ReportSettingMenuLogEvent(),
-      (e.IsEdited = !1));
+      (MenuController_1.MenuController.ReportSettingMenuLogEvent(),
+      (e.IsEdited = !1)),
+      this.IYa(),
+      ModelManager_1.ModelManager.MenuModel.ClearMenuDataMap();
   }
   async OnBeforeStartAsync() {
-    MenuController_1.MenuController.RefreshCurrentSetting(),
+    var e = ModelManager_1.ModelManager.MenuModel;
+    e.CreateConfigByBaseConfig(),
+      e.RefreshMenuDataEnable(),
+      GameSettingsManager_1.GameSettingsManager.RefreshFullScreenMode(),
       (this.qwi =
         new MenuScrollSettingContainerDynItem_1.MenuScrollSettingContainerDynItem()),
       (this.xqe = new DynScrollView_1.DynamicScrollView(
@@ -269,11 +316,14 @@ class MenuView extends UiViewBase_1.UiViewBase {
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
-      EventDefine_1.EEventName.TextLanguageChange,
-      this.kwi,
+      EventDefine_1.EEventName.OnDropDownListVisibleChanged,
+      this.o9a,
     ),
-      (GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform() ||
-        GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform()) &&
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.TextLanguageChange,
+        this.kwi,
+      ),
+      Platform_1.Platform.IsMobilePlatform() &&
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.ConfigLoadChange,
           this.Vwi,
@@ -281,23 +331,23 @@ class MenuView extends UiViewBase_1.UiViewBase {
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.TextLanguageChange,
-      this.kwi,
+      EventDefine_1.EEventName.OnDropDownListVisibleChanged,
+      this.o9a,
     ),
-      (GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform() ||
-        GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform()) &&
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.TextLanguageChange,
+        this.kwi,
+      ),
+      Platform_1.Platform.IsMobilePlatform() &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.ConfigLoadChange,
           this.Vwi,
         );
   }
-  OnStart() {
-    this.Ivt.SelectToggleByIndex(0, !0);
-  }
   GetGuideUiItemAndUiItemForShowEx(e) {
     var t;
     if (!(e.length < 1))
-      return (t = this.Nsa.get(e[0]))
+      return (t = this.Ula.get(e[0]))
         ? t(e)
         : void (
             Log_1.Log.CheckError() &&
@@ -310,6 +360,19 @@ class MenuView extends UiViewBase_1.UiViewBase {
           );
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Guide", 65, "引导配置MenuView时，必须要有Extra参数");
+  }
+  IYa() {
+    this.EYa &&
+      TimerSystem_1.TimerSystem.Has(this.EYa) &&
+      TimerSystem_1.TimerSystem.Remove(this.EYa),
+      (this.EYa = void 0);
+  }
+  fVa() {
+    this.Xpt?.SetDetailVisible(!1),
+      this.Xpt?.SetSelected(!1),
+      this.CVa?.SetDetailTextVisible(!1),
+      (this.Xpt = void 0),
+      (this.CVa = void 0);
   }
   async Ywi() {
     this.Bwi = MenuController_1.MenuController.GetMainTypeList();
@@ -350,8 +413,7 @@ class MenuView extends UiViewBase_1.UiViewBase {
       this.Gwi.MenuViewDataCurMainType,
     );
     2 === this.Gwi.MenuViewDataCurMainType &&
-    (GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform() ||
-      GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform())
+    Platform_1.Platform.IsMobilePlatform()
       ? (this.GetItem(3)?.SetUIActive(!0), this.Vwi())
       : this.GetItem(3)?.SetUIActive(!1),
       (this.Gwi.MenuViewDataLastSubType = 0),
@@ -369,25 +431,25 @@ class MenuView extends UiViewBase_1.UiViewBase {
       var r = n.GetAttachUIChildren(),
         n = i?.GetAttachUIChildren().Get(4);
       if (n) {
-        var a = n.Width,
+        var s = n.Width,
           o = [0, 0, 0, 0, 0];
-        if (100 <= e) for (let e = 0; e < r.Num(); e++) o[e] = a;
+        if (100 <= e) for (let e = 0; e < r.Num(); e++) o[e] = s;
         else if (80 <= e) {
-          for (let e = 0; e < r.Num() - 1; e++) o[e] = a;
-          o[4] = a * ((5 * (e - 80)) / 100);
+          for (let e = 0; e < r.Num() - 1; e++) o[e] = s;
+          o[4] = s * ((5 * (e - 80)) / 100);
         } else if (60 <= e) {
-          for (let e = 0; e < r.Num() - 2; e++) o[e] = a;
-          o[3] = a * ((5 * (e - 60)) / 100);
+          for (let e = 0; e < r.Num() - 2; e++) o[e] = s;
+          o[3] = s * ((5 * (e - 60)) / 100);
         } else if (40 <= e) {
-          for (let e = 0; e < r.Num() - 3; e++) o[e] = a;
-          o[2] = a * ((5 * (e - 40)) / 100);
+          for (let e = 0; e < r.Num() - 3; e++) o[e] = s;
+          o[2] = s * ((5 * (e - 40)) / 100);
         } else if (20 <= e) {
-          for (let e = 0; e < r.Num() - 4; e++) o[e] = a;
-          o[1] = a * ((5 * (e - 20)) / 100);
-        } else o[0] = a * ((5 * e) / 100);
+          for (let e = 0; e < r.Num() - 4; e++) o[e] = s;
+          o[1] = s * ((5 * (e - 20)) / 100);
+        } else o[0] = s * ((5 * e) / 100);
         for (let e = 0; e < r.Num(); e++) {
-          var s = r.Get(e);
-          s.SetWidth(o[e]), this.SetSpriteByPath(t, s, !1);
+          var a = r.Get(e);
+          a.SetWidth(o[e]), this.SetSpriteByPath(t, a, !1);
         }
       }
     }
@@ -405,9 +467,8 @@ class MenuView extends UiViewBase_1.UiViewBase {
   zwi(e) {
     for (const t of e)
       t.CheckCondition() &&
-        (t.MenuDataSubType !== this.Gwi.MenuViewDataLastSubType &&
-          ((this.Gwi.MenuViewDataLastSubType = t.MenuDataSubType),
-          this.Zwi(t, 0)),
+        (t.SubType !== this.Gwi.MenuViewDataLastSubType &&
+          ((this.Gwi.MenuViewDataLastSubType = t.SubType), this.Zwi(t, 0)),
         this.Zwi(t, 1));
     this.xqe.RefreshByData(this.bwi), this.xqe.BindLateUpdate(this.$wi);
   }

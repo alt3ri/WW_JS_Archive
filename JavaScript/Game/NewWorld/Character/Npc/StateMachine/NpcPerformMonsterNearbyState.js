@@ -25,7 +25,7 @@ class NpcPerformMonsterNearbyState extends StateBase_1.StateBase {
     this.otr = e;
   }
   CanChangeFrom(e) {
-    var t = this.Owner.Entity.GetComponent(171);
+    var t = this.Owner.Entity.GetComponent(172);
     return this.wtr && 1 === e && !t.IsInPlot;
   }
   OnCreate(e) {
@@ -38,9 +38,9 @@ class NpcPerformMonsterNearbyState extends StateBase_1.StateBase {
   }
   OnEnter(e) {
     this.Gtr = e;
-    var e = this.Owner.Entity.GetComponent(171),
+    var e = this.Owner.Entity.GetComponent(172),
       t =
-        (e?.HasBrain && this.Owner.Entity.GetComponent(37)?.StopMove(!1),
+        (e?.HasBrain && this.Owner.Entity.GetComponent(38)?.StopMove(!1),
         new BasePerformComponent_1.PlayMontageConfig(0, 0, !0, !0));
     (this.bTe = e?.LoadAndPlayMontageById(this.Btr, t) ?? 0),
       this.bTe < 0 &&
@@ -54,7 +54,7 @@ class NpcPerformMonsterNearbyState extends StateBase_1.StateBase {
       );
   }
   OnExit(e) {
-    this.Owner.Entity.GetComponent(171)?.ClearAndStopMontage(this.bTe);
+    this.Owner.Entity.GetComponent(172)?.ClearAndStopMontage(this.bTe);
   }
   OnDestroy() {
     this.otr = void 0;

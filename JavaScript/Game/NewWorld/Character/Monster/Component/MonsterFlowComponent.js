@@ -27,8 +27,8 @@ let MonsterFlowComponent = class MonsterFlowComponent extends CharacterFlowCompo
   }
   OnStart() {
     return (
-      (this.I5r = this.Entity.GetComponent(160)),
-      (this.Stn = this.Entity.GetComponent(108)),
+      (this.I5r = this.Entity.GetComponent(161)),
+      (this.Stn = this.Entity.GetComponent(109)),
       super.OnStart(),
       !0
     );
@@ -52,7 +52,7 @@ let MonsterFlowComponent = class MonsterFlowComponent extends CharacterFlowCompo
   }
 };
 (MonsterFlowComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(166)],
+  [(0, RegisterComponent_1.RegisterComponent)(167)],
   MonsterFlowComponent,
 )),
   (exports.MonsterFlowComponent = MonsterFlowComponent);

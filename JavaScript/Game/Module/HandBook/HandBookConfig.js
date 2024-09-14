@@ -26,6 +26,11 @@ const AnimalHandBookAll_1 = require("../../../Core/Define/ConfigQuery/AnimalHand
   MonsterHandBookById_1 = require("../../../Core/Define/ConfigQuery/MonsterHandBookById"),
   MonsterHandBookByType_1 = require("../../../Core/Define/ConfigQuery/MonsterHandBookByType"),
   MonsterHandBookTypeAll_1 = require("../../../Core/Define/ConfigQuery/MonsterHandBookTypeAll"),
+  NounHandBookAll_1 = require("../../../Core/Define/ConfigQuery/NounHandBookAll"),
+  NounHandBookById_1 = require("../../../Core/Define/ConfigQuery/NounHandBookById"),
+  NounHandBookByType_1 = require("../../../Core/Define/ConfigQuery/NounHandBookByType"),
+  NounTypeAll_1 = require("../../../Core/Define/ConfigQuery/NounTypeAll"),
+  NounTypeById_1 = require("../../../Core/Define/ConfigQuery/NounTypeById"),
   PhantomFetterHandBookAll_1 = require("../../../Core/Define/ConfigQuery/PhantomFetterHandBookAll"),
   PhantomHandBookAll_1 = require("../../../Core/Define/ConfigQuery/PhantomHandBookAll"),
   PhantomHandBookById_1 = require("../../../Core/Define/ConfigQuery/PhantomHandBookById"),
@@ -123,6 +128,21 @@ class HandBookConfig extends ConfigBase_1.ConfigBase {
   }
   GetChipTypeConfig(o) {
     return ChipTypeById_1.configChipTypeById.GetConfig(o);
+  }
+  GetNounHandBookConfig(o) {
+    return NounHandBookById_1.configNounHandBookById.GetConfig(o);
+  }
+  GetNounHandBookConfigList(o) {
+    return NounHandBookByType_1.configNounHandBookByType.GetConfigList(o);
+  }
+  GetNounTypeConfigList() {
+    return NounTypeAll_1.configNounTypeAll.GetConfigList();
+  }
+  GetNounTypeConfig(o) {
+    return NounTypeById_1.configNounTypeById.GetConfig(o);
+  }
+  GetNounTypeConfigAll() {
+    return NounHandBookAll_1.configNounHandBookAll.GetConfigList();
   }
   GetGeographyHandBookConfig(o) {
     return GeographyHandBookById_1.configGeographyHandBookById.GetConfig(o);

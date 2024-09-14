@@ -33,9 +33,11 @@ var EAiStateType,
   ERogueThemeType,
   ECheckSystemStateType,
   EShopType,
-  EEventKey;
+  EEventKey,
+  ETeleControlState;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.EEventKey =
+  (exports.ETeleControlState =
+    exports.EEventKey =
     exports.EShopType =
     exports.ECheckSystemStateType =
     exports.ERogueThemeType =
@@ -101,7 +103,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e.WeaponLevel = "WeaponLevel"),
       (e.HasEquippedVision = "HasEquippedVision"),
       (e.HasUpgradableVision = "HasUpgradableVision"),
-      (e.DataCenter = "DataCenter");
+      (e.FeatureCollection = "FeatureCollection");
   })(
     (EFormationRoleInfoType =
       exports.EFormationRoleInfoType || (exports.EFormationRoleInfoType = {})),
@@ -146,5 +148,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     (e.EventKeyA = "EventKeyA"),
       (e.EventKeyB = "EventKeyB"),
       (e.EventKeyC = "EventKeyC");
-  })((EEventKey = exports.EEventKey || (exports.EEventKey = {})));
+  })((EEventKey = exports.EEventKey || (exports.EEventKey = {}))),
+  (function (e) {
+    (e.Hold = "Hold"), (e.LetGo = "LetGo");
+  })(
+    (ETeleControlState =
+      exports.ETeleControlState || (exports.ETeleControlState = {})),
+  );
 //# sourceMappingURL=ICondition.js.map

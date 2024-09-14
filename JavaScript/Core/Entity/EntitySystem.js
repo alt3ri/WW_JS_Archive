@@ -38,12 +38,12 @@ class TickEntityManager {
     }
     if (this.WW[0].Priority < e) return 0;
     let t = 0,
-      s = i;
-    for (; 1 < s - t; ) {
-      var r = (t + s) >> 1;
-      this.WW[r].Priority > e ? (t = r) : (s = r);
+      r = i;
+    for (; 1 < r - t; ) {
+      var s = (t + r) >> 1;
+      this.WW[s].Priority > e ? (t = s) : (r = s);
     }
-    return s;
+    return r;
   }
   Delete(t) {
     var e = this.KW.get(t);
@@ -53,34 +53,34 @@ class TickEntityManager {
     this.KW.delete(t), this.jW.get(e).Entities.delete(t);
   }
   ForceTick(t) {
-    this.QW = !0;
+    TickEntityManager.ZW.Start(), (this.QW = !0);
     for (const e of this.WW)
       for (const i of e.Entities.values())
         i.Valid && i.IsInit && i.ForceTick(t);
-    (this.QW = !1), this.eK();
+    (this.QW = !1), this.eK(), TickEntityManager.ZW.Stop();
   }
   Tick(t) {
     if (!GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen) {
-      this.QW = !0;
+      TickEntityManager.gW.Start(), (this.QW = !0);
       for (const e of this.WW)
         for (const i of e.Entities.values()) i.Valid && i.IsInit && i.Tick(t);
-      (this.QW = !1), this.eK();
+      (this.QW = !1), this.eK(), TickEntityManager.gW.Stop();
     }
   }
   ForceAfterTick(t) {
-    this.QW = !0;
+    TickEntityManager.tK.Start(), (this.QW = !0);
     for (const e of this.WW)
       for (const i of e.Entities.values())
         i.Valid && i.IsInit && i.ForceAfterTick(t);
-    (this.QW = !1), this.eK();
+    (this.QW = !1), this.eK(), TickEntityManager.tK.Stop();
   }
   AfterTick(t) {
     if (!GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen) {
-      this.QW = !0;
+      TickEntityManager.fW.Start(), (this.QW = !0);
       for (const e of this.WW)
         for (const i of e.Entities.values())
           i.Valid && i.IsInit && i.AfterTick(t);
-      (this.QW = !1), this.eK();
+      (this.QW = !1), this.eK(), TickEntityManager.fW.Stop();
     }
   }
   eK() {
@@ -89,9 +89,9 @@ class TickEntityManager {
       i.Valid && void 0 !== (t = this.KW.get(i.Id)) && this.YW(i, t);
     }
     this.XW.length = 0;
-    for (const s of this.$W) {
-      var e = this.KW.get(s);
-      void 0 !== e && this.zW(s, e);
+    for (const r of this.$W) {
+      var e = this.KW.get(r);
+      void 0 !== e && this.zW(r, e);
     }
     this.$W.length = 0;
   }
@@ -99,10 +99,12 @@ class TickEntityManager {
     this.jW.clear(), (this.WW.length = 0);
   }
 }
-(TickEntityManager.ZW = void 0),
-  (TickEntityManager.gW = void 0),
-  (TickEntityManager.tK = void 0),
-  (TickEntityManager.fW = void 0);
+(TickEntityManager.ZW = Stats_1.Stat.Create("TickEntityManager.ForceTick")),
+  (TickEntityManager.gW = Stats_1.Stat.Create("TickEntityManager.Tick")),
+  (TickEntityManager.tK = Stats_1.Stat.Create(
+    "TickEntityManager.ForceAfterTick",
+  )),
+  (TickEntityManager.fW = Stats_1.Stat.Create("TickEntityManager.AfterTick"));
 class EntitySystem {
   constructor() {}
   static Initialize() {
@@ -118,20 +120,20 @@ class EntitySystem {
       );
     ObjectSystem_1.ObjectSystem.Destroy(t);
   }
-  static CreateExternal(t, e, i = 0, s) {
+  static CreateExternal(t, e, i = 0, r) {
     return (
       !!ObjectSystem_1.ObjectSystem.CreateExternal(e) &&
-      (e.Create(s)
+      (e.Create(r)
         ? (e.TickComponentManager.NeedTick && this.iK.Add(e, i),
           e.TickComponentManager.NeedAfterTick && this.oK.Add(e, i),
           !0)
         : (ObjectSystem_1.ObjectSystem.Destroy(e), !1))
     );
   }
-  static Respawn(t, e = !1, i = 0, s) {
+  static Respawn(t, e = !1, i = 0, r) {
     return !(
       (!e && !ObjectSystem_1.ObjectSystem.CreateExternal(t)) ||
-      !t.Respawn(s) ||
+      !t.Respawn(r) ||
       (t.TickComponentManager.NeedTick && this.iK.Add(t, i),
       t.TickComponentManager.NeedAfterTick && this.oK.Add(t, i),
       0)

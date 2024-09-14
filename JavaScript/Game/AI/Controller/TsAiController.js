@@ -35,22 +35,7 @@ class TsAiController extends UE.KuroAIController {
       (this.CharStateMachineComp = void 0),
       (this.AiController = void 0),
       (this.BehaviorTree = void 0),
-      (this.StateMachineGroup = void 0),
-      (this.DebugDraw = 0),
-      (this.DebugDrawInternal = 0);
-  }
-  ChangeDebugDraw() {
-    this.DebugDraw = this.DebugDraw ? 0 : 1;
-  }
-  SetDebugDraw(t) {
-    (this.DebugDraw = t), (this.DebugDrawInternal = this.DebugDraw);
-  }
-  get IsDebugDraw() {
-    return (
-      void 0 === this.DebugDrawInternal &&
-        (this.DebugDrawInternal = this.DebugDraw),
-      this.DebugDrawInternal
-    );
+      (this.StateMachineGroup = void 0);
   }
   GetEntity() {
     return this.CharAiDesignComp?.Entity;
@@ -64,9 +49,9 @@ class TsAiController extends UE.KuroAIController {
   InitAiController(t) {
     (this.CharAiDesignComp = t),
       (this.AiController = t.AiController),
-      (this.CharBuffComp = t.Entity.GetComponent(159)),
-      (this.CharTagComp = t.Entity.GetComponent(188)),
-      (this.CharStateMachineComp = t.Entity.GetComponent(67));
+      (this.CharBuffComp = t.Entity.GetComponent(160)),
+      (this.CharTagComp = t.Entity.GetComponent(190)),
+      (this.CharStateMachineComp = t.Entity.GetComponent(68));
   }
   DrawDebugLines(t) {
     var e, i, r;
@@ -229,7 +214,7 @@ class TsAiController extends UE.KuroAIController {
       });
   }
   AicApplyBuffToTarget(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 192);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 194);
     t &&
       this.CharBuffComp?.Valid &&
       t.AddBuffFromAi(this.AiController.AiCombatMessageId, e, {
@@ -296,12 +281,14 @@ class TsAiController extends UE.KuroAIController {
     this.AiController.AiPerception?.EnableAiSenseByType(t, e);
   }
   SetAiHateConfig(t) {
-    this.AiController.AiHateList.AiHate = t
-      ? ConfigManager_1.ConfigManager.AiConfig.LoadAiHate(Number(t))
-      : ConfigManager_1.ConfigManager.AiConfig.LoadAiHateByController(
-          this.AiController,
-          void 0,
-        );
+    TsAiController.StatSetAiHateConfig.Start(),
+      (this.AiController.AiHateList.AiHate = t
+        ? ConfigManager_1.ConfigManager.AiConfig.LoadAiHate(Number(t))
+        : ConfigManager_1.ConfigManager.AiConfig.LoadAiHateByController(
+            this.AiController,
+            void 0,
+          )),
+      TsAiController.StatSetAiHateConfig.Stop();
   }
   ChangeHatred(t, e, i) {
     this.AiController.AiHateList.ChangeHatred(t, e, i);
@@ -380,7 +367,7 @@ ${this.AiController.AiHateList.GetHatredMapDebugText()}
 等待切换主控：${this.AiController.IsWaitingSwitchControl()}
 感知：${this.AiController.AiPerception?.GetEnableAiSenseDebug()}
 怪物仇恨组： ${this.AiController.HatredGroupId}
-部位血量: ${this.CharBuffComp?.Entity?.GetComponent(60)?.GetDebugText()}
+部位血量: ${this.CharBuffComp?.Entity?.GetComponent(61)?.GetDebugText()}
 集群Id：${this.AiController.GetTeamLevelId()}
 `;
   }
@@ -413,6 +400,6 @@ ${this.AiController.AiHateList.GetHatredMapDebugText()}
   }
 }
 (TsAiController.TmpVector = Vector_1.Vector.Create()),
-  (TsAiController.StatSetAiHateConfig = void 0),
+  (TsAiController.StatSetAiHateConfig = Stats_1.Stat.Create("SetAiHateConfig")),
   (exports.default = TsAiController);
 //# sourceMappingURL=TsAiController.js.map

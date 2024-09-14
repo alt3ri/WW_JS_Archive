@@ -158,6 +158,14 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
         !0,
       );
   }
+  OnLevelUpSequenceFinished() {
+    this.SetActive(!0),
+      (this.Kbi = !1),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.HangPlotViewHud,
+        !1,
+      );
+  }
   OnLevelMaxSequenceFinished() {
     this.CloseMe();
   }
@@ -242,28 +250,28 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
       s = i.GetTargetDragonPoolLevelById(this.PoolConfigId),
       h = i.GetTargetDragonPoolMaxLevelById(this.PoolConfigId),
       o = this.GetText(4),
-      r = i.GetTargetDragonPoolActiveById(this.PoolConfigId);
+      n = i.GetTargetDragonPoolActiveById(this.PoolConfigId);
     if (
       this.CurrentShowLevel === s + 1 ||
       (this.CurrentShowLevel === s && this.CurrentShowLevel === h)
     ) {
       let e = s;
-      (this.aPi = 1), 2 === r && (this.aPi = 0), s === h && --e;
+      (this.aPi = 1), 2 === n && (this.aPi = 0), s === h && --e;
       var h = i.GetTargetDragonPoolLevelNeedCoreById(this.PoolConfigId, e);
       let t = 0;
-      var r =
+      var n =
         (t =
-          2 === r ? h : i.GetTargetDragonPoolCoreCountById(this.PoolConfigId)) /
+          2 === n ? h : i.GetTargetDragonPoolCoreCountById(this.PoolConfigId)) /
         h;
-      this.GAr.SetFillAmount(r), o.SetText(t + "/" + h);
+      this.GAr.SetFillAmount(n), o.SetText(t + "/" + h);
     } else
       this.CurrentShowLevel <= s
         ? ((this.aPi = 0),
-          (r = i.GetTargetDragonPoolLevelNeedCoreById(
+          (n = i.GetTargetDragonPoolLevelNeedCoreById(
             this.PoolConfigId,
             this.CurrentShowLevel - 1,
           )),
-          o.SetText(r + "/" + r),
+          o.SetText(n + "/" + n),
           this.GAr.SetFillAmount(1))
         : this.CurrentShowLevel > s + 1 &&
           ((this.aPi = 2),

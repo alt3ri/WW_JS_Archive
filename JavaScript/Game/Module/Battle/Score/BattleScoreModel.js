@@ -29,7 +29,7 @@ class BattleScoreModel extends ModelBase_1.ModelBase {
     );
   }
   HandleBattleScoreNotify(e) {
-    this.UpdateScore(e.xAs, e.bAs);
+    this.UpdateScore(e.NAs, e.FAs);
   }
   UpdateScore(e, t) {
     var r;

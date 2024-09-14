@@ -68,7 +68,9 @@ class GameplayTagUtils {
       a === e ||
       ((a = this.GetNameByTagId(a)),
       (e = this.GetNameByTagId(e)),
-      !(!a || !e) && a.startsWith(e))
+      !(!a || !e || a.length <= e.length) &&
+        a.startsWith(e) &&
+        "." === a[e.length])
     );
   }
   static Contains(a, e) {

@@ -32,7 +32,7 @@ const CsvLoader_1 = require("./CsvLoader"),
       CnName: "地图Id",
       Type: "Int",
       ExportType: "CS",
-      RenderType: 40,
+      RenderType: 41,
       Tip: "DataLayer所在的地图ID",
     }),
     (0, CsvLoader_1.createCsvField)({

@@ -62,7 +62,7 @@ class PlotViewManager {
       (this.OnUpdateSubtitle = (e) => {
         ModelManager_1.ModelManager.PlotModel.CurTalkItem = e;
       }),
-      (this.Ezs = (e) => {
+      (this.pea = (e) => {
         e
           ? ((ModelManager_1.ModelManager.PlotModel.HangViewHud = !0),
             Log_1.Log.CheckInfo() &&
@@ -120,7 +120,7 @@ class PlotViewManager {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnTutorialTipExistChanged,
-        this.Ezs,
+        this.pea,
       );
   }
   UnRegisterEvent() {
@@ -142,7 +142,7 @@ class PlotViewManager {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnTutorialTipExistChanged,
-        this.Ezs,
+        this.pea,
       );
   }
   GetCurrentViewName() {
@@ -260,7 +260,9 @@ class PlotViewManager {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Plot", 27, "[PlotView] 操作进入缓存", [
           "Handle",
-          e.ResetToBattleView ? "ResetToBattleView" : e.ViewName ?? "CloseView",
+          e.ResetToBattleView
+            ? "ResetToBattleView"
+            : (e.ViewName ?? "CloseView"),
         ]);
   }
   ProtectPlotView() {

@@ -22,7 +22,7 @@ class NpcPerformInteractState extends StateBase_1.StateBase {
     this.otr = t;
   }
   CanChangeFrom(t) {
-    var e = this.Owner.Entity.GetComponent(171);
+    var e = this.Owner.Entity.GetComponent(172);
     return this.Ptr && 1 === t && !e.IsInPlot;
   }
   OnCreate(t) {

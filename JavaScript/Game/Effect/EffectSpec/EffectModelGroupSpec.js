@@ -41,12 +41,21 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
     for (const s of this.EffectSpecMap.values())
       s.GetEffectSpec().SetExtraState(t);
   }
+  ShouldRegisterBodyEffect() {
+    for (const t of this.EffectSpecMap.values())
+      if (!t.GetEffectSpec().ShouldRegisterBodyEffect()) return !1;
+    return !0;
+  }
   OnInit() {
     Stats_1.Stat.Enable &&
-      ((this.f0e = void 0),
-      (this.p0e = void 0),
-      (this.v0e = void 0),
-      (this.M0e = void 0)),
+      ((this.f0e = Stats_1.Stat.Create(
+        "[EffectModelGroupSpec.Tick] Path:" + this.Handle.Path,
+      )),
+      (this.p0e = Stats_1.Stat.Create("[EffectModelGroupSpec.Tick.SuperTick]")),
+      (this.v0e = Stats_1.Stat.Create(
+        "[EffectModelGroupSpec.Tick.GroupTickHandle]",
+      )),
+      (this.M0e = Stats_1.Stat.Create("[EffectModelGroupSpec.OnTick]"))),
       (this.InitPromise = new CustomPromise_1.CustomPromise());
     const s = this.Handle.GetSureEffectActor();
     if (s?.IsValid()) {
@@ -65,11 +74,11 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
           this.GroupComponent.SetComponentTickEnabled(!1),
           (this.SceneComponent = t),
           this.EffectModel.EffectData.Num());
-      const h = this.EffectModel.EffectData;
+      const f = this.EffectModel.EffectData;
       let o = e;
       for (let t = 0; t < e; ++t) {
-        const n = h.GetKey(t);
-        if (!n?.IsValid())
+        const h = f.GetKey(t);
+        if (!h?.IsValid())
           return (
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -83,14 +92,13 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
             !1
           );
         const s = this.Handle.GetSureEffectActor();
-        var r = s.GetOuter(),
-          f = UE.KismetSystemLibrary.GetPathName(n);
+        var r = UE.KismetSystemLibrary.GetPathName(h);
         let i = !1;
         r = EffectSystem_1.EffectSystem.SpawnChildEffect(
-          r,
+          s,
           this.Handle,
           s,
-          f,
+          r,
           this.Handle.CreateReason,
           !1,
           this.Handle.GetContext(),
@@ -105,7 +113,7 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
                 i = !0;
                 break;
               case 5:
-                var e = h.Get(n);
+                var e = f.Get(h);
                 0 < e && (this.C0e.push([s, e]), this.d0e.add(s));
             }
             o ||
@@ -174,11 +182,18 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
     this.EffectSpecMap.clear();
   }
   Tick(t) {
-    super.Tick(t);
-    for (const s of this.EffectSpecMap.values()) s.Tick(t);
+    this.f0e?.Start(), this.p0e?.Start(), super.Tick(t), this.p0e?.Stop();
+    for (const s of this.EffectSpecMap.values())
+      this.v0e?.Start(), s.Tick(t), this.v0e?.Stop();
+    this.f0e?.Stop();
+  }
+  AlwaysTick(t) {
+    super.AlwaysTick(t);
+    for (const s of this.EffectSpecMap.values())
+      s.GetEffectSpec()?.AlwaysTick(t);
   }
   OnTick(s) {
-    if (0 < this.g0e.length)
+    if ((this.M0e?.Start(), 0 < this.g0e.length))
       for (let t = 0; t < this.g0e.length; ++t) {
         var e = this.g0e[t],
           i = e[1] - s;
@@ -200,7 +215,8 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
         this.CachedRotationCurve,
         this.CachedScaleCurve,
         this.LifeTime.PassTime,
-      );
+      ),
+      this.M0e?.Stop();
   }
   OnBodyEffectChanged(t) {
     for (const s of this.EffectSpecMap.values())
@@ -257,7 +273,8 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
       if (t.GetEffectSpec()?.NeedVisibilityTest()) return !0;
     return !1;
   }
-  OnVisibilityChanged(t) {
+  VisibilityChanged(t) {
+    super.VisibilityChanged(t);
     for (const s of this.EffectSpecMap.values()) s.OnVisibilityChanged(t);
   }
   ChaseFrame(t, s, e) {
@@ -307,6 +324,17 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
   FreezeEffect(t) {
     super.FreezeEffect(t);
     for (const s of this.EffectSpecMap.values()) s.FreezeEffect(t);
+  }
+  OnModifyEffectModel() {
+    super.OnModifyEffectModel();
+    for (const t of this.EffectSpecMap.values()) t.OnModifyEffectModel();
+  }
+  GetDebugErrorCode() {
+    for (const s of this.EffectSpecMap.values()) {
+      var t = s.GetDebugErrorCode();
+      if (0 !== t) return t;
+    }
+    return 0;
   }
 }
 exports.EffectModelGroupSpec = EffectModelGroupSpec;

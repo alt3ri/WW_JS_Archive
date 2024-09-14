@@ -20,8 +20,8 @@ class BusinessShopRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnStart() {
     this.GetItem(1)?.SetUIActive(!1);
   }
-  SwitchRoleSpineAnim(i, t) {
-    this.GetSpine(0).SetAnimation(0, i, !0)?.SetMixDuration(t);
+  SwitchRoleSpineAnim(i, e) {
+    this.GetSpine(0).SetAnimation(0, i, !0)?.SetMixDuration(e);
   }
   Refresh(i) {
     this.RoleId = i;
@@ -40,9 +40,6 @@ class BusinessShopRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
   ShowDialog(i) {
     this.GetItem(1)?.SetUIActive(!0),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), i);
-  }
-  ChangeRotation() {
-    this.GetItem(3)?.SetUIRelativeRotation(new UE.Rotator(180, 0, 0));
   }
 }
 exports.BusinessShopRoleItem = BusinessShopRoleItem;

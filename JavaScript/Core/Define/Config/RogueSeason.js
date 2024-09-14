@@ -28,9 +28,16 @@ class RogueSeason {
   get FirstPassRewardMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.firstpassrewardmapLength(),
-      (t) => this.firstpassrewardmap(t)?.key(),
-      (t) => this.firstpassrewardmap(t)?.value(),
+      this.firstpassrewardmapKey,
+      this.firstpassrewardmapValue,
+      this,
     );
+  }
+  firstpassrewardmapKey(t) {
+    return this.firstpassrewardmap(t)?.key();
+  }
+  firstpassrewardmapValue(t) {
+    return this.firstpassrewardmap(t)?.value();
   }
   get ShopId() {
     return this.shopid();

@@ -10,23 +10,23 @@ const UE = require("ue"),
   tmpVector = Vector_1.Vector.Create();
 class TsControlBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetMoveVectorCache(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 53).GetMoveVectorCache();
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 54).GetMoveVectorCache();
     return (tmpVector2D.X = t.X), (tmpVector2D.Y = t.Y), tmpVector2D;
   }
   static GetMoveDirectionCache(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 53).GetMoveDirectionCache();
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 54).GetMoveDirectionCache();
     return (tmpVector2D.X = t.X), (tmpVector2D.Y = t.Y), tmpVector2D;
   }
   static GetWorldMoveDirectionCache(t) {
     t = EntitySystem_1.EntitySystem.GetComponent(
       t,
-      53,
+      54,
     ).GetWorldMoveDirectionCache();
     return (tmpVector2D.X = t.X), (tmpVector2D.Y = t.Y), tmpVector2D;
   }
   static GetMoveVector(t) {
     return (
-      EntitySystem_1.EntitySystem.GetComponent(t, 53).GetMoveVector(tmpVector),
+      EntitySystem_1.EntitySystem.GetComponent(t, 54).GetMoveVector(tmpVector),
       (tmpVector2D.X = tmpVector.X),
       (tmpVector2D.Y = tmpVector.Y),
       tmpVector2D
@@ -34,7 +34,7 @@ class TsControlBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static GetMoveDirection(t) {
     return (
-      EntitySystem_1.EntitySystem.GetComponent(t, 53).GetMoveDirection(
+      EntitySystem_1.EntitySystem.GetComponent(t, 54).GetMoveDirection(
         tmpVector,
       ),
       (tmpVector2D.X = tmpVector.X),
@@ -66,7 +66,7 @@ class TsControlBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     EntitySystem_1.EntitySystem.GetComponent(t, 3).UseControllerRotation = e;
   }
   static SetBpInputComponent(t, e) {
-    var o = EntitySystem_1.EntitySystem.GetComponent(t, 53),
+    var o = EntitySystem_1.EntitySystem.GetComponent(t, 54),
       t = EntitySystem_1.EntitySystem.GetComponent(t, 3);
     (o.BpInputComp = e).OwnerActor = t.Actor;
   }

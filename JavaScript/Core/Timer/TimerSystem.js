@@ -36,14 +36,14 @@ class TimerHandle {
 }
 (exports.TimerHandle = TimerHandle).o6 = 0;
 class Timer {
-  constructor(t, i, e, s, r, o, h, n) {
+  constructor(t, i, e, s, r, h, o, n) {
     (this.Id = t),
       (this.IO = i),
       (this.Interval = e),
       (this.kC = s),
       (this.Dilation = r),
-      (this.Handle = o),
-      (this.MJ = h),
+      (this.Handle = h),
+      (this.MJ = o),
       (this.Reason = n),
       (this.Now = -0),
       (this.Next = -0),
@@ -53,11 +53,12 @@ class Timer {
   }
   Do() {
     var t = this.Next,
-      i = t - this.Now;
-    this.MJ;
+      i = t - this.Now,
+      e = this.MJ;
     (this.Now = t),
       (this.Next = t + this.Interval / this.Dilation),
-      (this.t6 += 1);
+      (this.t6 += 1),
+      e?.Start();
     try {
       (this.Handle = void 0), this.IO(i);
     } catch (t) {
@@ -82,7 +83,7 @@ class Timer {
             ["error", t],
           );
     }
-    return this.kC === FOREVER || this.t6 < this.kC;
+    return e?.Stop(), this.kC === FOREVER || this.t6 < this.kC;
   }
   Copy() {
     this.Handle = void 0;
@@ -114,7 +115,7 @@ class TimerSystemInstance {
     (this.Now = 0),
       (this.Timers = new Map()),
       (this.Queue = new PriorityQueue_1.PriorityQueue(Timer.Compare)),
-      (this.Stat = void 0),
+      (this.Stat = Stats_1.Stat.Create("TimerSystem.Tick")),
       (this.StatWeakMap = new WeakMap()),
       (this.Registry = new FinalizationRegistry((t) => {
         Log_1.Log.CheckError() &&
@@ -126,28 +127,34 @@ class TimerSystemInstance {
       }));
   }
   Tick(t) {
+    this.Stat?.Start();
     for (var i = this.Now + t, e = ((this.Now = i), this.Queue); !e.Empty; ) {
       var s = e.Top;
       if (!s || s.Next > i) break;
       e.Pop(), 0 === s.State && (s.Do() ? e.Push(s) : this.gK(s));
     }
+    this.Stat?.Stop();
   }
   Has(t) {
     return void 0 !== t && this.Timers.has(t.Id);
   }
-  Loop(t, i, e, s = 1, r = void 0, o = void 0, h = !0) {
+  Loop(t, i, e, s = 1, r = void 0, h = void 0, o = !0) {
     if (
-      TimerSystemInstance.j6(i, o, h) &&
+      TimerSystemInstance.j6(i, h, o) &&
       TimerSystemInstance.yJ(e) &&
       TimerSystemInstance.IJ(s)
     )
-      return this.fK(t, i, e, s, r, o);
+      return this.fK(t, i, e, s, r, h);
   }
-  Forever(t, i, e = 1, s = void 0, r = void 0, o = !0) {
-    if (TimerSystemInstance.j6(i, r, o) && TimerSystemInstance.IJ(e))
+  Forever(t, i, e = 1, s = void 0, r = void 0, h = !0) {
+    if (TimerSystemInstance.j6(i, r, h) && TimerSystemInstance.IJ(e))
       return this.fK(t, i, FOREVER, e, s, r);
   }
   Delay(t, i, e = void 0, s = void 0, r = !0) {
+    if (TimerSystemInstance.j6(i, s, r)) return this.fK(t, i, 1, 1, e, s);
+  }
+  EmitOnTime(t, i, e = void 0, s = void 0, r = !0) {
+    i -= this.Now;
     if (TimerSystemInstance.j6(i, s, r)) return this.fK(t, i, 1, 1, e, s);
   }
   Next(t, i = void 0, e = void 0) {
@@ -221,13 +228,13 @@ class TimerSystemInstance {
     ) {
       s = this.Now;
       if (1 === e.State) {
-        const o = e.Next + i - e.Interval;
-        (e.Next = o < 0 ? 0 : o), (e.Interval = i);
+        const h = e.Next + i - e.Interval;
+        (e.Next = h < 0 ? 0 : h), (e.Interval = i);
       } else {
         var r = e.Copy();
         e.State = 2;
-        const o = r.Next + i - r.Interval;
-        (r.Next = o < s ? s : o),
+        const h = r.Next + i - r.Interval;
+        (r.Next = h < s ? s : h),
           (r.Interval = i),
           this.Registry.unregister(e),
           this.Timers.set(t.Id, r),
@@ -292,15 +299,15 @@ class TimerSystemInstance {
         Log_1.Log.Error("Timer", 1, "计时器句柄不存在", ["id", t]);
     }
   }
-  fK(i, e, s, r, o, h) {
+  fK(i, e, s, r, h, o) {
     if (i) {
       let t = void 0;
-      o ||
+      h ||
         (t = this.StatWeakMap.get(i)) ||
         ((t = void 0), this.StatWeakMap.set(i, t));
       var n = this.Now,
         a = new TimerHandle(this),
-        s = new Timer(a.Id, i, e, s, r, a, o ?? t, h);
+        s = new Timer(a.Id, i, e, s, r, a, h ?? t, o);
       return (
         (s.Now = n),
         (s.Next = n + e / r),

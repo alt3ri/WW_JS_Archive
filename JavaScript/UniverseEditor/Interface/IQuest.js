@@ -9,19 +9,14 @@ var EInformationViewType,
   EQuestScheduleType,
   EQuestScheduleUiType,
   EStatisticsEventType,
+  EPlayerHitStatisticsType,
+  EPlayerDamageInfoType,
+  EChildQuest,
   ESkillType,
   ESkillCategory,
   EUseSkillCheckType,
   ETargetBattleAttribute,
   EAttributeToTarget;
-function createQuestTypeCnNameMap() {
-  var e = new Map();
-  for (const o in exports.questTypeCNMapper) {
-    var t = Number(o);
-    e.set(exports.questTypeCNMapper[t], t);
-  }
-  return e;
-}
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.repeatBanList =
     exports.getSkillTypeFromCnName =
@@ -47,6 +42,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ESkillType =
     exports.childQuestsForTest =
     exports.childQuestConfigs =
+    exports.childQuestForLevelPlay =
+    exports.childQuestForQuest =
+    exports.EChildQuest =
+    exports.EPlayerDamageInfoType =
+    exports.EPlayerHitStatisticsType =
     exports.EStatisticsEventType =
     exports.EQuestScheduleUiType =
     exports.EQuestScheduleType =
@@ -89,7 +89,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.EEnableSystemType ||
     (exports.EEnableSystemType = {})).GradingSystem = "GradingSystem"),
   (function (e) {
-    (e.Score = "Score"), (e.Grade = "Grade"), (e.Wave = "Wave");
+    (e.Score = "Score"),
+      (e.Grade = "Grade"),
+      (e.Wave = "Wave"),
+      (e.CustomVar = "CustomVar");
   })(
     (EGradingSystemVarType =
       exports.EGradingSystemVarType || (exports.EGradingSystemVarType = {})),
@@ -123,11 +126,79 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e.Timer = "Timer"),
       (e.MonsterPoint = "MonsterPoint"),
       (e.MonsterRemainingHealth = "MonsterRemainingHealth"),
-      (e.MonsterHealthScore = "MonsterHealthScore");
+      (e.MonsterHealthScore = "MonsterHealthScore"),
+      (e.PlayerHit = "PlayerHit");
   })(
     (EStatisticsEventType =
       exports.EStatisticsEventType || (exports.EStatisticsEventType = {})),
   ),
+  (function (e) {
+    (e.HitCount = "HitCount"), (e.BeDamage = "BeDamage");
+  })(
+    (EPlayerHitStatisticsType =
+      exports.EPlayerHitStatisticsType ||
+      (exports.EPlayerHitStatisticsType = {})),
+  ),
+  (function (e) {
+    (e.DamagePoint = "DamagePoint"), (e.DamagePercentage = "DamagePercentage");
+  })(
+    (EPlayerDamageInfoType =
+      exports.EPlayerDamageInfoType || (exports.EPlayerDamageInfoType = {})),
+  ),
+  (function (e) {
+    (e.DoInteract = "DoInteract"),
+      (e.ReachArea = "ReachArea"),
+      (e.Kill = "Kill"),
+      (e.GetItem = "GetItem"),
+      (e.UseSkill = "UseSkill"),
+      (e.GetSkill = "GetSkill"),
+      (e.PlayFlow = "PlayFlow"),
+      (e.DetectCombatState = "DetectCombatState"),
+      (e.Parkour = "Parkour"),
+      (e.Timer = "Timer"),
+      (e.HandInItems = "HandInItems"),
+      (e.MonsterCreator = "MonsterCreator"),
+      (e.InformationViewCheck = "InformationViewCheck"),
+      (e.UseItem = "UseItem"),
+      (e.CheckEntityState = "CheckEntityState"),
+      (e.CheckLevelPlay = "CheckLevelPlay"),
+      (e.CheckUiGame = "CheckUiGame"),
+      (e.FinishDungeon = "FinishDungeon"),
+      (e.WaitTime = "WaitTime"),
+      (e.ScheduleTime = "ScheduleTime"),
+      (e.ReadMail = "ReadMail"),
+      (e.Guide = "Guide"),
+      (e.EnterDungeon = "EnterDungeon"),
+      (e.LeaveDungeon = "LeaveDungeon"),
+      (e.CheckTargetBattleAttribute = "CheckTargetBattleAttribute"),
+      (e.WaitBattleCondition = "WaitBattleCondition"),
+      (e.CompareVar = "CompareVar"),
+      (e.ReceiveTelecom = "ReceiveTelecom"),
+      (e.ShowUi = "ShowUi"),
+      (e.TakePhoto = "TakePhoto"),
+      (e.VisionSystem = "VisionSystem"),
+      (e.ParallaxAlign = "ParallaxAlign"),
+      (e.CheckConditionGroup = "CheckConditionGroup"),
+      (e.CheckActivityState = "CheckActivityState"),
+      (e.CheckPlayerInput = "CheckPlayerInput"),
+      (e.AwakeAndLoadEntity = "AwakeAndLoadEntity"),
+      (e.WalkingPattern = "WalkingPattern");
+  })((EChildQuest = exports.EChildQuest || (exports.EChildQuest = {})));
+const childQuestAll = Object.values(EChildQuest);
+function createQuestTypeCnNameMap() {
+  var e = new Map();
+  for (const o in exports.questTypeCNMapper) {
+    var t = Number(o);
+    e.set(exports.questTypeCNMapper[t], t);
+  }
+  return e;
+}
+(exports.childQuestForQuest = new Set(childQuestAll)),
+  (exports.childQuestForLevelPlay = new Set(
+    childQuestAll.filter(
+      (e) => e !== EChildQuest.EnterDungeon && e !== EChildQuest.FinishDungeon,
+    ),
+  )),
   (exports.childQuestConfigs = {
     DoInteract: { OnlineParticipateRule: "AnyPlayer" },
     ReachArea: { OnlineParticipateRule: "AnyPlayer" },
@@ -164,6 +235,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     CheckConditionGroup: {},
     CheckActivityState: {},
     CheckPlayerInput: {},
+    AwakeAndLoadEntity: {},
+    WalkingPattern: {},
   }),
   (exports.childQuestsForTest = []),
   (function (e) {
@@ -223,7 +296,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     (e.CheckSkillGenre = "CheckBySkillGenre"),
       (e.CheckSkillId = "CheckBySkillId"),
       (e.CheckVisionSummonId = "CheckVisionSummonId"),
-      (e.CheckVisionShowId = "CheckVisionShowId");
+      (e.CheckVisionShowId = "CheckVisionShowId"),
+      (e.CheckFollowShooterSkillId = "CheckFollowShooterSkillId");
   })(
     (EUseSkillCheckType =
       exports.EUseSkillCheckType || (exports.EUseSkillCheckType = {})),
@@ -263,6 +337,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     EntityStateCondition: {},
     SneakPlayCondition: {},
     PlayerMotionStateCondition: {},
+    PlayerMovementModeCondition: {},
     FailedTeleport: {},
     AddTimeConfig: {},
     CheckDataLayer: {},
@@ -309,6 +384,14 @@ function createQuestRegionCnNameMap() {
     10: "北落野",
     11: "黑海岸",
     12: "乘霄山",
+    13: "帕尔米罗墓岛",
+    14: "拉古那城",
+    15: "扶风水畔",
+    16: "声骸猎场",
+    17: "槲生半岛",
+    18: "氤柔水境",
+    19: "狄萨莱海脊",
+    20: "埃弗拉德金库",
   });
 const questRegionCnNameMap = createQuestRegionCnNameMap();
 function questCnNameToRegion(e) {

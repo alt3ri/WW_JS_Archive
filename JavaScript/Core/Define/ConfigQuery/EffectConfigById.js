@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configEffectConfigById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configEffectConfigById.GetConfig"),
   CONFIG_STAT_PREFIX = "configEffectConfigById.GetConfig(";
 exports.configEffectConfigById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, n = !0) => {
-    if (
-      (f = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var f = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      t =
+        (f.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
       if (n) {
-        var e = KEY_PREFIX + `#${o})`;
-        const i = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (i) return i;
+        var i = KEY_PREFIX + `#${o})`;
+        const e = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (e)
+          return (
+            f.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
+          );
       }
       if (
-        (f =
+        (t =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,31 +58,36 @@ exports.configEffectConfigById = {
               o,
             ]))
       ) {
-        var f,
-          e = void 0;
+        i = void 0;
         if (
-          (([f, e] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([t, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
           )),
-          f)
+          t)
         ) {
-          const i = EffectConfig_1.EffectConfig.getRootAsEffectConfig(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
+          const e = EffectConfig_1.EffectConfig.getRootAsEffectConfig(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
           );
           return (
             n &&
-              ((f = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(f, i)),
+              ((t = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(t, e)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i
+            f.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    f.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=EffectConfigById.js.map

@@ -54,11 +54,11 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
         "BubbleComponent",
       )),
         this.InitFlowLogic(this.FlowData);
-      t = this.ActorComp.CreatureData.ComponentDataMap.get("Uys")?.Uys?.MIs;
+      t = this.ActorComp.CreatureData.ComponentDataMap.get("Oys")?.Oys?.RIs;
       if (t)
         for (const e of t) {
           var i = ConfigManager_1.ConfigManager.BubbleConfig.GetBubbleData(
-            e.pIs,
+            e.LIs,
           );
           if (i) {
             i =
@@ -158,7 +158,7 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
       this.FlowLogic.Tick(Time_1.Time.DeltaTimeSeconds));
   }
   RemoveFlowActions() {
-    this.Entity.GetComponent(72).HideDialogueText();
+    this.Entity.GetComponent(73).HideDialogueText();
   }
   ResetFlowPlayCoolDownTime() {
     this.FlowLogic && this.FlowLogic.ResetWaitTime();

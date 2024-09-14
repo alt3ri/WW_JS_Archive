@@ -8,7 +8,7 @@ const UE = require("ue"),
   KeyItemBase_1 = require("./KeyItemBase");
 class CombineKeyItem extends KeyItemBase_1.KeyItemBase {
   constructor() {
-    super(...arguments), (this.Tut = ""), (this.LIa = void 0);
+    super(...arguments), (this.Tut = ""), (this.uUa = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -18,7 +18,7 @@ class CombineKeyItem extends KeyItemBase_1.KeyItemBase {
     ];
   }
   Reset() {
-    super.Reset(), (this.LIa = void 0);
+    super.Reset(), (this.uUa = void 0);
   }
   GetKeyText() {}
   GetKeyTexture() {
@@ -58,9 +58,9 @@ class CombineKeyItem extends KeyItemBase_1.KeyItemBase {
       if (!StringUtils_1.StringUtils.IsEmpty(i)) {
         const s = this.GetTexture(2);
         s.SetUIActive(!1),
-          (this.LIa = i),
+          (this.uUa = i),
           this.SetTextureByPath(i, s, void 0, () => {
-            this.LIa === i && (s.SetSizeFromTexture(), s.SetUIActive(!0));
+            this.uUa === i && (s.SetSizeFromTexture(), s.SetUIActive(!0));
           });
       }
       this.Tut = e;

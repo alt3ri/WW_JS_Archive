@@ -36,13 +36,13 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   EffectSystem_1 = require("../../../../Effect/EffectSystem"),
-  GameQualitySettingsManager_1 = require("../../../../GameQualitySettings/GameQualitySettingsManager"),
+  GameSettingsDeviceRender_1 = require("../../../../GameSettings/GameSettingsDeviceRender"),
   GlobalData_1 = require("../../../../GlobalData"),
   ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
+  VoxelUtils_1 = require("../../../../Utils/VoxelUtils"),
   CharacterNameDefines_1 = require("../CharacterNameDefines"),
   CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
-  VoxelUtils_1 = require("../../../../Utils/VoxelUtils"),
   PROFILE_KEY = "CharacterFootEffectComponent_FootTrace",
   FOOTPRINT_SPAWN_DURATION = 200,
   FOOTPRINT_SPAWN_MIN_DISTANCE_SQUARED = 500,
@@ -81,7 +81,7 @@ let CharacterFootEffectComponent =
         (this.b5r = Vector_1.Vector.Create());
     }
     static get Dependencies() {
-      return [3, 43, 162, 160, 0];
+      return [3, 44, 163, 161, 0];
     }
     OnInit(t) {
       return super.OnInit(t), !0;
@@ -90,12 +90,12 @@ let CharacterFootEffectComponent =
       super.OnStart();
       var t = this.Entity.GetComponent(3);
       if (!t?.Valid) return !1;
-      var e = this.Entity.GetComponent(162);
+      var e = this.Entity.GetComponent(163);
       if (!e?.Valid) return !1;
-      var i = this.Entity.GetComponent(43);
+      var i = this.Entity.GetComponent(44);
       if (!i?.Valid) return !1;
       if (!this.Entity.GetComponent(0)?.Valid) return !1;
-      var r = this.Entity.GetComponent(160);
+      var r = this.Entity.GetComponent(161);
       if (!r?.Valid) return !1;
       (this.Hte = t),
         (this.oRe = e),
@@ -110,9 +110,8 @@ let CharacterFootEffectComponent =
         this.R5r.SetTraceTypeQuery(
           QueryTypeDefine_1.KuroTraceTypeQuery.IkGround,
         );
-      t = DataTableUtil_1.DataTableUtil.GetAllDataTableRow(6);
-      if (!t) return !1;
-      for (const o of t) this.w5r.set(o.SurfaceType, o.Effect);
+      for (const o of DataTableUtil_1.DataTableUtil.GetDataTableAllRow(6))
+        this.w5r.set(o.SurfaceType, o.Effect);
       return !0;
     }
     OnEnd() {
@@ -232,7 +231,7 @@ let CharacterFootEffectComponent =
             (EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnCharFootOnTheGround,
             ),
-            (0, RegisterComponent_1.isComponentInstance)(this.y5r, 173))
+            (0, RegisterComponent_1.isComponentInstance)(this.y5r, 174))
           ) {
             var h = this.y5r?.GetAkComponent();
             if (h?.IsValid()) {
@@ -270,50 +269,63 @@ let CharacterFootEffectComponent =
       }
     }
     UpdateFootprintEffect() {
-      GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-        .GetCurrentQualityInfo()
-        .GetGameQualitySettingLevel() <= 1 ||
+      GameSettingsDeviceRender_1.GameSettingsDeviceRender
+        .GameQualitySettingLevel <= 1 ||
         (this.T5r && this.D5r && this.U5r && this.VTn(this.R5r?.HitResult),
         this.L5r && this.D5r && this.A5r && this.VTn(this.R5r?.HitResult));
     }
-    VTn(t) {
-      var e, i, r;
-      !t?.bBlockingHit ||
-        Time_1.Time.Now - this.B5r < FOOTPRINT_SPAWN_DURATION ||
-        ((e = this.kTn),
-        TraceElementCommon_1.TraceElementCommon.GetHitLocation(t, 0, e),
-        Vector_1.Vector.DistSquared(e, this.b5r) <
-          FOOTPRINT_SPAWN_MIN_DISTANCE_SQUARED) ||
-        ((i = t.PhysMaterials?.Get(0)),
-        (r = void 0) !== (r = this.w5r.get(i.SurfaceType)?.ToAssetPathName()) &&
-          (this.Hte.ActorForwardProxy.Multiply(
-            FOOTPRINT_FORWARD_OFFSET,
-            this.Lz,
-          ),
-          TraceElementCommon_1.TraceElementCommon.GetImpactNormal(
-            t,
-            0,
-            this.Tz,
-          ),
-          Vector_1.Vector.VectorPlaneProject(this.Lz, this.Tz, this.fHo),
-          this.fHo.AdditionEqual(e),
-          MathUtils_1.MathUtils.LookRotationUpFirst(
-            this.Hte.ActorForwardProxy,
-            this.Tz,
-            this.Gue,
-          ),
-          EffectSystem_1.EffectSystem.SpawnUnloopedEffect(
-            GlobalData_1.GlobalData.World,
-            new UE.Transform(
-              this.Gue.ToUeRotator(),
-              this.fHo.ToUeVector(),
-              Vector_1.Vector.OneVectorProxy.ToUeVector(),
+    VTn(e) {
+      if (
+        e?.bBlockingHit &&
+        !(Time_1.Time.Now - this.B5r < FOOTPRINT_SPAWN_DURATION)
+      ) {
+        var i = this.kTn;
+        if (
+          (TraceElementCommon_1.TraceElementCommon.GetHitLocation(e, 0, i),
+          !(
+            Vector_1.Vector.DistSquared(i, this.b5r) <
+            FOOTPRINT_SPAWN_MIN_DISTANCE_SQUARED
+          ))
+        ) {
+          let t = void 0;
+          t =
+            (t =
+              this.Entity.Id ===
+              ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity?.Id
+                ? ModelManager_1.ModelManager.SceneTeamModel?.GetPhysMaterial
+                : t) || e.PhysMaterials?.Get(0);
+          var r;
+          void 0 !== (r = this.w5r.get(t.SurfaceType)?.ToAssetPathName()) &&
+            (this.Hte.ActorForwardProxy.Multiply(
+              FOOTPRINT_FORWARD_OFFSET,
+              this.Lz,
             ),
-            r,
-            "[SceneCharacterFootprintEffect.SpawnEffect]",
-          ),
-          (this.B5r = Time_1.Time.Now),
-          this.b5r.DeepCopy(e)));
+            TraceElementCommon_1.TraceElementCommon.GetImpactNormal(
+              e,
+              0,
+              this.Tz,
+            ),
+            Vector_1.Vector.VectorPlaneProject(this.Lz, this.Tz, this.fHo),
+            this.fHo.AdditionEqual(i),
+            MathUtils_1.MathUtils.LookRotationUpFirst(
+              this.Hte.ActorForwardProxy,
+              this.Tz,
+              this.Gue,
+            ),
+            EffectSystem_1.EffectSystem.SpawnUnloopedEffect(
+              GlobalData_1.GlobalData.World,
+              new UE.Transform(
+                this.Gue.ToUeRotator(),
+                this.fHo.ToUeVector(),
+                Vector_1.Vector.OneVectorProxy.ToUeVector(),
+              ),
+              r,
+              "[SceneCharacterFootprintEffect.SpawnEffect]",
+            ),
+            (this.B5r = Time_1.Time.Now),
+            this.b5r.DeepCopy(i));
+        }
+      }
     }
     TriggerFootprint(t) {
       if (!(Time_1.Time.Now - this.B5r < FOOTPRINT_SPAWN_DURATION)) {
@@ -370,7 +382,7 @@ let CharacterFootEffectComponent =
   )),
   (CharacterFootEffectComponent = CharacterFootEffectComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(49)],
+      [(0, RegisterComponent_1.RegisterComponent)(50)],
       CharacterFootEffectComponent,
     )),
   (exports.CharacterFootEffectComponent = CharacterFootEffectComponent);

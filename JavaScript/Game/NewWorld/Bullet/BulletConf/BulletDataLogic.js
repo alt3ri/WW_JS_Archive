@@ -18,6 +18,7 @@ class BulletDataLogic {
       (this.g8o = !1),
       (this.f8o = void 0),
       (this.p8o = void 0),
+      (this.xKs = void 0),
       (this.v8o = void 0),
       (this.M8o = void 0),
       (this.E8o = void 0),
@@ -81,6 +82,11 @@ class BulletDataLogic {
   }
   get InteractWithWater() {
     return void 0 === this.p8o && (this.p8o = this.Data.开启水面交互), this.p8o;
+  }
+  get InteractWithAirWall() {
+    return (
+      void 0 === this.xKs && (this.xKs = this.Data.开启空气墙交互), this.xKs
+    );
   }
   get ReboundChannel() {
     return void 0 === this.v8o && (this.v8o = this.Data.弹反通道), this.v8o;

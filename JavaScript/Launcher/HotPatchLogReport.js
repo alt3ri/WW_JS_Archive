@@ -6,8 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.LoginLogEvent =
     exports.HotPatchLog =
       void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   BaseConfigController_1 = require("./BaseConfig/BaseConfigController"),
+  HotPatchKuroSdk_1 = require("./HotPatchKuroSdk/HotPatchKuroSdk"),
   NetworkDefine_1 = require("./NetworkDefine"),
   ThinkDataLaunchReporter_1 = require("./ThinkDataReport/ThinkDataLaunchReporter");
 class HotPatchLog {
@@ -18,7 +20,8 @@ class HotPatchLog {
       (this.s_step_id = ""),
       (this.client_platform = ""),
       (this.net_status = ""),
-      (this.s_version = "");
+      (this.s_version = ""),
+      (this.s_device_id = "");
   }
 }
 exports.HotPatchLog = HotPatchLog;
@@ -60,7 +63,7 @@ class HotPatchLogReport {
       (HotPatchLogReport.FSr = o),
       t.Save()),
       (HotPatchLogReport.Qre = `${UE.KuroLauncherLibrary.GetAppVersion()}(${BaseConfigController_1.BaseConfigController.GetPackageConfigOrDefault("Changelist")})`),
-      (HotPatchLogReport.rwi = UE.GameplayStatics.GetPlatformName());
+      (HotPatchLogReport.rwi = cpp_1.KuroApplication.IniPlatformName());
   }
   static get World() {
     return HotPatchLogReport.kSr;
@@ -89,6 +92,9 @@ class HotPatchLogReport {
       (t.s_version = HotPatchLogReport.Qre),
       (t.net_status = HotPatchLogReport.VSr()),
       (t.client_platform = HotPatchLogReport.rwi),
+      HotPatchKuroSdk_1.HotPatchKuroSdk.CanUseSdk() &&
+        t instanceof HotPatchLog &&
+        (t.s_device_id = UE.KuroSDKManager.GetBasicInfo().DeviceId),
       (t.s_client_version =
         ThinkDataLaunchReporter_1.ThinkDataLaunchReporter.ClientVersion),
       ThinkDataLaunchReporter_1.ThinkDataLaunchReporter.Report(

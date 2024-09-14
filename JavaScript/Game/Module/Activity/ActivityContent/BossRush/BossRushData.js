@@ -12,6 +12,7 @@ const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTex
   TimeUtil_1 = require("../../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
   ActivityData_1 = require("../../ActivityData"),
   BossRushController_1 = require("./BossRushController"),
   BossRushModel_1 = require("./BossRushModel"),
@@ -31,21 +32,21 @@ class BossRushLevelDetailInfo {
   }
   Phrase(t, e, s) {
     (this.LOe = t),
-      this.SetId(e.X5n),
-      this.SetScore(e.mMs),
-      this.SetUnLockTime(e.cps),
-      (this.jFe = e.dps),
+      this.SetId(e.r6n),
+      this.SetScore(e.SMs),
+      this.SetUnLockTime(e.Mps),
+      (this.jFe = e.Sps),
       (this.ySn = []),
       (this.ISn = []),
       (this.xAn = []);
-    for (const h of e.gMs) {
+    for (const h of e.yMs) {
       var i = new BossRushModel_1.BossRushBuffInfo();
-      (i.BuffId = h.L6n),
-        (i.Slot = h.D6n),
+      (i.BuffId = h.b6n),
+        (i.Slot = h.q6n),
         (i.ChangeAble =
-          h.A6n !== Protocol_1.Aki.Protocol.fks.cBs &&
-          h.A6n !== Protocol_1.Aki.Protocol.fks.Proto_Inactive),
-        (i.State = h.A6n),
+          h.G6n !== Protocol_1.Aki.Protocol.Iks.pBs &&
+          h.G6n !== Protocol_1.Aki.Protocol.Iks.Proto_Inactive),
+        (i.State = h.G6n),
         this.ySn.push(i);
     }
     for (const u of this.GetConfig().OptionalBuff) {
@@ -53,14 +54,14 @@ class BossRushLevelDetailInfo {
       (r.BuffId = u), (r.Slot = -1), (r.ChangeAble = !0), this.xAn.push(r);
     }
     for (const l of s) {
-      var o = new BossRushModel_1.BossRushBuffInfo();
-      (o.BuffId = l), (o.Slot = -1), (o.ChangeAble = !0), this.ISn.push(o);
+      var n = new BossRushModel_1.BossRushBuffInfo();
+      (n.BuffId = l), (n.Slot = -1), (n.ChangeAble = !0), this.ISn.push(n);
     }
     this.TSn = [];
-    let n = 0;
-    for (const c of e.CMs) {
+    let o = 0;
+    for (const _ of e.EMs) {
       var a = new BossRushModel_1.BossRushRoleInfo();
-      (a.RoleId = c), (a.Slot = n), n++, this.TSn.push(a);
+      (a.RoleId = _), (a.Slot = o), o++, this.TSn.push(a);
     }
   }
   SetId(t) {
@@ -171,7 +172,7 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
       (this.DSn = []),
       (this.RSn = !1),
       (this.USn = !1),
-      (this.naa = !1),
+      (this.s1a = !1),
       (this.ASn = []),
       (this.PSn = []),
       (this.$8i = void 0),
@@ -187,11 +188,23 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
       });
   }
   PhraseEx(t) {
-    (this.PSn = t.Vps.dMs),
-      this.PhraseLevelInfo(this.PSn, t.Vps.uMs),
+    (this.PSn = t.Xps.MMs),
+      this.PhraseLevelInfo(this.PSn, t.Xps.vMs),
       this.CheckIfNewBossRushOpen(),
-      this.PhraseRewardInfo(t.Vps.cMs),
-      (this.$8i = t);
+      this.PhraseRewardInfo(t.Xps.pMs),
+      (this.$8i = t),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.BossRushDataUpdate,
+      ),
+      UiManager_1.UiManager.IsViewOpen("ActivityRewardPopUpView") &&
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.RefreshCommonActivityRewardPopUpView,
+          this.GetRewardViewData(),
+        ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.BossRefreshBossRushRewardRedDot,
+        this.Id,
+      );
   }
   RebuildData() {
     this.$8i && this.PhraseEx(this.$8i);
@@ -202,7 +215,7 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
       var e = this.BSn(s);
       this.DSn.push(e);
     }
-    this.$8i && (this.$8i.Vps.cMs = t);
+    this.$8i && (this.$8i.Xps.pMs = t);
   }
   PhraseLevelInfo(t, e) {
     (this.ASn = []), (this.LSn = []);
@@ -213,7 +226,7 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
       this.LSn.push(e);
     }
     (this.LSn = this.LSn.reverse()),
-      this.$8i && ((this.$8i.Vps.uMs = e), (this.$8i.Vps.dMs = t));
+      this.$8i && ((this.$8i.Xps.vMs = e), (this.$8i.Xps.MMs = t));
   }
   GetBossRushLevelDetailInfoById(t) {
     for (const e of this.ASn) if (e.GetId() === t) return e;
@@ -228,7 +241,7 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
     return this.USn;
   }
   GetNewBuffState() {
-    return this.naa;
+    return this.s1a;
   }
   qSn() {
     for (const t of this.DSn) if (1 === t.RewardState) return !0;
@@ -257,14 +270,14 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
           0,
         ));
     (this.USn = t < e),
-      this.saa(),
+      this.a1a(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
         this.Id,
       );
   }
-  saa() {
-    this.naa = !1;
+  a1a() {
+    this.s1a = !1;
     var t = ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
         this.Id,
         0,
@@ -272,14 +285,14 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
         UNLOCKBUFFKEY,
         0,
       ),
-      e = this.aaa();
+      e = this.h1a();
     t < e &&
       0 < e &&
       (t = this.GetBossRushLevelDetailInfo()[e - 1]) &&
       t.GetConfig() &&
-      (this.naa = 0 < t.GetConfig().UnlockBuff.length);
+      (this.s1a = 0 < t.GetConfig().UnlockBuff.length);
   }
-  aaa() {
+  h1a() {
     let e = 0;
     var s = this.GetBossRushLevelDetailInfo(),
       i = s.length;
@@ -293,8 +306,8 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
     return t;
   }
   CacheNewBuffUnlock() {
-    this.naa = !1;
-    var t = this.aaa();
+    this.s1a = !1;
+    var t = this.h1a();
     ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
       this.Id,
       this.Id,
@@ -302,7 +315,7 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
       0,
       t,
     ),
-      this.saa();
+      this.a1a();
   }
   CacheNewUnlock() {
     this.USn = !1;
@@ -385,7 +398,7 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
   BSn(t) {
     var e =
         ConfigManager_1.ConfigManager.BossRushConfig.GetBossRushScoreConfigById(
-          t.R6n,
+          t.N6n,
         ),
       s = StringUtils_1.StringUtils.Format(
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -394,23 +407,23 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
         e.Score.toString(),
       );
     return {
-      Id: t.R6n,
+      Id: t.N6n,
       NameText: s,
-      RewardState: Number(t.vMs),
+      RewardState: Number(t.TMs),
       ClickFunction: () => {
         BossRushController_1.BossRushController.RequestGetBossRushReward(
           this.Id,
-          t.R6n,
-          Protocol_1.Aki.Protocol.vks.mMs,
+          t.N6n,
+          Protocol_1.Aki.Protocol.Tks.SMs,
         );
       },
       RewardList: this.I2e(e.RewardId),
       RewardButtonText: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-        this.xbn(Number(t.vMs)),
+        this.kbn(Number(t.TMs)),
       ),
     };
   }
-  xbn(t) {
+  kbn(t) {
     let e = "";
     switch (t) {
       case 0:
@@ -439,24 +452,24 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
     const s =
       ConfigManager_1.ConfigManager.BossRushConfig.GetBossRushByActivityIdAndInstanceId(
         this.Id,
-        e.X5n,
+        e.r6n,
       );
     return {
       Id: t.GetId(),
       NameText: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         s.LevelRewardDesc,
       ),
-      RewardState: Number(e.fMs),
+      RewardState: Number(e.IMs),
       ClickFunction: () => {
         BossRushController_1.BossRushController.RequestGetBossRushReward(
           this.Id,
           s.Id,
-          Protocol_1.Aki.Protocol.vks.P6n,
+          Protocol_1.Aki.Protocol.Tks.F6n,
         );
       },
       RewardList: this.I2e(s.RewardId),
       RewardButtonText: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-        this.xbn(Number(e.fMs)),
+        this.kbn(Number(e.IMs)),
       ),
     };
   }

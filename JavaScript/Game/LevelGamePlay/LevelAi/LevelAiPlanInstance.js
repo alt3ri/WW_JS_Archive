@@ -203,8 +203,12 @@ class LevelAiPlanInstance {
     );
   }
   XIe() {
-    var t = this.AIe[0];
-    void 0 !== t && (this.AIe.splice(0, 1), this.YIe(t));
+    for (var t = new Array(); 0 < this.AIe.length; ) {
+      var i = this.AIe[0];
+      if (void 0 === i) return;
+      if (t.includes(i)) break;
+      this.AIe.splice(0, 1), this.YIe(i), t.push(i);
+    }
   }
   YIe(i) {
     if (!this.HasPlan())

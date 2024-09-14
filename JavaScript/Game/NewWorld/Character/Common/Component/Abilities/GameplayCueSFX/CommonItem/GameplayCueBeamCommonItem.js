@@ -38,7 +38,7 @@ class GameplayCueBeamCommonItem {
   l$o() {
     const r = ActorSystem_1.ActorSystem.Get(
         UE.Actor.StaticClass(),
-        MathUtils_1.MathUtils.DefaultTransform,
+        this.OQt.GetTransform(),
       ),
       s =
         (GlobalData_1.GlobalData.IsPlayInEditor &&

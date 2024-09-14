@@ -152,7 +152,7 @@ let SceneItemTrackGuideComponent =
         (this.LHo = Vector_1.Vector.Create()),
         (this.EEn = Vector_1.Vector.Create()),
         (this.CEn = 0),
-        (this.rzr = this.Entity.GetComponent(108)),
+        (this.rzr = this.Entity.GetComponent(109)),
         this.rzr.SetLogicRange(i.Range),
         this.Ore(),
         !0
@@ -201,7 +201,7 @@ let SceneItemTrackGuideComponent =
         );
     }
     OnStart() {
-      if (((this.Hte = this.Entity.GetComponent(185)), !this.Hte))
+      if (((this.Hte = this.Entity.GetComponent(187)), !this.Hte))
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -227,9 +227,9 @@ let SceneItemTrackGuideComponent =
                 ["PbDataId:", t.GetPbDataId()],
               ),
             (this.w0n = 0)),
-          (this.oEn = this.Entity.GetComponent(95)),
-          (this.Oln = this.Entity.GetComponent(117)),
-          (this.Nln = this.Entity.GetComponent(144)),
+          (this.oEn = this.Entity.GetComponent(96)),
+          (this.Oln = this.Entity.GetComponent(118)),
+          (this.Nln = this.Entity.GetComponent(145)),
           ModelManager_1.ModelManager.GameModeModel.IsMulti &&
           !LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
             this.w0n,
@@ -516,7 +516,7 @@ let SceneItemTrackGuideComponent =
   });
 (SceneItemTrackGuideComponent = SceneItemTrackGuideComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(153)],
+    [(0, RegisterComponent_1.RegisterComponent)(154)],
     SceneItemTrackGuideComponent,
   )),
   (exports.SceneItemTrackGuideComponent = SceneItemTrackGuideComponent);

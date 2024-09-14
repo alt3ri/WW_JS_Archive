@@ -43,6 +43,9 @@ class InputCombinationActionMapping {
   GetCombinationActionBindingByActionName(i) {
     return this.YEe.get(i);
   }
+  GetCombinationActionBindingMap() {
+    return this.YEe;
+  }
   IsMainKey(i) {
     return this.zEe.has(i);
   }

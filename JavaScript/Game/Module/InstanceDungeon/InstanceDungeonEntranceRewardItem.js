@@ -42,7 +42,7 @@ class InstanceDungeonEntranceRewardItem extends UiPanelBase_1.UiPanelBase {
     this.Jhi && (this.Jhi = void 0);
   }
   RefreshReward(e, t) {
-    (this.zhi = t),
+    (this.zhi = !t),
       this.Jhi.RefreshByDataAsync(e).then(() => {
         let t = 0;
         this.Jhi?.GetScrollItemList().forEach((e) => {

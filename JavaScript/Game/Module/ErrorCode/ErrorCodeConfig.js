@@ -33,7 +33,7 @@ class ErrorCodeConfig extends ConfigBase_1.ConfigBase {
           ? ConfigManager_1.ConfigManager.TextConfig.GetTextById(
               "UnknownErrorCodeText",
             )
-          : MultiTextLang_1.configMultiTextLang.GetLocalTextNew(r.Text) ?? ""
+          : (MultiTextLang_1.configMultiTextLang.GetLocalTextNew(r.Text) ?? "")
       : "";
   }
   GetTextKeyByErrorId(r) {

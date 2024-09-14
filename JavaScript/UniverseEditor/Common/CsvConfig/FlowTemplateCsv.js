@@ -27,7 +27,7 @@ const CsvLoader_1 = require("./CsvLoader"),
     (0, CsvLoader_1.createCsvField)({
       Name: "CameraType",
       CnName: "镜头类型",
-      RenderType: 30,
+      RenderType: 31,
       Default: "None",
     }),
     (0, CsvLoader_1.createCsvField)({

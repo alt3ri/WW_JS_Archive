@@ -10,9 +10,16 @@ class CostConfig {
   get Cost() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.costLength(),
-      (t) => this.cost(t)?.key(),
-      (t) => this.cost(t)?.value(),
+      this.costKey,
+      this.costValue,
+      this,
     );
+  }
+  costKey(t) {
+    return this.cost(t)?.key();
+  }
+  costValue(t) {
+    return this.cost(t)?.value();
   }
   __init(t, s) {
     return (this.z7 = t), (this.J7 = s), this;

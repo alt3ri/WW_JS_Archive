@@ -89,7 +89,7 @@ class Achievement {
   }
   thirdpartytrophyid() {
     var t = this.J7.__offset(this.z7, 24);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
+    return t ? this.J7.readInt32(this.z7 + t) : -1;
   }
 }
 exports.Achievement = Achievement;

@@ -144,7 +144,7 @@ let SceneItemRotatorComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(185)),
+        (this.Hte = this.Entity.GetComponent(187)),
         this.Hte
           ? this.Hte.Owner
             ? ((this.wMn = this.Hte.Owner.GetComponentByClass(
@@ -158,9 +158,9 @@ let SceneItemRotatorComponent =
                 !1,
               )),
               this.wMn?.IsValid())
-                ? ((this.mBe = this.Entity.GetComponent(119)),
+                ? ((this.mBe = this.Entity.GetComponent(120)),
                   this.mBe
-                    ? ((this.Lie = this.Entity.GetComponent(180)),
+                    ? ((this.Lie = this.Entity.GetComponent(181)),
                       !!this.Lie ||
                         (Log_1.Log.CheckError() &&
                           Log_1.Log.Error(
@@ -388,7 +388,7 @@ let SceneItemRotatorComponent =
   });
 (SceneItemRotatorComponent = SceneItemRotatorComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(152)],
+    [(0, RegisterComponent_1.RegisterComponent)(153)],
     SceneItemRotatorComponent,
   )),
   (exports.SceneItemRotatorComponent = SceneItemRotatorComponent);

@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.CycleCounter = void 0);
-const puerts_1 = require("puerts"),
+  (exports.CycleCounter = exports.STAT_MAX_NAME_LENGTH = void 0);
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
   UE = require("ue");
+exports.STAT_MAX_NAME_LENGTH = 800;
 class CycleCounter {
   static RefreshState() {
     if (
@@ -73,10 +75,11 @@ class CycleCounter {
       : (puerts_1.logger.error("CycleCounter.Stop()匹配失败 name: " + s), !1);
   }
 }
-((exports.CycleCounter = CycleCounter).cY = !0),
-  (CycleCounter.mY = !0),
-  (CycleCounter.CY = !0),
-  (CycleCounter.gY = !0),
+((exports.CycleCounter = CycleCounter).cY =
+  cpp_1.FKuroUtilityForPuerts.IsWithStat()),
+  (CycleCounter.mY = CycleCounter.cY),
+  (CycleCounter.CY = !cpp_1.FKuroUtilityForPuerts.IsBuildShipping()),
+  (CycleCounter.gY = CycleCounter.CY),
   (CycleCounter.uY = !1),
   (CycleCounter.dY = new Array());
 //# sourceMappingURL=CycleCounter.js.map

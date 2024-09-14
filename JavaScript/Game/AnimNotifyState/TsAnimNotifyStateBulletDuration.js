@@ -25,9 +25,9 @@ class TsAnimNotifyStateBulletDuration extends UE.KuroAnimNotifyState {
     if (r instanceof TsBaseCharacter_1.default) {
       var s = r.CharacterActorComponent?.Entity;
       if (s?.Valid) {
-        var s = s.GetComponent(33),
+        var s = s.GetComponent(34),
           o =
-            (s?.SetCurSkillAnIndex(this.exportIndex),
+            (s?.SetCurAnInfo(this.exportIndex, t.GetName()),
             s?.GetCurrentMontageCorrespondingSkillId()?.toString()),
           a = this.BulletIds.Num(),
           l = this.LocationOffsets.Num();
@@ -61,8 +61,8 @@ class TsAnimNotifyStateBulletDuration extends UE.KuroAnimNotifyState {
     var h = this.BulletIds,
       u = h.Num();
     if (!(u <= 0)) {
-      s = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(r.GetWorld());
-      if (2 === s || 4 === s) {
+      t = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(r.GetWorld());
+      if (2 === t || 4 === t) {
         var s = UE.KismetSystemLibrary.GetOuterObject(this),
           n = UE.KismetSystemLibrary.GetPathName(s),
           _ =

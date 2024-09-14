@@ -22,9 +22,10 @@ class SceneInteractionManager {
       (this.ActorMap = void 0),
       (this.MainPlayerConfig = void 0),
       (this.WaterObjects = void 0),
+      (this.AirWallObjects = void 0),
       (this.TempVector = void 0),
       (this.xie = () => {
-        this.Ikn();
+        this.Bkn();
       });
   }
   static Get() {
@@ -35,7 +36,9 @@ class SceneInteractionManager {
       ((this.Instanced = new SceneInteractionManager()), this.Instanced.Init());
   }
   static Tick(e) {
-    this.Instanced && this.Instanced.Tick(e / 1e3);
+    RenderModuleConfig_1.RenderStats.StatSceneInteractionManagerTick.Start();
+    this.Instanced && this.Instanced.Tick(e / 1e3),
+      RenderModuleConfig_1.RenderStats.StatSceneInteractionManagerTick.Stop();
   }
   Init() {
     (this.IsOnMobile =
@@ -49,6 +52,7 @@ class SceneInteractionManager {
       (this.ActorMap = new Map()),
       (this.TempVector = Vector_1.Vector.Create()),
       (this.WaterObjects = new Array()),
+      (this.AirWallObjects = new Array()),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeRole,
         this.xie,
@@ -59,7 +63,7 @@ class SceneInteractionManager {
       ),
       this.LoadAssets();
   }
-  Ikn() {
+  Bkn() {
     for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems()) {
       var e = t.EntityHandle?.Entity?.GetComponent(3)?.Owner;
       e &&
@@ -92,10 +96,10 @@ class SceneInteractionManager {
     e.includes(".") && (c = e.split(".")[0]);
     var e = this.UniqueLevelInstanceId,
       h = (0, puerts_1.$ref)(!1),
-      u = "KuroSceneInteraction_" + e,
-      a = UE.LevelStreamingDynamic.LoadLevelInstance(a, c, i, r, h, u);
+      l = "KuroSceneInteraction_" + e,
+      a = UE.LevelStreamingDynamic.LoadLevelInstance(a, c, i, r, h, l);
     return (0, puerts_1.$unref)(h) && a
-      ? ((u = new SceneInteractionLevel_1.SceneInteractionLevel()).Init(
+      ? ((l = new SceneInteractionLevel_1.SceneInteractionLevel()).Init(
           a,
           c,
           i,
@@ -107,7 +111,7 @@ class SceneInteractionManager {
           o,
         ),
         this.UniqueLevelInstanceId++,
-        this.AllSceneInteractionInfos.set(e, u),
+        this.AllSceneInteractionInfos.set(e, l),
         e)
       : -1;
   }
@@ -274,6 +278,24 @@ class SceneInteractionManager {
           this.WaterObjects[this.WaterObjects.length - 1]),
         this.WaterObjects.pop());
   }
+  RegisterAirWallEffectObject(e) {
+    this.AirWallObjects.push(e), e.AfterRegistered();
+  }
+  UnregisterAirWallEffectObject(t) {
+    var e = this.AirWallObjects.findIndex((e) => e === t);
+    -1 === e
+      ? (Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "RenderEffect",
+            32,
+            "要移除的SceneObjectAirWallEffect不存在队列中",
+          ),
+        t && t.BeforeUnregistered())
+      : (t.BeforeUnregistered(),
+        (this.AirWallObjects[e] =
+          this.AirWallObjects[this.AirWallObjects.length - 1]),
+        this.AirWallObjects.pop());
+  }
   PlayExtraEffectByTag(e, t, i) {
     e = this.AllSceneInteractionInfos.get(e);
     e && e.PlayExtraEffect(t, i);
@@ -290,9 +312,20 @@ class SceneInteractionManager {
     e = this.AllSceneInteractionInfos.get(e);
     if (e) return e.GetReceivingDecalsActors();
   }
+  DisableInteractionLevel(e) {
+    e = this.AllSceneInteractionInfos.get(e);
+    e && e.Disable();
+  }
+  EnableInteractionLevel(e) {
+    e = this.AllSceneInteractionInfos.get(e);
+    e && e.Enable();
+  }
   Tick(i) {
+    RenderModuleConfig_1.RenderStats.StatSceneInteractionOthers.Start();
     for (let e = 0, t = this.WaterObjects.length; e < t; e++)
       this.WaterObjects[e].Update(i);
+    for (let e = 0, t = this.AirWallObjects.length; e < t; e++)
+      this.AirWallObjects[e].Update(i);
     this.TempCacheIds.length = 0;
     for (const t of this.AllSceneInteractionInfos.keys())
       this.TempCacheIds.push(t);
@@ -300,6 +333,7 @@ class SceneInteractionManager {
       var e = this.AllSceneInteractionInfos.get(r);
       e && !e.IsInfoDestroyed() && e.Update();
     }
+    RenderModuleConfig_1.RenderStats.StatSceneInteractionOthers.Stop();
   }
 }
 (exports.SceneInteractionManager = SceneInteractionManager).Instanced = void 0;

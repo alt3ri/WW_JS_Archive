@@ -86,6 +86,9 @@ class PlayerMarkItem extends MarkItem_1.MarkItem {
   CheckCanShowView() {
     return !0;
   }
+  GetInteractiveFlag() {
+    return !1;
+  }
 }
 exports.PlayerMarkItem = PlayerMarkItem;
 //# sourceMappingURL=PlayerMarkItem.js.map

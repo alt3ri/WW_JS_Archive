@@ -12,7 +12,8 @@ class HotKeyView {
   get FunctionButtonArray() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.functionbuttonarrayLength(),
-      (t) => this.functionbuttonarray(t),
+      this.functionbuttonarray,
+      this,
     );
   }
   __init(t, i) {

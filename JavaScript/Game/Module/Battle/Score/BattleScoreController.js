@@ -6,10 +6,10 @@ const ControllerBase_1 = require("../../../../Core/Framework/ControllerBase"),
   ModelManager_1 = require("../../../Manager/ModelManager");
 class BattleScoreController extends ControllerBase_1.ControllerBase {
   static OnInit() {
-    return Net_1.Net.Register(21242, this.pIn), !0;
+    return Net_1.Net.Register(20306, this.pIn), !0;
   }
   static OnClear() {
-    return Net_1.Net.UnRegister(21242), !0;
+    return Net_1.Net.UnRegister(20306), !0;
   }
 }
 (exports.BattleScoreController = BattleScoreController).pIn = (e) => {

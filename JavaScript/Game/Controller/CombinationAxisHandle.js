@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CombinationAxisHandle = void 0);
-const Log_1 = require("../../Core/Common/Log"),
+const Info_1 = require("../../Core/Common/Info"),
+  Log_1 = require("../../Core/Common/Log"),
   TimeUtil_1 = require("../Common/TimeUtil"),
   Global_1 = require("../Global"),
   InputSettings_1 = require("../InputSettings/InputSettings"),
@@ -12,7 +13,8 @@ class CombinationAxisHandle {
     (this.Hde = void 0),
       (this.PressMainKeyTimeStamp = 0),
       (this.Jde = void 0),
-      (this.zde = !1);
+      (this.zde = !1),
+      (this.B8a = new Set());
   }
   Clear() {
     this.Jde = void 0;
@@ -49,18 +51,38 @@ class CombinationAxisHandle {
   }
   Tick(t) {
     if (!this.zde && this.Jde && !(this.Jde.size <= 0)) {
-      var i,
-        e,
-        s = Global_1.Global.CharacterController;
-      for ([i, e] of this.Jde) {
-        var n = InputSettings_1.InputSettings.GetUeKey(i),
-          r = s.GetInputAnalogKeyState(n);
-        for (const a of e) {
-          var o = a.GetAxisName(),
-            u = r * a.GetSourceAxisValue(i);
-          InputDistributeController_1.InputDistributeController.InputAxis(o, u);
+      var i = Global_1.Global.CharacterController;
+      if (Info_1.Info.AxisInputOptimize) {
+        this.B8a.clear();
+        for (var [e, s] of this.Jde) {
+          var n = InputSettings_1.InputSettings.GetUeKey(e),
+            o = i.GetInputAnalogKeyState(n);
+          for (const g of s) {
+            var r,
+              u = g.GetAxisName();
+            u &&
+              !this.B8a.has(u) &&
+              (0 !== o && this.B8a.add(u),
+              (r = o * g.GetSourceAxisValue(e)),
+              InputDistributeController_1.InputDistributeController.InputAxis(
+                u,
+                r,
+              ));
+          }
         }
-      }
+      } else
+        for (var [a, l] of this.Jde) {
+          var h = InputSettings_1.InputSettings.GetUeKey(a),
+            _ = i.GetInputAnalogKeyState(h);
+          for (const f of l) {
+            var p = f.GetAxisName(),
+              I = _ * f.GetSourceAxisValue(a);
+            InputDistributeController_1.InputDistributeController.InputAxis(
+              p,
+              I,
+            );
+          }
+        }
     }
   }
 }

@@ -65,8 +65,8 @@ class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantB
       }),
       (this.DSe = (e, t) => {
         switch (t) {
-          case Protocol_1.Aki.Protocol.tTs.Proto_Finish:
-          case Protocol_1.Aki.Protocol.tTs.Proto_Delete:
+          case Protocol_1.Aki.Protocol.hTs.Proto_Finish:
+          case Protocol_1.Aki.Protocol.hTs.Proto_Delete:
             ModelManager_1.ModelManager.DailyTaskModel.RemoveDailyQuest(e);
         }
       });

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleUiDataControl = void 0);
 const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  IQuest_1 = require("../../../UniverseEditor/Interface/IQuest"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   LevelGeneralContextDefine_1 = require("../../LevelGamePlay/LevelGeneralContextDefine"),
@@ -70,17 +71,17 @@ class BattleUiDataControl extends UiControllerBase_1.UiControllerBase {
       );
   }),
   (BattleUiDataControl.VQe = (t, n) => {
-    if (t && 6 === t.Type && n.lEs) {
+    if (t && 6 === t.Type && n.gEs) {
       let e = void 0;
       switch (t.BtType) {
-        case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
+        case Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest:
           e = ModelManager_1.ModelManager.QuestNewModel.GetQuestNodeConfig(
             t.TreeConfigId,
             t.NodeId,
           );
           break;
-        case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
-        case Protocol_1.Aki.Protocol.tps.Proto_BtTypeInst:
+        case Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay:
+        case Protocol_1.Aki.Protocol.hps.Proto_BtTypeInst:
           e = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayNodeConfig(
             t.TreeConfigId,
             t.NodeId,
@@ -89,21 +90,21 @@ class BattleUiDataControl extends UiControllerBase_1.UiControllerBase {
       var o;
       e &&
         "ChildQuest" === e.Type &&
-        "MonsterCreator" === (o = e.Condition).Type &&
+        (o = e.Condition).Type === IQuest_1.EChildQuest.MonsterCreator &&
         o.ShowMonsterMergedHpBar &&
         ModelManager_1.ModelManager.BattleUiModel.MergeHeadStateData.UpdateProgress(
           t.TreeIncId,
           t.NodeId,
-          n.lEs,
+          n.gEs,
           o.TidMonsterGroupName,
         );
     }
   }),
   (BattleUiDataControl.fIe = (e, t, n) => {
     e instanceof LevelGeneralContextDefine_1.GeneralLogicTreeContext &&
-      ((n !== Protocol_1.Aki.Protocol.DNs.Proto_CompletedFailed &&
-        n !== Protocol_1.Aki.Protocol.DNs.Proto_CompletedSuccess &&
-        n !== Protocol_1.Aki.Protocol.DNs.Proto_Destroy) ||
+      ((n !== Protocol_1.Aki.Protocol.BNs.Proto_CompletedFailed &&
+        n !== Protocol_1.Aki.Protocol.BNs.Proto_CompletedSuccess &&
+        n !== Protocol_1.Aki.Protocol.BNs.Proto_Destroy) ||
         ModelManager_1.ModelManager.BattleUiModel.MergeHeadStateData.RemoveNode(
           e.TreeIncId,
           e.NodeId,

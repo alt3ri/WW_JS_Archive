@@ -33,7 +33,7 @@ let SceneItemTimeScaleComponent = class SceneItemTimeScaleComponent extends Pawn
       !!super.OnStart() &&
       ((this.TimeScaleList && !this.TimeScaleList.Empty) ||
         this.XMn(!1, "[PawnTimeScaleComponent] OnStart, 初始关闭时间缩放"),
-      (this.Xte = this.Entity.GetComponent(180)),
+      (this.Xte = this.Entity.GetComponent(181)),
       !0)
     );
   }
@@ -46,7 +46,7 @@ let SceneItemTimeScaleComponent = class SceneItemTimeScaleComponent extends Pawn
       : e ||
         void 0 !== this.Rne ||
         ((this.Rne = this.Disable(t ?? "[PawnTimeScaleComponent] 关闭Tick")),
-        this.Wsa());
+        this.bla());
   }
   OnTick(e) {
     var t = Time_1.Time.WorldTimeSeconds;
@@ -62,9 +62,9 @@ let SceneItemTimeScaleComponent = class SceneItemTimeScaleComponent extends Pawn
     }
     i !== this.TimeScaleInternal &&
       (1 === i
-        ? this.Wsa()
+        ? this.bla()
         : (i - 1) * (this.TimeScaleInternal - 1) <= 0 &&
-          (this.Wsa(), this.Xte?.AddTag(1 < i ? upsizeTag : downsizeTag)),
+          (this.bla(), this.Xte?.AddTag(1 < i ? upsizeTag : downsizeTag)),
       (this.TimeScaleInternal = i),
       this.Entity.SetTimeDilation(this.TimeDilation)),
       this.TimeScaleList.Empty &&
@@ -77,13 +77,13 @@ let SceneItemTimeScaleComponent = class SceneItemTimeScaleComponent extends Pawn
   RemoveTimeScale(e) {
     super.RemoveTimeScale(e), this.OnTick(0);
   }
-  Wsa() {
+  bla() {
     this.Xte &&
       (this.Xte.RemoveTag(downsizeTag), this.Xte.RemoveTag(upsizeTag));
   }
 };
 (SceneItemTimeScaleComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(187)],
+  [(0, RegisterComponent_1.RegisterComponent)(189)],
   SceneItemTimeScaleComponent,
 )),
   (exports.SceneItemTimeScaleComponent = SceneItemTimeScaleComponent);

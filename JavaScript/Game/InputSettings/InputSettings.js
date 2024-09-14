@@ -29,9 +29,9 @@ class InputSettings {
       this.IEe();
   }
   static Refresh() {
-    this.dea(), this.Cea(), this.gea();
+    this.tra(), this.ira(), this.rra();
   }
-  static dea() {
+  static tra() {
     var e = this.GetActionNames();
     for (let t = 0; t < e.Num(); t++) {
       var n = e.Get(t),
@@ -53,7 +53,7 @@ class InputSettings {
       s.Empty();
     }
   }
-  static Cea() {
+  static ira() {
     var e = this.GetAxisNames();
     for (let t = 0; t < e.Num(); t++) {
       var n = e.Get(t),
@@ -116,7 +116,7 @@ class InputSettings {
       t ? t.push(e) : ((t = [e]), n.set(i, t));
     } else (n = new Map()).set(i, [e]), this.LEe.set(t, n);
   }
-  static gea() {
+  static rra() {
     this.REe.clear();
     for (const p of ConfigManager_1.ConfigManager.InputSettingsConfig.GetAllCombinationAxisConfig()) {
       var t,
@@ -144,7 +144,7 @@ class InputSettings {
     a.push(t);
   }
   static SaveKeyMappings() {
-    this.CEe?.SaveKeyMappings();
+    this.CEe?.SaveKeyMappingsNotSort();
   }
   static TEe(t) {
     this.UEe.has(t) || this.AEe(t);
@@ -541,9 +541,11 @@ class InputSettings {
     this.CEe && (this.CEe.bUseMouseForTouch = t);
   }
   static GetKeyboardPrimaryLangId() {
-    return this.CEe
-      ? this.CEe.GetKeyboardPrimaryLangId().toString()
-      : "Default";
+    if (this.CEe) {
+      var t = this.CEe.GetKeyboardPrimaryLangId().toString();
+      if ("French" === t) return t;
+    }
+    return "Default";
   }
 }
 ((exports.InputSettings = InputSettings).CEe = void 0),

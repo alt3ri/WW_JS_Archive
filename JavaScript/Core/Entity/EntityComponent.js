@@ -1,22 +1,4 @@
 "use strict";
-var __decorate =
-  (this && this.__decorate) ||
-  function (t, i, n, e) {
-    var s,
-      o = arguments.length,
-      r =
-        o < 3
-          ? i
-          : null === e
-            ? (e = Object.getOwnPropertyDescriptor(i, n))
-            : e;
-    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      r = Reflect.decorate(t, i, n, e);
-    else
-      for (var h = t.length - 1; 0 <= h; h--)
-        (s = t[h]) && (r = (o < 3 ? s(r) : 3 < o ? s(i, n, r) : s(i, n)) || r);
-    return 3 < o && r && Object.defineProperty(i, n, r), r;
-  };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EntityComponent = void 0);
 const Log_1 = require("../Common/Log"),
@@ -28,7 +10,8 @@ class EntityComponent {
     (this.UnResetPropertySet = void 0),
       (this.PW = void 0),
       (this.vW = 0),
-      (this.DW = new Map()),
+      (this.PFa = new Map()),
+      (this.wFa = new Map()),
       (this.m6 = void 0),
       (this._W = void 0),
       (this.uW = void 0),
@@ -39,6 +22,7 @@ class EntityComponent {
       (this.wW = void 0),
       (this.BW = void 0),
       (this.bW = void 0),
+      (this.qzo = !0),
       (this.qW = !1),
       (this.GW = !1),
       (this.oW = !1),
@@ -63,16 +47,16 @@ class EntityComponent {
     EntityComponent.UW.has(t)
       ? (i = EntityComponent.UW.get(t))
       : ((i = [
-          void 0,
-          void 0,
-          void 0,
-          void 0,
-          void 0,
-          void 0,
-          void 0,
-          void 0,
-          void 0,
-          void 0,
+          Stats_1.Stat.Create(t + ".Create"),
+          Stats_1.Stat.Create(t + ".Init"),
+          Stats_1.Stat.Create(t + ".Clear"),
+          Stats_1.Stat.Create(t + ".Start"),
+          Stats_1.Stat.Create(t + ".End"),
+          Stats_1.Stat.Create(t + ".Activate"),
+          Stats_1.Stat.Create(t + ".Tick"),
+          Stats_1.Stat.Create(t + ".ForceTick"),
+          Stats_1.Stat.Create(t + ".AfterTick"),
+          Stats_1.Stat.Create(t + ".ForceAfterTick"),
         ]),
         EntityComponent.UW.set(t, i)),
       ([
@@ -93,13 +77,13 @@ class EntityComponent {
     return !!this.Entity && this.Entity.IsCreate && !this.Entity.IsClear;
   }
   AW() {
-    this.DW.clear(), (this.vW = 0), (this.PW = void 0);
+    this.PFa.clear(), (this.vW = 0), (this.PW = void 0);
   }
   get Entity() {
     return this.PW;
   }
   get Active() {
-    return 0 === this.DW.size;
+    return this.qzo;
   }
   get NeedTick() {
     return this.oW;
@@ -163,8 +147,10 @@ class EntityComponent {
     }
     return !0;
   }
-  VW(t, i, n) {
-    return this.FW(t, n);
+  VW(t, i, s) {
+    i.Start();
+    t = this.FW(t, s);
+    return i.Stop(), t;
   }
   Create(t, i) {
     return (
@@ -222,12 +208,23 @@ class EntityComponent {
       this.VW(() => this.OnEnd(), this.mW, this.OnEnd.name)
     );
   }
+  RefreshEnable(i) {
+    var t = this.qzo;
+    (this.qzo = 0 === this.PFa.size && 0 === this.wFa.size),
+      this.PW && (this.qzo = this.qzo && this.PW.Active),
+      this.qzo !== t &&
+        (this.qzo
+          ? this.qW && this.FW(() => (this.OnEnable(), !0), this.OnEnable.name)
+          : this.GW &&
+            this.FW(() => {
+              var t =
+                "string" == typeof i ? i : "EEntityDisableKey." + i?.toString();
+              return this.OnDisable(t), !0;
+            }, this.OnDisable.name));
+  }
   Enable(t, i) {
-    return t && this.DW.delete(t)
-      ? (this.qW &&
-          this.Active &&
-          this.FW(() => (this.OnEnable(), !0), this.OnEnable.name),
-        !0)
+    return t && this.PFa.delete(t)
+      ? (this.RefreshEnable(i), !0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Entity",
@@ -257,19 +254,24 @@ class EntityComponent {
           "Component",
           this.constructor.name,
         ]);
-    var i = this.Active,
-      n = ++this.vW;
-    return (
-      this.DW.set(n, t),
-      this.GW &&
-        i &&
-        this.FW(() => (this.OnDisable(t), !0), this.OnDisable.name),
-      n
-    );
+    var i = ++this.vW;
+    return this.PFa.set(i, t), this.RefreshEnable(t), i;
+  }
+  EnableByKey(t, i = !0) {
+    var s = this.wFa.get(t);
+    !s || s <= 0
+      ? void 0 !== s && this.wFa.delete(t)
+      : (!i && 1 < s ? this.wFa.set(t, s - 1) : this.wFa.delete(t),
+        this.RefreshEnable(t));
+  }
+  DisableByKey(t, i = !0) {
+    var s = Math.max(0, this.wFa.get(t) ?? 0);
+    (i && 0 < s) || (this.wFa.set(t, s + 1), this.RefreshEnable(t));
   }
   Tick(t) {
     if (this.Active) {
-      this.xW;
+      var i = this.xW;
+      i?.Start();
       try {
         this.OnTick(t);
       } catch (t) {
@@ -296,10 +298,12 @@ class EntityComponent {
               ["error", t],
             );
       }
+      i?.Stop();
     }
   }
   ForceTick(t) {
-    if (this.Active)
+    if (this.Active) {
+      this.wW.Start();
       try {
         this.OnForceTick(t);
       } catch (t) {
@@ -326,9 +330,12 @@ class EntityComponent {
               ["error", t],
             );
       }
+      this.wW.Stop();
+    }
   }
   AfterTick(t) {
-    if (this.Active)
+    if (this.Active) {
+      this.BW.Start();
       try {
         this.OnAfterTick(t);
       } catch (t) {
@@ -355,9 +362,12 @@ class EntityComponent {
               ["error", t],
             );
       }
+      this.BW.Stop();
+    }
   }
   ForceAfterTick(t) {
-    if (this.Active)
+    if (this.Active) {
+      this.bW.Start();
       try {
         this.OnForceAfterTick(t);
       } catch (t) {
@@ -384,6 +394,8 @@ class EntityComponent {
               ["error", t],
             );
       }
+      this.bW.Stop();
+    }
   }
   SetTimeDilation(t) {
     this.kW &&
@@ -427,14 +439,14 @@ class EntityComponent {
   DumpDisableInfo() {
     var t,
       i,
-      n = new Array();
-    let e = "";
-    for ([t, i] of this.DW)
-      n.push(
-        `${e}{Component:${this.constructor.name},Handle:${t},Reason:${i}}`,
+      s = new Array();
+    let n = "";
+    for ([t, i] of this.PFa)
+      s.push(
+        `${n}{Component:${this.constructor.name},Handle:${t},Reason:${i}}`,
       ),
-        (e = " ");
-    return n.join("");
+        (n = " ");
+    return s.join("");
   }
   AddUnResetProperty(...t) {
     this.UnResetPropertySet || (this.UnResetPropertySet = new Set());
@@ -442,19 +454,6 @@ class EntityComponent {
       this.UnResetPropertySet.has(i) || this.UnResetPropertySet.add(i);
   }
 }
-(EntityComponent.Id = -1),
-  (EntityComponent.UW = new Map()),
-  __decorate(
-    [(0, PerformanceDecorators_1.EntityComponentTickPerformanceEx)(!0)],
-    EntityComponent.prototype,
-    "Tick",
-    null,
-  ),
-  __decorate(
-    [(0, PerformanceDecorators_1.EntityComponentTickPerformanceEx)(!1)],
-    EntityComponent.prototype,
-    "AfterTick",
-    null,
-  ),
-  (exports.EntityComponent = EntityComponent);
+((exports.EntityComponent = EntityComponent).Id = -1),
+  (EntityComponent.UW = new Map());
 //# sourceMappingURL=EntityComponent.js.map

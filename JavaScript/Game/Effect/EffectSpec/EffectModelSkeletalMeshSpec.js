@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
+  TickProcessSystem_1 = require("../../../Core/Tick/TickProcessSystem"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../GlobalData"),
@@ -22,7 +23,14 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
       (this.CachedLocationCurve = void 0),
       (this.CachedRotationCurve = void 0),
       (this.CachedScaleCurve = void 0),
-      (this.HideCounter = 0);
+      (this.HideCounter = 0),
+      (this.gWa = 0),
+      (this.DHr = 1),
+      (this.hWa = (t) => {
+        (this.gWa = 0),
+          this.SkeletalMeshComponent?.IsValid() &&
+            this.SkeletalMeshComponent.SetPlayRate(this.DHr);
+      });
   }
   OnBodyEffectChanged(t) {
     var i;
@@ -106,10 +114,15 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
     );
   }
   OnTick(t) {
+    var i;
     this.SkeletalMeshComponent?.IsValid() &&
-      (this.SkeletalMeshComponent.SetPlayRate(
-        this.GetTimeScale() * this.GetGlobalTimeScale(),
-      ),
+      ((i = this.GetTimeScale() * this.GetGlobalTimeScale()) !== this.DHr &&
+        ((this.DHr = i), 0 === this.gWa) &&
+        (this.gWa =
+          TickProcessSystem_1.TickProcessSystem.RegisterOnceTickProcess(
+            5,
+            this.hWa,
+          )),
       this.r0e(this.GetPlayInEditor()));
   }
   OnEffectTypeChange() {
@@ -132,18 +145,24 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
       );
   }
   OnStop() {
-    this.SkeletalMeshComponent?.IsValid() &&
-      (this.CharRenderingComponent?.ResetAllRenderingState(),
-      this.CharRenderingComponent?.K2_DestroyComponent(
-        this.CharRenderingComponent,
-      ),
-      (this.CharRenderingComponent = void 0),
-      this.SkeletalMeshComponent.SetVisibility(!1),
-      this.SkeletalMeshComponent.SetComponentTickEnabled(!1),
-      this.SkeletalMeshComponent.Stop(),
-      UE.KuroAnimLibrary.EndAnimNotifyStates(
-        this.SkeletalMeshComponent.AnimScriptInstance,
-      ));
+    0 !== this.gWa &&
+      (TickProcessSystem_1.TickProcessSystem.UnregisterTickProcess(this.gWa),
+      (this.gWa = 0)),
+      this.SkeletalMeshComponent?.IsValid() &&
+        (this.CharRenderingComponent?.ResetAllRenderingState(),
+        this.CharRenderingComponent?.K2_DestroyComponent(
+          this.CharRenderingComponent,
+        ),
+        (this.CharRenderingComponent = void 0),
+        this.SkeletalMeshComponent.SetVisibility(!1),
+        this.SkeletalMeshComponent.SetComponentTickEnabled(!1),
+        this.SkeletalMeshComponent.Stop(),
+        UE.KuroAnimLibrary.EndAnimNotifyStates(
+          this.SkeletalMeshComponent.AnimScriptInstance,
+        ));
+  }
+  Replay() {
+    (this.gWa = 0), (this.DHr = 1);
   }
   OnPlay() {
     this.SkeletalMeshComponent?.IsValid() &&

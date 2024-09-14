@@ -7,12 +7,15 @@ const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
   FunctionOpenViewLimitAll_1 = require("../../../Core/Define/ConfigQuery/FunctionOpenViewLimitAll"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  PlatformSdkManagerNew_1 = require("../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  InputDistributeDefine_1 = require("../../Ui/InputDistribute/InputDistributeDefine"),
   UiManager_1 = require("../../Ui/UiManager"),
   UiModel_1 = require("../../Ui/UiModel"),
   TutorialController_1 = require("../Tutorial/TutorialController");
@@ -58,46 +61,38 @@ class FunctionController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static InitFunctionOpenViewLimit() {
-    var n =
+    var o =
         FunctionOpenViewLimitAll_1.configFunctionOpenViewLimitAll.GetConfigList(),
-      e = n.length;
-    for (let o = 0; o < e; o++) {
-      var t = n[o];
+      e = o.length;
+    for (let n = 0; n < e; n++) {
+      var t = o[n];
       this.p7t.add(t.ViewName);
     }
   }
   static OnAddEvents() {
-    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.CloseView, this.v7t),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnInputDistributeTagChanged,
-        this.xMe,
-      );
+    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.CloseView, this.v7t);
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.CloseView,
       this.v7t,
-    ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnInputDistributeTagChanged,
-        this.xMe,
-      );
+    );
   }
   static async TryOpenFunctionOpenView() {
     if (!this.M7t()) return !1;
-    const n = new CustomPromise_1.CustomPromise();
+    const o = new CustomPromise_1.CustomPromise();
     return (
       UiManager_1.UiManager.IsViewOpen("FunctionOpenView") ||
-        UiManager_1.UiManager.OpenView("FunctionOpenView", void 0, (o) => {
-          n.SetResult(o);
+        UiManager_1.UiManager.OpenView("FunctionOpenView", void 0, (n) => {
+          o.SetResult(n);
         }),
-      n.Promise
+      o.Promise
     );
   }
-  static async ManualOpenFunctionOpenView(...o) {
-    var n,
+  static async ManualOpenFunctionOpenView(...n) {
+    var o,
       e = [];
-    for (const t of o)
+    for (const t of n)
       2 !==
       ConfigManager_1.ConfigManager.FunctionConfig.GetFunctionCondition(t)
         .ShowUIType
@@ -108,11 +103,11 @@ class FunctionController extends UiControllerBase_1.UiControllerBase {
             "传入的id表格不支持手动开启,详细查功能开启表",
             ["FunctionId", t],
           )
-        : (n =
+        : (o =
               ModelManager_1.ModelManager.FunctionModel.GetFunctionInstance(
                 t,
               )).GetIsOpen()
-          ? n.GetHasManualShowUi()
+          ? o.GetHasManualShowUi()
             ? Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Functional",
@@ -128,20 +123,30 @@ class FunctionController extends UiControllerBase_1.UiControllerBase {
             ]);
     return !(e.length <= 0) && this.E7t(e);
   }
-  static async E7t(o) {
-    var n = Protocol_1.Aki.Protocol.Nrs.create(),
-      n = ((n.n6n = o), await Net_1.Net.CallAsync(16789, n));
-    return n.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+  static async E7t(n) {
+    var o = Protocol_1.Aki.Protocol.Krs.create(),
+      o = ((o.d6n = n), await Net_1.Net.CallAsync(28051, o));
+    return o.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
       ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          n.O4n,
-          27903,
+          o.Q4n,
+          26906,
         ),
         !1)
-      : (ModelManager_1.ModelManager.FunctionModel.RefreshInfoManualState(o),
+      : (ModelManager_1.ModelManager.FunctionModel.RefreshInfoManualState(n),
         this.TryOpenFunctionOpenView());
   }
   static M7t() {
     if (!ModelManager_1.ModelManager.FunctionModel.IsExistNewOpenFunction())
+      return !1;
+    let n = !1;
+    var o = UiModel_1.UiModel.NormalStack.Peek();
+    if (!o) return !1;
+    if (
+      !(n =
+        !(n = "BattleView" === o.Info.Name ? !0 : n) && this.S7t(o.Info.Name)
+          ? !0
+          : n)
+    )
       return !1;
     if (!ModelManager_1.ModelManager.InputDistributeModel.IsAllowUiInput())
       return (
@@ -151,88 +156,142 @@ class FunctionController extends UiControllerBase_1.UiControllerBase {
             38,
             "功能开启界面打开时UI输入存在限制,不打开",
           ),
-        !(this.xYs = !0)
+        ModelManager_1.ModelManager.InputDistributeModel.AddInputDistributeTagChangedListener(
+          InputDistributeDefine_1.inputDistributeTagDefine.UiInputRootTag,
+          this.xMe,
+        ),
+        !1
       );
-    let o = !0;
-    var n,
-      e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
-    for (const t of [1733479717, -1791250236])
-      e?.GameplayTagComponent?.HasTag(t) &&
-        (e?.GameplayTagComponent?.AddTagAddOrRemoveListener(
-          t,
-          FunctionController.BYs,
+    let e = !0;
+    var t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
+    for (const r of [1733479717, -1791250236])
+      t?.GameplayTagComponent?.HasTag(r) &&
+        (t?.GameplayTagComponent?.AddTagAddOrRemoveListener(
+          r,
+          FunctionController.Uzs,
         ),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Functional", 38, "功能开启界面打开时存在Tag限制", [
             "TagId",
-            t,
+            r,
           ]),
-        (o = !1));
-    return (
-      !!o &&
-      !(
-        !(n = UiModel_1.UiModel.NormalStack.Peek()) ||
-        (!this.S7t(n.Info.Name) && "BattleView" !== n.Info.Name)
-      )
-    );
+        (e = !1));
+    return !!e;
   }
-  static S7t(o) {
+  static S7t(n) {
     return (
       this.y7t || (this.InitFunctionOpenViewLimit(), (this.y7t = !0)),
-      this.p7t.has(o)
+      this.p7t.has(n)
     );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(9312, (o) => {
-      ModelManager_1.ModelManager.FunctionModel.SetFunctionOpenInfo(o);
+    Net_1.Net.Register(23819, (n) => {
+      ModelManager_1.ModelManager.FunctionModel.SetFunctionOpenInfo(n);
     }),
-      Net_1.Net.Register(12821, (o) => {
-        ModelManager_1.ModelManager.FunctionModel.UpdateFunctionOpenInfo(o),
+      Net_1.Net.Register(29421, (n) => {
+        ModelManager_1.ModelManager.FunctionModel.UpdateFunctionOpenInfo(n),
           FunctionController.TryOpenFunctionOpenView();
       });
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(9312), Net_1.Net.UnRegister(12821);
+    Net_1.Net.UnRegister(23819), Net_1.Net.UnRegister(29421);
   }
-  static OpenFunctionRelateView(o) {
-    var n;
-    ModelManager_1.ModelManager.FunctionModel.IsOpen(o)
-      ? (n = FunctionController.K9t.get(o))
-        ? n()
+  static async VWa() {
+    1 ===
+    (await PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetCommunicationRestrictedAsync(
+      ModelManager_1.ModelManager.PlayerInfoModel.GetThirdPartyAccountId(),
+    ))
+      ? (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("MultiPlayerTeam", 28, "通信受限，拒绝申请"),
+        this.bNa())
+      : UiManager_1.UiManager.OpenView("FriendView");
+  }
+  static async bNa() {
+    (await PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().OpenMessageBox(
+      ModelManager_1.ModelManager.PlayerInfoModel.GetThirdPartyUserId(),
+      3,
+      6,
+    )) &&
+      (this.u3a(),
+      (this.c3a = TimerSystem_1.TimerSystem.Forever(() => {
+        PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetMessageBoxCurrentState(
+          (n) => {
+            3 === n &&
+              (this.u3a(),
+              PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().TerminateMessageBox());
+          },
+        );
+      }, 500)));
+  }
+  static async HWa() {
+    var n, o;
+    1 ===
+    (await PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetCommunicationRestrictedAsync(
+      ModelManager_1.ModelManager.PlayerInfoModel.GetThirdPartyAccountId(),
+    ))
+      ? (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("MultiPlayerTeam", 28, "通信受限，拒绝申请"),
+        this.bNa())
+      : ((n = ModelManager_1.ModelManager.GameModeModel.IsMulti),
+        (o = ModelManager_1.ModelManager.OnlineModel.IsOnlineDisabled()),
+        !n && o
+          ? ControllerHolder_1.ControllerHolder.OnlineController.ShowTipsWhenOnlineDisabled()
+          : UiManager_1.UiManager.OpenView("OnlineWorldHallView"));
+  }
+  static OpenFunctionRelateView(n) {
+    var o;
+    ModelManager_1.ModelManager.FunctionModel.IsOpen(n)
+      ? (o = FunctionController.K9t.get(n))
+        ? o()
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Functional",
             11,
             "原因：查找不到对应按钮打开界面的实现方式 解决：在FunctionController.OpenFunctionViewMap注册打开界面方法",
-            ["功能ID", o],
+            ["功能ID", n],
           )
       : ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "FunctionDisable",
         );
+  }
+  static u3a() {
+    this.c3a &&
+      TimerSystem_1.TimerSystem.Has(this.c3a) &&
+      (TimerSystem_1.TimerSystem.Remove(this.c3a), (this.c3a = void 0));
+  }
+  static OnClear() {
+    return this.u3a(), !0;
   }
 }
 (exports.FunctionController = FunctionController),
   ((_a = FunctionController).y7t = !1),
   (FunctionController.K9t = new Map()),
   (FunctionController.p7t = new Set()),
-  (FunctionController.xYs = !1),
-  (FunctionController.xMe = () => {
-    _a.xYs && ((_a.xYs = !1), _a.TryOpenFunctionOpenView());
-  }),
-  (FunctionController.BYs = (o, n) => {
-    n ||
+  (FunctionController.c3a = void 0),
+  (FunctionController.xMe = (n, o) => {
+    o &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Functional", 38, "功能开启界面打开时Tag限制解除", [
-          "TagId",
-          o,
-        ]),
-      ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData()?.GameplayTagComponent?.RemoveTagAddOrRemoveListener(
-        o,
-        FunctionController.BYs,
+        Log_1.Log.Info("Functional", 38, "功能开启界面打开时InputTag限制解除"),
+      ModelManager_1.ModelManager.InputDistributeModel.RemoveInputDistributeTagChangedListener(
+        InputDistributeDefine_1.inputDistributeTagDefine.UiInputRootTag,
+        _a.xMe,
       ),
       _a.TryOpenFunctionOpenView());
   }),
-  (FunctionController.v7t = (o) => {
+  (FunctionController.Uzs = (n, o) => {
+    o ||
+      (Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("Functional", 38, "功能开启界面打开时Tag限制解除", [
+          "TagId",
+          n,
+        ]),
+      ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData()?.GameplayTagComponent?.RemoveTagAddOrRemoveListener(
+        n,
+        FunctionController.Uzs,
+      ),
+      _a.TryOpenFunctionOpenView());
+  }),
+  (FunctionController.v7t = (n) => {
     FunctionController.TryOpenFunctionOpenView();
   }),
   (FunctionController.Q9t = () => {
@@ -263,7 +322,7 @@ class FunctionController extends UiControllerBase_1.UiControllerBase {
     UiManager_1.UiManager.OpenView("TimeOfDaySecondView");
   }),
   (FunctionController.t7t = () => {
-    UiManager_1.UiManager.OpenView("FriendView");
+    _a.VWa();
   }),
   (FunctionController.i7t = () => {
     ControllerHolder_1.ControllerHolder.PayShopController.OpenPayShopView();
@@ -305,11 +364,7 @@ class FunctionController extends UiControllerBase_1.UiControllerBase {
     ControllerHolder_1.ControllerHolder.ChannelController.OpenKuroStreet();
   }),
   (FunctionController.f7t = () => {
-    var o = ModelManager_1.ModelManager.GameModeModel.IsMulti,
-      n = ModelManager_1.ModelManager.OnlineModel.IsOnlineDisabled();
-    !o && n
-      ? ControllerHolder_1.ControllerHolder.OnlineController.ShowTipsWhenOnlineDisabled()
-      : UiManager_1.UiManager.OpenView("OnlineWorldHallView");
+    _a.HWa();
   }),
   (FunctionController.m7t = () => {
     ControllerHolder_1.ControllerHolder.AchievementController.OpenAchievementMainView();

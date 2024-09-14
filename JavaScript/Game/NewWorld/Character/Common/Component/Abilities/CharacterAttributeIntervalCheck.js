@@ -1,42 +1,44 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AttributeIntervalCheck = void 0);
-const CharacterAttributeTypes_1 = require("./CharacterAttributeTypes");
+const CharacterAttributeTypes_1 = require("./CharacterAttributeTypes"),
+  Macro_1 = require("../../../../../../Core/Preprocessor/Macro"),
+  CombatDebugController_1 = require("../../../../../Utils/CombatDebugController");
 class AttributeIntervalCheck {
-  constructor(t, s, e, i) {
+  constructor(t, e, s, r) {
     (this.MaxAttributeId = void 0),
       (this.LowerBound = -1),
       (this.UpperBound = -1),
       (this.IsPerTenThousand = !1),
       (this.ListenAttributeId = t),
-      (this.LowerBound = s),
-      (this.UpperBound = e),
-      (this.IsPerTenThousand = i),
+      (this.LowerBound = e),
+      (this.UpperBound = s),
+      (this.IsPerTenThousand = r),
       this.IsPerTenThousand &&
         (this.MaxAttributeId =
           CharacterAttributeTypes_1.attributeIdsWithMax.get(
             this.ListenAttributeId,
           ));
   }
-  CheckListenActiveness(t, s) {
+  CheckListenActiveness(t, e) {
     return this.IsPerTenThousand
-      ? (s =
-          (t / s.GetCurrentValue(this.MaxAttributeId)) *
+      ? (e =
+          (t / e.GetCurrentValue(this.MaxAttributeId)) *
           CharacterAttributeTypes_1.PER_TEN_THOUSAND) <= this.UpperBound &&
-          s > this.LowerBound
+          e > this.LowerBound
       : t <= this.UpperBound && t > this.LowerBound;
   }
   CheckActiveness(t) {
-    var s;
+    var e;
     return (
       !!t &&
-      ((s = t.GetCurrentValue(this.ListenAttributeId)),
+      ((e = t.GetCurrentValue(this.ListenAttributeId)),
       this.IsPerTenThousand
         ? (t =
-            (s / t.GetCurrentValue(this.MaxAttributeId)) *
+            (e / t.GetCurrentValue(this.MaxAttributeId)) *
             CharacterAttributeTypes_1.PER_TEN_THOUSAND) <= this.UpperBound &&
           t > this.LowerBound
-        : s <= this.UpperBound && s > this.LowerBound)
+        : e <= this.UpperBound && e > this.LowerBound)
     );
   }
 }

@@ -35,10 +35,10 @@ class NavigationScrollbarData {
   }
   AddScrollbar(r) {
     this.Wwo = [];
-    for (let i = 0, t = r.Num(); i < t; ++i) {
-      var s = r.Get(i).ListenerList;
-      for (let i = 0, t = s.Num(); i < t; ++i) {
-        var e = s.Get(i);
+    for (let i = 0, t = r.length; i < t; ++i) {
+      var s = r[i].ListenerList;
+      for (let i = 0, t = s.length; i < t; ++i) {
+        var e = s[i];
         this.Wwo.push(e);
       }
     }
@@ -47,8 +47,8 @@ class NavigationScrollbarData {
   DeleteScrollbar(i) {
     var r = i.ListenerList;
     if (r) {
-      for (let i = 0, t = r.Num(); i < t; ++i) {
-        var s = r.Get(i),
+      for (let i = 0, t = r.length; i < t; ++i) {
+        var s = r[i],
           e = this.Wwo.indexOf(s);
         this.Wwo.splice(e, 1), this.Kwo === s && this.Ywo(void 0);
       }

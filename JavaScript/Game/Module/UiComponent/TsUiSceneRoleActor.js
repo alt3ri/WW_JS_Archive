@@ -34,11 +34,11 @@ class TsUiSceneRoleActor extends UE.Actor {
     return this.RoleActorIndex;
   }
   Destroy() {
-    ActorSystem_1.ActorSystem.Put(this),
-      this.Model?.End(),
+    this.Model?.End(),
       this.Model?.Clear(),
       (this.Model = void 0),
-      (this.RoleActorIndex = 0);
+      (this.RoleActorIndex = 0),
+      ActorSystem_1.ActorSystem.Put(this);
   }
   IsShowUiWepaonEffect() {
     return !0;

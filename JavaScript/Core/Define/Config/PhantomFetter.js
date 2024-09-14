@@ -14,13 +14,17 @@ class PhantomFetter {
     return this.name();
   }
   get BuffIds() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buffidsLength(), (t) =>
-      this.buffids(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buffidsLength(),
+      this.buffids,
+      this,
     );
   }
   get AddProp() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.addpropLength(), (t) =>
-      this.addprop(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.addpropLength(),
+      this.addprop,
+      this,
     );
   }
   get EffectDescription() {
@@ -35,7 +39,8 @@ class PhantomFetter {
   get EffectDescriptionParam() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.effectdescriptionparamLength(),
-      (t) => this.effectdescriptionparam(t),
+      this.effectdescriptionparam,
+      this,
     );
   }
   get EffectDefineDescription() {

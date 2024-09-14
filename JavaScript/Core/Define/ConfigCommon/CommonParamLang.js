@@ -14,34 +14,43 @@ const LanguageSystem_1 = require("../../Common/LanguageSystem"),
     ["语句", COMMAND],
   ],
   langCache = new Map(),
-  initStat = void 0,
-  getLocalTextStat = void 0,
+  initStat = Stats_1.Stat.Create("configCommonParamLang.Init"),
+  getLocalTextStat = Stats_1.Stat.Create("configCommonParamLang.GetLocalText"),
   LOCAL_TEXT_STAT_PREFIX = "configCommonParamLang.GetLocalText(";
 exports.configCommonParamLang = {
   Init: () => {
-    ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND);
+    initStat.Start(),
+      ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND),
+      initStat.Stop();
   },
-  GetLocalText: (o, e = void 0) => {
-    if (LanguageSystem_1.LanguageSystem.GmShowLanguageKey)
+  GetLocalText: (o, a = void 0) => {
+    var t = Stats_1.Stat.Create("" + LOCAL_TEXT_STAT_PREFIX + o + `, ${a})`);
+    if (
+      (getLocalTextStat.Start(),
+      t.Start(),
+      LanguageSystem_1.LanguageSystem.GmShowLanguageKey)
+    )
       return (
-        `CommonParam|${o}|` +
-        LanguageSystem_1.LanguageSystem.GetCultureOrDefault(e)
+        (n = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(a)),
+        t.Stop(),
+        getLocalTextStat.Stop(),
+        `CommonParam|${o}|` + n
       );
-    let n = langCache.get(o);
-    n || ((n = new Map()), langCache.set(o, n));
-    var a = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(e),
-      i = n.get(a);
-    if (i) return i;
+    let e = langCache.get(o);
+    e || ((e = new Map()), langCache.set(o, e));
+    var n = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(a),
+      i = e.get(n);
+    if (i) return t.Stop(), getLocalTextStat.Stop(), i;
     var m = ConfigCommon_1.ConfigCommon.GetLangStatementId(
       TABLE,
       DB,
       COMMAND,
-      e,
+      a,
     );
-    if ((g = ConfigCommon_1.ConfigCommon.CheckStatement(m))) {
+    if ((C = ConfigCommon_1.ConfigCommon.CheckStatement(m))) {
       if (
-        (g =
-          (g = ConfigCommon_1.ConfigCommon.BindInt(m, 1, o, ...logPair, [
+        (C =
+          (C = ConfigCommon_1.ConfigCommon.BindInt(m, 1, o, ...logPair, [
             "Id",
             o,
           ])) &&
@@ -50,42 +59,45 @@ exports.configCommonParamLang = {
               m,
               !0,
               ...logPair,
-              ["传入语言", e],
-              ["查询语言", a],
+              ["传入语言", a],
+              ["查询语言", n],
               ["文本Id", o],
             ))
       ) {
-        var C = void 0;
+        var g = void 0;
         if (
-          (([g, C] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([C, g] = ConfigCommon_1.ConfigCommon.GetValue(
             m,
             0,
             ...logPair,
-            ["传入语言", e],
-            ["查询语言", a],
+            ["传入语言", a],
+            ["查询语言", n],
             ["文本Id", o],
           )),
-          g)
+          C)
         ) {
-          var g = DeserializeConfig_1.DeserializeConfig.ParseString(
-            C,
+          var C = DeserializeConfig_1.DeserializeConfig.ParseString(
+            g,
             0,
             ...logPair,
-            ["传入语言", e],
-            ["查询语言", a],
+            ["传入语言", a],
+            ["查询语言", n],
             ["文本Id", o],
           );
-          if (g.Success)
+          if (C.Success)
             return (
-              (i = g.Value),
-              n.set(a, i),
+              (i = C.Value),
+              e.set(n, i),
               ConfigCommon_1.ConfigCommon.Reset(m),
+              t.Stop(),
+              getLocalTextStat.Stop(),
               i
             );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(m);
     }
+    t.Stop(), getLocalTextStat.Stop();
   },
 };
 //# sourceMappingURL=CommonParamLang.js.map

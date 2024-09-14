@@ -6,7 +6,9 @@ class ShowOnlyComponent extends HotKeyComponent_1.HotKeyComponent {
   OnRefreshSelfHotKeyState(e) {
     this.SetVisibleMode(2, !0);
   }
-  OnInputAxis(e, o) {}
+  OnIsOccupancyFightInput() {
+    return !1;
+  }
 }
 exports.ShowOnlyComponent = ShowOnlyComponent;
 //# sourceMappingURL=ShowOnlyComponent.js.map

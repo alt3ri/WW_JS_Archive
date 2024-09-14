@@ -11,6 +11,7 @@ const UE = require("ue"),
   PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
   UiManager_1 = require("../../../Ui/UiManager"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
   RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
@@ -30,8 +31,22 @@ class RoguelikeShop extends UiViewBase_1.UiViewBase {
       (this.LevelSequencePlayer = void 0),
       (this.CaptionItem = void 0),
       (this.vlo = () => {
+        var e = this.Data.CostCurrency;
+        if (0 < e.length) {
+          e = e[0];
+          if (
+            !(
+              ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+                e.s5n,
+              ) >= e.m9n
+            )
+          )
+            return void ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
+              "RogueSpecialRefreshCost_NotEnough",
+            );
+        }
         RoguelikeController_1.RoguelikeController.RoguelikeRefreshGainRequest(
-          Protocol_1.Aki.Protocol.Z6s.Proto_ShopBindId,
+          Protocol_1.Aki.Protocol.s8s.Proto_ShopBindId,
         );
       }),
       (this.Mlo = () => {
@@ -154,26 +169,25 @@ class RoguelikeShop extends UiViewBase_1.UiViewBase {
   DDn() {
     var e = this.Data.UseTime,
       i = this.Data.MaxTime,
-      t = this.GetButton(3),
-      e = (t.RootUIComp.SetUIActive(0 < i), i - e);
-    const s = this.GetText(4);
+      e = (this.GetButton(3).RootUIComp.SetUIActive(0 < i), i - e);
+    const t = this.GetText(4);
     e <= 0
-      ? LguiUtil_1.LguiUtil.SetLocalTextNew(s, "RoguelikeView_29_Text", e, i)
-      : LguiUtil_1.LguiUtil.SetLocalTextNew(s, "RoguelikeView_28_Text", e, i);
-    i = this.Data.CostCurrency;
-    if (0 < i.length) {
-      var i = i[0],
-        o =
-          ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-            i.J4n,
-          ) >= i.o9n;
-      const s = o ? "RogueSpecialRefreshCost" : "RogueSpecialRefreshCost_Not";
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), s, i.o9n),
-        t.SetSelfInteractive(0 < e && o);
-      t = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCurrencyConfig(
-        i.J4n,
+      ? LguiUtil_1.LguiUtil.SetLocalTextNew(t, "RoguelikeView_29_Text", e, i)
+      : LguiUtil_1.LguiUtil.SetLocalTextNew(t, "RoguelikeView_28_Text", e, i);
+    e = this.Data.CostCurrency;
+    if (0 < e.length) {
+      i = e[0];
+      const t =
+        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+          i.s5n,
+        ) >= i.m9n
+          ? "RogueSpecialRefreshCost"
+          : "RogueSpecialRefreshCost_Not";
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), t, i.m9n);
+      e = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCurrencyConfig(
+        i.s5n,
       );
-      this.SetTextureByPath(t.IconSmall, this.GetTexture(7));
+      this.SetTextureByPath(e.IconSmall, this.GetTexture(7));
     }
   }
   OnAddEventListener() {

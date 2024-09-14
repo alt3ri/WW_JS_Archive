@@ -91,15 +91,15 @@ class LevelConditionCompareVar extends LevelGeneralBase_1.LevelConditionBase {
   }
   E$(e) {
     if (e)
-      switch ((0, IVar_1.getVarTypeByIndex)(e.XIs)) {
+      switch ((0, IVar_1.getVarTypeByIndex)(e.iTs)) {
         case "Boolean":
-          return e.YIs;
+          return e.rTs;
         case "Float":
-          return e.ZIs;
+          return e.sTs;
         case "Int":
-          return MathUtils_1.MathUtils.LongToNumber(e.JIs);
+          return MathUtils_1.MathUtils.LongToNumber(e.oTs);
         case "String":
-          return e.zIs;
+          return e.nTs;
         default:
           return;
       }

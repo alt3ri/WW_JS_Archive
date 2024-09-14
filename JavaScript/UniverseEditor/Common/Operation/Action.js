@@ -175,7 +175,7 @@ function isBanInDynamicPrefabAction(e) {
   JumpTalk: { Env: ["aki", "ue5"], Context: ["flow"], ImplementType: "Server" },
   MoveToPos: { Env: ["ue5"], Context: ["flow"], ImplementType: "Client" },
   MoveWithSpline: {
-    Context: ["quest", "levelPlay"],
+    Context: ["entity", "quest", "levelPlay"],
     Env: ["aki", "ue5"],
     ImplementType: "Server",
   },
@@ -337,6 +337,11 @@ function isBanInDynamicPrefabAction(e) {
     Context: ["entity", "quest", "levelPlay", "flow"],
     Env: ["aki"],
     ImplementType: "Server",
+  },
+  SetEntityClientVisible: {
+    Context: ["entity"],
+    Env: ["aki"],
+    ImplementType: "Client",
   },
   PlayEffect: {
     Context: ["entity", "quest", "levelPlay"],
@@ -901,12 +906,13 @@ function isBanInDynamicPrefabAction(e) {
     Context: ["quest", "levelPlay", "flow"],
     ImplementType: "Server",
   },
-  PerformerAiSplineMove: {
+  ExecRiskHarvestEffect: {
     Env: ["aki"],
-    Context: [],
-    ImplementType: "Client",
-    IsTest: !0,
+    Context: ["entity", "quest", "levelPlay"],
+    ImplementType: "Server",
   },
+  PerformerAiSplineMove: { Env: ["aki"], Context: [], ImplementType: "Client" },
+  EntityTurnTo: { Env: ["aki"], Context: [], ImplementType: "Client" },
   CustomJson: {
     Env: ["aki"],
     Context: ["entity", "quest", "levelPlay"],
@@ -916,7 +922,6 @@ function isBanInDynamicPrefabAction(e) {
   ExecResurrection: {
     Env: ["aki"],
     Context: ["levelPlay"],
-    IsTest: !0,
     ImplementType: "Server",
   },
   OpenSystemBoardWithReturn: {
@@ -930,6 +935,18 @@ function isBanInDynamicPrefabAction(e) {
     IsTest: !0,
     ImplementType: "Server",
   },
+  SetTeleControl: {
+    Env: ["aki"],
+    Context: ["entity", "quest", "levelPlay"],
+    ImplementType: "Client",
+  },
+  ExecVehicleAction: {
+    Env: ["aki"],
+    Context: ["entity"],
+    ImplementType: "Server",
+  },
+  EnableFunction: { Env: ["aki"], Context: ["quest"], ImplementType: "Server" },
+  OpenQte: { Env: ["aki"], Context: ["entity"], ImplementType: "Client" },
 }),
   (exports.isTestAction = isTestAction),
   (exports.isActionImplementType = isActionImplementType),

@@ -14,6 +14,7 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   GlobalData_1 = require("../../../../GlobalData"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
   LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
   MarkChildIconComponent_1 = require("./Components/MarkChildIconComponent"),
@@ -30,8 +31,8 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.Holder = void 0),
       (this.IsSelectedInternal = !1),
-      (this._aa = !1),
-      (this.uaa = 0),
+      (this.u1a = !1),
+      (this.c1a = 0),
       (this.GOe = void 0),
       (this.IsShowIcon = !0),
       (this.pRi = void 0),
@@ -46,7 +47,7 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       (this.vRi = void 0),
       (this.MRi = void 0),
       (this.ERi = void 0),
-      (this.Gla = void 0),
+      (this.Oua = void 0),
       (this.SRi = void 0),
       (this.yRi = !1),
       (this.IRi = void 0),
@@ -71,19 +72,21 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
             this.ERi?.SetAlpha(1));
       }),
       (this.kOe = () => {
-        var t,
-          i,
-          e = CommonParamById_1.configCommonParamById.GetFloatConfig(
-            "MapMarkSelectedAdditionScale",
-          ),
-          e = this.Holder.MarkScale + e;
-        this.caa()
-          ? ((t = (Time_1.Time.NowSeconds - this.uaa) / SCALE_TWEEN_DURATION),
-            (i = this._aa ? this.Holder.MarkScale : e),
-            (e = this._aa ? e : this.Holder.MarkScale),
-            (i = MathUtils_1.MathUtils.Lerp(i, e, t)),
-            this.SetScale(i))
-          : (this.jm(), this.maa(this._aa));
+        var t, i, e;
+        void 0 === this.Holder
+          ? this.jm()
+          : ((i = CommonParamById_1.configCommonParamById.GetFloatConfig(
+              "MapMarkSelectedAdditionScale",
+            )),
+            (i = this.Holder.MarkScale + i),
+            this.m1a()
+              ? ((t =
+                  (Time_1.Time.NowSeconds - this.c1a) / SCALE_TWEEN_DURATION),
+                (e = this.u1a ? this.Holder.MarkScale : i),
+                (i = this.u1a ? i : this.Holder.MarkScale),
+                (e = MathUtils_1.MathUtils.Lerp(e, i, t)),
+                this.SetScale(e))
+              : (this.jm(), this.d1a(this.u1a)));
       }),
       (this.Holder = t),
       (this.pRi = new UE.Vector());
@@ -197,6 +200,14 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
           )),
         this.AddChild(this.VerticalPointerComponentInternal)),
       await this.URi,
+      this.pRi.Set(
+        this.Holder.CornerScale,
+        this.Holder.CornerScale,
+        this.Holder.CornerScale,
+      ),
+      this.VerticalPointerComponentInternal.GetRootItem().SetUIRelativeScale3D(
+        this.pRi,
+      ),
       this.VerticalPointerComponentInternal
     );
   }
@@ -237,6 +248,7 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       [1, UE.UISprite],
       [2, UE.UISprite],
       [3, UE.UIItem],
+      [4, UE.UISprite],
     ];
   }
   OnStart() {
@@ -248,7 +260,7 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
     var t = this.RootItem.GetAttachSocketName(),
       i = this.RootItem.GetAttachParent(),
       i =
-        ((this.Gla = i.GetSocketTransform(t)),
+        ((this.Oua = i.GetSocketTransform(t)),
         (this.ERi = this.GetItem(0)),
         (this.LevelSequencePlayer =
           new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
@@ -261,13 +273,16 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
         this.GetSprite(1).SetUIActive(!1),
         new UE.Vector(this.Holder.ConfigScale));
     this.GetSprite(1).SetUIItemScale(i),
+      this.GetSprite(4).SetUIActive(!1),
       this.SetScale(this.Holder.MarkScale),
       this.OnInitialize(),
-      void 0 !== this.SRi && (this.SRi(), (this.SRi = void 0)),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnMarkItemViewCreate,
         this,
       );
+  }
+  OnBeforeShow() {
+    void 0 !== this.SRi && (this.SRi(), (this.SRi = void 0));
   }
   OnAfterHide() {
     this.jm();
@@ -287,85 +302,96 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
         EventDefine_1.EEventName.OnMarkItemViewDestroy,
         this,
       ),
-      (this.Gla = void 0),
+      (this.Oua = void 0),
       (this.Holder = void 0);
   }
   SetScale(t) {
     var i, e;
     void 0 !== this.Holder &&
-      void 0 !== this.Gla &&
-      ((i = 1 / this.Holder.LogicWorldScale),
-      (e =
-        1 === this.Holder.MapType
-          ? this.Gla.GetScale3D()
-          : Vector_1.Vector.OneVectorProxy),
+      void 0 !== this.Oua &&
+      ((i =
+        1 /
+        ((e = 1 === this.Holder.MapType)
+          ? 1
+          : ModelManager_1.ModelManager.WorldMapModel.MapScale)),
+      (e = e ? this.Oua.GetScale3D() : Vector_1.Vector.OneVectorProxy),
       this.pRi.Set((t * i) / e.X, (t * i) / e.Y, (t * i) / e.Z),
       this.RootItem.SetUIRelativeScale3D(this.pRi));
   }
   OnUpdate(t, i = !1, e = !1) {
-    if (void 0 === this.Holder)
-      Log_1.Log.CheckDebug() &&
+    var s;
+    void 0 === this.Holder
+      ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Map",
           35,
           "Holder is undefined",
           ["ComponentState", this.IsDestroyOrDestroying],
           ["isCreating", this.IsCreating],
-        );
-    else if (
-      ((this.yRi = e),
-      this.IsCreating || this.IsDestroyOrDestroying || this.IsHideOrHiding)
-    )
-      this.SRi = () => {
-        this.OnUpdate(t, i, e);
-      };
-    else {
-      this.bRi(this.yRi);
-      var s = this.Holder.IsCanShowView;
-      if ((this.SetUiActive(s), s)) {
-        2 === this.Holder.MapType && this.maa(this.IsSelected);
-        s = this.Holder.IsOutOfBound;
-        (this.PRi === s && void 0 !== this.PRi) ||
-          ((this.PRi = s),
-          this.PRi
-            ? this.GetOutOfBoundComponentAsync().then((t) => {
-                t.SetActive(!0);
-              })
-            : this.OutOfBoundComponentInternal?.SetActive(!1)),
-          (s = this.Holder.IsTracked && !i),
-          (this.xRi === s && void 0 !== this.xRi) ||
-            ((this.xRi = s),
-            this.xRi
-              ? this.GetTrackComponentAsync().then((t) => {
-                  t.SetActive(!0);
-                })
-              : this.TrackComponentInternal?.SetActive(!1)),
-          (s = this.IsSelected),
-          (this.wRi === s && void 0 !== this.wRi) ||
-            (this.IsSelected
-              ? this.GetSelectComponentAsync().then((t) => {
-                  t.SetActive(!0);
-                })
-              : this.SelectComponentInternal?.SetActive(!1),
-            (this.wRi = s));
-        const h = this.qRi(this.Holder.WorldPosition, t);
-        this.BRi !== h &&
-          ((this.BRi = h),
-          this.GetVerticalPointerComponentAsync().then((t) => {
-            switch (h) {
-              case 0:
-                t.HideSelf();
-                break;
-              case 1:
-                t.ShowUp();
-                break;
-              case 2:
-                t.ShowDown();
-            }
-          })),
-          this.OnSafeUpdate(t, i, e);
-      }
-    }
+        )
+      : ((this.yRi = e),
+        this.IsCreating || this.IsDestroyOrDestroying || this.IsHideOrHiding
+          ? (this.SRi = () => {
+              this.OnUpdate(t, i, e);
+            })
+          : (this.bRi(this.yRi),
+            ((s = this.Holder.IsCanShowView) || this.RootItem?.bIsUIActive) &&
+              (s && !this.RootItem?.bIsUIActive && this.SetUiActive(!0),
+              2 === this.Holder.MapType && this.d1a(this.IsSelected),
+              this.sza(t, i),
+              this.OnSafeUpdate(t, i, e),
+              s || this.SetUiActive(!1))));
+  }
+  sza(t, i = !1) {
+    var e = this.Holder.IsOutOfBound;
+    if (
+      ((this.PRi === e && void 0 !== this.PRi) ||
+        ((this.PRi = e),
+        this.PRi
+          ? this.GetOutOfBoundComponentAsync().then((t) => {
+              t.SetActive(this.PRi);
+            })
+          : this.OutOfBoundComponentInternal?.SetActive(this.PRi)),
+      (e = this.Holder.IsTracked && !i),
+      this.UpdateTrackComponent(e),
+      (e = this.IsSelected),
+      (this.wRi === e && void 0 !== this.wRi) ||
+        (this.IsSelected
+          ? this.GetSelectComponentAsync().then((t) => {
+              t.SetActive(this.IsSelected);
+            })
+          : this.SelectComponentInternal?.SetActive(this.IsSelected),
+        (this.wRi = e)),
+      this.ShowVerticalPointer())
+    ) {
+      const s = this.qRi(this.Holder.WorldPosition, t);
+      this.BRi !== s &&
+        ((this.BRi = s),
+        this.GetVerticalPointerComponentAsync().then((t) => {
+          switch (s) {
+            case 0:
+              t.HideSelf();
+              break;
+            case 1:
+              t.ShowUp();
+              break;
+            case 2:
+              t.ShowDown();
+          }
+        }));
+    } else this.VerticalPointerComponentInternal?.HideSelf();
+  }
+  ShowVerticalPointer() {
+    return !0;
+  }
+  UpdateTrackComponent(t) {
+    (this.xRi === t && void 0 !== this.xRi) ||
+      ((this.xRi = t),
+      this.xRi
+        ? this.GetTrackComponentAsync().then((t) => {
+            t.SetActive(!0);
+          })
+        : this.TrackComponentInternal?.SetActive(!1));
   }
   OnSafeUpdate(t, i = 0, e) {}
   bRi(t) {
@@ -400,7 +426,9 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
     this.GetOutOfBoundComponentAsync().then((t) => {
       var i = this.Holder.UiPosition,
         i = Vector2D_1.Vector2D.Create(i.X, i.Y);
-      i.SubtractionEqual(e), t.SetOutOfBoundDirection(i);
+      i.SubtractionEqual(e),
+        t.SetOutOfBoundDirection(i),
+        t.SetActive(this.Holder.IsOutOfBound);
     });
   }
   OnStartTrack() {}
@@ -470,25 +498,25 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       this.LevelSequencePlayer.PlayLevelSequenceByName("HideView");
   }
   async PlayUnlockSequence() {}
-  maa(t) {
+  d1a(t) {
     var i;
-    if (this._aa === t)
-      return this.caa()
+    if (this.u1a === t)
+      return this.m1a()
         ? void 0
         : ((i = CommonParamById_1.configCommonParamById.GetFloatConfig(
             "MapMarkSelectedAdditionScale",
           )),
-          (i = this._aa ? i : 0),
+          (i = this.u1a ? i : 0),
           (i = this.Holder.MarkScale + i),
           void this.SetScale(i));
-    (this._aa = t),
-      (this.uaa = Time_1.Time.NowSeconds),
+    (this.u1a = t),
+      (this.c1a = Time_1.Time.NowSeconds),
       this.jm(),
       (this.GOe = TimerSystem_1.TimerSystem.Forever(this.kOe, 50));
   }
-  caa() {
+  m1a() {
     return (
-      0 < this.uaa && this.uaa + SCALE_TWEEN_DURATION >= Time_1.Time.NowSeconds
+      0 < this.c1a && this.c1a + SCALE_TWEEN_DURATION >= Time_1.Time.NowSeconds
     );
   }
   jm() {

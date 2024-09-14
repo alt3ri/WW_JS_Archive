@@ -33,26 +33,26 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(2231, (e) => {
+    Net_1.Net.Register(29859, (e) => {
       e &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Phantom", 38, "推送探索技能设置更新信息"),
         (ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId =
-          e.qPs));
+          e.$Ps));
     }),
-      Net_1.Net.Register(8891, (e) => {
+      Net_1.Net.Register(22104, (e) => {
         e &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Phantom", 38, "推送当前轮盘保存的数据"),
-          ModelManager_1.ModelManager.RouletteModel.UpdateRouletteData(e.GPs));
+          ModelManager_1.ModelManager.RouletteModel.UpdateRouletteData(e.HPs));
       }),
-      Net_1.Net.Register(4283, (e) => {
+      Net_1.Net.Register(24148, (e) => {
         e &&
           (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Phantom", 38, "推送探索技能解锁", ["Id", e.X4n]),
-          ModelManager_1.ModelManager.RouletteModel.UnlockExploreSkill(e.X4n));
+            Log_1.Log.Info("Phantom", 38, "推送探索技能解锁", ["Id", e.r5n]),
+          ModelManager_1.ModelManager.RouletteModel.UnlockExploreSkill(e.r5n));
       }),
-      Net_1.Net.Register(24243, (e) => {
+      Net_1.Net.Register(20804, (e) => {
         if (e) {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -61,11 +61,11 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
               "推送所有已解锁的探索技能及当前装备的探索技能",
             ),
             ModelManager_1.ModelManager.RouletteModel.CreateAllUnlockExploreSkill(
-              e.BPs,
+              e.VPs,
             ),
             (ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId =
-              e.qPs);
-          e = e.ara;
+              e.$Ps);
+          e = e.Sna;
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Phantom", 38, "新解锁探索技能", ["NewUnlock", e]);
           for (const o of e)
@@ -74,10 +74,10 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(2231),
-      Net_1.Net.UnRegister(8891),
-      Net_1.Net.UnRegister(4283),
-      Net_1.Net.UnRegister(24243);
+    Net_1.Net.UnRegister(29859),
+      Net_1.Net.UnRegister(22104),
+      Net_1.Net.UnRegister(24148),
+      Net_1.Net.UnRegister(20804);
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -128,22 +128,22 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId === e ||
     this.R0o
       ? o?.(!1)
-      : (((r = new Protocol_1.Aki.Protocol.hts()).X4n = e),
-        (r.Fda = t),
+      : (((r = new Protocol_1.Aki.Protocol.Cts()).r5n = e),
+        (r.S0a = t),
         (this.R0o = !0),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Phantom", 38, "请求设置探索技能", ["skillId", e]),
-        Net_1.Net.Call(13766, Protocol_1.Aki.Protocol.hts.create(r), (e) => {
+        Net_1.Net.Call(15514, Protocol_1.Aki.Protocol.Cts.create(r), (e) => {
           (this.R0o = !1),
             e
-              ? e.A9n === Protocol_1.Aki.Protocol.O4n.NRs
+              ? e.G9n === Protocol_1.Aki.Protocol.Q4n.KRs
                 ? ((ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId =
-                    e.X4n),
+                    e.r5n),
                   o?.(!0))
                 : (o?.(!1),
                   ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                    e.A9n,
-                    11651,
+                    e.G9n,
+                    23725,
                   ))
               : o?.(!1);
         }));
@@ -153,31 +153,31 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
     RouletteController.ExploreSkillSetRequest(e);
   }
   static SaveRouletteDataRequest(e, o, t, r = !1, n) {
-    var l = new Protocol_1.Aki.Protocol.uts(),
+    var l = new Protocol_1.Aki.Protocol.vts(),
       a = new Array(),
-      i = new Protocol_1.Aki.Protocol.Z4s(),
+      i = new Protocol_1.Aki.Protocol.s6s(),
       e =
-        ((i.GHn = e),
-        (i.OHn = t),
+        ((i.KHn = e),
+        (i.QHn = t),
         a.push(i),
-        new Protocol_1.Aki.Protocol.Z4s());
-    (e.GHn = o),
+        new Protocol_1.Aki.Protocol.s6s());
+    (e.KHn = o),
       a.push(e),
-      (l.NHn = a),
-      Net_1.Net.Call(9419, Protocol_1.Aki.Protocol.uts.create(l), (e) => {
+      (l.XHn = a),
+      Net_1.Net.Call(23317, Protocol_1.Aki.Protocol.vts.create(l), (e) => {
         e
-          ? e.A9n === Protocol_1.Aki.Protocol.O4n.NRs
+          ? e.G9n === Protocol_1.Aki.Protocol.Q4n.KRs
             ? (r &&
                 ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                   "SaveChangeSuccess",
                 ),
               ModelManager_1.ModelManager.RouletteModel.UpdateRouletteData(
-                e.NHn,
+                e.XHn,
               ),
               n?.(!0))
             : (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.A9n,
-                19073,
+                e.G9n,
+                18150,
               ),
               n?.(!1))
           : n?.(!1);
@@ -356,14 +356,20 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
         PhotographController_1.PhotographController.PhotographFastScreenShot();
     }
   }),
-  (RouletteController.iVe = (e) => {
-    var o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+  (RouletteController.iVe = (e, o) => {
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     return (
-      !(!o || !o.Entity) &&
+      !(!t || !t.Entity) &&
       (Info_1.Info.IsInGamepad()
         ? ModelManager_1.ModelManager.RouletteModel.IsExploreRouletteOpen() ||
           ModelManager_1.ModelManager.RouletteModel.IsFunctionRouletteOpen()
-        : ModelManager_1.ModelManager.RouletteModel.IsExploreRouletteOpen())
+        : ((o = 0 < (t = o ?? []).length ? Number(t[0]) : 1),
+          0 ===
+          ModelManager_1.ModelManager.RouletteModel.GetRouletteActionOpenConfig(
+            o,
+          )
+            ? ModelManager_1.ModelManager.RouletteModel.IsExploreRouletteOpen()
+            : ModelManager_1.ModelManager.RouletteModel.IsFunctionRouletteOpen()))
     );
   }),
   (RouletteController.U0o = (e) => {

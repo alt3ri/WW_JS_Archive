@@ -35,8 +35,8 @@ const UE = require("ue"),
   EffectSystem_1 = require("../../../../Effect/EffectSystem"),
   Global_1 = require("../../../../Global"),
   GlobalData_1 = require("../../../../GlobalData"),
-  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
+  FormationDataController_1 = require("../../../../Module/Abilities/FormationDataController"),
   BattleUiDefine_1 = require("../../../../Module/BattleUi/BattleUiDefine"),
   SceneTeamDefine_1 = require("../../../../Module/SceneTeam/SceneTeamDefine"),
   UiCameraAnimationManager_1 = require("../../../../Module/UiCameraAnimation/UiCameraAnimationManager"),
@@ -64,20 +64,20 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
       (this.GoBattleSkill = !1),
       (this.Trn = void 0),
       (this.Lrn = void 0),
-      (this.qpa = 0),
+      (this.qSa = 0),
       (this.Drn = void 0);
   }
   OnInit(e) {
     return (
-      (this.m1t = this.Entity.GetComponent(159)),
-      (this.Xte = this.Entity.GetComponent(188)),
+      (this.m1t = this.Entity.GetComponent(160)),
+      (this.Xte = this.Entity.GetComponent(190)),
       (this.Hte = this.Entity.GetComponent(3)),
-      (this.mBe = this.Entity.GetComponent(160)),
-      (this.Mrn = this.Entity.GetComponent(86)),
-      (this.cBe = this.Entity.GetComponent(33)),
-      (this.Ern = this.Entity.GetComponent(88)),
-      (this.Gce = this.Entity.GetComponent(163)),
-      (this.Nce = this.Entity.GetComponent(53)),
+      (this.mBe = this.Entity.GetComponent(161)),
+      (this.Mrn = this.Entity.GetComponent(87)),
+      (this.cBe = this.Entity.GetComponent(34)),
+      (this.Ern = this.Entity.GetComponent(89)),
+      (this.Gce = this.Entity.GetComponent(164)),
+      (this.Nce = this.Entity.GetComponent(54)),
       (this.cZr = this.Entity.GetComponent(29)),
       !0
     );
@@ -119,7 +119,7 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
       this.Drn &&
         (TimerSystem_1.TimerSystem.Remove(this.Drn), (this.Drn = void 0));
   }
-  static OnChangeRole(e, t, i, o, s, a, r) {
+  static OnChangeRole(e, t, i, o, s, a, r, n) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "SceneTeam",
@@ -128,49 +128,54 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
         ["Last", e?.Id],
         ["New", t.Id],
       );
-    var n = e?.Entity?.GetComponent(83),
-      h = t.Entity.GetComponent(83),
-      _ = n?.cBe,
-      m = _?.SkillTarget,
-      _ = void 0 !== _ && !_.IsMainSkillReadyEnd;
+    var h = e?.Entity?.GetComponent(84),
+      _ = t.Entity.GetComponent(84),
+      m = h?.cBe;
+    let l = m?.SkillTarget;
+    var m = void 0 !== m && !m.IsMainSkillReadyEnd;
     e &&
       s &&
       m &&
-      _ &&
-      (s = e.Entity.GetComponent(159))?.HasBuffAuthority() &&
-      s.AddBuff(CharacterBuffIds_1.buffId.GoDown, {
-        InstigatorId: s.CreatureDataId,
+      (!l &&
+        FormationDataController_1.FormationDataController.GlobalIsInFight &&
+        ((s = h?.cZr)?.DetectSoftLockTarget(0, 0, 8),
+        (l = s?.GetCurrentTarget())),
+      (m = h?.m1t),
+      l) &&
+      m?.HasBuffAuthority() &&
+      m.AddBuff(CharacterBuffIds_1.buffId.GoDown, {
+        InstigatorId: m.CreatureDataId,
         Reason: "战斗换人",
       });
-    let l = !1;
-    m = e?.Entity?.GetComponent(188);
-    m && (l = m.HasTag(504239013) || m.HasTag(855966206)),
-      h.Urn(),
-      n &&
-        n !== h &&
+    let f = !1;
+    s = e?.Entity?.GetComponent(190);
+    s && (f = s.HasTag(504239013) || s.HasTag(855966206)),
+      _.Urn(),
+      h &&
+        h !== _ &&
         (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("SceneTeam", 49, "角色下场", ["Entity", n.Entity?.Id]),
-        h.m1t.AddBuff(CharacterBuffIds_1.buffId.WaitRemoveQteInvincible, {
-          InstigatorId: h.m1t.CreatureDataId,
+          Log_1.Log.Info("SceneTeam", 49, "角色下场", ["Entity", h.Entity?.Id]),
+        _.m1t.AddBuff(CharacterBuffIds_1.buffId.WaitRemoveQteInvincible, {
+          InstigatorId: _.m1t.CreatureDataId,
           Reason: "换人去除QTE无敌",
         }),
         GlobalData_1.GlobalData.GameInstance &&
           GlobalData_1.GlobalData.BpEventManager.当换人完成时.Broadcast(),
-        t.Entity.GetComponent(56).SetDataFromOldRole(e),
-        e?.Entity?.GetComponent(57)?.ClearTarget(),
-        n.Xte.HasTag(1144073280) ||
-          n.cBe.StopAllSkills("RoleTeamComponent.OnChangeRole"),
-        (_ = n.Xte.HasTag(-1371021686) && !n.cBe.IsMainSkillReadyEnd),
+        t.Entity.GetComponent(57).SetDataFromOldRole(e),
+        e?.Entity?.GetComponent(58)?.ClearTarget(),
+        h.Xte.HasTag(1144073280) ||
+          h.cBe.StopAllSkills("RoleTeamComponent.OnChangeRole"),
+        (m = h.Xte.HasTag(-1371021686) && !h.cBe.IsMainSkillReadyEnd),
         RoleInheritComponent_1.RoleInheritComponent.StateInherit(
-          n.Mrn,
           h.Mrn,
-          h.Ern.IsInQte ? 1 : 0,
-          _,
+          _.Mrn,
+          _.Ern.IsInQte ? 1 : 0,
+          m,
         ),
-        n.Arn(),
-        n.Prn(o)),
-      h.xrn(e, a, l || r),
-      h.wrn(!l && i);
+        h.Arn(),
+        h.Prn(o)),
+      _.xrn(e, a, f || r),
+      _.wrn(!f && i, n);
   }
   Urn() {
     var e = Global_1.Global.CharacterController,
@@ -182,20 +187,21 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
       this.Nce?.Active || this.Nce?.SetActive(!0));
   }
   xrn(e, t, i) {
-    var o;
+    var o,
+      s = void 0 === e;
     ModelManager_1.ModelManager.AutoRunModel?.IsInLogicTreeGmMode()
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("SceneTeam", 49, "人物上场，GM推进中，继承位置"),
-        this.InheritTransform())
+        this.InheritTransform(s))
       : t
         ? i
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("SceneTeam", 49, "人物上场，强制继承位置"),
-            this.InheritTransform())
+            this.InheritTransform(s))
           : this.Ern.IsInQte
             ? Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("SceneTeam", 49, "人物上场，角色QTE中，不更新位置")
-            : ((i = (t = e?.Entity?.GetComponent(188))?.HasTag(-2100129479)),
+            : ((i = (t = e?.Entity?.GetComponent(190))?.HasTag(-2100129479)),
               (e = t?.HasTag(1144073280)),
               (o = t?.HasTag(-2044964178)),
               i || e || o
@@ -206,7 +212,7 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
                       "人物上场，上个角色还在场，进行寻点",
                     ),
                   (i = t?.HasTag(40422668)),
-                  this.Entity.GetComponent(88).SetQtePosition({
+                  this.Entity.GetComponent(89).SetQtePosition({
                     Rotate: i
                       ? SceneTeamDefine_1.SPECIAL_CHANGE_ANGLE_AIR
                       : SceneTeamDefine_1.SPECIAL_CHANGE_ANGLE_LAND,
@@ -226,13 +232,13 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
                       49,
                       "人物上场，上个角色不在场，继承位置",
                     ),
-                  this.InheritTransform()))
+                  this.InheritTransform(s)))
         : Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("SceneTeam", 49, "人物上场，不允许改变位置");
   }
-  InheritTransform() {
-    var e = ModelManager_1.ModelManager.SceneTeamModel.GetSpawnTransform();
-    if (!e)
+  InheritTransform(e = !1) {
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetSpawnTransform();
+    if (!t)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -242,22 +248,23 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
           ),
         !1
       );
-    e.SetRotation(new UE.Rotator(0, e.Rotator().Yaw, 0).Quaternion()),
+    t.SetRotation(new UE.Rotator(0, t.Rotator().Yaw, 0).Quaternion()),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("SceneTeam", 49, "继承位置", [
           "Location",
-          e.GetLocation(),
+          t.GetLocation(),
         ]),
-      this.Hte.SetActorTransform(e, "换人.上场", !1),
+      this.Hte.SetActorTransform(t, "换人.上场", !1),
+      e && this.Hte.SetInputFacing(this.Hte.ActorForwardProxy),
       ModelManager_1.ModelManager.SceneTeamModel.SetLastTransform(void 0);
-    e = this.mBe;
+    t = this.mBe;
     return (
-      e.PositionState ===
+      t.PositionState ===
         CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
       ModelManager_1.ModelManager.SceneTeamModel.LastEntityIsOnGround
         ? this.Brn("换人.地面修正")
-        : (e.MoveState !== CharacterUnifiedStateTypes_1.ECharMoveState.Slide &&
-            e.MoveState !==
+        : (t.MoveState !== CharacterUnifiedStateTypes_1.ECharMoveState.Slide &&
+            t.MoveState !==
               CharacterUnifiedStateTypes_1.ECharMoveState.NormalSki) ||
           this.Brn("换人.滑行修正"),
       !0
@@ -266,43 +273,41 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
   Brn(e) {
     this.Hte.FixSwitchLocation(e, !0, !0);
   }
-  wrn(e) {
-    var t;
+  wrn(e, t) {
+    var i;
     this.Ern.IsInQte
       ? (this.GoBattleSkill = !1)
-      : ((o = this.Xte.HasTag(1949807524)),
+      : ((s = this.Xte.HasTag(1949807524)),
         this.cZr.DetectSoftLockTarget(),
-        (t = void 0 !== this.cZr.GetCurrentTarget()),
-        (i = this.Xte.HasTag(-1207177910)),
-        (this.GoBattleSkill = o || (e && i && t))),
+        (i = void 0 !== this.cZr.GetCurrentTarget()),
+        (o = this.Xte.HasTag(-1207177910)),
+        (this.GoBattleSkill = s || (e && o && i))),
       this.Rrn();
-    for (const s of CharacterUnifiedStateComponent_1.outGameRoleTags)
-      this.Xte.RemoveTag(s);
-    var i,
-      o = ModelManager_1.ModelManager.SceneTeamModel,
+    for (const a of CharacterUnifiedStateComponent_1.outGameRoleTags)
+      this.Xte.RemoveTag(a);
+    var o,
+      s = ModelManager_1.ModelManager.SceneTeamModel,
       e =
         (this.SetTeamTag(0),
         !ModelManager_1.ModelManager.PlotModel.InSeamlessFormation);
-    ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
-      this.Entity,
-      e,
-      "RoleTeamComponent.GoBattle",
-    ),
+    e ? this.Entity.EnableByKey(1, !0) : this.Entity.DisableByKey(1, !0),
       this.brn(),
       this.Hte.KuroMoveAlongFloor(Vector_1.Vector.ZeroVector, 0, "GoBattle"),
-      o.GoBattleInvincible &&
+      s.GoBattleInvincible &&
+        t &&
         (this.m1t.AddBuff(CharacterBuffIds_1.buffId.GoBattleInvincible, {
           InstigatorId: this.m1t.CreatureDataId,
+          PreMessageId: t,
           Reason: "角色上场短暂无敌",
         }),
-        (o.GoBattleInvincible = !1)),
+        (s.GoBattleInvincible = !1)),
       UiCameraAnimationManager_1.UiCameraAnimationManager.IsActivate() ||
         CameraController_1.CameraController.ExitCameraMode(2),
       this.GoBattleSkill &&
-        ((i =
+        ((o =
           this.mBe.PositionState ===
           CharacterUnifiedStateTypes_1.ECharPositionState.Air),
-        this.Hte.Actor.FightCommand(i));
+        this.Hte.Actor.FightCommand(o));
   }
   brn() {
     var e, t;
@@ -358,11 +363,7 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("SceneTeam", 49, "角色下场，立即隐藏"),
         this.SetTeamTag(2),
-        ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
-          this.Entity,
-          !1,
-          "RoleTeamComponent.GoDown",
-        ),
+        this.Entity.DisableByKey(1, !0),
         this.Hte.RestoreDefaultController(),
         this.Gce?.StopAllAddMove(),
         EventSystem_1.EventSystem.EmitWithTarget(
@@ -385,10 +386,10 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
   InterruptDisableWithEffect() {
     this.Drn &&
       (TimerSystem_1.TimerSystem.Remove(this.Drn), (this.Drn = void 0));
-    var e = this.qpa;
+    var e = this.qSa;
     e &&
       (this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(e),
-      (this.qpa = 0));
+      (this.qSa = 0));
   }
   SetRoleDisableWithEffect() {
     this.Drn
@@ -397,7 +398,7 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("SceneTeam", 49, "角色下场，播放特效后再隐藏"),
         this.yrn &&
-          (this.qpa =
+          (this.qSa =
             this.Hte.Actor.CharRenderingComponent.AddMaterialControllerData(
               this.yrn,
             )),
@@ -406,17 +407,9 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
             this.cBe.StopAllSkills(
               "RoleTeamComponent.SetRoleDisableWithEffect",
             ),
-            this.m1t.RemoveBuff(
-              CharacterBuffIds_1.buffId.OnStage,
-              -1,
-              "RoleTeamComponent.SetRoleDisableWithEffect",
-            ),
+            this.jHa(!1),
             this.SetTeamTag(2),
-            ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
-              this.Entity,
-              !1,
-              "RoleTeamComponent.SetRoleDisableWithEffect",
-            ),
+            this.Entity.DisableByKey(1, !0),
             EventSystem_1.EventSystem.EmitWithTarget(
               this.Entity,
               EventDefine_1.EEventName.OnRoleGoDownFinish,
@@ -443,20 +436,13 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
       switch (e) {
         case 0:
           this.Xte.AddTag(-1384309247),
-            this.m1t.RemoveBuff(
-              CharacterBuffIds_1.buffId.OnStage,
-              -1,
-              "SetTeamTag",
-            ),
+            this.jHa(!1),
             this.Xte.HasTag(-1207177910) && this.Xte.RemoveTag(-1207177910),
             this.Xte.HasTag(-1388400236) && this.Xte.RemoveTag(-1388400236);
           break;
         case 1:
           this.Xte.AddTag(-1388400236),
-            this.m1t.AddBuff(CharacterBuffIds_1.buffId.OnStage, {
-              InstigatorId: this.m1t.CreatureDataId,
-              Reason: "SetTeamTag",
-            }),
+            this.jHa(!0),
             this.Xte.HasTag(-1207177910) && this.Xte.RemoveTag(-1207177910),
             this.Xte.HasTag(-1384309247) && this.Xte.RemoveTag(-1384309247);
           break;
@@ -465,6 +451,11 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
             this.Xte.HasTag(-1384309247) && this.Xte.RemoveTag(-1384309247),
             this.Xte.HasTag(-1388400236) && this.Xte.RemoveTag(-1388400236);
       }
+  }
+  jHa(e) {
+    e
+      ? (this.Xte.AddTag(-1728939369), this.Xte.AddTag(-1858008874))
+      : (this.Xte.RemoveTag(-1728939369), this.Xte.RemoveTag(-1858008874));
   }
   OutOfControl() {
     this.SetTeamTag(1),
@@ -478,7 +469,7 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
   }
 };
 (RoleTeamComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(83)],
+  [(0, RegisterComponent_1.RegisterComponent)(84)],
   RoleTeamComponent,
 )),
   (exports.RoleTeamComponent = RoleTeamComponent);

@@ -1,56 +1,58 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (e, t, o, n) {
+  function (e, o, t, n) {
     var r,
       a = arguments.length,
-      i =
+      s =
         a < 3
-          ? t
+          ? o
           : null === n
-            ? (n = Object.getOwnPropertyDescriptor(t, o))
+            ? (n = Object.getOwnPropertyDescriptor(o, t))
             : n;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      i = Reflect.decorate(e, t, o, n);
+      s = Reflect.decorate(e, o, t, n);
     else
-      for (var s = e.length - 1; 0 <= s; s--)
-        (r = e[s]) && (i = (a < 3 ? r(i) : 3 < a ? r(t, o, i) : r(t, o)) || i);
-    return 3 < a && i && Object.defineProperty(t, o, i), i;
+      for (var i = e.length - 1; 0 <= i; i--)
+        (r = e[i]) && (s = (a < 3 ? r(s) : 3 < a ? r(o, t, s) : r(o, t)) || s);
+    return 3 < a && s && Object.defineProperty(o, t, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleTagComponent = void 0);
 const Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   FormationDataController_1 = require("../../../../Module/Abilities/FormationDataController"),
+  CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
   BaseTagComponent_1 = require("../../../Common/Component/BaseTagComponent");
 let RoleTagComponent = class RoleTagComponent extends BaseTagComponent_1.BaseTagComponent {
   constructor() {
     super(...arguments),
       (this.OnFormationLoaded = () => {
         var e = this.Entity.GetComponent(0),
-          t = e.GetPlayerId(),
-          o =
-            ModelManager_1.ModelManager.SceneTeamModel.GetTeamItemsByPlayer(t),
+          o = e.GetPlayerId(),
           t =
+            ModelManager_1.ModelManager.SceneTeamModel.GetTeamItemsByPlayer(o),
+          o =
             FormationDataController_1.FormationDataController.GetPlayerEntity(
-              t,
-            )?.GetComponent(188);
-        if (t) {
+              o,
+            )?.GetComponent(190);
+        if (o) {
           var n,
             r,
-            o = o.some((e) => e.EntityHandle?.Entity === this.Entity) && t,
+            t = t.some((e) => e.EntityHandle?.Entity === this.Entity) && o,
             a = new Map();
-          if (o) {
-            var i = this.TagContainer,
-              s = t.TagContainer;
+          if (t) {
+            var s = this.TagContainer,
+              i = o.TagContainer;
             for (const l of this.TagContainer.GetAllExactTags())
-              a.set(l, s.GetExactTagCount(l) - i.GetExactTagCount(l));
-            for (const m of t.TagContainer.GetAllExactTags())
+              a.set(l, i.GetExactTagCount(l) - s.GetExactTagCount(l));
+            for (const m of o.TagContainer.GetAllExactTags())
               a.has(m) ||
-                a.set(m, s.GetExactTagCount(m) - i.GetExactTagCount(m));
+                a.set(m, i.GetExactTagCount(m) - s.GetExactTagCount(m));
           } else
             for (const C of this.TagContainer.GetAllExactTags())
               a.set(C, -this.TagContainer.GetExactTagCount(C));
@@ -84,18 +86,29 @@ let RoleTagComponent = class RoleTagComponent extends BaseTagComponent_1.BaseTag
       !0
     );
   }
-  OnAnyTagChanged(e, t, o) {
-    void 0 !== e &&
-      o !== t &&
-      (super.OnAnyTagChanged(e, t, o),
-      (t = this.Entity.GetComponent(0)?.GetPlayerId())) &&
-      FormationDataController_1.FormationDataController.GetPlayerEntity(t)
-        ?.GetComponent(183)
-        ?.OnTagChanged(e);
+  OnAnyTagChanged(e, o, t) {
+    if (void 0 !== e && t !== o) {
+      switch (e) {
+        case -1384309247:
+        case -1207177910:
+        case -1388400236:
+          var n;
+          ((0 < o && t <= 0) || (o <= 0 && 0 < t)) &&
+            (((n = Protocol_1.Aki.Protocol.n3a.create()).m5n = e),
+            (n.iSs = o),
+            CombatMessage_1.CombatNet.Call(25687, this.Entity, n, void 0));
+      }
+      super.OnAnyTagChanged(e, o, t);
+      var r = this.Entity.GetComponent(0)?.GetPlayerId();
+      r &&
+        FormationDataController_1.FormationDataController.GetPlayerEntity(r)
+          ?.GetComponent(184)
+          ?.OnTagChanged(e);
+    }
   }
 };
 (RoleTagComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(177)],
+  [(0, RegisterComponent_1.RegisterComponent)(178)],
   RoleTagComponent,
 )),
   (exports.RoleTagComponent = RoleTagComponent);

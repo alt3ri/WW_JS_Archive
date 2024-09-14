@@ -55,6 +55,12 @@ class LogicTreeContainer {
   GetTrackDistance(e) {
     return this.Tree?.GetTrackDistance(e);
   }
+  GetNodeDungeonId(e) {
+    return this.Tree.GetNodeDungeonId(e);
+  }
+  HasValidTrackTarget(e) {
+    return this.Tree.HasValidTrackTarget(e);
+  }
   GetDefaultMark(e) {
     return this.Tree?.GetDefaultMark(e);
   }

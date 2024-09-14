@@ -99,7 +99,7 @@ class RoleDataBase {
           ParamType: 0,
           OnlyMyRole: !0,
         }),
-        r = a ? a.EntityHandle.Entity.GetComponent(158) : void 0;
+        r = a ? a.EntityHandle.Entity.GetComponent(159) : void 0;
       for (const i of e)
         if (i.IsShow) {
           let e = 0,
@@ -130,7 +130,7 @@ class RoleDataBase {
         ParamType: 0,
         OnlyMyRole: !0,
       }),
-      t = t ? t.EntityHandle.Entity.GetComponent(158) : void 0;
+      t = t ? t.EntityHandle.Entity.GetComponent(159) : void 0;
     let r = 0;
     return (
       t
@@ -160,7 +160,7 @@ class RoleDataBase {
         ParamType: 0,
         OnlyMyRole: !0,
       }),
-      a = a ? a.EntityHandle.Entity.GetComponent(158) : void 0;
+      a = a ? a.EntityHandle.Entity.GetComponent(159) : void 0;
     let t = 0;
     return (t = a
       ? a.GetBaseValue(e)

@@ -22,37 +22,47 @@ class TextInputComponent extends UiPanelBase_1.UiPanelBase {
       (this.ZAt = void 0),
       (this._Et = CommonInputViewDefine_1.MAX_SINGLE_LENGTH),
       (this.uEt = 0),
+      (this.e7a = !1),
       (this.BAt = (t) => {
         t && 1 === this.PAt && this.C4e(0);
       }),
       (this.qAt = () => {
-        var t = this.yAt.GetText(),
-          i = StringUtils_1.StringUtils.GetStringRealCount(t);
-        i > this._Et
-          ? (this.C4e(2), (this.j3 = 0))
-          : 0 === i && this.zAt.IsCheckNone
-            ? (this.C4e(1), (this.j3 = 0))
-            : i < this.uEt
-              ? (this.C4e(3), (this.j3 = 0))
-              : this.zAt.ConfirmFunc?.(t).then(
-                  (t) => {
-                    this.IsDestroyOrDestroying ||
-                      (t ===
-                        Protocol_1.Aki.Protocol.O4n.Proto_ContainsDirtyWord &&
-                        this.C4e(4),
-                      this.zAt.ResultFunc?.(
-                        t === Protocol_1.Aki.Protocol.O4n.NRs,
-                      ));
-                  },
-                  () => {
-                    Log_1.Log.CheckError() &&
-                      Log_1.Log.Error(
-                        "UiCommon",
-                        11,
-                        "通用输入框执行出现未知错误",
-                      );
-                  },
-                );
+        var t, i;
+        this.e7a
+          ? Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("UiCommon", 11, "通用输入框锁住确认点击")
+          : ((t = this.yAt.GetText()),
+            (i = StringUtils_1.StringUtils.GetStringRealCount(t)) > this._Et
+              ? (this.C4e(2), (this.j3 = 0))
+              : 0 === i && this.zAt.IsCheckNone
+                ? (this.C4e(1), (this.j3 = 0))
+                : i < this.uEt
+                  ? (this.C4e(3), (this.j3 = 0))
+                  : ((this.e7a = !0),
+                    this.zAt
+                      .ConfirmFunc?.(t)
+                      .then(
+                        (t) => {
+                          this.IsDestroyOrDestroying ||
+                            (t ===
+                              Protocol_1.Aki.Protocol.Q4n
+                                .Proto_ContainsDirtyWord && this.C4e(4),
+                            this.zAt.ResultFunc?.(
+                              t === Protocol_1.Aki.Protocol.Q4n.KRs,
+                            ));
+                        },
+                        () => {
+                          Log_1.Log.CheckError() &&
+                            Log_1.Log.Error(
+                              "UiCommon",
+                              11,
+                              "通用输入框执行出现未知错误",
+                            );
+                        },
+                      )
+                      .finally(() => {
+                        this.e7a = !1;
+                      })));
       }),
       (this.ePt = (t) => {
         StringUtils_1.StringUtils.GetStringRealCount(t) <= this._Et

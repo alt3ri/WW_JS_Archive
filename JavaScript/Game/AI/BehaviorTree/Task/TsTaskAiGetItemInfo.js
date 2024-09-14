@@ -44,11 +44,11 @@ class TsTaskAiGetItemInfo extends TsTaskAbortImmediatelyBase_1.default {
       if (s)
         if (
           void 0 === i ||
-          s.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_SceneItem
+          s.GetEntityType() !== Protocol_1.Aki.Protocol.kks.Proto_SceneItem
         )
           this.FinishExecute(!1);
         else {
-          (s = i.GetComponent(185).ActorLocation),
+          (s = i.GetComponent(187).ActorLocation),
             (i =
               (void 0 === this.VectorArray && (this.VectorArray = new Array()),
               r.K2_GetActorLocation()));

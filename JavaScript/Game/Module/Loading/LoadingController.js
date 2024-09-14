@@ -92,13 +92,13 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
         LoadingController.Ilt,
       );
   }
-  static Lzs() {
+  static Eea() {
     UE.NavigationSystemV1.SetGameLoadingFlag(
       GlobalData_1.GlobalData.GameInstance,
       !0,
     );
   }
-  static Dzs() {
+  static yea() {
     UE.NavigationSystemV1.SetGameLoadingFlag(
       GlobalData_1.GlobalData.GameInstance,
       !1,
@@ -117,7 +117,7 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
       a = ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities();
     for (const n of a)
       n.Valid &&
-        (e = n.Entity.GetComponent(159)) &&
+        (e = n.Entity.GetComponent(160)) &&
         e.AddBuff(CharacterBuffIds_1.buffId.Invisible, {
           InstigatorId: e.CreatureDataId,
           Reason: "HandleRoleBuffChangeInLoading",
@@ -126,7 +126,7 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
       .FinishPromise?.Promise;
     for (const r of a)
       r.Valid &&
-        (o = r.Entity.GetComponent(159)) &&
+        (o = r.Entity.GetComponent(160)) &&
         o.RemoveBuff(
           CharacterBuffIds_1.buffId.Invisible,
           -1,
@@ -256,16 +256,16 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
     _a.UpdateUidViewShow();
   }),
   (LoadingController.FWe = () => {
-    LoadingController.Dzs();
+    LoadingController.yea();
   }),
   (LoadingController.SYi = () => {
-    LoadingController.Lzs();
+    LoadingController.Eea();
   }),
   (LoadingController.bpr = () => {
-    LoadingController.Lzs();
+    LoadingController.Eea();
   }),
   (LoadingController.Ilt = () => {
-    LoadingController.Dzs();
+    LoadingController.yea();
   }),
   (LoadingController.yvi = () => {
     ModelManager_1.ModelManager.LoadingModel.IsLoadingView && _a.Ivi();

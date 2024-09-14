@@ -14,6 +14,7 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   CharacterController_1 = require("../../../../NewWorld/Character/CharacterController"),
   UiLayer_1 = require("../../../../Ui/UiLayer"),
+  ChargingDeviceHeadState_1 = require("./ChargingDeviceHeadState"),
   CommonHeadState_1 = require("./CommonHeadState"),
   DurabilityDamageHeadState_1 = require("./DurabilityDamageHeadState"),
   DurabilityHeadState_1 = require("./DurabilityHeadState"),
@@ -31,6 +32,7 @@ const UE = require("ue"),
     [7, DurabilityDamageHeadState_1.DurabilityDamageHeadState],
     [8, DurabilityDamageHeadState_1.DurabilityDamageHeadState],
     [9, ProgressControlHeadState_1.ProgressControlHeadState],
+    [10, ChargingDeviceHeadState_1.ChargingDeviceHeadState],
   ]);
 class BattleHeadStatePanel {
   constructor() {
@@ -50,7 +52,7 @@ class BattleHeadStatePanel {
         var i = EntitySystem_1.EntitySystem.Get(t);
         i?.Valid &&
           CharacterController_1.CharacterController.GetCharacter(i) &&
-          !i.GetComponent(188).HasTag(1008164187) &&
+          !i.GetComponent(190).HasTag(1008164187) &&
           (i = this.glt(t)) &&
           i.OnHealthChanged(t);
       }),
@@ -145,7 +147,7 @@ class BattleHeadStatePanel {
             ),
           !e)
         )
-          return this.glt(t.Id)
+          return this.olt.get(t.Id)
             ? (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Battle",
@@ -167,27 +169,34 @@ class BattleHeadStatePanel {
                   ["ProgressData", a],
                 )
               );
-        this.vlt(t) &&
-          (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Battle",
-              40,
-              "[HeadState] 进度控制机关启用时，尝试添加进度条",
-              ["EntityId", t.Id],
-              ["PbDataId", i],
-              ["ProgressData", a],
-            ),
-          "CaptureStrategicPoint" === a.ProgressCtrlType
-            ? this.Mlt(t, a.CurrentValue / a.MaxValue, !1)
-            : Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn(
+        if (this.vlt(t))
+          switch (
+            (Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info(
                 "Battle",
                 40,
-                "[HeadState] 进度控制机关启用时，尚未支持所用的进度数据类型",
+                "[HeadState] 进度控制机关启用时，尝试添加进度条",
                 ["EntityId", t.Id],
                 ["PbDataId", i],
                 ["ProgressData", a],
-              ));
+              ),
+            a.ProgressCtrlType)
+          ) {
+            case "CaptureStrategicPoint":
+            case "ChargingDevice":
+              this.Mlt(t, a.CurrentValue / a.MaxValue, !1);
+              break;
+            default:
+              Log_1.Log.CheckWarn() &&
+                Log_1.Log.Warn(
+                  "Battle",
+                  40,
+                  "[HeadState] 进度控制机关启用时，尚未支持所用的进度数据类型",
+                  ["EntityId", t.Id],
+                  ["PbDataId", i],
+                  ["ProgressData", a],
+                );
+          }
       }),
       (this.hMe = () => {
         this.ClearAllHeadState();
@@ -355,7 +364,9 @@ class BattleHeadStatePanel {
       );
   }
   Tick(t) {
-    this.RefreshAllHeadState(t);
+    BattleHeadStatePanel.Ult.Start(),
+      this.RefreshAllHeadState(t),
+      BattleHeadStatePanel.Ult.Stop();
   }
   RefreshAllHeadState(t) {
     for (const i of this.olt.values()) {
@@ -364,7 +375,9 @@ class BattleHeadStatePanel {
       this.Alt(i)
         ? (e = this.glt(a))
           ? this.Plt(e, i.DistanceSquared, t)
-          : this.wlt(i)
+          : (BattleHeadStatePanel.xlt.Start(),
+            this.wlt(i),
+            BattleHeadStatePanel.xlt.Stop())
         : this.Blt(a);
     }
   }
@@ -385,11 +398,13 @@ class BattleHeadStatePanel {
     return !1;
   }
   Plt(t, e, a) {
+    BattleHeadStatePanel.blt.Start();
     let i = -1;
     1 === t.HeadStateType || 2 === t.HeadStateType
       ? this.ult && (i = this.ult.GetFloatValue(e))
       : this.clt && (i = this.clt.GetFloatValue(e)),
-      i < 0 || t.OnRefresh(e, i, a);
+      i < 0 || t.OnRefresh(e, i, a),
+      BattleHeadStatePanel.blt.Stop();
   }
   RefreshCurrentRole() {
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
@@ -469,6 +484,7 @@ class BattleHeadStatePanel {
       return this.Glt(t);
   }
   Blt(t, e = !1) {
+    BattleHeadStatePanel.Nlt.Start();
     var a = this.glt(t);
     a
       ? (e &&
@@ -486,7 +502,8 @@ class BattleHeadStatePanel {
           8,
           "[HeadState]休眠头顶状态条时，找不到对应的状态条",
           ["EntityId", t],
-        );
+        ),
+      BattleHeadStatePanel.Nlt.Stop();
   }
   qlt(t, e = !1) {
     var a;
@@ -504,7 +521,7 @@ class BattleHeadStatePanel {
     return (
       !!t?.Valid &&
       t.CreatureData.GetEntityType() ===
-        Protocol_1.Aki.Protocol.wks.Proto_Monster &&
+        Protocol_1.Aki.Protocol.kks.Proto_Monster &&
       !t.IsBoss
     );
   }
@@ -513,7 +530,7 @@ class BattleHeadStatePanel {
     return (
       !!t?.Valid &&
       t.CreatureData.GetEntityType() ===
-        Protocol_1.Aki.Protocol.wks.Proto_SceneItem
+        Protocol_1.Aki.Protocol.kks.Proto_SceneItem
     );
   }
   plt(t) {
@@ -525,8 +542,15 @@ class BattleHeadStatePanel {
     return this.rlt.get(t);
   }
 }
-((exports.BattleHeadStatePanel = BattleHeadStatePanel).Ult = void 0),
-  (BattleHeadStatePanel.Nlt = void 0),
-  (BattleHeadStatePanel.xlt = void 0),
-  (BattleHeadStatePanel.blt = void 0);
+((exports.BattleHeadStatePanel = BattleHeadStatePanel).Ult =
+  Stats_1.Stat.Create("[BattleView]BattleHeadStatePanelTick")),
+  (BattleHeadStatePanel.Nlt = Stats_1.Stat.Create(
+    "[BattleView]DeactivateHeadState",
+  )),
+  (BattleHeadStatePanel.xlt = Stats_1.Stat.Create(
+    "[BattleView]ActivateHeadState",
+  )),
+  (BattleHeadStatePanel.blt = Stats_1.Stat.Create(
+    "[BattleView]RefreshHeadState",
+  ));
 //# sourceMappingURL=BattleHeadStatePanel.js.map

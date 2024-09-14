@@ -6,6 +6,7 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   ObjectUtils_1 = require("../../../../../../Core/Utils/ObjectUtils"),
   StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
   Global_1 = require("../../../../../Global"),
+  LevelGeneralContextDefine_1 = require("../../../../../LevelGamePlay/LevelGeneralContextDefine"),
   ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
@@ -32,7 +33,7 @@ class CharacterFlowLogic {
       (this.IsExecuteFlowEnd = !0),
       (this.WaitSecondsRemain = 0),
       (this.ActorComp = t),
-      (this.HeadInfoComp = t.Entity.GetComponent(72)),
+      (this.HeadInfoComp = t.Entity.GetComponent(73)),
       (this.TempFlowInfoList = new Array()),
       (this.HYo = this.ActorComp.CreatureData.GetPbDataId()),
       i && ((this.EntityList = i.NpcIds), (this.FlowInfoList = i.Flows));
@@ -69,7 +70,7 @@ class CharacterFlowLogic {
   }
   PlayFlow() {
     if (this.CurrentFlowInfo || this.DynamicFlowData) {
-      if (!this.DynamicFlowData || this.IsDynamicFlowActorsReady()) {
+      if (this.IsFlowActorsReady()) {
         let t = void 0,
           i = 0;
         var e;
@@ -113,17 +114,17 @@ class CharacterFlowLogic {
       var o = this.DynamicFlowData
           ? this.DynamicFlowData.Flow
           : this.CurrentFlowInfo?.Flow.FlowIndex,
-        s = this.DynamicFlowData
+        r = this.DynamicFlowData
           ? this.DynamicFlowData.EntityIds
           : this.EntityList,
         e = e[i];
       let t = this.ActorComp.Entity;
-      if (s && 2 <= s?.length) {
-        var r =
+      if (r && 2 <= r?.length) {
+        var s =
           SimpleNpcFlowConditionChecker_1.SimpleNpcFlowConditionChecker.GetFlowActorIndex(
             e.WhoId,
           );
-        if (-1 === r)
+        if (-1 === s)
           return (
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -138,7 +139,7 @@ class CharacterFlowLogic {
               ),
             void this.PlayTalk(i + 1)
           );
-        if (r >= s.length)
+        if (s >= r.length)
           return (
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -149,40 +150,40 @@ class CharacterFlowLogic {
                 ["FlowName", o?.FlowListName],
                 ["FlowId", o?.FlowId],
                 ["StateId", o?.StateId],
-                ["Index", r],
+                ["Index", s],
               ),
             void this.PlayTalk(i + 1)
           );
-        var s = s[r];
-        if (!(t = this.GetEntity(s)))
+        var r = r[s];
+        if (!(t = this.GetEntity(r)))
           return (
-            Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
+            Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn(
                 "Level",
                 51,
-                "播放多人冒泡时找不到演员",
+                "播放多人冒泡时找不到演员,停止冒泡",
                 ["MasterPbDataId", this.ActorComp.CreatureData.GetPbDataId()],
-                ["ActorPbDataId", s],
+                ["ActorPbDataId", r],
                 ["FlowName", o?.FlowListName],
                 ["FlowId", o?.FlowId],
                 ["StateId", o?.StateId],
-                ["Index", r],
+                ["Index", s],
               ),
-            void this.PlayTalk(i + 1)
+            void this.HandleFlowEnd()
           );
       }
       this.HandleTalkAction(t, e)
         ? ((this.IsExecuteFlowEnd = !1),
           this.WaitSecondsRemain <= 0 &&
             (this.WaitSecondsRemain = this.GetWaitSeconds(e)),
-          (s = this.ActorComp.CreatureData.GetPbDataId()),
+          (r = this.ActorComp.CreatureData.GetPbDataId()),
           (o = this.GetFlowText(e.TidTalk)),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Level",
               51,
               "[CharacterFlowLogic] 播放对话框文本",
-              ["PbDataId", s],
+              ["PbDataId", r],
               ["DialogText", o],
               ["WaitTime", this.WaitSecondsRemain],
             ))
@@ -230,6 +231,9 @@ class CharacterFlowLogic {
         ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckConditionNew(
           t.Condition,
           this.ActorComp.Owner,
+          LevelGeneralContextDefine_1.EntityContext.Create(
+            this.ActorComp.Entity.Id,
+          ),
         ) && this.TempFlowInfoList.push(t);
       this.CurrentFlowInfo = ObjectUtils_1.ObjectUtils.GetRandomArrayItem(
         this.TempFlowInfoList,
@@ -298,9 +302,14 @@ class CharacterFlowLogic {
         );
     return (this.DynamicFlowData = t?.BubbleData), !!t;
   }
-  IsDynamicFlowActorsReady() {
-    var t = this.DynamicFlowData?.EntityIds;
-    if (!t) return !1;
+  IsFlowActorsReady() {
+    let t = void 0;
+    if (
+      !(t = this.DynamicFlowData
+        ? this.DynamicFlowData.EntityIds
+        : this.EntityList)?.length
+    )
+      return !1;
     for (const i of t)
       if (
         !ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(i)

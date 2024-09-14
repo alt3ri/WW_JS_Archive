@@ -3,11 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FriendSearchView = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   ButtonAndSpriteItem_1 = require("../../Common/Button/ButtonAndSpriteItem"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
   LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
   FriendController_1 = require("../FriendController"),
   FriendItem_1 = require("./FriendItem");
@@ -16,7 +18,11 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.n9t = void 0),
       (this.s9t = []),
+      (this.Xxa = 0),
       (this.a9t = void 0),
+      (this.Yxa = () => {
+        (this.Xxa = 0 === this.Xxa ? 1 : 0), this.zxa(), this.UZa(), this.Iwn();
+      }),
       (this.fGe = () => {
         return new FriendItem_1.FriendItem(this.Info.Name);
       }),
@@ -46,9 +52,13 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
             e.ClearRefuseFriendList(),
             this.GetInputText(0).GetText());
         0 < e.length &&
-          FriendController_1.FriendController.RequestSearchPlayerBasicInfo(
-            Number(e),
-          );
+          (0 === this.Xxa
+            ? FriendController_1.FriendController.RequestSearchPlayerBasicInfo(
+                Number(e),
+              )
+            : FriendController_1.FriendController.RequestSearchPlayerBasicInfoBySdkId(
+                e,
+              ));
       }),
       (this._9t = (e) => {
         (this.s9t = FriendController_1.FriendController.CreateFriendItemSt(
@@ -85,8 +95,40 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
       [3, UE.UIItem],
       [4, UE.UILoopScrollViewComponent],
       [5, UE.UIItem],
+      [6, UE.UIButtonComponent],
+      [7, UE.UIText],
+      [8, UE.UIText],
+      [9, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[2, this.l9t]]);
+      (this.BtnBindInfo = [
+        [2, this.l9t],
+        [6, this.Yxa],
+      ]);
+  }
+  UZa() {
+    var e;
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.SupportSwitchFriendSearchByThirdPartyId()
+      ? ((e = 0 === this.Xxa ? "Search_UID_Tips" : "Search_PSN_ID_Tips"),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), e))
+      : LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), "Search_UID_Tips");
+  }
+  Iwn() {
+    var e;
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.SupportSwitchFriendSearchByThirdPartyId()
+      ? ((e = 0 === this.Xxa ? "Search_UID_Result" : "Search_PSN_ID_Result"),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(9), e))
+      : LguiUtil_1.LguiUtil.SetLocalTextNew(
+          this.GetText(9),
+          "Search_UID_Result",
+        );
+  }
+  zxa() {
+    var e;
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.SupportSwitchFriendSearchByThirdPartyId()
+      ? (this.GetButton(6).RootUIComp.SetUIActive(!0),
+        (e = 0 === this.Xxa ? "NormalSearch" : "PlayStationSearch"),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), e))
+      : this.GetButton(6).RootUIComp.SetUIActive(!1);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -132,6 +174,7 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
         this.m9t,
       );
   }
+  async OnBeforeStartAsync() {}
   OnStart() {
     this.a9t = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(this.GetItem(1));
     var e = this.GetItem(3),
@@ -161,7 +204,11 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
       ModelManager_1.ModelManager.FriendModel.ResetShowingView();
   }
   u8t() {
-    0 < this.s9t.length && this.n9t.ReloadData(this.s9t), this.d9t();
+    0 < this.s9t.length && this.n9t.ReloadData(this.s9t),
+      this.d9t(),
+      this.zxa(),
+      this.UZa(),
+      this.Iwn();
   }
   d9t() {
     this.GetInputText(0).SetText(""),

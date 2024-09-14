@@ -11,13 +11,13 @@ const puerts_1 = require("puerts"),
 class RewardExploreRecord extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.Tra = void 0),
-      (this.kzs = void 0),
-      (this.Lra = (e) => {
+      (this.asa = void 0),
+      (this.Hea = void 0),
+      (this.hsa = (e) => {
         this.Lfi(e.toString());
       }),
-      (this.fra = () => {
-        this.Tra?.Kill(), (this.Tra = void 0);
+      (this.Zna = () => {
+        this.asa?.Kill(), (this.asa = void 0);
       });
   }
   OnRegisterComponent() {
@@ -29,7 +29,7 @@ class RewardExploreRecord extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   OnBeforeDestroy() {
-    super.OnBeforeDestroy(), this.fra(), this.oaa();
+    super.OnBeforeDestroy(), this.Zna(), this.n1a();
   }
   Refresh(e) {
     var i = e.TitleTextId,
@@ -38,7 +38,7 @@ class RewardExploreRecord extends UiPanelBase_1.UiPanelBase {
       this.mfi(t),
       this.Dfi(e.IsNewRecord),
       void 0 !== e.RecordRollingTo
-        ? this.Dra(e.RecordRollingTo)
+        ? this.lsa(e.RecordRollingTo)
         : this.Lfi(e.Record);
   }
   Ubt(e) {
@@ -55,26 +55,26 @@ class RewardExploreRecord extends UiPanelBase_1.UiPanelBase {
   Dfi(e) {
     this.GetItem(2).SetUIActive(e),
       e &&
-        (this.kzs ||
-          (this.kzs = new LevelSequencePlayer_1.LevelSequencePlayer(
+        (this.Hea ||
+          (this.Hea = new LevelSequencePlayer_1.LevelSequencePlayer(
             this.RootItem,
           )),
-        this.kzs.PlayLevelSequenceByName("Start"));
+        this.Hea.PlayLevelSequenceByName("Start"));
   }
-  Dra(e) {
-    (this.Tra = UE.LTweenBPLibrary.IntTo(
+  lsa(e) {
+    (this.asa = UE.LTweenBPLibrary.IntTo(
       this.RootActor,
-      (0, puerts_1.toManualReleaseDelegate)(this.Lra),
+      (0, puerts_1.toManualReleaseDelegate)(this.hsa),
       0,
       e,
       ROLLING_DURATION,
       0,
       2,
     )),
-      this.Tra.OnCompleteCallBack.Bind(this.fra);
+      this.asa.OnCompleteCallBack.Bind(this.Zna);
   }
-  oaa() {
-    this.kzs?.StopCurrentSequence(), (this.kzs = void 0);
+  n1a() {
+    this.Hea?.StopCurrentSequence(), (this.Hea = void 0);
   }
 }
 exports.RewardExploreRecord = RewardExploreRecord;

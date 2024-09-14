@@ -33,8 +33,9 @@ class TagSwitchedTask {
   }
   StartTask(t, a, e, i) {
     this.Qor = t;
+    const s = i ?? void 0;
     (this.B7 = (t, e) => {
-      a(t, e);
+      s?.Start(), a(t, e), s?.Stop();
     }),
       (this.Xte = e),
       this.Xte?.AddTagAddOrRemoveListener(this.Qor, this.B7);
@@ -49,8 +50,9 @@ class TagChangedTask {
   }
   StartTask(t, e, a) {
     this.Qor = t;
+    const i = void 0;
     (this.B7 = (t) => {
-      e(t);
+      i, e(t), i;
     }),
       (this.Xte = a),
       this.Xte?.AddTagChangedListener(this.Qor, this.B7);
@@ -142,6 +144,10 @@ let BaseTagComponent = class BaseTagComponent extends EntityComponent_1.EntityCo
         GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t),
       ]);
   }
+  HasTagAddOrRemoveListener(t, e) {
+    t = this.TagSwitchedCallbacks.get(t);
+    return !!t && t?.has(e);
+  }
   AddTagAddOrRemoveListener(e, a) {
     if (void 0 !== e && a) {
       let t = this.TagSwitchedCallbacks.get(e);
@@ -232,11 +238,11 @@ let BaseTagComponent = class BaseTagComponent extends EntityComponent_1.EntityCo
           a,
           e,
         ),
-      this.Entity.GetComponent(192)?.OnTagChanged(t));
+      this.Entity.GetComponent(194)?.OnTagChanged(t));
   }
 };
 (BaseTagComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(188)],
+  [(0, RegisterComponent_1.RegisterComponent)(190)],
   BaseTagComponent,
 )),
   (exports.BaseTagComponent = BaseTagComponent);

@@ -133,7 +133,7 @@ class BossRushLevelDetailView extends UiTabViewBase_1.UiTabViewBase {
   OnStart() {}
   OnBeforeShow() {
     (this.aSn = ModelManager_1.ModelManager.BossRushModel.CurrentTeamInfo),
-      this.SOn(),
+      this.ROn(),
       this.$Sn(),
       this.JSn(),
       this.zSn(),
@@ -144,9 +144,9 @@ class BossRushLevelDetailView extends UiTabViewBase_1.UiTabViewBase {
       this.sDn();
   }
   OnAfterShow() {
-    this.haa();
+    this.l1a();
   }
-  haa() {
+  l1a() {
     var e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
       ModelManager_1.ModelManager.BossRushModel.CurrentSelectActivityId,
     );
@@ -156,7 +156,7 @@ class BossRushLevelDetailView extends UiTabViewBase_1.UiTabViewBase {
         "BossRushUnlockBuffTips"),
       UiManager_1.UiManager.OpenView("DifficultUnlockTipView", e));
   }
-  SOn() {
+  ROn() {
     let e = "Start";
     ModelManager_1.ModelManager.BossRushModel.PlayBackAnimation &&
       (e = "ShowView"),
@@ -232,11 +232,11 @@ class BuffEntry extends UiPanelBase_1.UiPanelBase {
       (this.SlotIndex = 0),
       (this.tyn = void 0),
       (this.iyn = () => {
-        this.tyn?.State === Protocol_1.Aki.Protocol.fks.cBs
+        this.tyn?.State === Protocol_1.Aki.Protocol.Iks.pBs
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
               "BossRushLock",
             )
-          : this.tyn?.State !== Protocol_1.Aki.Protocol.fks.Proto_Inactive &&
+          : this.tyn?.State !== Protocol_1.Aki.Protocol.Iks.Proto_Inactive &&
             ((ModelManager_1.ModelManager.BossRushModel.CurrentChangeBuffSlot =
               this.SlotIndex),
             EventSystem_1.EventSystem.Emit(
@@ -263,35 +263,35 @@ class BuffEntry extends UiPanelBase_1.UiPanelBase {
       ]);
   }
   Refresh(e) {
-    (this.tyn = e).State === Protocol_1.Aki.Protocol.fks.Proto_Inactive
+    (this.tyn = e).State === Protocol_1.Aki.Protocol.Iks.Proto_Inactive
       ? this.GetButton(0)?.SetSelfInteractive(!1)
       : (this.GetButton(0)?.SetSelectionState(0),
         this.GetButton(0)?.SetSelfInteractive(!0)),
       this.oyn(),
       this.ryn(),
-      this.Lbn(),
+      this.bbn(),
       this.qfo(),
-      this.Gqn();
+      this.Kqn();
   }
-  Gqn() {
+  Kqn() {
     let e = "";
     (e =
-      this.tyn.State === Protocol_1.Aki.Protocol.fks.cBs
+      this.tyn.State === Protocol_1.Aki.Protocol.Iks.pBs
         ? "BossRushLock"
-        : this.tyn.State === Protocol_1.Aki.Protocol.fks.Proto_Inactive
+        : this.tyn.State === Protocol_1.Aki.Protocol.Iks.Proto_Inactive
           ? "BossRushBuffDisableTips"
           : "BossRushBuffSelectTips"),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), e);
   }
-  Lbn() {
+  bbn() {
     this.GetItem(8).SetUIActive(
-      this.tyn.State === Protocol_1.Aki.Protocol.fks.cBs,
+      this.tyn.State === Protocol_1.Aki.Protocol.Iks.pBs,
     );
   }
   qfo() {
     this.GetItem(7).SetUIActive(
       0 !== this.tyn.BuffId &&
-        this.tyn.State !== Protocol_1.Aki.Protocol.fks.cBs,
+        this.tyn.State !== Protocol_1.Aki.Protocol.Iks.pBs,
     );
   }
   oyn() {

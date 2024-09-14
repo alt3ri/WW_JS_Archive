@@ -62,7 +62,7 @@ class TsTaskRandomNavMeshPathMove extends TsTaskAbortImmediatelyBase_1.default {
           this.FindRandomPath(t, r.ActorLocation, this.SelectedTargetLocation),
           (this.FoundPath = 0 < this.NavigationPath.length),
           (this.CurrentNavigationIndex = 1);
-        var o = e.CharAiDesignComp?.Entity.GetComponent(160);
+        var o = e.CharAiDesignComp?.Entity.GetComponent(161);
         if (o?.Valid)
           switch (this.TsMoveState) {
             case 1:

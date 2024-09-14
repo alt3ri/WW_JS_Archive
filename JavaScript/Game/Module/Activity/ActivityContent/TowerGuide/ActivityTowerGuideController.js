@@ -49,24 +49,24 @@ class ActivityTowerGuideController extends ActivityControllerBase_1.ActivityCont
     );
   }
   static RequestTowerReward(e) {
-    var t = new Protocol_1.Aki.Protocol.s0s();
-    (t.Q6n = e),
-      Net_1.Net.Call(17911, t, (e) => {
+    var t = new Protocol_1.Aki.Protocol.d0s();
+    (t.i8n = e),
+      Net_1.Net.Call(17313, t, (e) => {
         e &&
-          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+          (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.O4n,
-                21283,
+                e.Q4n,
+                28617,
               )
             : ActivityTowerGuideController.RequestTowerRewardInfo());
       });
   }
   static RequestTowerRewardInfo() {
-    var e = new Protocol_1.Aki.Protocol.h0s();
-    Net_1.Net.Call(6788, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.C0s();
+    Net_1.Net.Call(24090, e, (e) => {
       if (e) {
         var t = ActivityTowerGuideController.t4e();
-        if (t) for (const r of e.Q6n) t.SetRewardClaimed(r, !0);
+        if (t) for (const r of e.i8n) t.SetRewardClaimed(r, !0);
       }
     });
   }

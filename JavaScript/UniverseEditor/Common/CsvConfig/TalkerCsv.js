@@ -58,7 +58,7 @@ const CsvLoader_1 = require("./CsvLoader"),
       CnName: "音色Id",
       Type: "Int",
       Default: "0",
-      RenderType: 48,
+      RenderType: 49,
     }),
   ];
 class TalkerCsvLoader extends CsvLoader_1.CsvLoader {

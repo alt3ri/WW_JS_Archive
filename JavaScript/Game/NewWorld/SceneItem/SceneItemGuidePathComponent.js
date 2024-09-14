@@ -99,17 +99,17 @@ let SceneItemGuidePathComponent =
               )),
             this.cfn(e.Interval, !0));
         }),
-        (this.gIe = (t, e) => {
-          t.includes(1298716444)
+        (this.g_n = (t, e) => {
+          1298716444 === t
             ? ((this.r$t = !0),
               Info_1.Info.EnableForceTick
                 ? this.Cfn(1, !0)
                 : (this.tfn.HasFinishTag = !0))
-            : t.includes(-3775711)
+            : -3775711 === t
               ? ((this.dce = !0),
                 Info_1.Info.EnableForceTick || (this.tfn.HasActiveTag = !0),
                 this.dfn(!0))
-              : t.includes(-1152559349) &&
+              : -1152559349 === t &&
                 (this.r$t &&
                   ((this.r$t = !1),
                   Info_1.Info.EnableForceTick || (this.tfn.HasFinishTag = !1)),
@@ -169,7 +169,7 @@ let SceneItemGuidePathComponent =
     OnActivate() {
       return (
         (this.Hte = this.Entity.GetComponent(1)),
-        (this.Lie = this.Entity.GetComponent(180)),
+        (this.Lie = this.Entity.GetComponent(181)),
         (this.sxr = this.Disable(
           "[SceneItemGuidePathComponent.OnActivate] 默认Disable",
         )),
@@ -213,13 +213,13 @@ let SceneItemGuidePathComponent =
           ),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
-          EventDefine_1.EEventName.OnLevelTagChanged,
-          this.gIe,
+          EventDefine_1.EEventName.OnSceneItemStateChange,
+          this.g_n,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
-            EventDefine_1.EEventName.OnLevelTagChanged,
-            this.gIe,
+            EventDefine_1.EEventName.OnSceneItemStateChange,
+            this.g_n,
           ),
         EventSystem_1.EventSystem.Has(
           EventDefine_1.EEventName.CharUseSkill,
@@ -303,8 +303,8 @@ let SceneItemGuidePathComponent =
               this.Lo.ColorChangeOption &&
                 (EventSystem_1.EventSystem.AddWithTarget(
                   this.Entity,
-                  EventDefine_1.EEventName.OnLevelTagChanged,
-                  this.gIe,
+                  EventDefine_1.EEventName.OnSceneItemStateChange,
+                  this.g_n,
                 ),
                 this.vfn(),
                 this.Sfn()))
@@ -324,24 +324,24 @@ let SceneItemGuidePathComponent =
           );
     }
     dfn(e = !1, i = void 0) {
-      var t = Protocol_1.Aki.Protocol.Cms.create();
-      (t.P4n = MathUtils_1.MathUtils.NumberToLong(
+      var t = Protocol_1.Aki.Protocol.Ems.create();
+      (t.F4n = MathUtils_1.MathUtils.NumberToLong(
         this.Hte.CreatureData.GetCreatureDataId(),
       )),
-        Net_1.Net.Call(26421, t, (t) => {
-          t.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+        Net_1.Net.Call(25654, t, (t) => {
+          t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              t.O4n,
-              25875,
+              t.Q4n,
+              28766,
             ),
-            (this.ofn = t.WLs),
+            (this.ofn = t.ZLs),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "SceneItem",
                 32,
                 "response",
-                ["entityID", t.P4n],
-                ["resetTime", t.WLs],
+                ["entityID", t.F4n],
+                ["resetTime", t.ZLs],
               ),
             e &&
               this.tfn?.IsValid() &&
@@ -430,7 +430,7 @@ let SceneItemGuidePathComponent =
   });
 (SceneItemGuidePathComponent = SceneItemGuidePathComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(139)],
+    [(0, RegisterComponent_1.RegisterComponent)(140)],
     SceneItemGuidePathComponent,
   )),
   (exports.SceneItemGuidePathComponent = SceneItemGuidePathComponent);

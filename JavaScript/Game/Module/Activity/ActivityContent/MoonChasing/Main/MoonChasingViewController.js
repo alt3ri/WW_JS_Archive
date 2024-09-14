@@ -20,8 +20,12 @@ class MoonChasingViewController {
       (this.SkipToBuild = () => {
         (this.jio.IsInBuildingModule = !0), this.Yzt.SkipToBuild();
       }),
-      (this.SkipToTask = () => {
-        ControllerHolder_1.ControllerHolder.MoonChasingController.OpenTaskView();
+      (this.SkipToTask = (t = 1, i = !1) => {
+        ControllerHolder_1.ControllerHolder.MoonChasingController.OpenTaskView(
+          t,
+          0,
+          i,
+        );
       }),
       (this.SkipToHandbook = () => {
         ControllerHolder_1.ControllerHolder.MoonChasingController.OpenHandbookView();
@@ -40,23 +44,24 @@ class MoonChasingViewController {
   RegisterView(t) {
     (this.Yzt = t), (this.jio = t.OpenParam);
   }
-  Z7s() {
+  uHs() {
     2 === this.jio.SkipTarget
       ? this.SkipToBuild()
       : 1 === this.jio.SkipTarget
         ? this.SkipToBusiness()
-        : 3 === this.jio.SkipTarget && this.SkipToTask(),
+        : 3 === this.jio.SkipTarget &&
+          this.SkipToTask(this.jio.TaskType, this.jio.IsLastTask),
       (this.jio.SkipTarget = 0);
   }
-  eHs() {
+  cHs() {
     0 < this.jio.RefreshBuildingId &&
       (this.Yzt.RefreshMainModule(this.jio.RefreshBuildingId),
       (this.jio.RefreshBuildingId = 0));
   }
   Show() {
-    this.Z7s(),
-      this.eHs(),
-      this.B0a(),
+    this.uHs(),
+      this.cHs(),
+      this.rMa(),
       this.Yzt.RefreshBuildingModule(),
       this.Yzt.RefreshRedDot();
   }
@@ -67,7 +72,7 @@ class MoonChasingViewController {
       this.jio.BuildingBackToBusiness &&
         ((this.jio.BuildingBackToBusiness = !1), this.SkipToBusiness());
   }
-  B0a() {
+  rMa() {
     ModelManager_1.ModelManager.MoonChasingModel.HasEnteredMainViewFlag
       ? (this.Yzt.UiViewSequence.StartSequenceName = "Start")
       : ((this.Yzt.UiViewSequence.StartSequenceName = "Start01"),

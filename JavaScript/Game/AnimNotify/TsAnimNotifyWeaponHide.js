@@ -15,7 +15,7 @@ class TsAnimNotifyWeaponHide extends UE.KuroAnimNotify {
     if (e instanceof TsBaseCharacter_1.default) {
       e = e?.CharacterActorComponent?.Entity;
       if (!e?.Valid) return !1;
-      e.GetComponent(71)?.HideWeapon(
+      e.GetComponent(72)?.HideWeapon(
         this.WeaponIndex,
         this.Hide,
         this.HideEffect,

@@ -29,6 +29,9 @@ class AiAlert {
   get AlertnessType() {
     return this.alertnesstype();
   }
+  get ShowDist() {
+    return this.showdist();
+  }
   __init(t, s) {
     return (this.z7 = t), (this.J7 = s), this;
   }
@@ -69,6 +72,10 @@ class AiAlert {
   alertnesstype() {
     var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  showdist() {
+    var t = this.J7.__offset(this.z7, 20);
+    return t ? this.J7.readInt32(this.z7 + t) : 3e3;
   }
 }
 exports.AiAlert = AiAlert;

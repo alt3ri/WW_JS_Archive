@@ -14,18 +14,24 @@ class PhantomSkill {
     return this.phantomskillid();
   }
   get BuffIds() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buffidsLength(), (t) =>
-      this.buffids(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buffidsLength(),
+      this.buffids,
+      this,
     );
   }
   get SettleIds() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.settleidsLength(), (t) =>
-      this.settleids(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.settleidsLength(),
+      this.settleids,
+      this,
     );
   }
   get BuffEffects() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buffeffectsLength(), (t) =>
-      this.buffeffects(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buffeffectsLength(),
+      this.buffeffects,
+      this,
     );
   }
   get ChargeEfficiency() {
@@ -49,13 +55,15 @@ class PhantomSkill {
   get CurLevelDescriptionEx() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.curleveldescriptionexLength(),
-      (t) => this.curleveldescriptionex(t),
+      this.curleveldescriptionex,
+      this,
     );
   }
   get LevelDescStrArray() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.leveldescstrarrayLength(),
-      (t) => this.leveldescstrarray(t),
+      this.leveldescstrarray,
+      this,
     );
   }
   get BattleViewIcon() {

@@ -17,8 +17,10 @@ class AdventureTask {
     return this.tasktext();
   }
   get RecordId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.recordidLength(), (t) =>
-      this.recordid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.recordidLength(),
+      this.recordid,
+      this,
     );
   }
   get NeedProgress() {
@@ -33,9 +35,16 @@ class AdventureTask {
   get JumpTo() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.jumptoLength(),
-      (t) => this.jumpto(t)?.key(),
-      (t) => this.jumpto(t)?.value(),
+      this.jumptoKey,
+      this.jumptoValue,
+      this,
     );
+  }
+  jumptoKey(t) {
+    return this.jumpto(t)?.key();
+  }
+  jumptoValue(t) {
+    return this.jumpto(t)?.value();
   }
   __init(t, s) {
     return (this.z7 = t), (this.J7 = s), this;

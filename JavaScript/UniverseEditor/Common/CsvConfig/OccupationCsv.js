@@ -15,7 +15,7 @@ const immer_1 = require("immer"),
       CnName: "占用类型",
       Filter: "1",
       Condition: "notEmpty",
-      RenderType: 25,
+      RenderType: 26,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "NameStringKey",
@@ -33,7 +33,7 @@ const immer_1 = require("immer"),
     (0, CsvLoader_1.createCsvField)({
       Name: "OccupationData",
       CnName: "数据",
-      RenderType: 26,
+      RenderType: 27,
     }),
   ];
 class OccupationCsvLoader extends CsvLoader_1.CsvLoader {

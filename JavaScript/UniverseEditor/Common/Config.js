@@ -27,11 +27,10 @@ function checkVersionIsLatest(e, t = exports.EDITOR_VERSION) {
 (exports.EDITOR_VERSION = "2024.01.18"),
   (exports.checkVersionIsLatest = checkVersionIsLatest);
 const GAME_CLIENT_GM_PORT_OFFSET = 11,
-  config = {
+  configRecords = {
     IsSaveWhileExitPie: !1,
     IsTestMode: !1,
     MaxErrorReportCount: 4,
-    IsNewLevelLoadMode: !0,
     IsNewJsonNameMode: !0,
     IsFullDataMode: !1,
     ReportErrorToSentry: !0,
@@ -49,6 +48,7 @@ const GAME_CLIENT_GM_PORT_OFFSET = 11,
     IsEnableAutoJump: !1,
     IsShowFilterPreset: !0,
     IsShowFormalText: !1,
+    IsShowActionNote: !0,
     TidTextExportType: "Desc",
     PlannedBranch: "development",
     AutoCaptureTree: [],
@@ -63,6 +63,10 @@ const GAME_CLIENT_GM_PORT_OFFSET = 11,
     IsEnableEntityExternalReferenceCheck: !1,
     IsEnableSameOccupationInQuestCheck: !1,
     IsEnableDifferentOccupationUnderParallelSelectNodeCheck: !1,
+    IsEnableOccupationInDungeonCheck: !1,
+    IsEnableWutheriumerInSleepCheck: !1,
+    IsEnableLevelAiReachAreaCheck: !1,
+    IsEnablePlotPosCheck: !1,
   };
 let clusterRecords = void 0;
 function getClusterTimestamp() {
@@ -81,16 +85,20 @@ function getClusterTimestamp() {
 exports.serverInfoList = [
   { Ip: "10.0.7.6", Name: "final1.1周包服" },
   { Ip: "10.0.7.14", Name: "final1.2周包服" },
+  { Ip: "10.0.7.100", Name: "final1.3周包服" },
   { Ip: "10.0.7.80", Name: "branch_1.1公共服" },
   { Ip: "10.0.7.77", Name: "branch_1.2公共服" },
+  { Ip: "10.0.7.26", Name: "branch_1.3公共服" },
   { Ip: "127.0.0.1", Name: "本地服" },
   { Ip: "10.0.61.42", Name: "雷涛", IsTest: !0 },
   { Ip: "10.0.70.231", Name: "黄俊集", IsTest: !0 },
 ];
+const eventDefine = { OnConfigChanged: (e, t, r) => {} };
 class Config extends JsonConfig_1.JsonConfig {
   constructor() {
     if (
       (super("Config", Config.t()),
+      (this.Dispatcher = new EventSystem_1.EventDispatcher()),
       (this.VirtualMacAddress = ""),
       (this.o = this.i()),
       this.o || (this.o = this.l()),
@@ -172,12 +180,12 @@ class Config extends JsonConfig_1.JsonConfig {
     for (const t of (0, Util_1.readJsonObj)(e).ConnectionGroups)
       if (!(0, Util_1.isPortInUse)(t.EditorPort)) return t;
   }
-  static Tkn(e) {
+  static wkn(e) {
     e.PlannedBranch = (0, BranchDefine_1.getDefaultPlannedBranch)();
   }
   static t() {
-    var e = (0, Util_1.deepCopyData)(config);
-    return Config.Tkn(e), e;
+    var e = (0, Util_1.deepCopyData)(configRecords);
+    return Config.wkn(e), e;
   }
   get NetworkAddress() {
     return (
@@ -187,22 +195,22 @@ class Config extends JsonConfig_1.JsonConfig {
   }
   get NetworkAddressMd5() {
     return (
-      void 0 === this.jaa &&
-        (this.jaa = (0, Util_1.getMd5)(this.NetworkAddress)),
-      this.jaa
+      void 0 === this.W1a &&
+        (this.W1a = (0, Util_1.getMd5)(this.NetworkAddress)),
+      this.W1a
     );
   }
   get MacAddress() {
     return (
       this.VirtualMacAddress ||
-      (void 0 === this.Waa && (this.Waa = (0, Util_1.getMacAddress)()),
-      this.Waa)
+      (void 0 === this.Q1a && (this.Q1a = (0, Util_1.getMacAddress)()),
+      this.Q1a)
     );
   }
   get MacAddressMd5() {
     return (
-      void 0 === this.Qaa && (this.Qaa = (0, Util_1.getMd5)(this.MacAddress)),
-      this.Qaa
+      void 0 === this.K1a && (this.K1a = (0, Util_1.getMd5)(this.MacAddress)),
+      this.K1a
     );
   }
   get EditorCommandPort() {
@@ -261,6 +269,10 @@ class Config extends JsonConfig_1.JsonConfig {
           ),
         this.Get("PlannedBranch"))
       : "development";
+  }
+  Set(e, t) {
+    var r = (0, Util_1.deepCopyData)(this.Get(e));
+    super.Set(e, t), this.Dispatcher.Dispatch("OnConfigChanged", e, r, t);
   }
 }
 ((exports.Config = Config).FlowListPrefix = (0, Init_1.isUe5)()

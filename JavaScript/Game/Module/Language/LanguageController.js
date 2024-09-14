@@ -28,13 +28,13 @@ class LanguageController extends ControllerBase_1.ControllerBase {
     );
   }
   static RequestSetLanguage(e) {
-    var t = new Protocol_1.Aki.Protocol.Pms();
-    (t.XVn = e),
-      Net_1.Net.Call(12314, t, (e) => {
-        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+    var t = new Protocol_1.Aki.Protocol.Gms();
+    (t.r9n = e),
+      Net_1.Net.Call(24990, t, (e) => {
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.O4n,
-            13572,
+            e.Q4n,
+            17062,
           );
       });
   }

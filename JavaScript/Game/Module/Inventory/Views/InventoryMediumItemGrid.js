@@ -25,6 +25,7 @@ class InventoryMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediu
         StarLevel: s,
         IsNewVisible: r.IsNewItem,
         IsLockVisible: r.IsLock,
+        IsDeprecate: r.IsDeprecate,
         CoolDown: this.GetRemainingCoolDownTime(),
         TotalCoolDown: this.GetTotalCoolDownTime(),
         IsRedDotVisible: r.HasRedDot,
@@ -72,18 +73,18 @@ class InventoryMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediu
           (a.IsOmitBottomText = !0),
           0 < h.length)
         ) {
-          var C = h[0]?.SlotState ?? 0,
-            c = h[1]?.SlotState ?? 0,
+          var c = h[0]?.SlotState ?? 0,
+            C = h[1]?.SlotState ?? 0,
             I = h[2]?.SlotState ?? 0;
           switch (s) {
             case 3:
-              a.VisionSlotStateList = [C];
+              a.VisionSlotStateList = [c];
               break;
             case 4:
-              a.VisionSlotStateList = [C, c];
+              a.VisionSlotStateList = [c, C];
               break;
             case 5:
-              a.VisionSlotStateList = [C, c, I];
+              a.VisionSlotStateList = [c, C, I];
           }
         }
         ControllerHolder_1.ControllerHolder.PhantomBattleController.CheckIsEquip(

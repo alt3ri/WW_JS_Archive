@@ -96,6 +96,9 @@ class ControlScreenModel extends ModelBase_1.ModelBase {
   GetTouchEmptyFingerDataCount() {
     return this.wqt.size;
   }
+  get IsTouching() {
+    return 0 < this.wqt.size;
+  }
   IsTouchEmpty(e) {
     return this.wqt.has(e);
   }
@@ -116,7 +119,7 @@ class ControlScreenModel extends ModelBase_1.ModelBase {
   RefreshRotationScreenRate() {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e &&
-    e.Entity.GetComponent(160).DirectionState ===
+    e.Entity.GetComponent(161).DirectionState ===
       CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection
       ? (this.Uqt = this.Rqt)
       : (this.Uqt = this.Dqt);

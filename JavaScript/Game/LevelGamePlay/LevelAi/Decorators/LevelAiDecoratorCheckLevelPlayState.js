@@ -8,11 +8,11 @@ const EventDefine_1 = require("../../../Common/Event/EventDefine"),
 class LevelAiDecoratorCheckLevelPlayState extends LevelAiDecorator_1.LevelAiDecorator {
   constructor() {
     super(...arguments),
-      (this.mIe = (e) => {
-        var t = this.Params;
-        t &&
-          t.LevelId === e &&
-          ((t = this.CheckCondition(1)), this.NotifyEventBasedCondition(t));
+      (this.mIe = (e, t) => {
+        var r = this.Params;
+        r &&
+          r.LevelId === e &&
+          ((r = this.CheckCondition(1)), this.NotifyEventBasedCondition(r));
       });
   }
   OnExecutionStart() {

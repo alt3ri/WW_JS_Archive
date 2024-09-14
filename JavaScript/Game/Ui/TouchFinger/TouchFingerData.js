@@ -8,7 +8,7 @@ class TouchFingerData {
     (this.Fdr = void 0),
       (this.Vdr = void 0),
       (this.Hdr = !1),
-      (this.AOn = BigInt(0)),
+      (this.OOn = BigInt(0)),
       (this.jdr = t);
   }
   StartTouch(t) {
@@ -18,9 +18,9 @@ class TouchFingerData {
     (this.Fdr = void 0), (this.Vdr = void 0), (this.Hdr = !1);
   }
   MoveTouch(t) {
-    this.AOn !== UE.KismetSystemLibrary.GetFrameCount() &&
+    this.OOn !== UE.KismetSystemLibrary.GetFrameCount() &&
       ((this.Vdr = this.Fdr),
-      (this.AOn = UE.KismetSystemLibrary.GetFrameCount())),
+      (this.OOn = UE.KismetSystemLibrary.GetFrameCount())),
       (this.Fdr = t);
   }
   GetFingerIndex() {

@@ -12,7 +12,8 @@ class ElementReactionMatrix {
   get ElementReactionList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.elementreactionlistLength(),
-      (t) => this.elementreactionlist(t),
+      this.elementreactionlist,
+      this,
     );
   }
   __init(t, e) {

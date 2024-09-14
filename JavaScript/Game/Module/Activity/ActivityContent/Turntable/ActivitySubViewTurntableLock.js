@@ -51,7 +51,9 @@ class ActivitySubViewTurntableLock extends ActivitySubViewBase_1.ActivitySubView
         ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
         await this.UNe.CreateThenShowByActorAsync(i.GetOwner()),
         this.GetItem(4));
-    (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
+    (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(
+      this.ActivityBaseData,
+    )),
       await this.ANe.CreateThenShowByActorAsync(i.GetOwner());
   }
   OnStart() {
@@ -70,8 +72,7 @@ class ActivitySubViewTurntableLock extends ActivitySubViewBase_1.ActivitySubView
       this.UNe.SetTitleByTextId("CollectActivity_reward"),
       this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
       this.UNe.RefreshItemLayout(t),
-      this.ANe.FunctionButton?.BindCallback(this.DFe),
-      this.ANe.FunctionButton.RefreshText("CollectActivity_Button_ahead"));
+      this.ANe.FunctionButton.SetFunction(this.DFe));
   }
   OnRefreshView() {
     this.FNe(), this._Fe(), this.BNe();
@@ -85,8 +86,10 @@ class ActivitySubViewTurntableLock extends ActivitySubViewBase_1.ActivitySubView
       this.ANe.SetPanelConditionVisible(!i),
       i ||
         (this.ANe.FunctionButton?.SetUiActive(!1),
-        (i = this.GetCurrentLockConditionText()),
-        this.ANe.SetLockTextByTextId(i));
+        this.ANe.SetPerformanceConditionLock(
+          this.ActivityBaseData.ConditionGroupId,
+          this.ActivityBaseData.Id,
+        ));
   }
   FNe() {
     var [i, t] = this.GetTimeVisibleAndRemainTime();

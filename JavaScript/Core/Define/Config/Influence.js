@@ -43,13 +43,15 @@ class Influence {
   get ReputationItem() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.reputationitemLength(),
-      (t) => this.reputationitem(t),
+      this.reputationitem,
+      this,
     );
   }
   get ReputationReward() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.reputationrewardLength(),
-      (t) => this.reputationreward(t),
+      this.reputationreward,
+      this,
     );
   }
   __init(t, i) {

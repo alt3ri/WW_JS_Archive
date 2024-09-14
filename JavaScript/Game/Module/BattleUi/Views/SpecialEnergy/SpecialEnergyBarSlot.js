@@ -36,20 +36,22 @@ class SpecialEnergyBarSlot extends SpecialEnergyBarBase_1.SpecialEnergyBarBase {
   }
   OnStart() {
     if (this.Config) {
-      var t = effectBasePercents[this.SlotNum - 1];
-      for (const i of this.SlotItemList) i.SetEffectBasePercent(t);
+      var e = effectBasePercents[this.SlotNum - 1];
+      for (const r of this.SlotItemList) r.SetEffectBasePercent(e);
       if (this.Config.EffectColor) {
-        var e = UE.Color.FromHex(this.Config.EffectColor),
-          s = new UE.LinearColor(e);
-        let t = e;
+        var s = UE.Color.FromHex(this.Config.EffectColor),
+          i = new UE.LinearColor(s);
+        let t = s;
         this.Config.PointColor &&
           (t = UE.Color.FromHex(this.Config.PointColor));
-        for (const r of this.SlotItemList)
-          r.SetBarColor(e),
-            r.SetPointColor(t),
-            r.SetFullEffectColor(s, this.IsMorph);
+        for (const h of this.SlotItemList)
+          h.SetBarColor(s),
+            h.SetPointColor(t),
+            h.SetFullEffectColor(i, this.IsMorph);
       }
-      this.GetItem(this.SlotNum + 1)?.SetUIActive(!this.IsMorph),
+      let t = !0;
+      this.IsMorph && this.Config?.IconPath && (t = !1),
+        this.GetItem(this.SlotNum + 1)?.SetUIActive(t),
         this.RefreshBarPercent(!0);
     }
   }

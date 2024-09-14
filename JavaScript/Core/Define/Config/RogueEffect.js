@@ -18,7 +18,8 @@ class RogueEffect {
   get ConditionArgs() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.conditionargsLength(),
-      (t) => this.conditionargs(t),
+      this.conditionargs,
+      this,
     );
   }
   get Count() {
@@ -28,37 +29,45 @@ class RogueEffect {
     return this.roomcount();
   }
   get BuffArray1() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buffarray1Length(), (t) =>
-      this.buffarray1(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buffarray1Length(),
+      this.buffarray1,
+      this,
     );
   }
   get ExtraEffectTypeArray1() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.extraeffecttypearray1Length(),
-      (t) => this.extraeffecttypearray1(t),
+      this.extraeffecttypearray1,
+      this,
     );
   }
   get ExtraEffectTypeArgsArray1() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.extraeffecttypeargsarray1Length(),
-      (t) => this.extraeffecttypeargsarray1(t),
+      this.extraeffecttypeargsarray1,
+      this,
     );
   }
   get BuffArray2() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buffarray2Length(), (t) =>
-      this.buffarray2(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buffarray2Length(),
+      this.buffarray2,
+      this,
     );
   }
   get ExtraEffectTypeArray2() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.extraeffecttypearray2Length(),
-      (t) => this.extraeffecttypearray2(t),
+      this.extraeffecttypearray2,
+      this,
     );
   }
   get ExtraEffectTypeArgsArray2() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.extraeffecttypeargsarray2Length(),
-      (t) => this.extraeffecttypeargsarray2(t),
+      this.extraeffecttypeargsarray2,
+      this,
     );
   }
   __init(t, r) {

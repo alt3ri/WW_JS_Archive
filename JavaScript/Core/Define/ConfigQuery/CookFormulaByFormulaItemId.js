@@ -17,25 +17,39 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configCookFormulaByFormulaItemId.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configCookFormulaByFormulaItemId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configCookFormulaByFormulaItemId.GetConfig(";
 exports.configCookFormulaByFormulaItemId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, n = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      i =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
       if (n) {
         var e = KEY_PREFIX + `#${o})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (r) return r;
+        const m = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (m)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            m
+          );
       }
       if (
         (i =
@@ -46,8 +60,7 @@ exports.configCookFormulaByFormulaItemId = {
               o,
             ]))
       ) {
-        var i,
-          e = void 0;
+        e = void 0;
         if (
           (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -57,20 +70,26 @@ exports.configCookFormulaByFormulaItemId = {
           )),
           i)
         ) {
-          const r = CookFormula_1.CookFormula.getRootAsCookFormula(
+          const m = CookFormula_1.CookFormula.getRootAsCookFormula(
             new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
           );
           return (
             n &&
               ((i = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(i, r)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, m)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            r
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            m
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=CookFormulaByFormulaItemId.js.map

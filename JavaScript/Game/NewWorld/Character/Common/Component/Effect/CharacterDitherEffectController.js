@@ -14,7 +14,7 @@ class CharacterDitherEffectController {
       (this.kYo = !1),
       (this.Ane = void 0),
       (this.Pne = void 0),
-      (this.yaa = !1),
+      (this.I1a = !1),
       (this.OC = t),
       (this.l9e = i),
       ObjectUtils_1.ObjectUtils.IsValid(this.l9e) || (this.kYo = !1);
@@ -49,7 +49,7 @@ class CharacterDitherEffectController {
   }
   EnterAppearEffect(t = 1, i = 3, s = !0) {
     this.FYo && this.SetHiddenInGame(!1, !0),
-      (this.yaa = !1),
+      (this.I1a = !1),
       (this.qYo = !0),
       (this.NYo = i),
       (this.OYo = t),
@@ -57,7 +57,7 @@ class CharacterDitherEffectController {
   }
   EnterDisappearEffect(t = 1, i = 3, s = !0) {
     this.FYo
-      ? ((this.GYo = 0), (this.NYo = i), this.Iaa())
+      ? ((this.GYo = 0), (this.NYo = i), this.T1a())
       : ((this.qYo = !0),
         (this.NYo = i),
         (this.OYo = -t),
@@ -86,7 +86,7 @@ class CharacterDitherEffectController {
           (this.Ane = s.DisableActor(
             "[CharacterDitherEffectController.SetHiddenInGame]",
           )),
-            s.Entity.GetComponent(170)?.IsNpcOutShowRange ||
+            s.Entity.GetComponent(171)?.IsNpcOutShowRange ||
               (this.Pne = s.DisableCollision(
                 "[CharacterDitherEffectController.SetHiddenInGame]",
               ));
@@ -105,9 +105,9 @@ class CharacterDitherEffectController {
       this.qYo &&
       ((t = t * MILLISECOND_TO_SECOND * this.OYo), this.VYo(t, this.NYo));
   }
-  Iaa() {
-    this.yaa ||
-      ((this.yaa = !0),
+  T1a() {
+    this.I1a ||
+      ((this.I1a = !0),
       this.SetHiddenInGame(
         MathUtils_1.MathUtils.IsNearlyZero(
           this.GYo,
@@ -118,7 +118,7 @@ class CharacterDitherEffectController {
       this.l9e.SetDitherEffect(this.GYo, this.NYo));
   }
   ForceResetDither() {
-    (this.GYo = 0), (this.NYo = 1), this.Iaa();
+    (this.GYo = 0), (this.NYo = 1), this.T1a();
   }
   VYo(t, i) {
     (this.GYo = MathUtils_1.MathUtils.Clamp(this.GYo + t, 0, 1)),

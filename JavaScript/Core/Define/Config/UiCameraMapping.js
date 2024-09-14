@@ -31,9 +31,16 @@ class UiCameraMapping {
   get BodyCameraSettingsNameMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.bodycamerasettingsnamemapLength(),
-      (t) => this.bodycamerasettingsnamemap(t)?.key(),
-      (t) => this.bodycamerasettingsnamemap(t)?.value(),
+      this.bodycamerasettingsnamemapKey,
+      this.bodycamerasettingsnamemapValue,
+      this,
     );
+  }
+  bodycamerasettingsnamemapKey(t) {
+    return this.bodycamerasettingsnamemap(t)?.key();
+  }
+  bodycamerasettingsnamemapValue(t) {
+    return this.bodycamerasettingsnamemap(t)?.value();
   }
   get DefaultCameraBlendName() {
     return this.defaultcamerablendname();
@@ -41,9 +48,16 @@ class UiCameraMapping {
   get UiCameraBlendNameMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.uicamerablendnamemapLength(),
-      (t) => this.uicamerablendnamemap(t)?.key(),
-      (t) => this.uicamerablendnamemap(t)?.value(),
+      this.uicamerablendnamemapKey,
+      this.uicamerablendnamemapValue,
+      this,
     );
+  }
+  uicamerablendnamemapKey(t) {
+    return this.uicamerablendnamemap(t)?.key();
+  }
+  uicamerablendnamemapValue(t) {
+    return this.uicamerablendnamemap(t)?.value();
   }
   get UiCameraDelayTime() {
     return this.uicameradelaytime();

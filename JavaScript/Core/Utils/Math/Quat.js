@@ -242,6 +242,24 @@ class Quat {
       Math.abs(this.W) < t
     );
   }
+  GetAxisX(t) {
+    return this.RotateVector(Vector_1.Vector.ForwardVectorProxy, t), t;
+  }
+  GetAxisY(t) {
+    return this.RotateVector(Vector_1.Vector.RightVectorProxy, t), t;
+  }
+  GetAxisZ(t) {
+    return this.RotateVector(Vector_1.Vector.UpVectorProxy, t), t;
+  }
+  GetForwardVector(t) {
+    return this.GetAxisX(t);
+  }
+  GetRightVector(t) {
+    return this.GetAxisY(t);
+  }
+  GetUpVector(t) {
+    return this.GetAxisZ(t);
+  }
   static ConstructorByAxisAngle(t, i, h) {
     var t = t.Tuple,
       h = h.Tuple,

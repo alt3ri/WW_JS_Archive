@@ -17,25 +17,36 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0;
+const initStat = Stats_1.Stat.Create("configMonsterDetectionFilterAll.Init"),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configMonsterDetectionFilterAll.GetConfigList",
+  );
 exports.configMonsterDetectionFilterAll = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfigList: (e = !0) => {
+  GetConfigList: (t = !0) => {
     var o;
     if (
-      (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
+      (ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start(),
+      (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair)))
     ) {
-      if (e) {
-        var t = KEY_PREFIX + ")";
-        const i = ConfigCommon_1.ConfigCommon.GetConfig(t);
-        if (i) return i;
+      if (t) {
+        var e = KEY_PREFIX + ")";
+        const i = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (i)
+          return (
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            i
+          );
       }
       const i = new Array();
       for (;;) {
@@ -50,7 +61,11 @@ exports.configMonsterDetectionFilterAll = {
           )),
           !o)
         )
-          return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
+          return (
+            ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            getConfigListStat.Stop(),
+            void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+          );
         n =
           MonsterDetectionFilter_1.MonsterDetectionFilter.getRootAsMonsterDetectionFilter(
             new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
@@ -58,13 +73,17 @@ exports.configMonsterDetectionFilterAll = {
         i.push(n);
       }
       return (
-        e &&
-          ((t = KEY_PREFIX + ")"),
-          ConfigCommon_1.ConfigCommon.SaveConfig(t, i, i.length)),
+        t &&
+          ((e = KEY_PREFIX + ")"),
+          ConfigCommon_1.ConfigCommon.SaveConfig(e, i, i.length)),
         ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+        getConfigListStat.Stop(),
+        ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
         i
       );
     }
+    getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=MonsterDetectionFilterAll.js.map

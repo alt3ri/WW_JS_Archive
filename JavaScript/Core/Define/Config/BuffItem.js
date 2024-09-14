@@ -13,8 +13,10 @@ class BuffItem {
     return this.publiccdgroup();
   }
   get Buffs() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buffsLength(), (t) =>
-      this.buffs(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buffsLength(),
+      this.buffs,
+      this,
     );
   }
   get Cd() {

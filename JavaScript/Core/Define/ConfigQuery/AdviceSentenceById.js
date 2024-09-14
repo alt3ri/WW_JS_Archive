@@ -17,25 +17,37 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configAdviceSentenceById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configAdviceSentenceById.GetConfig"),
   CONFIG_STAT_PREFIX = "configAdviceSentenceById.GetConfig(";
 exports.configAdviceSentenceById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (e, n = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var o = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${e})`),
+      i =
+        (o.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
       if (n) {
-        var o = KEY_PREFIX + `#${e})`;
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(o);
-        if (t) return t;
+        var t = KEY_PREFIX + `#${e})`;
+        const C = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (C)
+          return (
+            o.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
+          );
       }
       if (
         (i =
@@ -46,10 +58,9 @@ exports.configAdviceSentenceById = {
               e,
             ]))
       ) {
-        var i,
-          o = void 0;
+        t = void 0;
         if (
-          (([i, o] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -57,20 +68,26 @@ exports.configAdviceSentenceById = {
           )),
           i)
         ) {
-          const t = AdviceSentence_1.AdviceSentence.getRootAsAdviceSentence(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(o.buffer)),
+          const C = AdviceSentence_1.AdviceSentence.getRootAsAdviceSentence(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
             n &&
               ((i = KEY_PREFIX + `#${e})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(i, t)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t
+            o.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    o.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=AdviceSentenceById.js.map

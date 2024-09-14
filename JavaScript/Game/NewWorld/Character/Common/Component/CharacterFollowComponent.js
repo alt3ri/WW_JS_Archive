@@ -3,19 +3,19 @@ var __decorate =
   (this && this.__decorate) ||
   function (t, e, o, r) {
     var i,
-      s = arguments.length,
-      n =
-        s < 3
+      n = arguments.length,
+      s =
+        n < 3
           ? e
           : null === r
             ? (r = Object.getOwnPropertyDescriptor(e, o))
             : r;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      n = Reflect.decorate(t, e, o, r);
+      s = Reflect.decorate(t, e, o, r);
     else
       for (var l = t.length - 1; 0 <= l; l--)
-        (i = t[l]) && (n = (s < 3 ? i(n) : 3 < s ? i(e, o, n) : i(e, o)) || n);
-    return 3 < s && n && Object.defineProperty(e, o, n), n;
+        (i = t[l]) && (s = (n < 3 ? i(s) : 3 < n ? i(e, o, s) : i(e, o)) || s);
+    return 3 < n && s && Object.defineProperty(e, o, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterFollowComponent = void 0);
@@ -27,7 +27,8 @@ const UE = require("ue"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   ActorUtils_1 = require("../../../../Utils/ActorUtils");
-var EProtoSummonType = Protocol_1.Aki.Protocol.Summon.L3s;
+var EProtoSummonType = Protocol_1.Aki.Protocol.Summon.x3s;
+const PhantomUtil_1 = require("../../../../Module/Phantom/PhantomUtil");
 let CharacterFollowComponent = class CharacterFollowComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -49,7 +50,7 @@ let CharacterFollowComponent = class CharacterFollowComponent extends EntityComp
     return (this.u1t = this.Entity.GetComponent(0)), !0;
   }
   OnActivate() {
-    return this.SXs(), !0;
+    return this.fJs(), !0;
   }
   OnEnd() {
     return this.DeleteFollowEntity(), !0;
@@ -58,8 +59,8 @@ let CharacterFollowComponent = class CharacterFollowComponent extends EntityComp
     (this.JGi = t),
       (this.SummonTypeInternal = e),
       0 !== this.JGi &&
-        (t = EntitySystem_1.EntitySystem.Get(this.JGi)?.GetComponent(85)) &&
-        this.Entity.GetComponent(33)?.ResetRoleGrowComponent(t);
+        (t = EntitySystem_1.EntitySystem.Get(this.JGi)?.GetComponent(86)) &&
+        this.Entity.GetComponent(34)?.ResetRoleGrowComponent(t);
   }
   GetRoleActor() {
     var t = EntitySystem_1.EntitySystem.Get(this.JGi);
@@ -85,19 +86,29 @@ let CharacterFollowComponent = class CharacterFollowComponent extends EntityComp
     var t = ModelManager_1.ModelManager.CreatureModel.GetEntity(
       this.u1t.GetSummonerId(),
     );
-    t?.Valid && t.Entity.GetComponent(48).EXs(this.Entity.Id);
+    t?.Valid && t.Entity.GetComponent(49).pJs(this.Entity.Id);
   }
   GetAttributeHolder() {
-    return 0 !== this.RoleId && 2 === this.SummonType
-      ? EntitySystem_1.EntitySystem.Get(this.RoleId)
-      : this.Entity;
+    if (0 !== this.RoleId && 2 === this.SummonType) {
+      var t = EntitySystem_1.EntitySystem.Get(this.RoleId);
+      if (t?.Valid) return t;
+      Log_1.Log.CheckError() &&
+        Log_1.Log.Error(
+          "Character",
+          21,
+          "FollowComp role is inValid",
+          ["Id", this.RoleId],
+          ["SelfId", this.u1t?.GetCreatureDataId()],
+        );
+    }
+    return this.Entity;
   }
   SetFollowData(t, e) {
     var o;
     t?.IsValid()
       ? (o = (t =
           ActorUtils_1.ActorUtils.GetEntityByActor(t))?.Entity?.GetComponent(
-          48,
+          49,
         ))
         ? (o.SetRoleId(this.Entity.Id, e), this.SetFollowId(t.Id))
         : Log_1.Log.CheckDebug() &&
@@ -110,7 +121,7 @@ let CharacterFollowComponent = class CharacterFollowComponent extends EntityComp
         Log_1.Log.Debug("Character", 23, "SetFollowData 对象为null");
   }
   Reset(t = 0) {
-    this.EXs(t), (this.SummonTypeInternal = 0), (this.JGi = 0);
+    this.pJs(t), (this.SummonTypeInternal = 0), (this.JGi = 0);
   }
   GetToRoleDistance() {
     var t;
@@ -125,26 +136,34 @@ let CharacterFollowComponent = class CharacterFollowComponent extends EntityComp
         )
       : -1;
   }
-  SXs() {
-    var t,
-      e = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-        this.u1t.GetSummonerId(),
-      );
-    e?.Valid &&
+  fJs() {
+    var e = ModelManager_1.ModelManager.CreatureModel.GetEntity(
+      this.u1t.GetSummonerId(),
+    );
+    if (
+      e?.Valid &&
       this.u1t.SummonType ===
-        EProtoSummonType.Proto_ESummonTypeConcomitantVision &&
-      ((t = e.Entity.GetComponent(48)),
-      this.SetRoleId(e.Id, 2),
-      t.SetFollowId(this.Entity.Id));
+        EProtoSummonType.Proto_ESummonTypeConcomitantVision
+    ) {
+      var o = this.u1t.GetVisionComponent();
+      let t = !1;
+      (t =
+        o && (o = PhantomUtil_1.PhantomUtil.GetVisionData(o.VisionId))
+          ? 0 === o.类型
+          : t) ||
+        ((o = e.Entity.GetComponent(49)),
+        this.SetRoleId(e.Id, 2),
+        o.SetFollowId(this.Entity.Id));
+    }
   }
-  EXs(t) {
+  pJs(t) {
     0 !== t
       ? -1 !== (t = this.v5r.indexOf(t)) && this.v5r.splice(t, 1)
       : (this.v5r = []);
   }
 };
 (CharacterFollowComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(48)],
+  [(0, RegisterComponent_1.RegisterComponent)(49)],
   CharacterFollowComponent,
 )),
   (exports.CharacterFollowComponent = CharacterFollowComponent);

@@ -137,10 +137,17 @@ class DamageUiManager {
               ])));
   }
   static Tick(a) {
-    for (const i of DamageUiManager.$2t) i.Tick(a);
+    for (const r of DamageUiManager.$2t) r.Tick(a);
     for (let a = 0; a < MAX_DAMAGE_PER_FRAME && !this.W2t.Empty; a++) {
       var e = this.W2t.Pop();
       this.K2t(e), this.j2t.push(e);
+    }
+    if (this.Kka) {
+      var i = ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity;
+      if (i?.Valid) {
+        var t = i.Entity?.GetComponent(165)?.CurrentTimeScale ?? 1;
+        for (const g of DamageUiManager.$2t) g.SetTimeScale(t);
+      }
     }
   }
   static Q2t(a, e, i, t = -1) {
@@ -191,6 +198,10 @@ class DamageUiManager {
     for (const a of DamageUiManager.$2t) a.RefreshFontSize();
     for (const e of DamageUiManager.V2t) e.RefreshFontSize();
   }
+  static SetDamageTimeScaleEnable(a) {
+    if (((this.Kka = a), !this.Kka))
+      for (const e of DamageUiManager.$2t) e.SetTimeScale(1);
+  }
   static OnLeaveLevel() {
     for (const a of DamageUiManager.$2t) a.ClearData(), a.Destroy();
     DamageUiManager.$2t.clear();
@@ -216,5 +227,6 @@ class DamageUiManager {
   (DamageUiManager.MaxDamageOffsetDistance = 0),
   (DamageUiManager.DamagePositionCache = void 0),
   (DamageUiManager.k2t = void 0),
-  (DamageUiManager.Y2t = (0, puerts_1.$ref)(void 0));
+  (DamageUiManager.Y2t = (0, puerts_1.$ref)(void 0)),
+  (DamageUiManager.Kka = !1);
 //# sourceMappingURL=DamageUiManager.js.map

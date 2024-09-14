@@ -6,7 +6,6 @@ const UE = require("ue"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
-  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
   CommonItemSelectView_1 = require("./CommonItemSelectView"),
   FilterEntrance_1 = require("./FilterSort/Filter/View/FilterEntrance"),
   SortEntrance_1 = require("./FilterSort/Sort/View/SortEntrance"),
@@ -16,7 +15,7 @@ class ItemSelectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.Fvt = void 0),
-      (this.vQs = void 0),
+      (this.GXs = void 0),
       (this.Mpt = void 0),
       (this.vpt = void 0),
       (this.OnClickMask = () => {
@@ -24,25 +23,33 @@ class ItemSelectView extends UiViewBase_1.UiViewBase {
       }),
       (this.Wvt = (e, t) => {
         e = ItemTipsUtilTool_1.ItemTipsComponentUtilTool.GetTipsDataById(e, t);
-        (e.CanClickLockButton = this.Kvt),
-          this.vQs.Refresh(e),
-          this.GetItem(3).SetUIActive(!0);
-      }),
-      (this.Kvt = (t) => {
-        var i = this.Fvt.GetCurrentSelectedData(),
-          r = i?.length;
-        for (let e = 0; e < r; e++)
-          if (i[e].IncId === t)
-            return (
-              ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-                "NoLock",
-              ),
-              !1
-            );
-        return !0;
+        this.GXs.Refresh(e), this.GetItem(3).SetUIActive(!0);
       }),
       (this.Qvt = (e) => {
         this.Fvt.UpdateByDataList(e);
+      }),
+      (this.SNa = (t) => {
+        var e,
+          i,
+          s = this.OpenParam;
+        void 0 === s ||
+          void 0 === s.ItemDataBaseList ||
+          (e = s.ItemDataBaseList.findIndex((e) => e.GetUniqueId() === t)) <
+            0 ||
+          ((i = s.ItemDataBaseList[e].GetIsLock()),
+          void 0 !== s.SelectedDataList &&
+            i &&
+            0 <= (i = s.SelectedDataList.findIndex((e) => e.IncId === t)) &&
+            s.SelectedDataList.splice(i, 1),
+          this.Fvt.UpdateSelectableComponent(
+            s.SelectableComponentType,
+            s.ItemDataBaseList,
+            s.SelectedDataList,
+            s.SelectableComponentData,
+            s.ExpData,
+          ),
+          this.Fvt.RefreshPartByIndex(e),
+          this.Fvt.UpdateChangeItemSelectList());
       });
   }
   OnRegisterComponent() {
@@ -57,8 +64,8 @@ class ItemSelectView extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [[2, this.OnClickMask]]);
   }
   async OnBeforeStartAsync() {
-    (this.vQs = new ItemTipsComponent_1.ItemTipsComponentContentComponent()),
-      await this.vQs.CreateByActorAsync(this.GetItem(3).GetOwner());
+    (this.GXs = new ItemTipsComponent_1.ItemTipsComponentContentComponent()),
+      await this.GXs.CreateByActorAsync(this.GetItem(3).GetOwner());
   }
   OnStart() {
     (this.Fvt = new CommonItemSelectView_1.CommonItemSelectView(
@@ -74,13 +81,21 @@ class ItemSelectView extends UiViewBase_1.UiViewBase {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnSelectItemAdd,
       this.Wvt,
-    );
+    ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnItemFuncValueChange,
+        this.SNa,
+      );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnSelectItemAdd,
       this.Wvt,
-    );
+    ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnItemFuncValueChange,
+        this.SNa,
+      );
   }
   OnBeforeShow() {
     var e = this.OpenParam;
@@ -96,23 +111,23 @@ class ItemSelectView extends UiViewBase_1.UiViewBase {
   }
   UpdateFilterComponent(e, t) {
     let i = !1,
-      r = !1;
-    var s;
+      s = !1;
+    var n;
     e &&
-      ((s = ConfigManager_1.ConfigManager.SortConfig.GetSortId(e)) &&
-        0 < s &&
+      ((n = ConfigManager_1.ConfigManager.SortConfig.GetSortId(e)) &&
+        0 < n &&
         (i = !0),
-      (s = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(e))) &&
-      0 < s &&
-      (r = !0),
+      (n = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(e))) &&
+      0 < n &&
+      (s = !0),
       this.Mpt.GetRootItem().SetUIActive(i),
-      this.vpt.GetRootItem().SetUIActive(r),
-      i || r
-        ? (i && this.Mpt.UpdateData(e, t), r && this.vpt.UpdateData(e, t))
+      this.vpt.GetRootItem().SetUIActive(s),
+      i || s
+        ? (i && this.Mpt.UpdateData(e, t), s && this.vpt.UpdateData(e, t))
         : this.Fvt.UpdateByDataList(t);
   }
   OnBeforeDestroy() {
-    this.Fvt.Destroy(), this.vQs.Destroy();
+    this.Fvt.Destroy(), this.GXs.Destroy();
   }
 }
 exports.ItemSelectView = ItemSelectView;

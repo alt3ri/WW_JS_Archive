@@ -1,17 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MobileHotPatchProcedure = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   DownloadDefine_1 = require("../Download/DownloadDefine"),
   UrlPrefixDownload_1 = require("../Download/UrlPrefixDownload"),
+  HotPatchLogReport_1 = require("../HotPatchLogReport"),
   NetworkDefine_1 = require("../NetworkDefine"),
   AppUtil_1 = require("../Update/AppUtil"),
   LauncherLog_1 = require("../Util/LauncherLog"),
+  LauncherSerialize_1 = require("../Util/LauncherSerialize"),
   LauncherTextLib_1 = require("../Util/LauncherTextLib"),
   ProcedureUtil_1 = require("../Util/ProcedureUtil"),
-  BaseHotPatchProcedure_1 = require("./BaseHotPatchProcedure"),
-  HotPatchLogReport_1 = require("../HotPatchLogReport"),
-  LauncherSerialize_1 = require("../Util/LauncherSerialize");
+  BaseHotPatchProcedure_1 = require("./BaseHotPatchProcedure");
 class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProcedure {
   constructor(t, e) {
     super(t, e),
@@ -140,7 +141,11 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
         LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(this.UpdateSize),
       ))
     )
-      return AppUtil_1.AppUtil.QuitGame(), await this.ViewMgr.WaitFrame(), !1;
+      return (
+        AppUtil_1.AppUtil.QuitGame("用户取消下载"),
+        await this.ViewMgr.WaitFrame(),
+        !1
+      );
     o = new HotPatchLogReport_1.HotPatchLog();
     if (
       ((o.s_step_id = "hotpatch_mobile_procedure_check_use_bgdownload"),
@@ -331,7 +336,9 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
       var o,
         r = i[t]?.FileName;
       r &&
-        ((r = UE.KuroStaticLibrary.IsBuildShipping() ? i[t]?.HashString : r),
+        ((r = cpp_1.FKuroUtilityForPuerts.IsBuildShipping()
+          ? i[t]?.HashString
+          : r),
         (o = (t = new Date().getTime()) - s),
         (l -= o) < 0 && ((l = 500), (u = BigInt(this.JSr.GetBpsSpeed()))),
         (s = t),
@@ -412,7 +419,7 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
               return (
                 LauncherLog_1.LauncherLog.Info("退出应用"),
                 (n = !1),
-                AppUtil_1.AppUtil.QuitGame(),
+                AppUtil_1.AppUtil.QuitGame("Download failed"),
                 await this.ViewMgr.WaitFrame(),
                 { Success: !1 }
               );
@@ -449,7 +456,7 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
               ? ((_ = !0), LauncherLog_1.LauncherLog.Info("重试下载"), e())
               : (LauncherLog_1.LauncherLog.Info("退出应用"),
                 (n = !1),
-                AppUtil_1.AppUtil.QuitGame(),
+                AppUtil_1.AppUtil.QuitGame("Download failed"),
                 await this.ViewMgr.WaitFrame(),
                 { Success: !0 });
           }
@@ -468,7 +475,7 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
           return h
             ? ((_ = !0), e())
             : ((n = !1),
-              AppUtil_1.AppUtil.QuitGame(),
+              AppUtil_1.AppUtil.QuitGame("Download failed"),
               await this.ViewMgr.WaitFrame(),
               { Success: !0 });
         },

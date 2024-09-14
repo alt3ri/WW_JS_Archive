@@ -87,13 +87,6 @@ class LevelEventGuideTrigger extends LevelGeneralBase_1.LevelEventBase {
   ExecuteInGm(e, t) {
     this.FinishExecute(!0);
   }
-  Execute(e, t) {
-    e &&
-      (e = e.get("GuideGroupId")) &&
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Guide", 17, "行为触发了引导组", ["组Id", e]),
-      GuideController_1.GuideController.TryStartGuide(parseInt(e)));
-  }
   ExecuteNew(e, t) {
     e &&
       ((this.YO = { Type: 0, Conditions: e.Conditions ?? [] }),

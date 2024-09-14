@@ -12,6 +12,7 @@ const Info_1 = require("../../../Core/Common/Info"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   SkillButtonEntityData_1 = require("./SkillButtonEntityData"),
+  SkillButtonFollowerEntityData_1 = require("./SkillButtonFollowerEntityData"),
   SkillButtonFormationData_1 = require("./SkillButtonFormationData"),
   SkillButtonUiGamepadData_1 = require("./SkillButtonUiGamepadData"),
   behaviorIconResMap = new Map([
@@ -26,11 +27,24 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
       (this._Io = new Map()),
       (this.uIo = void 0),
       (this.SkillButtonFormationData = void 0),
+      (this.wxa = void 0),
       (this.cIo = []),
       (this.IsNormalButtonTypeList = !1),
       (this.SkillButtonRotationRate = 0),
-      (this.GamepadData = void 0),
-      (this.mIo = void 0);
+      (this.$Ya = void 0),
+      (this.mIo = void 0),
+      (this.gU = !1);
+  }
+  get GamepadData() {
+    return (
+      this.$Ya ||
+        (this.gU &&
+          !Info_1.Info.IsInTouch() &&
+          ((this.$Ya =
+            new SkillButtonUiGamepadData_1.SkillButtonUiGamepadData()),
+          this.$Ya.Init())),
+      this.$Ya
+    );
   }
   OnInit() {
     (this.SkillButtonRotationRate =
@@ -51,10 +65,9 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
     }
     return (
       Info_1.Info.IsInTouch() ||
-        ((this.GamepadData =
-          new SkillButtonUiGamepadData_1.SkillButtonUiGamepadData()),
-        this.GamepadData.Init()),
-      !0
+        ((this.$Ya = new SkillButtonUiGamepadData_1.SkillButtonUiGamepadData()),
+        this.$Ya.Init()),
+      (this.gU = !0)
     );
   }
   OnClear() {
@@ -62,9 +75,11 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
       this.SkillButtonFormationData?.Clear(),
       (this.SkillButtonFormationData = void 0),
       this.ClearAllSkillButtonEntityData(),
+      this.ClearSkillButtonFollowerEntityData(),
       (this.cIo.length = 0),
-      this.GamepadData?.Clear(),
-      (this.GamepadData = void 0),
+      this.$Ya?.Clear(),
+      (this.$Ya = void 0),
+      (this.gU = !1),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnSkillButtonDataClear,
       ),
@@ -99,12 +114,32 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
     for (const t of this._Io.values()) t.Clear();
     this._Io.clear(), (this.uIo = void 0);
   }
+  CreateSkillButtonFollowerEntityData(t) {
+    var i =
+      ModelManager_1.ModelManager.BattleUiModel?.FormationData?.GetFollowerEnable() ??
+      !1;
+    if (this.wxa) {
+      if (this.wxa.EntityHandle === t)
+        return void (this.wxa.IsEnable !== i && this.wxa.SetEnable(i));
+      this.wxa.Clear(), (this.wxa = void 0);
+    }
+    (this.wxa =
+      new SkillButtonFollowerEntityData_1.SkillButtonFollowerEntityData()),
+      this.wxa.Init(t, i);
+  }
+  ClearSkillButtonFollowerEntityData() {
+    this.wxa &&
+      (this.wxa.IsEnable && this.wxa.SetEnable(!1),
+      this.wxa.Clear(),
+      (this.wxa = void 0));
+  }
   OnRemoveEntity(t) {
     var i = this._Io.get(t.Id);
     i &&
       (this._Io.delete(t.Id), i.Clear(), i === this.uIo) &&
       (this.uIo = void 0),
-      this.uIo === i && (this.uIo = void 0);
+      this.uIo === i && (this.uIo = void 0),
+      this.wxa?.EntityHandle === t && this.ClearSkillButtonFollowerEntityData();
   }
   RefreshSkillButtonData(i, t, e) {
     if (
@@ -121,7 +156,7 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
       t || (this.uIo = this.CreateSkillButtonEntityData(i, !0));
     }
     this.RefreshSkillButtonIndex(this.uIo.SkillButtonIndexConfig, i, t),
-      this.GamepadData?.RefreshSkillButtonData(e),
+      this.$Ya?.RefreshSkillButtonData(e),
       this.uIo.RefreshSkillButtonData(e);
   }
   RefreshSkillButtonExplorePhantomSkillId(t) {
@@ -138,7 +173,7 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
     if (((this.IsNormalButtonTypeList = !1), t)) {
       var o,
         n,
-        s = i.Entity.GetComponent(188);
+        s = i.Entity.GetComponent(190);
       for ([o, n] of e ? t.DesktopButtonTypeMap : t.PadButtonTypeMap)
         if (s.HasTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(o)))
           return void (this.cIo = n.ArrayInt);
@@ -190,16 +225,17 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
   RefreshVisibleByButtonType(t) {
     for (const i of this._Io.values()) i.RefreshVisibleByButtonType(t);
   }
-  OnOpenMenuView() {
-    this.GamepadData?.OnOpenMenuView();
-  }
-  OnCloseMenuView() {
-    this.GamepadData?.OnCloseMenuView();
-  }
   GetCurSkillButtonEntityData() {
     return this.uIo;
   }
+  GetAllSkillButtonEntityData() {
+    return this._Io.values();
+  }
   GetSkillButtonDataByButton(t) {
+    if (this.wxa?.IsEnable) {
+      var i = this.wxa.GetSkillButtonDataByButton(t);
+      if (i) return i;
+    }
     return this.uIo?.GetSkillButtonDataByButton(t);
   }
   GetBehaviorButtonDataByButton(t) {
@@ -217,6 +253,9 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
       var t = SkillButtonTextAll_1.configSkillButtonTextAll.GetConfigList();
       if (t) for (const i of t) this.mIo.set(i.Id, i.Name);
     }
+  }
+  GetCurSkillButtonFollowerEntityData() {
+    return this.wxa;
   }
 }
 exports.SkillButtonUiModel = SkillButtonUiModel;

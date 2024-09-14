@@ -10,6 +10,7 @@ const puerts_1 = require("puerts"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   EffectEnvironment_1 = require("../../../Core/Effect/EffectEnvironment"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  TickProcessSystem_1 = require("../../../Core/Tick/TickProcessSystem"),
   TickSystem_1 = require("../../../Core/Tick/TickSystem"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
@@ -22,7 +23,8 @@ const puerts_1 = require("puerts"),
   EffectSystem_1 = require("../EffectSystem"),
   EffectSpec_1 = require("./EffectSpec"),
   NEAR_ZERO = 0.001,
-  niagaraCharBodyOpacityParameterName = new UE.FName("BodyOpacity");
+  niagaraCharBodyOpacityParameterName = new UE.FName("BodyOpacity"),
+  MAX_CHECK_NO_RENDERED_COUNT = 5;
 class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
   constructor() {
     super(...arguments),
@@ -30,20 +32,49 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
       (this.T0e = void 0),
       (this.t0e = !1),
       (this.IsEffectFinish = !1),
+      (this.HasBoundsInternal = !1),
       (this.ExtraState = -1),
       (this.L0e = void 0),
       (this.D0e = !1),
       (this.R0e = !1),
       (this.U0e = !0),
       (this.A0e = !0),
+      (this.U9a = 0),
       (this.P0e = -0),
-      (this.Hda = void 0),
-      (this.jda = -1),
-      (this.Wda = -1),
-      (this.Qda = -1);
+      (this.gWa = 0),
+      (this.fWa = !1),
+      (this._Ja = !1),
+      (this.pWa = void 0),
+      (this.hWa = (t) => {
+        (this.gWa = 0),
+          this._Ja
+            ? ((this._Ja = !1),
+              this.T0e?.IsValid() &&
+                UE.KuroEffectLibrary.DeactivateImmediateNiagaraComponent(
+                  this.T0e,
+                ))
+            : this.fWa ||
+              (void 0 !== this.pWa &&
+                this.T0e?.IsValid() &&
+                (this.U0e
+                  ? ((this.U0e = !1),
+                    this.T0e?.IsValid() &&
+                      (this.T0e.SetPaused(this.pWa, !1), (this.R0e = this.pWa)))
+                  : this.R0e !== this.pWa &&
+                    this.T0e?.IsValid() &&
+                    (this.T0e.SetPaused(this.pWa, !1), (this.R0e = this.pWa)),
+                (this.pWa = this.R0e)));
+      }),
+      (this.$0a = void 0),
+      (this.H0a = -1),
+      (this.j0a = -1),
+      (this.W0a = -1);
   }
   OnBodyEffectChanged(t) {
     this.T0e?.SetFloatParameter(niagaraCharBodyOpacityParameterName, t);
+  }
+  OnModifyEffectModel() {
+    this.UpdateParameter(!0);
   }
   SetEffectParameterNiagara(t) {
     if (this.IsPlaying() && this.T0e) {
@@ -57,18 +88,18 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
         for (var [h, r] of t.UserParameterVector)
           this.T0e.SetVectorParameter(h, r);
       if (t.MaterialParameterFloat)
-        for (var [o, f] of t.MaterialParameterFloat)
+        for (var [f, c] of t.MaterialParameterFloat)
           this.T0e.SetKuroNiagaraEmitterFloatParam(
             EffectModelNiagaraSpec.NoneEmitterString,
-            o.toString(),
-            f,
+            f.toString(),
+            c,
           );
       if (t.MaterialParameterColor)
-        for (var [c, n] of t.MaterialParameterColor)
+        for (var [o, E] of t.MaterialParameterColor)
           this.T0e.SetKuroNiagaraEmitterVectorParam(
             EffectModelNiagaraSpec.NoneEmitterString,
-            c.toString(),
-            new UE.Vector4(n),
+            o.toString(),
+            new UE.Vector4(E),
           );
     }
   }
@@ -85,11 +116,22 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
       if (!t) return !1;
       Stats_1.Stat.Enable &&
         !EffectModelNiagaraSpec.B0e &&
-        ((EffectModelNiagaraSpec.B0e = void 0),
-        (EffectModelNiagaraSpec.b0e = void 0),
-        (EffectModelNiagaraSpec.q0e = void 0),
-        (EffectModelNiagaraSpec.S0e = void 0),
-        (EffectModelNiagaraSpec.G0e = void 0));
+        ((EffectModelNiagaraSpec.B0e = Stats_1.Stat.Create(
+          "[EffectModelNiagaraSpec.Tick]",
+        )),
+        (EffectModelNiagaraSpec.b0e = Stats_1.Stat.Create(
+          "[EffectModelNiagaraSpec.UpdateNiagara]",
+        )),
+        (EffectModelNiagaraSpec.q0e = Stats_1.Stat.Create(
+          "[EffectModelNiagaraSpec.SetPaused]",
+        )),
+        (EffectModelNiagaraSpec.S0e = Stats_1.Stat.Create(
+          "[EffectModelNiagaraSpec.Tick.UpdateParameter]",
+        )),
+        (EffectModelNiagaraSpec.G0e = Stats_1.Stat.Create(
+          "[EffectModelNiagaraSpec.OnInit]",
+        ))),
+        EffectModelNiagaraSpec.G0e?.Start();
       var e = this.Handle.GetSureEffectActor(),
         i = this.Handle.Parent,
         i = i
@@ -125,29 +167,55 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
           (!GlobalData_1.GlobalData.IsUiSceneLoading &&
             !GlobalData_1.GlobalData.IsUiSceneOpen) ||
           (t.bEvenTickWhenPaused = this.IsTickWhenPaused = !0),
-        (this.Handle.IsTickWhenPaused = this.IsTickWhenPaused);
+        (this.Handle.IsTickWhenPaused = this.IsTickWhenPaused),
+        EffectModelNiagaraSpec.G0e?.Stop();
     }
     return !0;
   }
   OnTick(t) {
-    this.T0e &&
-      (this.O0e() ? this.k0e(t) : this.F0e(!1),
-      this.UpdateParameter(!1),
-      this.Kda(),
-      !Info_1.Info.IsGameRunning() ||
-        this.Handle?.IsPreview ||
-        TickSystem_1.TickSystem.IsPaused ||
-        (this.LifeTime.IsAfterStart &&
-          0 < this.P0e &&
-          ((this.P0e -= t), this.P0e <= 0) &&
-          (this.HasBounds()
-            ? this.Handle?.GetSureEffectActor()?.WasRecentlyRenderedOnScreen() ||
-              this.Handle?.OnVisibilityChanged(!1)
-            : (this.P0e = 1))));
+    EffectModelNiagaraSpec.B0e?.Start(),
+      this.T0e
+        ? ((this.O0e()
+            ? (EffectModelNiagaraSpec.b0e?.Start(),
+              this.k0e(t),
+              EffectModelNiagaraSpec.b0e)
+            : (EffectModelNiagaraSpec.q0e?.Start(),
+              this.F0e(!1),
+              EffectModelNiagaraSpec.q0e)
+          )?.Stop(),
+          EffectModelNiagaraSpec.S0e?.Start(),
+          this.UpdateParameter(!1),
+          EffectModelNiagaraSpec.S0e?.Stop(),
+          EffectModelNiagaraSpec.B0e?.Stop(),
+          this.Q0a(),
+          !Info_1.Info.IsGameRunning() ||
+            this.Handle?.IsPreview ||
+            TickSystem_1.TickSystem.IsPaused ||
+            (this.LifeTime.IsAfterStart &&
+              0 < this.P0e &&
+              ((this.P0e -= t), this.P0e <= 0) &&
+              (this.HasBounds()
+                ? this.Handle?.GetSureEffectActor()?.WasRecentlyRenderedOnScreen() ||
+                  this.Handle?.OnVisibilityChanged(!1)
+                : !this.T0e ||
+                    UE.KuroRenderingRuntimeBPPluginBPLibrary.IsNiagaraComplete(
+                      this.T0e,
+                    ) ||
+                    this.U9a > MAX_CHECK_NO_RENDERED_COUNT
+                  ? (this.Handle?.GetSureEffectActor()?.WasRecentlyRenderedOnScreen() ||
+                      this.Handle?.OnVisibilityChanged(!1),
+                    (this.HasBoundsInternal = !0))
+                  : ((this.P0e = 1), this.U9a++))))
+        : EffectModelNiagaraSpec.B0e?.Stop();
   }
   HasBounds() {
     return (
-      !!this.T0e && UE.KuroEffectLibrary.IsNiagaraComponentHasBound(this.T0e)
+      !!this.HasBoundsInternal ||
+      (this.T0e
+        ? (this.HasBoundsInternal =
+            UE.KuroEffectLibrary.IsNiagaraComponentHasBound(this.T0e, 0.01))
+        : (this.HasBoundsInternal = !0),
+      this.HasBoundsInternal)
     );
   }
   O0e() {
@@ -175,13 +243,13 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
       (this.D0e = !1);
   }
   F0e(t) {
-    t = t || !this.Visible || !this.Enable || this.StoppingTimeInternal;
-    this.U0e
-      ? ((this.U0e = !1),
-        this.T0e?.IsValid() && (this.T0e.SetPaused(t, !1), (this.R0e = t)))
-      : this.R0e !== t &&
-        this.T0e?.IsValid() &&
-        (this.T0e.SetPaused(t, !1), (this.R0e = t));
+    t = t || !this.IsVisible || !this.Enable || this.StoppingTimeInternal;
+    t !== this.pWa &&
+      ((this.pWa = t), 0 === this.gWa) &&
+      (this.gWa = TickProcessSystem_1.TickProcessSystem.RegisterOnceTickProcess(
+        5,
+        this.hWa,
+      ));
   }
   GetSkeletalMeshComp() {
     let t = void 0;
@@ -232,6 +300,7 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
   OnPlay(t) {
     var e;
     (this.IsEffectFinish = !1),
+      (this.HasBoundsInternal = !1),
       this.L0e &&
         this.T0e?.IsValid() &&
         (EventSystem_1.EventSystem.Emit(
@@ -268,14 +337,24 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
         this.UpdateParameter(!0));
   }
   OnPreStop() {
-    this.T0e?.IsValid() && this.A0e && this.T0e.Deactivate();
+    this.T0e?.IsValid() && this.A0e && ((this.fWa = !0), this.T0e.Deactivate());
   }
   OnStop(t, e) {
-    this.Xda(),
+    0 !== this.gWa &&
+      (TickProcessSystem_1.TickProcessSystem.UnregisterTickProcess(this.gWa),
+      (this.gWa = 0)),
+      this.K0a(),
       this.T0e?.IsValid() &&
-        (e && (this.T0e.SetVisibility(!1), this.T0e.SetPaused(!0)),
-        this.T0e.Deactivate(),
-        this.T0e.SetComponentTickEnabled(!1));
+        (e && this.T0e.SetVisibility(!1),
+        (this.fWa = !0),
+        (this._Ja = !0),
+        this.T0e.SetComponentTickEnabled(!1),
+        0 === this.gWa) &&
+        (this.gWa =
+          TickProcessSystem_1.TickProcessSystem.RegisterOnceTickProcess(
+            5,
+            this.hWa,
+          ));
   }
   SetNiagaraSolo(t) {
     this.T0e &&
@@ -315,7 +394,17 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
         UE.KuroEffectLibrary.SetNiagaraFrameDeltaTime(this.T0e, t);
   }
   OnReplay() {
-    (this.U0e = !0), (this.R0e = !1), this.Xda();
+    (this.gWa = 0),
+      (this.fWa = !1),
+      (this._Ja = !1),
+      (this.pWa = void 0),
+      (this.U0e = !0),
+      (this.R0e = !1),
+      (this.IsEffectFinish = !1),
+      (this.HasBoundsInternal = !1),
+      (this.U9a = 0),
+      (this.P0e = 0),
+      this.K0a();
   }
   DebugErrorNiagaraPauseCount() {
     return this.T0e && this.T0e.IsPaused() !== this.R0e
@@ -338,13 +427,13 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
       !(
         !(t = ModelManager_1.ModelManager.CharacterModel.GetHandle(t))?.Valid ||
         (((e = (t = t.Entity).GetComponent(0)).GetEntityType() !==
-          Protocol_1.Aki.Protocol.wks.Proto_Player ||
+          Protocol_1.Aki.Protocol.kks.Proto_Player ||
           t.GetComponent(3).IsAutonomousProxy) &&
           ((e = ModelManager_1.ModelManager.CreatureModel.GetEntityId(
             e.GetSummonerId(),
           )),
           !(e = EntitySystem_1.EntitySystem.Get(e)?.GetComponent(0)) ||
-            e.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_Player ||
+            e.GetEntityType() !== Protocol_1.Aki.Protocol.kks.Proto_Player ||
             t.GetComponent(3).IsAutonomousProxy))
       )
     );
@@ -356,36 +445,43 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
     this.T0e?.IsValid() &&
       this.T0e.SetIsUIScenePrimitive(1 === this.GetEffectType());
   }
-  Xda() {
-    (this.Hda = void 0), (this.jda = -1), (this.Wda = -1), (this.Qda = -1);
+  K0a() {
+    (this.$0a = void 0), (this.H0a = -1), (this.j0a = -1), (this.W0a = -1);
   }
   SetPublicToSequence(t) {
-    this.Hda = t;
+    this.$0a = t;
   }
-  Kda() {
+  Q0a() {
     var t, e, i, s;
-    this.Hda &&
+    this.$0a &&
       this.T0e?.IsValid() &&
-      (this.Hda.IsValid()
-        ? ((s = this.Hda.FloatParameter0),
-          (t = this.Hda.FloatParameter1),
-          (e = this.Hda.FloatParameter2),
-          this.jda !== s &&
-            ((this.jda = s),
-            (i = this.Hda.FloatParameterName0),
+      (this.$0a.IsValid()
+        ? ((s = this.$0a.FloatParameter0),
+          (t = this.$0a.FloatParameter1),
+          (e = this.$0a.FloatParameter2),
+          this.H0a !== s &&
+            ((this.H0a = s),
+            (i = this.$0a.FloatParameterName0),
             StringUtils_1.StringUtils.IsEmpty(i) ||
               this.T0e.SetFloatParameter(new UE.FName(i), s)),
-          this.Wda !== t &&
-            ((this.Wda = t),
-            (i = this.Hda.FloatParameterName1),
+          this.j0a !== t &&
+            ((this.j0a = t),
+            (i = this.$0a.FloatParameterName1),
             StringUtils_1.StringUtils.IsEmpty(i) ||
               this.T0e.SetFloatParameter(new UE.FName(i), t)),
-          this.Qda !== e &&
-            ((this.Qda = e),
-            (s = this.Hda.FloatParameterName2),
+          this.W0a !== e &&
+            ((this.W0a = e),
+            (s = this.$0a.FloatParameterName2),
             StringUtils_1.StringUtils.IsEmpty(s) ||
               this.T0e.SetFloatParameter(new UE.FName(s), e)))
-        : this.Xda());
+        : this.K0a());
+  }
+  GetDebugErrorCode() {
+    return this.T0e?.IsValid
+      ? this.U0e || this.T0e.IsPaused() === this.R0e
+        ? 0
+        : 3
+      : 2;
   }
 }
 (exports.EffectModelNiagaraSpec = EffectModelNiagaraSpec),

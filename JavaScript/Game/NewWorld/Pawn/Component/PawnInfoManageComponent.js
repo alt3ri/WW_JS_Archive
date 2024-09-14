@@ -37,12 +37,12 @@ let PawnInfoManageComponent = class PawnInfoManageComponent extends EntityCompon
       (this.lan = void 0),
       (this._an = -1),
       (this.xrr = void 0),
-      (this.lKs = void 0);
+      (this.KQs = void 0);
   }
   OnInit() {
     return (
       (this.Ovr = this.Entity.GetComponent(0)),
-      (this.han = this.Entity.GetComponent(135)),
+      (this.han = this.Entity.GetComponent(136)),
       !0
     );
   }
@@ -60,14 +60,14 @@ let PawnInfoManageComponent = class PawnInfoManageComponent extends EntityCompon
     this.he = t;
   }
   SetPawnNameKey(t) {
-    (this.lKs = t), this.oCo();
+    (this.KQs = t), this.oCo();
   }
   oCo() {
     var t;
     (this.xrr = LanguageSystem_1.LanguageSystem.PackageLanguage),
-      this.lKs
+      this.KQs
         ? (this.he = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
-            this.lKs,
+            this.KQs,
           ))
         : this.han?.DropItemConfig
           ? ((t = this.han.DropItemConfig.Config),
@@ -88,7 +88,7 @@ let PawnInfoManageComponent = class PawnInfoManageComponent extends EntityCompon
     return this.Entity.Id;
   }
   get HasQuestOption() {
-    var t = this.Entity.GetComponent(181);
+    var t = this.Entity.GetComponent(182);
     return !!t && !!(t = t.GetInteractController()) && t.HasDynamicOption;
   }
   uan() {
@@ -141,7 +141,7 @@ let PawnInfoManageComponent = class PawnInfoManageComponent extends EntityCompon
   }
 };
 (PawnInfoManageComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(104)],
+  [(0, RegisterComponent_1.RegisterComponent)(105)],
   PawnInfoManageComponent,
 )),
   (exports.PawnInfoManageComponent = PawnInfoManageComponent);

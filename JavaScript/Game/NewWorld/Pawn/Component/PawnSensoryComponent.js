@@ -71,7 +71,7 @@ let PawnSensoryComponent = class PawnSensoryComponent extends EntityComponent_1.
           ModelManager_1.ModelManager.CreatureModel.GetEntitiesInRangeWithLocation(
             this.Hte.ActorLocationProxy,
             this.Uhn,
-            3,
+            63,
             this.Ioe,
           ),
           this.Ahn.HandleEntities(
@@ -85,7 +85,7 @@ let PawnSensoryComponent = class PawnSensoryComponent extends EntityComponent_1.
   }
 };
 (PawnSensoryComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(107)],
+  [(0, RegisterComponent_1.RegisterComponent)(108)],
   PawnSensoryComponent,
 )),
   (exports.PawnSensoryComponent = PawnSensoryComponent);

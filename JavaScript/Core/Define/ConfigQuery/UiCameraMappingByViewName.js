@@ -17,28 +17,42 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configUiCameraMappingByViewName.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configUiCameraMappingByViewName.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configUiCameraMappingByViewName.GetConfig(";
 exports.configUiCameraMappingByViewName = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (i, e = !0) => {
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
-        var o = KEY_PREFIX + `#${i})`;
-        const a = ConfigCommon_1.ConfigCommon.GetConfig(o);
-        if (a) return a;
+  GetConfig: (i, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var o = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${i})`),
+      e =
+        (o.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
+      if (n) {
+        var a = KEY_PREFIX + `#${i})`;
+        const t = ConfigCommon_1.ConfigCommon.GetConfig(a);
+        if (t)
+          return (
+            o.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            t
+          );
       }
       if (
-        (n =
+        (e =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, i, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,31 +60,36 @@ exports.configUiCameraMappingByViewName = {
               i,
             ]))
       ) {
-        var n,
-          o = void 0;
+        a = void 0;
         if (
-          (([n, o] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, a] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["ViewName", i],
           )),
-          n)
+          e)
         ) {
-          const a = UiCameraMapping_1.UiCameraMapping.getRootAsUiCameraMapping(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(o.buffer)),
+          const t = UiCameraMapping_1.UiCameraMapping.getRootAsUiCameraMapping(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
           );
           return (
-            e &&
-              ((n = KEY_PREFIX + `#${i})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(n, a)),
+            n &&
+              ((e = KEY_PREFIX + `#${i})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(e, t)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            a
+            o.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            t
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    o.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=UiCameraMappingByViewName.js.map

@@ -27,6 +27,7 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
       (this.$nr = Vector_1.Vector.Create()),
       (this.AfterHit = !1),
       (this.NeedResetPhysicsMode = !0),
+      (this.NeedNotifyServer = !0),
       (this.Ynr = () => {
         this.AfterHit = !0;
       }),
@@ -50,10 +51,11 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
         (this.SceneItem.ActorComp.Owner.OnActorHit.Add(this.HitCallback),
         this.SceneItem.ActorComp.Owner.OnActorHit.Add(this.Ynr)),
       (this.SceneItem.NeedRemoveControllerId = !0),
-      LevelGamePlayController_1.LevelGamePlayController.ManipulatableBeCastOrDrop2Server(
-        this.SceneItem.Entity.Id,
-        !1,
-      ),
+      this.NeedNotifyServer &&
+        LevelGamePlayController_1.LevelGamePlayController.ManipulatableBeCastOrDrop2Server(
+          this.SceneItem.Entity.Id,
+          !1,
+        ),
       this.SceneItem.OnCastItem(),
       this.SceneItem.TryAddTagById(1488763518),
       FNameUtil_1.FNameUtil.IsNothing(
@@ -69,7 +71,9 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
   OnExit() {
     this.StopCameraShake(),
       this.SceneItem.TryRemoveTagById(1488763518),
-      (this.NeedResetPhysicsMode = !0);
+      (this.NeedResetPhysicsMode = !0),
+      (this.NeedNotifyServer = !0),
+      this.HitCallback && this.SceneItem.ActorComp.Owner.OnActorHit.Clear();
   }
   StartCast() {
     var t = Vector_1.Vector.Dist(
@@ -158,6 +162,12 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
         "[ManipulableCastState.UpdateLocation]",
         void 0 !== this.HitCallback,
       ));
+  }
+  HasHitCallback() {
+    return void 0 !== this.HitCallback;
+  }
+  CallHitCallback(t, i) {
+    this.HitCallback && this.HitCallback(t, i);
   }
 }
 exports.SceneItemManipulableCastState = SceneItemManipulableCastState;

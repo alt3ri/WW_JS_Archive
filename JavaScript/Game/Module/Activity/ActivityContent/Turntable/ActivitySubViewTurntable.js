@@ -31,13 +31,13 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
       (this.vUn = void 0),
       (this.ZTn = void 0),
       (this.eLn = void 0),
-      (this.Oqn = void 0),
+      (this.Qqn = void 0),
       (this.tLn = void 0),
       (this.iLn = -1),
       (this.PNe = !1),
       (this.xNe = 0),
       (this.wNe = (t) => {
-        t === this.ActivityTurntableData.Id && this.GOn();
+        t === this.ActivityTurntableData.Id && this.e2n();
       }),
       (this.oLn = () => {
         var t = new ActivityTurntableItem_1.ActivityTurntableToggleGroupItem();
@@ -58,8 +58,8 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
             this.ActivityTurntableData.Id,
           );
       }),
-      (this.Nqn = []),
-      (this.kqn = []),
+      (this.Xqn = []),
+      (this.$qn = []),
       (this.sLn = (t) => {
         const i = this.ActivityTurntableData.GetCurrentRoundId(),
           e = this.iLn;
@@ -126,11 +126,13 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
         await this.eLn.CreateThenShowByActorAsync(t.GetOwner()),
         this.GetItem(8)),
       t =
-        ((this.Oqn =
+        ((this.Qqn =
           new ActivityTurntableComponent_1.ActivityTurntableComponent()),
-        await this.Oqn.CreateThenShowByActorAsync(t.GetOwner()),
+        await this.Qqn.CreateThenShowByActorAsync(t.GetOwner()),
         this.GetItem(7));
-    (this.vUn = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
+    (this.vUn = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(
+      this.ActivityBaseData,
+    )),
       await this.vUn.CreateThenShowByActorAsync(t.GetOwner()),
       (this.tLn = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(4),
@@ -140,11 +142,11 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
   OnStart() {
     this.ActivityBaseData.LocalConfig &&
       (this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
-      this.vUn.FunctionButton.BindCallback(this.nLn),
+      this.vUn.FunctionButton.SetFunction(this.nLn),
       this.vUn.SetFunctionRedDotVisible(!0),
-      this.Oqn.SetActive(!1),
-      (this.Oqn.Activate = !1),
-      this.Fqn());
+      this.Qqn.SetActive(!1),
+      (this.Qqn.Activate = !1),
+      this.Yqn());
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -175,12 +177,12 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
       );
   }
   OnBeforeDestroy() {
-    (this.Nqn.length = 0), (this.kqn.length = 0);
+    (this.Xqn.length = 0), (this.$qn.length = 0);
   }
   OnTimer(t) {
     this.FNe();
   }
-  GOn() {
+  e2n() {
     var t = this.ActivityTurntableData.IsHasNewQuestRedDot();
     this.ZTn.SetRedDot(t);
   }
@@ -217,7 +219,7 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
               (this.xNe = h.QuestUnlockStamp), this.FNe();
           }
           this.ZTn.Refresh(t, r[0], i, this.ActivityTurntableData.Id),
-            this.GOn();
+            this.e2n();
         }
       }
     }
@@ -288,7 +290,7 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
       this.rLn(i, this.iLn, !1), this.MUn();
     });
   }
-  Fqn() {
+  Yqn() {
     for (const s of titleIdNameList) {
       var t = [];
       for (const n of s) {
@@ -296,7 +298,7 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
           i = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i);
         t.push(i);
       }
-      this.kqn.push(t);
+      this.$qn.push(t);
     }
     for (const r of [
       [9, 0, !0],
@@ -306,18 +308,18 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
       [13, 0, !0],
     ]) {
       var e = { Sprite: this.GetSprite(r[0]), Index: r[1], IsCurrent: r[2] };
-      this.Nqn.push(e);
+      this.Xqn.push(e);
     }
   }
   async mGe(t, i) {
     let e = 0;
     const s = new CustomPromise_1.CustomPromise();
     var n = () => {
-      ++e === this.Nqn.length && s.SetResult();
+      ++e === this.Xqn.length && s.SetResult();
     };
-    for (const h of this.Nqn) {
+    for (const h of this.Xqn) {
       var r = h.IsCurrent ? t : i,
-        r = this.kqn[r][h.Index];
+        r = this.$qn[r][h.Index];
       this.SetSpriteByPath(r, h.Sprite, !1, void 0, n);
     }
     await s.Promise;
@@ -327,10 +329,10 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
     var e = e && 0 <= i,
       s =
         (e &&
-          (await this.Vqn(i, this.Oqn),
-          this.Oqn.SetUiActive(!0),
+          (await this.Jqn(i, this.Qqn),
+          this.Qqn.SetUiActive(!0),
           this.eLn.SetUiActive(!1)),
-        [this.Vqn(t, this.eLn), this.mGe(t, 0 <= i ? i : t)]);
+        [this.Jqn(t, this.eLn), this.mGe(t, 0 <= i ? i : t)]);
     await Promise.all(s),
       e &&
         (await this.LevelSequencePlayer.PlaySequenceAsync(
@@ -339,7 +341,7 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
           !0,
         ));
   }
-  async Vqn(t, i) {
+  async Jqn(t, i) {
     var e = [];
     for (const n of this.ActivityTurntableData.RoundRewardIdMap.get(t)) {
       var s = this.ActivityTurntableData.AllRewardInfo.get(n);

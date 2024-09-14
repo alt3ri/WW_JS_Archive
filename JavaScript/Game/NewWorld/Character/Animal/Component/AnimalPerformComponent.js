@@ -107,7 +107,7 @@ let AnimalPerformComponent =
         }),
         (this.zYe = () => {
           this.Entity.GetComponent(0).GetEntityType() !==
-            Protocol_1.Aki.Protocol.wks.Proto_Monster &&
+            Protocol_1.Aki.Protocol.kks.Proto_Monster &&
             (ModelManager_1.ModelManager.GameModeModel.IsMulti
               ? (this.Hte.SetAutonomous(!0), this.ibr())
               : this.obr());
@@ -120,7 +120,7 @@ let AnimalPerformComponent =
             (t =
               i?.IsRole() ||
               i?.IsVision() ||
-              ((i = e.GetComponent(48)) &&
+              ((i = e.GetComponent(49)) &&
                 EntitySystem_1.EntitySystem.Get(i.RoleId)
                   ?.GetComponent(0)
                   ?.IsRole())
@@ -149,7 +149,7 @@ let AnimalPerformComponent =
     }
     HandlePendingDestroy() {
       this.PendingDestroy
-        ? this.Entity.GetComponent(188).AddTag(-1000614969)
+        ? this.Entity.GetComponent(190).AddTag(-1000614969)
         : EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.DelayRemoveEntityFinished,
             this.Entity,
@@ -172,7 +172,7 @@ let AnimalPerformComponent =
             ),
           !1
         );
-      if (((this.AnimComp = this.Entity.GetComponent(162)), !this.AnimComp))
+      if (((this.AnimComp = this.Entity.GetComponent(163)), !this.AnimComp))
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -206,7 +206,7 @@ let AnimalPerformComponent =
               );
         }
       }
-      if (((this.jBr = this.Entity.GetComponent(106)), !this.jBr))
+      if (((this.jBr = this.Entity.GetComponent(107)), !this.jBr))
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -221,7 +221,7 @@ let AnimalPerformComponent =
         );
       if (
         (this.jBr.SetSightRange(DEFAULT_SIGHT_RANGE),
-        (this.WBr = this.Entity.GetComponent(188)),
+        (this.WBr = this.Entity.GetComponent(190)),
         !this.WBr)
       )
         return (
@@ -247,7 +247,7 @@ let AnimalPerformComponent =
     }
     OnActivate() {
       this.Entity.GetComponent(0).GetEntityType() !==
-        Protocol_1.Aki.Protocol.wks.Proto_Monster &&
+        Protocol_1.Aki.Protocol.kks.Proto_Monster &&
         ModelManager_1.ModelManager.GameModeModel.IsMulti &&
         (this.Hte.SetAutonomous(!0), this.ibr());
     }
@@ -395,7 +395,7 @@ let AnimalPerformComponent =
   });
 (AnimalPerformComponent = AnimalPerformComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(156)],
+    [(0, RegisterComponent_1.RegisterComponent)(157)],
     AnimalPerformComponent,
   )),
   (exports.AnimalPerformComponent = AnimalPerformComponent);

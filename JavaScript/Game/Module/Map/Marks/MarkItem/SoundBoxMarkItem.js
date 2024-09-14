@@ -50,6 +50,9 @@ class SoundBoxMarkItem extends ServerMarkItem_1.ServerMarkItem {
   GetSoundBoxEntityId() {
     return this.ServerMarkInfo?.EntityConfigId;
   }
+  GetInteractiveFlag() {
+    return !1;
+  }
 }
 exports.SoundBoxMarkItem = SoundBoxMarkItem;
 //# sourceMappingURL=SoundBoxMarkItem.js.map

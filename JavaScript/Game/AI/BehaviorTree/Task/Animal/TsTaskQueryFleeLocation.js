@@ -24,7 +24,8 @@ const puerts_1 = require("puerts"),
   TURN_COST_DIVIDING_LINE_3 = 0.707,
   TEST_MODE = !1,
   QUERY_LOCATION_CD = 0.5,
-  Z_ALLOWABLE_DIFFERENCE = 45;
+  Z_ALLOWABLE_DIFFERENCE = 45,
+  queryExtent = new UE.Vector(100, 100, 1e3);
 class QuatNode {
   constructor(t, e) {
     (this.Quaternion = Quat_1.Quat.Create(t)),
@@ -199,6 +200,7 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
           r,
           void 0,
           void 0,
+          queryExtent,
         )
       ) {
         var o,
@@ -212,7 +214,16 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
         if (
           (a &&
             ((o = this.CheckLegalZ(r, this.Character.FloorLocation)),
-            (this.FoundPath = a && o)),
+            (this.FoundPath = a && o),
+            Log_1.Log.CheckWarn()) &&
+            Log_1.Log.Warn(
+              "Test",
+              6,
+              "FoundPath",
+              ["Actor", this.Character?.Actor.GetName()],
+              ["target", r],
+              ["self", t],
+            ),
           this.FoundPath)
         ) {
           GlobalData_1.GlobalData.IsPlayInEditor &&
@@ -234,7 +245,7 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
     return Math.abs(t.Z - e.Z) <= Z_ALLOWABLE_DIFFERENCE;
   }
   DebugDraw(t, e) {
-    UE.KismetSystemLibrary.DrawDebugSphere(this, t, 20, 10, e, 0.25);
+    UE.KismetSystemLibrary.DrawDebugSphere(this, t, 20, 10, e, 5);
   }
   DebugDraw2() {
     if (GlobalData_1.GlobalData.IsPlayInEditor && TEST_MODE) {

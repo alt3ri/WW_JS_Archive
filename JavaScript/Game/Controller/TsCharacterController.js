@@ -25,7 +25,7 @@ class TsCharacterController extends TsBasePlayerController_1.TsBasePlayerControl
   ReceiveBeginPlay() {
     super.ReceiveBeginPlay(),
       (this.ChangeRotationOnPossess = !1),
-      (this.bShowMouseCursor = !0),
+      (this.bShowMouseCursor = Info_1.Info.IsInKeyBoard()),
       UE.KuroInputFunctionLibrary.ApplyInputMode(this);
   }
   ReceiveDestroyed() {

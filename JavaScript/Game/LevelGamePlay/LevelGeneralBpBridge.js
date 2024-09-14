@@ -1,18 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
-  ControllerHolder_1 = require("../Manager/ControllerHolder"),
   TsInteractionUtils_1 = require("../Module/Interaction/TsInteractionUtils");
 class LevelGeneralBpBridge extends UE.Object {
-  HandleCoditionInteractOption(e, t, n, r) {
+  HandleCoditionInteractOption(e, t, n, i) {
     return !1;
   }
-  TriggerLevelGeneralEvents(e, t) {
-    ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActions(
-      e,
-      t,
-    );
-  }
+  TriggerLevelGeneralEvents(e, t) {}
   HandleConditionalEventListen(e) {}
   HandleConditionPush(e) {}
   OpenInteractHints() {

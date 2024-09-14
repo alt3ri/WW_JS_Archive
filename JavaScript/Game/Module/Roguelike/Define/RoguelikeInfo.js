@@ -6,18 +6,18 @@ class RoguelikeInfo {
   constructor(t) {
     (this.PhantomEntry = void 0),
       (this.SpecialEntryList = []),
-      (this.RoleEntry = new RogueGainEntry_1.RogueGainEntry(t.G2s)),
-      t.O2s && (this.PhantomEntry = new RogueGainEntry_1.RogueGainEntry(t.O2s)),
+      (this.RoleEntry = new RogueGainEntry_1.RogueGainEntry(t.H2s)),
+      t.j2s && (this.PhantomEntry = new RogueGainEntry_1.RogueGainEntry(t.j2s)),
       (this.BuffEntryList = new Array());
-    for (const o of t.k2s)
+    for (const o of t.W2s)
       this.BuffEntryList.push(new RogueGainEntry_1.RogueGainEntry(o));
     this.ElementDict = new Map();
-    for (const n of Object.keys(t.L2s ?? {})) {
-      var e = t.L2s[n] ?? 0;
+    for (const n of Object.keys(t.x2s ?? {})) {
+      var e = t.x2s[n] ?? 0;
       e && this.ElementDict.set(Number(n), e);
     }
     this.SpecialEntryList = [];
-    for (const r of t.N2s)
+    for (const r of t.K2s)
       this.SpecialEntryList.push(new RogueGainEntry_1.RogueGainEntry(r));
   }
   GetIsUnlock(t) {

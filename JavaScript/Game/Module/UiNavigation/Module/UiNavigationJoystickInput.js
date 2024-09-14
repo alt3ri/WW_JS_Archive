@@ -117,9 +117,9 @@ class UiNavigationJoystickInput {
     this.Vwo.delete(i);
   }
 }
-((exports.UiNavigationJoystickInput = UiNavigationJoystickInput).Pwo = 0.6),
+((exports.UiNavigationJoystickInput = UiNavigationJoystickInput).Pwo = 0.7),
   (UiNavigationJoystickInput.xwo = 0.2),
-  (UiNavigationJoystickInput.kwo = 0.3),
+  (UiNavigationJoystickInput.kwo = 0.2),
   (UiNavigationJoystickInput.fgt = ""),
   (UiNavigationJoystickInput.qwo = 500),
   (UiNavigationJoystickInput.Owo = 100),

@@ -56,7 +56,7 @@ class AiHateList {
       (this.Uie = (t, e, i, s, r, h, n) => {
         0 !== s.CalculateType ||
           (this.Lie?.Valid && this.Lie.HasTag(-893996770)) ||
-          ((s = t.GetComponent(188))?.Valid && s.HasTag(-1566015933)) ||
+          ((s = t.GetComponent(190))?.Valid && s.HasTag(-1566015933)) ||
           ((s = t.CheckGetComponent(3))?.Valid &&
             2 ===
               CampUtils_1.CampUtils.GetCampRelationship(
@@ -93,7 +93,7 @@ class AiHateList {
           void 0 !== (i = this.Aie.get(e?.Id))) &&
           (this.wie(t.Id, i, "ChangeRole"), this.Bie(e.Id, "InActive"));
       }),
-      (this.ZHs = (t, e) => {
+      (this.Mjs = (t, e) => {
         this.vie &&
           void 0 !== (e = this.Aie.get(e?.Id)) &&
           this.wie(t.Id, e, "VisionMorph");
@@ -110,23 +110,36 @@ class AiHateList {
     return this.vie;
   }
   set AiHate(t) {
-    var e, i;
-    this.vie !== t &&
-      ((e = this.Bte.CharActorComp.Entity.GetComponent(163)) &&
-        ((i = this.Fie()) &&
-          BlackboardController_1.BlackboardController.SetVectorValueByEntity(
-            this.Bte.CharActorComp.Entity.Id,
-            "CenterLocation",
-            i.X,
-            i.Y,
-            i.Z,
+    if (this.vie !== t) {
+      var e,
+        i = this.Bte.CharActorComp.Entity.GetComponent(164);
+      if (
+        (i &&
+          ((e = this.Fie()) &&
+            BlackboardController_1.BlackboardController.SetVectorValueByEntity(
+              this.Bte.CharActorComp.Entity.Id,
+              "CenterLocation",
+              e.X,
+              e.Y,
+              e.Z,
+            ),
+          i.SetChain(t ? t.MaxMoveFromBorn : 0, e)),
+        (this.vie = t),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "AI",
+            6,
+            "AiHateInternal Changed",
+            ["Actor", this.Bte.CharActorComp?.Actor.GetName()],
+            ["Id", t?.Id],
           ),
-        e.SetChain(t ? t.MaxMoveFromBorn : 0, i)),
-      (this.vie = t)
-        ? (t.ExcludeTag &&
-            (this.Mie = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
-              t.ExcludeTag,
-            )),
+        t)
+      ) {
+        for (var [, s] of this.Aie) s.DisengageTime = -1;
+        t.ExcludeTag &&
+          (this.Mie = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
+            t.ExcludeTag,
+          )),
           t.SwornHatredTag &&
             (this.Eie = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
               t.SwornHatredTag,
@@ -138,8 +151,9 @@ class AiHateList {
           (this.Iie =
             t.DisengageBornDistance.Min * t.DisengageBornDistance.Min),
           (this.Tie =
-            t.DisengageBornDistance.Max * t.DisengageBornDistance.Max))
-        : ((this.Die = void 0),
+            t.DisengageBornDistance.Max * t.DisengageBornDistance.Max);
+      } else
+        (this.Die = void 0),
           this.Aie.clear(),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -148,10 +162,11 @@ class AiHateList {
               "RemoveHatredItem",
               ["AiActor", this.Bte.CharActorComp?.Actor.GetName()],
               ["Reason", "SetAiHate"],
-            )));
+            );
+    }
   }
   RefreshAbilityComp() {
-    this.Lie = this.Bte.CharAiDesignComp?.Entity?.GetComponent(188);
+    this.Lie = this.Bte.CharAiDesignComp?.Entity?.GetComponent(190);
   }
   GetHatredMap() {
     return this.Aie;
@@ -197,7 +212,7 @@ class AiHateList {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.VisionMorphBegin,
-        this.ZHs,
+        this.Mjs,
       ));
   }
   UnBindEvents() {
@@ -222,11 +237,11 @@ class AiHateList {
         ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.VisionMorphBegin,
-        this.ZHs,
+        this.Mjs,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.VisionMorphBegin,
-          this.ZHs,
+          this.Mjs,
         );
   }
   Clear(t = !0) {
@@ -447,13 +462,13 @@ class AiHateList {
       if (n && n.Entity.Active) {
         var a = Vector_1.Vector.DistSquared2D(i, n.ActorLocationProxy),
           o = n.ActorLocationProxy.Z - i.Z + s - n.ScaledHalfHeight,
-          _ = Vector_1.Vector.DistSquared2D(e, n.ActorLocationProxy);
-        if (
-          ((h.InMaxArea = this.Wie(a, o, _)),
-          Time_1.Time.WorldTime < h.EarliestClearTime)
-        )
+          _ = Vector_1.Vector.DistSquared2D(e, n.ActorLocationProxy),
+          o =
+            ((h.InMaxArea = this.Wie(a, o, _)),
+            h.InMaxArea && this.Kie(a, o, _));
+        if (Time_1.Time.WorldTime < h.EarliestClearTime)
           !(h.DisengageTime <= 0) ||
-            (h.InMaxArea && this.Kie(a, o, _)) ||
+            (h.InMaxArea && o) ||
             (h.DisengageTime =
               Time_1.Time.WorldTime +
               MathUtils_1.MathUtils.GetRandomRange(
@@ -466,13 +481,16 @@ class AiHateList {
             continue;
           }
           if (0 < h.DisengageTime) {
-            if (h.TauntValue <= 0 && Time_1.Time.WorldTime > h.DisengageTime) {
+            if (o) h.DisengageTime = -1;
+            else if (
+              h.TauntValue <= 0 &&
+              Time_1.Time.WorldTime > h.DisengageTime
+            ) {
               this.bie.push(r), this.qie.push("MinAreaTimer");
               continue;
             }
-            this.Kie(a, o, _) && (h.DisengageTime = -1);
           } else
-            this.Kie(a, o, _) ||
+            o ||
               (h.DisengageTime =
                 Time_1.Time.WorldTime +
                 MathUtils_1.MathUtils.GetRandomRange(
@@ -487,13 +505,13 @@ class AiHateList {
             h.HatredValue * this.vie.DecreaseRate,
           )),
           h.AfterTriggerHatredDecrease());
-        o = this.Qie(n.Entity, h.TauntValue);
-        if (!(this.kie > o)) {
-          if (this.kie === o) {
+        _ = this.Qie(n.Entity, h.TauntValue);
+        if (!(this.kie > _)) {
+          if (this.kie === _) {
             if (this.Oie > h.HatredValueActual) continue;
             if (this.Oie === h.HatredValueActual && this.Nie <= a) continue;
           }
-          (this.kie = o),
+          (this.kie = _),
             (this.Oie = h.HatredValue),
             (this.Nie = a),
             (this.Gie = r);
@@ -555,9 +573,9 @@ class AiHateList {
   }
   Qie(t, e) {
     if (!t?.Active) return 0;
-    var i = t.GetComponent(160);
+    var i = t.GetComponent(161);
     if (i?.Valid && !i.IsInGame) return 0;
-    i = t.GetComponent(188);
+    i = t.GetComponent(190);
     if (i) {
       if (this.Mie && i.HasTag(this.Mie)) return 1;
       if (i.HasTag(1008164187)) return 2;

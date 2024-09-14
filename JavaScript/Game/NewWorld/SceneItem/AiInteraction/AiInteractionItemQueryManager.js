@@ -111,13 +111,13 @@ class AiInteractionItemQueryManager {
   }
   snr(t, e) {
     var r = this.cz,
-      t = (r.FromUeVector(t), e.GetComponent(185).ActorLocation),
+      t = (r.FromUeVector(t), e.GetComponent(187).ActorLocation),
       e = (r.Subtraction(Vector_1.Vector.Create(t), r), r.SizeSquared());
     return e;
   }
   anr(t, e, r) {
     var i = new Array(),
-      e = e.GetComponent(185).ActorLocation;
+      e = e.GetComponent(187).ActorLocation;
     return AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
       r,
       t,
@@ -128,7 +128,7 @@ class AiInteractionItemQueryManager {
       : [-1, !1];
   }
   nnr(e, r) {
-    var t = e.GetComponent(130);
+    var t = e.GetComponent(131);
     if (!SceneItemUtility_1.SceneItemUtility.GetBaseItemActor(e) || !e.Active)
       return !0;
     if (r) {

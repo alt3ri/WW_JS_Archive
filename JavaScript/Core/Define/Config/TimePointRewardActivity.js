@@ -16,9 +16,16 @@ class TimePointRewardActivity {
   get RewardItem() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.rewarditemLength(),
-      (t) => this.rewarditem(t)?.key(),
-      (t) => this.rewarditem(t)?.value(),
+      this.rewarditemKey,
+      this.rewarditemValue,
+      this,
     );
+  }
+  rewarditemKey(t) {
+    return this.rewarditem(t)?.key();
+  }
+  rewarditemValue(t) {
+    return this.rewarditem(t)?.value();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;

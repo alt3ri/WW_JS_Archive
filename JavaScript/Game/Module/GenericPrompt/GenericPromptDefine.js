@@ -23,5 +23,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     18: "RemainStarWarningTips",
     19: "TowerDefenceWaveTipView",
     20: "RogueSilentAreaFloatTips",
+    21: "MowingRiskBuffTipView",
   });
 //# sourceMappingURL=GenericPromptDefine.js.map

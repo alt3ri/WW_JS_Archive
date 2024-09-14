@@ -20,7 +20,7 @@ class BuildingItem extends UiPanelBase_1.UiPanelBase {
           this.BuildingId,
         );
       }),
-      (this.E1a = (e) => {
+      (this.yca = (e) => {
         "Close" === e &&
           ((e =
             ModelManager_1.ModelManager.MoonChasingBuildingModel.GetBuildingDataById(
@@ -51,7 +51,7 @@ class BuildingItem extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     (this.$pt = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.$pt.BindSequenceCloseEvent(this.E1a);
+      this.$pt.BindSequenceCloseEvent(this.yca);
   }
   OnBeforeShow() {
     this.AddEventListener(), this.Refresh();
@@ -108,7 +108,7 @@ class BuildingItem extends UiPanelBase_1.UiPanelBase {
   SetInteractive(e) {
     this.GetButton(6)?.SetSelfInteractive(e);
   }
-  mua() {
+  yma() {
     var e =
         ModelManager_1.ModelManager.MoonChasingBuildingModel.GetBuildingDataById(
           this.BuildingId,
@@ -125,7 +125,7 @@ class BuildingItem extends UiPanelBase_1.UiPanelBase {
             )),
           this.SetTextureByPath(e, this.GetTexture(0))));
   }
-  dua() {
+  Ima() {
     var e =
       ModelManager_1.ModelManager.MoonChasingBuildingModel.GetBuildingDataById(
         this.BuildingId,
@@ -136,16 +136,20 @@ class BuildingItem extends UiPanelBase_1.UiPanelBase {
           "SP_TogPointMaxNor",
         )
       : e.IsUnlock
-        ? ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-            "SP_TogPointNor",
-          )
+        ? 0 === e.Level
+          ? ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+              "SP_TogPointUnLock",
+            )
+          : ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+              "SP_TogPointNor",
+            )
         : ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
             "SP_TogPointNorLock",
           );
     e = this.GetUiSpriteTransition(3);
     this.SetSpriteTransitionByPath(t, e, 0);
   }
-  Cua() {
+  Tma() {
     var e =
         ModelManager_1.ModelManager.MoonChasingBuildingModel.GetBuildingDataById(
           this.BuildingId,
@@ -154,34 +158,31 @@ class BuildingItem extends UiPanelBase_1.UiPanelBase {
         this.BuildingId,
       ),
       i = this.GetUiSpriteTransition(1);
-    i.RootUIComp.SetUIActive(!e.IsMax);
-    let s = void 0;
-    (s = e.IsMax
-      ? UE.Color.FromHex("#d6ab52")
+    i.RootUIComp.SetUIActive(e.IsUnlock);
+    let r = void 0;
+    (r = e.IsMax
+      ? UE.Color.FromHex("#ecb138")
       : e.IsUnlock
-        ? UE.Color.FromHex("#947b5d")
+        ? 0 === e.Level
+          ? UE.Color.FromHex("#595854")
+          : UE.Color.FromHex("#b49570")
         : UE.Color.FromHex("#ffffff")),
       this.SetSpriteTransitionByPath(t.TipsSprite, i),
-      (i.TransitionInfo.NormalTransition.Color = s);
+      (i.TransitionInfo.NormalTransition.Color = r);
   }
-  gua() {
-    var e =
-        ModelManager_1.ModelManager.MoonChasingBuildingModel.GetBuildingDataById(
-          this.BuildingId,
-        ),
-      t = ConfigManager_1.ConfigManager.BuildingConfig.GetBuildingById(
-        this.BuildingId,
-      ),
-      i = this.GetUiSpriteTransition(2);
-    i.RootUIComp.SetUIActive(e.IsMax),
-      e.IsMax && this.SetSpriteTransitionByPath(t.TipsSprite, i);
-  }
-  fua() {
+  bBa() {
     var e =
       ModelManager_1.ModelManager.MoonChasingBuildingModel.GetBuildingDataById(
         this.BuildingId,
       );
-    this.GetItem(4)?.SetUIActive(e.IsBuild && !e.IsMax);
+    this.GetUiSpriteTransition(2).RootUIComp.SetUIActive(!e.IsUnlock);
+  }
+  Dma() {
+    var e =
+      ModelManager_1.ModelManager.MoonChasingBuildingModel.GetBuildingDataById(
+        this.BuildingId,
+      );
+    this.GetItem(4)?.SetUIActive(e.IsAvailableLevelUp);
   }
   esi() {
     var e =
@@ -202,11 +203,11 @@ class BuildingItem extends UiPanelBase_1.UiPanelBase {
     LguiUtil_1.LguiUtil.SetLocalTextNew(t, e.Name);
   }
   Refresh() {
-    this.mua(),
-      this.Cua(),
-      this.gua(),
-      this.dua(),
-      this.fua(),
+    this.yma(),
+      this.Tma(),
+      this.bBa(),
+      this.Ima(),
+      this.Dma(),
       this.esi(),
       this.qWe();
   }

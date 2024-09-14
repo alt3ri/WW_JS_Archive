@@ -4,12 +4,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../Core/Common/Log");
 class TestModuleBridge {
   static async TryGetTestModuleExports() {
-    if (this.RIa) return this.RIa;
+    if (this.VUa) return this.VUa;
     try {
       var e = await Promise.resolve().then(() =>
         require("../../Test/TestModuleExports"),
       );
-      if (e) return (this.RIa = e.TestModuleExports), this.RIa;
+      if (e) return (this.VUa = e.TestModuleExports), this.VUa;
     } catch (e) {
       e instanceof Error
         ? Log_1.Log.CheckInfo() &&
@@ -22,5 +22,5 @@ class TestModuleBridge {
     }
   }
 }
-(exports.TestModuleBridge = TestModuleBridge).RIa = void 0;
+(exports.TestModuleBridge = TestModuleBridge).VUa = void 0;
 //# sourceMappingURL=TestModuleBridge.js.map

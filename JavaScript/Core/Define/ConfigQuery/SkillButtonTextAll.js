@@ -17,25 +17,36 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0;
+const initStat = Stats_1.Stat.Create("configSkillButtonTextAll.Init"),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configSkillButtonTextAll.GetConfigList",
+  );
 exports.configSkillButtonTextAll = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfigList: (o = !0) => {
-    var n;
+  GetConfigList: (t = !0) => {
+    var o;
     if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
+      (ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start(),
+      (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair)))
     ) {
-      if (o) {
-        var t = KEY_PREFIX + ")";
-        const e = ConfigCommon_1.ConfigCommon.GetConfig(t);
-        if (e) return e;
+      if (t) {
+        var n = KEY_PREFIX + ")";
+        const e = ConfigCommon_1.ConfigCommon.GetConfig(n);
+        if (e)
+          return (
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
+          );
       }
       const e = new Array();
       for (;;) {
@@ -43,27 +54,35 @@ exports.configSkillButtonTextAll = {
           break;
         var i = void 0;
         if (
-          (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([o, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
           )),
-          !n)
+          !o)
         )
-          return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
+          return (
+            ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            getConfigListStat.Stop(),
+            void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+          );
         i = SkillButtonText_1.SkillButtonText.getRootAsSkillButtonText(
           new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
         );
         e.push(i);
       }
       return (
-        o &&
-          ((t = KEY_PREFIX + ")"),
-          ConfigCommon_1.ConfigCommon.SaveConfig(t, e, e.length)),
+        t &&
+          ((n = KEY_PREFIX + ")"),
+          ConfigCommon_1.ConfigCommon.SaveConfig(n, e, e.length)),
         ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+        getConfigListStat.Stop(),
+        ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
         e
       );
     }
+    getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=SkillButtonTextAll.js.map

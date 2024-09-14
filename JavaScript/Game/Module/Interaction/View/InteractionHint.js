@@ -29,7 +29,7 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
       (this.J_i = void 0),
       (this.z_i = void 0),
       (this.Z_i = void 0),
-      (this.ZXs = void 0),
+      (this.XJs = void 0),
       (this.tui = void 0),
       (this.iui = void 0),
       (this.oui = void 0),
@@ -78,14 +78,14 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
     )),
       await Promise.all([
         this.$_i.CreateThenShowByActorAsync(t.GetOwner()),
-        this.oui.CreateThenShowByActorAsync(e.GetOwner()),
+        this.oui.CreateByActorAsync(e.GetOwner()),
         this.rui.CreateThenShowByActorAsync(i.GetOwner()),
       ]);
   }
   OnStart() {
     this.mui(),
       (this.Z_i = this.$_i.GetToggleText()),
-      (this.ZXs = this.GetSprite(1)),
+      (this.XJs = this.GetSprite(1)),
       this.Z_i.OnSelfLanguageChange.Bind(() => {
         this.P5e();
       }),
@@ -115,14 +115,14 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
       (this.tui = void 0),
       (this.Y_i = -1),
       (this.z_i = void 0),
-      (this.ZXs = void 0),
+      (this.XJs = void 0),
       (this.oui = void 0),
       (this.rui = void 0);
   }
   Refresh(t, e, i) {
     (this.Y_i = this.GridIndex),
-      (this.J_i = t.GetComponent(105)),
-      (this.z_i = t.GetComponent(104)),
+      (this.J_i = t.GetComponent(106)),
+      (this.z_i = t.GetComponent(105)),
       this.z_i &&
         ((this.ETt = this.z_i.DropItemId), this.ETt) &&
         (this.apt =
@@ -136,7 +136,6 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
       (this.nui = UE.Color.FromHex(s)),
       this.P5e(),
       this.dui(),
-      this.oIn(),
       this.rIn(),
       this.rui?.ResetLongPress();
   }
@@ -223,7 +222,7 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
           ]),
         PublicUtil_1.PublicUtil.GetConfigTextByKey(t)
       );
-    if ((0, RegisterComponent_1.isComponentInstance)(this.J_i, 181)) {
+    if ((0, RegisterComponent_1.isComponentInstance)(this.J_i, 182)) {
       t = this.J_i.GetInteractController().DefaultShowOption;
       if (t)
         return (
@@ -260,7 +259,7 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
         this.ETt,
       );
       t = e?.IconMiddle;
-    } else if ((0, RegisterComponent_1.isComponentInstance)(this.J_i, 181)) {
+    } else if ((0, RegisterComponent_1.isComponentInstance)(this.J_i, 182)) {
       e = this.J_i.GetInteractController().InteractIcon;
       if ("Collect" === e) {
         var i =
@@ -309,8 +308,8 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
   }
   dui() {
     this.gui()
-      ? (this.ZXs.SetColor(this.nui), this.ZXs.SetUIActive(!0))
-      : this.ZXs.SetUIActive(!1);
+      ? (this.XJs.SetColor(this.nui), this.XJs.SetUIActive(!0))
+      : this.XJs.SetUIActive(!1);
   }
   Mui(t) {
     t = GlobalConfigFromCsvByName_1.configGlobalConfigFromCsvByName.GetConfig(
@@ -374,7 +373,7 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
     return this.cui;
   }
   UpdatePriority() {
-    (0, RegisterComponent_1.isComponentInstance)(this.J_i, 181) &&
+    (0, RegisterComponent_1.isComponentInstance)(this.J_i, 182) &&
       (this.cui = this.J_i.GetInteractController().InteractEntity.Priority);
   }
   GetButtonForGuide() {

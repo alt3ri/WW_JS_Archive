@@ -17,34 +17,49 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configVideoSoundByCgNameAndGirlOrBoy.Init",
+  ),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configVideoSoundByCgNameAndGirlOrBoy.GetConfigList",
+  ),
   CONFIG_LIST_STAT_PREFIX =
     "configVideoSoundByCgNameAndGirlOrBoy.GetConfigList(";
 exports.configVideoSoundByCgNameAndGirlOrBoy = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfigList: (o, n, i = !0) => {
-    var e;
-    if (
-      (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (i) {
-        var r = KEY_PREFIX + `#${o}#${n})`;
-        const C = ConfigCommon_1.ConfigCommon.GetConfig(r);
-        if (C) return C;
+  GetConfigList: (o, i, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start();
+    var e = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${o}#${i})`),
+      t =
+        (e.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
+      if (n) {
+        var C = KEY_PREFIX + `#${o}#${i})`;
+        const r = ConfigCommon_1.ConfigCommon.GetConfig(C);
+        if (r)
+          return (
+            e.Stop(),
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            r
+          );
       }
       if (
-        (e =
+        (t =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, n, ...logPair))
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, i, ...logPair))
       ) {
-        const C = new Array();
+        const r = new Array();
         for (;;) {
           if (
             1 !==
@@ -53,37 +68,48 @@ exports.configVideoSoundByCgNameAndGirlOrBoy = {
               !1,
               ...logPair,
               ["CgName", o],
-              ["GirlOrBoy", n],
+              ["GirlOrBoy", i],
             )
           )
             break;
-          var d = void 0;
+          var g = void 0;
           if (
-            (([e, d] = ConfigCommon_1.ConfigCommon.GetValue(
+            (([t, g] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
               0,
               ...logPair,
               ["CgName", o],
-              ["GirlOrBoy", n],
+              ["GirlOrBoy", i],
             )),
-            !e)
+            !t)
           )
-            return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
-          d = VideoSound_1.VideoSound.getRootAsVideoSound(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(d.buffer)),
+            return (
+              ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+              e.Stop(),
+              getConfigListStat.Stop(),
+              void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+            );
+          g = VideoSound_1.VideoSound.getRootAsVideoSound(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(g.buffer)),
           );
-          C.push(d);
+          r.push(g);
         }
         return (
-          i &&
-            ((r = KEY_PREFIX + `#${o}#${n})`),
-            ConfigCommon_1.ConfigCommon.SaveConfig(r, C, C.length)),
+          n &&
+            ((C = KEY_PREFIX + `#${o}#${i})`),
+            ConfigCommon_1.ConfigCommon.SaveConfig(C, r, r.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          C
+          e.Stop(),
+          getConfigListStat.Stop(),
+          ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+          r
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    e.Stop(),
+      getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=VideoSoundByCgNameAndGirlOrBoy.js.map

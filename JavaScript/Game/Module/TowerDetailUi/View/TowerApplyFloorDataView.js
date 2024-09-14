@@ -57,7 +57,7 @@ class TowerApplyFloorDataView extends UiViewBase_1.UiViewBase {
       var s = this.GetItem(9),
         l = this.GetItem(4),
         n = [];
-      for (const T of r.Formation) n.push(T.O6n);
+      for (const T of r.Formation) n.push(T.Q6n);
       for (const h of n) {
         var _ = LguiUtil_1.LguiUtil.CopyItem(s, l);
         const M = new TowerRoleComplexItem_1.TowerRoleComplexItem();
@@ -67,7 +67,7 @@ class TowerApplyFloorDataView extends UiViewBase_1.UiViewBase {
       }
       var g = this.GetItem(2),
         w = [];
-      for (const f of o.Formation) w.push(f.O6n);
+      for (const f of o.Formation) w.push(f.Q6n);
       for (const p of w) {
         var U = LguiUtil_1.LguiUtil.CopyItem(s, g);
         const x = new TowerRoleComplexItem_1.TowerRoleComplexItem();

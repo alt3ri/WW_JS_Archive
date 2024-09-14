@@ -13,8 +13,10 @@ class CircumBase {
     return this.entrytype();
   }
   get ArgId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.argidLength(), (t) =>
-      this.argid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.argidLength(),
+      this.argid,
+      this,
     );
   }
   get Title() {

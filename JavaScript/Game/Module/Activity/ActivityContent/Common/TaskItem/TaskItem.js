@@ -11,15 +11,15 @@ const UE = require("ue"),
 class TaskItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.JGn = void 0),
+      (this.sOn = void 0),
       (this.bOe = void 0),
       (this.JGe = () =>
         new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
       (this.IOe = () => {
-        SkipTaskManager_1.SkipTaskManager.RunByConfigId(this.JGn.JumpId);
+        SkipTaskManager_1.SkipTaskManager.RunByConfigId(this.sOn.JumpId);
       }),
       (this.qOe = () => {
-        this.JGn.ReceiveDelegate?.(this.JGn.TaskId);
+        this.sOn.ReceiveDelegate?.(this.sOn.TaskId);
       });
   }
   OnRegisterComponent() {
@@ -44,7 +44,7 @@ class TaskItem extends GridProxyAbstract_1.GridProxyAbstract {
     );
   }
   Refresh(i, t, e) {
-    (this.JGn = i),
+    (this.sOn = i),
       this.bOe.RefreshByData(i.RewardList),
       this.GetButton(1).RootUIComp.SetUIActive(i.IsFinished && !i.IsTaken),
       this.GetItem(2).SetUIActive(i.IsTaken),

@@ -16,7 +16,7 @@ class RewardExploreOnlineChallengePlayer extends UiPanelBase_1.UiPanelBase {
       (this.sGe = () => {
         return new RewardExploreOnlineChallengePlayerItem_1.RewardExploreOnlineChallengePlayerItem();
       }),
-      (this.Zjs = () => {
+      (this.SWs = () => {
         this.RefreshPlayerData();
       });
   }
@@ -29,7 +29,7 @@ class RewardExploreOnlineChallengePlayer extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnRefreshOnlineChallengePlayer,
-      this.Zjs,
+      this.SWs,
     ),
       (this.Layout = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(0),
@@ -40,7 +40,7 @@ class RewardExploreOnlineChallengePlayer extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnRefreshOnlineChallengePlayer,
-      this.Zjs,
+      this.SWs,
     );
   }
   RefreshPlayerData() {

@@ -10,30 +10,37 @@ class RogueRandomGood {
   get GoodsPoolWeight() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.goodspoolweightLength(),
-      (t) => this.goodspoolweight(t)?.key(),
-      (t) => this.goodspoolweight(t)?.value(),
+      this.goodspoolweightKey,
+      this.goodspoolweightValue,
+      this,
     );
+  }
+  goodspoolweightKey(t) {
+    return this.goodspoolweight(t)?.key();
+  }
+  goodspoolweightValue(t) {
+    return this.goodspoolweight(t)?.value();
   }
   get Discount() {
     return this.discount();
   }
-  __init(t, i) {
-    return (this.z7 = t), (this.J7 = i), this;
+  __init(t, o) {
+    return (this.z7 = t), (this.J7 = o), this;
   }
-  static getRootAsRogueRandomGood(t, i) {
-    return (i || new RogueRandomGood()).__init(
+  static getRootAsRogueRandomGood(t, o) {
+    return (o || new RogueRandomGood()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
   }
-  GetGoodspoolweightAt(t, i) {
+  GetGoodspoolweightAt(t, o) {
     return this.goodspoolweight(t);
   }
-  goodspoolweight(t, i) {
-    var s = this.J7.__offset(this.z7, 4);
-    return s
-      ? (i || new DicStringInt_1.DicStringInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+  goodspoolweight(t, o) {
+    var i = this.J7.__offset(this.z7, 4);
+    return i
+      ? (o || new DicStringInt_1.DicStringInt()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
           this.J7,
         )
       : null;

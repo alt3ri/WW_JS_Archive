@@ -18,7 +18,8 @@ class KuroObjectTypeQuery {}
   (KuroObjectTypeQuery.KuroTrigger = 10),
   (KuroObjectTypeQuery.Limbs_Deprecated = 11),
   (KuroObjectTypeQuery.HitItem = 12),
-  (KuroObjectTypeQuery.BulletSpecial = 13);
+  (KuroObjectTypeQuery.BulletSpecial = 13),
+  (KuroObjectTypeQuery.KuroWater = 15);
 class KuroTraceTypeQuery {}
 ((exports.KuroTraceTypeQuery = KuroTraceTypeQuery).Visible = 0),
   (KuroTraceTypeQuery.Camera = 1),
@@ -54,5 +55,6 @@ class KuroCollisionChannel {}
   (KuroCollisionChannel.AcrossBlock = 26),
   (KuroCollisionChannel.VoiceBlock = 27),
   (KuroCollisionChannel.HitItem = 28),
-  (KuroCollisionChannel.BulletSpecial = 29);
+  (KuroCollisionChannel.BulletSpecial = 29),
+  (KuroCollisionChannel.KuroWater = 31);
 //# sourceMappingURL=QueryTypeDefine.js.map

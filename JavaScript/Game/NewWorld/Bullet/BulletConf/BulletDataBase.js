@@ -57,7 +57,7 @@ class BulletDataBase {
       (this.G6o = 0),
       (this.N6o = !1),
       (this.O6o = void 0),
-      (this.Kfa = void 0),
+      (this.cSa = void 0),
       (this.HitActorTypeInternal = void 0),
       (this.Pe = t);
   }
@@ -140,7 +140,7 @@ class BulletDataBase {
       ((this.l6o = !0),
       (this._6o = this.Pe.命中判定类型预设.ToAssetPathName()),
       0 < this._6o?.length &&
-        ((t = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+        ((t = ResourceSystem_1.ResourceSystem.Load(
           this._6o,
           UE.BulletCampType_C,
         )),
@@ -289,8 +289,8 @@ class BulletDataBase {
   }
   get BigRangeHitSceneItem() {
     return (
-      void 0 === this.Kfa && (this.Kfa = this.Pe.大范围子弹对场景物件生效),
-      this.Kfa
+      void 0 === this.cSa && (this.cSa = this.Pe.大范围子弹对场景物件生效),
+      this.cSa
     );
   }
   get HitActorType() {

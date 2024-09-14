@@ -21,12 +21,15 @@ class Shield {
   get AttributeRate() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.attributerateLength(),
-      (t) => this.attributerate(t),
+      this.attributerate,
+      this,
     );
   }
   get Value() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.valueLength(), (t) =>
-      this.value(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.valueLength(),
+      this.value,
+      this,
     );
   }
   __init(t, i) {

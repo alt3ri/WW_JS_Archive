@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DataTableUtil = exports.dataTablePaths = void 0);
-const puerts_1 = require("puerts"),
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
   UE = require("ue"),
   Log_1 = require("../Common/Log"),
   ResourceSystem_1 = require("../Resource/ResourceSystem");
@@ -54,7 +55,7 @@ class DataTableUtil {
   static GetDataTableRow(a, e) {
     if (a && e) {
       var t = (0, puerts_1.$ref)(void 0);
-      if (UE.KuroDataTableFunctionLibrary.GetDataTableRowFromName(a, e, t))
+      if (cpp_1.FKuroDataTableFunctionLibrary.GetDataTableRowFromName(a, e, t))
         return (0, puerts_1.$unref)(t);
     }
   }
@@ -62,7 +63,7 @@ class DataTableUtil {
     a = DataTableUtil.xJ(a);
     if (a && e) {
       var t = (0, puerts_1.$ref)(void 0);
-      if (UE.KuroDataTableFunctionLibrary.GetDataTableRowFromName(a, e, t))
+      if (cpp_1.FKuroDataTableFunctionLibrary.GetDataTableRowFromName(a, e, t))
         return (0, puerts_1.$unref)(t);
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("DataTableUtil", 44, "获取预加载DT行配置失败", [
@@ -98,88 +99,65 @@ class DataTableUtil {
           ))
     );
   }
-  static GetAllDataTableRow(a) {
+  static GetDataTableAllRowNames(a, e) {
+    a = DataTableUtil.xJ(a);
+    a && cpp_1.FKuroDataTableFunctionLibrary.GetDataTableAllRowNames(a, e);
+  }
+  static GetDataTableAllRowNamesFromTable(a, e) {
+    a && cpp_1.FKuroDataTableFunctionLibrary.GetDataTableAllRowNames(a, e);
+  }
+  static GetDataTableAllRow(a) {
     var e = new Array(),
-      t = (0, puerts_1.$ref)(void 0),
-      i = DataTableUtil.xJ(a),
-      r =
-        (UE.DataTableFunctionLibrary.GetDataTableRowNames(i, t),
-        (0, puerts_1.$unref)(t));
-    if (r) {
-      for (let a = 0; a < r.Num(); a++) {
-        var o = r.Get(a).toString(),
-          o = DataTableUtil.GetDataTableRow(i, o);
-        e.push(o);
-      }
-      return e;
-    }
+      a = DataTableUtil.xJ(a);
+    return a && cpp_1.FKuroDataTableFunctionLibrary.GetDataTableAllRow(a, e), e;
   }
-  static GetAllDataTableRowFromTable(e) {
-    var t = new Array(),
-      a = (0, puerts_1.$ref)(void 0),
-      i =
-        (UE.DataTableFunctionLibrary.GetDataTableRowNames(e, a),
-        (0, puerts_1.$unref)(a));
-    if (i) {
-      for (let a = 0; a < i.Num(); a++) {
-        var r = i.Get(a).toString(),
-          o = DataTableUtil.GetDataTableRow(e, r);
-        o
-          ? t.push(o)
-          : Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "DataTableUtil",
-              37,
-              "[GetAllDataTableRowFromTable]GetRowValue Failed",
-              ["Table", e?.GetName()],
-              ["RowName", r],
-            );
-      }
-      return t;
-    }
+  static GetDataTableAllRowFromTable(a) {
+    var e = new Array();
+    return a && cpp_1.FKuroDataTableFunctionLibrary.GetDataTableAllRow(a, e), e;
   }
-  static GetAllDataTableRowFromTableWithRowName(e) {
-    var t = new Array(),
-      a = (0, puerts_1.$ref)(void 0),
-      i =
-        (UE.DataTableFunctionLibrary.GetDataTableRowNames(e, a),
-        (0, puerts_1.$unref)(a));
-    if (i) {
-      for (let a = 0; a < i.Num(); a++) {
-        var r = i.Get(a).toString(),
-          o = DataTableUtil.GetDataTableRow(e, r);
-        o
-          ? t.push([r, o])
+  static GetDataTableAllRowWithKeys(a, e) {
+    a = DataTableUtil.xJ(a);
+    a && cpp_1.FKuroDataTableFunctionLibrary.GetDataTableAllRowWithKeys(a, e);
+  }
+  static GetDataTableAllRowWithKeysFromTable(a, e) {
+    a && cpp_1.FKuroDataTableFunctionLibrary.GetDataTableAllRowWithKeys(a, e);
+  }
+  static GetAllDataTableRowFromTableWithRowName(a) {
+    var e = new Array();
+    if (a) {
+      var t = new Array();
+      this.GetDataTableAllRowNamesFromTable(a, t);
+      for (const r of t) {
+        var i = DataTableUtil.GetDataTableRow(a, r);
+        i
+          ? e.push([r, i])
           : Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "DataTableUtil",
               37,
               "[GetAllDataTableRowFromTableWithRowName]GetRowValue Failed",
-              ["Table", e?.GetName()],
+              ["Table", a?.GetName()],
               ["RowName", r],
             );
       }
-      return t;
     }
+    return e;
   }
   static LoadAiWeaponSocketConfigs(a, e) {
     a = DataTableUtil.GetDataTableRowFromName(2, a);
     if (a) return a.AiModelConfig.Get(e)?.Weapon;
   }
   static LoadAllAiWeaponSockets() {
-    var e = new Map(),
-      a = (0, puerts_1.$ref)(void 0),
-      t = DataTableUtil.xJ(2),
-      i =
-        (UE.DataTableFunctionLibrary.GetDataTableRowNames(t, a),
-        (0, puerts_1.$unref)(a));
-    if (i) {
-      for (let a = 0; a < i.Num(); a++) {
-        var r = i.Get(a).toString(),
-          o = DataTableUtil.GetDataTableRowFromName(2, r);
-        e.set(parseInt(r), o);
+    var a = new Map(),
+      e = new Array(),
+      t = DataTableUtil.xJ(2);
+    if (t) {
+      this.GetDataTableAllRowNamesFromTable(t, e);
+      for (const r of e) {
+        var i = DataTableUtil.GetDataTableRowFromName(2, r);
+        a.set(parseInt(r), i);
       }
-      return e;
+      return a;
     }
   }
 }

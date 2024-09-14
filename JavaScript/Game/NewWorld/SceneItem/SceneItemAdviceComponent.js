@@ -44,15 +44,15 @@ let SceneItemAdviceComponent = class SceneItemAdviceComponent extends EntityComp
       });
   }
   OnActivate() {
-    var t = this.Entity.GetComponent(181);
+    var t = this.Entity.GetComponent(182);
     if (t && t.GetInteractController()) {
       t = this.Entity.GetComponent(0);
       if (t) {
         t = t.GetAdviceInfo();
         if (t) {
-          var i = this.Entity.GetComponent(104);
+          var i = this.Entity.GetComponent(105);
           if (i) {
-            this.Xte = this.Entity.GetComponent(180);
+            this.Xte = this.Entity.GetComponent(181);
             let e =
               ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceInteractText();
             (e = e.replace("{PlayerName}", t.GetPlayerName())),
@@ -84,7 +84,7 @@ let SceneItemAdviceComponent = class SceneItemAdviceComponent extends EntityComp
   }
 };
 (SceneItemAdviceComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(129)],
+  [(0, RegisterComponent_1.RegisterComponent)(130)],
   SceneItemAdviceComponent,
 )),
   (exports.SceneItemAdviceComponent = SceneItemAdviceComponent);

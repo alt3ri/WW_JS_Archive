@@ -61,12 +61,12 @@ let SceneItemBuffConsumerComponent =
             ((this.ndn = !0),
             SceneItemBuffController_1.SceneItemBuffController.BuffOperate(
               this.Entity.Id,
-              Protocol_1.Aki.Protocol.K3s.Proto_RemoveBuff,
+              Protocol_1.Aki.Protocol.eFs.Proto_RemoveBuff,
               this.adn,
             ));
         }),
         (this.adn = (e, t) => {
-          e === Protocol_1.Aki.Protocol.K3s.Proto_RemoveBuff && t
+          e === Protocol_1.Aki.Protocol.eFs.Proto_RemoveBuff && t
             ? this.hdn()
             : (this.ndn = !1);
         }),
@@ -105,18 +105,18 @@ let SceneItemBuffConsumerComponent =
       e = e.GetParam(SceneItemBuffConsumerComponent_1)[0];
       (this.eHr = BigInt(e.BuffId)),
         e.BulletId && (this.odn = e.BulletId.toString());
-      e = this.Entity.GetComponent(0)?.ComponentDataMap.get("Vys");
-      return (this.JUn = MathUtils_1.MathUtils.LongToBigInt(e?.Vys?.tVn)), !0;
+      e = this.Entity.GetComponent(0)?.ComponentDataMap.get("Xys");
+      return (this.JUn = MathUtils_1.MathUtils.LongToBigInt(e?.Xys?._Vn)), !0;
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(185)),
+        (this.Hte = this.Entity.GetComponent(187)),
         this.Hte
-          ? ((this.wsn = this.Entity.GetComponent(180)),
+          ? ((this.wsn = this.Entity.GetComponent(181)),
             this.wsn
-              ? ((this.mBe = this.Entity.GetComponent(119)),
+              ? ((this.mBe = this.Entity.GetComponent(120)),
                 this.mBe
-                  ? ((this.vtn = this.Entity.GetComponent(76)),
+                  ? ((this.vtn = this.Entity.GetComponent(77)),
                     this.vtn
                       ? ((ModelManager_1.ModelManager.GameModeModel.IsMulti &&
                           ModelManager_1.ModelManager.PlayerInfoModel.GetId() !==
@@ -124,7 +124,7 @@ let SceneItemBuffConsumerComponent =
                           ((this.Wpo =
                             this.Hte.CreatureData.GetCreatureDataId()),
                           this.wsn.AddTag(HIT_CONDITION_TAGID),
-                          (this.Xln = this.Entity.GetComponent(140)),
+                          (this.Xln = this.Entity.GetComponent(141)),
                           this.Xln.RegisterComponent(this),
                           this.vtn.AddOnPlayerOverlapCallback(this.Q1n)),
                         !0)
@@ -198,10 +198,10 @@ let SceneItemBuffConsumerComponent =
       var e = Global_1.Global.BaseCharacter;
       if (!e) return !1;
       var e = e.CharacterActorComponent.Entity,
-        t = e.CheckGetComponent(159);
+        t = e.CheckGetComponent(160);
       if (!t) return !1;
       let n = 0 < t.GetBuffTotalStackById(this.eHr);
-      t = e.CheckGetComponent(174);
+      t = e.CheckGetComponent(175);
       return (
         t &&
           (n ||=
@@ -251,7 +251,7 @@ let SceneItemBuffConsumerComponent =
   });
 (SceneItemBuffConsumerComponent = SceneItemBuffConsumerComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(186)],
+    [(0, RegisterComponent_1.RegisterComponent)(188)],
     SceneItemBuffConsumerComponent,
   )),
   (exports.SceneItemBuffConsumerComponent = SceneItemBuffConsumerComponent);

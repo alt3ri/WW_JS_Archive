@@ -10,13 +10,13 @@ const UE = require("ue"),
 class CommonHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   constructor() {
     super(...arguments),
-      (this.okn = new BuffItemContainer_1.BuffItemContainer()),
+      (this.mkn = new BuffItemContainer_1.BuffItemContainer()),
       (this.pnt = 0),
       (this.OnAddOrRemoveBuff = (t, e, i, s) => {
         this.HeadStateData.GetEntityId() === t &&
           (i
-            ? this.okn.AddBuffByCue(e, s, !0)
-            : this.okn.RemoveBuffByCue(e, s, !0));
+            ? this.mkn.AddBuffByCue(e, s, !0)
+            : this.mkn.RemoveBuffByCue(e, s, !0));
       }),
       (this.OnShieldChanged = (t) => {
         this.RefreshHpAndShield(!1);
@@ -54,10 +54,10 @@ class CommonHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   }
   OnStart() {
     (this.pnt = this.GetSprite(2).GetParentAsUIItem().GetWidth()),
-      this.okn.Init(this.GetItem(5));
+      this.mkn.Init(this.GetItem(5));
   }
   ResetBattleHeadState() {
-    this.okn.ClearAll(), super.ResetBattleHeadState();
+    this.mkn.ClearAll(), super.ResetBattleHeadState();
   }
   GetResourceId() {
     return "UiItem_LittleMonsterState_Prefab";
@@ -71,8 +71,8 @@ class CommonHeadState extends HeadStateViewBase_1.HeadStateViewBase {
       ? ((t = ModelManager_1.ModelManager.CharacterModel?.GetHandle(
           this.HeadStateData.GetEntityId(),
         )),
-        this.okn.RefreshBuff(t))
-      : this.okn.ClearAll();
+        this.mkn.RefreshBuff(t))
+      : this.mkn.ClearAll();
   }
   Hlt() {
     var t = this.GetHpColor();
@@ -91,7 +91,7 @@ class CommonHeadState extends HeadStateViewBase_1.HeadStateViewBase {
     this.GetItem(5).SetUIActive(t);
   }
   jlt(t) {
-    this.IsBuffVisible() && this.okn.Tick(t);
+    this.IsBuffVisible() && this.mkn.Tick(t);
   }
   RefreshHpAndShield(t = !1) {
     var [e, i] = this.GetHpAndShieldPercent();

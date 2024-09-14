@@ -12,16 +12,25 @@ class PropRewardConf {
     return this.id();
   }
   get Props() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.propsLength(), (t) =>
-      this.props(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.propsLength(),
+      this.props,
+      this,
     );
   }
   get Tips() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.tipsLength(),
-      (t) => this.tips(t)?.key(),
-      (t) => this.tips(t)?.value(),
+      this.tipsKey,
+      this.tipsValue,
+      this,
     );
+  }
+  tipsKey(t) {
+    return this.tips(t)?.key();
+  }
+  tipsValue(t) {
+    return this.tips(t)?.value();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;

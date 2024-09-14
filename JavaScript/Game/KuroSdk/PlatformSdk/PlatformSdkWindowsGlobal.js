@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlatformSdkWindowsGlobal = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   ue_1 = require("ue"),
   Json_1 = require("../../../Core/Common/Json"),
   LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
@@ -14,7 +15,6 @@ const UE = require("ue"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   KuroSdkData_1 = require("../KuroSdkData"),
   PlatformSdkBase_1 = require("./PlatformSdkBase"),
-  cpp_1 = require("cpp"),
   WEBVIEWCD = 5e3;
 class WindowsSdkRedPointSt extends Json_1.JsonObjBase {
   constructor() {
@@ -139,7 +139,7 @@ class PlatformSdkWindowsGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     );
   }
   SdkExit() {
-    UE.KuroStaticLibrary.ExitGame(!1);
+    cpp_1.KuroApplication.ExitWithReason(!1, "SdkExit");
   }
   InitializePostWebView() {
     var e = this.GetCurrentSelectServerId(),

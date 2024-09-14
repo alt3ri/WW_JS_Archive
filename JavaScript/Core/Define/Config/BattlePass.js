@@ -31,16 +31,30 @@ class BattlePass {
   get FreeRecurringReward() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.freerecurringrewardLength(),
-      (t) => this.freerecurringreward(t)?.key(),
-      (t) => this.freerecurringreward(t)?.value(),
+      this.freerecurringrewardKey,
+      this.freerecurringrewardValue,
+      this,
     );
+  }
+  freerecurringrewardKey(t) {
+    return this.freerecurringreward(t)?.key();
+  }
+  freerecurringrewardValue(t) {
+    return this.freerecurringreward(t)?.value();
   }
   get PayRecurringReward() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.payrecurringrewardLength(),
-      (t) => this.payrecurringreward(t)?.key(),
-      (t) => this.payrecurringreward(t)?.value(),
+      this.payrecurringrewardKey,
+      this.payrecurringrewardValue,
+      this,
     );
+  }
+  payrecurringrewardKey(t) {
+    return this.payrecurringreward(t)?.key();
+  }
+  payrecurringrewardValue(t) {
+    return this.payrecurringreward(t)?.value();
   }
   get RecurringLevelExp() {
     return this.recurringlevelexp();

@@ -18,13 +18,13 @@ class AttachActorItem {
 exports.AttachActorItem = AttachActorItem;
 class AttachActorEntry {
   constructor() {
-    (this.ebn = 0),
-      (this.tbn = new Map()),
+    (this.lbn = 0),
+      (this._bn = new Map()),
       (this.WXe = new CustomMap_1.CustomMap());
   }
   AddAttachActorItem(t, s, r, e, i, h) {
-    if (this.tbn.has(r)) return !1;
-    this.tbn.set(r, ++this.ebn);
+    if (this._bn.has(r)) return !1;
+    this._bn.set(r, ++this.lbn);
     var o = new AttachActorItem();
     return (
       (o.Id = t),
@@ -36,26 +36,26 @@ class AttachActorEntry {
       (o.DetachType = h),
       GlobalData_1.GlobalData.IsPlayInEditor &&
         r.Tags.Add(FNameUtil_1.FNameUtil.GetDynamicFName("AttachId: " + t)),
-      this.WXe.Set(this.ebn, o),
+      this.WXe.Set(this.lbn, o),
       !0
     );
   }
   GetAttachActorItem(t) {
-    t = this.tbn.get(t);
+    t = this._bn.get(t);
     if (t) return this.WXe.Get(t);
   }
   GetAttachActorItems() {
     return this.WXe.GetItems();
   }
   Size() {
-    return this.tbn.size;
+    return this._bn.size;
   }
   RemoveAttachActorItem(t) {
-    var s = this.tbn.get(t);
-    return !!s && this.tbn.delete(t) && this.WXe.Remove(s);
+    var s = this._bn.get(t);
+    return !!s && this._bn.delete(t) && this.WXe.Remove(s);
   }
   Clear() {
-    (this.ebn = 0), this.tbn.clear(), this.WXe.Clear();
+    (this.lbn = 0), this._bn.clear(), this.WXe.Clear();
   }
 }
 exports.AttachActorEntry = AttachActorEntry;

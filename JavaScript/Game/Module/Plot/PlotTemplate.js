@@ -28,6 +28,7 @@ const UE = require("ue"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   CharacterNameDefines_1 = require("../../NewWorld/Character/Common/CharacterNameDefines"),
+  NpcPerformController_1 = require("../../NewWorld/Character/Npc/Controller/NpcPerformController"),
   WaitEntityTask_1 = require("../../World/Define/WaitEntityTask"),
   TeleportController_1 = require("../Teleport/TeleportController"),
   MovingShotManager_1 = require("./MovingShotManager"),
@@ -43,15 +44,13 @@ const UE = require("ue"),
   DITHER_RATE_PER_SECOND = 0.33,
   WAIT_TURING_TIME = 1500,
   BEGIN_WAIT_TIME = 800,
-  CAMERA_FILMBACK_SENSOR_WIDTH = 23.76,
-  CAMERA_FILMBACK_SENSOR_HEIGHT = 13.365,
   MONTAGE_BLEND_OUT_TIME = 0.5,
   DEFAULT_CAMERA_BASE = 140.19,
   DEFAULT_CAMERA_BASE_HEAD = 135.96,
   MAX_POS_DIST_SQ = 1e6;
 class ActorData {
   constructor() {
-    (this.Valid = !1),
+    (this.ValidInternal = !1),
       (this.PbDataId = 0),
       (this.EntityId = 0),
       (this.TalkerId = 0),
@@ -79,8 +78,22 @@ class ActorData {
       (this.TurningTimer = void 0),
       (this.LookLocked = !1);
   }
+  get Valid() {
+    return (
+      !!this.ValidInternal &&
+      (this.IsPlayer()
+        ? (ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity
+            ?.Valid ?? !1)
+        : (ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(
+            this.PbDataId,
+          )?.Valid ?? !1))
+    );
+  }
+  set Valid(t) {
+    this.ValidInternal = t;
+  }
   Reset() {
-    (this.Valid = !1),
+    (this.ValidInternal = !1),
       (this.PbDataId = 0),
       (this.EntityId = 0),
       (this.TalkerId = 0),
@@ -125,31 +138,31 @@ class ShowActorParam {
 }
 class DelayActionManager {
   constructor() {
-    (this.lea = new Set()), (this._ea = new Map());
+    (this.Sia = new Set()), (this.Eia = new Map());
   }
-  DelayAction(e, t, i, s) {
-    if (s) {
-      s = TimerSystem_1.TimerSystem.Delay(() => {
-        var t = this._ea.get(e)[1];
-        this._ea.delete(e), t();
+  DelayAction(e, t, i, o) {
+    if (o) {
+      o = TimerSystem_1.TimerSystem.Delay(() => {
+        var t = this.Eia.get(e)[1];
+        this.Eia.delete(e), t();
       }, t);
-      this._ea.has(e) && this._ea.get(e)[0].Remove(), this._ea.set(e, [s, i]);
+      this.Eia.has(e) && this.Eia.get(e)[0].Remove(), this.Eia.set(e, [o, i]);
     } else {
-      const o = TimerSystem_1.TimerSystem.Delay(() => {
-        this.lea.delete(o), i();
+      const s = TimerSystem_1.TimerSystem.Delay(() => {
+        this.Sia.delete(s), i();
       }, t);
-      this.lea.add(o);
+      this.Sia.add(s);
     }
   }
-  CleanAction(t = 0) {
-    this.lea.forEach((t) => t.Remove()),
-      this.lea.clear(),
-      this._ea.forEach((t) => {
+  CleanAction(i = !0) {
+    this.Sia.forEach((t) => t.Remove()),
+      this.Sia.clear(),
+      this.Eia.forEach((t) => {
         var e = t[0],
           t = t[1];
-        e.Remove(), t();
+        e.Remove(), i && t();
       }),
-      this._ea.clear();
+      this.Eia.clear();
   }
 }
 class PlotTemplate {
@@ -178,15 +191,19 @@ class PlotTemplate {
       (this.yJi = 0),
       (this.IJi = !1),
       (this.TJi = !1),
-      (this.K2n = -1),
-      (this.Q2n = void 0),
+      (this.tNn = -1),
+      (this.iNn = void 0),
       (this.xJt = void 0),
-      (this.FVs = 0),
+      (this.a9s = 0),
       (this.LJi = new MovingShotManager_1.MovingShotManager()),
-      (this.uea = new DelayActionManager());
+      (this.yia = new DelayActionManager()),
+      (this.B4a = new DelayActionManager());
   }
   get IsInTemplate() {
     return this.oJi;
+  }
+  get IsCameraControl() {
+    return this.EJi;
   }
   get DJi() {
     if (!this.sJi) {
@@ -208,21 +225,27 @@ class PlotTemplate {
       (this.nx = e),
       (this.TJi = !0),
       (this.IJi = !0);
-    var s = new Array();
-    for (const o of t.Actors) s.push(o.EntityId);
-    this.RJi(s, () => {
+    var o = new Array();
+    for (const s of t.Actors) o.push(s.EntityId);
+    this.RJi(o, () => {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "等待模板演出实体完成"),
-        this.EJi ||
-          (ModelManager_1.ModelManager.CameraModel.SequenceCamera.DisplayComponent.CineCamera.ResetSeqCineCamSetting(),
-          ModelManager_1.ModelManager.PlotModel.SwitchCameraMode(3),
-          (this.yJi = UE.KismetSystemLibrary.GetConsoleVariableFloatValue(
-            "r.MotionBlur.Amount",
-          )),
-          UE.KismetSystemLibrary.ExecuteConsoleCommand(
-            GlobalData_1.GlobalData.World,
-            "r.MotionBlur.Amount 0",
-          )),
+        this.EJi
+          ? ControllerHolder_1.ControllerHolder.PlotController.EnableViewControl(
+              !0,
+            )
+          : (ModelManager_1.ModelManager.CameraModel.SequenceCamera.DisplayComponent.CineCamera.ResetSeqCineCamSetting(),
+            ModelManager_1.ModelManager.PlotModel.SwitchCameraMode(3),
+            ControllerHolder_1.ControllerHolder.PlotController.EnableViewControl(
+              !1,
+            ),
+            (this.yJi = UE.KismetSystemLibrary.GetConsoleVariableFloatValue(
+              "r.MotionBlur.Amount",
+            )),
+            UE.KismetSystemLibrary.ExecuteConsoleCommand(
+              GlobalData_1.GlobalData.World,
+              "r.MotionBlur.Amount 0",
+            )),
         this.UJi(t.Actors),
         (this.mJi = new Array()),
         this.EJi &&
@@ -236,12 +259,12 @@ class PlotTemplate {
     this.aJi.clear();
     for (let t = 0; t < ACTOR_NUM_MAX; t++) {
       var i,
-        s,
         o,
+        s,
         r,
-        _,
-        a = this.DJi[t];
-      a.Reset(),
+        a,
+        _ = this.DJi[t];
+      _.Reset(),
         t >= e.length ||
           ((i =
             t === this.dJi
@@ -249,47 +272,47 @@ class PlotTemplate {
               : ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
                   e[t].EntityId,
                 )),
-          this.Vjs(i)
-            ? (s = i.Entity.GetComponent(3))
-              ? (ModelManager_1.ModelManager.WorldModel.AddIgnore(s.Actor),
-                s.ClearInput(),
-                (o = i.Entity.GetComponent(33))?.Valid &&
-                  o.StopAllSkills("PlotTemplate.ControlActor"),
-                (o = i.Entity.GetComponent(37))?.Valid &&
-                  (o.CharacterMovement &&
-                    (o.CharacterMovement.Velocity = Vector_1.Vector.ZeroVector),
-                  s.ResetCachedVelocityTime()),
-                (r = i.Entity.GetComponent(162))?.Valid &&
+          this._Ws(i)
+            ? (o = i.Entity.GetComponent(3))
+              ? (ModelManager_1.ModelManager.WorldModel.AddIgnore(o.Actor),
+                o.ClearInput(),
+                (s = i.Entity.GetComponent(34))?.Valid &&
+                  s.StopAllSkills("PlotTemplate.ControlActor"),
+                (s = i.Entity.GetComponent(38))?.Valid &&
+                  (s.CharacterMovement &&
+                    (s.CharacterMovement.Velocity = Vector_1.Vector.ZeroVector),
+                  o.ResetCachedVelocityTime()),
+                (r = i.Entity.GetComponent(163))?.Valid &&
                   r.SetSightTargetItem(void 0),
-                (_ = i.Entity.GetComponent(59))?.Valid &&
-                  ((a.OriginMoveSync = _.GetEnableMovementSync()),
-                  a.OriginMoveSync) &&
-                  _.SetEnableMovementSync(!1, "PlotTemplate"),
-                (a.Valid = !0),
-                (a.EntityId = i.Id),
-                (a.PbDataId = e[t].EntityId),
-                (a.TalkerId = e[t].TalkerId),
-                (a.OriginPos.X = s.ActorLocationProxy.X),
-                (a.OriginPos.Y = s.ActorLocationProxy.Y),
-                (a.OriginPos.Z = s.ActorLocationProxy.Z),
-                (a.OriginPos.A = s.ActorRotationProxy.Yaw),
-                Object.assign(a.Pos, a.OriginPos),
-                (a.IsPosReset = e[t].IsResetPosition),
-                (a.OriginEnableLookAt = !1),
-                (a.Visible = !0),
-                (a.OriginMoveMode = o.CharacterMovement.MovementMode),
-                a.IsPlayer() ||
-                  ((_ = i?.Entity?.GetComponent(171)),
-                  (a.FaceChangeManager = _?.ExpressionController)),
-                -1 !== a.TalkerId
-                  ? (this.aJi.has(a.TalkerId) &&
+                (a = i.Entity.GetComponent(60))?.Valid &&
+                  ((_.OriginMoveSync = a.GetEnableMovementSync()),
+                  _.OriginMoveSync) &&
+                  a.SetEnableMovementSync(!1, "PlotTemplate"),
+                (_.Valid = !0),
+                (_.EntityId = i.Id),
+                (_.PbDataId = e[t].EntityId),
+                (_.TalkerId = e[t].TalkerId),
+                (_.OriginPos.X = o.ActorLocationProxy.X),
+                (_.OriginPos.Y = o.ActorLocationProxy.Y),
+                (_.OriginPos.Z = o.ActorLocationProxy.Z),
+                (_.OriginPos.A = o.ActorRotationProxy.Yaw),
+                Object.assign(_.Pos, _.OriginPos),
+                (_.IsPosReset = e[t].IsResetPosition),
+                (_.OriginEnableLookAt = !1),
+                (_.Visible = !0),
+                (_.OriginMoveMode = s.CharacterMovement.MovementMode),
+                _.IsPlayer() ||
+                  ((a = i?.Entity?.GetComponent(172)),
+                  (_.FaceChangeManager = a?.ExpressionController)),
+                -1 !== _.TalkerId
+                  ? (this.aJi.has(_.TalkerId) &&
                       Log_1.Log.CheckWarn() &&
                       Log_1.Log.Warn(
                         "Plot",
                         27,
                         "重复的对话人，请策划检查配置",
                       ),
-                    this.aJi.set(a.TalkerId, a))
+                    this.aJi.set(_.TalkerId, _))
                   : Log_1.Log.CheckWarn() &&
                     Log_1.Log.Warn(
                       "Plot",
@@ -298,18 +321,23 @@ class PlotTemplate {
                       ["演员位", t],
                     ),
                 t === this.dJi
-                  ? (s.Entity.GetComponent(71).HideWeapon(-1, !0, !1),
+                  ? (o.Entity.GetComponent(72).HideWeapon(-1, !0, !1),
                     this.EJi ||
-                      s.Actor.CharRenderingComponent?.SetDisableFightDither(!0))
-                  : ((_ = i.Entity.GetComponent(171))?.Valid &&
-                      ((a.OriginEnableLookAt = _.OpenLookAt),
-                      _.SetLookAtPlayerEnabled(!1),
-                      _.OnNpcInPlot(!0)),
-                    (_ = i.Entity?.GetComponent(39))?.Valid &&
-                      ((a.OriginEnableAi = _.IsAiDriver && _.IsEnabled()),
-                      a.OriginEnableAi) &&
-                      _.DisableAi("Plot Control Ai"),
-                    o.CharacterMovement.SetMovementMode(1),
+                      o.Actor.CharRenderingComponent?.SetDisableFightDither(!0))
+                  : (NpcPerformController_1.NpcPerformController.ForceSetNpcDitherVisible(
+                      !0,
+                      _.PbDataId,
+                      1,
+                    ),
+                    (a = i.Entity.GetComponent(172))?.Valid &&
+                      ((_.OriginEnableLookAt = a.OpenLookAt),
+                      a.SetLookAtPlayerEnabled(!1),
+                      a.OnNpcInPlot(!0)),
+                    (a = i.Entity?.GetComponent(40))?.Valid &&
+                      ((_.OriginEnableAi = a.IsAiDriver && a.IsEnabled()),
+                      _.OriginEnableAi) &&
+                      a.DisableAi("Plot Control Ai"),
+                    s.CharacterMovement.SetMovementMode(1),
                     r.SetBlendSpaceLookAt(!0)),
                 Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
@@ -317,13 +345,13 @@ class PlotTemplate {
                     27,
                     "演员信息",
                     ["index", t],
-                    ["actor", s.Actor.GetName()],
-                    ["entityId", a.EntityId],
+                    ["actor", o.Actor.GetName()],
+                    ["entityId", _.EntityId],
                     [
                       "pbDataId",
-                      -1 === a.PbDataId
-                        ? s.CreatureData.GetPbDataId()
-                        : a.PbDataId,
+                      -1 === _.PbDataId
+                        ? o.CreatureData.GetPbDataId()
+                        : _.PbDataId,
                     ],
                   ))
               : Log_1.Log.CheckWarn() &&
@@ -338,7 +366,7 @@ class PlotTemplate {
               ]));
     }
   }
-  Vjs(t) {
+  _Ws(t) {
     return (
       !!t?.Valid &&
       !(
@@ -353,49 +381,49 @@ class PlotTemplate {
     this.nx.IsBackground && t();
     var i = new Array();
     for (let t = 0; t < e.length; t++) {
-      var s,
-        o,
+      var o,
+        s,
         r = e[t],
-        _ = this.DJi[t];
-      _.Valid
-        ? ((s = r.InitialState?.InitialMontage) &&
-            ((o = _.IsPlayer()
-              ? this.PJi(s.MontageId.MontageId)
-              : s.MontageId.MontageId),
-            (s = s.MontageId.IsAbp
-              ? ModelManager_1.ModelManager.PlotModel.GetAbpMontageConfig(o)
-              : ModelManager_1.ModelManager.PlotModel.GetMontageConfig(o))
-              ? i.push(this.xJi(_, s.ActionMontage))
+        a = this.DJi[t];
+      a.Valid
+        ? ((o = r.InitialState?.InitialMontage) &&
+            ((s = a.IsPlayer()
+              ? this.PJi(o.MontageId.MontageId)
+              : o.MontageId.MontageId),
+            (o = o.MontageId.IsAbp
+              ? ModelManager_1.ModelManager.PlotModel.GetAbpMontageConfig(s)
+              : ModelManager_1.ModelManager.PlotModel.GetMontageConfig(s))
+              ? i.push(this.xJi(a, o.ActionMontage))
               : ControllerHolder_1.ControllerHolder.FlowController.LogError(
                   "初始化演员蒙太奇时找不到资源",
-                  ["id", o],
+                  ["id", s],
                 )),
-          (s = r.InitialState?.InitialLookAt) &&
-            ((o = EntitySystem_1.EntitySystem.Get(_.EntityId).GetComponent(
-              162,
+          (o = r.InitialState?.InitialLookAt) &&
+            ((s = EntitySystem_1.EntitySystem.Get(a.EntityId).GetComponent(
+              163,
             )),
-            this.wJi(o, s, _)))
+            this.wJi(s, o, a)))
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Plot", 27, "初始化演员失败", [
             "EntityId",
             r.EntityId,
           ]);
     }
-    const a = new CustomPromise_1.CustomPromise();
-    i.push(a.Promise),
+    const _ = new CustomPromise_1.CustomPromise();
+    i.push(_.Promise),
       TimerSystem_1.TimerSystem.Delay(() => {
-        a.SetResult();
+        _.SetResult();
       }, BEGIN_WAIT_TIME),
       Promise.all(i).finally(t);
   }
   async xJi(i, t) {
-    const s = new CustomPromise_1.CustomPromise();
+    const o = new CustomPromise_1.CustomPromise();
     return (
       this.BJi(t, (t) => {
         var e;
         ObjectUtils_1.ObjectUtils.IsValid(t) &&
           ((e = EntitySystem_1.EntitySystem.Get(i.EntityId).GetComponent(
-            162,
+            163,
           ).MainAnimInstance).Montage_IsPlaying(t) || e.Montage_Play(t),
           e.Montage_SetNextSection(
             CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
@@ -409,25 +437,25 @@ class PlotTemplate {
           (i.BodyMontage = t),
           (i.MontageLooping = !0),
           (i.MontageKeeping = !0)),
-          s.SetResult();
+          o.SetResult();
       }),
-      s.Promise
+      o.Promise
     );
   }
   async SetTemplateNew(e) {
     if (!this.EJi && e && this.IsInTemplate) {
-      var i, s;
+      var i, o;
       this.bJi(e.TemplateMode.CameraId),
         e.TargetPos &&
           (this.qJi(e.TargetPos),
-          (s = Vector_1.Vector.Create(
+          (o = Vector_1.Vector.Create(
             e.TargetPos.X,
             e.TargetPos.Y,
             e.TargetPos.Z,
           )),
           (i = Rotator_1.Rotator.Create(0, e.TargetPos.A, 0)),
           this.rJi.SetRotation(i.Quaternion()),
-          this.rJi.SetLocation(s),
+          this.rJi.SetLocation(o),
           this.rJi.SetScale3D(Vector_1.Vector.OneVectorProxy),
           (this.nJi = e.TargetPos.A));
       let t = !1;
@@ -448,11 +476,11 @@ class PlotTemplate {
                   Vector_1.Vector.OneVectorProxy,
                 )
               : void 0),
-            (s = this.GJi(t)),
+            (o = this.GJi(t)),
             this.NJi(),
-            this.OJi(i),
+            this.OJi(i, e.CameraSetting),
             this.PlayCameraAnimCompatible(e.CameraAnim),
-            await s)
+            await o)
           : ControllerHolder_1.ControllerHolder.FlowController.LogError(
               "没有演员列表啊，前面也没有",
             );
@@ -481,21 +509,26 @@ class PlotTemplate {
   }
   async GJi(e) {
     let i = void 0;
-    var s = this.iJi.ActorDataArray,
-      o = Vector_1.Vector.Create(0, 0, 0),
+    var o = this.iJi.ActorDataArray,
+      s = Vector_1.Vector.Create(0, 0, 0),
       r = Vector_1.Vector.Create(0, 0, 0),
-      _ = new UE.Vector(0, 0, 0),
-      a = new UE.Rotator(0, 0, 0),
+      a = new UE.Vector(0, 0, 0),
+      _ = new UE.Rotator(0, 0, 0),
       t = ((this.fJi = 0), Time_1.Time.Frame);
-    Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Plot", 27, "剧情切镜飘带处理 -关闭", ["frame", t]),
+    this.nx.IsBackground ||
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Plot", 27, "剧情切镜飘带处理 -关闭", ["frame", t]),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "r.Kuro.DisableKawaiiSimulate 1",
-      );
+      ),
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "r.InvalidSeveralFrameOcculusion 5",
+      ));
     for (
       let t = 0;
-      t < s.length && !(t >= this.mJi.length || t >= this.DJi.length);
+      t < o.length && !(t >= this.mJi.length || t >= this.DJi.length);
       t++
     ) {
       var h = this.mJi[t];
@@ -509,31 +542,34 @@ class PlotTemplate {
             if (l) {
               e && h.Offset
                 ? (this.qJi(h.Offset),
-                  (_.X = h.Offset.X),
-                  (_.Y = h.Offset.Y),
-                  (_.Z = h.Offset.Z),
-                  (a.Yaw = ((h.Offset.A + 180) % 360) - 180),
-                  r.FromUeVector(_))
-                : ((m = s[t]),
-                  o.Set(m.X, m.Y, 0),
-                  this.rJi.TransformPosition(o, r),
-                  _.Set(r.X, r.Y, r.Z),
-                  (a.Yaw = ((m.A + this.nJi + 180) % 360) - 180));
-              var m = _.Z,
-                c = (this.kJi(_, l), _.Z - m),
+                  (a.X = h.Offset.X),
+                  (a.Y = h.Offset.Y),
+                  (a.Z = h.Offset.Z),
+                  (_.Yaw = ((h.Offset.A + 180) % 360) - 180),
+                  r.FromUeVector(a))
+                : ((m = o[t]),
+                  s.Set(m.X, m.Y, 0),
+                  this.rJi.TransformPosition(s, r),
+                  a.Set(r.X, r.Y, r.Z),
+                  (_.Yaw = ((m.A + this.nJi + 180) % 360) - 180));
+              var m = a.Z,
+                c = (this.kJi(a, l), a.Z - m),
                 E =
-                  ((_.Z +=
+                  ((a.Z +=
                     l.Actor.CapsuleComponent.GetScaledCapsuleHalfHeight()),
-                  this.FJi(n.Pos, _.X, _.Y, _.Z, a.Yaw));
+                  this.FJi(n.Pos, a.X, a.Y, a.Z, _.Yaw));
               if (
-                ((n.Pos.X = _.X),
-                (n.Pos.Y = _.Y),
-                (n.Pos.Z = _.Z),
-                (n.Pos.A = a.Yaw),
+                ((n.Pos.X = a.X),
+                (n.Pos.Y = a.Y),
+                (n.Pos.Z = a.Z),
+                (n.Pos.A = _.Yaw),
                 !this.nx.IsBackground)
               )
                 if (
-                  (t === this.uJi &&
+                  (!n.IsPlayer() &&
+                    l.HasMesh() &&
+                    (l.SkeletalMesh.bForceTickThisFrame = !0),
+                  t === this.uJi &&
                     (Log_1.Log.CheckDebug() &&
                       Log_1.Log.Debug("Plot", 27, "演员位", [
                         "station",
@@ -552,8 +588,8 @@ class PlotTemplate {
                     if (this.VJi(n.OriginPos, n.Pos)) {
                       i =
                         TeleportController_1.TeleportController.TeleportToPositionNoLoading(
-                          _,
                           a,
+                          _,
                           "剧情演出.SetupTemplateActor",
                         );
                       continue;
@@ -563,8 +599,8 @@ class PlotTemplate {
                     );
                   }
                   l.FixBornLocation("剧情演出.SetupTemplateActor", !0, r, !1),
-                    l.SetActorRotation(a, "剧情演出.SetupTemplateActor", !1),
-                    l.SetInputRotator(a);
+                    l.SetActorRotation(_, "剧情演出.SetupTemplateActor", !1),
+                    l.SetInputRotator(_);
                 }
             } else
               Log_1.Log.CheckWarn() &&
@@ -581,63 +617,64 @@ class PlotTemplate {
     }
     return (
       void 0 !== i && (await i),
-      (this.Q2n = new CustomPromise_1.CustomPromise()),
-      (this.K2n = t + 3),
-      await this.Q2n.Promise,
+      this.nx.IsBackground ||
+        ((this.iNn = new CustomPromise_1.CustomPromise()),
+        (this.tNn = t + 3),
+        await this.iNn.Promise),
       !0
     );
   }
-  X2n() {
+  rNn() {
     var t;
-    !this.Q2n ||
-      (t = Time_1.Time.Frame) < this.K2n ||
+    !this.iNn ||
+      (t = Time_1.Time.Frame) < this.tNn ||
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "剧情切镜飘带处理 -开启", ["curFrame", t]),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "r.Kuro.DisableKawaiiSimulate 0",
       ),
-      (t = this.Q2n),
-      (this.K2n = -1),
-      (this.Q2n = void 0),
+      (t = this.iNn),
+      (this.tNn = -1),
+      (this.iNn = void 0),
       t.SetResult());
   }
-  FJi(t, e, i, s, o) {
+  FJi(t, e, i, o, s) {
     return (
       MathUtils_1.MathUtils.IsNearlyEqual(t.X, e, 1) &&
       MathUtils_1.MathUtils.IsNearlyEqual(t.Y, i, 1) &&
-      MathUtils_1.MathUtils.IsNearlyEqual(t.Z, s, 1) &&
-      MathUtils_1.MathUtils.IsNearlyEqual(t.A, o, 1)
+      MathUtils_1.MathUtils.IsNearlyEqual(t.Z, o, 1) &&
+      MathUtils_1.MathUtils.IsNearlyEqual(t.A, s, 1)
     );
   }
   VJi(t, e) {
     (t = Vector_1.Vector.Create(t)), (e = Vector_1.Vector.Create(e));
     return Vector_1.Vector.DistSquared(t, e) > MAX_POS_DIST_SQ;
   }
-  OJi(e) {
+  OJi(e, i) {
     if (!this.nx.IsBackground) {
       this.LJi.Stop();
-      var i = this.iJi.CameraData;
+      var o = this.iJi.CameraData;
       let t = e;
       if (!t) {
-        var e = Vector_1.Vector.Create(i.Pos.X, i.Pos.Y, i.Pos.Z),
-          s = Rotator_1.Rotator.Create(i.Rot.Y, i.Rot.Z, i.Rot.X);
+        var e = Vector_1.Vector.Create(o.Pos.X, o.Pos.Y, o.Pos.Z),
+          s = Rotator_1.Rotator.Create(o.Rot.Y, o.Rot.Z, o.Rot.X);
         if (
           ("_CU" === this.cJi || "_MS" === this.cJi) &&
           0 <= this.uJi &&
           this.uJi < this.mJi.length
         ) {
-          var o = this.mJi[this.uJi].Index;
-          if (o !== ACTOR_EMPTY_INDEX) {
-            o = this.DJi[o];
+          var r = this.mJi[this.uJi].Index;
+          if (r !== ACTOR_EMPTY_INDEX) {
+            r = this.DJi[r];
             let t =
-              EntitySystem_1.EntitySystem.Get(o.EntityId)
+              EntitySystem_1.EntitySystem.Get(r.EntityId)
                 ?.GetComponent(3)
                 ?.Actor.Mesh.GetSocketTransform(PlotTemplate.HJi, 2)
                 ?.GetLocation().Z ?? DEFAULT_CAMERA_BASE;
             0 === t
               ? ((t =
-                  EntitySystem_1.EntitySystem.Get(o.EntityId)
+                  EntitySystem_1.EntitySystem.Get(r.EntityId)
                     ?.GetComponent(3)
                     ?.Actor.Mesh.GetSocketTransform(PlotTemplate.jJi, 2)
                     ?.GetLocation().Z ?? DEFAULT_CAMERA_BASE_HEAD),
@@ -651,12 +688,12 @@ class PlotTemplate {
                 ]);
           }
         }
-        o = Transform_1.Transform.Create(
+        r = Transform_1.Transform.Create(
           s.Quaternion(),
           e,
           Vector_1.Vector.OneVectorProxy,
         );
-        (t = Transform_1.Transform.Create()), o.ComposeTransforms(this.rJi, t);
+        (t = Transform_1.Transform.Create()), r.ComposeTransforms(this.rJi, t);
       }
       (s =
         CameraController_1.CameraController.SequenceCamera.GetComponent(
@@ -665,12 +702,17 @@ class PlotTemplate {
         (e = s.CameraComponent);
       ObjectUtils_1.ObjectUtils.IsValid(s) &&
         (s.K2_SetActorTransform(t.ToUeTransform(), !1, void 0, !0),
-        i.Aperture && (e.CurrentAperture = i.Aperture),
-        i.FocalLength && (e.CurrentFocalLength = i.FocalLength),
-        i.FocusDistance &&
-          (e.FocusSettings.ManualFocusDistance = i.FocusDistance),
-        (e.Filmback.SensorWidth = CAMERA_FILMBACK_SENSOR_WIDTH),
-        (e.Filmback.SensorHeight = CAMERA_FILMBACK_SENSOR_HEIGHT),
+        s.ResetSeqCineCamSetting(),
+        i
+          ? ((e.CurrentAperture = i.Aperture),
+            (e.CurrentFocalLength = i.FocalLength),
+            (e.FocusSettings.ManualFocusDistance = i.FocusDistance),
+            (e.CurrentFocalRegion = i.FocalRegion))
+          : (o.Aperture && (e.CurrentAperture = o.Aperture),
+            o.FocalLength && (e.CurrentFocalLength = o.FocalLength),
+            o.FocusDistance &&
+              (e.FocusSettings.ManualFocusDistance = o.FocusDistance),
+            o.FocalRegion && (e.CurrentFocalRegion = o.FocalRegion)),
         this.WJi());
     }
   }
@@ -679,12 +721,14 @@ class PlotTemplate {
       t.Valid &&
         t.Visible &&
         EntitySystem_1.EntitySystem.Get(t.EntityId)
-          ?.GetComponent(162)
+          ?.GetComponent(163)
           ?.StartForceDisableAnimOptimization(0);
   }
   async EndTemplateNew(t) {
     this.IsInTemplate &&
       (this.LJi.Stop(),
+      this.yia.CleanAction(!1),
+      this.B4a.CleanAction(!1),
       this.EJi ||
         (ModelManager_1.ModelManager.PlotModel.SwitchCameraMode(1),
         CameraController_1.CameraController.FightCamera.LogicComponent.ResetArmLengthAndRotation(
@@ -694,8 +738,8 @@ class PlotTemplate {
           GlobalData_1.GlobalData.World,
           "r.MotionBlur.Amount " + this.yJi,
         )),
-      await this.Lc(t),
-      this.uea.CleanAction(!1),
+      (t = this.Lc(t)),
+      this.nx.IsBackground || (await t),
       this.hJi.forEach((t) => {
         TimerSystem_1.TimerSystem.Remove(t);
       }),
@@ -720,107 +764,112 @@ class PlotTemplate {
   async Lc(e) {
     var i = [];
     for (let t = 0; t < this.DJi.length; t++) {
-      var s,
-        o,
+      var o,
+        s,
         r,
-        _,
-        a = this.DJi[t];
-      a.Valid &&
-        ((o = (s = EntitySystem_1.EntitySystem.Get(a.EntityId))?.GetComponent(
+        a,
+        _ = this.DJi[t];
+      _.Valid &&
+        ((s = (o = EntitySystem_1.EntitySystem.Get(_.EntityId))?.GetComponent(
           3,
         ))
-          ? (o.ClearInput(),
-            ModelManager_1.ModelManager.WorldModel.RemoveIgnore(o.Actor),
-            a.Visible ||
+          ? (s.ClearInput(),
+            ModelManager_1.ModelManager.WorldModel.RemoveIgnore(s.Actor),
+            _.Visible ||
               ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
-                s,
+                o,
                 !0,
                 "[PlotTemplate.ReleaseActor] 恢复模板演出实体显隐",
               ),
-            a.MouseMontageLoadingId !==
+            _.MouseMontageLoadingId !==
               ResourceSystem_1.ResourceSystem.InvalidId &&
               (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(
-                a.MouseMontageLoadingId,
+                _.MouseMontageLoadingId,
               ),
-              (a.MouseMontageLoadingId =
+              (_.MouseMontageLoadingId =
                 ResourceSystem_1.ResourceSystem.InvalidId)),
-            (r = (_ = s.GetComponent(162))?.MainAnimInstance),
+            (r = (a = o.GetComponent(163))?.MainAnimInstance),
             ObjectUtils_1.ObjectUtils.IsValid(r) &&
               (r.Montage_Stop(MONTAGE_BLEND_OUT_TIME),
-              _.ResetSightLimit(),
-              _.SetSightTargetItem(void 0)),
-            (r = s.GetComponent(59))?.Valid &&
-              a.OriginMoveSync &&
+              a.ResetSightLimit(),
+              a.SetSightTargetItem(void 0)),
+            (r = o.GetComponent(60))?.Valid &&
+              _.OriginMoveSync &&
               r.SetEnableMovementSync(!0, "PlotTemplate"),
-            void 0 !== a.TurningTimer &&
-              TimerSystem_1.TimerSystem.Remove(a.TurningTimer),
+            void 0 !== _.TurningTimer &&
+              TimerSystem_1.TimerSystem.Remove(_.TurningTimer),
             t === this.dJi
               ? this.EJi ||
-                o.Actor.CharRenderingComponent?.SetDisableFightDither(!1)
-              : ((r = s?.GetComponent(39))?.Valid &&
-                  a.OriginEnableAi &&
+                s.Actor.CharRenderingComponent?.SetDisableFightDither(!1)
+              : (NpcPerformController_1.NpcPerformController.ForceSetNpcDitherVisible(
+                  !1,
+                  _.PbDataId,
+                  1,
+                ),
+                (r = o?.GetComponent(40))?.Valid &&
+                  _.OriginEnableAi &&
                   r.EnableAi("Plot Control Ai"),
-                (r = s.GetComponent(171))?.Valid &&
-                  (a.OriginEnableLookAt && r.SetLookAtPlayerEnabled(!0),
+                (r = o.GetComponent(172))?.Valid &&
+                  (_.OriginEnableLookAt && r.SetLookAtPlayerEnabled(!0),
                   r.OnNpcInPlot(!1)),
-                (r = s.GetComponent(37))?.Valid &&
-                  r.CharacterMovement.SetMovementMode(a.OriginMoveMode),
-                _.SetBlendSpaceLookAt(!1),
-                (r = s.GetComponent(0).GetModelConfig()),
+                (r = o.GetComponent(38))?.Valid &&
+                  r.CharacterMovement.SetMovementMode(_.OriginMoveMode),
+                a.SetBlendSpaceLookAt(!1),
+                (r = o.GetComponent(0).GetModelConfig()),
                 (ObjectUtils_1.ObjectUtils.SoftObjectPathIsValid(r.DA) &&
                   !StringUtils_1.StringUtils.IsEmpty(
                     r.DA.AssetPathName?.toString(),
                   ) &&
                   "None" !== r.DA.AssetPathName?.toString()) ||
-                  ((_ = o.SkeletalMesh.SkeletalMesh),
+                  ((a = s.SkeletalMesh.SkeletalMesh),
                   UE.KuroMeshTextureFunctionLibrary.HandleSkeletalMeshComponentStreaming(
-                    _,
+                    a,
                     !1,
                   ))),
-            i.push(this.KJi(a, e?.IsResetPosition)),
-            a.Reset())
+            i.push(this.KJi(_, e?.IsResetPosition)),
+            _.Reset())
           : Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Plot",
               27,
               "模板结束时无法获取实体CharacterActorComponent",
-              ["EntityId", a.EntityId],
-              ["PbDataId", a.PbDataId],
+              ["EntityId", _.EntityId],
+              ["PbDataId", _.PbDataId],
             ));
     }
     await Promise.all(i);
   }
   async KJi(e, i = !1) {
     if (!ModelManager_1.ModelManager.AutoRunModel.IsInLogicTreeGmMode()) {
-      var s = new UE.Vector(0, 0, 0),
-        o = new UE.Rotator(0, 0, 0);
+      var o = Vector_1.Vector.Create(),
+        s = new UE.Rotator(0, 0, 0);
       let t = !1;
       i && e.IsPosReset
-        ? ((o.Yaw = e.OriginPos.A),
-          s.Set(e.OriginPos.X, e.OriginPos.Y, e.OriginPos.Z),
+        ? ((s.Yaw = e.OriginPos.A),
+          o.Set(e.OriginPos.X, e.OriginPos.Y, e.OriginPos.Z),
           (t = !0))
         : this.nx.IsBackground &&
-          ((o.Yaw = e.Pos.A), s.Set(e.Pos.X, e.Pos.Y, e.Pos.Z), (t = !0)),
+          ((s.Yaw = e.Pos.A), o.Set(e.Pos.X, e.Pos.Y, e.Pos.Z), (t = !0)),
         t &&
           ((i = EntitySystem_1.EntitySystem.Get(e.EntityId).GetComponent(3)),
           this.EJi
-            ? i.SetInputRotator(o)
+            ? i.SetInputRotator(s)
             : e.IsPlayer()
               ? await TeleportController_1.TeleportController.TeleportToPositionNoLoading(
+                  o.ToUeVector(),
                   s,
-                  o,
                   "模板演出结束设置位置",
                 )
-              : (i.SetActorRotation(o, "模板演出结束设置位置", !1),
-                i.SetInputRotator(o),
-                i.SetActorLocation(s, "模板演出结束设置位置", !1)));
+              : (i.SetActorRotation(s, "模板演出结束设置位置", !1),
+                i.SetInputRotator(s),
+                i.FixBornLocation("模板演出结束设置位置", !0, o, !1)));
     }
   }
   RJi(t, e) {
     const i = new Array();
     this.dJi = PLAYER_UNUSED_INDEX;
-    for (const s of t)
-      s !== PLAYER_USED_ID ? i.push(s) : (this.dJi = t.indexOf(s));
+    for (const o of t)
+      o !== PLAYER_USED_ID ? i.push(o) : (this.dJi = t.indexOf(o));
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Plot", 18, "剧情加载等待-npc-开始", ["", i]),
       WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
@@ -830,12 +879,11 @@ class PlotTemplate {
             Log_1.Log.Debug("Plot", 18, "剧情加载等待-npc-完成", ["result", t]),
             this.$In(i, e);
         },
-        !0,
         WAIT_ENTITY_TIME,
       );
   }
-  $In(t, s) {
-    const o = new Map();
+  $In(t, o) {
+    const s = new Map();
     for (const r of t) {
       var e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(r);
       if (e?.IsInit) {
@@ -846,38 +894,38 @@ class PlotTemplate {
             if (i?.length && "None" !== i) continue;
           }
           i = e.Entity.GetComponent(3)?.SkeletalMesh?.SkeletalMesh;
-          ObjectUtils_1.ObjectUtils.IsValid(i) && o.set(i, !1);
+          ObjectUtils_1.ObjectUtils.IsValid(i) && s.set(i, !1);
         }
       }
     }
-    0 === o.size
-      ? s()
+    0 === s.size
+      ? o()
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Plot", 27, "剧情加载等待 npc纹理流送 开始", [
             "size",
-            o.size,
+            s.size,
           ]),
-        (this.FVs = 0),
+        (this.a9s = 0),
         (this.xJt = TimerSystem_1.TimerSystem.Forever(() => {
-          this.FVs++;
+          this.a9s++;
           let t = !0;
-          for (var [e, i] of o)
+          for (var [e, i] of s)
             i ||
               (UE.KuroMeshTextureFunctionLibrary.IsSkeletalMeshComponentStreamingComplete(
                 e,
               )
-                ? o.set(e, !0)
+                ? s.set(e, !0)
                 : (t = !1));
-          (t || 15 < this.FVs) &&
+          (t || 15 < this.a9s) &&
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Plot", 27, "剧情加载等待 npc纹理流送 完成", [
                 "checkTimes",
-                this.FVs,
+                this.a9s,
               ]),
-            (this.FVs = 0),
+            (this.a9s = 0),
             this.xJt?.Remove(),
             (this.xJt = void 0),
-            s());
+            o());
         }, 200)));
   }
   qJi(t) {
@@ -909,21 +957,26 @@ class PlotTemplate {
         },
       });
   }
-  async HandleTemplateShowTalk(t) {
-    var e;
-    this.IsInTemplate &&
-      (this.TJi ? (this.TJi = !1) : (this.IJi = !1),
-      t.CameraData &&
-        Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Plot", 27, "旧演出模板已废弃"),
-      (e = this.SetTemplateNew(t.FlowTemplate)),
-      this.JJi(t),
-      await e,
-      this.QJi(t.WhoId, t.ActorTurnToArray),
-      this.nx.IsBackground ||
-        (this.XJi(t.WhoId, t.ActorLookAtArray),
-        this.$Ji(t.ActorMontageArray),
-        this.YJi(t)));
+  async HandleTemplateShowTalk(e) {
+    if (this.IsInTemplate) {
+      this.TJi ? (this.TJi = !1) : (this.IJi = !1),
+        e.CameraData &&
+          Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn("Plot", 27, "旧演出模板已废弃");
+      const i = new CustomPromise_1.CustomPromise();
+      TimerSystem_1.TimerSystem.Next(() => {
+        var t = this.SetTemplateNew(e.FlowTemplate);
+        this.JJi(e),
+          t.finally(() => {
+            i.SetResult();
+          });
+      }),
+        await i.Promise,
+        this.QJi(e.WhoId, e.ActorTurnToArray),
+        this.nx.IsBackground ||
+          (this.XJi(e.WhoId, e.ActorLookAtArray, "Option" === e.Type),
+          this.$Ji(e.ActorMontageArray));
+    }
   }
   JJi(t) {
     let e = void 0;
@@ -934,22 +987,29 @@ class PlotTemplate {
     }
     e && this.LJi.Play(e);
   }
-  XJi(t, e) {
-    this.uea.CleanAction();
-    var i,
-      s = this.aJi.get(t);
-    const o = s?.Valid
-        ? EntitySystem_1.EntitySystem.Get(s.EntityId)?.GetComponent(3)
-        : void 0,
-      r =
-        (o?.Valid ||
-          (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug(
-              "Plot",
-              27,
-              "说话人未在模板内，可能会导致演员看向错误",
-            )),
-        new Map());
+  XJi(t, e, i) {
+    this.yia.CleanAction();
+    let o = void 0,
+      s = void 0;
+    i
+      ? this.dJi !== PLAYER_UNUSED_INDEX &&
+        ((o = this.DJi[this.dJi]),
+        (s =
+          ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
+            3,
+          )))
+      : ((o = this.aJi.get(t)),
+        (s = o?.Valid
+          ? EntitySystem_1.EntitySystem.Get(o.EntityId)?.GetComponent(3)
+          : void 0)),
+      s?.Valid ||
+        (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Plot",
+            27,
+            "说话人未在模板内，可能会导致演员看向错误",
+          ));
+    const r = new Map();
     e?.forEach((t) => {
       var e;
       r.has(t.ActorIndex)
@@ -957,67 +1017,69 @@ class PlotTemplate {
           e.sort((t, e) => (t.DelayTime ?? 0) - (e.DelayTime ?? 0)))
         : ((e = new Array()).push(t), r.set(t.ActorIndex, e));
     });
-    for (const h of this.DJi)
-      !h.Valid ||
-        h.Visible ||
-        h.LookLocked ||
-        ((i = EntitySystem_1.EntitySystem.Get(h.EntityId)?.GetComponent(162))
+    for (const n of this.DJi) {
+      var a;
+      !n.Valid ||
+        n.Visible ||
+        n.LookLocked ||
+        ((a = EntitySystem_1.EntitySystem.Get(n.EntityId)?.GetComponent(163))
           ?.Valid &&
-          (i.ResetSightLimit(), i.SetSightTargetItem(void 0)));
-    for (const n of this.mJi)
-      if (n.Index !== ACTOR_EMPTY_INDEX) {
+          (a.ResetSightLimit(), a.SetSightTargetItem(void 0)));
+    }
+    for (const l of this.mJi)
+      if (l.Index !== ACTOR_EMPTY_INDEX) {
         var _,
-          a = this.DJi[n.Index];
-        if (a.Valid) {
-          const l = EntitySystem_1.EntitySystem.Get(a.EntityId)?.GetComponent(
-            162,
+          h = this.DJi[l.Index];
+        if (h.Valid) {
+          const m = EntitySystem_1.EntitySystem.Get(h.EntityId)?.GetComponent(
+            163,
           );
-          l?.Valid &&
-            ((_ = a.LookLocked),
-            (r.has(n.Index) && this.cea(l, r.get(n.Index), a, s)) ||
+          m?.Valid &&
+            ((_ = h.LookLocked),
+            (r.has(l.Index) && this.Iia(m, r.get(l.Index), h, o)) ||
               _ ||
-              ("_CU" === this.cJi && n === this.mJi[this.uJi]
-                ? (l.ResetSightLimit(), l.SetSightTargetItem(void 0))
-                : a.Visible &&
-                  a.Valid &&
-                  (s?.Visible && s?.Valid
-                    ? a === s
-                      ? l.GetSightTargetPoint() ||
-                        this.zJi(l.GetSightTargetItem()) ||
-                        (l.ResetSightLimit(), l.SetSightTargetItem(void 0))
+              ("_CU" === this.cJi && l === this.mJi[this.uJi]
+                ? (m.ResetSightLimit(), m.SetSightTargetItem(void 0))
+                : h.Visible &&
+                  h.Valid &&
+                  (o?.Visible && o?.Valid
+                    ? h === o
+                      ? m.GetSightTargetPoint() ||
+                        this.zJi(m.GetSightTargetItem()) ||
+                        (m.ResetSightLimit(), m.SetSightTargetItem(void 0))
                       : ((_ =
                           ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
                             .PlotTemplateLookAtDelay),
                         (_ = MathUtils_1.MathUtils.GetRandomRange(_[0], _[1])),
-                        this.uea.DelayAction(
-                          a.EntityId,
+                        this.yia.DelayAction(
+                          h.EntityId,
                           _,
                           () => {
-                            l.ResetSightLimit(), l.SetSightTargetItem(o);
+                            m.ResetSightLimit(), m.SetSightTargetItem(s);
                           },
                           !1,
                         ))
-                    : (l.ResetSightLimit(), l.SetSightTargetItem(void 0)))));
+                    : (m.ResetSightLimit(), m.SetSightTargetItem(void 0)))));
         }
       }
   }
-  cea(i, t, s, o) {
+  Iia(i, t, o, s) {
     const r = t.length - 1;
     if (r < 0) return !1;
-    let _ = !1;
+    let a = !1;
     return (
       t.forEach((t, e) => {
-        (_ ||=
+        (a ||=
           (t.DelayTime ?? 0) * CommonDefine_1.MILLIONSECOND_PER_SECOND <
           TimerSystem_1.MIN_TIME),
-          this.wJi(i, t.Target, s, o, t.DelayTime, e === r);
+          this.wJi(i, t.Target, o, s, t.DelayTime, e === r);
       }),
-      _
+      a
     );
   }
-  wJi(e, t, i, s, o = 0, r) {
-    let _ = void 0,
-      a = !1;
+  wJi(e, t, i, o, s = 0, r) {
+    let a = void 0,
+      _ = !1;
     switch (t.Type) {
       case 3: {
         var h = t;
@@ -1026,8 +1088,8 @@ class PlotTemplate {
           h.Pos.Y ?? 0,
           h.Pos.Z ?? 0,
         );
-        (a = h.Lock ?? !1),
-          (_ = () => {
+        (_ = h.Lock ?? !1),
+          (a = () => {
             e.SetSightLimit([-90, 90], [-90, 90]), e.SetSightTargetPoint(l);
           });
         break;
@@ -1038,9 +1100,9 @@ class PlotTemplate {
             h.EntityId,
           );
         if (n?.IsInit) {
-          const m = n.Entity.GetComponent(3) ?? n.Entity.GetComponent(185);
-          (a = h.Lock ?? !1),
-            (_ = () => {
+          const m = n.Entity.GetComponent(3) ?? n.Entity.GetComponent(187);
+          (_ = h.Lock ?? !1),
+            (a = () => {
               e.ResetSightLimit(), e.SetSightTargetItem(m);
             });
         } else
@@ -1051,8 +1113,8 @@ class PlotTemplate {
             ]);
         break;
       case 1:
-        (a = t.Lock ?? !1),
-          (_ = () => {
+        (_ = t.Lock ?? !1),
+          (a = () => {
             e.ResetSightLimit(), e.SetSightTargetItem(void 0);
           });
         break;
@@ -1062,8 +1124,8 @@ class PlotTemplate {
           ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
             3,
           );
-        (a = n.Lock ?? !1),
-          (_ = () => {
+        (_ = n.Lock ?? !1),
+          (a = () => {
             e.ResetSightLimit(), e.SetSightTargetItem(c);
           });
         break;
@@ -1071,21 +1133,21 @@ class PlotTemplate {
       case 0:
       case 5: {
         let t = void 0;
-        s &&
-          i !== s &&
-          (t = EntitySystem_1.EntitySystem.Get(s.EntityId)?.GetComponent(3)),
-          (a = !1),
-          (_ = () => {
+        o &&
+          i !== o &&
+          (t = EntitySystem_1.EntitySystem.Get(o.EntityId)?.GetComponent(3)),
+          (_ = !1),
+          (a = () => {
             e.ResetSightLimit(), e.SetSightTargetItem(t);
           });
         break;
       }
     }
-    i.LookLocked = a;
-    o = (o ?? 0) * CommonDefine_1.MILLIONSECOND_PER_SECOND;
-    o > TimerSystem_1.MIN_TIME
-      ? this.uea.DelayAction(i.EntityId, o, _, a)
-      : _?.();
+    i.LookLocked = _;
+    s = (s ?? 0) * CommonDefine_1.MILLIONSECOND_PER_SECOND;
+    s > TimerSystem_1.MIN_TIME
+      ? this.yia.DelayAction(i.EntityId, s, a, _)
+      : a?.();
   }
   zJi(t) {
     if (!t) return !1;
@@ -1099,78 +1161,125 @@ class PlotTemplate {
     return !0;
   }
   $Ji(t) {
-    this.hJi.forEach((t) => {
-      TimerSystem_1.TimerSystem.Remove(t);
-    }),
-      this.hJi.clear();
-    for (const i of this.DJi)
-      (i.BodyMontagePath = void 0),
-        (i.OverlayMontagePath = void 0),
-        (i.MontageBlendToEnd = !1);
-    if (t)
-      for (const s of t)
-        if (!(s.ActorIndex < 0 || s.ActorIndex >= ACTOR_NUM_MAX)) {
-          const o = this.DJi[s.ActorIndex];
-          if (o.Valid && o.Visible)
-            if (s.EndMontageDirectly)
-              (o.MontageKeeping = !1),
-                (o.OverlayMontageKeeping = !1),
-                (o.MontageBlendToEnd = !0);
-            else if (s.EndLoopingMontage)
-              (o.MontageKeeping = !1), (o.OverlayMontageKeeping = !1);
-            else {
-              var e = s.DelayTime
-                ? TimeUtil_1.TimeUtil.SetTimeMillisecond(s.DelayTime)
-                : 0;
-              if (e <= TimerSystem_1.MIN_TIME) this.ZJi(o, s, !1);
-              else {
-                const r = TimerSystem_1.TimerSystem.Delay(() => {
-                  this.ZJi(o, s, !0), this.hJi.delete(r);
-                }, e);
-                this.hJi.add(r);
+    this.B4a.CleanAction();
+    for (const r of this.DJi)
+      r.MontageKeeping || (r.BodyMontagePath = void 0),
+        r.OverlayMontageKeeping || (r.OverlayMontagePath = void 0),
+        (r.MontageBlendToEnd = !1);
+    if (t) {
+      var e = [...t],
+        i =
+          (e.sort((t, e) => (t.DelayTime ?? 0) - (e.DelayTime ?? 0)),
+          new Set());
+      for (let t = e.length - 1; 0 <= t; t--) {
+        var o = e[t];
+        i.has(o.ActorIndex)
+          ? (o.KeepPose = !1)
+          : (o.KeepPose ?? o.EndLoopingMontage ?? o.EndMontageDirectly) &&
+            i.add(o.ActorIndex);
+      }
+      for (const a of e)
+        if (!(a.ActorIndex < 0 || a.ActorIndex >= ACTOR_NUM_MAX)) {
+          const _ = this.DJi[a.ActorIndex];
+          if (_.Valid && _.Visible) {
+            var s = a.DelayTime
+              ? TimeUtil_1.TimeUtil.SetTimeMillisecond(a.DelayTime)
+              : 0;
+            if (s <= TimerSystem_1.MIN_TIME) {
+              if (a.EndMontageDirectly) {
+                (_.MontageKeeping = !1),
+                  (_.OverlayMontageKeeping = !1),
+                  (_.MontageBlendToEnd = !0);
+                continue;
               }
-              if (s.OverlayMontage) {
-                e = s.OverlayMontage?.DelayTime
-                  ? TimeUtil_1.TimeUtil.SetTimeMillisecond(
-                      s.OverlayMontage.DelayTime,
-                    )
-                  : 0;
-                if (e <= TimerSystem_1.MIN_TIME) this.ezi(o, s, !1);
-                else {
-                  const _ = TimerSystem_1.TimerSystem.Delay(() => {
-                    this.ezi(o, s, !0), this.hJi.delete(_);
-                  }, e);
-                  this.hJi.add(_);
-                }
+              if (a.EndLoopingMontage) {
+                (_.MontageKeeping = !1),
+                  (_.OverlayMontageKeeping = !1),
+                  (_.MontageBlendToEnd = !1);
+                continue;
+              }
+              this.ZJi(_, a, !1);
+            } else {
+              if (a.EndMontageDirectly) {
+                this.B4a.DelayAction(
+                  _.PbDataId,
+                  s,
+                  () => {
+                    (_.MontageKeeping = !1),
+                      (_.OverlayMontageKeeping = !1),
+                      (_.MontageBlendToEnd = !0),
+                      this.tzi(_);
+                  },
+                  a.KeepPose ?? !1,
+                );
+                continue;
+              }
+              if (a.EndLoopingMontage) {
+                this.B4a.DelayAction(
+                  _.PbDataId,
+                  s,
+                  () => {
+                    (_.MontageKeeping = !1),
+                      (_.OverlayMontageKeeping = !1),
+                      (_.MontageBlendToEnd = !1),
+                      this.tzi(_);
+                  },
+                  a.KeepPose ?? !1,
+                );
+                continue;
+              }
+              this.B4a.DelayAction(
+                _.PbDataId,
+                s,
+                () => {
+                  this.ZJi(_, a, !0);
+                },
+                a.KeepPose ?? !1,
+              );
+            }
+            if (a.OverlayMontage) {
+              s = a.OverlayMontage?.DelayTime
+                ? TimeUtil_1.TimeUtil.SetTimeMillisecond(
+                    a.OverlayMontage.DelayTime,
+                  )
+                : 0;
+              if (s <= TimerSystem_1.MIN_TIME) this.ezi(_, a, !1);
+              else {
+                const h = TimerSystem_1.TimerSystem.Delay(() => {
+                  this.ezi(_, a, !0), this.hJi.delete(h);
+                }, s);
+                this.hJi.add(h);
               }
             }
+          }
         }
-    for (const a of this.DJi)
-      a.Valid &&
-        a.Visible &&
-        (this.tzi(a),
-        this.izi(a),
-        this.BJi(a.BodyMontagePath, (t) => {
-          this.ozi(a, t);
+    }
+    for (const n of this.DJi)
+      n.Valid &&
+        n.Visible &&
+        (this.tzi(n),
+        this.izi(n),
+        this.BJi(n.BodyMontagePath, (t) => {
+          this.ozi(n, t);
         }),
-        this.BJi(a.OverlayMontagePath, (t) => {
-          this.rzi(a, t);
+        this.BJi(n.OverlayMontagePath, (t) => {
+          this.rzi(n, t);
         }));
   }
-  ezi(e, i, s) {
+  ezi(e, i, o) {
     if (void 0 !== i.OverlayMontage?.MontageId.MontageId)
       if (void 0 !== e.TurningTimer)
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Plot", 27, "试图在转身期间播放蒙太奇，已阻止");
       else {
-        var o =
+        var s =
           i.ActorIndex === this.dJi
             ? this.PJi(i.OverlayMontage.MontageId.MontageId)
             : i.OverlayMontage.MontageId.MontageId;
         let t = void 0;
         (t = i.OverlayMontage.MontageId.IsAbp
-          ? ModelManager_1.ModelManager.PlotModel.GetOverlayAbpMontageConfig(o)
-          : ModelManager_1.ModelManager.PlotModel.GetMontageConfig(o))
+          ? ModelManager_1.ModelManager.PlotModel.GetOverlayAbpMontageConfig(s)
+          : ModelManager_1.ModelManager.PlotModel.GetMontageConfig(s))
           ? (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Plot",
@@ -1182,26 +1291,26 @@ class PlotTemplate {
             (e.OverlayMontagePath = t.ActionMontage),
             (e.OverlayMontageLooping = i.OverlayMontage.IsLoop ?? !1),
             (e.OverlayMontageKeeping = i.OverlayMontage.KeepPose ?? !1),
-            s &&
+            o &&
               (this.izi(e),
               this.BJi(e.OverlayMontagePath, (t) => {
                 this.rzi(e, t);
               })))
           : Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Plot", 27, "模板蒙太奇库中没有该资源", ["Id", o]);
+            Log_1.Log.Warn("Plot", 27, "模板蒙太奇库中没有该资源", ["Id", s]);
       }
   }
-  ZJi(e, i, s) {
+  ZJi(e, i, o) {
     if (void 0 !== i.MontageId)
       if (void 0 !== e.TurningTimer)
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Plot", 27, "试图在转身期间播放蒙太奇，已阻止");
       else {
-        var o = i.ActorIndex === this.dJi ? this.PJi(i.MontageId) : i.MontageId;
+        var s = i.ActorIndex === this.dJi ? this.PJi(i.MontageId) : i.MontageId;
         let t = void 0;
         (t = i.IsAbpMontage
-          ? ModelManager_1.ModelManager.PlotModel.GetAbpMontageConfig(o)
-          : ModelManager_1.ModelManager.PlotModel.GetMontageConfig(o))
+          ? ModelManager_1.ModelManager.PlotModel.GetAbpMontageConfig(s)
+          : ModelManager_1.ModelManager.PlotModel.GetMontageConfig(s))
           ? (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Plot",
@@ -1214,13 +1323,13 @@ class PlotTemplate {
             (e.MontageLooping = i.IsLoop ?? !1),
             (e.MontageKeeping = i.KeepPose ?? !1),
             (e.FaceExpressionId = i.FaceExpressionId),
-            s &&
+            o &&
               (this.tzi(e),
               this.BJi(e.BodyMontagePath, (t) => {
                 this.ozi(e, t);
               })))
           : Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Plot", 27, "模板蒙太奇库中没有该资源", ["Id", o]);
+            Log_1.Log.Warn("Plot", 27, "模板蒙太奇库中没有该资源", ["Id", s]);
       }
   }
   PJi(t) {
@@ -1243,17 +1352,17 @@ class PlotTemplate {
               },
             ));
   }
-  Qca(e, i) {
+  KCa(e, i) {
     if (
       !i
         .Montage_GetCurrentSection(e)
         .op_Equality(CharacterNameDefines_1.CharacterNameDefines.END_SECTION)
     ) {
       i.Montage_Stop(MONTAGE_BLEND_OUT_TIME, e);
-      var s = e.CompositeSections,
-        o = s.Num();
-      for (let t = 0; t < o; t++) {
-        var r = s.Get(t);
+      var o = e.CompositeSections,
+        s = o.Num();
+      for (let t = 0; t < s; t++) {
+        var r = o.Get(t);
         if (
           r.SectionName.op_Equality(
             CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
@@ -1274,7 +1383,7 @@ class PlotTemplate {
   tzi(t) {
     var e,
       i = EntitySystem_1.EntitySystem.Get(t.EntityId)?.GetComponent(
-        162,
+        163,
       )?.MainAnimInstance;
     ObjectUtils_1.ObjectUtils.IsValid(i) &&
       (this.IJi && !t.MontageKeeping
@@ -1286,7 +1395,7 @@ class PlotTemplate {
             i.Montage_IsPlaying(t.BodyMontage)
           ? StringUtils_1.StringUtils.IsEmpty(t.BodyMontagePath)
             ? t.MontageBlendToEnd
-              ? this.Qca(t.BodyMontage, i)
+              ? this.KCa(t.BodyMontage, i)
               : t.MontageKeeping ||
                 (!(e = i.Montage_GetCurrentSection(t.BodyMontage)).op_Equality(
                   CharacterNameDefines_1.CharacterNameDefines.START_SECTION,
@@ -1307,14 +1416,14 @@ class PlotTemplate {
   izi(t) {
     var e,
       i = EntitySystem_1.EntitySystem.Get(t.EntityId)?.GetComponent(
-        162,
+        163,
       )?.MainAnimInstance;
     ObjectUtils_1.ObjectUtils.IsValid(i) &&
       (ObjectUtils_1.ObjectUtils.IsValid(t.OverlayMontage) &&
       i.Montage_IsPlaying(t.OverlayMontage)
         ? StringUtils_1.StringUtils.IsEmpty(t.OverlayMontagePath)
           ? t.MontageBlendToEnd
-            ? this.Qca(t.OverlayMontage, i)
+            ? this.KCa(t.OverlayMontage, i)
             : t.OverlayMontageKeeping ||
               (!(e = i.Montage_GetCurrentSection(t.OverlayMontage)).op_Equality(
                 CharacterNameDefines_1.CharacterNameDefines.START_SECTION,
@@ -1333,76 +1442,77 @@ class PlotTemplate {
         : (t.OverlayMontage = void 0));
   }
   ozi(t, e, i = 1) {
-    var s;
+    var o;
     ObjectUtils_1.ObjectUtils.IsValid(e) &&
       this.IsInTemplate &&
-      ((s = EntitySystem_1.EntitySystem.Get(t.EntityId)?.GetComponent(
-        162,
+      ((o = EntitySystem_1.EntitySystem.Get(t.EntityId)?.GetComponent(
+        163,
       )?.MainAnimInstance),
-      ObjectUtils_1.ObjectUtils.IsValid(s)) &&
+      ObjectUtils_1.ObjectUtils.IsValid(o)) &&
       (this.ZYi.get(t.BodyMontagePath) !== e
         ? Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Plot", 27, "异步加载完的蒙太奇过期了")
         : ((t.BodyMontagePath = void 0),
-          (s.Montage_IsPlaying(e) &&
-            !s
+          (o.Montage_IsPlaying(e) &&
+            !o
               .Montage_GetCurrentSection(e)
               .op_Equality(
                 CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
               )) ||
             (this.IJi &&
               (UE.KuroStaticLibrary.StopAllMontagesBySlotName(
-                s,
+                o,
                 CharacterNameDefines_1.CharacterNameDefines.DEFAULT_SLOT,
                 MONTAGE_BLEND_OUT_TIME,
               ),
               UE.KuroStaticLibrary.StopAllMontagesBySlotName(
-                s,
+                o,
                 CharacterNameDefines_1.CharacterNameDefines.SEQUENCE_SLOT,
                 MONTAGE_BLEND_OUT_TIME,
               )),
-            s.Montage_Play(e, i, 0, 0, !1)),
+            o.Montage_Play(e, i, 0, 0, !1)),
           (t.BodyMontage = e),
           t.MontageLooping
-            ? s.Montage_SetNextSection(
+            ? o.Montage_SetNextSection(
                 CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
                 CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
                 e,
               )
-            : s.Montage_SetNextSection(
+            : o.Montage_SetNextSection(
                 CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
                 CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
                 e,
               ),
+          t.FaceChangeManager?.ResetFacialExpressionOuter(),
           t.FaceChangeManager?.ChangeFaceForExpression(e, t.FaceExpressionId)));
   }
   rzi(t, e, i = 1) {
-    var s;
+    var o;
     ObjectUtils_1.ObjectUtils.IsValid(e) &&
       this.IsInTemplate &&
-      ((s = EntitySystem_1.EntitySystem.Get(t.EntityId)?.GetComponent(
-        162,
+      ((o = EntitySystem_1.EntitySystem.Get(t.EntityId)?.GetComponent(
+        163,
       )?.MainAnimInstance),
-      ObjectUtils_1.ObjectUtils.IsValid(s)) &&
+      ObjectUtils_1.ObjectUtils.IsValid(o)) &&
       (this.ZYi.get(t.OverlayMontagePath) !== e
         ? Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Plot", 27, "异步加载完的蒙太奇过期了")
         : ((t.OverlayMontagePath = void 0),
-          (s.Montage_IsPlaying(e) &&
-            !s
+          (o.Montage_IsPlaying(e) &&
+            !o
               .Montage_GetCurrentSection(e)
               .op_Equality(
                 CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
               )) ||
-            s.Montage_Play(e, i, 0, 0, !1),
+            o.Montage_Play(e, i, 0, 0, !1),
           (t.OverlayMontage = e),
           t.OverlayMontageLooping
-            ? s.Montage_SetNextSection(
+            ? o.Montage_SetNextSection(
                 CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
                 CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
                 e,
               )
-            : s.Montage_SetNextSection(
+            : o.Montage_SetNextSection(
                 CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
                 CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
                 e,
@@ -1414,9 +1524,9 @@ class PlotTemplate {
       (this.uoe.bIgnoreSelf = !0),
       this.uoe.SetTraceTypeQuery(QueryTypeDefine_1.KuroTraceTypeQuery.IkGround);
   }
-  kJi(t, s) {
+  kJi(t, o) {
     this.uoe || this.koe();
-    var e = s.Actor,
+    var e = o.Actor,
       i = e.CapsuleComponent,
       e =
         ((this.uoe.WorldContextObject = e),
@@ -1434,27 +1544,27 @@ class PlotTemplate {
           this.uoe,
           PROFILE_KEY,
         )),
-      o = this.uoe.HitResult;
-    if (e && o.bBlockingHit) {
-      var r = o.Actors.Num();
+      s = this.uoe.HitResult;
+    if (e && s.bBlockingHit) {
+      var r = s.Actors.Num();
       let e = 0,
         i = void 0;
       for (let t = 0; t < r; t++)
         if (
-          ((i = o.Actors.Get(t)),
+          ((i = s.Actors.Get(t)),
           ObjectUtils_1.ObjectUtils.IsValid(i) &&
             !i.IsA(UE.Character.StaticClass()))
         ) {
           e = t;
           break;
         }
-      (t.Z = o.LocationZ_Array.Get(e)),
+      (t.Z = s.LocationZ_Array.Get(e)),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
             27,
             "实体剧情内修正地面",
-            ["FixedActor", s.CreatureData.GetPbDataId()],
+            ["FixedActor", o.CreatureData.GetPbDataId()],
             ["Location", t],
             ["HitActor", i.GetName()],
           );
@@ -1497,7 +1607,7 @@ class PlotTemplate {
             !1,
             "[PlotTemplate.ShowActor] 隐藏演出的实体",
           ),
-          (t = t.GetComponent(162))?.Valid &&
+          (t = t.GetComponent(163))?.Valid &&
             t.MainAnimInstance.Montage_Stop(0),
           e.UseEffect &&
             i.Actor.DitherEffectController.EnterDisappearEffect(
@@ -1511,79 +1621,78 @@ class PlotTemplate {
       t.ActorIndex < 0 ||
       this.aJi.set(t.Talker, this.DJi[t.ActorIndex]);
   }
-  YJi(i) {
-    for (const s of this.DJi)
-      s.Valid &&
-        (s.MouseMontageLoadingId !==
-          ResourceSystem_1.ResourceSystem.InvalidId &&
-          (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(
-            s.MouseMontageLoadingId,
-          ),
-          (s.MouseMontageLoadingId =
-            ResourceSystem_1.ResourceSystem.InvalidId)),
-        EntitySystem_1.EntitySystem.Get(s.EntityId)
-          ?.GetComponent(162)
-          ?.MainAnimInstance?.StopSlotAnimation(
-            0,
-            SequenceDefine_1.ABP_Mouth_Slot_Name,
-          ));
-    if (
-      !(
-        !i.PlayVoice ||
-        !i.WhoId ||
-        (i && "Talk" !== i.Type) ||
-        StringUtils_1.StringUtils.IsEmpty(i.TidTalk) ||
-        i.NoMouthAnim
-      )
-    ) {
-      var t = i;
-      if ("InnerVoice" !== t.Style?.Type) {
-        const s = this.aJi.get(i.WhoId);
-        if (s?.Valid && s?.Visible) {
-          const o = EntitySystem_1.EntitySystem.Get(s.EntityId)?.GetComponent(
-            162,
-          )?.MainAnimInstance;
-          o
-            ? ((t = PlotAudioById_1.configPlotAudioById.GetConfig(i.TidTalk)),
-              (t = PlotAudioModel_1.PlotAudioModel.GetAudioMouthAnimName([
-                t.IsCheckSex,
-                t.FileName,
-              ])),
-              (s.MouseMontageLoadingId =
-                ResourceSystem_1.ResourceSystem.LoadAsync(
-                  t,
-                  UE.AnimSequence,
-                  (t) => {
-                    s.MouseMontageLoadingId =
-                      ResourceSystem_1.ResourceSystem.InvalidId;
-                    var e = o.PlaySlotAnimationAsDynamicMontage(
-                      t,
-                      SequenceDefine_1.ABP_Mouth_Slot_Name,
-                      0,
-                      0,
-                      1,
-                      1,
-                      -1,
-                      0,
-                      !1,
-                    );
-                    s.FaceChangeManager?.ChangeFaceForMouthMontage(e),
-                      Log_1.Log.CheckDebug() &&
-                        Log_1.Log.Debug(
-                          "Plot",
-                          39,
-                          "MouthAnim 播放口型",
-                          ["Key", i.TidTalk],
-                          ["Asset", t?.GetName()],
-                          ["ABP", o.GetName()],
-                        );
-                  },
-                )))
-            : Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn("Plot", 27, "播放嘴型时拿不到AnimInst", [
-                "EntityId",
-                s.EntityId,
-              ]);
+  HandleMouthAnim(i) {
+    if (this.IsInTemplate) {
+      for (const o of this.DJi)
+        o.Valid &&
+          (o.MouseMontageLoadingId !==
+            ResourceSystem_1.ResourceSystem.InvalidId &&
+            (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(
+              o.MouseMontageLoadingId,
+            ),
+            (o.MouseMontageLoadingId =
+              ResourceSystem_1.ResourceSystem.InvalidId)),
+          EntitySystem_1.EntitySystem.Get(o.EntityId)
+            ?.GetComponent(163)
+            ?.MainAnimInstance?.StopSlotAnimation(
+              0,
+              SequenceDefine_1.ABP_Mouth_Slot_Name,
+            ));
+      if (
+        !(
+          !i.PlayVoice ||
+          !i.WhoId ||
+          (i && "Talk" !== i.Type) ||
+          StringUtils_1.StringUtils.IsEmpty(i.TidTalk) ||
+          i.NoMouthAnim
+        )
+      ) {
+        var t = i;
+        if ("InnerVoice" !== t.Style?.Type) {
+          const o = this.aJi.get(i.WhoId);
+          if (o?.Valid && o?.Visible) {
+            const s = EntitySystem_1.EntitySystem.Get(o.EntityId)?.GetComponent(
+              163,
+            )?.MainAnimInstance;
+            s
+              ? ((t = PlotAudioById_1.configPlotAudioById.GetConfig(i.TidTalk)),
+                (t = PlotAudioModel_1.PlotAudioModel.GetAudioMouthAnimName(t)),
+                (o.MouseMontageLoadingId =
+                  ResourceSystem_1.ResourceSystem.LoadAsync(
+                    t,
+                    UE.AnimSequence,
+                    (t) => {
+                      o.MouseMontageLoadingId =
+                        ResourceSystem_1.ResourceSystem.InvalidId;
+                      var e = s.PlaySlotAnimationAsDynamicMontage(
+                        t,
+                        SequenceDefine_1.ABP_Mouth_Slot_Name,
+                        0,
+                        0,
+                        1,
+                        1,
+                        -1,
+                        0,
+                        !1,
+                      );
+                      o.FaceChangeManager?.ChangeFaceForMouthMontage(e),
+                        Log_1.Log.CheckDebug() &&
+                          Log_1.Log.Debug(
+                            "Plot",
+                            39,
+                            "MouthAnim 播放口型",
+                            ["Key", i.TidTalk],
+                            ["Asset", t?.GetName()],
+                            ["ABP", s.GetName()],
+                          );
+                    },
+                  )))
+              : Log_1.Log.CheckWarn() &&
+                Log_1.Log.Warn("Plot", 27, "播放嘴型时拿不到AnimInst", [
+                  "EntityId",
+                  o.EntityId,
+                ]);
+          }
         }
       }
     }
@@ -1596,61 +1705,62 @@ class PlotTemplate {
       }),
       t && 0 !== t.length)
     )
-      for (const _ of t)
-        if (!(_.ActorIndex > this.DJi.length)) {
-          const a = this.DJi[_.ActorIndex];
-          if (a.Valid && a.Visible) {
+      for (const a of t)
+        if (!(a.ActorIndex > this.DJi.length)) {
+          const _ = this.DJi[a.ActorIndex];
+          if (_.Valid && _.Visible) {
             let t = void 0;
-            switch (_.Target.Type) {
+            switch (a.Target.Type) {
               case 2:
-                var i = _.Target;
+                var i = a.Target;
                 t = this.tL(i.EntityId);
                 break;
               case 3:
-                i = _.Target;
+                i = a.Target;
                 t = Vector_1.Vector.Create(i.Pos.X, i.Pos.Y, i.Pos.Z);
                 break;
               case 0:
-                var s = this.aJi.get(e);
-                if (!s?.Valid) {
+                var o = this.aJi.get(e);
+                if (!o?.Valid) {
                   Log_1.Log.CheckWarn() &&
                     Log_1.Log.Warn("Plot", 27, "说话人未在模板内，转向失败");
                   continue;
                 }
-                s = EntitySystem_1.EntitySystem.Get(s.EntityId)?.GetComponent(
+                o = EntitySystem_1.EntitySystem.Get(o.EntityId)?.GetComponent(
                   3,
                 );
-                s && (t = Vector_1.Vector.Create(s.ActorLocationProxy));
+                o && (t = Vector_1.Vector.Create(o.ActorLocationProxy));
                 break;
               case 4:
-                s =
+                o =
                   ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
                     3,
                   );
-                s && (t = Vector_1.Vector.Create(s.ActorLocationProxy));
+                o && (t = Vector_1.Vector.Create(o.ActorLocationProxy));
             }
             if (t)
               if (this.nx.IsBackground) {
-                var o = Vector_1.Vector.Create(),
-                  r = EntitySystem_1.EntitySystem.Get(a.EntityId)?.GetComponent(
+                var s = Vector_1.Vector.Create(),
+                  r = EntitySystem_1.EntitySystem.Get(_.EntityId)?.GetComponent(
                     3,
                   );
-                t.Subtraction(r.ActorLocationProxy, o),
-                  (a.Pos.A =
-                    o.HeadingAngle() * MathCommon_1.MathCommon.RadToDeg);
+                r?.Valid &&
+                  (t.Subtraction(r.ActorLocationProxy, s),
+                  (_.Pos.A =
+                    s.HeadingAngle() * MathCommon_1.MathCommon.RadToDeg));
               } else {
-                r = _.DelayTime
-                  ? TimeUtil_1.TimeUtil.SetTimeMillisecond(_.DelayTime)
+                r = a.DelayTime
+                  ? TimeUtil_1.TimeUtil.SetTimeMillisecond(a.DelayTime)
                   : 0;
-                if (r < TimerSystem_1.MIN_TIME) this.szi(a, t);
+                if (r < TimerSystem_1.MIN_TIME) this.szi(_, t);
                 else {
                   const h = TimerSystem_1.TimerSystem.Delay(() => {
-                    this.szi(a, t), this.lJi.delete(h);
+                    this.szi(_, t), this.lJi.delete(h);
                   }, r);
                   this.lJi.add(h);
                 }
-                o = r + WAIT_TURING_TIME + 0.5 * MONTAGE_BLEND_OUT_TIME;
-                this.SJi < o && (this.SJi = o);
+                s = r + WAIT_TURING_TIME + 0.5 * MONTAGE_BLEND_OUT_TIME;
+                this.SJi < s && (this.SJi = s);
               }
           }
         }
@@ -1675,16 +1785,16 @@ class PlotTemplate {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Plot", 27, "多次触发转身！！！！注意表现");
     else {
-      var s = EntitySystem_1.EntitySystem.Get(e.EntityId);
-      const o = s?.GetComponent(3);
-      if (o?.Valid) {
-        o.ClearInput();
+      var o = EntitySystem_1.EntitySystem.Get(e.EntityId);
+      const s = o?.GetComponent(3);
+      if (s?.Valid) {
+        s.ClearInput();
         let t = WAIT_TURING_TIME;
-        s = s?.GetComponent(162);
+        o = o?.GetComponent(163);
         if (
           (ObjectUtils_1.ObjectUtils.IsValid(e.BodyMontage) &&
-            s.MainAnimInstance.Montage_IsPlaying(e.BodyMontage) &&
-            (s.MainAnimInstance.Montage_Stop(MONTAGE_BLEND_OUT_TIME),
+            o.MainAnimInstance.Montage_IsPlaying(e.BodyMontage) &&
+            (o.MainAnimInstance.Montage_Stop(MONTAGE_BLEND_OUT_TIME),
             (t += 0.5 * MONTAGE_BLEND_OUT_TIME)),
           (e.TurningTimer = TimerSystem_1.TimerSystem.Delay(() => {
             e.TurningTimer = void 0;
@@ -1694,7 +1804,7 @@ class PlotTemplate {
           TimerSystem_1.TimerSystem.Delay(
             () => {
               e.Valid &&
-                AiContollerLibrary_1.AiControllerLibrary.TurnToTarget(o, i, 0);
+                AiContollerLibrary_1.AiControllerLibrary.TurnToTarget(s, i, 0);
             },
             MONTAGE_BLEND_OUT_TIME *
               CommonDefine_1.MILLIONSECOND_PER_SECOND *
@@ -1702,15 +1812,15 @@ class PlotTemplate {
           );
         else {
           const r = MathUtils_1.MathUtils.CommonTempRotator;
-          s = MathUtils_1.MathUtils.CommonTempVector;
-          i.Subtraction(o.ActorLocationProxy, s),
-            s.Normalize(),
+          o = MathUtils_1.MathUtils.CommonTempVector;
+          i.Subtraction(s.ActorLocationProxy, o),
+            o.Normalize(),
             (r.Roll = 0),
             (r.Pitch = 0),
-            (r.Yaw = MathUtils_1.MathUtils.GetAngleByVector2D(s)),
+            (r.Yaw = MathUtils_1.MathUtils.GetAngleByVector2D(o)),
             TimerSystem_1.TimerSystem.Delay(
               () => {
-                e.Valid && o.SetInputRotator(r);
+                e.Valid && s.SetInputRotator(r);
               },
               MONTAGE_BLEND_OUT_TIME *
                 CommonDefine_1.MILLIONSECOND_PER_SECOND *
@@ -1728,8 +1838,19 @@ class PlotTemplate {
       (e.Pos.Z = t.Z ?? 0),
       (e.Pos.A = t.A ?? 0));
   }
+  OnFinishShowTalk() {
+    if (this.IsInTemplate)
+      for (const e of this.DJi) {
+        if (!e.Valid) return;
+        var t = EntitySystem_1.EntitySystem.Get(e.EntityId)?.GetComponent(
+          163,
+        )?.MainAnimInstance;
+        if (!ObjectUtils_1.ObjectUtils.IsValid(t)) return;
+        t?.StopSlotAnimation(0, SequenceDefine_1.ABP_Mouth_Slot_Name);
+      }
+  }
   OnTick(t) {
-    this.IsInTemplate && (this.LJi.OnTick(t), this.X2n());
+    this.IsInTemplate && (this.LJi.OnTick(t), this.rNn());
   }
 }
 ((exports.PlotTemplate = PlotTemplate).HJi = new UE.FName(

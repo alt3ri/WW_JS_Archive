@@ -101,7 +101,14 @@ class BuffExtraEffectLibrary {
         case 12:
           s.Requirements.push({
             Type: i,
-            DamageGenres: u.map((e) => Number(e)),
+            DamageTypes: u.map((e) => Number(e)),
+          });
+          break;
+        case 17:
+          s.Requirements.push({
+            Type: i,
+            IncludeType: Number(u[0]),
+            DamageSubTypes: u.slice(1).map((e) => Number(e)),
           });
           break;
         case 14:

@@ -12,7 +12,8 @@ const cpp_1 = require("cpp"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   KuroSdkData_1 = require("../KuroSdkData"),
-  PlatformSdkBase_1 = require("./PlatformSdkBase");
+  PlatformSdkBase_1 = require("./PlatformSdkBase"),
+  MAXREVIEWTIME = 3;
 class ISdkCustomerService extends Json_1.JsonObjBase {
   constructor() {
     super(...arguments), (this.cuid = ""), (this.isredot = 0);
@@ -72,17 +73,17 @@ class PlatformSdkIos extends PlatformSdkBase_1.PlatformSdkBase {
   }
   OpenCustomerService(e) {
     var r = ModelManager_1.ModelManager.LoginModel,
-      o = ModelManager_1.ModelManager.PlayerInfoModel,
-      t = new KuroSdkData_1.OpenCustomerServiceParamIos(),
+      t = ModelManager_1.ModelManager.PlayerInfoModel,
+      o = new KuroSdkData_1.OpenCustomerServiceParamIos(),
       e =
-        ((t.islogin = r.IsSdkLoggedIn() ? 1 : 0),
-        (t.from = e),
-        (t.RoleId = o.GetId()),
-        (t.RoleName = o.GetAccountName()),
-        (t.ServerId = r.GetServerId()),
-        (t.ServerName = r.GetServerName()),
-        (t.RoleLevel = o.GetPlayerLevel()),
-        Json_1.Json.Stringify(t));
+        ((o.islogin = r.IsSdkLoggedIn() ? 1 : 0),
+        (o.from = e),
+        (o.RoleId = t.GetId()),
+        (o.RoleName = t.GetAccountName()),
+        (o.ServerId = r.GetServerId()),
+        (o.ServerName = r.GetServerName()),
+        (o.RoleLevel = t.GetPlayerLevel()),
+        Json_1.Json.Stringify(o));
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("KuroSdk", 28, "IosCustomerService", ["json", e]),
       ue_1.KuroSDKManager.OpenCustomerService(e);
@@ -111,15 +112,15 @@ class PlatformSdkIos extends PlatformSdkBase_1.PlatformSdkBase {
     var r = Json_1.Json.Parse(e);
     if (0 === r.KRMAINLAND_SDK_EVENT_KEY_RESULT) {
       r = Json_1.Json.Parse(r.KRMAINLAND_SDK_EVENT_KEY_DATA);
-      const o = new Array();
+      const t = new Array();
       r?.forEach((e) => {
         var r = new PlatformSdkBase_1.SharePlatformSt();
         (r.IconUrl = e.iconUrl),
           (r.PlatformId = e.platform.toString()),
-          o.push(r);
+          t.push(r);
       }),
         this.GetSharePlatformCallBackList.forEach((e) => {
-          e(o);
+          e(t);
         }),
         (this.GetSharePlatformCallBackList = []);
     }
@@ -131,9 +132,9 @@ class PlatformSdkIos extends PlatformSdkBase_1.PlatformSdkBase {
       Log_1.Log.Info("KuroSdk", 28, "SetFont", ["fontPath", e]),
       ue_1.KuroSDKManager.SetFont(e);
   }
-  OnShareResult(e, r, o) {
-    var t = r.replace(/[\n\s]/g, ""),
-      n = Json_1.Json.Parse(t);
+  OnShareResult(e, r, t) {
+    var o = r.replace(/[\n\s]/g, ""),
+      n = Json_1.Json.Parse(o);
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "KuroSdk",
@@ -141,7 +142,7 @@ class PlatformSdkIos extends PlatformSdkBase_1.PlatformSdkBase {
         "OnShareResult",
         ["code", e],
         ["platform", r],
-        ["finalMsg", t],
+        ["finalMsg", o],
         ["shareResult", n],
       ),
       n?.KRMAINLAND_SDK_EVENT_KEY_RESULT
@@ -163,10 +164,10 @@ class PlatformSdkIos extends PlatformSdkBase_1.PlatformSdkBase {
   BSe(e) {
     if (0 === this.wSe.size) {
       var r = ue_1.KuroSDKManager.GetSdkParams("").split(","),
-        o = r.length;
-      for (let e = 0; e < o; e++) {
-        var t = r[e].split("=");
-        2 === t.length && this.wSe.set(t[0], t[1]);
+        t = r.length;
+      for (let e = 0; e < t; e++) {
+        var o = r[e].split("=");
+        2 === o.length && this.wSe.set(o[0], o[1]);
       }
     }
     e = this.wSe.get(e);
@@ -176,6 +177,9 @@ class PlatformSdkIos extends PlatformSdkBase_1.PlatformSdkBase {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, "游戏注销"),
       ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
         ue_1.KuroSDKManager.KuroSDKEvent(5, "");
+  }
+  CurrentPlatformYearReviewTime() {
+    return MAXREVIEWTIME;
   }
 }
 exports.PlatformSdkIos = PlatformSdkIos;

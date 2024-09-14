@@ -11,22 +11,22 @@ const Log_1 = require("../../../Core/Common/Log"),
   UiConfig_1 = require("../Define/UiConfig");
 class UiTimeDilation {
   static set GmSwitch(i) {
-    UiTimeDilation.U7s = i;
+    UiTimeDilation.sjs = i;
   }
   static get GmSwitch() {
-    return UiTimeDilation.U7s;
+    return UiTimeDilation.sjs;
   }
   static get s1t() {
-    return UiTimeDilation.R7s?.TimeDilation ?? 1;
+    return UiTimeDilation.ajs?.TimeDilation ?? 1;
   }
-  static get x7s() {
-    return UiTimeDilation.R7s?.ViewId ?? 0;
+  static get hjs() {
+    return UiTimeDilation.ajs?.ViewId ?? 0;
   }
-  static get P7s() {
-    return UiTimeDilation.R7s?.DebugName;
+  static get ljs() {
+    return UiTimeDilation.ajs?.DebugName;
   }
   static get pLe() {
-    return UiTimeDilation.R7s?.Reason ?? "UiTimeDilation";
+    return UiTimeDilation.ajs?.Reason ?? "UiTimeDilation";
   }
   static Init() {
     EventSystem_1.EventSystem.Add(
@@ -67,19 +67,19 @@ class UiTimeDilation {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnStartLoadingState,
-        UiTimeDilation.RBn,
+        UiTimeDilation.NBn,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFinishLoadingState,
-        UiTimeDilation.xBn,
+        UiTimeDilation.kBn,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.LevelLoadingLockTimeDilation,
-        UiTimeDilation.B7s,
+        UiTimeDilation._js,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.LevelLoadingUnlockDilation,
-        UiTimeDilation.w7s,
+        UiTimeDilation.ujs,
       );
   }
   static Destroy() {
@@ -121,19 +121,19 @@ class UiTimeDilation {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnStartLoadingState,
-        UiTimeDilation.RBn,
+        UiTimeDilation.NBn,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFinishLoadingState,
-        UiTimeDilation.xBn,
+        UiTimeDilation.kBn,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.LevelLoadingLockTimeDilation,
-        UiTimeDilation.B7s,
+        UiTimeDilation._js,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.LevelLoadingUnlockDilation,
-        UiTimeDilation.w7s,
+        UiTimeDilation.ujs,
       );
   }
   static Aur(i, e) {
@@ -146,7 +146,7 @@ class UiTimeDilation {
         ["是否触发真时停", i < MathUtils_1.MathUtils.KindaSmallNumber],
       );
   }
-  static b7s(i) {
+  static cjs(i) {
     (UiTimeDilation.Nur && 1 !== UiTimeDilation.Nur.TimeDilation) ||
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -158,7 +158,7 @@ class UiTimeDilation {
         ),
       (UiTimeDilation.Nur = i));
   }
-  static q7s(i) {
+  static mjs(i) {
     return ModelManager_1.ModelManager.GameModeModel
       ? UiTimeDilation.qur()
         ? (Log_1.Log.CheckInfo() &&
@@ -193,7 +193,7 @@ class UiTimeDilation {
   }
   static Pur(i) {
     var e = i.TimeDilation;
-    (UiTimeDilation.R7s = 1 !== e ? i : void 0),
+    (UiTimeDilation.ajs = 1 !== e ? i : void 0),
       UiTimeDilation.Aur(e, i.Reason),
       UiTimeDilation.wur
         ? ((UiTimeDilation.Bur = e < MathUtils_1.MathUtils.KindaSmallNumber),
@@ -205,7 +205,7 @@ class UiTimeDilation {
             ))
         : UiTimeDilation.GmSwitch
           ? ControllerHolder_1.ControllerHolder.GameModeController.SetTimeDilation(
-              e * UiTimeDilation.G7s,
+              e * UiTimeDilation.djs,
             )
           : e < MathUtils_1.MathUtils.KindaSmallNumber
             ? ControllerHolder_1.ControllerHolder.GameModeController.SetGamePaused(
@@ -215,7 +215,7 @@ class UiTimeDilation {
             : ControllerHolder_1.ControllerHolder.GameModeController.SetGamePaused(
                 !1,
                 "UiTimeDilation",
-                e * UiTimeDilation.G7s,
+                e * UiTimeDilation.djs,
               );
   }
   static SetGameTimeDilation(i) {
@@ -231,9 +231,9 @@ class UiTimeDilation {
               ["界面Id", i.ViewId],
               ["Tag", UiTimeDilation.vur],
             ),
-          UiTimeDilation.b7s(i),
+          UiTimeDilation.cjs(i),
           !1)
-        : UiTimeDilation.q7s(i)
+        : UiTimeDilation.mjs(i)
     );
   }
   static qur() {
@@ -291,7 +291,7 @@ class UiTimeDilation {
   static Our() {
     var i;
     UiTimeDilation.Nur &&
-      (UiTimeDilation.kur !== UiTimeDilation.Nur.ViewId
+      (UiTimeDilation.kur && UiTimeDilation.kur !== UiTimeDilation.Nur.ViewId
         ? (UiTimeDilation.Nur = void 0)
         : UiTimeDilation.SetGameTimeDilation(UiTimeDilation.Nur) &&
           ((UiTimeDilation.kur = UiTimeDilation.Nur.ViewId),
@@ -343,7 +343,7 @@ class UiTimeDilation {
           "Tag",
           i,
         ]),
-      UiTimeDilation.R7s &&
+      UiTimeDilation.ajs &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiTimeDilation",
@@ -351,12 +351,12 @@ class UiTimeDilation {
             "目前存在界面正在时停中,缓存并且临时恢复",
             ["Tag", i],
           ),
-        UiTimeDilation.b7s(UiTimeDilation.R7s),
-        UiTimeDilation.q7s({
-          ViewId: UiTimeDilation.R7s.ViewId,
+        UiTimeDilation.cjs(UiTimeDilation.ajs),
+        UiTimeDilation.mjs({
+          ViewId: UiTimeDilation.ajs.ViewId,
           TimeDilation: 1,
-          DebugName: UiTimeDilation.R7s.DebugName,
-          Reason: UiTimeDilation.R7s.Reason,
+          DebugName: UiTimeDilation.ajs.DebugName,
+          Reason: UiTimeDilation.ajs.Reason,
         }));
   }
   static Mur(i) {
@@ -369,23 +369,24 @@ class UiTimeDilation {
     return 0 < UiTimeDilation.vur.size;
   }
 }
-((exports.UiTimeDilation = UiTimeDilation).U7s = !1),
-  (UiTimeDilation.kur = 0),
+((exports.UiTimeDilation = UiTimeDilation).sjs = !1),
+  (UiTimeDilation.kur = void 0),
   (UiTimeDilation.Bur = !1),
   (UiTimeDilation.wur = !1),
   (UiTimeDilation.Nur = void 0),
-  (UiTimeDilation.R7s = void 0),
+  (UiTimeDilation.ajs = void 0),
   (UiTimeDilation.Sur = (i, e) => {
     i &&
-      (UiTimeDilation.AddViewData(i, e), 0 === UiTimeDilation.kur) &&
-      1 !== (i = UiConfig_1.UiConfig.TryGetViewInfo(i)).TimeDilation &&
-      UiTimeDilation.SetGameTimeDilation({
-        ViewId: e,
-        TimeDilation: i.TimeDilation,
-        DebugName: i.Name,
-        Reason: "UiTimeDilation",
-      }) &&
-      (UiTimeDilation.kur = e);
+      (UiTimeDilation.AddViewData(i, e),
+      UiTimeDilation.kur ||
+        (1 !== (i = UiConfig_1.UiConfig.TryGetViewInfo(i)).TimeDilation &&
+          UiTimeDilation.SetGameTimeDilation({
+            ViewId: e,
+            TimeDilation: i.TimeDilation,
+            DebugName: i.Name,
+            Reason: "UiTimeDilation",
+          }) &&
+          (UiTimeDilation.kur = e)));
   }),
   (UiTimeDilation.yur = (i, e) => {
     UiTimeDilation.RemoveViewData(e),
@@ -399,7 +400,7 @@ class UiTimeDilation {
               ["恢复界面", i],
               ["界面Id", e],
             ),
-          UiTimeDilation.kur === e && (UiTimeDilation.kur = 0))
+          UiTimeDilation.kur === e && (UiTimeDilation.kur = void 0))
         : e === UiTimeDilation.kur &&
           UiTimeDilation.SetGameTimeDilation({
             ViewId: e,
@@ -407,7 +408,7 @@ class UiTimeDilation {
             DebugName: i,
             Reason: "UiTimeDilation",
           }) &&
-          ((UiTimeDilation.kur = 0),
+          ((UiTimeDilation.kur = void 0),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiTimeDilation",
@@ -424,7 +425,7 @@ class UiTimeDilation {
       (Net_1.Net.IsServerConnected() && UiTimeDilation.Tur());
   }),
   (UiTimeDilation.Tur = () => {
-    (UiTimeDilation.R7s = void 0),
+    (UiTimeDilation.ajs = void 0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("UiTimeDilation", 11, "时停强制重置为1"),
       UiTimeDilation.GmSwitch
@@ -437,17 +438,17 @@ class UiTimeDilation {
             1,
           ),
       (UiTimeDilation.Nur = void 0),
-      (UiTimeDilation.kur = 0),
+      (UiTimeDilation.kur = void 0),
       (UiTimeDilation.Bur = !1);
   }),
-  (UiTimeDilation.G7s = 1),
+  (UiTimeDilation.djs = 1),
   (UiTimeDilation.Lur = (i) => {
-    UiTimeDilation.G7s !== i &&
-      ((UiTimeDilation.G7s = i), 0 !== UiTimeDilation.s1t) &&
-      ((i = UiTimeDilation.R7s ?? {
-        ViewId: UiTimeDilation.x7s,
+    UiTimeDilation.djs !== i &&
+      ((UiTimeDilation.djs = i), 0 !== UiTimeDilation.s1t) &&
+      ((i = UiTimeDilation.ajs ?? {
+        ViewId: UiTimeDilation.hjs,
         TimeDilation: UiTimeDilation.s1t,
-        DebugName: UiTimeDilation.P7s,
+        DebugName: UiTimeDilation.ljs,
         Reason: UiTimeDilation.pLe,
       }),
       UiTimeDilation.Pur(i));
@@ -460,16 +461,16 @@ class UiTimeDilation {
       ? UiTimeDilation.pur("CameraSequence")
       : UiTimeDilation.Mur("CameraSequence");
   }),
-  (UiTimeDilation.RBn = () => {
+  (UiTimeDilation.NBn = () => {
     UiTimeDilation.pur("Loading");
   }),
-  (UiTimeDilation.xBn = () => {
+  (UiTimeDilation.kBn = () => {
     UiTimeDilation.Mur("Loading");
   }),
-  (UiTimeDilation.B7s = () => {
+  (UiTimeDilation._js = () => {
     UiTimeDilation.pur("LevelLoading");
   }),
-  (UiTimeDilation.w7s = () => {
+  (UiTimeDilation.ujs = () => {
     UiTimeDilation.Mur("LevelLoading");
   }),
   (UiTimeDilation.Fur = []),

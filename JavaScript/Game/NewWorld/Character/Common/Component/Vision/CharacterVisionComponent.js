@@ -49,11 +49,11 @@ let CharacterVisionComponent = class CharacterVisionComponent extends EntityComp
       (this.bpr = () => {
         PhantomUtil_1.PhantomUtil.SetVisionEnable(this.Entity, !1);
       }),
-      (this.cua = (t, i) => {
+      (this.Ema = (t, i) => {
         var e = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
           this.Entity,
-          Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantVision,
-        )?.Entity?.GetComponent(33);
+          Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeConcomitantVision,
+        )?.Entity?.GetComponent(34);
         e?.Valid && ((e.SkillTarget = t), (e.SkillTargetSocket = i));
       });
   }
@@ -62,7 +62,7 @@ let CharacterVisionComponent = class CharacterVisionComponent extends EntityComp
     (this.len = t.VisionSkillServerEntityId),
       this._en
         ? (this.uen(this._en), (this._en = void 0))
-        : (t = t.ComponentDataMap.get("oys")?.oys?.hIs) && this.uen(t);
+        : (t = t.ComponentDataMap.get("uys")?.uys?.CIs) && this.uen(t);
     for (const i of Object.keys(visionTypes))
       this.aen.set(Number(i), visionTypes[Number(i)].Spawn(this));
     return (
@@ -73,7 +73,7 @@ let CharacterVisionComponent = class CharacterVisionComponent extends EntityComp
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharSkillTargetChanged,
-        this.cua,
+        this.Ema,
       ),
       (this.rXt = !0)
     );
@@ -88,7 +88,7 @@ let CharacterVisionComponent = class CharacterVisionComponent extends EntityComp
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharSkillTargetChanged,
-        this.cua,
+        this.Ema,
       ),
       !0
     );
@@ -105,45 +105,45 @@ let CharacterVisionComponent = class CharacterVisionComponent extends EntityComp
   }
   uen(t) {
     if ((this.sen.clear(), (this.hen = 0), t)) {
-      var i = this.Entity.GetComponent(190);
+      var i = this.Entity.GetComponent(192);
       for (const o of t) {
-        var e = PhantomUtil_1.PhantomUtil.GetVisionData(o.X4n);
+        var e = PhantomUtil_1.PhantomUtil.GetVisionData(o.r5n);
         e &&
           (this.sen.set(e.类型, o), [0, 1].includes(e.类型)) &&
           (i.ModifyCdInfo(
-            PhantomUtil_1.PhantomUtil.GetSkillGroupId(o.X4n),
-            PhantomUtil_1.PhantomUtil.GetSkillCd(o.X4n),
+            PhantomUtil_1.PhantomUtil.GetSkillGroupId(o.r5n),
+            PhantomUtil_1.PhantomUtil.GetSkillCd(o.r5n),
           ),
-          (this.hen = o.X4n));
+          (this.hen = o.r5n));
       }
     }
   }
   GetVisionIdList() {
     var t = UE.NewArray(UE.BuiltinInt);
-    for (const i of this.sen.values()) t.Add(i.X4n);
+    for (const i of this.sen.values()) t.Add(i.r5n);
     return t;
   }
   GetVisionLevelList() {
     var t = UE.NewArray(UE.BuiltinInt);
-    for (const i of this.sen.values()) t.Add(i.ETs);
+    for (const i of this.sen.values()) t.Add(i.ATs);
     return t;
   }
   GetVisionLevelByBuffId(t) {
     for (const i of this.sen.values())
-      if (0 < i.ETs)
-        if (PhantomUtil_1.PhantomUtil.GetSkillBuffIds(i.X4n).includes(t))
-          return i.ETs;
+      if (0 < i.ATs)
+        if (PhantomUtil_1.PhantomUtil.GetSkillBuffIds(i.r5n).includes(t))
+          return i.ATs;
     return CharacterAbilityComponent_1.DEFAULT_SOURCE_SKILL_LEVEL_NOT_FOUND;
   }
   GetVisionLevelByDamageId(t) {
     for (const i of this.sen.values())
-      if (0 < i.ETs)
-        if (PhantomUtil_1.PhantomUtil.GetSkillSettleIds(i.X4n).includes(t))
-          return i.ETs;
+      if (0 < i.ATs)
+        if (PhantomUtil_1.PhantomUtil.GetSkillSettleIds(i.r5n).includes(t))
+          return i.ATs;
     return CharacterAbilityComponent_1.DEFAULT_SOURCE_SKILL_LEVEL_NOT_FOUND;
   }
   GetVisionData(i) {
-    if ([...this.sen.values()].some((t) => t.X4n === i))
+    if ([...this.sen.values()].some((t) => t.r5n === i))
       return PhantomUtil_1.PhantomUtil.GetVisionData(i);
   }
   ActivateAbilityVision(t) {
@@ -160,7 +160,7 @@ let CharacterVisionComponent = class CharacterVisionComponent extends EntityComp
   }
 };
 (CharacterVisionComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(35)],
+  [(0, RegisterComponent_1.RegisterComponent)(36)],
   CharacterVisionComponent,
 )),
   (exports.CharacterVisionComponent = CharacterVisionComponent);

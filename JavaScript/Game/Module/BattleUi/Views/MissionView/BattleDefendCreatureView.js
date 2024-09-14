@@ -6,17 +6,17 @@ const UE = require("ue"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
   BattleEntityChildView_1 = require("../BattleChildView/BattleEntityChildView");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 class BattleDefendCreatureView extends BattleEntityChildView_1.BattleEntityChildView {
   constructor() {
     super(...arguments),
       (this.Kut = (e, t, i) => {
         var r, n;
         this.IsValid() &&
-          ((r = (n = this.GetEntity().GetComponent(158)).GetCurrentValue(
+          ((r = (n = this.GetEntity().GetComponent(159)).GetCurrentValue(
             EAttributeId.Proto_Life,
           )),
-          (n = n.GetCurrentValue(EAttributeId.e5n)),
+          (n = n.GetCurrentValue(EAttributeId.l5n)),
           this.Qut(0 < n ? r / n : 0));
       });
   }

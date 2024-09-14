@@ -12,17 +12,17 @@ class BusinessHelperPanel extends UiPanelBase_1.UiPanelBase {
       (this.EditTeamModule = void 0),
       (this.SelectedRoleId = 0),
       (this.RoleList = []),
-      (this.zGn = void 0),
+      (this.aOn = void 0),
       (this.Mke = () => {
-        this.zGn?.SkipToInteractivePanel();
+        this.aOn?.SkipToInteractivePanel();
       }),
-      (this.Yga = () => {
+      (this.jpa = () => {
         var e,
           i = ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustRoleById(
             this.SelectedRoleId,
           );
         1 === i.JumpType
-          ? this.zGn?.SkipToTaskView(1, i.Id)
+          ? this.aOn?.SkipToTaskView(1, i.Id)
           : 2 === i.JumpType &&
             (0 ===
             ModelManager_1.ModelManager.MoonChasingTaskModel.GetBranchLineState(
@@ -32,9 +32,9 @@ class BusinessHelperPanel extends UiPanelBase_1.UiPanelBase {
                   ModelManager_1.ModelManager.MoonChasingBuildingModel.GetBuildingIdByRoleId(
                     i.Id,
                   )) <= 0
-                ? this.zGn?.SkipToBuildingPreview()
-                : this.zGn?.SkipToBuildingView(e)
-              : this.zGn?.SkipToTaskView(2, i.Id));
+                ? this.aOn?.SkipToBuildingPreview()
+                : this.aOn?.SkipToBuildingView(e)
+              : this.aOn?.SkipToTaskView(2, i.JumpParam));
       }),
       (this.qke = (e, i, s) => {
         var t = this.SelectedRoleId,
@@ -46,10 +46,10 @@ class BusinessHelperPanel extends UiPanelBase_1.UiPanelBase {
         this.GetButton(1)?.RootUIComp.SetUIActive(h.IsOwn),
           this.GetButton(2)?.RootUIComp.SetUIActive(!h.IsOwn),
           0 !== t && this.EditTeamModule.SelectEditTeamItem(s),
-          this.zGn?.RefreshSpine(e).finally(void 0);
+          this.aOn?.RefreshSpine(e).finally(void 0);
       }),
       (this.Lke = (e, i) => this.SelectedRoleId !== e || 1 !== i),
-      (this.fda = (e) => this.SelectedRoleId === e);
+      (this.dga = (e) => this.SelectedRoleId === e);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -59,14 +59,14 @@ class BusinessHelperPanel extends UiPanelBase_1.UiPanelBase {
     ]),
       (this.BtnBindInfo = [
         [1, this.Mke],
-        [2, this.Yga],
+        [2, this.jpa],
       ]);
   }
   async OnBeforeStartAsync() {
     (this.EditTeamModule = new EditTeamModule_1.EditTeamModule()),
       this.EditTeamModule.SetClickEvent(this.qke),
       this.EditTeamModule.SetCanExecuteChange(this.Lke),
-      this.EditTeamModule.SetIsItemSelected(this.fda),
+      this.EditTeamModule.SetIsItemSelected(this.dga),
       await this.EditTeamModule.CreateThenShowByActorAsync(
         this.GetItem(0).GetOwner(),
       ),
@@ -83,7 +83,7 @@ class BusinessHelperPanel extends UiPanelBase_1.UiPanelBase {
       );
   }
   RegisterViewController(e) {
-    this.zGn = e;
+    this.aOn = e;
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     return this.EditTeamModule.GetGuideUiItemAndUiItemForShowEx(e);

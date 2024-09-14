@@ -11,6 +11,7 @@ const puerts_1 = require("puerts"),
   MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils"),
   SkeletalMeshEffectContext_1 = require("../../../../../../Effect/EffectContext/SkeletalMeshEffectContext"),
   EffectSystem_1 = require("../../../../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../../../../GlobalData"),
   CharacterNameDefines_1 = require("../../../CharacterNameDefines"),
   GameplayCueMagnitude_1 = require("./GameplayCueMagnitude"),
   RATE = 50,
@@ -22,8 +23,7 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
       (this.EffectViewHandle = 0),
       (this.TargetMesh = void 0),
       (this.TargetSocket = void 0),
-      (this.TargetWeaponComp = void 0),
-      (this.TargetCharacterWeapon = void 0),
+      (this.cRa = void 0),
       (this.RelativeTransform = void 0),
       (this.SocketTransform = Transform_1.Transform.Create()),
       (this.TargetTransform = Transform_1.Transform.Create());
@@ -38,20 +38,9 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
           29,
           "瞬间型Buff特效不能应用特效幅度，因为瞬间型Buff特效依赖特效自身管理生命周期",
           ["BuffId", this.BuffId],
-          ["CueId:", this.CueConfig.Id],
+          ["CueId", this.CueConfig.Id],
         ),
-      2 === this.CueConfig.Comp
-        ? ((this.TargetWeaponComp = this.M$o()),
-          (this.TargetCharacterWeapon = this.E$o()),
-          this.TargetCharacterWeapon?.Mesh instanceof
-            UE.SkeletalMeshComponent &&
-            (this.TargetMesh = this.TargetCharacterWeapon.Mesh))
-        : (this.TargetMesh = this.S$o()),
-      (this.TargetSocket = FNameUtil_1.FNameUtil.GetDynamicFName(
-        this.CueConfig.Socket,
-      )),
-      this.TargetMesh?.DoesSocketExist(this.TargetSocket) ||
-        (this.TargetSocket = CharacterNameDefines_1.CharacterNameDefines.ROOT);
+      this.mRa();
     var t = Vector_1.Vector.Create(
         this.CueConfig.Location.X,
         this.CueConfig.Location.Y,
@@ -73,27 +62,19 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
     super.OnTick(t);
   }
   OnCreate() {
-    var t = new SkeletalMeshEffectContext_1.SkeletalMeshEffectContext(void 0),
-      e =
-        ((t.SkeletalMeshComp = this.TargetMesh),
-        this.CueComp.GetBuffByHandleId(this.ActiveHandleId)?.GetInstigator());
-    t.EntityId = e ? e.Id : void 0;
-    let s = void 0;
-    e = this.Entity.GetComponent(3);
-    e && (s = e.GetReplaceEffect(this.CueConfig.Path)),
-      (this.EffectViewHandle = EffectSystem_1.EffectSystem.SpawnEffect(
-        this.ActorInternal,
-        this.RelativeTransform.ToUeTransform(),
-        s || this.CueConfig.Path,
-        "[GameplayCueEffect.OnCreate]",
-        t,
-        0,
-        (t) => {
-          this.BeginCallback?.(),
-            this.UseMagnitude() &&
-              EffectSystem_1.EffectSystem.FreezeHandle(t, !0);
-        },
-      )),
+    (this.EffectViewHandle = EffectSystem_1.EffectSystem.SpawnEffect(
+      GlobalData_1.GlobalData.World,
+      this.RelativeTransform.ToUeTransform(),
+      this.gT(),
+      "[GameplayCueEffect.OnCreate]",
+      this.S3a(),
+      0,
+      (t) => {
+        this.BeginCallback?.(),
+          this.UseMagnitude() &&
+            EffectSystem_1.EffectSystem.FreezeHandle(t, !0);
+      },
+    )),
       this.y$o() &&
         (this.CueComp.AddEffectToSet(this.EffectViewHandle),
         this.AttachEffect(),
@@ -122,9 +103,17 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
             "[GameplayCueEffect.OnDestroy]",
             !1,
           );
+          break;
+        case 2:
+          EffectSystem_1.EffectSystem.FreezeHandle(this.EffectViewHandle, !1),
+            EffectSystem_1.EffectSystem.StopEffectById(
+              this.EffectViewHandle,
+              "[GameplayCueEffect.OnDestroy]",
+              !1,
+            );
       }
     2 === this.CueConfig.Comp &&
-      this.TargetCharacterWeapon?.RemoveBuffEffect(this.EffectViewHandle);
+      this.cRa?.RemoveBuffEffect(this.EffectViewHandle);
   }
   OnSetMagnitude(t) {
     EffectSystem_1.EffectSystem.HandleSeekToTimeWithProcess(
@@ -132,6 +121,15 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
       t,
       !0,
     );
+  }
+  OnChangeRole(t) {
+    super.OnChangeRole(t),
+      this.mRa(),
+      this.AttachEffect(),
+      EffectSystem_1.EffectSystem.AttachSkeletalMesh(
+        this.EffectViewHandle,
+        this.S3a(),
+      );
   }
   AttachEffect() {
     var t = EffectSystem_1.EffectSystem.GetEffectActor(this.EffectViewHandle);
@@ -146,7 +144,7 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
           !1,
         ),
         2 === this.CueConfig.Comp &&
-          this.TargetCharacterWeapon?.AddBuffEffect(this.EffectViewHandle))
+          this.cRa?.AddBuffEffect(this.EffectViewHandle))
       : (this.SocketTransform.FromUeTransform(
           this.TargetMesh.GetSocketTransform(this.TargetSocket),
         ),
@@ -177,7 +175,7 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
       }
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Battle", 29, "Cue信息错误！或者无法找到合适的组件", [
-          "CueId:",
+          "CueId",
           this.CueConfig.Id,
         ]);
     }
@@ -186,7 +184,7 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
     var t;
     return this.ActorInternal?.IsValid() &&
       2 === this.CueConfig.Comp &&
-      (t = this.Entity?.GetComponent(71))?.Valid
+      (t = this.EntityHandle.Entity?.GetComponent(72))?.Valid
       ? t
       : void 0;
   }
@@ -245,6 +243,34 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
           this.EndCallback?.();
         },
       );
+  }
+  gT() {
+    let t = void 0;
+    var e = this.EntityHandle.Entity.GetComponent(3);
+    return (
+      (t = e ? e.GetReplaceEffect(this.CueConfig.Path) : t) ||
+      this.CueConfig.Path
+    );
+  }
+  mRa() {
+    2 === this.CueConfig.Comp
+      ? ((this.cRa = this.E$o()),
+        this.cRa?.Mesh instanceof UE.SkeletalMeshComponent &&
+          (this.TargetMesh = this.cRa.Mesh))
+      : (this.TargetMesh = this.S$o()),
+      (this.TargetSocket = FNameUtil_1.FNameUtil.GetDynamicFName(
+        this.CueConfig.Socket,
+      )),
+      this.TargetMesh?.DoesSocketExist(this.TargetSocket) ||
+        (this.TargetSocket = CharacterNameDefines_1.CharacterNameDefines.ROOT);
+  }
+  S3a() {
+    var t = new SkeletalMeshEffectContext_1.SkeletalMeshEffectContext(void 0);
+    return (
+      (t.SkeletalMeshComp = this.TargetMesh),
+      (t.EntityId = this.Instigator?.Entity?.Id),
+      t
+    );
   }
 }
 exports.GameplayCueEffect = GameplayCueEffect;

@@ -23,11 +23,11 @@ class ItemModel extends ModelBase_1.ModelBase {
         LocalStorageDefine_1.ELocalStoragePlayerKey.GetItemConfigListSaveKey,
       ) ?? [];
   }
-  AddGetItemConfigIdList(e) {
-    this.$Ci.push(e), this.SaveGetItemConfigIdList();
+  AddGetItemConfigIdList(t) {
+    this.$Ci.push(t), this.SaveGetItemConfigIdList();
   }
-  IsGotItem(e) {
-    return this.$Ci.includes(e);
+  IsGotItem(t) {
+    return this.$Ci.includes(t);
   }
   SaveGetItemConfigIdList() {
     LocalStorage_1.LocalStorage.SetPlayer(
@@ -38,11 +38,14 @@ class ItemModel extends ModelBase_1.ModelBase {
   IsWaitItemListEmpty() {
     return 0 === this.XCi.length;
   }
-  PushWaitItemList(e) {
-    this.XCi.push(e);
+  PushWaitItemList(t) {
+    this.XCi.push(t);
   }
   ShiftWaitItemList() {
     return this.XCi.shift();
+  }
+  GmClearWaitItemList() {
+    this.XCi = [];
   }
 }
 exports.ItemModel = ItemModel;

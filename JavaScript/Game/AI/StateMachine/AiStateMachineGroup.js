@@ -16,7 +16,8 @@ const Time_1 = require("../../../Core/Common/Time"),
   CombatLog_1 = require("../../Utils/CombatLog"),
   FrequencyMonitor_1 = require("../../Utils/FrequencyMonitor"),
   AiStateMachine_1 = require("./AiStateMachine"),
-  AiStateMachineTaskSkill_1 = require("./Task/AiStateMachineTaskSkill");
+  AiStateMachineTaskSkill_1 = require("./Task/AiStateMachineTaskSkill"),
+  MAX_SWITCH_STATE_COUNT = 3;
 class AiStateMachineGroup {
   constructor(t) {
     (this.Kre = 0),
@@ -38,6 +39,7 @@ class AiStateMachineGroup {
       (this.SwitchStateFrequencyMonitor = void 0),
       (this.Inited = !1),
       (this.StateMachinesActivated = !1),
+      (this.AnyChange = !1),
       (this.zre = void 0),
       (this.ErrorMessage = void 0),
       (this.OnDeath = () => {
@@ -173,7 +175,7 @@ class AiStateMachineGroup {
             t.StateMachine,
           ))?.StateMachineJson &&
         ((e = JSON.parse(e.StateMachineJson)),
-        ((s = this.Entity.GetComponent(67)).StateMachineName = t.StateMachine),
+        ((s = this.Entity.GetComponent(68)).StateMachineName = t.StateMachine),
         (s.StateMachineJsonObject = e)),
       !0
     );
@@ -225,15 +227,16 @@ class AiStateMachineGroup {
       ),
         (this.Inited = !0),
         this.StartStateMachines(),
-        this.ActorComp.IsAutonomousProxy && this.OnControl();
+        this.ActorComp.IsAutonomousProxy && this.OnControl(),
+        this.OnTick(0);
     }
   }
   StartStateMachines() {
-    var t = this.Entity.GetComponent(0).ComponentDataMap.get("Iys")?.Iys;
-    if (t?.xTs && 0 < t.xTs.length) {
+    var t = this.Entity.GetComponent(0).ComponentDataMap.get("Uys")?.Uys;
+    if (t?.NTs && 0 < t.NTs.length) {
       if (
-        ((this.Xre = Number(t.BTs)),
-        (this.$re = Number(t.bTs)),
+        ((this.Xre = Number(t.VTs)),
+        (this.$re = Number(t.FTs)),
         this.Qre !== this.$re &&
           CombatLog_1.CombatLog.Warn(
             "StateMachineNew",
@@ -252,18 +255,18 @@ class AiStateMachineGroup {
           ),
         this.Inited)
       ) {
-        if (t.qTs) for (const i of t.qTs) this.Yre.set(i.j4n, i.W4n);
-        if (t.GTs?.kTs)
-          for (const e of t.GTs.kTs)
+        if (t.$Ts) for (const i of t.$Ts) this.Yre.set(i.Z4n, i.e5n);
+        if (t.HTs?.WTs)
+          for (const e of t.HTs.WTs)
             CombatLog_1.CombatLog.Warn(
               "StateMachineNew",
               this.Entity,
               "初始化黑板值",
-              ["Key", e.j4n],
-              ["Value", e.W4n],
+              ["Key", e.Z4n],
+              ["Value", e.e5n],
             ),
-              this.Jre.set(e.j4n, e.W4n);
-        for (const s of t.xTs) this.StartState(s.k4n, s.UTs, s.wTs);
+              this.Jre.set(e.Z4n, e.e5n);
+        for (const s of t.NTs) this.StartState(s.$4n, s.OTs, s.kTs);
         this.StateMachinesActivated = !0;
       }
     } else
@@ -280,17 +283,17 @@ class AiStateMachineGroup {
         this.Entity,
         "HandleBlackboard",
       ),
-      t.OTs)
+      t.jTs)
     )
-      for (const i of t.OTs)
+      for (const i of t.jTs)
         CombatLog_1.CombatLog.Info(
           "StateMachineNew",
           this.Entity,
           "set",
-          ["key", i.j4n],
-          ["value", i.W4n],
+          ["key", i.Z4n],
+          ["value", i.e5n],
         ),
-          this.Yre.set(i.j4n, i.W4n);
+          this.Yre.set(i.Z4n, i.e5n);
   }
   HandleCustomBlackboard(t) {
     if (
@@ -299,17 +302,17 @@ class AiStateMachineGroup {
         this.Entity,
         "HandleCustomBlackboard",
       ),
-      t.GTs?.kTs)
+      t.HTs?.WTs)
     )
-      for (const i of t.GTs.kTs)
+      for (const i of t.HTs.WTs)
         CombatLog_1.CombatLog.Info(
           "StateMachineNew",
           this.Entity,
           "set",
-          ["key", i.j4n],
-          ["value", i.W4n],
+          ["key", i.Z4n],
+          ["value", i.e5n],
         ),
-          this.Jre.set(i.j4n, i.W4n);
+          this.Jre.set(i.Z4n, i.e5n);
   }
   Clear() {
     if (this.StateMachines) for (const t of this.StateMachines) t.Clear();
@@ -346,7 +349,21 @@ class AiStateMachineGroup {
   }
   OnTick(t) {
     if (this.StateMachinesActivated)
-      for (const i of this.StateMachines) i.Activated && i.Tick(t);
+      for (const s of this.StateMachines)
+        if (s.Activated) {
+          s.Tick(t);
+          let i = !1,
+            e = !1;
+          for (let t = 0; t < MAX_SWITCH_STATE_COUNT && (!(0 < t) || e); t++)
+            t,
+              (this.AnyChange = !1),
+              s.TickTransition(),
+              (e =
+                this.AnyChange &&
+                (s.IsAnimStateMachine || s.CurrentLeafNode.IsConduitNode)),
+              (i = this.AnyChange || i);
+          i && (s.WaitSwitchState = !0);
+        }
   }
   GetNodeByUuid(t) {
     var i;
@@ -361,9 +378,9 @@ class AiStateMachineGroup {
   RequestServerDebugInfo() {
     Time_1.Time.NowSeconds < this.tne + 1 ||
       (Net_1.Net.Call(
-        18418,
-        Protocol_1.Aki.Protocol.QZn.create({
-          P4n: this.ActorComp.CreatureData.GetCreatureDataId(),
+        27206,
+        Protocol_1.Aki.Protocol.tes.create({
+          F4n: this.ActorComp.CreatureData.GetCreatureDataId(),
         }),
         (t) => {
           this.HandleEntityFsmGroupInfo(t);
@@ -447,13 +464,13 @@ ${this.ErrorMessage.ToString()}
         ),
         s.Start(!1, e),
         this.ActorComp.IsAutonomousProxy &&
-          (((s = Protocol_1.Aki.Protocol.e4n.create()).k4n = t),
-          (s.F4n = i),
-          CombatMessage_1.CombatNet.Call(14914, this.Entity, s)))
+          (((s = Protocol_1.Aki.Protocol.l4n.create()).$4n = t),
+          (s.Y4n = i),
+          CombatMessage_1.CombatNet.Call(22140, this.Entity, s)))
       : CombatLog_1.CombatLog.Warn(
           "StateMachineNew",
           this.Entity,
-          `设置初始状态失败，目标节点不存在 [${i}]`,
+          `设置初始状态失败，目标节点不存在 [${t}][${i}]`,
         );
   }
   HandleSwitch(t, i, e, s) {
@@ -483,9 +500,9 @@ ${this.ErrorMessage.ToString()}
             h.ForceActive(),
             (o.CurrentMessageIdCache = void 0),
             this.ActorComp.IsAutonomousProxy &&
-              (((s = Protocol_1.Aki.Protocol.e4n.create()).k4n = t),
-              (s.F4n = e),
-              CombatMessage_1.CombatNet.Call(14914, this.Entity, s)))
+              (((s = Protocol_1.Aki.Protocol.l4n.create()).$4n = t),
+              (s.Y4n = e),
+              CombatMessage_1.CombatNet.Call(22140, this.Entity, s)))
       : CombatLog_1.CombatLog.Warn(
           "StateMachineNew",
           this.Entity,
@@ -509,36 +526,36 @@ ${this.ErrorMessage.ToString()}
         );
   }
   HandleEntityFsmGroupInfo(t) {
-    if (t.NTs)
-      for (const i of t.NTs)
-        for (const e of i.FTs)
-          this.GetNodeByUuid(e.Qvs)?.HandleServerDebugInfo(e);
+    if (t.KTs)
+      for (const i of t.KTs)
+        for (const e of i.QTs)
+          this.GetNodeByUuid(e.tps)?.HandleServerDebugInfo(e);
   }
   ResetStateMachine(t, i) {
     if (
       (CombatLog_1.CombatLog.Info("StateMachineNew", this.Entity, "状态机重置"),
-      t?.xTs && 0 < t.xTs.length)
+      t?.NTs && 0 < t.NTs.length)
     ) {
       if (
-        ((this.Xre = Number(t.BTs)), (this.$re = Number(t.bTs)), this.Inited)
+        ((this.Xre = Number(t.VTs)), (this.$re = Number(t.FTs)), this.Inited)
       ) {
-        for (const o of t.xTs) {
-          var e = this.GetNodeByUuid(o.k4n),
-            s = this.GetNodeByUuid(o.UTs);
+        for (const o of t.NTs) {
+          var e = this.GetNodeByUuid(o.$4n),
+            s = this.GetNodeByUuid(o.OTs);
           if (!s)
             return void CombatLog_1.CombatLog.Error(
               "StateMachineNew",
               this.Entity,
               "状态机重置失败，目标状态不存在",
-              ["fsmId", o.k4n],
-              ["fsmId", o.UTs],
+              ["fsmId", o.$4n],
+              ["fsmId", o.OTs],
             );
           CombatLog_1.CombatLog.Warn(
             "StateMachineNew",
             this.Entity,
             "状态机重置状态",
-            ["fsmId", o.k4n],
-            ["stateId", o.UTs],
+            ["fsmId", o.$4n],
+            ["stateId", o.OTs],
           ),
             (e.CurrentMessageIdCache = i),
             s.ForceActive(),

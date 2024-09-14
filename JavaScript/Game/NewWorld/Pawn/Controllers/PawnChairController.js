@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnChairController = exports.SubEntityInteractLogicController =
     void 0);
 const puerts_1 = require("puerts"),
+  UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   ModelManager_1 = require("../../../Manager/ModelManager");
@@ -15,9 +16,9 @@ class SubEntityInteractLogicController {
       (this.CreatureDataComp = t),
       (this.Entity = t.Entity),
       (this.InteractComp =
-        this.Entity.GetComponent(181)?.GetInteractController());
+        this.Entity.GetComponent(182)?.GetInteractController());
   }
-  Possess(t, e = 0) {
+  Possess(t, r = 0) {
     return !0;
   }
   UnPossess(t) {
@@ -36,95 +37,94 @@ class SubEntityInteractLogicController {
       (this.InteractComp = void 0);
   }
 }
-class PawnChairController extends (exports.SubEntityInteractLogicController =
-  SubEntityInteractLogicController) {
+((exports.SubEntityInteractLogicController =
+  SubEntityInteractLogicController).TmpVector = Vector_1.Vector.Create()),
+  (SubEntityInteractLogicController.TmpVector2 = Vector_1.Vector.Create());
+class PawnChairController extends SubEntityInteractLogicController {
   constructor() {
-    super(...arguments), (this.crr = 40), (this.mrr = void 0);
+    super(...arguments), (this.CFa = 40), (this.mrr = void 0);
   }
-  Possess(t, e) {
+  Possess(t, r) {
     return (this.MasterEntity = t), !0;
   }
-  GetInteractPoint() {
-    var t = this.Entity.GetComponent(1),
-      e = Vector_1.Vector.Create(),
-      r = Vector_1.Vector.Create(),
-      s = Vector_1.Vector.Create(t.ActorRightProxy),
-      t = Vector_1.Vector.Create(t.ActorLocationProxy);
-    return s.Normalize(), s.Multiply(this.crr, r), t.Addition(r, e), e;
+  UnPossess(t) {
+    return !(this.MasterEntity = void 0);
+  }
+  GetSitLocation() {
+    var t = PawnChairController.TmpVector,
+      r = (t.Reset(), PawnChairController.TmpVector2),
+      s = this.Entity.GetComponent(1),
+      i = (r.DeepCopy(s.ActorLocationProxy), this.MasterEntity.GetComponent(2)),
+      e = i.ScaledHalfHeight,
+      i = i.ActorLocationProxy;
+    return (
+      (this.mrr || s).ActorRightProxy.Multiply(this.CFa, t),
+      (r.Z = this.mrr ? this.mrr.ActorLocationProxy.Z + e : i.Z),
+      t.AdditionEqual(r),
+      t
+    );
   }
   GetForwardDirection() {
     return this.Entity.GetComponent(1).ActorRightProxy;
   }
-  drr(e) {
-    if (this.mrr && this.MasterEntity) {
-      var t,
-        r = this.MasterEntity.GetComponent(2),
-        s =
-          (r.Actor.CapsuleComponent.SetCollisionResponseToChannel(2, e ? 0 : 2),
-          (0, puerts_1.$ref)(void 0)),
-        o = (this.mrr.Owner.GetAttachedActors(s), (0, puerts_1.$unref)(s)),
-        i = o.Num();
-      0 === i &&
-        ((s = this.CreatureDataComp.GetPbDataId()),
-        (t = this.mrr.CreatureData.GetPbDataId()),
-        Log_1.Log.CheckWarn()) &&
+  drr(r) {
+    if (
+      this.mrr &&
+      this.MasterEntity &&
+      this.mrr.GetIsSceneInteractionLoadCompleted()
+    ) {
+      var s = r ? 0 : 2,
+        i = this.MasterEntity.GetComponent(2),
+        t = (0, puerts_1.$ref)(void 0),
+        e = (this.mrr.Owner.GetAttachedActors(t), (0, puerts_1.$unref)(t)),
+        o = e.Num();
+      0 === o &&
+        Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "AI",
           51,
-          "[PawnChairController] Scene Interaction Loaded UnComplete!",
-          ["itemPbDataId", s],
-          ["OwnerPbDataId", t],
+          "[PawnChairController.IgnoreChairActorsCollision] 场景交互物体未加载完全",
+          ["itemPbDataId", this.CreatureDataComp.GetPbDataId()],
+          ["OwnerPbDataId", this.mrr.CreatureData.GetPbDataId()],
         );
-      for (let t = 0; t < i; ++t) {
-        var n = o.Get(t),
-          a = (0, puerts_1.$ref)(void 0),
-          h = (n.GetAttachedActors(a), (0, puerts_1.$unref)(a)),
-          d = h.Num();
-        for (let t = 0; t < d; ++t)
-          r.Actor.CapsuleComponent.IgnoreActorWhenMoving(h.Get(t), e);
+      for (let t = 0; t < o; ++t) {
+        var n = e.Get(t),
+          h = (0, puerts_1.$ref)(void 0),
+          a = (n.GetAttachedActors(h), (0, puerts_1.$unref)(h)),
+          l = a.Num();
+        for (let t = 0; t < l; ++t) {
+          var u = a.Get(t);
+          u.IsValid() &&
+            (i.Actor.IgnoreActorWhenMoving(a.Get(t), r, !0),
+            (u = u)?.IsValid()) &&
+            u
+              .GetComponentByClass(UE.StaticMeshComponent.StaticClass())
+              ?.SetCollisionResponseToChannel(2, s);
+        }
       }
     }
   }
   ResetCollision() {
-    this.Entity.GetComponent(185) && this.drr(!1);
+    this.Entity.GetComponent(187) && this.drr(!1);
   }
   IgnoreCollision() {
-    this.Entity.GetComponent(185) && this.drr(!0);
+    this.Entity.GetComponent(187) && this.drr(!0);
   }
   IsSceneInteractionLoadCompleted() {
-    var t = this.Entity.GetComponent(185);
-    if (!t) return !1;
-    var e = this.CreatureDataComp.GetPbDataId();
-    const r = ModelManager_1.ModelManager.CreatureModel.GetOwnerEntity(e);
-    if (
-      (r &&
-        (e =
-          ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(r)) &&
-        (this.mrr = e.Entity.GetComponent(185)),
-      this.mrr || (this.mrr = t),
-      !this.mrr.Owner)
-    )
-      return !1;
-    e = (0, puerts_1.$ref)(void 0);
-    if (
-      (this.mrr.Owner.GetAttachedActors(e), 0 !== (0, puerts_1.$unref)(e).Num())
-    )
-      return !0;
-    {
-      t = this.CreatureDataComp.GetPbDataId();
-      const r = this.mrr.CreatureData.GetPbDataId();
-      return (
-        Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn(
-            "AI",
-            51,
-            "[PawnChairController] Scene Interaction Loaded UnComplete!",
-            ["itemPbDataId", t],
-            ["OwnerPbDataId", r],
-          ),
-        !1
-      );
-    }
+    var t,
+      r = this.Entity.GetComponent(187);
+    return !(
+      !r ||
+      !r.GetIsSceneInteractionLoadCompleted() ||
+      ((t = this.CreatureDataComp.GetPbDataId()),
+      (t = ModelManager_1.ModelManager.CreatureModel.GetOwnerEntity(t))
+        ? !(t =
+            ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t))
+            ?.Valid ||
+          ((this.mrr = t.Entity.GetComponent(187)), !this.mrr) ||
+          !this.mrr.GetIsSceneInteractionLoadCompleted()
+        : ((this.mrr = r), 0))
+    );
   }
 }
 exports.PawnChairController = PawnChairController;

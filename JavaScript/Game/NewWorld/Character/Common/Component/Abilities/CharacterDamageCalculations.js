@@ -88,7 +88,7 @@ const formulas = {
   },
   5: function (t, e, r, a, A, s, i, _, u, c, T) {
     return (
-      (t.TargetSnapshot.CurrentValues.e5n *
+      (t.TargetSnapshot.CurrentValues.l5n *
         (c * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND)) /
         u +
       T
@@ -108,7 +108,7 @@ const formulas = {
       n),
       (c =
         t.TargetSnapshot.CurrentValues.Proto_Life -
-        (t.TargetSnapshot.CurrentValues.e5n *
+        (t.TargetSnapshot.CurrentValues.l5n *
           h *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND +
           b));

@@ -69,9 +69,11 @@ class TrackedMarksView extends BattleChildView_1.BattleChildView {
     for (const e of this.wmt.values()) for (const t of e.values()) t.OnUiShow();
   }
   Update(e) {
-    ModelManager_1.ModelManager.TrackModel.ClearGroupMinDistance();
+    TrackedMarksView.Ult.Start(),
+      ModelManager_1.ModelManager.TrackModel.ClearGroupMinDistance();
     for (const i of this.wmt.values())
       for (const s of i.values()) s.UpdateTrackDistance();
+    TrackedMarksView.Ult.Stop();
     for (var [t, r] of this.wmt)
       for (const n of r.values())
         this.rgt &&
@@ -127,5 +129,7 @@ class TrackedMarksView extends BattleChildView_1.BattleChildView {
     return !0;
   }
 }
-(exports.TrackedMarksView = TrackedMarksView).Ult = void 0;
+(exports.TrackedMarksView = TrackedMarksView).Ult = Stats_1.Stat.Create(
+  "[BattleView]UpdateTrackDistance",
+);
 //# sourceMappingURL=TrackedMarksView.js.map

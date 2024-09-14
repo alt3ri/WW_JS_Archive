@@ -21,7 +21,7 @@ class QuestFailRangeTipsView extends UiTickViewBase_1.UiTickViewBase {
     (this.AYt = this.GetText(0)),
       (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
     var e = this.OpenParam;
-    (this.mNe = e - TimeUtil_1.TimeUtil.GetServerTimeStamp()), this.PYt();
+    (this.mNe = e - TimeUtil_1.TimeUtil.GetServerStopTimeStamp()), this.PYt();
   }
   OnTick(e) {
     ModelManager_1.ModelManager.GeneralLogicTreeModel.TimeStop ||

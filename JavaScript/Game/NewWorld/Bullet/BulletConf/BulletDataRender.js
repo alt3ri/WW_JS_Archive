@@ -8,7 +8,7 @@ class BulletDataRender {
       (this.a9o = void 0),
       (this.h9o = void 0),
       (this.l9o = void 0),
-      (this.Z8s = void 0),
+      (this.iVs = void 0),
       (this._9o = void 0),
       (this.u9o = void 0),
       (this.c9o = void 0),
@@ -19,7 +19,7 @@ class BulletDataRender {
       (this.f9o = void 0),
       (this.p9o = void 0),
       (this.v9o = void 0),
-      (this.wKs = void 0),
+      (this.X$s = void 0),
       (this.Pe = t);
   }
   get VictimCameraShakeOnHit() {
@@ -48,7 +48,7 @@ class BulletDataRender {
     return this.l9o;
   }
   get AudioOnHit() {
-    return void 0 === this.Z8s && (this.Z8s = this.Pe.命中音效), this.Z8s;
+    return void 0 === this.iVs && (this.iVs = this.Pe.命中音效), this.iVs;
   }
   get EffectOnHitConf() {
     if (void 0 === this._9o) {
@@ -126,8 +126,8 @@ class BulletDataRender {
   }
   get OnHitMaterialEffect() {
     return (
-      void 0 === this.wKs && (this.wKs = this.Pe.受击闪白.ToAssetPathName()),
-      this.wKs
+      void 0 === this.X$s && (this.X$s = this.Pe.受击闪白.ToAssetPathName()),
+      this.X$s
     );
   }
   Preload() {

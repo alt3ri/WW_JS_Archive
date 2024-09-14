@@ -42,7 +42,7 @@ const UE = require("ue"),
   CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
   BaseMoveComponent_1 = require("./BaseMoveComponent"),
   CustomMovementDefine_1 = require("./Move/CustomMovementDefine");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   FormationAttributeController_1 = require("../../../../Module/Abilities/FormationAttributeController"),
   GravityUtils_1 = require("../../../../Utils/GravityUtils"),
@@ -61,7 +61,10 @@ const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponen
   BASE_MOVE_INHERIT_TIME = 1.5,
   TRY_GLIDE_TIME = 500,
   NEAR_ZERO = 1e-6,
-  MAX_WALK_FLOOR_ANGLE = 55;
+  MAX_WALK_FLOOR_ANGLE = 55,
+  DEFAULT_MAX_STEP_HEIGHT = 45,
+  DEFAULT_STEP_UP_PERCENT = 0.08,
+  DEFAULT_STEP_UP_STANDARD_SPEED = 400;
 class ForceFallingSpeedCache {
   constructor() {
     (this.ForceFallingSpeed = Vector_1.Vector.Create()),
@@ -111,7 +114,7 @@ let CharacterMoveComponent =
               this.ActorComp.IsRoleAndCtrlByMe) &&
               e === CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
               this.PlayerMotionRequest(
-                Protocol_1.Aki.Protocol.Q6s.Proto_BeLand,
+                Protocol_1.Aki.Protocol.t8s.Proto_BeLand,
               ),
             e)
           ) {
@@ -160,7 +163,7 @@ let CharacterMoveComponent =
         (this.OnStateInherit = (t, e) => {
           var i;
           t?.Valid &&
-            (i = t.GetComponent(163))?.Valid &&
+            (i = t.GetComponent(164))?.Valid &&
             (this.SetGravityDirect(i.GravityDirect),
             this.CharacterMovement.ConsumeInputVector(),
             this.CharacterMovement.AddInputVector(
@@ -184,7 +187,7 @@ let CharacterMoveComponent =
                 CharacterMoveComponent_1.TempVelocity.MultiplyEqual(
                   Math.sqrt(SQUARE_MAX_INHERIT_SPEED / e),
                 ),
-              this.Entity.GetComponent(188)?.HasTag(-1423251824) ||
+              this.Entity.GetComponent(190)?.HasTag(-1423251824) ||
                 (this.ForceSpeed.DeepCopy(
                   CharacterMoveComponent_1.TempVelocity,
                 ),
@@ -198,7 +201,7 @@ let CharacterMoveComponent =
                   this.ForceSpeed.ToUeVector())),
               i.ActorComp.Actor.BasedMovement.MovementBase ||
                 (this.ActorComp.Actor.BasedMovement.MovementBase = void 0),
-              (e = t.GetComponent(188)),
+              (e = t.GetComponent(190)),
               0 === i.CharacterMovement.MovementMode || e?.HasTag(-2100129479)
                 ? this.CharacterMovement.SetMovementMode(1, 0)
                 : 5 !== i.CharacterMovement.MovementMode &&
@@ -224,29 +227,29 @@ let CharacterMoveComponent =
             switch (t) {
               case 24802177:
                 this.PlayerMotionRequest(
-                  Protocol_1.Aki.Protocol.Q6s.Proto_Spurt,
+                  Protocol_1.Aki.Protocol.t8s.Proto_Spurt,
                 );
                 break;
               case -268378154:
                 this.PlayerMotionRequest(
-                  Protocol_1.Aki.Protocol.Q6s.Proto_Pullback,
+                  Protocol_1.Aki.Protocol.t8s.Proto_Pullback,
                 );
                 break;
               case 1965311544:
                 this.PlayerMotionRequest(
-                  Protocol_1.Aki.Protocol.Q6s.Proto_AirSprint,
+                  Protocol_1.Aki.Protocol.t8s.Proto_AirSprint,
                 );
                 break;
               case -2042325985:
                 this.PlayerMotionRequest(
-                  Protocol_1.Aki.Protocol.Q6s.Proto_BackFlip,
+                  Protocol_1.Aki.Protocol.t8s.Proto_BackFlip,
                 );
             }
         }),
         (this.SlideTrans = void 0),
         (this.OnSpeedRatioAttributeChanged = (t, e, i) => {
           var s = this.UnifiedStateComponent?.MoveState,
-            h = this.Entity.GetComponent(163);
+            h = this.Entity.GetComponent(164);
           h?.Valid && h.ResetMaxSpeed(s);
         }),
         (this.OnResponseInputTagsChanged = (t, e) => {
@@ -254,7 +257,11 @@ let CharacterMoveComponent =
             ? (0 === this.CannotResponseInputCount && (this.HasMoveInput = !1),
               ++this.CannotResponseInputCount)
             : --this.CannotResponseInputCount;
-        });
+        }),
+        (this.kka = 0),
+        (this.InitMaxStepHeight = DEFAULT_MAX_STEP_HEIGHT),
+        (this.InitStepUpPercent = DEFAULT_STEP_UP_PERCENT),
+        (this.InitStepUpStandardSpeed = DEFAULT_STEP_UP_STANDARD_SPEED);
     }
     static get Dependencies() {
       return [3];
@@ -318,7 +325,7 @@ let CharacterMoveComponent =
       this.fHr = 0;
     }
     SetMaxSpeed(t) {
-      let e = this.AttributeComponent?.GetCurrentValue(EAttributeId._Vn);
+      let e = this.AttributeComponent?.GetCurrentValue(EAttributeId.vVn);
       (!e || e <= 0) && (e = CharacterAttributeTypes_1.PER_TEN_THOUSAND),
         (e /= CharacterAttributeTypes_1.PER_TEN_THOUSAND);
       var i = this.CharacterMovement.MovementMode;
@@ -389,21 +396,22 @@ let CharacterMoveComponent =
         (this.CharacterMovement.bRotationFollowBaseMovement = !0),
         this.CharacterMovement.SetWalkableFloorAngle(MAX_WALK_FLOOR_ANGLE),
         (this.CharacterMovement.bEnablePhysicsInteraction = !1),
-        (this.AnimComp = this.Entity.GetComponent(162)),
-        (this.GlideComp = this.Entity.GetComponent(51)),
-        (this.SwimComp = this.Entity.GetComponent(68)),
-        (this.AttributeComponent = this.Entity.GetComponent(158)),
-        (this.TagComponent = this.Entity.GetComponent(188)),
+        (this.AnimComp = this.Entity.GetComponent(163)),
+        (this.GlideComp = this.Entity.GetComponent(52)),
+        (this.SwimComp = this.Entity.GetComponent(69)),
+        (this.AttributeComponent = this.Entity.GetComponent(159)),
+        (this.TagComponent = this.Entity.GetComponent(190)),
         (this.DeathComponent = this.Entity.GetComponent(15)),
-        (this.UnifiedStateComponent = this.Entity.GetComponent(91)),
-        (this.SkillComp = this.Entity.GetComponent(33)),
-        (this.TimeScaleComp = this.Entity.GetComponent(109)),
+        (this.UnifiedStateComponent = this.Entity.GetComponent(92)),
+        (this.SkillComp = this.Entity.GetComponent(34)),
+        (this.TimeScaleComp = this.Entity.GetComponent(110)),
         (this.CapsuleOffset = Vector_1.Vector.Create(
           0,
           0,
           this.ActorComp.Radius - this.ActorComp.HalfHeight,
         )),
         this.InitCreatureProperty(),
+        this.InitStepUpParams(),
         (this.MovementData = DataTableUtil_1.DataTableUtil.GetDataTableRow(
           this.ActorComp.Actor.DtBaseMovementSetting,
           CharacterNameDefines_1.CharacterNameDefines.NORMAL.toString(),
@@ -449,7 +457,7 @@ let CharacterMoveComponent =
         (this.IsStopInternal = !1),
         this.InitBaseState(),
         this.AttributeComponent?.AddListener(
-          EAttributeId._Vn,
+          EAttributeId.vVn,
           this.OnSpeedRatioAttributeChanged,
         ),
         (this.CannotResponseInputCount = 0);
@@ -512,7 +520,7 @@ let CharacterMoveComponent =
           this.OnStateInherit,
         ),
         this.AttributeComponent?.RemoveListener(
-          EAttributeId._Vn,
+          EAttributeId.vVn,
           this.OnSpeedRatioAttributeChanged,
         );
       for (const t of this.CanResponseInputTasks) t.EndTask();
@@ -665,7 +673,7 @@ let CharacterMoveComponent =
     }
     CanJumpPress() {
       if (this.GroundedFrame > Time_1.Time.Frame - 2) return !1;
-      var t = this.Entity.GetComponent(33),
+      var t = this.Entity.GetComponent(34),
         e = this.UnifiedStateComponent?.PositionState,
         i = this.UnifiedStateComponent?.MoveState;
       switch (e) {
@@ -702,7 +710,7 @@ let CharacterMoveComponent =
         this.ActorComp.ResetCachedVelocityTime());
     }
     OnJump() {
-      var t = this.Entity.GetComponent(162);
+      var t = this.Entity.GetComponent(163);
       t.Valid && t.MainAnimInstance && t.MainAnimInstance.Montage_Stop(0),
         (this.JumpFrameCount = JUMP_FRAME_COUNT),
         this.AnimComp.OnJump();
@@ -714,13 +722,13 @@ let CharacterMoveComponent =
           i = t === CharacterUnifiedStateTypes_1.ECharPositionState.Climb;
         if (e || i)
           this.TagComponent?.RemoveTag(-1371021686),
-            (i = this.Entity.GetComponent(33)).Valid &&
+            (i = this.Entity.GetComponent(34)).Valid &&
               i.CurrentSkill &&
               (i.StopGroup1Skill("跳跃打断技能"), this.LimitMaxSpeed()),
             this.OnJump(),
             e &&
               this.PlayerMotionRequest(
-                Protocol_1.Aki.Protocol.Q6s.Proto_MotionJump,
+                Protocol_1.Aki.Protocol.t8s.Proto_MotionJump,
               );
         else {
           if (t === CharacterUnifiedStateTypes_1.ECharPositionState.Air) {
@@ -791,7 +799,7 @@ let CharacterMoveComponent =
               this.OnJump(),
               this.CharacterMovement.SetMovementMode(3),
               this.PlayerMotionRequest(
-                Protocol_1.Aki.Protocol.Q6s.Proto_MotionJump,
+                Protocol_1.Aki.Protocol.t8s.Proto_MotionJump,
               ),
               0))
       );
@@ -833,7 +841,7 @@ let CharacterMoveComponent =
           CharacterMoveComponent_1.TempVelocity.ToUeVector()),
         this.OnJump(),
         t.OnJump(),
-        this.PlayerMotionRequest(Protocol_1.Aki.Protocol.Q6s.Proto_MotionJump),
+        this.PlayerMotionRequest(Protocol_1.Aki.Protocol.t8s.Proto_MotionJump),
         !0)
       );
     }
@@ -855,7 +863,7 @@ let CharacterMoveComponent =
             1,
           ) > GLIDE_STRENGTH_THREADHOLD
         ) {
-          t = this.Entity.GetComponent(33);
+          t = this.Entity.GetComponent(34);
           if (t.Valid && t.CurrentSkill) {
             if (!t.CheckGlideCanInterrupt()) return !1;
             t.StopGroup1Skill("滑翔打断技能"), this.LimitMaxSpeed();
@@ -877,7 +885,7 @@ let CharacterMoveComponent =
     PlayerMovementInput(t) {
       var e = this.Entity.GetComponent(26);
       if (!e?.GetSitDownState()) {
-        e = this.Entity.GetComponent(33);
+        e = this.Entity.GetComponent(34);
         if (
           e?.Valid &&
           this.ContainsTag(1996624497) &&
@@ -1092,8 +1100,8 @@ let CharacterMoveComponent =
             (this.CurrentChainLengthSquared = t));
     }
     PlayerMotionRequest(t) {
-      var e = Protocol_1.Aki.Protocol.Gls.create();
-      (e.r8n = t), Net_1.Net.Call(29291, e, () => {});
+      var e = Protocol_1.Aki.Protocol.Hls.create();
+      (e.c8n = t), Net_1.Net.Call(19946, e, () => {});
     }
     pHr() {
       var t,
@@ -1102,14 +1110,14 @@ let CharacterMoveComponent =
         1 < e ||
         ((t = CharacterMoveComponent_1.VelocityAdditionDestination),
         Vector_1.Vector.Lerp(this.gHr.BeginLocation, this.gHr.ToLocation, e, t),
-        this.ActorComp.SetActorLocation(t.ToUeVector(), "移动.被吸引", !1),
+        this.ActorComp.SetActorLocation(t.ToUeVector(), "移动.被吸引", !0),
         0)
       );
     }
     BeginWhirlpool(t, e, i, s, h = -1, r = 0) {
       var a = this.CharacterMovement;
       (a.GravityScale = 0),
-        this.Entity.GetComponent(160).SetMoveState(
+        this.Entity.GetComponent(161).SetMoveState(
           CharacterUnifiedStateTypes_1.ECharMoveState.KnockUp,
         ),
         a.SetMovementMode(3),
@@ -1131,11 +1139,49 @@ let CharacterMoveComponent =
     UpdateWhirlpoolLocation(t) {
       this.gHr.UpdateLocation(t);
     }
+    InitStepUpParams() {
+      this.CharacterMovement &&
+        ((this.InitMaxStepHeight = this.CharacterMovement.MaxStepHeight),
+        (this.InitStepUpPercent = this.CharacterMovement.StepUpDeltaPrecent),
+        (this.InitStepUpStandardSpeed =
+          this.CharacterMovement.StepUpStandardSpeed));
+    }
+    SetStepUpParamsRecord(t) {
+      t
+        ? (--this.kka, 0 === this.kka && this.ResetStepUpParams())
+        : (++this.kka, 1 === this.kka && this.SetStepUpParams()),
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Movement",
+            43,
+            "SetStepUpParamsRecord",
+            ["reset", t],
+            ["count", this.kka],
+          );
+    }
+    SetStepUpParams() {
+      this.CharacterMovement &&
+        ((this.CharacterMovement.StepUpDeltaPrecent = 1),
+        (this.CharacterMovement.StepUpStandardSpeed = 1));
+    }
+    ResetStepUpParams() {
+      this.CharacterMovement &&
+        ((this.CharacterMovement.StepUpDeltaPrecent = this.InitStepUpPercent),
+        (this.CharacterMovement.StepUpStandardSpeed =
+          this.InitStepUpStandardSpeed));
+    }
+    SetStepHeight(t) {
+      this.CharacterMovement && (this.CharacterMovement.MaxStepHeight = t);
+    }
+    ResetStepHeight() {
+      this.CharacterMovement &&
+        (this.CharacterMovement.MaxStepHeight = this.InitMaxStepHeight);
+    }
   });
 (CharacterMoveComponent.TempVelocity = Vector_1.Vector.Create()),
   (CharacterMoveComponent = CharacterMoveComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(163)],
+      [(0, RegisterComponent_1.RegisterComponent)(164)],
       CharacterMoveComponent,
     )),
   (exports.CharacterMoveComponent = CharacterMoveComponent);

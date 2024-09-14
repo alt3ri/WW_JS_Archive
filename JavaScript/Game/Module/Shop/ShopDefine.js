@@ -10,7 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SECONDS_PRE_HOUR = 3600);
 class Shop {
   constructor(t) {
-    (this.uMo = t.pxs), (this.x5e = new Map()), this.UpdateShopItemList(t.Kqs);
+    (this.uMo = t.Lxs), (this.x5e = new Map()), this.UpdateShopItemList(t.eGs);
   }
   get UpdateTime() {
     return this.uMo;
@@ -20,7 +20,7 @@ class Shop {
   }
   UpdateShopItemList(t) {
     this.x5e.clear();
-    for (const e of t) this.x5e.set(e.J4n, e);
+    for (const e of t) this.x5e.set(e.s5n, e);
   }
   GetItemInfo(t) {
     return this.x5e.get(t);

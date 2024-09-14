@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const puerts_1 = require("puerts"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
   ScreenEffectSystem_1 = require("../../../Render/Effect/ScreenEffectSystem/ScreenEffectSystem"),
   BattleChildViewPanel_1 = require("./BattleChildViewPanel/BattleChildViewPanel"),
   FullScreenNiagaraItem_1 = require("./FullScreenNiagaraItem");
@@ -124,10 +125,13 @@ class FullScreenPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     t?.IsValid() &&
       (t.GetScreenEffectFightRoot(e),
       (this.Uht = (0, puerts_1.$unref)(e)),
-      this.Uht?.K2_AttachRootComponentTo(this.RootItem));
+      this.Uht?.K2_AttachRootComponentTo(this.RootItem),
+      ModelManager_1.ModelManager.ScreenEffectModel.SetFightRootInited(!0));
   }
   kht() {
-    this.Uht?.IsValid() && this.Uht.K2_DetachFromActor(), (this.Uht = void 0);
+    this.Uht?.IsValid() && this.Uht.K2_DetachFromActor(),
+      (this.Uht = void 0),
+      ModelManager_1.ModelManager.ScreenEffectModel?.SetFightRootInited(!1);
   }
 }
 exports.FullScreenPanel = FullScreenPanel;

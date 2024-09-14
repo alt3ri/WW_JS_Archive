@@ -6,8 +6,6 @@ const UE = require("ue"),
   ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
-  EventDefine_1 = require("../../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../../Common/Event/EventSystem"),
   EffectContext_1 = require("../../../Effect/EffectContext/EffectContext"),
   EffectSystem_1 = require("../../../Effect/EffectSystem"),
   GlobalData_1 = require("../../../GlobalData"),
@@ -47,32 +45,32 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
   OnEnter() {
     (this.Xne = !0), (this.Nne = !1);
     var t = this.Node.AiComponent.TsAiController,
-      e = this.Node.AiController;
-    if (e) {
+      i = this.Node.AiController;
+    if (i) {
       this.Node.SkillComponent.StopAllSkills(
         "AiStateMachineTaskLeaveFight.OnEnter",
       ),
         this.Node.AnimationComponent.MainAnimInstance.Montage_Stop(0);
-      var i = e.AiWanderInfos?.AiWander;
-      i
-        ? ((this.Hne = i.ResetMoveState),
-          (this.jne = i.ShowEffectDaPath),
-          (this.Wne = i.HideEffectDaPath),
-          (this.Kne = i.ShowMaterialDaPath),
-          (this.Qne = i.HideMaterialDaPath))
+      var e = i.AiWanderInfos?.AiWander;
+      e
+        ? ((this.Hne = e.ResetMoveState),
+          (this.jne = e.ShowEffectDaPath),
+          (this.Wne = e.HideEffectDaPath),
+          (this.Kne = e.ShowMaterialDaPath),
+          (this.Qne = e.HideMaterialDaPath))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error("BehaviorTree", 6, "没有配置AiWander", [
             "AiBaseId",
-            e.AiBase.Id,
+            i.AiBase.Id,
           ]);
-      const r = e.CharActorComp;
+      const a = i.CharActorComp;
       if (
         (this.UsePatrolPointPriority &&
-        e.AiPatrol.HasPatrolConfig() &&
-        (s = e.AiPatrol.GetLastPatrolPoint())
+        i.AiPatrol.HasPatrolConfig() &&
+        (s = i.AiPatrol.GetLastPatrolPoint())
           ? this.qne.DeepCopy(s)
-          : this.qne.DeepCopy(e.CharActorComp.GetInitLocation()),
-        i && this.Hne !== BLINK_TYPE)
+          : this.qne.DeepCopy(i.CharActorComp.GetInitLocation()),
+        e && this.Hne !== BLINK_TYPE)
       ) {
         if (this.Node?.ActorComponent?.IsAutonomousProxy) {
           var s = {
@@ -92,7 +90,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
               Callback: (t) => {
                 1 === t
                   ? this.$ne(!0)
-                  : (this.Yne(r),
+                  : (this.Yne(a),
                     CombatLog_1.CombatLog.Warn(
                       "StateMachineNew",
                       this.Node.Entity,
@@ -103,7 +101,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
             },
             h =
               (this.Node.MoveComponent.MoveAlongPath(s),
-              r.Entity.CheckGetComponent(91));
+              a.Entity.CheckGetComponent(92));
           if (h.Valid)
             switch (this.Hne) {
               case 1:
@@ -115,8 +113,8 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
                 h.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Run);
             }
         }
-      } else this.Yne(r);
-      this.Jne(e, !1);
+      } else this.Yne(a);
+      this.Jne(i, !1);
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
@@ -124,22 +122,14 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
           t.GetClass().GetName(),
         ]);
   }
-  Jne(t, e) {
-    t.AiPerception.SetAllAiSenseEnable(e);
+  Jne(t, i) {
+    t.AiPerception.SetAllAiSenseEnable(i);
   }
   OnTick(t) {
     this.Node.AiController ? this.Gne && this.zne(t) : this.$ne(!1);
   }
   $ne(t) {
-    var e;
-    this.Xne &&
-      ((e = this.Node.Entity),
-      (this.Node.TaskFinish = !0),
-      EventSystem_1.EventSystem.EmitWithTarget(
-        e,
-        EventDefine_1.EEventName.AiTaskWanderForResetEnd,
-      ),
-      (this.Xne = !1));
+    this.Xne && ((this.Node.TaskFinish = !0), (this.Xne = !1));
   }
   OnExit() {
     var t = this.Node.AiController;
@@ -170,7 +160,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
       (this.Vne = void 0),
       (this.Fne = void 0);
   }
-  Yne(e) {
+  Yne(i) {
     var t;
     (this.Gne = !0),
       (this.kne = 0),
@@ -182,14 +172,14 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
           MathUtils_1.MathUtils.DefaultTransform,
           this.Wne,
           "[AiStateMachineTaskLeaveFight.BlinkMoveBegin] hideEffect",
-          new EffectContext_1.EffectContext(e.Entity.Id),
+          new EffectContext_1.EffectContext(i.Entity.Id),
         )),
         (t = EffectSystem_1.EffectSystem.GetEffectActor(t))
-          ? t.K2_SetActorLocation(e.ActorLocation, !1, void 0, !1)
+          ? t.K2_SetActorLocation(i.ActorLocation, !1, void 0, !1)
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("BehaviorTree", 58, "AiWander瞬移隐藏特效生成失败", [
               "Type",
-              e.Actor.GetName(),
+              i.Actor.GetName(),
             ])),
       "" !== this.Qne
         ? ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -199,12 +189,12 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("BehaviorTree", 58, "脱战隐藏材质加载回调", [
                   "Type",
-                  e.Actor.GetName(),
+                  i.Actor.GetName(),
                 ]),
                 this.Node.Activated &&
                   (t
                     ? (this.Vne =
-                        e.Actor.CharRenderingComponent.AddMaterialControllerData(
+                        i.Actor.CharRenderingComponent.AddMaterialControllerData(
                           t,
                         ))
                     : ((this.Vne = 0),
@@ -213,7 +203,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
                           "BehaviorTree",
                           58,
                           "AiWander瞬移隐藏材质生成失败",
-                          ["Type", e.Actor.GetName()],
+                          ["Type", i.Actor.GetName()],
                         )));
             },
           )
@@ -227,45 +217,45 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
       this.kne >= this.BlinkTime && this.ese();
   }
   Zne() {
-    const e = this.Node.ActorComponent;
+    const i = this.Node.ActorComponent;
     var t;
     this.Node.ActorComponent.SetMoveControlled(
       !0,
       this.BlinkTime * MathUtils_1.MathUtils.MillisecondToSecond,
       "脱战传送",
     ),
-      e.SetActorLocation(
+      i.SetActorLocation(
         this.qne.ToUeVector(),
         "脱战节点.执行瞬移重置位置",
         !1,
       ),
-      e.FixBornLocation("脱战节点.修正角色地面位置", !0, void 0, !1),
-      e.Actor.SetActorEnableCollision(!0),
+      i.FixBornLocation("脱战节点.修正角色地面位置", !0, void 0, !1),
+      i.Actor.SetActorEnableCollision(!0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "BehaviorTree",
           58,
           "AiWander[BlinkMoveTick]怪物闪烁导致Actor碰撞为True",
-          ["Actor:", e.Actor.GetName()],
+          ["Actor:", i.Actor.GetName()],
         ),
-      this.tse(e),
+      this.tse(i),
       "" !== this.jne &&
         ((t = EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
           MathUtils_1.MathUtils.DefaultTransform,
           this.jne,
           "[AiStateMachineTaskLeaveFight.BlinkMoveTick] showEffect",
-          new EffectContext_1.EffectContext(e.Entity.Id),
+          new EffectContext_1.EffectContext(i.Entity.Id),
         )),
         (t = EffectSystem_1.EffectSystem.GetEffectActor(t))
-          ? t.K2_SetActorLocation(e.ActorLocation, !1, void 0, !1)
+          ? t.K2_SetActorLocation(i.ActorLocation, !1, void 0, !1)
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("BehaviorTree", 58, "AiWander瞬移显示特效生成失败", [
               "Type",
-              e.Actor.GetName(),
+              i.Actor.GetName(),
             ])),
       0 <= this.Vne &&
-        (e.Actor.CharRenderingComponent.RemoveMaterialControllerData(this.Vne),
+        (i.Actor.CharRenderingComponent.RemoveMaterialControllerData(this.Vne),
         (this.Vne = void 0)),
       "" !== this.Kne
         ? ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -275,7 +265,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
               this.Node.Activated &&
                 (t
                   ? (this.Fne =
-                      e.Actor.CharRenderingComponent.AddMaterialControllerData(
+                      i.Actor.CharRenderingComponent.AddMaterialControllerData(
                         t,
                       ))
                   : ((this.Fne = -1),
@@ -284,12 +274,12 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
                         "BehaviorTree",
                         58,
                         "AiWander瞬移显示材质生成失败",
-                        ["Type", e.Actor.GetName()],
+                        ["Type", i.Actor.GetName()],
                       )));
             },
           )
         : (this.Fne = -1),
-      e.SetInputDirect(Vector_1.Vector.ZeroVector);
+      i.SetInputDirect(Vector_1.Vector.ZeroVector);
   }
   ese() {
     var t = this.Node.ActorComponent;
@@ -312,11 +302,11 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
     );
   }
   tse(t) {
-    var e = this.Node.Entity.GetComponent(0).GetRotation();
-    t.SetActorRotation(e, "脱战节点.重置为基础方法", !1);
+    var i = this.Node.Entity.GetComponent(0).GetRotation();
+    t.SetActorRotation(i, "脱战节点.重置为基础方法", !1);
   }
-  ToString(t, e = 0) {
-    (0, AiStateMachine_1.appendDepthSpace)(t, e);
+  ToString(t, i = 0) {
+    (0, AiStateMachine_1.appendDepthSpace)(t, i);
   }
 }
 exports.AiStateMachineTaskLeaveFight = AiStateMachineTaskLeaveFight;

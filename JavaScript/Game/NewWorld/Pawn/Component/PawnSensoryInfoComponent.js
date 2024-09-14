@@ -35,7 +35,7 @@ let PawnSensoryInfoComponent = class PawnSensoryInfoComponent extends EntityComp
       (this.bhn = !1),
       (this.qhn = Number.MAX_VALUE),
       (this.Ghn = void 0),
-      (this.kTa = new Set()),
+      (this.fBa = new Set()),
       (this.Nhn = void 0),
       (this.Ohn = () => {
         (this.Bhn = !0),
@@ -74,30 +74,30 @@ let PawnSensoryInfoComponent = class PawnSensoryInfoComponent extends EntityComp
   CreatePerceptionEvent() {
     var t =
       EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.CreatePlayerPerceptionEvent();
-    return this.kTa.add(t), t;
+    return this.fBa.add(t), t;
   }
   DeletePerceptionEvent(t) {
-    this.kTa.delete(t),
+    this.fBa.delete(t),
       EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.DestroyPlayerPerceptionEvent(
         t,
       );
   }
-  NTa() {
-    for (const t of this.kTa)
+  pBa() {
+    for (const t of this.fBa)
       EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.DestroyPlayerPerceptionEvent(
         t,
       );
-    this.kTa.clear();
+    this.fBa.clear();
   }
   RegisterPerceptionEvent() {
     var t = this.Entity.GameBudgetManagedToken;
-    if (t) for (const e of this.kTa) e.IsValid() || e.Register(t);
+    if (t) for (const e of this.fBa) e.IsValid() || e.Register(t);
   }
   OnActivate() {
     var t = this.Entity.GetComponent(0),
       e = this.Entity?.GameBudgetManagedToken;
     return (
-      t.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player
+      t.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player
         ? this.khn()
         : (this.Ghn &&
             (this.DeletePerceptionEvent(this.Ghn), (this.Ghn = void 0)),
@@ -124,7 +124,7 @@ let PawnSensoryInfoComponent = class PawnSensoryInfoComponent extends EntityComp
     return (
       (this.Nhn = void 0),
       (this.Ghn = void 0),
-      this.NTa(),
+      this.pBa(),
       EventSystem_1.EventSystem.EmitWithTarget(
         this.Entity,
         EventDefine_1.EEventName.LeaveLogicRange,
@@ -166,7 +166,7 @@ LogicRangeInfo:
   }
 };
 (PawnSensoryInfoComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(108)],
+  [(0, RegisterComponent_1.RegisterComponent)(109)],
   PawnSensoryInfoComponent,
 )),
   (exports.PawnSensoryInfoComponent = PawnSensoryInfoComponent);

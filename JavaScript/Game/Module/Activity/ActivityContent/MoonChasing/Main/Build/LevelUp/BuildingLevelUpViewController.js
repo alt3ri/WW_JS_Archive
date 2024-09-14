@@ -11,7 +11,7 @@ class BuildingLevelUpViewController {
   constructor() {
     (this.Yzt = void 0),
       (this.jio = void 0),
-      (this.z7s = !1),
+      (this._Hs = !1),
       (this.CRn = 0),
       (this.UnlockPress = () => {
         var i = this.Yzt.UiViewSequence;
@@ -19,13 +19,13 @@ class BuildingLevelUpViewController {
           ? i.ChangePlaybackDirection("Press")
           : (this.Yzt.UiViewSequence.PlaySequence("Press"),
             this.Yzt.PlayBuildingLoopSequence(!0)),
-          (this.z7s = !0);
+          (this._Hs = !0);
       }),
       (this.UnlockRelease = () => {
         var i = this.Yzt.UiViewSequence;
         i.HasSequenceNameInPlaying("Press") &&
           i.ChangePlaybackDirection("Press"),
-          (this.z7s = !1);
+          (this._Hs = !1);
       }),
       (this.CloseSelf = () => {
         var i;
@@ -48,7 +48,7 @@ class BuildingLevelUpViewController {
               this.jio.BuildingId,
               (i) => {
                 i
-                  ? ((this.Yzt.UiViewSequence.CloseSequenceName = "Close2"),
+                  ? ((this.Yzt.UiViewSequence.CloseSequenceName = "Close02"),
                     UiManager_1.UiManager.ResetToBattleView())
                   : this.Yzt.CloseMe();
               },
@@ -70,7 +70,7 @@ class BuildingLevelUpViewController {
   Tick(i) {
     this.jio.IsLevelUp ||
       1 <= this.CRn ||
-      (this.z7s
+      (this._Hs
         ? (this.CRn = MathUtils_1.MathUtils.Clamp(
             this.CRn + i / ADD_STEP,
             0,

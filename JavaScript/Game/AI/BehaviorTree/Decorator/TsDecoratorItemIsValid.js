@@ -38,7 +38,7 @@ class TsDecoratorItemIsValid extends UE.BTDecorator_BlueprintBase {
       (r = EntitySystem_1.EntitySystem.Get(r));
     return !(
       !r ||
-      r.GetComponent(130)?.IsSearchByOther(e.Entity.Id) ||
+      r.GetComponent(131)?.IsSearchByOther(e.Entity.Id) ||
       !SceneItemUtility_1.SceneItemUtility.GetBaseItemActor(r) ||
       !r.Active
     );

@@ -31,7 +31,8 @@ const puerts_1 = require("puerts"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   IAction_1 = require("../../../../../UniverseEditor/Interface/IAction"),
   TimeUtil_1 = require("../../../../Common/TimeUtil"),
-  ModelManager_1 = require("../../../../Manager/ModelManager");
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  OFFSET = 100;
 class MoveTarget {
   constructor(t, e, i = 0, s = -1, o = -1) {
     (this.TargetPosData = t),
@@ -59,19 +60,19 @@ let SceneItemMoveComponent = class SceneItemMoveComponent extends EntityComponen
       (this.Hln = -0),
       (this.jln = !1),
       (this.Wln = !1),
-      (this.INn = !1),
-      (this.TNn = []),
+      (this.BNn = !1),
+      (this.wNn = []),
       (this.hIn = []),
       (this.lIn = () => {
-        this.INn = !0;
+        this.BNn = !0;
         for (const t of this.hIn) t(this.Entity);
-        this.INn = !1;
-        for (const e of this.TNn) this.hIn.push(e);
-        this.TNn.length = 0;
+        this.BNn = !1;
+        for (const e of this.wNn) this.hIn.push(e);
+        this.wNn.length = 0;
       });
   }
   static get Dependencies() {
-    return [185, 0];
+    return [187, 0];
   }
   get IsMovingPrepareCompleted() {
     return this.Wln;
@@ -86,9 +87,9 @@ let SceneItemMoveComponent = class SceneItemMoveComponent extends EntityComponen
   OnStart() {
     var t = this.Entity.GetComponent(0);
     return (
-      (this.ActorComp = this.Entity.GetComponent(185)),
-      (this.Nln = this.Entity.GetComponent(144)),
-      (this.Oln = this.Entity.GetComponent(117)),
+      (this.ActorComp = this.Entity.GetComponent(187)),
+      (this.Nln = this.Entity.GetComponent(145)),
+      (this.Oln = this.Entity.GetComponent(118)),
       this.Nln?.SetEnableMovementSync(!1, "SceneItemMoveComponent OnStart"),
       t &&
         t.GetPbEntityInitData() &&
@@ -171,14 +172,16 @@ let SceneItemMoveComponent = class SceneItemMoveComponent extends EntityComponen
               (this.Anr = i),
               (this._ii = 0)));
   }
-  Opa(t) {
+  OSa(t) {
+    var e;
     !Info_1.Info.EnableForceTick && this.IsMovingPrepareCompleted
-      ? (this.o4o.AddMoveTarget(
-          new UE.Vector(
-            t.TargetPosData.X ?? 0,
-            t.TargetPosData.Y ?? 0,
-            t.TargetPosData.Z ?? 0,
-          ),
+      ? ((e = Vector_1.Vector.Create(
+          t.TargetPosData.X ?? 0,
+          t.TargetPosData.Y ?? 0,
+          t.TargetPosData.Z ?? 0,
+        )),
+        this.o4o.AddMoveTarget(
+          e.ToUeVector(),
           t.MoveTime,
           t.StayTime,
           t.MaxSpees,
@@ -186,7 +189,10 @@ let SceneItemMoveComponent = class SceneItemMoveComponent extends EntityComponen
         ),
         this.Oln.IsMoving || this.AddStopMoveCallback(this.lIn),
         this.o4o.SetTickingMoveEnable(!0),
-        2 !== this.o4o.GetSimpleRunState() && (this.Oln.IsMoving = !0))
+        (e = Vector_1.Vector.Dist(e, this.ActorComp.ActorLocationProxy)),
+        0 === this.o4o.GetSimpleRunState() &&
+          e > OFFSET &&
+          (this.Oln.IsMoving = !0))
       : this.Fln.push(t),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -217,37 +223,37 @@ let SceneItemMoveComponent = class SceneItemMoveComponent extends EntityComponen
           : ((i =
               e.MoveMotion?.Type === IAction_1.EMoveMotion.VariableMotion
                 ? -1
-                : e.MoveMotion?.Time ?? 0),
+                : (e.MoveMotion?.Time ?? 0)),
             new MoveTarget(e.Point, i))),
-        this.Opa(t),
+        this.OSa(t),
         ModelManager_1.ModelManager.GameModeModel.IsMulti &&
           this.RequestMoveToTarget(t);
     }
   }
   RequestMoveToTarget(t) {
-    var e = Protocol_1.Aki.Protocol.sda.create();
-    (e.dda = Protocol_1.Aki.Protocol.mda.create()),
-      (e.dda.P4n = this.ActorComp.CreatureData.GetCreatureDataId()),
-      (e.dda.y5n = {
+    var e = Protocol_1.Aki.Protocol.l0a.create();
+    (e.g0a = Protocol_1.Aki.Protocol.v0a.create()),
+      (e.g0a.F4n = this.ActorComp.CreatureData.GetCreatureDataId()),
+      (e.g0a.P5n = {
         X: t.TargetPosData.X,
         Y: t.TargetPosData.Y,
         Z: t.TargetPosData.Z,
       }),
-      (e.dda.lda = t.MoveTime),
-      (e.dda._da = t.StayTime),
-      (e.dda.uda = t.MaxSpees),
-      (e.dda.cda = t.Acceleration),
-      Net_1.Net.Call(28769, e, (t) => {});
+      (e.g0a.c0a = t.MoveTime),
+      (e.g0a.d0a = t.StayTime),
+      (e.g0a.m0a = t.MaxSpees),
+      (e.g0a.C0a = t.Acceleration),
+      Net_1.Net.Call(29164, e, (t) => {});
   }
   HandleMoveToTarget(t) {
     t = new MoveTarget(
-      { X: t.dda.y5n.X, Y: t.dda.y5n.Y, Z: t.dda.y5n.Z },
-      t.dda.lda,
-      t.dda._da,
-      t.dda.uda,
-      t.dda.cda,
+      { X: t.g0a.P5n.X, Y: t.g0a.P5n.Y, Z: t.g0a.P5n.Z },
+      t.g0a.c0a,
+      t.g0a.d0a,
+      t.g0a.m0a,
+      t.g0a.C0a,
     );
-    this.Opa(t);
+    this.OSa(t);
   }
   StartPatrol(t, e, i, s, o, h, r) {
     (this.jln = !0),
@@ -295,7 +301,7 @@ let SceneItemMoveComponent = class SceneItemMoveComponent extends EntityComponen
     this.o4o.OnStopCallback.Remove(t);
   }
   AddStopMoveCallbackWithEntity(t) {
-    (this.INn ? this.TNn : this.hIn).push(t);
+    (this.BNn ? this.wNn : this.hIn).push(t);
   }
   RemoveStopMoveCallbackWithEntity(t) {
     this.hIn.includes(t) && this.hIn.splice(this.hIn.indexOf(t), 1);
@@ -305,7 +311,7 @@ let SceneItemMoveComponent = class SceneItemMoveComponent extends EntityComponen
   }
 };
 (SceneItemMoveComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(115)],
+  [(0, RegisterComponent_1.RegisterComponent)(116)],
   SceneItemMoveComponent,
 )),
   (exports.SceneItemMoveComponent = SceneItemMoveComponent);

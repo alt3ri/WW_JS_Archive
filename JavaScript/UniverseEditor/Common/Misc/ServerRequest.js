@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.getPlayerPosInfo =
     exports.waitForServerReloadReady =
     exports.isServerReloadReady =
+    exports.sendReloadServer =
     exports.sendPrepareReloadServer =
     exports.requestPlayerBuffOp =
     exports.requestEntityBuffOp =
@@ -108,12 +109,22 @@ function sendPrepareReloadServer(e) {
     }
   }
 }
+function sendReloadServer(e) {
+  if ("Remote" !== e) {
+    e = `http://localhost:${getPortFromServerType(e)}/GameManager/ReloadAllNodeEntityConfig`;
+    try {
+      (0, Util_1.sendHttpRequest)("POST", e);
+    } catch (e) {
+      (0, Log_1.warn)("sendReloadServer failed: " + e);
+    }
+  }
+}
 async function isServerReloadReady(e) {
   if ("Remote" === e) return !1;
   e = `http://localhost:${getPortFromServerType(e)}/GameManager/GetEntityConfigReloadState`;
   try {
     var r = await (0, Util_2.doJsonHttpGet)(e);
-    return void 0 !== r && 0 === r.code;
+    return void 0 !== r && 0 === r.code && 0 === parseInt(r.data);
   } catch (e) {
     return (0, Log_1.warn)("isServerReloadReady " + e), !1;
   }
@@ -141,6 +152,7 @@ async function getPlayerPosInfo(e, r) {
   (exports.requestEntityBuffOp = requestEntityBuffOp),
   (exports.requestPlayerBuffOp = requestPlayerBuffOp),
   (exports.sendPrepareReloadServer = sendPrepareReloadServer),
+  (exports.sendReloadServer = sendReloadServer),
   (exports.isServerReloadReady = isServerReloadReady),
   (exports.waitForServerReloadReady = waitForServerReloadReady),
   (exports.getPlayerPosInfo = getPlayerPosInfo);

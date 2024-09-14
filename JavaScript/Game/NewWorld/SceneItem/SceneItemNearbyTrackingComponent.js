@@ -134,7 +134,7 @@ let SceneItemNearbyTrackingComponent =
       return (
         this.Lo?.IsEnableWhileUnlock &&
           !this.Lo?.IsEnable &&
-          ((this.Xte = this.Entity?.GetComponent(180)),
+          ((this.Xte = this.Entity?.GetComponent(181)),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemLockPropChange,
@@ -198,7 +198,7 @@ let SceneItemNearbyTrackingComponent =
   });
 (SceneItemNearbyTrackingComponent = SceneItemNearbyTrackingComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(146)],
+    [(0, RegisterComponent_1.RegisterComponent)(147)],
     SceneItemNearbyTrackingComponent,
   )),
   (exports.SceneItemNearbyTrackingComponent = SceneItemNearbyTrackingComponent);

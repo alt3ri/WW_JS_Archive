@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventCaptureRequest = void 0);
 const EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
-  TsBaseCharacter_1 = require("../../Character/TsBaseCharacter"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   BattleNetController_1 = require("../../World/Controller/BattleNetController"),
   LevelGameplayActionsDefine_1 = require("../LevelGameplayActionsDefine"),
@@ -11,17 +10,6 @@ const EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
 class LevelEventCaptureRequest extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments), (this.NLe = ""), (this.E0 = 0);
-  }
-  Execute(e, t) {
-    t instanceof TsBaseCharacter_1.default
-      ? ((this.NLe = e.get("Success")),
-        (this.E0 = t.CharacterActorComponent.Entity.Id),
-        BattleNetController_1.BattleNetController.RequestCaptureEntity(
-          this.E0,
-        ).then((e) => {
-          e ? (this.OLe(), this.FinishExecute(!0)) : this.FinishExecute(!1);
-        }))
-      : this.FinishExecute(!1);
   }
   ExecuteNew(t, e) {
     1 === e.Type && EntitySystem_1.EntitySystem.Get(e.EntityId)?.Valid
@@ -46,7 +34,7 @@ class LevelEventCaptureRequest extends LevelGeneralBase_1.LevelEventBase {
   }
   OLe() {
     var e = EntitySystem_1.EntitySystem.Get(this.E0);
-    e && (e = e.GetComponent(132)) && e.ExecuteCapture(this.NLe);
+    e && (e = e.GetComponent(133)) && e.ExecuteCapture(this.NLe);
   }
   OnReset() {
     (this.NLe = void 0), (this.E0 = 0);

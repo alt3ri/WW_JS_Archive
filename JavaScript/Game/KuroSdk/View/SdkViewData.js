@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.SdkLoadPopUpViewData =
+  (exports.SdkPayProductInformationViewData =
+    exports.SdkLoadPopUpViewData =
     exports.SdkPayTipData =
     exports.SdkLoginViewLayoutData =
     exports.SdkLoginViewData =
@@ -19,12 +20,12 @@ class SdkLoginViewData {
       (this.CancelCallback = () => {}),
       (this.LayoutData = []);
   }
-  static Create(t, s, a, o) {
+  static Create(t, a, s, o) {
     var i = new SdkLoginViewData();
     return (
       (i.DescTextId = t),
-      (i.EnterCallback = s),
-      (i.CancelCallback = a),
+      (i.EnterCallback = a),
+      (i.CancelCallback = s),
       (i.LayoutData = o),
       i
     );
@@ -45,15 +46,15 @@ class SdkPayTipData {
       (this.CountDownTime = 0),
       (this.CountDownTextId = "");
   }
-  static Create(t, s, a, o, i) {
-    var e = new SdkPayTipData();
+  static Create(t, a, s, o, i) {
+    var r = new SdkPayTipData();
     return (
-      (e.PayStateSpritePath = t),
-      (e.PayResultTextId = s),
-      (e.PayContentTextId = a),
-      (e.CountDownTime = o),
-      (e.CountDownTextId = i),
-      e
+      (r.PayStateSpritePath = t),
+      (r.PayResultTextId = a),
+      (r.PayContentTextId = s),
+      (r.CountDownTime = o),
+      (r.CountDownTextId = i),
+      r
     );
   }
 }
@@ -64,4 +65,23 @@ class SdkLoadPopUpViewData {
   }
 }
 exports.SdkLoadPopUpViewData = SdkLoadPopUpViewData;
+class SdkPayProductInformationViewData {
+  constructor() {
+    (this.ProductName = ""),
+      (this.ContentName = ""),
+      (this.ProductId = ""),
+      (this.OnClickConfirmBtn = () => {});
+  }
+  static Create(t, a, s, o) {
+    var i = new SdkPayProductInformationViewData();
+    return (
+      (i.ProductName = t ?? ""),
+      (i.ContentName = a ?? ""),
+      (i.ProductId = s ?? ""),
+      (i.OnClickConfirmBtn = o),
+      i
+    );
+  }
+}
+exports.SdkPayProductInformationViewData = SdkPayProductInformationViewData;
 //# sourceMappingURL=SdkViewData.js.map

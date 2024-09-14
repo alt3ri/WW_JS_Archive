@@ -37,7 +37,7 @@ class BehaviorButtonData {
       i && this.RefreshIsVisible(i, e);
   }
   RefreshIsVisible(t, s) {
-    if (0 < this.VisibleTagId && this.mSo(t, this.VisibleTagId))
+    if (0 !== this.VisibleTagId && this.mSo(t, this.VisibleTagId))
       this.IsVisible = !0;
     else if (101 !== this.ButtonType || s?.IsAim) {
       for (const i of this.HiddenTagIds)

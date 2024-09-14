@@ -14,26 +14,36 @@ class LevelAiTaskPlayMontage extends LevelAiTask_1.LevelAiTask {
       (this.kTe = !1);
   }
   ExecuteTask() {
-    var s = this.Params;
-    if (!s) return 1;
-    (this.NTe = s.LoopDuration ?? 0),
-      (this.OTe = s.RepeatTimes ?? 0),
+    const t = this.Params;
+    if (!t) return 1;
+    (this.NTe = t.LoopDuration ?? 0),
+      (this.OTe = t.RepeatTimes ?? 0),
       (this.qTe = void 0 !== this.NTe && 0 !== this.NTe),
       (this.GTe = -1 === this.NTe || -1 === this.OTe);
-    var t = this.CreatureDataComponent.Entity.GetComponent(38),
-      e = new BasePerformComponent_1.PlayMontageConfig(
+    const e = this.CreatureDataComponent.Entity;
+    var s = e.GetComponent(39),
+      i = new BasePerformComponent_1.PlayMontageConfig(
         this.OTe,
         this.NTe,
         this.qTe,
         this.GTe,
       ),
-      s = { IsAbp: s.IsAbpMontage, MontageId: s.MontageId };
+      h = { IsAbp: t.IsAbpMontage, MontageId: t.MontageId };
+    this.kTe = !1;
     return (
-      (this.kTe = !1),
-      (this.bTe = t.LoadAndPlayMontageById(
-        s,
-        e,
-        void 0,
+      (this.bTe = s.LoadAndPlayMontageById(
+        h,
+        i,
+        (s) => {
+          t.FaceExpressionId &&
+            s?.BodyMontage?.IsValid() &&
+            e
+              ?.GetComponent(172)
+              ?.ExpressionController?.ChangeFaceForExpression(
+                s.BodyMontage,
+                t.FaceExpressionId,
+              );
+        },
         () => {
           this.kTe || this.FinishLatentTask(0);
         },
@@ -45,7 +55,7 @@ class LevelAiTaskPlayMontage extends LevelAiTask_1.LevelAiTask {
   AbortTask() {
     return (
       (this.kTe = !0),
-      this.CreatureDataComponent.Entity.GetComponent(38).ClearAndStopMontage(
+      this.CreatureDataComponent.Entity.GetComponent(39).ClearAndStopMontage(
         this.bTe,
       ),
       2

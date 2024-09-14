@@ -307,7 +307,7 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
   }
   UpdateInternal(t) {
     var i;
-    this.Camera.CharacterEntityHandle.Entity.GetComponent(53).GetMoveVector(
+    this.Camera.CharacterEntityHandle.Entity.GetComponent(54).GetMoveVector(
       this.Lz,
     ),
       this.Dle(this.Lz)
@@ -320,7 +320,7 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
             ),
             (this.IsMoving = !0),
             (i =
-              this.Camera.CharacterEntityHandle.Entity.GetComponent(163).Speed),
+              this.Camera.CharacterEntityHandle.Entity.GetComponent(164).Speed),
             (this.ElapseTimeScale =
               i > this.ReferToMoveSpeed ? i / this.ReferToMoveSpeed : 1),
             (this.yle =
@@ -335,7 +335,7 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
               this.StartInputDelay * TimeUtil_1.TimeUtil.InverseMillisecond))
         : this.IsMoving &&
           ((i =
-            this.Camera.CharacterEntityHandle.Entity.GetComponent(163).Speed),
+            this.Camera.CharacterEntityHandle.Entity.GetComponent(164).Speed),
           (this.ElapseTimeScale =
             i > this.ReferToMoveSpeed ? i / this.ReferToMoveSpeed : 1)),
       this.Lle.Update(t);
@@ -359,7 +359,7 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
               this.LargeAngleTurnDelay *
                 TimeUtil_1.TimeUtil.InverseMillisecond),
             (t =
-              this.Camera.CharacterEntityHandle.Entity.GetComponent(163).Speed),
+              this.Camera.CharacterEntityHandle.Entity.GetComponent(164).Speed),
             (this.ElapseTimeScale =
               t > this.ReferToMoveSpeed ? t / this.ReferToMoveSpeed : 1),
             !1

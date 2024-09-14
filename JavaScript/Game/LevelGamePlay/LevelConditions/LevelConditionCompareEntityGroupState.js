@@ -16,14 +16,14 @@ class LevelConditionCompareEntityGroupState extends LevelGeneralBase_1.LevelCond
         );
         let t = !0;
         if (void 0 !== e.State) {
-          var a = r?.Entity?.GetComponent(180);
+          var a = r?.Entity?.GetComponent(181);
           if (!a) return;
           a = a.ContainsTagByName(e.State);
           t = "Eq" === o ? a : !a;
         }
         let n = !0;
         if (void 0 !== e.IsLocked) {
-          a = r?.Entity?.GetComponent(117);
+          a = r?.Entity?.GetComponent(118);
           if (!a) return;
           r = e.IsLocked === a.IsLocked;
           n = "Eq" === o ? r : !r;

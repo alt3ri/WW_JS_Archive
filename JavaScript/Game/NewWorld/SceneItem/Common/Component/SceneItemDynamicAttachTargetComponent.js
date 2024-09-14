@@ -151,12 +151,12 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       });
   }
   static get Dependencies() {
-    return [185, 0];
+    return [187, 0];
   }
   OnInitData(t) {
     return (
       (this.EIe = this.Entity.GetComponent(0)),
-      (this.Hte = this.Entity.GetComponent(185)),
+      (this.Hte = this.Entity.GetComponent(187)),
       !!this.Hte ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -182,6 +182,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
           EventDefine_1.EEventName.AddEntity,
           this.hln,
         ),
+      EventSystem_1.EventSystem.RemoveAllTargetUseKey(this),
       !(this.Sln = !1)
     );
   }
@@ -215,12 +216,12 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
     }
     if (t?.IsInit)
       switch (t.Entity?.GetComponent(0)?.GetEntityType()) {
-        case Protocol_1.Aki.Protocol.wks.Proto_SceneItem:
+        case Protocol_1.Aki.Protocol.kks.Proto_SceneItem:
           this.Lln(t);
           break;
-        case Protocol_1.Aki.Protocol.wks.Proto_Monster:
-        case Protocol_1.Aki.Protocol.wks.Proto_Player:
-        case Protocol_1.Aki.Protocol.wks.Proto_Vision:
+        case Protocol_1.Aki.Protocol.kks.Proto_Monster:
+        case Protocol_1.Aki.Protocol.kks.Proto_Player:
+        case Protocol_1.Aki.Protocol.kks.Proto_Vision:
           this.Dln(t);
       }
     else
@@ -233,44 +234,50 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
           this.hln,
         );
   }
-  Lln(t) {
-    var e = t.Entity?.GetComponent(185);
-    if (e)
-      if (this.rln && !e?.GetIsSceneInteractionLoadCompleted())
+  Lln(e) {
+    var i = e.Entity?.GetComponent(187);
+    if (i)
+      if (this.rln && !i?.GetIsSceneInteractionLoadCompleted())
         EventSystem_1.EventSystem.HasWithTarget(
-          t.Entity,
+          e.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
           this.cln,
         ) ||
           EventSystem_1.EventSystem.AddWithTarget(
-            t.Entity,
+            e.Entity,
             EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
             this.cln,
           );
       else {
         let t = void 0;
         (t = this.rln
-          ? e.GetActorInSceneInteraction(this.rln) ?? e.Owner
-          : e.Owner),
+          ? (i.GetActorInSceneInteraction(this.rln) ?? i.Owner)
+          : i.Owner),
           this.dln(t),
-          EventSystem_1.EventSystem.Has(
+          EventSystem_1.EventSystem.HasWithTarget(
+            e,
             EventDefine_1.EEventName.RemoveEntity,
             this._ln,
           ) ||
-            EventSystem_1.EventSystem.Add(
+            EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+              this,
+              e,
               EventDefine_1.EEventName.RemoveEntity,
               this._ln,
             );
       }
   }
   Dln(t) {
-    t = t.Entity?.GetComponent(3)?.Owner;
-    this.dln(t),
-      EventSystem_1.EventSystem.Has(
+    var e = t.Entity?.GetComponent(3)?.Owner;
+    this.dln(e),
+      EventSystem_1.EventSystem.HasWithTarget(
+        t,
         EventDefine_1.EEventName.RemoveEntity,
         this._ln,
       ) ||
-        EventSystem_1.EventSystem.Add(
+        EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+          this,
+          t,
           EventDefine_1.EEventName.RemoveEntity,
           this._ln,
         );
@@ -285,11 +292,14 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       if (!this.Tln) return;
       t = ModelManager_1.ModelManager.CreatureModel.GetEntity(this.Tln);
     }
-    EventSystem_1.EventSystem.Has(
+    EventSystem_1.EventSystem.HasWithTarget(
+      t,
       EventDefine_1.EEventName.RemoveEntity,
       this._ln,
-    ) &&
-      EventSystem_1.EventSystem.Remove(
+    ) ||
+      EventSystem_1.EventSystem.RemoveWithTargetUseKey(
+        this,
+        t,
         EventDefine_1.EEventName.RemoveEntity,
         this._ln,
       ),
@@ -304,7 +314,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
           this.cln,
         );
-    var e = t?.Entity?.GetComponent(185);
+    var e = t?.Entity?.GetComponent(187);
     let i = void 0;
     (i =
       this.rln && e?.GetIsSceneInteractionLoadCompleted()
@@ -665,50 +675,50 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
   RequestAttachRefActor(t, e, i) {
     var s;
     this.Hte?.Owner?.IsValid() &&
-      (((s = Protocol_1.Aki.Protocol._gs.create()).P4n =
+      (((s = Protocol_1.Aki.Protocol.fgs.create()).F4n =
         this.Hte.CreatureData.GetCreatureDataId()),
-      (s.J5n = Protocol_1.Aki.Protocol.z3s.Proto_AttachTargetActorPath),
-      (s.b6n = "t6n"),
-      (s.t6n = t),
-      (s.$5n = Protocol_1.Aki.Protocol.Pks.create()),
-      (s.$5n.X = e.X),
-      (s.$5n.Y = e.Y),
-      (s.$5n.Z = e.Z),
-      (s.Y5n = Protocol_1.Aki.Protocol.S2s.create()),
-      (s.Y5n.Pitch = i.Pitch),
-      (s.Y5n.Yaw = i.Yaw),
-      (s.Y5n.Roll = i.Roll),
-      Net_1.Net.Call(10081, s, () => {}));
+      (s.s6n = Protocol_1.Aki.Protocol.nFs.Proto_AttachTargetActorPath),
+      (s.j6n = "_6n"),
+      (s._6n = t),
+      (s.o6n = Protocol_1.Aki.Protocol.Gks.create()),
+      (s.o6n.X = e.X),
+      (s.o6n.Y = e.Y),
+      (s.o6n.Z = e.Z),
+      (s.n6n = Protocol_1.Aki.Protocol.D2s.create()),
+      (s.n6n.Pitch = i.Pitch),
+      (s.n6n.Yaw = i.Yaw),
+      (s.n6n.Roll = i.Roll),
+      Net_1.Net.Call(20384, s, () => {}));
   }
   RequestAttachEntity(t, e, i, s) {
     var h;
     this.Hte?.Owner?.IsValid() &&
-      (((h = Protocol_1.Aki.Protocol._gs.create()).P4n =
+      (((h = Protocol_1.Aki.Protocol.fgs.create()).F4n =
         this.Hte.CreatureData.GetCreatureDataId()),
-      (h.J5n = Protocol_1.Aki.Protocol.z3s.Proto_AttachTargetEntity),
-      (h.b6n = "Z5n"),
-      (h.Z5n = Protocol_1.Aki.Protocol.Z3s.create()),
-      (h.Z5n.z5n = t),
-      (h.Z5n.e6n = e ?? ""),
-      (h.$5n = Protocol_1.Aki.Protocol.Pks.create()),
-      (h.$5n.X = i.X),
-      (h.$5n.Y = i.Y),
-      (h.$5n.Z = i.Z),
-      (h.Y5n = Protocol_1.Aki.Protocol.S2s.create()),
-      (h.Y5n.Pitch = s.Pitch),
-      (h.Y5n.Yaw = s.Yaw),
-      (h.Y5n.Roll = s.Roll),
-      Net_1.Net.Call(10081, h, () => {}));
+      (h.s6n = Protocol_1.Aki.Protocol.nFs.Proto_AttachTargetEntity),
+      (h.j6n = "h6n"),
+      (h.h6n = Protocol_1.Aki.Protocol.sFs.create()),
+      (h.h6n.a6n = t),
+      (h.h6n.l6n = e ?? ""),
+      (h.o6n = Protocol_1.Aki.Protocol.Gks.create()),
+      (h.o6n.X = i.X),
+      (h.o6n.Y = i.Y),
+      (h.o6n.Z = i.Z),
+      (h.n6n = Protocol_1.Aki.Protocol.D2s.create()),
+      (h.n6n.Pitch = s.Pitch),
+      (h.n6n.Yaw = s.Yaw),
+      (h.n6n.Roll = s.Roll),
+      Net_1.Net.Call(20384, h, () => {}));
   }
   RequestDetach() {
-    var t = Protocol_1.Aki.Protocol._gs.create();
-    (t.P4n = this.Hte.CreatureData.GetCreatureDataId()),
-      (t.J5n = Protocol_1.Aki.Protocol.z3s.Proto_AttachTargetNone),
-      Net_1.Net.Call(10081, t, () => {});
+    var t = Protocol_1.Aki.Protocol.fgs.create();
+    (t.F4n = this.Hte.CreatureData.GetCreatureDataId()),
+      (t.s6n = Protocol_1.Aki.Protocol.nFs.Proto_AttachTargetNone),
+      Net_1.Net.Call(20384, t, () => {});
   }
 };
 (SceneItemDynamicAttachTargetComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(112)],
+  [(0, RegisterComponent_1.RegisterComponent)(113)],
   SceneItemDynamicAttachTargetComponent,
 )),
   (exports.SceneItemDynamicAttachTargetComponent =

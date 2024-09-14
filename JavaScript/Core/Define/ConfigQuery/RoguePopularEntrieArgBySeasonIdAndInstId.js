@@ -18,26 +18,42 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configRoguePopularEntrieArgBySeasonIdAndInstId.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configRoguePopularEntrieArgBySeasonIdAndInstId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX =
     "configRoguePopularEntrieArgBySeasonIdAndInstId.GetConfig(";
 exports.configRoguePopularEntrieArgBySeasonIdAndInstId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, n, e = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${n})`),
+      i =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
       if (e) {
         var r = KEY_PREFIX + `#${o}#${n})`;
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(r);
-        if (t) return t;
+        const g = ConfigCommon_1.ConfigCommon.GetConfig(r);
+        if (g)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
+          );
       }
       if (
         (i =
@@ -52,8 +68,7 @@ exports.configRoguePopularEntrieArgBySeasonIdAndInstId = {
               ["InstId", n],
             ))
       ) {
-        var i,
-          r = void 0;
+        r = void 0;
         if (
           (([i, r] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -64,21 +79,27 @@ exports.configRoguePopularEntrieArgBySeasonIdAndInstId = {
           )),
           i)
         ) {
-          const t =
+          const g =
             RoguePopularEntrieArg_1.RoguePopularEntrieArg.getRootAsRoguePopularEntrieArg(
               new byte_buffer_1.ByteBuffer(new Uint8Array(r.buffer)),
             );
           return (
             e &&
               ((i = KEY_PREFIX + `#${o}#${n})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(i, t)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, g)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=RoguePopularEntrieArgBySeasonIdAndInstId.js.map

@@ -51,28 +51,28 @@ class WorldLevelController extends UiControllerBase_1.UiControllerBase {
   }
   static SetWorldLevelAttributes(e) {
     for (const o of e)
-      o.j4n === Protocol_1.Aki.Protocol.pNs.oSs &&
-        (ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel = o.OSs),
-        o.j4n === Protocol_1.Aki.Protocol.pNs.nSs &&
-          (ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel = o.OSs),
-        o.j4n === Protocol_1.Aki.Protocol.pNs.oOs &&
+      o.Z4n === Protocol_1.Aki.Protocol.LNs.uSs &&
+        (ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel = o.jSs),
+        o.Z4n === Protocol_1.Aki.Protocol.LNs.cSs &&
+          (ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel = o.jSs),
+        o.Z4n === Protocol_1.Aki.Protocol.LNs.uOs &&
           (ModelManager_1.ModelManager.WorldLevelModel.LastChangeWorldLevelTimeStamp =
-            o.OSs),
-        o.j4n === Protocol_1.Aki.Protocol.pNs._7n &&
-          (ModelManager_1.ModelManager.WorldLevelModel.Sex = o.OSs),
-        o.j4n === Protocol_1.Aki.Protocol.pNs.Proto_Sign &&
-          ModelManager_1.ModelManager.PersonalModel.SetSignature(o.b8n);
+            o.jSs),
+        o.Z4n === Protocol_1.Aki.Protocol.LNs.v7n &&
+          (ModelManager_1.ModelManager.WorldLevelModel.Sex = o.jSs),
+        o.Z4n === Protocol_1.Aki.Protocol.LNs.Proto_Sign &&
+          ModelManager_1.ModelManager.PersonalModel.SetSignature(o.j8n);
   }
   static SendWorldLevelDownRequest() {
-    var e = Protocol_1.Aki.Protocol.A0s.create();
-    Net_1.Net.Call(2700, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.q0s.create();
+    Net_1.Net.Call(15404, e, (e) => {
       e &&
-        (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
+        (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
           ? ((ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel =
-              e.oSs),
-            (ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel = e.nSs),
+              e.uSs),
+            (ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel = e.cSs),
             (ModelManager_1.ModelManager.WorldLevelModel.LastChangeWorldLevelTimeStamp =
-              e.oOs),
+              e.uOs),
             ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
               WorldLevelController.GetLocalText(
                 "WorldLevelAdjustTo",
@@ -80,21 +80,21 @@ class WorldLevelController extends UiControllerBase_1.UiControllerBase {
               ),
             ))
           : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              1868,
+              e.Q4n,
+              22339,
             ));
     });
   }
   static SendWorldLevelRegainRequest() {
-    var e = Protocol_1.Aki.Protocol.U0s.create();
-    Net_1.Net.Call(1413, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.O0s.create();
+    Net_1.Net.Call(21519, e, (e) => {
       e &&
-        (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
+        (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
           ? ((ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel =
-              e.oSs),
-            (ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel = e.nSs),
+              e.uSs),
+            (ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel = e.cSs),
             (ModelManager_1.ModelManager.WorldLevelModel.LastChangeWorldLevelTimeStamp =
-              e.oOs),
+              e.uOs),
             ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
               WorldLevelController.GetLocalText(
                 "WorldLevelAdjustTo",
@@ -102,8 +102,8 @@ class WorldLevelController extends UiControllerBase_1.UiControllerBase {
               ),
             ))
           : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              13199,
+              e.Q4n,
+              27076,
             ));
     });
   }

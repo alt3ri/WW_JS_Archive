@@ -9,6 +9,7 @@ const UE = require("ue"),
   UiViewBase_1 = require("../../../../../../../Ui/Base/UiViewBase"),
   PopupCaptionItem_1 = require("../../../../../../../Ui/Common/PopupCaptionItem"),
   ScrollingTipsController_1 = require("../../../../../../ScrollingTips/ScrollingTipsController"),
+  ActivityMoonChasingController_1 = require("../../../Activity/ActivityMoonChasingController"),
   BusinessHelperPanel_1 = require("./BusinessHelperPanel"),
   BusinessHelperViewController_1 = require("./BusinessHelperViewController"),
   BusinessInteractivePanel_1 = require("./BusinessInteractivePanel");
@@ -18,7 +19,7 @@ class BusinessHelperView extends UiViewBase_1.UiViewBase {
       (this.CaptionItem = void 0),
       (this.HelperPanel = void 0),
       (this.InteractivePanel = void 0),
-      (this.zGn =
+      (this.aOn =
         new BusinessHelperViewController_1.BusinessHelperViewController());
   }
   OnRegisterComponent() {
@@ -31,15 +32,15 @@ class BusinessHelperView extends UiViewBase_1.UiViewBase {
       [2, UE.UIItem],
     ];
   }
-  async Laa() {
+  async D1a() {
     (this.HelperPanel = new BusinessHelperPanel_1.BusinessHelperPanel()),
-      this.HelperPanel.RegisterViewController(this.zGn),
+      this.HelperPanel.RegisterViewController(this.aOn),
       await this.HelperPanel.CreateByActorAsync(this.GetItem(1).GetOwner());
   }
-  async Daa() {
+  async A1a() {
     (this.InteractivePanel =
       new BusinessInteractivePanel_1.BusinessInteractivePanel()),
-      this.InteractivePanel.RegisterViewController(this.zGn),
+      this.InteractivePanel.RegisterViewController(this.aOn),
       await this.InteractivePanel.CreateByActorAsync(
         this.GetItem(2).GetOwner(),
       );
@@ -48,8 +49,8 @@ class BusinessHelperView extends UiViewBase_1.UiViewBase {
     (this.CaptionItem = new PopupCaptionItem_1.PopupCaptionItem(
       this.GetItem(0),
     )),
-      this.CaptionItem.SetCloseCallBack(this.zGn.BackToLastState),
-      this.CaptionItem.SetHelpCallBack(this.zGn.OpenHelpView);
+      this.CaptionItem.SetCloseCallBack(this.aOn.BackToLastState),
+      this.CaptionItem.SetHelpCallBack(this.aOn.OpenHelpView);
     var e = ConfigManager_1.ConfigManager.BusinessConfig.GetWishItemId();
     await Promise.all([
       this.CaptionItem.SetTitleIconByResourceId("SP_ChasingMoonIcon8"),
@@ -57,22 +58,23 @@ class BusinessHelperView extends UiViewBase_1.UiViewBase {
     ]);
   }
   async OnBeforeStartAsync() {
-    this.zGn.RegisterView(this),
-      await Promise.all([this.U3e(), this.Laa(), this.Daa()]);
+    this.aOn.RegisterView(this),
+      await Promise.all([this.U3e(), this.D1a(), this.A1a()]);
   }
   OnBeforeShow() {
-    this.zGn.Show();
+    this.aOn.Show(),
+      ActivityMoonChasingController_1.ActivityMoonChasingController.CheckIsActivityClose();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OpenTipsShopView,
-      this.zGn.RefreshInteractivePanel,
+      this.aOn.RefreshInteractivePanel,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OpenTipsShopView,
-      this.zGn.RefreshInteractivePanel,
+      this.aOn.RefreshInteractivePanel,
     );
   }
   async RefreshSpine(e) {

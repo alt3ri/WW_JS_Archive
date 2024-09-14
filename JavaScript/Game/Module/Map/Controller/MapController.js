@@ -152,13 +152,14 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
   static RequestCreateCustomMark(e, t) {
     MapController.cYt(0).RequestCreateCustomMark(e, t);
   }
-  static RequestRemoveMapMark(e, t) {
+  static RequestRemoveMapMarks(e, t) {
     var r = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
-    r &&
-      r[0] === e &&
-      r[1] === t &&
-      ModelManager_1.ModelManager.MapModel.SetCurTrackMark(void 0),
-      MapController.cYt(0).RequestRemoveMapMark(e, t);
+    for (const a of t)
+      r &&
+        r[0] === e &&
+        r[1] === a &&
+        ModelManager_1.ModelManager.MapModel.SetCurTrackMark(void 0);
+    MapController.cYt(0).RequestRemoveMapMarks(e, t);
   }
   static RequestTrackMapMark(e, t, r) {
     r
@@ -174,19 +175,23 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
   static UpdateCustomMapMarkPosition(e, t) {
     MapController.cYt(0).UpdateCustomMapMarkPosition(e, t);
   }
-  static RequestCreateTemporaryTeleport(e) {
-    MapController.cYt(0).RequestCreateTemporaryTeleport(e);
+  static RequestCreateTemporaryTeleport(e, t) {
+    MapController.cYt(0).RequestCreateTemporaryTeleport(e, t);
+  }
+  static RequestTrackEnrichmentArea(e) {
+    MapController.cYt(0).RequestTrackEnrichmentArea(e);
   }
   static RequestRemoveDynamicMapMark(e) {
     MapController.cYt(0).RequestRemoveDynamicMapMark(e);
   }
-  static RequestTeleportToTargetByTemporaryTeleport(e) {
-    var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    t?.Valid &&
-      (t = t.Entity.GetComponent(3)) &&
+  static RequestTeleportToTargetByTemporaryTeleport(e, t) {
+    var r = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    r?.Valid &&
+      (r = r.Entity.GetComponent(3)) &&
       MapController.cYt(0).RequestTeleportToTargetByTemporaryTeleport(
         e,
-        Rotator_1.Rotator.Create(t.ActorRotationProxy),
+        Rotator_1.Rotator.Create(r.ActorRotationProxy),
+        t,
       );
   }
   static ForceSetMarkVisible(e, t, r) {

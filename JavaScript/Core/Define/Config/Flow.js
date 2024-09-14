@@ -13,8 +13,10 @@ class Flow {
     return this.dungeonid();
   }
   get States() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.statesLength(), (t) =>
-      this.states(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.statesLength(),
+      this.states,
+      this,
     );
   }
   __init(t, s) {

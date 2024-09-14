@@ -4,12 +4,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ue_1 = require("ue"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
   IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
-  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
-  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
-  TreeStepWithStatus_1 = require("../../../GeneralLogicTree/View/TreeStep/TreeStepWithStatus"),
-  ModelManager_1 = require("../../../../Manager/ModelManager"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../../../Common/Event/EventSystem");
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  TreeStepWithStatus_1 = require("../../../GeneralLogicTree/View/TreeStep/TreeStepWithStatus");
 class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
   constructor() {
     super(),
@@ -21,7 +21,7 @@ class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
       (this.Hct = void 0),
       (this.jct = IQuest_1.EQuestScheduleType.None),
       (this.Zut = 0),
-      (this.Sxn = void 0),
+      (this.pxn = void 0),
       (this.owt = (e) => {
         "Start" === e && this.SetActive(!0);
       }),
@@ -37,7 +37,7 @@ class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
             this.Ict();
             break;
           case "Close":
-            this.SetActive(!1), this.Sxn ? this.Sxn() : this.Ict();
+            this.SetActive(!1), this.pxn ? this.pxn() : this.Ict();
         }
       }),
       (this.Oct = ue_1.Color.FromHex("ECE5D8FF")),
@@ -57,7 +57,7 @@ class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
       this.LevelSequencePlayer.BindSequenceCloseEvent(this.yct),
       this.GetItem(5)?.SetUIActive(!1);
   }
-  DisableUi(e) {
+  SetUiVisible(e) {
     this.SetUiActive(e), e || this.GetItem(5)?.SetAlpha(0);
   }
   Wct() {
@@ -151,23 +151,23 @@ class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
     var e =
         "Disabled" !==
         ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode(),
-      t = this.Exn();
+      t = this.vxn();
     (!e && t) || this.LevelSequencePlayer.StopCurrentSequence(!0, !0);
   }
   PlayCloseSequence(e, t) {
     (this.Zut = e),
       this.LevelSequencePlayer.StopCurrentSequence(!0, !0),
       this.LevelSequencePlayer?.PlayLevelSequenceByName("Close"),
-      (this.Sxn = t);
+      (this.pxn = t);
     (e =
       "Disabled" !== ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode()),
-      (t = this.Exn());
+      (t = this.vxn());
     return !(
       (!e && t) ||
       (this.LevelSequencePlayer.StopCurrentSequence(!0, !0), 0)
     );
   }
-  Exn() {
+  vxn() {
     return void 0 !== this.Config;
   }
   Ict() {

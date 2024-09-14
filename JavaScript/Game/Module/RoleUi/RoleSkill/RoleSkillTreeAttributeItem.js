@@ -6,7 +6,7 @@ const UE = require("ue"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class RoleSkillTreeAttributeItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
-    super(), (this.iaa = 0), this.CreateThenShowByActor(e.GetOwner());
+    super(), (this.r1a = 0), this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -19,14 +19,14 @@ class RoleSkillTreeAttributeItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.iaa = this.GetItem(5)?.GetWidth() ?? 0), this.SetNextLevelItem(!1);
+    (this.r1a = this.GetItem(5)?.GetWidth() ?? 0), this.SetNextLevelItem(!1);
   }
   Refresh(e, t) {
     var i = this.GetText(0),
       s = this.GetText(1),
       r =
-        (i.SetWidth(this.iaa),
-        s.SetWidth(this.iaa),
+        (i.SetWidth(this.r1a),
+        s.SetWidth(this.r1a),
         e.AttrBaseValue && s.SetText(e.AttrBaseValue),
         e.AttrNameText && i.SetText(e.AttrNameText),
         i.GetTextRenderSize().X),
@@ -35,7 +35,7 @@ class RoleSkillTreeAttributeItem extends UiPanelBase_1.UiPanelBase {
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "RoleSkillTreeAttributeSpace",
         ) ?? 0,
-      a = this.iaa - a,
+      a = this.r1a - a,
       l = a / 2;
     r + o < a
       ? (i.SetWidth(r), s.SetWidth(o))

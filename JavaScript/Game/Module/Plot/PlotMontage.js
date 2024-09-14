@@ -46,7 +46,7 @@ class PlotMontage {
   Fc(e, t, r) {
     var a,
       s,
-      i = e.Entity.GetComponent(162)?.MainAnimInstance;
+      i = e.Entity.GetComponent(163)?.MainAnimInstance;
     ObjectUtils_1.ObjectUtils.IsValid(i) &&
       ((s = this.eJi.get(e)),
       (a =
@@ -81,7 +81,7 @@ class PlotMontage {
   }
   StopAllMontage(e = !0) {
     for (var [t, r] of this.eJi) {
-      var a = t?.Entity?.GetComponent(162)?.MainAnimInstance;
+      var a = t?.Entity?.GetComponent(163)?.MainAnimInstance;
       ObjectUtils_1.ObjectUtils.IsValid(a) &&
       ObjectUtils_1.ObjectUtils.IsValid(r) &&
       a.Montage_IsPlaying(r)

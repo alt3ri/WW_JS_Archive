@@ -30,7 +30,8 @@ var EReconnectProcessStep, ELogoutReason, EBackLoginViewReason;
       (e[(e.LoginViewQuit = 3)] = "LoginViewQuit"),
       (e[(e.NetWorkMaskViewBackBtn = 4)] = "NetWorkMaskViewBackBtn"),
       (e[(e.ExitGameConfirmBox = 5)] = "ExitGameConfirmBox"),
-      (e[(e.SdkRenewAccessTokenFailed = 6)] = "SdkRenewAccessTokenFailed");
+      (e[(e.SdkRenewAccessTokenFailed = 6)] = "SdkRenewAccessTokenFailed"),
+      (e[(e.PsnUnAvailable = 7)] = "PsnUnAvailable");
   })((ELogoutReason = exports.ELogoutReason || (exports.ELogoutReason = {}))),
   (function (e) {
     (e[(e.Logout = 0)] = "Logout"),

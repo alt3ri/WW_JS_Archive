@@ -23,7 +23,7 @@ const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
   BaseMovementSyncComponent_1 = require("../Character/Common/Component/BaseMovementSyncComponent");
 let SceneItemMovementSyncComponent = class SceneItemMovementSyncComponent extends BaseMovementSyncComponent_1.BaseMovementSyncComponent {};
 (SceneItemMovementSyncComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(144)],
+  [(0, RegisterComponent_1.RegisterComponent)(145)],
   SceneItemMovementSyncComponent,
 )),
   (exports.SceneItemMovementSyncComponent = SceneItemMovementSyncComponent);

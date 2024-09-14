@@ -13,6 +13,8 @@ const cpp_1 = require("cpp"),
   MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
   IComponent_1 = require("../../../../../../UniverseEditor/Interface/IComponent"),
   AiContollerLibrary_1 = require("../../../../../AI/Controller/AiContollerLibrary"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
   GlobalData_1 = require("../../../../../GlobalData"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
   ColorUtils_1 = require("../../../../../Utils/ColorUtils"),
@@ -35,6 +37,7 @@ class BaseMoveCharacter {
       (this.Jh = void 0),
       (this.Hte = void 0),
       (this.rJo = void 0),
+      (this.XNa = !1),
       (this.nJo = 0),
       (this.sJo = !1),
       (this.aJo = !1),
@@ -62,15 +65,15 @@ class BaseMoveCharacter {
         this.vJo && this.vJo(t);
       }),
       (this.PushMoveInfo = () => {
-        var t = Protocol_1.Aki.Protocol.Kus.create(),
-          i = Protocol_1.Aki.Protocol.Wks.create();
-        (i.P4n = MathUtils_1.MathUtils.NumberToLong(
+        var t = Protocol_1.Aki.Protocol.ecs.create(),
+          i = Protocol_1.Aki.Protocol.Zks.create();
+        (i.F4n = MathUtils_1.MathUtils.NumberToLong(
           this.Hte.CreatureData.GetCreatureDataId(),
         )),
-          (i.y5n = this.Hte.ActorLocationProxy),
-          (i.a8n = void 0),
-          (t.Q8n = [i]),
-          Net_1.Net.Send(29559, t),
+          (i.P5n = this.Hte.ActorLocationProxy),
+          (i.g8n = void 0),
+          (t.iVn = [i]),
+          Net_1.Net.Send(21915, t),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "AI",
@@ -78,10 +81,17 @@ class BaseMoveCharacter {
               "向服务器同步NPC位置",
               ["EntityId", this.Jh.Id],
               ["PbDataId", this.wDe],
-              ["X", i.y5n.X],
-              ["Y", i.y5n.Y],
-              ["Z", i.y5n.Z],
+              ["X", i.P5n.X],
+              ["Y", i.P5n.Y],
+              ["Z", i.P5n.Z],
             );
+      }),
+      (this.xsa = (t, i) => {
+        var s;
+        this.MJo.TargetPoint &&
+          (s = this.bJo(this.MJo.TargetPoint.MoveState)) &&
+          CharacterUnifiedStateTypes_1.legalMoveStates.get(i).has(s) &&
+          this.rJo.SetMoveState(s);
       });
   }
   get CurrentToLocation() {
@@ -90,24 +100,38 @@ class BaseMoveCharacter {
   Init(t) {
     (this.Jh = t),
       (this.Hte = this.Jh.GetComponent(3)),
-      (this.rJo = this.Jh.GetComponent(91)),
+      (this.rJo = this.Jh.GetComponent(92)),
       (this.wDe = this.Hte.CreatureData.GetPbDataId()),
       (this.fJo = []),
       (this.Ero = !1),
       this.MJo.Init(this.Hte),
-      this.EJo.Init(this.Jh);
+      this.EJo.Init(this.Jh),
+      EventSystem_1.EventSystem.HasWithTarget(
+        this.Jh,
+        EventDefine_1.EEventName.CharOnPositionStateChanged,
+        this.xsa,
+      ) ||
+        EventSystem_1.EventSystem.AddWithTarget(
+          this.Jh,
+          EventDefine_1.EEventName.CharOnPositionStateChanged,
+          this.xsa,
+        );
   }
-  UpdateMove(h) {
+  UpdateMove(e) {
     if (this.IsRunning)
       if (this.MJo.TargetPoint) {
-        (this.mie += h),
+        (this.mie += e),
           1 < this.mie && ((this.mie = 0), this.yJo()),
           GlobalData_1.GlobalData.IsPlayInEditor &&
             MoveToLocationLogic_1.MoveToLocationController.DebugDraw &&
             this.IJo();
         let t = !1,
-          i = !1,
-          s = this.EJo.UpdateMove(h, this.pJo);
+          i = !1;
+        var h =
+          this.sJo ||
+          this.rJo?.PositionState ===
+            CharacterUnifiedStateTypes_1.ECharPositionState.Climb;
+        let s = this.EJo.UpdateMove(e, this.pJo);
         for (; !s; ) {
           if (
             ((i = i || 0 <= this.MJo.TargetPoint.Index),
@@ -116,21 +140,22 @@ class BaseMoveCharacter {
           ) {
             const t = this.EJo.ResetLastPointCondition();
             return (
-              !this.sJo && t && this.EJo.ResetLastPatrolPoint(h, !1),
+              !h && t && this.EJo.ResetLastPatrolPoint(e),
               this.RJo(),
               void this.MoveEnd(1)
             );
           }
-          (t = !0), this.LJo(), (s = this.EJo.UpdateMove(h, this.pJo));
+          if (((t = !0), this.LJo(), this.XNa)) break;
+          s = this.EJo.UpdateMove(e, this.pJo);
         }
-        !this.sJo &&
+        !h &&
           this.EJo.ResetLastPointCondition() &&
           this.DJo() &&
-          this.EJo.ResetLastPatrolPoint(h, !0),
+          this.EJo.ResetLastPatrolPoint(e),
           t && i && this.RJo(),
           this.cJo &&
-            h > MathCommon_1.MathCommon.KindaSmallNumber &&
-            this.UJo(h, t);
+            e > MathCommon_1.MathCommon.KindaSmallNumber &&
+            this.UJo(e, t);
       } else this.MoveEnd(2);
   }
   UJo(t, i) {
@@ -170,6 +195,7 @@ class BaseMoveCharacter {
       );
   }
   DJo() {
+    if (this.XNa) return !0;
     var t = this.MJo.GetPreviousLocation();
     if (!t) return !1;
     this.jye.DeepCopy(this.Hte.ActorLocationProxy),
@@ -217,7 +243,18 @@ class BaseMoveCharacter {
       (this.fJo = []),
       (this.Ero = !1),
       (this._Jo = !0),
-      this.uJo.DeepCopy(this.Hte.ActorLocationProxy);
+      this.uJo.DeepCopy(this.Hte.ActorLocationProxy),
+      this.Jh &&
+        EventSystem_1.EventSystem.HasWithTarget(
+          this.Jh,
+          EventDefine_1.EEventName.CharOnPositionStateChanged,
+          this.xsa,
+        ) &&
+        EventSystem_1.EventSystem.RemoveWithTarget(
+          this.Jh,
+          EventDefine_1.EEventName.CharOnPositionStateChanged,
+          this.xsa,
+        );
   }
   MoveAlongPath(t) {
     var i;
@@ -230,6 +267,7 @@ class BaseMoveCharacter {
         (this.pJo = t.DebugMode),
         (this.vJo = t.Callback),
         (this.hJo = t.ReturnFalseWhenNavigationFailed),
+        (this.XNa = t.ResetAllPoints ?? !1),
         t.ReturnTimeoutFailed && 0 !== t.ReturnTimeoutFailed
           ? ((this.cJo = !0),
             (this.mJo = t.ReturnTimeoutFailed),
@@ -269,6 +307,8 @@ class BaseMoveCharacter {
                 ["EntityId", this.Jh.Id],
                 ["PbDataId", this.wDe],
                 ["当前目标点Index", this.MJo.TargetIndex],
+                ["PreLocation", this.uJo],
+                ["Current", this.Hte.ActorLocationProxy],
               ))
           : ((this._Jo = !1),
             this.AJo(void 0, this.MJo.TargetPoint.Position, this.aJo, !0)))
@@ -296,10 +336,10 @@ class BaseMoveCharacter {
           ["EndState", t],
         );
   }
-  AJo(t, i, s, h) {
+  AJo(t, i, s, e) {
     if (
       ((this.tKo = []),
-      (!h && t) ||
+      (!e && t) ||
         (this.gJo.DeepCopy(this.Hte.LastActorLocation),
         this.sJo || (this.gJo.Z -= this.Hte.HalfHeight),
         this.tKo.push(this.gJo)),
@@ -357,26 +397,29 @@ class BaseMoveCharacter {
     var t = WorldFunctionLibrary_1.default.GetEntityTypeByEntity(
       this.Hte.Entity.Id,
     );
-    t === Protocol_1.Aki.Protocol.wks.Proto_Npc && this.wJo(),
-      t === Protocol_1.Aki.Protocol.wks.Proto_Monster && this.BJo();
+    t === Protocol_1.Aki.Protocol.kks.Proto_Npc && this.wJo(),
+      t === Protocol_1.Aki.Protocol.kks.Proto_Monster && this.BJo();
   }
   BJo() {
-    var t = this.Hte.Entity.GetComponent(59),
+    var t = this.Hte.Entity.GetComponent(60),
       i = t.GetCurrentMoveSample(),
       s =
-        ((i.y5n = this.Hte.ActorLocationProxy),
+        ((i.P5n = this.Hte.ActorLocationProxy),
         t.PendingMoveInfos.push(i),
-        Protocol_1.Aki.Protocol.$us.create());
-    s.kRs.push(t.CollectPendingMoveInfos()),
-      Net_1.Net.Send(28674, s),
+        Protocol_1.Aki.Protocol.Yus.create());
+    (s.qZa = ModelManager_1.ModelManager.GameModeModel.IsMulti
+      ? ModelManager_1.ModelManager.OnlineModel.OwnerId
+      : ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
+      s.WRs.push(t.CollectPendingMoveInfos()),
+      Net_1.Net.Send(28450, s),
       Info_1.Info.IsBuildDevelopmentOrDebug &&
         ((t = {
           scene_id: ModelManager_1.ModelManager.CreatureModel.GetSceneId(),
           instance_id:
             ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-          msg_id: 28674,
+          msg_id: 28450,
           immediately: !0,
-          sub_count: s.kRs.length,
+          sub_count: s.WRs.length,
           is_multi: ModelManager_1.ModelManager.GameModeModel.IsMulti,
           ed: IS_WITH_EDITOR,
           br: LogAnalyzer_1.LogAnalyzer.GetBranch(),
@@ -393,22 +436,22 @@ class BaseMoveCharacter {
           "向服务器同步怪物位置",
           ["EntityId", this.Jh.Id],
           ["PbDataId", this.wDe],
-          ["X", i.y5n.X],
-          ["Y", i.y5n.Y],
-          ["Z", i.y5n.Z],
+          ["X", i.P5n.X],
+          ["Y", i.P5n.Y],
+          ["Z", i.P5n.Z],
         );
   }
   wJo() {
-    var t = Protocol_1.Aki.Protocol.Wks.create(),
+    var t = Protocol_1.Aki.Protocol.Zks.create(),
       i =
-        ((t.P4n = MathUtils_1.MathUtils.NumberToLong(
+        ((t.F4n = MathUtils_1.MathUtils.NumberToLong(
           this.Hte.CreatureData.GetCreatureDataId(),
         )),
-        (t.y5n = this.Hte.ActorLocationProxy),
-        (t.a8n = this.Hte.ActorRotationProxy),
-        Protocol_1.Aki.Protocol.Kus.create());
-    (i.Q8n = [t]),
-      Net_1.Net.Send(29559, i),
+        (t.P5n = this.Hte.ActorLocationProxy),
+        (t.g8n = this.Hte.ActorRotationProxy),
+        Protocol_1.Aki.Protocol.ecs.create());
+    (i.iVn = [t]),
+      Net_1.Net.Send(21915, i),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AI",
@@ -416,23 +459,24 @@ class BaseMoveCharacter {
           "向服务器同步NPC位置",
           ["EntityId", this.Jh.Id],
           ["PbDataId", this.wDe],
-          ["X", t.y5n.X],
-          ["Y", t.y5n.Y],
-          ["Z", t.y5n.Z],
+          ["X", t.P5n.X],
+          ["Y", t.P5n.Y],
+          ["Z", t.P5n.Z],
         );
   }
   yJo() {
     var t, i;
     this.MJo.TargetPoint &&
-      (i = this.Jh.GetComponent(37)) &&
+      (i = this.Jh.GetComponent(38)) &&
       ((t = this.MJo.TargetPoint.MoveSpeed),
       this.sJo
         ? (i.CharacterMovement.SetMovementMode(5), t && i.SetMaxSpeed(t))
         : (t && i.SetMaxSpeed(t),
-          (i = this.bJo(this.MJo.TargetPoint.MoveState)),
-          CharacterUnifiedStateTypes_1.legalMoveStates
-            .get(this.rJo.PositionState)
-            .has(i) && this.rJo.SetMoveState(i)));
+          (i = this.bJo(this.MJo.TargetPoint.MoveState)) &&
+            CharacterUnifiedStateTypes_1.legalMoveStates
+              .get(this.rJo.PositionState)
+              .has(i) &&
+            this.rJo.SetMoveState(i)));
   }
   bJo(t) {
     if (t && this.rJo?.Valid)
@@ -441,14 +485,27 @@ class BaseMoveCharacter {
           return this.rJo.PositionState ===
             CharacterUnifiedStateTypes_1.ECharPositionState.Water
             ? CharacterUnifiedStateTypes_1.ECharMoveState.NormalSwim
-            : CharacterUnifiedStateTypes_1.ECharMoveState.Walk;
+            : this.rJo.PositionState ===
+                CharacterUnifiedStateTypes_1.ECharPositionState.Climb
+              ? CharacterUnifiedStateTypes_1.ECharMoveState.NormalClimb
+              : CharacterUnifiedStateTypes_1.ECharMoveState.Walk;
         case IComponent_1.EPatrolMoveState.Run:
           return this.rJo.PositionState ===
             CharacterUnifiedStateTypes_1.ECharPositionState.Water
             ? CharacterUnifiedStateTypes_1.ECharMoveState.FastSwim
-            : CharacterUnifiedStateTypes_1.ECharMoveState.Run;
+            : this.rJo.PositionState ===
+                CharacterUnifiedStateTypes_1.ECharPositionState.Climb
+              ? CharacterUnifiedStateTypes_1.ECharMoveState.FastClimb
+              : CharacterUnifiedStateTypes_1.ECharMoveState.Run;
+        case IComponent_1.EPatrolMoveState.Sprint:
+          return this.rJo.PositionState ===
+            CharacterUnifiedStateTypes_1.ECharPositionState.Water
+            ? CharacterUnifiedStateTypes_1.ECharMoveState.FastSwim
+            : this.rJo.PositionState ===
+                CharacterUnifiedStateTypes_1.ECharPositionState.Climb
+              ? CharacterUnifiedStateTypes_1.ECharMoveState.FastClimb
+              : CharacterUnifiedStateTypes_1.ECharMoveState.Sprint;
       }
-    return CharacterUnifiedStateTypes_1.ECharMoveState.Walk;
   }
   IJo() {
     if (

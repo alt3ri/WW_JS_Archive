@@ -169,8 +169,8 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
   }
   SyncTagsFromServer(t) {
     for (const a of t) {
-      var e = a.o5n;
-      a.eWn ? this.Zrn(e) : this.enn(e);
+      var e = a.m5n;
+      a.lWn ? this.Zrn(e) : this.enn(e);
     }
   }
   AddServerTagByIdLocal(t, e) {
@@ -235,7 +235,7 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
   }
 };
 (LevelTagComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(180)],
+  [(0, RegisterComponent_1.RegisterComponent)(181)],
   LevelTagComponent,
 )),
   (exports.LevelTagComponent = LevelTagComponent);

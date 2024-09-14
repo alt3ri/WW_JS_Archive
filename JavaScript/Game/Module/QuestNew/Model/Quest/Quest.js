@@ -11,7 +11,8 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   LogicTreeContainer_1 = require("../../../GeneralLogicTree/LogicTreeContainer"),
   MapDefine_1 = require("../../../Map/MapDefine"),
   QuestController_1 = require("../../Controller/QuestController"),
-  QuestDefine_1 = require("../../QuestDefine");
+  QuestDefine_1 = require("../../QuestDefine"),
+  QuestUtil_1 = require("../../QuestUtil");
 class Quest extends LogicTreeContainer_1.LogicTreeContainer {
   constructor(t, e) {
     super(),
@@ -44,7 +45,7 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
       (this.Jro = 0),
       e
         ? ((this.InnerId = e.Id),
-          (this.InnerStatus = Protocol_1.Aki.Protocol.tTs.Proto_InActive),
+          (this.InnerStatus = Protocol_1.Aki.Protocol.hTs.Proto_InActive),
           (this.InnerType = t),
           (this.Lo = e),
           (this.QuestNameTid = e.TidName),
@@ -97,7 +98,7 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
     return this.InnerStatus;
   }
   get IsProgressing() {
-    return this.Status === Protocol_1.Aki.Protocol.tTs.zfs;
+    return this.Status === Protocol_1.Aki.Protocol.hTs.nvs;
   }
   get IsInteractValid() {
     return (
@@ -134,9 +135,7 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
     return this.Lo.ProvideType?.Conditions;
   }
   get QuestMarkId() {
-    return ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeMarkId(
-      this.MainTypeId,
-    );
+    return QuestUtil_1.QuestUtil.GetQuestMarkId(this.MainTypeId, this.Id);
   }
   Destroy() {
     (this.Lo = void 0),
@@ -149,16 +148,16 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
       i = ((this.InnerStatus = t), i !== this.InnerStatus);
     if (i) {
       switch (((this.IsNewQuest = 1 === e), t)) {
-        case Protocol_1.Aki.Protocol.tTs.hTs:
+        case Protocol_1.Aki.Protocol.hTs.CTs:
           this.OnQuestStateToReady();
           break;
-        case Protocol_1.Aki.Protocol.tTs.zfs:
+        case Protocol_1.Aki.Protocol.hTs.nvs:
           this.OnQuestToProgress();
           break;
-        case Protocol_1.Aki.Protocol.tTs.Proto_Finish:
+        case Protocol_1.Aki.Protocol.hTs.Proto_Finish:
           this.OnQuestToFinish();
           break;
-        case Protocol_1.Aki.Protocol.tTs.Proto_Delete:
+        case Protocol_1.Aki.Protocol.hTs.Proto_Delete:
           this.OnQuestToDelete();
       }
       EventSystem_1.EventSystem.Emit(
@@ -204,7 +203,11 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
         ModelManager_1.ModelManager.MapModel.RemoveMapMark(12, this.Jro);
   }
   OnQuestToFinish() {
-    this.Finished = !0;
+    (this.Finished = !0),
+      QuestController_1.QuestNewController.TryChangeTrackedQuest2(this.Id),
+      QuestController_1.QuestNewController.QuestRangeFailWarningTreeId ===
+        this.TreeId &&
+        QuestController_1.QuestNewController.HideCancelRangeFailWaringEffect();
   }
   OnQuestToDelete() {
     var t;
@@ -216,7 +219,10 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
         !1,
         2,
         t,
-      ));
+      )),
+      QuestController_1.QuestNewController.QuestRangeFailWarningTreeId ===
+        this.TreeId &&
+        QuestController_1.QuestNewController.HideCancelRangeFailWaringEffect();
   }
   Zro(t) {
     var e;
@@ -244,7 +250,7 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
   }
   CanShowInUiPanel() {
     if (this.IsQuestCanPreShow()) return !0;
-    if (this.Status !== Protocol_1.Aki.Protocol.tTs.zfs) return !1;
+    if (this.Status !== Protocol_1.Aki.Protocol.hTs.nvs) return !1;
     var t = ModelManager_1.ModelManager.QuestNewModel.GetQuestBindingActivityId(
       this.Id,
     );
@@ -259,7 +265,7 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
   }
   IsQuestCanPreShow() {
     return (
-      this.Status === Protocol_1.Aki.Protocol.tTs.Proto_InActive &&
+      this.Status === Protocol_1.Aki.Protocol.hTs.Proto_InActive &&
       void 0 !== this.Lo.PreShowInfo
     );
   }

@@ -119,7 +119,7 @@ let SceneItemTurntableControllerComponent =
     }
     OnStart() {
       return (
-        (this.Xte = this.Entity.GetComponent(180)),
+        (this.Xte = this.Entity.GetComponent(181)),
         this.Xte
           ? (this.p_n &&
               EventSystem_1.EventSystem.AddWithTarget(
@@ -190,7 +190,7 @@ let SceneItemTurntableControllerComponent =
       );
     }
     E_n() {
-      var t = this.Entity?.GetComponent(185);
+      var t = this.Entity?.GetComponent(187);
       if (!t)
         return (
           Log_1.Log.CheckError() &&
@@ -573,12 +573,12 @@ let SceneItemTurntableControllerComponent =
     y_n() {
       var t;
       this.u1t &&
-        (((t = Protocol_1.Aki.Protocol._0s.create()).P4n =
+        (((t = Protocol_1.Aki.Protocol.f0s.create()).F4n =
           MathUtils_1.MathUtils.NumberToLong(this.u1t.GetCreatureDataId())),
-        Net_1.Net.Call(13600, t, (t) => {
-          t?.A9n !== Protocol_1.Aki.Protocol.O4n.NRs &&
-            t?.A9n !==
-              Protocol_1.Aki.Protocol.O4n.Proto_ErrStateEntityStateNoChange &&
+        Net_1.Net.Call(27822, t, (t) => {
+          t?.G9n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
+            t?.G9n !==
+              Protocol_1.Aki.Protocol.Q4n.Proto_ErrStateEntityStateNoChange &&
             (this.M_n &&
               this.GetRotateAllowed() &&
               this.IsBusyRotating() &&
@@ -605,7 +605,7 @@ let SceneItemTurntableControllerComponent =
 (SceneItemTurntableControllerComponent =
   SceneItemTurntableControllerComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(121)],
+      [(0, RegisterComponent_1.RegisterComponent)(122)],
       SceneItemTurntableControllerComponent,
     )),
   (exports.SceneItemTurntableControllerComponent =

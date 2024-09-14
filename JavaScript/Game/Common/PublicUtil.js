@@ -109,8 +109,8 @@ class PublicUtil {
   }
   static GetConfigTextByKey(t) {
     return PublicUtil.UseDbConfig()
-      ? MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t) ?? t
-      : this.xde.GetLocalText(t) ?? t;
+      ? (MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t) ?? t)
+      : (this.xde.GetLocalText(t) ?? t);
   }
   static GetConfigTextByTable(t, e) {
     t = this.GetConfigIdByTable(t, e);

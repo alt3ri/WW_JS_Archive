@@ -25,7 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.HIGHTLIGHT_COLOR =
       void 0),
   (exports.HIGHTLIGHT_COLOR = "#003000 dark green"),
-  (exports.FOCUS_COLOR = "#008000 green"),
+  (exports.FOCUS_COLOR = "#005000 moderate green"),
   (exports.formatColor = formatColor),
   (exports.rgbToHex = rgbToHex);
 const OKBLUE = "[94m",

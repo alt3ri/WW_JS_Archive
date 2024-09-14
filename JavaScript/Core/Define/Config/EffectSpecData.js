@@ -9,9 +9,6 @@ class EffectSpecData {
   get Id() {
     return this.id();
   }
-  get Path() {
-    return this.path();
-  }
   get SpecType() {
     return this.spectype();
   }
@@ -22,8 +19,10 @@ class EffectSpecData {
     return this.lifetime();
   }
   get Children() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.childrenLength(), (t) =>
-      this.children(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.childrenLength(),
+      this.children,
+      this,
     );
   }
   __init(t, e) {
@@ -39,35 +38,31 @@ class EffectSpecData {
     var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  path(t) {
-    var e = this.J7.__offset(this.z7, 6);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
-  }
   spectype() {
-    var t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   effectregulartype() {
-    var t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   lifetime() {
-    var t = this.J7.__offset(this.z7, 12);
-    return t ? this.J7.readFloat32(this.z7 + t) : 0;
+    var t = this.J7.__offset(this.z7, 10);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetChildrenAt(t) {
     return this.children(t);
   }
   children(t) {
-    var e = this.J7.__offset(this.z7, 14);
+    var e = this.J7.__offset(this.z7, 12);
     return e ? this.J7.readInt32(this.J7.__vector(this.z7 + e) + 4 * t) : 0;
   }
   childrenLength() {
-    var t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   childrenArray() {
-    var t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 12);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,

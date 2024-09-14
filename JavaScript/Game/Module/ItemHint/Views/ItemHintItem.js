@@ -74,12 +74,7 @@ class ItemHintItem extends ListSliderControl_1.SliderItem {
       this.GetText(3).SetColor(e),
       this.GetText(2).SetColor(e),
       (this.zgi = t.QualityId)),
-      (this.CurSequencePlayer = void 0),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("ItemHint", 11, "ItemHintItem InitData", [
-          "Status",
-          this.Status,
-        ]);
+      (this.CurSequencePlayer = void 0);
   }
   PlayStart() {
     this.LevelSequencePlayer.PlayLevelSequenceByName("Start"),

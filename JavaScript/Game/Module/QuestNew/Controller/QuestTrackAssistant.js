@@ -5,20 +5,23 @@ const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../../Core/Net/Net"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
   InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
   ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase"),
-  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
 class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
       (this.Hro = (e) => {
-        0 !== e.I5n &&
+        0 !== e.B5n &&
           ModelManager_1.ModelManager.QuestNewModel.SetQuestTrackState(
-            e.I5n,
+            e.B5n,
             !0,
           );
       }),
@@ -27,33 +30,33 @@ class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantB
           ((r = ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnLogicTreeTrackUpdate,
-            Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest,
+            Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest,
             r?.TreeId,
           ));
       }),
       (this.jro = (e, r, t) => {
-        var n =
+        var o =
           ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(e);
-        if (n && n.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest) {
-          var o =
+        if (o && o.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest) {
+          var n =
             ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest();
-          if (o && o.TreeId === e)
+          if (n && n.TreeId === e)
             switch (t) {
               case 1:
-                this.RequestTrackQuest(o.Id, !1, 2);
+                this.RequestTrackQuest(n.Id, !1, 2);
                 break;
               case 2:
-                o.SetTrack(!1);
+                n.SetTrack(!1);
             }
         }
       });
   }
   OnDestroy() {}
   OnRegisterNetEvent() {
-    Net_1.Net.Register(25934, this.Hro);
+    Net_1.Net.Register(17169, this.Hro);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(25934);
+    Net_1.Net.UnRegister(17169);
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -83,27 +86,27 @@ class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantB
         ModelManager_1.ModelManager.QuestNewModel.CurShowUpdateTipsQuest);
     e && this.TryChangeTrackedQuest(e);
   }
-  RequestTrackQuest(e, r, t, n = 0, o) {
+  RequestTrackQuest(e, r, t, o = 0, n) {
     if (r && ModelManager_1.ModelManager.QuestNewModel.GetQuest(e)?.IsSuspend())
       return (
-        (s = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+        (i = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
           "QuestTrackOccupiedTip",
         )),
-        ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(s),
-        void o?.()
+        ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(i),
+        void n?.()
       );
-    ModelManager_1.ModelManager.QuestNewModel.SetQuestTrackState(e, r, n),
-      o?.();
-    var s = Protocol_1.Aki.Protocol.i1s.create({
-      I5n: e,
-      hHn: r ? 1 : 2,
-      aHn: t,
+    ModelManager_1.ModelManager.QuestNewModel.SetQuestTrackState(e, r, o),
+      n?.();
+    var i = Protocol_1.Aki.Protocol.l1s.create({
+      B5n: e,
+      fHn: r ? 1 : 2,
+      gHn: t,
     });
-    Net_1.Net.Call(25751, s, (e) => {
-      e.DEs !== Protocol_1.Aki.Protocol.O4n.NRs &&
+    Net_1.Net.Call(22531, i, (e) => {
+      e.BEs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          e.DEs,
-          22186,
+          e.BEs,
+          20619,
         );
     });
   }
@@ -116,6 +119,37 @@ class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantB
       t?.Id !== e &&
       (this.RequestTrackQuest(e, !0, 2), !0)
     );
+  }
+  TryChangeTrackedQuest2(e) {
+    var r = ModelManager_1.ModelManager.QuestNewModel,
+      t = r.GetCurTrackedQuest();
+    if (
+      void 0 === t ||
+      ModelManager_1.ModelManager.QuestNewModel.CheckQuestFinished(t.Id)
+    ) {
+      if (void 0 !== e) {
+        const o = r.GetSuccessiveQuestId(e);
+        if (void 0 !== o) return this.RequestTrackQuest(o, !0, 2), !0;
+      }
+      const o = r.GetHighestPriorityProcessingQuestId();
+      if (void 0 !== o) {
+        if (void 0 !== e) return this.RequestTrackQuest(o, !0, 2), !0;
+        (t = LocalStorage_1.LocalStorage.GetPlayer(
+          LocalStorageDefine_1.ELocalStoragePlayerKey.AuToTrackQuestTime,
+        )),
+          (r = TimeUtil_1.TimeUtil.GetServerTimeStamp());
+        if (!t || t < r)
+          return (
+            LocalStorage_1.LocalStorage.SetPlayer(
+              LocalStorageDefine_1.ELocalStoragePlayerKey.AuToTrackQuestTime,
+              TimeUtil_1.TimeUtil.GetNextDayTimeStamp(),
+            ),
+            this.RequestTrackQuest(o, !0, 2),
+            !0
+          );
+      }
+    }
+    return !1;
   }
 }
 exports.QuestTrackAssistant = QuestTrackAssistant;

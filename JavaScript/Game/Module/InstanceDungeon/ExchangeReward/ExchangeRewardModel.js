@@ -14,30 +14,30 @@ class ExchangeRewardModel extends ModelBase_1.ModelBase {
   }
   Phrase(e) {
     this.FQ.clear(), this.bai.clear();
-    for (const r of Object.keys(e.gws)) {
+    for (const r of Object.keys(e.yws)) {
       var a = new ExchangeRewardData_1.ExchangeShareData();
-      a.Phrase(Number.parseInt(r), e.gws[r]), this.bai.set(a.GetId(), a);
+      a.Phrase(Number.parseInt(r), e.yws[r]), this.bai.set(a.GetId(), a);
     }
-    for (const t of Object.keys(e.fws)) {
+    for (const t of Object.keys(e.Iws)) {
       var n = new ExchangeRewardData_1.ExchangeRewardData();
-      n.Phrase(Number.parseInt(t), e.fws[t]), this.FQ.set(n.GetId(), n);
+      n.Phrase(Number.parseInt(t), e.Iws[t]), this.FQ.set(n.GetId(), n);
     }
   }
   OnExchangeRewardNotify(e) {
-    let a = this.FQ.get(e.vws);
+    let a = this.FQ.get(e.Tws);
     a ||
       ((a = new ExchangeRewardData_1.ExchangeRewardData()),
-      this.FQ.set(e.vws, a)),
-      a.Phrase(e.vws, e.o9n);
+      this.FQ.set(e.Tws, a)),
+      a.Phrase(e.Tws, e.m9n);
   }
   OnShareInfoNotify(a) {
-    for (const r of Object.keys(a.pws)) {
+    for (const r of Object.keys(a.Lws)) {
       var n = Number.parseInt(r);
       let e = this.bai.get(n);
       e ||
         ((e = new ExchangeRewardData_1.ExchangeShareData()),
         this.bai.set(n, e)),
-        e.Phrase(n, a.pws[r]);
+        e.Phrase(n, a.Lws[r]);
     }
   }
   GetInstanceDungeonIfCanExchange(e) {
@@ -123,6 +123,20 @@ class ExchangeRewardModel extends ModelBase_1.ModelBase {
         )),
       (e = this.FQ.get(e)?.GetCount()),
       !!(a && e && a <= e))
+    );
+  }
+  IsFinishInstanceCompatible(e) {
+    var e =
+      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+        e,
+      )?.RewardId;
+    return (
+      !!e &&
+      1 ===
+        ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardMaxCount(
+          e,
+        ) &&
+      !!((e = this.FQ.get(e)?.GetCount()) && 1 <= e)
     );
   }
 }

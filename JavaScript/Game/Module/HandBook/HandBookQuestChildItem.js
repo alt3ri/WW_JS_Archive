@@ -18,7 +18,7 @@ class HandBookQuestChildItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.Lei = 0),
       (this.mei = () => {
         var e = this.kZt?.Config;
-        e.QuestId ? this.BBn(e.Type) : this.Fxn(e.Type);
+        e.QuestId ? this.HBn(e.Type) : this.Oxn(e.Type);
       }),
       (this.aei = (e, t) => e.Id - t.Id);
   }
@@ -95,7 +95,7 @@ class HandBookQuestChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   GetIsUnlock() {
     return !!this.kZt && !this.kZt.IsLock;
   }
-  Fxn(e) {
+  Oxn(e) {
     this.dei();
     var t = ConfigCommon_1.ConfigCommon.ToList(
         ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfigByType(
@@ -142,7 +142,7 @@ class HandBookQuestChildItem extends GridProxyAbstract_1.GridProxyAbstract {
       (e.ConfigId = g),
       UiManager_1.UiManager.OpenView("HandBookPhotoView", e);
   }
-  BBn(e) {
+  HBn(e) {
     this.dei();
     var t = this.kZt?.Config.QuestId,
       i = ConfigCommon_1.ConfigCommon.ToList(

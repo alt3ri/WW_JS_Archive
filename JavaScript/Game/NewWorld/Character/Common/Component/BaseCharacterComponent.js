@@ -41,14 +41,14 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
   constructor() {
     super(...arguments),
       (this.SubEntityType = 0),
-      (this.EntityType = Protocol_1.Aki.Protocol.wks.Proto_Npc),
+      (this.EntityType = Protocol_1.Aki.Protocol.kks.Proto_Npc),
       (this.RadiusInternal = 0),
       (this.HalfHeightInternal = 0),
       (this.DefaultRadiusInternal = 0),
       (this.DefaultHalfHeightInternal = 0),
       (this.ModelResPath = ""),
       (this.ClassDefaultObject = void 0),
-      (this.LBn = !1);
+      (this.wBn = !1);
   }
   get Actor() {
     return this.ActorInternal;
@@ -70,9 +70,9 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
   }
   SetCamp(t) {
     var e = this.Entity.GetComponent(0);
-    (e?.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_Npc &&
-      e?.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_Monster &&
-      e?.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_Vision) ||
+    (e?.GetEntityType() !== Protocol_1.Aki.Protocol.kks.Proto_Npc &&
+      e?.GetEntityType() !== Protocol_1.Aki.Protocol.kks.Proto_Monster &&
+      e?.GetEntityType() !== Protocol_1.Aki.Protocol.kks.Proto_Vision) ||
       (((e = e?.GetEntityCamp()) || 0 === e) &&
         t instanceof TsBaseCharacter_1.default &&
         (t.Camp = e));
@@ -100,19 +100,28 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
       );
     var o = o ?? this.ActorLocationProxy,
       n = ModelManager_1.ModelManager.TraceElementModel.CommonStartLocation,
-      a =
-        (a
-          ? n.Set(o.X, o.Y, o.Z + this.ScaledRadius)
-          : n.Set(o.X, o.Y, o.Z + this.ScaledHalfHeight),
-        ModelManager_1.ModelManager.TraceElementModel.CommonEndLocation);
-    a.Set(o.X, o.Y, o.Z + t);
-    let s = this.FixBornLocationInternal(o, n, a, !1, e, r);
+      s = ModelManager_1.ModelManager.TraceElementModel.CommonEndLocation;
+    a
+      ? (this.ActorUpProxy.Multiply(this.ScaledRadius, n),
+        this.ActorUpProxy.Multiply(-this.ScaledRadius + t, s))
+      : (this.ActorUpProxy.Multiply(
+          this.ScaledHalfHeight - this.ScaledRadius,
+          n,
+        ),
+        this.ActorUpProxy.Multiply(-this.ScaledHalfHeight + t, s)),
+      n.AdditionEqual(o),
+      s.AdditionEqual(o);
+    let h = this.FixBornLocationInternal(o, n, s, !1, e, r);
     return (
-      !s &&
+      !h &&
         i &&
-        ((n.Z = n.Z + this.ScaledHalfHeight - this.ScaledRadius),
-        (s = this.FixBornLocationInternal(o, n, a, !0, e, r))),
-      s
+        (this.ActorUpProxy.Multiply(
+          this.ScaledHalfHeight - this.ScaledRadius,
+          MathUtils_1.MathUtils.CommonTempVector,
+        ),
+        n.AdditionEqual(MathUtils_1.MathUtils.CommonTempVector),
+        (h = this.FixBornLocationInternal(o, n, s, !0, e, r))),
+      h
     );
   }
   FixBornLocationInternal(
@@ -121,8 +130,9 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
     a,
     n,
     s = !0,
-    c = "unknown.FixBornLocationInternal",
+    h = "unknown.FixBornLocationInternal",
   ) {
+    s = ModelManager_1.ModelManager.CreatureModel.EnableEntityLog && s;
     s &&
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
@@ -136,7 +146,7 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
         ["InitLocation", this.CreatureDataInternal.GetInitLocation()],
         ["射线开始位置", i],
         ["射线结束位置", a],
-        ["Context", c],
+        ["Context", h],
       );
     let e = !1;
     switch (this.Actor.CharacterMovement.MovementMode) {
@@ -150,12 +160,14 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
           CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SLIDE &&
           this.Actor.CharacterMovement.CustomMovementMode !==
             CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SKI &&
+          this.Actor.CharacterMovement.CustomMovementMode !==
+            CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_ROLL &&
           (e = !0);
         break;
       default:
         e = !0;
     }
-    if (e)
+    if (s && e)
       return (
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -165,7 +177,7 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
             ["CreatureDataId", this.CreatureDataInternal.GetCreatureDataId()],
             ["PbDataId", this.CreatureDataInternal.GetPbDataId()],
             ["MovementMode", this.Actor.CharacterMovement.MovementMode],
-            ["Context", c],
+            ["Context", h],
           ),
         [!0, t]
       );
@@ -183,9 +195,10 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
         PROFILE_KEY,
         PROFILE_KEY,
       ),
-      h = o.HitResult;
+      c = o.HitResult;
     if (
-      (Log_1.Log.CheckInfo() &&
+      (s &&
+        Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
           3,
@@ -193,35 +206,38 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
           ["CreatureDataId", this.CreatureDataInternal.GetCreatureDataId()],
           ["PbDataId", this.CreatureDataInternal.GetPbDataId()],
           ["isHit", t],
-          ["hitResult.bBlockingHit", h.bBlockingHit],
+          ["hitResult.bBlockingHit", c.bBlockingHit],
           ["allowStartPenetrating", n],
-          ["hitResult.bStartPenetrating", h.bStartPenetrating],
-          ["Context", c],
+          ["hitResult.bStartPenetrating", c.bStartPenetrating],
+          ["Context", h],
         ),
-      t && h.bBlockingHit)
+      t && c.bBlockingHit)
     ) {
-      if (!n && h.bStartPenetrating) return [!1, void 0];
+      if (!n && c.bStartPenetrating) return [!1, void 0];
       var l = ModelManager_1.ModelManager.TraceElementModel.CommonHitLocation;
       let e = "";
-      var C = h.Actors.Num();
+      var _ = c.Actors.Num();
       let o = -1,
         r = "";
-      TraceElementCommon_1.TraceElementCommon.GetHitLocation(h, 0, l);
-      for (let t = 0; t < C; ++t) {
-        var _ = h.Actors.Get(t);
+      TraceElementCommon_1.TraceElementCommon.GetHitLocation(c, 0, l);
+      for (let t = 0; t < _; ++t) {
+        var C = c.Actors.Get(t);
         if (
-          _?.IsValid() &&
-          ((e += _.GetName() + ", "), !_.IsA(UE.Character.StaticClass()))
+          C?.IsValid() &&
+          ((e += C.GetName() + ", "), !C.IsA(UE.Character.StaticClass()))
         ) {
           (o = t),
-            (r = _.GetName()),
-            TraceElementCommon_1.TraceElementCommon.GetHitLocation(h, t, l);
+            (r = C.GetName()),
+            TraceElementCommon_1.TraceElementCommon.GetHitLocation(c, t, l);
           break;
         }
       }
       return (
-        (l.Z += this.ScaledHalfHeight - this.ScaledRadius),
-        (l.Z += FIX_LOCATION_TOLERANCE),
+        this.ActorUpProxy.Multiply(
+          this.ScaledHalfHeight - this.ScaledRadius + FIX_LOCATION_TOLERANCE,
+          MathUtils_1.MathUtils.CommonTempVector,
+        ),
+        l.AdditionEqual(MathUtils_1.MathUtils.CommonTempVector),
         s &&
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -234,11 +250,11 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
             ["HitLocationIndex", o],
             ["HitLocationName", r],
             ["经过修正的位置", l],
-            ["Context", c],
+            ["Context", h],
           ),
-        this.LBn ||
-          ((this.LBn = !0),
-          (i = this.Entity.GetComponent(162)) &&
+        this.wBn ||
+          ((this.wBn = !0),
+          (i = this.Entity.GetComponent(163)) &&
             ((a = i.GetMeshTransform().GetLocation()),
             MathUtils_1.MathUtils.CommonTempVector.Set(
               0,
@@ -246,7 +262,8 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
               -FIX_LOCATION_TOLERANCE,
             ),
             i.AddModelLocation(MathUtils_1.MathUtils.CommonTempVector),
-            Log_1.Log.CheckInfo()) &&
+            s) &&
+            Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Entity",
               51,
@@ -255,7 +272,7 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
               ["PbDataId", this.CreatureDataInternal.GetPbDataId()],
               ["OrigMeshLocation", a],
               ["FixMeshLocation", i.GetMeshTransform().GetLocation()],
-              ["Context", c],
+              ["Context", h],
             )),
         ModelManager_1.ModelManager.TraceElementModel.ClearActorTrace(),
         [!0, l]
@@ -328,7 +345,7 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
   w2r() {
     if (
       this.CreatureDataInternal.GetEntityType() ===
-      Protocol_1.Aki.Protocol.wks.Proto_Npc
+      Protocol_1.Aki.Protocol.kks.Proto_Npc
     ) {
       var e = this.CreatureDataInternal.GetModelConfig();
       if (e) {

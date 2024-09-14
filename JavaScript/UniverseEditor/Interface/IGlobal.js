@@ -61,6 +61,7 @@ function getGlobalConfig() {
         AudioStatePath: "",
         PlotHandBookPath: "Content/Data/Json/PlotHandBook.json",
         PlotPositionPath: "Content/Data/Json/PlotPosition.json",
+        EnrichmentArea: "Content/Data/Json/EnrichmentArea.json",
       }
     : {
         FlowListDir: "../Config/Raw/Tables/k.可视化编辑/j.剧情",
@@ -143,6 +144,8 @@ function getGlobalConfig() {
           "../Config/Raw/Tables/k.可视化编辑/__Temp__/Json/PlotHandBook.json",
         PlotPositionPath:
           "../Config/Raw/Tables/k.可视化编辑/__Temp__/Json/PlotPosition.json",
+        EnrichmentArea:
+          "../Config/Raw/Tables/k.可视化编辑/__Temp__/Json/EnrichmentArea.json",
         TypeScriptRoot: "TypeScript/Src",
         GlobalVarConfigPath:
           "../Config/Raw/Tables/k.可视化编辑/__Temp__/Json/GlobalVar.json",
@@ -220,5 +223,6 @@ function getGlobalConfig() {
     AudioStatePath: "Content/Aki/UniverseEditorConfig/Json/a.AudioState.json",
     PlotHandBookPath: "Content/Aki/UniverseEditorConfig/Json/PlotHandBook.json",
     PlotPositionPath: "Content/Aki/UniverseEditorConfig/Json/PlotPosition.json",
+    EnrichmentArea: "Content/Aki/UniverseEditorConfig/Json/EnrichmentArea.json",
   });
 //# sourceMappingURL=IGlobal.js.map

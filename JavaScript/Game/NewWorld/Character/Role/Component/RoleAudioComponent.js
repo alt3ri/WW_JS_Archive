@@ -68,17 +68,17 @@ let RoleAudioComponent =
         )),
         (this.Xte = void 0),
         (this.$te = void 0),
-        (this.y1a = (o, i, e, t, n, r, _) => {
-          if (!(o === i || 0 <= r.Damage)) {
+        (this.Ica = (o, i, e, t, n, r, _) => {
+          if (!(o === i || 0 <= r.Damage) && this.$te) {
             var o = this.ActorComponent?.Owner,
               i = this.Config?.LostHealthEventMap,
-              s = this.$te?.GetCurrentValue(
-                CharacterAttributeTypes_1.EAttributeId.e5n,
+              s = this.$te.GetCurrentValue(
+                CharacterAttributeTypes_1.EAttributeId.l5n,
               ),
-              a = this.$te?.GetCurrentValue(
+              a = this.$te.GetCurrentValue(
                 CharacterAttributeTypes_1.EAttributeId.Proto_Life,
               );
-            if (o && i && s && a) {
+            if (o && i && s) {
               var u,
                 l,
                 m = (a / s) * 100,
@@ -105,7 +105,7 @@ let RoleAudioComponent =
             t = SKILL_EVENT_MAP.get(t);
           o?.IsValid() && t && AudioSystem_1.AudioSystem.PostEvent(t, o);
         }),
-        (this.m9s = () => {
+        (this.M9s = () => {
           var e = this.ActorComponent?.Owner;
           e?.IsValid() &&
             (Log_1.Log.CheckDebug() &&
@@ -124,13 +124,13 @@ let RoleAudioComponent =
       return (
         super.OnInit(),
         this.lUr(),
-        (this.Xte = this.Entity.CheckGetComponent(188)),
-        (this.$te = this.Entity.CheckGetComponent(158)),
+        (this.Xte = this.Entity.CheckGetComponent(190)),
+        (this.$te = this.Entity.CheckGetComponent(159)),
         this.Config &&
           (EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharBeDamage,
-            this.y1a,
+            this.Ica,
           ),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
@@ -140,7 +140,7 @@ let RoleAudioComponent =
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnRoleGoDownFinish,
-            this.m9s,
+            this.M9s,
           )),
         !0
       );
@@ -152,7 +152,7 @@ let RoleAudioComponent =
           (EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharBeDamage,
-            this.y1a,
+            this.Ica,
           ),
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
@@ -162,7 +162,7 @@ let RoleAudioComponent =
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnRoleGoDownFinish,
-            this.m9s,
+            this.M9s,
           )),
         !0
       );
@@ -208,22 +208,20 @@ let RoleAudioComponent =
     }
     xin() {
       var e;
-      this.ActorComponent?.Valid &&
-        !this.ActorComponent.ActorLocationProxy.Equals(
+      !this.ActorComponent?.Valid ||
+        (e = this.ActorComponent.ActorLocationProxy).Equals(
           RoleAudioComponent_1.LHo,
           LOCATION_TOLERANCE,
-        ) &&
-        (RoleAudioComponent_1.LHo.DeepCopy(
-          this.ActorComponent.ActorLocationProxy,
-        ),
-        (e = this.ActorComponent.ActorLocation),
+        ) ||
+        (RoleAudioComponent_1.LHo.DeepCopy(e),
         GameAudioController_1.GameAudioController.UpdatePlayerLocation(e),
+        (e = this.ActorComponent.ActorLocation),
         VoxelUtils_1.VoxelUtils.GetVoxelInfo(Info_1.Info.World, e).MtlID ===
-          MATERIAL_ID_SHR) &&
-        AudioSystem_1.AudioSystem.PostEvent(
-          "play_amb_role_interact_shr",
-          new UE.Transform(e),
-        );
+          MATERIAL_ID_SHR &&
+          AudioSystem_1.AudioSystem.PostEvent(
+            "play_amb_role_interact_shr",
+            new UE.Transform(e),
+          ));
     }
   });
 (RoleAudioComponent.IYt = 0),
@@ -231,7 +229,7 @@ let RoleAudioComponent =
   (RoleAudioComponent.LHo = Vector_1.Vector.Create()),
   (RoleAudioComponent = RoleAudioComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(173)],
+      [(0, RegisterComponent_1.RegisterComponent)(174)],
       RoleAudioComponent,
     )),
   (exports.RoleAudioComponent = RoleAudioComponent);

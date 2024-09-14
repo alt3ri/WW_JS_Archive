@@ -24,11 +24,11 @@ const UE = require("ue"),
   ProtoGachaInfo_1 = require("./ProtoGachaInfo");
 class GachaResult {
   constructor() {
-    (this.WVn = void 0),
-      (this.zVn = []),
+    (this.e9n = void 0),
+      (this.a9n = []),
       (this.IsNew = !0),
-      (this.ZVn = []),
-      (this.e9n = void 0);
+      (this.h9n = []),
+      (this.l9n = void 0);
   }
 }
 exports.GachaResult = GachaResult;
@@ -98,12 +98,12 @@ class GachaModel extends ModelBase_1.ModelBase {
     this.SWt = e;
     var o = new Map();
     for (const s of this.SWt) {
-      var r = s?.WVn?.f8n,
-        t = s?.WVn?.YVn;
+      var r = s?.e9n?.L8n,
+        t = s?.e9n?.n9n;
       o.set(r, (o.get(r) ?? 0) + t);
     }
     for (const n of this.SWt) {
-      var a = n?.WVn?.f8n,
+      var a = n?.e9n?.L8n,
         i = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(a);
       i
         ? (n.IsNew = GachaController_1.GachaController.IsNewRole(i.Id))

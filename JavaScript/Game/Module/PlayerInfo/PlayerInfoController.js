@@ -18,11 +18,11 @@ const ue_1 = require("ue"),
   WorldLevelController_1 = require("../WorldLevel/WorldLevelController");
 class PlayerInfoController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(7868, PlayerInfoController.dXi),
-      Net_1.Net.Register(17955, PlayerInfoController.CXi);
+    Net_1.Net.Register(17467, PlayerInfoController.dXi),
+      Net_1.Net.Register(25394, PlayerInfoController.CXi);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(7868), Net_1.Net.UnRegister(17955);
+    Net_1.Net.UnRegister(17467), Net_1.Net.UnRegister(25394);
   }
   static gXi() {
     var e = ModelManager_1.ModelManager.PlayerInfoModel.GetNumberPropById(9);
@@ -34,32 +34,32 @@ class PlayerInfoController extends UiControllerBase_1.UiControllerBase {
 }
 ((exports.PlayerInfoController = PlayerInfoController).dXi = (e) => {
   if (void 0 !== e) {
-    WorldLevelController_1.WorldLevelController.OnBasicInfoNotify(e.PSs);
+    WorldLevelController_1.WorldLevelController.OnBasicInfoNotify(e.GSs);
     var r = ModelManager_1.ModelManager.PlayerInfoModel;
     if (void 0 !== r) {
-      r.SetId(e.J4n), LogAnalyzer_1.LogAnalyzer.SetPlayerId(e.J4n);
+      r.SetId(e.s5n), LogAnalyzer_1.LogAnalyzer.SetPlayerId(e.s5n);
       var o = new Map(),
         n = new Map();
-      for (const a of e.PSs)
-        a.GSs === Protocol_1.Aki.Protocol.vNs.Proto_Int32
-          ? o.set(a.j4n, a.OSs)
-          : n.set(a.j4n, a.b8n);
+      for (const a of e.GSs)
+        a.HSs === Protocol_1.Aki.Protocol.TNs.Proto_Int32
+          ? o.set(a.Z4n, a.jSs)
+          : n.set(a.Z4n, a.j8n);
       r.SetNumberProp(o),
         r.SetStringProp(n),
-        (r.RandomSeed = e.eHn),
-        ModelManager_1.ModelManager.MingSuModel.UpdateDragonPoolInfoMap(e.wSs),
-        ModelManager_1.ModelManager.FunctionModel.SetPlayerId(e.J4n),
+        (r.RandomSeed = e.lHn),
+        ModelManager_1.ModelManager.MingSuModel.UpdateDragonPoolInfoMap(e.kSs),
+        ModelManager_1.ModelManager.FunctionModel.SetPlayerId(e.s5n),
         ModelManager_1.ModelManager.FunctionModel.UpdatePlayerAttributeNumberInfo(
           o,
         ),
         ModelManager_1.ModelManager.FunctionModel.UpdatePlayerAttributeStringInfo(
           n,
         ),
-        ModelManager_1.ModelManager.PersonalModel.SetRoleShowList(e.dSs),
-        ModelManager_1.ModelManager.PersonalModel.SetCurCardId(e.xSs),
-        ModelManager_1.ModelManager.PersonalModel.SetBirthday(e.jVn),
-        ModelManager_1.ModelManager.PersonalModel.SetBirthdayDisplay(e.BSs),
-        ModelManager_1.ModelManager.PersonalModel.SetCardUnlockList(e.bSs),
+        ModelManager_1.ModelManager.PersonalModel.SetRoleShowList(e.MSs),
+        ModelManager_1.ModelManager.PersonalModel.SetCurCardId(e.NSs),
+        ModelManager_1.ModelManager.PersonalModel.SetBirthday(e.ZVn),
+        ModelManager_1.ModelManager.PersonalModel.SetBirthdayDisplay(e.VSs),
+        ModelManager_1.ModelManager.PersonalModel.SetCardUnlockList(e.FSs),
         ModelManager_1.ModelManager.PersonalModel.SetName(
           ModelManager_1.ModelManager.FunctionModel.GetPlayerName(),
         ),
@@ -67,14 +67,14 @@ class PlayerInfoController extends UiControllerBase_1.UiControllerBase {
           ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
         ),
         ModelManager_1.ModelManager.PersonalModel.SetModifyNameInfo(
-          e.vna,
-          e.pna,
+          e.Zha,
+          e.ela,
         );
       var r = ModelManager_1.ModelManager.PlayerInfoModel.GetNumberPropById(4);
       ModelManager_1.ModelManager.PersonalModel.SetHeadPhotoId(r),
         PlayerInfoController.gXi(),
         LoginController_1.LoginController.SetIfFirstTimeLogin(),
-        2 === Info_1.Info.PlatformType && e.J4n % 10 == 1
+        2 === Info_1.Info.PlatformType && e.s5n % 10 == 1
           ? ((r = ue_1.KuroStaticLibrary.GetDeviceCPU()).includes("SM8475") ||
               r.includes("SM8550") ||
               r.includes("SM8650")) &&
@@ -103,15 +103,15 @@ class PlayerInfoController extends UiControllerBase_1.UiControllerBase {
 }),
   (PlayerInfoController.CXi = (e) => {
     if (void 0 !== e) {
-      WorldLevelController_1.WorldLevelController.OnPlayerAttrNotify(e.PSs);
+      WorldLevelController_1.WorldLevelController.OnPlayerAttrNotify(e.GSs);
       var r = ModelManager_1.ModelManager.PlayerInfoModel;
       if (void 0 !== r) {
         var o = new Map(),
           n = new Map();
-        for (const a of e.PSs)
-          a.GSs === Protocol_1.Aki.Protocol.vNs.Proto_Int32
-            ? (r.ChangeNumberProp(a.j4n, a.OSs), o.set(a.j4n, a.OSs))
-            : (r.ChangeStringProp(a.j4n, a.b8n), n.set(a.j4n, a.b8n));
+        for (const a of e.GSs)
+          a.HSs === Protocol_1.Aki.Protocol.TNs.Proto_Int32
+            ? (r.ChangeNumberProp(a.Z4n, a.jSs), o.set(a.Z4n, a.jSs))
+            : (r.ChangeStringProp(a.Z4n, a.j8n), n.set(a.Z4n, a.j8n));
         ModelManager_1.ModelManager.FunctionModel.UpdatePlayerAttributeNumberInfo(
           o,
         ),

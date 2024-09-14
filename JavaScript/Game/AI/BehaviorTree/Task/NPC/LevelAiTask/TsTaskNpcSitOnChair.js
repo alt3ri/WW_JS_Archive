@@ -72,14 +72,14 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
     s
       ? ((this.Entity = s.CharAiDesignComp.Entity),
         (this.Character = this.Entity.GetComponent(3)),
-        (this.MoveComp = this.Entity.GetComponent(37)),
+        (this.MoveComp = this.Entity.GetComponent(38)),
         this.MoveComp?.CharacterMovement?.IsValid()
           ? ((s = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
               this.TsChairEntityId,
             )),
             (this.ChairController =
               s?.Entity?.GetComponent(
-                181,
+                182,
               )?.GetSubEntityInteractLogicController()),
             this.ChairController &&
             this.ChairController.IsSceneInteractionLoadCompleted()
@@ -156,7 +156,7 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
         ? this.Character?.ClearInput()
         : 5 === this.Phase &&
           ((this.HasAborted = !0),
-          this.Entity?.GetComponent(38)?.ClearAndStopMontage(
+          this.Entity?.GetComponent(39)?.ClearAndStopMontage(
             this.PlayingMontageId,
           ));
   }
@@ -173,7 +173,8 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
     var t;
     this.IsExecuteMoveNearby ||
       ((this.IsExecuteMoveNearby = !0),
-      (t = this.ChairController.GetInteractPoint()),
+      this.ChairController.Possess(this.Entity),
+      (t = this.ChairController.GetSitLocation()),
       this.ChairController.GetForwardDirection().Multiply(
         NEARBY_CHAIR_OFFSET,
         this.ChairNearbyPos,
@@ -204,7 +205,7 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
       this.ChairController.Possess(this.Entity),
       this.ChairController.IgnoreCollision(),
       (t = this.Character.ActorLocationProxy),
-      (i = this.ChairController.GetInteractPoint()),
+      (i = this.ChairController.GetSitLocation()),
       this.TempVec.Set(i.X, i.Y, t.Z),
       (i = {
         Index: 0,
@@ -245,7 +246,7 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
         void 0 !== this.TsLoopDuration && 0 !== this.TsLoopDuration),
       (this.LoopMontage =
         -1 === this.TsLoopDuration || -1 === this.TsRepeatTimes),
-      (t = this.Entity.GetComponent(38)),
+      (t = this.Entity.GetComponent(39)),
       (i = new BasePerformComponent_1.PlayMontageConfig(
         this.TsRepeatTimes,
         this.TsLoopDuration,
@@ -268,6 +269,7 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
     var t;
     this.IsExecuteMoveAway ||
       ((this.IsExecuteMoveAway = !0),
+      this.ChairController.UnPossess(this.Entity),
       (t = {
         Index: 0,
         Position: this.ChairNearbyPos,

@@ -22,13 +22,17 @@ class DailyAdventureActivity {
     return this.areadefaultmarkid();
   }
   get TaskList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.tasklistLength(), (t) =>
-      this.tasklist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.tasklistLength(),
+      this.tasklist,
+      this,
     );
   }
   get RewardList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.rewardlistLength(), (t) =>
-      this.rewardlist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.rewardlistLength(),
+      this.rewardlist,
+      this,
     );
   }
   get TaskRefreshNum() {

@@ -12,7 +12,8 @@ class CalabashDevelopReward {
   get DevelopCondition() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.developconditionLength(),
-      (t) => this.developcondition(t),
+      this.developcondition,
+      this,
     );
   }
   get MonsterInfoId() {

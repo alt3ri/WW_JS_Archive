@@ -43,8 +43,8 @@ class CookRootView extends UiViewBase_1.UiViewBase {
       (this.MNt = void 0),
       (this.ENt = !1),
       (this.SNt = void 0),
-      (this.qjs = void 0),
-      (this.zVs = !1),
+      (this.oWs = void 0),
+      (this.p9s = !1),
       (this.yNt = () => {
         this.INt(),
           this.TNt(),
@@ -91,8 +91,8 @@ class CookRootView extends UiViewBase_1.UiViewBase {
       (this.jwe = (e) => {
         "OnBlackScreen" === e &&
           (this.ChildPopView?.PlayLevelSequenceByName("BlackScreenShow"),
-          this.qjs?.IsPending() && this.qjs.SetResult(),
-          (this.zVs = !0));
+          this.oWs?.IsPending() && this.oWs.SetResult(),
+          (this.p9s = !0));
       }),
       (this.Qvt = (e, t) => {
         this.gNt.DeselectCurrentGridProxy(!1), (this.mNt = 0), this.FNt(e);
@@ -136,7 +136,7 @@ class CookRootView extends UiViewBase_1.UiViewBase {
           (this.ChildPopView?.PopItem.SetActive(!0),
           this.ChildPopView?.PlayLevelSequenceByName("Start"));
       }),
-      (this.Msa = () => {
+      (this._la = () => {
         this.pNt.RefreshCooking();
       }),
       (this.YNt = () => {
@@ -246,7 +246,7 @@ class CookRootView extends UiViewBase_1.UiViewBase {
             "[LevelEventOpenSystem] 打开烹饪界面时找不到交互对象，直接关闭界面",
           ),
         this.CloseMe()),
-      (this.qjs = new CustomPromise_1.CustomPromise());
+      (this.oWs = new CustomPromise_1.CustomPromise());
     var e = ModelManager_1.ModelManager.CookModel;
     (e.CurrentInteractCreatureDataLongId =
       ModelManager_1.ModelManager.InteractionModel.InteractCreatureDataLongId),
@@ -258,7 +258,7 @@ class CookRootView extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseCookRole,
-        this.Msa,
+        this._la,
       );
   }
   OnBeforeShow() {
@@ -266,17 +266,17 @@ class CookRootView extends UiViewBase_1.UiViewBase {
   }
   async OnBeforeShowAsyncImplement() {
     UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingBlendInSequence() &&
-      this.qjs &&
-      (await this.qjs.Promise);
+      this.oWs &&
+      (await this.oWs.Promise);
   }
   OnAfterShow() {
-    this.JNt(), (this.qjs = void 0);
+    this.JNt(), (this.oWs = void 0);
   }
   JNt() {
     var e,
       t = this.ChildPopView.PopItem;
     t &&
-      !this.zVs &&
+      !this.p9s &&
       ((e =
         !UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingBlendInSequence()),
       t.GetActive() !== e) &&
@@ -527,7 +527,7 @@ class CookRootView extends UiViewBase_1.UiViewBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseCookRole,
-        this.Msa,
+        this._la,
       ),
       CookController_1.CookController.ClearCookDisplay(),
       this.DisableRedDot(),
@@ -539,7 +539,7 @@ class CookRootView extends UiViewBase_1.UiViewBase {
     var e = ModelManager_1.ModelManager.CookModel;
     (e.CurrentCookRoleId = void 0),
       e.ClearCookRoleItemDataList(),
-      (this.qjs = void 0);
+      (this.oWs = void 0);
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     var t = this.GetGuideUiItem(e[0]);

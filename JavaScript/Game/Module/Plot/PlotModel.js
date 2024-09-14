@@ -18,7 +18,7 @@ const puerts_1 = require("puerts"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   PublicUtil_1 = require("../../Common/PublicUtil"),
-  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  GameSettingsDeviceRender_1 = require("../../GameSettings/GameSettingsDeviceRender"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
@@ -87,7 +87,8 @@ class PlotConfig {
           (this.ShouldSwitchMainRole = !1),
           (this.PauseTime = !0),
           (this.SkipTalkWhenFighting = !1),
-          PlotController_1.PlotController.TogglePlotProtect(!0);
+          PlotController_1.PlotController.TogglePlotProtect(!0),
+          PlotController_1.PlotController.EnableViewControl(!1);
         break;
       case "LevelB":
         (this.CameraMode = 0),
@@ -100,7 +101,8 @@ class PlotConfig {
           (this.ShouldSwitchMainRole = !1),
           (this.PauseTime = !0),
           (this.SkipTalkWhenFighting = !1),
-          PlotController_1.PlotController.TogglePlotProtect(!0);
+          PlotController_1.PlotController.TogglePlotProtect(!0),
+          PlotController_1.PlotController.EnableViewControl(!1);
         break;
       case "LevelC":
         void 0 === t.UseFlowCamera
@@ -115,7 +117,8 @@ class PlotConfig {
           (this.ShouldSwitchMainRole = t.IsSwitchMainRole),
           (this.PauseTime = !e),
           (this.SkipTalkWhenFighting = !1),
-          PlotController_1.PlotController.TogglePlotProtect(!0);
+          PlotController_1.PlotController.TogglePlotProtect(!0),
+          PlotController_1.PlotController.EnableViewControl(!0);
         break;
       case "LevelD":
         (this.CameraMode = 1),
@@ -128,7 +131,8 @@ class PlotConfig {
           (this.PlotLevel = "LevelD"),
           (this.PauseTime = !1),
           (this.SkipTalkWhenFighting = t.Interruptible),
-          (this.SkipHiddenBlackScreenAtEnd = !0);
+          (this.SkipHiddenBlackScreenAtEnd = !0),
+          PlotController_1.PlotController.EnableViewControl(!1);
         break;
       case "Prompt":
         (this.CameraMode = 1),
@@ -140,7 +144,8 @@ class PlotConfig {
           (this.PlotLevel = "Prompt"),
           (this.PauseTime = !1),
           (this.SkipTalkWhenFighting = t.Interruptible),
-          (this.SkipHiddenBlackScreenAtEnd = !0);
+          (this.SkipHiddenBlackScreenAtEnd = !0),
+          PlotController_1.PlotController.EnableViewControl(!1);
     }
   }
 }
@@ -195,6 +200,9 @@ class PlotModel extends ModelBase_1.ModelBase {
       (this.InSeamlessFormation = !1),
       (this.IsTipsViewShowed = !1),
       (this.OptionEnable = !0),
+      (this.InDigitalScreen = !1),
+      (this.CanClick = !1),
+      (this.CanControlView = !1),
       (this.OnShowCenterTextFinished = () => {
         (this.PlayFlow = void 0),
           ModelManager_1.ModelManager.TeleportModel.CgTeleportCompleted &&
@@ -325,10 +333,10 @@ class PlotModel extends ModelBase_1.ModelBase {
         );
   }
   SetPendingPlotState(t, e, i, o) {
-    for (const s of this.PlotPendingList)
-      if (s.FlowIncId === t)
+    for (const r of this.PlotPendingList)
+      if (r.FlowIncId === t)
         return (
-          (s.IsBackground = i), (s.IsBreakdown = e), (s.IsServerEnd = o), !0
+          (r.IsBackground = i), (r.IsBreakdown = e), (r.IsServerEnd = o), !0
         );
     return !1;
   }
@@ -406,12 +414,8 @@ class PlotModel extends ModelBase_1.ModelBase {
   SetRender(t) {
     this.HasSetRender !== t &&
       ((this.HasSetRender = t)
-        ? GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-            .GetCurrentQualityInfo()
-            .SetSequenceFrameRateLimit()
-        : GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-            .GetCurrentQualityInfo()
-            .CancleSequenceFrameRateLimit());
+        ? GameSettingsDeviceRender_1.GameSettingsDeviceRender.SetSequenceFrameRateLimit()
+        : GameSettingsDeviceRender_1.GameSettingsDeviceRender.CancleSequenceFrameRateLimit());
   }
   SetInPlotGameBudget(t) {
     this.HasSetGameBudget !== t &&
@@ -466,7 +470,7 @@ class PlotModel extends ModelBase_1.ModelBase {
       Global_1.Global.BaseCharacter &&
       (t =
         Global_1.Global.BaseCharacter.CharacterActorComponent?.Entity.GetComponent(
-          33,
+          34,
         ))?.Valid &&
       t.StopAllSkills("PlotModel.StopMainCharacterSkill");
   }
@@ -497,7 +501,10 @@ class PlotModel extends ModelBase_1.ModelBase {
             CameraController_1.CameraController.ExitCameraMode(1, 0, 0, 0);
           break;
         case 3:
-          CameraController_1.CameraController.ExitDialogMode(),
+          CameraController_1.CameraController.SequenceCamera.PlayerComponent.GetIsInCinematic() &&
+            CameraController_1.CameraController.SequenceCamera.PlayerComponent.StopSequence(),
+            CameraController_1.CameraController.SequenceCamera.DisplayComponent.CineCamera.ResetSeqCineCamSetting(),
+            CameraController_1.CameraController.ExitDialogMode(),
             CameraController_1.CameraController.EnterCameraMode(1, 0, 0, 0);
       }
   }
@@ -544,9 +551,9 @@ class PlotModel extends ModelBase_1.ModelBase {
   }
   YYi(t, e) {
     let i = !0;
-    for (const s of t.PreCondition.PreOptions) {
+    for (const r of t.PreCondition.PreOptions) {
       var o = this.GrayOptionMap.get(e.Id);
-      i = i && !!o && o.has(s);
+      i = i && !!o && o.has(r);
     }
     return i;
   }
@@ -562,7 +569,7 @@ class PlotModel extends ModelBase_1.ModelBase {
     this.JYi() &&
       ((t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
       EntitySystem_1.EntitySystem.Get(t)
-        ?.GetComponent(188)
+        ?.GetComponent(190)
         ?.HasTag(-1150819426)) &&
       (this.GYi = !0);
   }

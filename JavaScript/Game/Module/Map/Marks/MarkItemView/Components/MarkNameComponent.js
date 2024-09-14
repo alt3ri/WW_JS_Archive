@@ -4,18 +4,18 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   MultiTextLang_1 = require("../../../../../../Core/Define/ConfigQuery/MultiTextLang"),
   StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
-  MarkComponent_1 = require("./MarkComponent");
-class MarkNameComponent extends MarkComponent_1.MarkComponent {
+  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
+class MarkNameComponent extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
   }
-  SetName(e, t, r, n) {
-    var i = this.GetText(0);
-    i &&
-      (n && i.SetFontSize(n),
-      (n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e)),
+  SetName(e, t, i, r) {
+    var n = this.GetText(0);
+    n &&
+      (r && n.SetFontSize(r),
+      (r = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e)),
       (e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t)),
-      i.SetText(StringUtils_1.StringUtils.Format(n, e, r)));
+      n.SetText(StringUtils_1.StringUtils.Format(r, e, i)));
   }
 }
 exports.MarkNameComponent = MarkNameComponent;

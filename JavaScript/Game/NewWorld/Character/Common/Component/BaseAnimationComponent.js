@@ -154,7 +154,7 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
       this.ActorComp?.Valid &&
       1 !== this.Mesh.AnimationMode &&
       this.ActorComp.CreatureData.GetEntityType() ===
-        Protocol_1.Aki.Protocol.wks.Proto_Npc
+        Protocol_1.Aki.Protocol.kks.Proto_Npc
     ) {
       var t = this.MainAnimInstance;
       if (t?.IsValid()) {
@@ -399,12 +399,7 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
             t,
           ]),
         !1)
-      : (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Character", 36, "动画优化强制关闭-开始", [
-            "reason",
-            t,
-          ]),
-        this.ForceDisableAnimOptimizationSet.add(t),
+      : (this.ForceDisableAnimOptimizationSet.add(t),
         this.RefreshAnimOptimization(),
         e &&
           TimerSystem_1.TimerSystem.Delay(() => {
@@ -414,12 +409,10 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
   }
   CancelForceDisableAnimOptimization(t) {
     this.ForceDisableAnimOptimizationSet.delete(t) &&
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Character", 36, "动画优化强制关闭-结束", ["reason", t]),
-      this.RefreshAnimOptimization());
+      this.RefreshAnimOptimization();
   }
   RefreshAnimOptimization() {
-    var t = this.Entity.GetComponent(160)?.IsInFighting ?? !1,
+    var t = this.Entity.GetComponent(161)?.IsInFighting ?? !1,
       e = 0 < this.ForceDisableAnimOptimizationSet.size,
       i = e || t,
       s = this.Actor.K2_GetComponentsByClass(
@@ -448,7 +441,7 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
   }
 };
 (BaseAnimationComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(36)],
+  [(0, RegisterComponent_1.RegisterComponent)(37)],
   BaseAnimationComponent,
 )),
   (exports.BaseAnimationComponent = BaseAnimationComponent);

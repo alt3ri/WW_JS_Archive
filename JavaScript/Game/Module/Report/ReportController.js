@@ -10,20 +10,20 @@ const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   ReportDefine_1 = require("./ReportDefine");
 class ReportController extends UiControllerBase_1.UiControllerBase {
   static ReportPlayerRequest(e, r, o, t = void 0) {
-    var l = new Protocol_1.Aki.Protocol.zXn(),
+    var l = new Protocol_1.Aki.Protocol.nYn(),
       r =
-        ((l.uHn = e.GetPlayerId()),
-        (l.cHn = r),
-        (l.mHn = o),
-        (l.dHn = e.GetSourceType()),
-        (l.CHn = t ?? { gHn: "" }),
-        new Protocol_1.Aki.Protocol.lNs());
-    (r.w8n = e.GetName()),
-      (r.HVn = e.GetSignature()),
-      (l.fHn = r),
+        ((l.MHn = e.GetPlayerId()),
+        (l.SHn = r),
+        (l.EHn = o),
+        (l.yHn = e.GetSourceType()),
+        (l.IHn = t ?? { THn: "" }),
+        new Protocol_1.Aki.Protocol.gNs());
+    (r.H8n = e.GetName()),
+      (r.zVn = e.GetSignature()),
+      (l.LHn = r),
       Net_1.Net.Call(
-        24112,
-        Protocol_1.Aki.Protocol.zXn.create(l),
+        25215,
+        Protocol_1.Aki.Protocol.nYn.create(l),
         this.ReportPlayerResponse,
       );
   }
@@ -38,10 +38,10 @@ class ReportController extends UiControllerBase_1.UiControllerBase {
   }
 }
 (exports.ReportController = ReportController).ReportPlayerResponse = (e) => {
-  e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+  e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
     ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-        e.O4n,
-        11805,
+        e.Q4n,
+        15740,
       )
     : (ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
         "ReportSuccess",

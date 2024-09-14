@@ -16,9 +16,16 @@ class CookFixTool {
   get Items() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.itemsLength(),
-      (t) => this.items(t)?.key(),
-      (t) => this.items(t)?.value(),
+      this.itemsKey,
+      this.itemsValue,
+      this,
     );
+  }
+  itemsKey(t) {
+    return this.items(t)?.key();
+  }
+  itemsValue(t) {
+    return this.items(t)?.value();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;

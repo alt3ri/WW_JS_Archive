@@ -73,7 +73,7 @@ let CharacterRoleTransitionComponent = class CharacterRoleTransitionComponent ex
     for (const r of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
       if (r?.IsInit) {
         var e = r.Entity.GetComponent(0);
-        if (e.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player) {
+        if (e.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player) {
           e =
             CharacterController_1.CharacterController.GetCharacterActorComponentById(
               r.Id,
@@ -102,7 +102,7 @@ let CharacterRoleTransitionComponent = class CharacterRoleTransitionComponent ex
   }
 };
 (CharacterRoleTransitionComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(65)],
+  [(0, RegisterComponent_1.RegisterComponent)(66)],
   CharacterRoleTransitionComponent,
 )),
   (exports.CharacterRoleTransitionComponent = CharacterRoleTransitionComponent);

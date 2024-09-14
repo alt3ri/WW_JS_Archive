@@ -21,27 +21,23 @@ class FlowActionChangeEntityState extends FlowActionBase_1.FlowActionBase {
         return;
     }
     o &&
-      WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
-        t.EntityId,
-        (e) => {
-          e
-            ? (LevelGeneralCommons_1.LevelGeneralCommons.PrechangeStateTag(
-                t.EntityId,
-                o,
-                "ShowInPlotSequence",
+      WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(t.EntityId, (e) => {
+        e
+          ? (LevelGeneralCommons_1.LevelGeneralCommons.PrechangeStateTag(
+              t.EntityId,
+              o,
+              "ShowInPlotSequence",
+            ),
+            this.FinishExecute(!0))
+          : (Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Level",
+                32,
+                "[ChangePerformanceTag] 等待Entity加载超时",
+                ["pbDataId", t.EntityId],
               ),
-              this.FinishExecute(!0))
-            : (Log_1.Log.CheckError() &&
-                Log_1.Log.Error(
-                  "Level",
-                  32,
-                  "[ChangePerformanceTag] 等待Entity加载超时",
-                  ["pbDataId", t.EntityId],
-                ),
-              this.FinishExecute(!1));
-        },
-        !0,
-      );
+            this.FinishExecute(!1));
+      });
   }
 }
 exports.FlowActionChangeEntityState = FlowActionChangeEntityState;

@@ -190,8 +190,8 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
             e.forEach((e) => {
               var t;
               0 < e.SelectedCount &&
-                (((t = new RoleDefine_1.ArrayIntInt()).j4n = e.ItemId),
-                (t.W4n = e.SelectedCount),
+                (((t = new RoleDefine_1.ArrayIntInt()).Z4n = e.ItemId),
+                (t.e5n = e.SelectedCount),
                 o.push(t));
             });
             var i,

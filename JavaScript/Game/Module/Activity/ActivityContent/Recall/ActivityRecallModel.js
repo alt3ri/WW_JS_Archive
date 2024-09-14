@@ -3,54 +3,30 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRecallModel = void 0);
 const Log_1 = require("../../../../../Core/Common/Log"),
   ModelBase_1 = require("../../../../../Core/Framework/ModelBase"),
-  LocalStorage_1 = require("../../../../Common/LocalStorage"),
-  LocalStorageDefine_1 = require("../../../../Common/LocalStorageDefine"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   UiManager_1 = require("../../../../Ui/UiManager");
 class ActivityRecallModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.$1a = 0), (this.vda = void 0), (this.OCa = !1);
+    super(...arguments), (this.nda = 0), (this.wfa = !1);
   }
   get ActivityId() {
-    return this.$1a;
+    return this.nda;
   }
   set ActivityId(e) {
-    this.$1a = e;
-  }
-  get ActivityRecallFirstShow() {
-    var e;
-    return (
-      void 0 === this.vda &&
-        ((e = LocalStorage_1.LocalStorage.GetPlayer(
-          LocalStorageDefine_1.ELocalStoragePlayerKey
-            .ActivityRecallWatchFirstShow,
-          !0,
-        )),
-        (this.vda = e)),
-      this.vda
-    );
-  }
-  set ActivityRecallFirstShow(e) {
-    this.vda !== e &&
-      (LocalStorage_1.LocalStorage.SetPlayer(
-        LocalStorageDefine_1.ELocalStoragePlayerKey
-          .ActivityRecallWatchFirstShow,
-        e,
-      ),
-      (this.vda = e));
+    this.nda = e;
   }
   get ActivityRecallForbidStart() {
-    return this.OCa;
+    return this.wfa;
   }
   set ActivityRecallForbidStart(e) {
-    this.OCa !== e &&
+    this.wfa !== e &&
       e &&
       UiManager_1.UiManager.IsViewOpen("ActivityRecallStartView") &&
       UiManager_1.UiManager.CloseView("ActivityRecallStartView"),
-      (this.OCa = e);
+      (this.wfa = e);
   }
   OnClear() {
-    return (this.$1a = 0), !(this.OCa = !1);
+    return (this.nda = 0), !(this.wfa = !1);
   }
   GetSignRewardLocalTextKeyByState(e) {
     switch (e) {
@@ -196,11 +172,14 @@ class ActivityRecallModel extends ModelBase_1.ModelBase {
       e,
     );
   }
+  GetRecallBaseConfigNewestList(e) {
+    let t = this.GetRecallBaseConfigsByEntryType(e).filter(
+      (e) => e.ShowCondition,
+    );
+    return t.sort((e, t) => t.Id - e.Id), (t = t.slice(0, 3));
+  }
   GetRecallRoleBaseConfigByEntryType() {
-    var e =
-      ConfigManager_1.ConfigManager.ActivityRecallConfig.GetRecallBaseConfigListByType(
-        3,
-      );
+    var e = this.GetRecallBaseConfigNewestList(3);
     return [e[0], e[1]];
   }
   GetRecallBaseRewardPreviewItemInfoList(e) {

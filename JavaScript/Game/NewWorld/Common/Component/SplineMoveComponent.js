@@ -129,11 +129,11 @@ let SplineMoveComponent =
         (this.Hte = this.Entity.GetComponent(1)),
         (0, RegisterComponent_1.isComponentInstance)(this.Hte, 3) &&
           (this.isn = this.Hte),
-        (this.Gce = this.Entity.GetComponent(163)),
-        (this.oRe = this.Entity.GetComponent(162)),
-        (this.rJo = this.Entity.GetComponent(160)),
-        (this.Lie = this.Entity.GetComponent(188)),
-        (this.osn = this.Entity.GetComponent(158)),
+        (this.Gce = this.Entity.GetComponent(164)),
+        (this.oRe = this.Entity.GetComponent(163)),
+        (this.rJo = this.Entity.GetComponent(161)),
+        (this.Lie = this.Entity.GetComponent(190)),
+        (this.osn = this.Entity.GetComponent(159)),
         !0
       );
     }
@@ -386,7 +386,7 @@ let SplineMoveComponent =
         ),
         this.Lie?.AddTag(-451106150),
         this.osn?.SetBaseValue(
-          Protocol_1.Aki.Protocol.Bks.Proto_Jump,
+          Protocol_1.Aki.Protocol.Vks.Proto_Jump,
           CharacterAttributeTypes_1.PER_TEN_THOUSAND *
             SplineMoveComponent_1.SplineMoveConfig.JumpHeightRate,
         ),
@@ -448,7 +448,7 @@ let SplineMoveComponent =
               this.Gce?.ResetOverrideMaxFallingSpeed(),
               this.Lie?.RemoveTag(-451106150),
               this.osn?.SetBaseValue(
-                Protocol_1.Aki.Protocol.Bks.Proto_Jump,
+                Protocol_1.Aki.Protocol.Vks.Proto_Jump,
                 CharacterAttributeTypes_1.PER_TEN_THOUSAND,
               ),
               (t = this.oRe?.MainAnimInstance),
@@ -464,7 +464,7 @@ let SplineMoveComponent =
   (SplineMoveComponent.msn = void 0),
   (SplineMoveComponent = SplineMoveComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(97)],
+      [(0, RegisterComponent_1.RegisterComponent)(98)],
       SplineMoveComponent,
     )),
   (exports.SplineMoveComponent = SplineMoveComponent);

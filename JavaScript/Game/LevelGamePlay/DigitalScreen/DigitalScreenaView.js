@@ -5,6 +5,7 @@ const puerts_1 = require("puerts"),
   UE = require("ue"),
   AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   LevelSequencePlayer_1 = require("../../Module/Common/LevelSequencePlayer"),
@@ -18,21 +19,23 @@ class DigitalScreenaView extends UiTickViewBase_1.UiTickViewBase {
       (this.XYt = void 0),
       (this.wZi = 0),
       (this.BZi = 1),
-      (this.Vda = 1),
+      (this.Lga = 1),
       (this.v6t = ""),
       (this.E6t = ""),
-      (this.Bga = 0),
-      (this.bga = ""),
-      (this.qga = ""),
-      (this.Gga = ""),
-      (this.Oga = ""),
+      (this.Rpa = 0),
+      (this.Apa = ""),
+      (this.Upa = ""),
+      (this.xpa = ""),
+      (this.Ppa = ""),
       (this.HFo = !1),
-      (this.kga = !1),
+      (this.wpa = !1),
       (this.xXt = 0),
-      (this.Nga = 0),
-      (this.Fga = ""),
-      (this.Vga = 0),
-      (this.LevelSequencePlayer = void 0);
+      (this.Bpa = 0),
+      (this.bpa = ""),
+      (this.qpa = 0),
+      (this.LevelSequencePlayer = void 0),
+      (this.N8a = void 0),
+      (this.F8a = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -43,7 +46,8 @@ class DigitalScreenaView extends UiTickViewBase_1.UiTickViewBase {
     ];
   }
   OnStart() {
-    this.Hga(),
+    (ModelManager_1.ModelManager.PlotModel.InDigitalScreen = !0),
+      this.Gpa(),
       AudioSystem_1.AudioSystem.PostEvent(LOOP_DIGITAL_SCREEN),
       (this.LevelSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.RootItem,
@@ -51,11 +55,11 @@ class DigitalScreenaView extends UiTickViewBase_1.UiTickViewBase {
       (this.XYt = this.GetText(2)
         .GetOwner()
         .GetComponentByClass(UE.LGUIPlayTweenComponent.StaticClass())),
-      this.LevelSequencePlayer.PlayLevelSequenceByName("Start", !0),
-      this.LevelSequencePlayer.PlayLevelSequenceByName("Loop", !0),
+      this.LevelSequencePlayer.PlayLevelSequenceByName("Start"),
+      this.LevelSequencePlayer.PlayLevelSequenceByName("Loop"),
       0 === ModelManager_1.ModelManager.DigitalScreenModel?.StartTimes[0]
         ? this.YZi()
-        : TimerSystem_1.TimerSystem.Delay(
+        : (this.F8a = TimerSystem_1.TimerSystem.Delay(
             () => {
               this.YZi();
             },
@@ -63,17 +67,29 @@ class DigitalScreenaView extends UiTickViewBase_1.UiTickViewBase {
               ModelManager_1.ModelManager.DigitalScreenModel?.StartTimes[0] ??
                 1,
             ),
-          ),
-      TimerSystem_1.TimerSystem.Delay(
+          )),
+      (this.N8a = TimerSystem_1.TimerSystem.Delay(
         () => {
-          AudioSystem_1.AudioSystem.ExecuteAction(LOOP_DIGITAL_SCREEN, 0),
-            this.LevelSequencePlayer.PlayLevelSequenceByName("Close", !0),
-            this.CloseMe();
+          this.CloseMe();
         },
         TimeUtil_1.TimeUtil.SetTimeMillisecond(
           ModelManager_1.ModelManager.DigitalScreenModel?.ExistTime ?? 1,
         ),
-      );
+      ));
+  }
+  OnBeforeHide() {
+    (ModelManager_1.ModelManager.PlotModel.InDigitalScreen = !1),
+      this.LevelSequencePlayer.PlayLevelSequenceByName("Close"),
+      AudioSystem_1.AudioSystem.ExecuteAction(LOOP_DIGITAL_SCREEN, 0),
+      this.Ufa();
+  }
+  Ufa() {
+    this.N8a &&
+      TimerSystem_1.TimerSystem.Has(this.N8a) &&
+      TimerSystem_1.TimerSystem.Remove(this.N8a),
+      this.F8a &&
+        TimerSystem_1.TimerSystem.Has(this.F8a) &&
+        TimerSystem_1.TimerSystem.Remove(this.F8a);
   }
   OnTick(i) {
     if (this.HFo) {
@@ -87,57 +103,59 @@ class DigitalScreenaView extends UiTickViewBase_1.UiTickViewBase {
             this.xXt < i &&
               ((this.xXt = i),
               (i =
-                this.Fga +
+                this.bpa +
                 ModelManager_1.ModelManager.DigitalScreenModel?.Text?.substring(
-                  this.Nga,
+                  this.Bpa,
                   this.xXt,
                 ) +
                 FONTSUFFIX),
               (t =
-                this.Fga +
+                this.bpa +
                 ModelManager_1.ModelManager.DigitalScreenModel?.Text?.substring(
-                  this.Nga,
+                  this.Bpa,
                   this.xXt,
                 ) +
                 "_" +
                 FONTSUFFIX),
-              1 === this.Bga
-                ? ((this.bga = this.v6t + t),
-                  (this.qga = this.v6t + i),
-                  this.GetText(1)?.SetText(this.bga))
-                : 0 === this.Bga &&
-                  ((this.Gga = this.E6t + t),
-                  (this.Oga = this.E6t + i),
-                  this.GetText(2)?.SetText(this.Gga)));
+              1 === this.Rpa
+                ? ((this.Apa = this.v6t + t),
+                  (this.Upa = this.v6t + i),
+                  this.GetText(1)?.SetText(this.Apa))
+                : 0 === this.Rpa &&
+                  ((this.xpa = this.E6t + t),
+                  (this.Ppa = this.E6t + i),
+                  this.GetText(2)?.SetText(this.xpa)));
           }),
         );
     } else
-      (this.Vga += i),
-        300 <= this.Vga &&
-          (0 === this.Bga
-            ? this.kga
-              ? (this.GetText(1)?.SetText(this.qga), (this.kga = !1))
-              : (this.GetText(1)?.SetText(this.bga), (this.kga = !0))
-            : 1 === this.Bga &&
-              (this.kga
-                ? (this.GetText(2)?.SetText(this.Oga), (this.kga = !1))
-                : (this.GetText(2)?.SetText(this.Gga), (this.kga = !0))),
-          (this.Vga = 0));
+      (this.qpa += i),
+        300 <= this.qpa &&
+          (0 === this.Rpa
+            ? this.wpa
+              ? (this.GetText(1)?.SetText(this.Upa), (this.wpa = !1))
+              : (this.GetText(1)?.SetText(this.Apa), (this.wpa = !0))
+            : 1 === this.Rpa &&
+              (this.wpa
+                ? (this.GetText(2)?.SetText(this.Ppa), (this.wpa = !1))
+                : (this.GetText(2)?.SetText(this.xpa), (this.wpa = !0))),
+          (this.qpa = 0));
   }
-  Hga() {
+  Gpa() {
     (this.wZi = -1),
       (this.BZi =
         ModelManager_1.ModelManager.DigitalScreenModel?.StartTimes.length ?? 1),
-      void (this.Vda = 0) !==
-        ModelManager_1.ModelManager.DigitalScreenModel?.BackgroundPicture &&
+      (this.Lga = 0),
+      StringUtils_1.StringUtils.IsBlank(
+        ModelManager_1.ModelManager.DigitalScreenModel.BackgroundPicture,
+      ) ||
         this.SetTextureByPath(
-          ModelManager_1.ModelManager.DigitalScreenModel?.BackgroundPicture,
+          ModelManager_1.ModelManager.DigitalScreenModel.BackgroundPicture,
           this.GetTexture(3),
         ),
-      (this.qga = ""),
-      (this.bga = "_"),
-      (this.Oga = ""),
-      (this.Gga = "_"),
+      (this.Upa = ""),
+      (this.Apa = "_"),
+      (this.Ppa = ""),
+      (this.xpa = "_"),
       this.GetText(2)?.SetText(""),
       this.GetText(1)?.SetText(""),
       this.GetText(2)?.SetCustomMaterialScalarParameter(
@@ -156,11 +174,11 @@ class DigitalScreenaView extends UiTickViewBase_1.UiTickViewBase {
       (h.duration = e),
       (h.startDelay = s),
       this.XYt.Play(),
-      (this.Vda = t),
+      (this.Lga = t),
       (this.HFo = !0);
   }
   oeo() {
-    TimerSystem_1.TimerSystem.Delay(
+    this.F8a = TimerSystem_1.TimerSystem.Delay(
       () => {
         this.reo();
       },
@@ -175,7 +193,7 @@ class DigitalScreenaView extends UiTickViewBase_1.UiTickViewBase {
       ((this.HFo = !1),
       0 === ModelManager_1.ModelManager.DigitalScreenModel?.DelayTimes[this.wZi]
         ? this.YZi()
-        : TimerSystem_1.TimerSystem.Delay(
+        : (this.F8a = TimerSystem_1.TimerSystem.Delay(
             () => {
               this.YZi();
             },
@@ -184,29 +202,29 @@ class DigitalScreenaView extends UiTickViewBase_1.UiTickViewBase {
                 this.wZi
               ] ?? 1,
             ),
-          ));
+          )));
   }
   YZi() {
-    this.GetText(1)?.SetText(this.qga),
-      this.GetText(2)?.SetText(this.Oga),
+    this.GetText(1)?.SetText(this.Upa),
+      this.GetText(2)?.SetText(this.Ppa),
       (this.wZi = this.wZi + 1),
-      (this.Bga =
+      (this.Rpa =
         0 ===
         ModelManager_1.ModelManager.DigitalScreenModel.ContentPos[this.wZi]
           ? 0
           : 1),
-      (this.Nga = this.xXt),
-      (this.v6t = this.qga),
-      (this.E6t = this.Oga),
-      (this.Fga =
+      (this.Bpa = this.xXt),
+      (this.v6t = this.Upa),
+      (this.E6t = this.Ppa),
+      (this.bpa =
         "<size=" +
         ModelManager_1.ModelManager.DigitalScreenModel.Font[
           this.wZi
         ].toString() +
         ">"),
       this.VZi(
-        this.Vda,
-        this.Vda +
+        this.Lga,
+        this.Lga +
           ModelManager_1.ModelManager.DigitalScreenModel.TextLength[this.wZi] ??
           1,
         ModelManager_1.ModelManager.DigitalScreenModel?.DuringTimes[this.wZi] ??

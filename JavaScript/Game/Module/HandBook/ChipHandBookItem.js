@@ -10,8 +10,8 @@ const UE = require("ue"),
 class ChipHandBookItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.YQn = void 0),
-      (this.JQn = void 0),
+      (this.nXn = void 0),
+      (this.sXn = void 0),
       (this.GZt = void 0),
       (this.FZt = void 0);
   }
@@ -19,19 +19,19 @@ class ChipHandBookItem extends UiPanelBase_1.UiPanelBase {
     await super.CreateByActorAsync(t.GetOwner(), void 0, !0), await this.WZt();
   }
   async WZt() {
-    (this.YQn = new HandBookChipToggleItem()),
-      this.AddChild(this.YQn),
-      (this.JQn = new HandBookChipDesItem()),
-      this.AddChild(this.JQn);
+    (this.nXn = new HandBookChipToggleItem()),
+      this.AddChild(this.nXn),
+      (this.sXn = new HandBookChipDesItem()),
+      this.AddChild(this.sXn);
     var t = this.GetItem(0),
       i = (t.SetUIActive(!1), this.GetItem(1));
     i.SetUIActive(!1),
       await Promise.all([
-        this.YQn.CreateByActorAsync(t.GetOwner()),
-        this.JQn.CreateByActorAsync(i.GetOwner()),
+        this.nXn.CreateByActorAsync(t.GetOwner()),
+        this.sXn.CreateByActorAsync(i.GetOwner()),
       ]),
-      this.YQn.BindToggleCallback(this.GZt),
-      this.JQn.BindChildToggleCallback(this.FZt);
+      this.nXn.BindToggleCallback(this.GZt),
+      this.sXn.BindChildToggleCallback(this.FZt);
   }
   GetUsingItem(t) {
     return (
@@ -48,17 +48,17 @@ class ChipHandBookItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Update(t, i) {
-    this.JQn?.SetUiActive(!1),
-      this.YQn?.SetUiActive(!1),
+    this.sXn?.SetUiActive(!1),
+      this.nXn?.SetUiActive(!1),
       t.HandBookChipConfigId
-        ? (this.JQn?.SetUiActive(!0),
-          this.JQn?.Refresh(t.HandBookChipConfigId, t.IsShowContent))
+        ? (this.sXn?.SetUiActive(!0),
+          this.sXn?.Refresh(t.HandBookChipConfigId, t.IsShowContent))
         : t.HandBookCommonItemData &&
-          (this.YQn?.SetUiActive(!0),
-          this.YQn?.Refresh(t.HandBookCommonItemData, t.IsShowContent));
+          (this.nXn?.SetUiActive(!0),
+          this.nXn?.Refresh(t.HandBookCommonItemData, t.IsShowContent));
   }
   RefreshNewState() {
-    this.YQn?.RefreshNewState(), this.JQn?.RefreshNewState();
+    this.nXn?.RefreshNewState(), this.sXn?.RefreshNewState();
   }
   BindChildToggleCallback(t) {
     this.FZt = t;
@@ -175,11 +175,11 @@ class HandBookChipDesItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.FZt = void 0),
-      (this.zQn = void 0),
+      (this.aXn = void 0),
       (this.Rjt = !1),
       (this.H5e = void 0),
       (this.OZt = (t) => {
-        this.FZt && 1 === t && this.FZt(this.zQn, this.H5e);
+        this.FZt && 1 === t && this.FZt(this.aXn, this.H5e);
       });
   }
   OnRegisterComponent() {
@@ -200,7 +200,7 @@ class HandBookChipDesItem extends UiPanelBase_1.UiPanelBase {
     var t =
         ConfigManager_1.ConfigManager.HandBookConfig.GetChipHandBookConfig(t),
       s =
-        ((this.zQn = t),
+        ((this.aXn = t),
         ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(6, t.Id)),
       t =
         ((this.Rjt = void 0 === s),
@@ -228,12 +228,12 @@ class HandBookChipDesItem extends UiPanelBase_1.UiPanelBase {
   }
   RefreshNewState() {
     var t;
-    this.zQn &&
+    this.aXn &&
       ((t =
         void 0 !==
           (t = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
             6,
-            this.zQn.Id,
+            this.aXn.Id,
           )) && !t.IsRead),
       this.GetItem(4).SetUIActive(t));
   }

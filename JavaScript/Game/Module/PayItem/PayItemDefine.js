@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const PayItem_1 = require("../../../Core/Define/Config/PayItem"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  PlatformSdkManagerNew_1 = require("../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   PayShopItemBase_1 = require("../PayShop/PayShopTab/TabItem/PayShopItemBase");
@@ -22,22 +23,22 @@ class PayItemData {
       (this.StageImage = "");
   }
   Phrase(t) {
-    (this.$Oi = t.Zbs ?? 0),
-      (this.Amount = t.k6n),
-      (this.ProductId = t.oBs),
-      (this.PayItemId = t.J4n ?? 0),
-      (this.ItemId = t.f8n ?? 0),
-      (this.ItemCount = t.YVn ?? 0),
-      (this.BonusItemCount = t.eBs ?? 0),
-      (this.SpecialBonusItemCount = t.tBs ?? 0),
-      (this.StageImage = t.rBs ?? ""),
+    (this.$Oi = t.sBs ?? 0),
+      (this.Amount = t.$6n),
+      (this.ProductId = t.uBs),
+      (this.PayItemId = t.s5n ?? 0),
+      (this.ItemId = t.L8n ?? 0),
+      (this.ItemCount = t.n9n ?? 0),
+      (this.BonusItemCount = t.aBs ?? 0),
+      (this.SpecialBonusItemCount = t.hBs ?? 0),
+      (this.StageImage = t._Bs ?? ""),
       ModelManager_1.ModelManager.RechargeModel.SetRechargeInfo(
         this.$Oi,
         this.Amount.toString(),
         this.ProductId,
       ),
       t instanceof PayItem_1.PayItem ||
-        (this.CanSpecialBonus = t.iBs ?? void 0),
+        (this.CanSpecialBonus = t.lBs ?? void 0),
       (this.XOi = new PayShopItemBase_1.PayShopItemBaseSt()),
       this.XOi.PhrasePromPayItemData(this);
   }
@@ -64,6 +65,23 @@ class PayItemData {
     return (
       t || ConfigManager_1.ConfigManager.PayItemConfig.GetPayShow(this.$Oi)
     );
+  }
+  GetIfCanShow() {
+    if (
+      !ConfigManager_1.ConfigManager.PayItemConfig.GetPayItem(this.PayItemId)
+        .IsDisplay
+    )
+      return !1;
+    var t =
+      PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedConfirmSdkProductInfo();
+    if (
+      t &&
+      !ModelManager_1.ModelManager.PayItemModel.GetProductInfoByGoodsId(
+        this.ProductId,
+      )
+    )
+      return !1;
+    return !0;
   }
 }
 exports.PayItemData = PayItemData;

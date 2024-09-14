@@ -49,7 +49,7 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
           this.CloseMe());
       }),
       (this.Dwe = (t, i) => {
-        i === Protocol_1.Aki.Protocol.O4n.Proto_ErrTimelineMove
+        i === Protocol_1.Aki.Protocol.Q4n.Proto_ErrTimelineMove
           ? this.Rwe()
           : this.dwe !== t &&
             (this.uwe && this.uwe[this.dwe].ToggleSelected(!1),

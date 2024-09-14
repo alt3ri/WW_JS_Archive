@@ -26,6 +26,11 @@ class EventDispatcher {
   HasReg(e, t) {
     return !!this.me.get(e)?.has(t);
   }
+  DelayDispatch(e, ...t) {
+    setTimeout(() => {
+      this.Dispatch(e, ...t);
+    }, 0);
+  }
   Dispatch(e, ...t) {
     e = this.me.get(e);
     e &&
@@ -48,6 +53,7 @@ const editorEventDefine = {
   ClearSelectableGridFocus: (e) => {},
   LoadUseCase: (e, t) => {},
   EditorPortAllInUse: () => {},
+  VarTypeChanged: (e, t) => {},
 };
 class EditorEventDispatcher extends EventDispatcher {}
 exports.EditorEventDispatcher = EditorEventDispatcher;

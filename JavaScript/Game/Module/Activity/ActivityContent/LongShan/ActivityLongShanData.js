@@ -19,7 +19,7 @@ class ActivityLongShanData extends ActivityData_1.ActivityBaseData {
       this.Id,
     )) {
       this.StageIds.push(n.Id);
-      var t = e.Nps?.lMs?.find((e) => e.J4n === n.Id);
+      var t = e.Kps?.gMs?.find((e) => e.s5n === n.Id);
       t &&
         ((t = new LongShanStageInfo_1.LongShanStageInfo(t)),
         this.ROe.set(n.Id, t));
@@ -27,10 +27,10 @@ class ActivityLongShanData extends ActivityData_1.ActivityBaseData {
   }
   UpdateStage(e) {
     for (const r of e) {
-      var t = r.J4n,
+      var t = r.s5n,
         n = this.ROe.get(t),
         a = new LongShanStageInfo_1.LongShanStageInfo(r);
-      this.ROe.set(r.J4n, a), n && this.OnStageInfoChange(t, n, a);
+      this.ROe.set(r.s5n, a), n && this.OnStageInfoChange(t, n, a);
     }
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.LongShanUpdate),
       EventSystem_1.EventSystem.Emit(
@@ -45,8 +45,8 @@ class ActivityLongShanData extends ActivityData_1.ActivityBaseData {
     }
   }
   OnStageTaskInfoChange(e, t, n) {
-    !t.sMs &&
-      n.sMs &&
+    !t.dMs &&
+      n.dMs &&
       0 < (t = LongShanTaskById_1.configLongShanTaskById.GetConfig(e).JumpId) &&
       8 ===
         (n =
@@ -69,13 +69,13 @@ class ActivityLongShanData extends ActivityData_1.ActivityBaseData {
     var t,
       e = this.GetStageInfoById(e);
     return e
-      ? ((t = e.nMs.filter((e) => e.aMs).length),
-        Math.ceil((t / e.nMs.length) * 100))
+      ? ((t = e.cMs.filter((e) => e.mMs).length),
+        Math.ceil((t / e.cMs.length) * 100))
       : 0;
   }
   CheckStageRed(e) {
     e = this.GetStageInfoById(e);
-    return !!e && 0 <= e.nMs.findIndex((e) => e.sMs && !e.aMs);
+    return !!e && 0 <= e.cMs.findIndex((e) => e.dMs && !e.mMs);
   }
   CheckAnyStageRed() {
     if (this.StageIds)

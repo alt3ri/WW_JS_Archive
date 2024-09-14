@@ -1,12 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.CreatureModel = void 0);
+  (exports.CreatureModel =
+    exports.globalEntityTypePerceptionType =
+    exports.globalEntityTypeQueryName =
+      void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   Info_1 = require("../../../Core/Common/Info"),
   Json_1 = require("../../../Core/Common/Json"),
   Log_1 = require("../../../Core/Common/Log"),
-  Time_1 = require("../../../Core/Common/Time"),
   BlueprintConfigByBlueprintType_1 = require("../../../Core/Define/ConfigQuery/BlueprintConfigByBlueprintType"),
   LevelEntityConfigByBlueprintType_1 = require("../../../Core/Define/ConfigQuery/LevelEntityConfigByBlueprintType"),
   LevelEntityConfigByMapIdAndEntityId_1 = require("../../../Core/Define/ConfigQuery/LevelEntityConfigByMapIdAndEntityId"),
@@ -14,7 +16,6 @@ const puerts_1 = require("puerts"),
   TemplateConfigByBlueprintType_1 = require("../../../Core/Define/ConfigQuery/TemplateConfigByBlueprintType"),
   TemplateConfigById_1 = require("../../../Core/Define/ConfigQuery/TemplateConfigById"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
-  EntityHelper_1 = require("../../../Core/Entity/EntityHelper"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
@@ -29,10 +30,20 @@ const puerts_1 = require("puerts"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  SeamlessTravelController_1 = require("../../Module/SeamlessTravel/SeamlessTravelController"),
   CreatureDensityContainer_1 = require("../Define/CreatureDensityContainer"),
   EntityContainer_1 = require("../Define/EntityContainer"),
   zero = 0n,
   ONE_HUNDRED = 100;
+(exports.globalEntityTypeQueryName = [
+  "NormalEntity",
+  "SimpleNpcEntity",
+  "NormalNpcEntity",
+  "CharacterEntity",
+  "BossEntity",
+  "PlayerAlwaysTickGroup",
+]),
+  (exports.globalEntityTypePerceptionType = [1, 2, 2, 2, 2, 4]);
 class CreatureModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -46,7 +57,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
       (this.hPr = new EntityContainer_1.EntityContainer()),
       (this.mMr = new Map()),
       (this.dMr = new Map()),
-      (this.Oca = new Map()),
+      (this.kCa = new Map()),
       (this.CMr = !1),
       (this.RemoveCreaturePendingSet = new Set()),
       (this.gMr = void 0),
@@ -58,13 +69,12 @@ class CreatureModel extends ModelBase_1.ModelBase {
       (this.SMr = void 0),
       (this.DelayRemoveContainer = new EntityContainer_1.EntityContainer()),
       (this.lPr = new EntityContainer_1.EntityContainer()),
-      (this.QQs = new CreatureDensityContainer_1.CreatureDensityContainer()),
+      (this.uYs = new CreatureDensityContainer_1.CreatureDensityContainer()),
       (this.TMr = new Set()),
       (this.LMr = !1),
       (this.DMr = void 0),
       (this.RMr = new Map()),
       (this.UMr = void 0),
-      (this.EntityDisableHandleMap = new Map()),
       (this.ActorMovableHandleMap = new Map()),
       (this.DisableLock = new Set()),
       (this.EntitiesSortedList = []),
@@ -72,6 +82,9 @@ class CreatureModel extends ModelBase_1.ModelBase {
       (this.AMr = () => {
         for (const t of this.GetAllEntities())
           this.dMr.has(t.Id) ||
+            SeamlessTravelController_1.SeamlessTravelController.WasRoleEntityInSeamlessTraveling(
+              t.Entity,
+            ) ||
             this.dMr.set(
               t.Id,
               t.Entity.Disable("[CharacterModel.OnLoadMap] Loading"),
@@ -93,13 +106,13 @@ class CreatureModel extends ModelBase_1.ModelBase {
             (Global_1.Global.BaseCharacter?.IsValid() &&
               Global_1.Global.BaseCharacter.EntityId === i.Id) ||
               i.Entity.GetComponent(0).GetEntityType() ===
-                Protocol_1.Aki.Protocol.wks.Proto_SceneItem ||
+                Protocol_1.Aki.Protocol.kks.Proto_SceneItem ||
               this.dMr.has(i.Id) ||
-              this.Oca.has(i.Id) ||
+              this.kCa.has(i.Id) ||
               (i.IsInit
-                ? (e = i.Entity.GetComponent(98)) &&
+                ? (e = i.Entity.GetComponent(99)) &&
                   ((e = e.DisableTickWithLog("CreatureModel.OnTeleportStart")),
-                  this.Oca.set(i.Id, e))
+                  this.kCa.set(i.Id, e))
                 : this.dMr.set(
                     i.Id,
                     i.Entity.Disable("CreatureModel.OnTeleportStart"),
@@ -115,15 +128,15 @@ class CreatureModel extends ModelBase_1.ModelBase {
             t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(t);
             t?.Valid && t.Entity.Enable(e, "CreatureModel.OnTeleportComplete");
           }
-          for (var [i, r] of this.Oca) {
+          for (var [i, r] of this.kCa) {
             i = ModelManager_1.ModelManager.CreatureModel.GetEntityById(i);
             i?.Valid &&
-              i.Entity.GetComponent(98).EnableTickWithLog(
+              i.Entity.GetComponent(99).EnableTickWithLog(
                 r,
                 "CreatureModel.OnTeleportComplete",
               );
           }
-          this.dMr.clear(), this.Oca.clear();
+          this.dMr.clear(), this.kCa.clear();
         }
       });
   }
@@ -154,6 +167,10 @@ class CreatureModel extends ModelBase_1.ModelBase {
         EventDefine_1.EEventName.TeleportComplete,
         this.Ilt,
       ),
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "a.UseDelayAnim True",
+      ),
       !0
     );
   }
@@ -180,7 +197,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
   }
   AddEntity(t, e) {
     this.hPr.AddEntity(t, e);
-    t = this.QQs.GetItem(t);
+    t = this.uYs.GetItem(t);
     t && (t.EntityHandle = e);
   }
   AddLoadingEntity(t) {
@@ -207,88 +224,19 @@ class CreatureModel extends ModelBase_1.ModelBase {
             ["Reason", e],
             ["Result", i],
           ),
-        this.QQs.GetItem(t));
+        this.uYs.GetItem(t));
     return e && (e.EntityHandle = void 0), i;
   }
   GetAllEntities() {
     return this.hPr.GetAllEntities();
   }
-  PMr(i, r, n) {
-    if (!(i.length < 1) && r < n) {
-      var o = i[Math.floor((r + n) / 2)];
-      let t = r,
-        e = n;
-      for (var a; t <= e; ) {
-        for (; i[t].Entity.DistanceWithCamera < o.Entity.DistanceWithCamera; )
-          t++;
-        for (; i[e].Entity.DistanceWithCamera > o.Entity.DistanceWithCamera; )
-          e--;
-        t <= e && ((a = i[t]), (i[t] = i[e]), (i[e] = a), t++, e--);
-      }
-      this.PMr(i, r, e), this.PMr(i, t, n);
-    }
-  }
   GetEntitiesInRange(t, e, i, r = !0) {
-    if (EntityHelper_1.EntitySystemHelper.IsFilterDirty) {
-      EntityHelper_1.EntitySystemHelper.IsFilterDirty = !1;
-      let e = 0;
-      for (let t = 0; t < this.EntitiesSortedList.length; t++) {
-        var n = this.EntitiesSortedList[t];
-        n.Valid && !n.Entity
-          ? Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "Entity",
-              3,
-              "EntityHandle的Valid为true,但Entity为undefined，逻辑存在严重漏洞",
-              ["EntityId", n.Id],
-            )
-          : n.Valid &&
-            !n.Entity.GetComponent(0).GetRemoveState() &&
-            (this.EntitiesSortedList[e++] = this.EntitiesSortedList[t]);
-      }
-      this.EntitiesSortedList.length = e;
-    }
-    EntityHelper_1.EntitySystemHelper.IsSortDirty &&
-      EntityHelper_1.EntitySystemHelper.SortedFrame !== Time_1.Time.Frame &&
-      ((EntityHelper_1.EntitySystemHelper.IsSortDirty = !1),
-      this.PMr(this.EntitiesSortedList, 0, this.EntitiesSortedList.length - 1),
-      (EntityHelper_1.EntitySystemHelper.SortedFrame = Time_1.Time.Frame));
-    let o = 0,
-      a = this.EntitiesSortedList.length - 1;
-    var s;
-    for (o; o <= a; ) {
-      var l = Math.floor((o + a) / 2);
-      this.EntitiesSortedList[l].Entity.DistanceWithCamera <= t
-        ? (o = l + 1)
-        : (a = l - 1);
-    }
-    for (s = o, o = 0, a = s - 1; o <= a; ) {
-      var h = Math.floor((o + a) / 2);
-      this.EntitiesSortedList[h].Entity.DistanceWithCamera < 0
-        ? (o = h + 1)
-        : (a = h - 1);
-    }
-    var u = o,
-      _ = (r && (i.length = 0), void 0),
-      d = void 0;
-    for (let t = u; t < s; t++)
-      if ((_ = (d = this.EntitiesSortedList[t]).Entity.GetComponent(0)))
-        switch (e) {
-          case 0:
-            i.push(d);
-            break;
-          case 2:
-            _.IsCharacter() && i.push(d);
-            break;
-          case 1:
-            _.IsSceneItem() && i.push(d);
-            break;
-          case 3:
-            (_.IsCharacter() || _.IsSceneItem()) && i.push(d);
-            break;
-          case 4:
-            _.IsCustom() && i.push(d);
-        }
+    ControllerHolder_1.ControllerHolder.WorldController.GetEntitiesInRange(
+      t,
+      e,
+      i,
+      r,
+    );
   }
   GetEntitiesInRangeWithLocation(t, e, i, r, n = !0) {
     ControllerHolder_1.ControllerHolder.WorldController.GetEntitiesInRangeWithLocation(
@@ -355,7 +303,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
       this.TMr.clear(),
       this.RMr.clear(),
       this.hPr.Clear(),
-      this.QQs.Clear(),
+      this.uYs.Clear(),
       (this.gMr = void 0),
       (this.fMr = void 0),
       !(this.pMr = void 0)
@@ -510,7 +458,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
       }
     }
   }
-  wMr(e = !1) {
+  InitEntityTemplateMap(e = !1) {
     if (e || !PublicUtil_1.PublicUtil.UseDbConfig()) {
       (this.MMr = new Map()), (this.SMr = new Map());
       e = (0, puerts_1.$ref)("");
@@ -615,39 +563,38 @@ class CreatureModel extends ModelBase_1.ModelBase {
           ["Path", t],
         );
   }
-  GetEntityData(t) {
-    var e;
+  GetEntityData(t, e) {
     if (void 0 !== t)
       return !PublicUtil_1.PublicUtil.UseDbConfig() && this.gMr
         ? this.gMr.get(t)
-        : (t =
+        : (e =
               LevelEntityConfigByMapIdAndEntityId_1.configLevelEntityConfigByMapIdAndEntityId.GetConfig(
-                ModelManager_1.ModelManager.GameModeModel.MapId,
+                e ?? ModelManager_1.ModelManager.GameModeModel.MapId,
                 t,
               ))
-          ? (((e = {}).Id = t.EntityId),
-            (e.BlueprintType = t.BlueprintType),
-            (e.InSleep = t.InSleep),
-            (e.AreaId = t.AreaId),
-            (e.Transform = {}),
-            Info_1.Info.IsBuildDevelopmentOrDebug && (e.Name = t.Name),
-            (e.Transform.Pos = {
-              X: t.Transform[0].X / ONE_HUNDRED,
-              Y: t.Transform[0].Y / ONE_HUNDRED,
-              Z: t.Transform[0].Z / ONE_HUNDRED,
+          ? (((t = {}).Id = e.EntityId),
+            (t.BlueprintType = e.BlueprintType),
+            (t.InSleep = e.InSleep),
+            (t.AreaId = e.AreaId),
+            (t.Transform = {}),
+            Info_1.Info.IsBuildDevelopmentOrDebug && (t.Name = e.Name),
+            (t.Transform.Pos = {
+              X: e.Transform[0].X / ONE_HUNDRED,
+              Y: e.Transform[0].Y / ONE_HUNDRED,
+              Z: e.Transform[0].Z / ONE_HUNDRED,
             }),
-            (e.Transform.Rot = {
-              X: t.Transform[1].X / ONE_HUNDRED,
-              Y: t.Transform[1].Y / ONE_HUNDRED,
-              Z: t.Transform[1].Z / ONE_HUNDRED,
+            (t.Transform.Rot = {
+              X: e.Transform[1].X / ONE_HUNDRED,
+              Y: e.Transform[1].Y / ONE_HUNDRED,
+              Z: e.Transform[1].Z / ONE_HUNDRED,
             }),
-            (e.Transform.Scale = {
-              X: t.Transform[2].X / ONE_HUNDRED,
-              Y: t.Transform[2].Y / ONE_HUNDRED,
-              Z: t.Transform[2].Z / ONE_HUNDRED,
+            (t.Transform.Scale = {
+              X: e.Transform[2].X / ONE_HUNDRED,
+              Y: e.Transform[2].Y / ONE_HUNDRED,
+              Z: e.Transform[2].Z / ONE_HUNDRED,
             }),
-            (e.ComponentsData = JSON.parse(t.ComponentsData)),
-            e)
+            (t.ComponentsData = JSON.parse(e.ComponentsData)),
+            t)
           : void 0;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -701,11 +648,11 @@ class CreatureModel extends ModelBase_1.ModelBase {
       : (this.vMr || ((this.vMr = new Map()), this.xMr()), this.vMr.get(t));
   }
   GetAllEntityTemplate(t = !1) {
-    return this.MMr || this.wMr(t), this.MMr;
+    return this.MMr || this.InitEntityTemplateMap(t), this.MMr;
   }
   GetEntityTemplate(e) {
     if (!PublicUtil_1.PublicUtil.UseDbConfig()) {
-      this.MMr || this.wMr();
+      this.MMr || this.InitEntityTemplateMap();
       let t = 0;
       return (t = "string" == typeof e ? this.SMr.get(e) : e), this.MMr.get(t);
     }
@@ -846,6 +793,9 @@ class CreatureModel extends ModelBase_1.ModelBase {
   }
   PopPendingRemoveEntity() {
     return this.lPr.PopEntity();
+  }
+  PeekPendingRemoveEntity() {
+    return this.lPr.PeekEntity();
   }
   GetPendingRemoveEntity(t) {
     return this.lPr.GetEntity(t);
@@ -1003,16 +953,19 @@ class CreatureModel extends ModelBase_1.ModelBase {
           );
       }
   }
+  GetDensityItemByPbDataId(t) {
+    return this.uYs.GetItemByPbDataId(t);
+  }
   GetOrAddDensityItem(t, e) {
     var i,
-      r = this.QQs.GetItem(t);
+      r = this.uYs.GetItem(t);
     if (r) return r;
     let n = 0;
     return (
-      2 === e.JEs
+      2 === e.oys
         ? (n = 2)
-        : 1 === e.JEs &&
-          ((r = e._9n),
+        : 1 === e.oys &&
+          ((r = e.v9n),
           (i =
             ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(r))
             ? ((i = (0, IComponent_1.getComponent)(
@@ -1028,15 +981,14 @@ class CreatureModel extends ModelBase_1.ModelBase {
                 ["creatureDataID", t],
                 ["pbDataId", r],
               )),
-      this.QQs.AddItem(t, n, e)
+      this.uYs.AddItem(t, n, e)
     );
   }
   RemoveDensityItem(t) {
-    var e = this.QQs.GetItem(t);
-    return this.QQs.RemoveItem(t), e;
+    return this.uYs.RemoveItem(t);
   }
   GetDensityLevelGroup(t) {
-    return this.QQs.GetLevel(t);
+    return this.uYs.GetLevel(t);
   }
 }
 exports.CreatureModel = CreatureModel;

@@ -10,9 +10,11 @@ class ParkourMarkItem extends SceneGameplayMarkItem_1.SceneGameplayMarkItem {
       this.MarkId,
     );
     return (
-      ModelManager_1.ModelManager.ActivityRunModel?.GetActivityRunData(
+      void 0 !== e &&
+      (ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
         e.Id,
-      )?.GetIsShow() ?? !1
+      )?.GetIsShow() ??
+        !1)
     );
   }
 }

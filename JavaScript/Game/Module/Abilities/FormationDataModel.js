@@ -27,7 +27,7 @@ class FormationDataModel extends ModelBase_1.ModelBase {
   RefreshOnLandPosition() {
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity;
     if (t) {
-      var e = t.GetComponent(160)?.PositionState;
+      var e = t.GetComponent(161)?.PositionState;
       if (e === CharacterUnifiedStateTypes_1.ECharPositionState.Ground) {
         (e = t.GetComponent(1)), (t = e?.Owner);
         if (t && !t.bHidden) {

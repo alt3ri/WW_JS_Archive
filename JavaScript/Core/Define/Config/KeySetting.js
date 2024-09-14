@@ -54,27 +54,35 @@ class KeySetting {
   get BothActionName() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.bothactionnameLength(),
-      (t) => this.bothactionname(t),
+      this.bothactionname,
+      this,
     );
   }
   get IsCheckSameKey() {
     return this.ischecksamekey();
   }
+  get CanDisable() {
+    return this.candisable();
+  }
   get AllowKeys() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.allowkeysLength(), (t) =>
-      this.allowkeys(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.allowkeysLength(),
+      this.allowkeys,
+      this,
     );
   }
   get AllowMainKeys() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.allowmainkeysLength(),
-      (t) => this.allowmainkeys(t),
+      this.allowmainkeys,
+      this,
     );
   }
   get AllowSecondKeys() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.allowsecondkeysLength(),
-      (t) => this.allowsecondkeys(t),
+      this.allowsecondkeys,
+      this,
     );
   }
   get DetailTextId() {
@@ -166,47 +174,51 @@ class KeySetting {
     var t = this.J7.__offset(this.z7, 36);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
+  candisable() {
+    var t = this.J7.__offset(this.z7, 38);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
   GetAllowkeysAt(t) {
     return this.allowkeys(t);
   }
   allowkeys(t, i) {
-    var s = this.J7.__offset(this.z7, 38);
+    var s = this.J7.__offset(this.z7, 40);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   allowkeysLength() {
-    var t = this.J7.__offset(this.z7, 38);
+    var t = this.J7.__offset(this.z7, 40);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetAllowmainkeysAt(t) {
     return this.allowmainkeys(t);
   }
   allowmainkeys(t, i) {
-    var s = this.J7.__offset(this.z7, 40);
+    var s = this.J7.__offset(this.z7, 42);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   allowmainkeysLength() {
-    var t = this.J7.__offset(this.z7, 40);
+    var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetAllowsecondkeysAt(t) {
     return this.allowsecondkeys(t);
   }
   allowsecondkeys(t, i) {
-    var s = this.J7.__offset(this.z7, 42);
+    var s = this.J7.__offset(this.z7, 44);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   allowsecondkeysLength() {
-    var t = this.J7.__offset(this.z7, 42);
+    var t = this.J7.__offset(this.z7, 44);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   detailtextid(t) {
-    var i = this.J7.__offset(this.z7, 44);
+    var i = this.J7.__offset(this.z7, 46);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }

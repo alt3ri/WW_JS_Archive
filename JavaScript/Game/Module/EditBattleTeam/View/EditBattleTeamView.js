@@ -108,13 +108,13 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
               r.SenderPlayerId;
           let t = void 0,
             o = r.Content;
-          if (r.ContentType === Protocol_1.Aki.Protocol.l8n.SIs)
+          if (r.ContentType === Protocol_1.Aki.Protocol.p8n.DIs)
             t = n
               ? a
                 ? "Text_TalkToFriend_Text"
                 : "Text_FriendTalkToMe_Text"
               : "Text_TeamTalk_Text";
-          else if (r.ContentType === Protocol_1.Aki.Protocol.l8n.Proto_Emoji) {
+          else if (r.ContentType === Protocol_1.Aki.Protocol.p8n.Proto_Emoji) {
             var r = Number(r.Content),
               l =
                 ConfigManager_1.ConfigManager.ChatConfig.GetExpressionConfig(r);
@@ -134,7 +134,7 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
           LguiUtil_1.LguiUtil.SetLocalTextNew(i, t, e, o);
         }
       }),
-      (this.VYs = () => {
+      (this.Ozs = () => {
         this.f4t();
       }),
       (this.L4t = () => {
@@ -150,7 +150,7 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
           ((t.GetPlayer() ?? -1) === e ||
             e ===
               ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo()
-                .DVn) &&
+                .qVn) &&
             t.RefreshPrepareState();
       }),
       (this.U4t = () => {
@@ -286,8 +286,8 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
             OnlineController_1.OnlineController.MatchChangePlayerUiStateRequest(
               ModelManager_1.ModelManager.InstanceDungeonEntranceModel
                 .EditBattleTeamMatching
-                ? Protocol_1.Aki.Protocol.P6s.Proto_Matching
-                : Protocol_1.Aki.Protocol.P6s.Proto_Wait,
+                ? Protocol_1.Aki.Protocol.G5s.Proto_Matching
+                : Protocol_1.Aki.Protocol.G5s.Proto_Wait,
             );
       }),
       (this.x4t = () => {
@@ -367,7 +367,7 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
             (e = e.GetRoleList()),
             (o = new QuickRoleSelectView_1.QuickRoleSelectViewData(o, t, e));
           (o.OnConfirm = this.N4t),
-            (o.CanConfirm = this.vaa),
+            (o.CanConfirm = this.M1a),
             (o.OnBack = this.O4t),
             (o.OnHideFinish = this.P4t),
             UiManager_1.UiManager.OpenView("QuickRoleSelectView", o),
@@ -391,7 +391,7 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
         }
         this.f4t();
       }),
-      (this.vaa = (e) => {
+      (this.M1a = (e) => {
         var t = ModelManager_1.ModelManager.EditBattleTeamModel;
         for (const r of e)
           if (t.IsTrialRole(r)) {
@@ -714,7 +714,7 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
             ))
           : ((this.d4t = !0), await this.Y4t()),
       this.k4t(!0),
-      await this.Rla(),
+      await this.Uua(),
       this.g4t(),
       this.f4t(),
       this.RefreshEnterButton(),
@@ -735,7 +735,7 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
         ModelManager_1.ModelManager.InstanceDungeonModel?.GetMatchTeamInfo(),
       e =
         (e &&
-          e.y9n !== Protocol_1.Aki.Protocol.D6s.Proto_EnterInstStart &&
+          e.P9n !== Protocol_1.Aki.Protocol.B5s.Proto_EnterInstStart &&
           ControllerHolder_1.ControllerHolder.InstanceDungeonEntranceController.LeaveMatchTeamRequest(),
         ModelManager_1.ModelManager.TowerModel.CheckInTower());
     ModelManager_1.ModelManager.EditBattleTeamModel.IsMultiInstanceDungeon ||
@@ -756,7 +756,7 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
       this.Ivt.GetTabItemByIndex(e - 1).ShowTeamBattleTips());
   }
   GetGuideUiItemAndUiItemForShowEx(t) {
-    if (!(t.length < 1) && "FirstSelf" === t[0]) {
+    if (!(t.length < 1) && t[0].includes("FirstSelf")) {
       var o = ModelManager_1.ModelManager.EditBattleTeamModel;
       for (let e = 0; e < 3; e++)
         if (o.GetRoleSlotData(e + 1)?.GetRoleData?.IsSelf)
@@ -790,7 +790,7 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TowerDefensePhantomChanged,
-        this.VYs,
+        this.Ozs,
       );
   }
   kre() {
@@ -820,7 +820,7 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TowerDefensePhantomChanged,
-        this.VYs,
+        this.Ozs,
       );
   }
   j4t(e) {
@@ -829,7 +829,7 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
       !UiManager_1.UiManager.IsViewShow("TeamRoleSelectView") &&
       (ModelManager_1.ModelManager.EditBattleTeamModel.IsMultiInstanceDungeon &&
         OnlineController_1.OnlineController.MatchChangePlayerUiStateRequest(
-          Protocol_1.Aki.Protocol.P6s.Proto_Selecting,
+          Protocol_1.Aki.Protocol.G5s.Proto_Selecting,
         ),
       UiManager_1.UiManager.OpenView("TeamRoleSelectView", e));
   }
@@ -944,7 +944,7 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
         t.SetUIActive(!1),
         o.SetUIActive(!1);
   }
-  async Rla() {
+  async Uua() {
     var e = this.GetItem(0),
       t = this.GetItem(1),
       o = this.GetItem(2);
@@ -997,10 +997,11 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
                         e,
                         a,
                         l,
-                        _.PlayerName,
+                        _.GetName(),
                         _.OnlineIndex ?? 1,
                         _.PlayerId,
                       ),
+                      this.tQa(e, _.ThirdPartyOnlineId),
                       i.RefreshPrepareState())
                     : this.t5t(e, a, l, s, 0, 0))
                 : (this.t5t(e), n && i.RefreshPrepareState())));
@@ -1010,6 +1011,10 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
           .EditBattleTeamMatching;
       this.T4t(t), this.p4t();
     } else o.SetUIActive(!1);
+  }
+  tQa(e, t) {
+    e = this.Z4t(e);
+    e && e.RefreshPlayStationItem(t);
   }
   t5t(t, o = 0, r = 0, i = "", n = 0, a = 0) {
     var l = t - 1,

@@ -21,7 +21,7 @@ class SceneItemManipulableCastToOutletState extends SceneItemManipulableCastStat
       ? (super.OnEnter(),
         (this.SceneItem.IsCanBeHeld = !1),
         (this.SceneItem.TargetActorComponent = this.NHo.GetComponent(1)),
-        (this.SceneItem.TargetOutletComponent = this.NHo.GetComponent(147)),
+        (this.SceneItem.TargetOutletComponent = this.NHo.GetComponent(148)),
         this.StartCast(),
         this.CalcDirection())
       : Log_1.Log.CheckError() &&

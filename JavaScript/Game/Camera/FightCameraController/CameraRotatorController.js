@@ -39,7 +39,7 @@ class CameraRotatorController extends CameraControllerBase_1.CameraControllerBas
     this.dce &&
       (([s, i] =
         this.Camera.CharacterEntityHandle.Entity.GetComponent(
-          53,
+          54,
         ).GetCameraInput()),
       0 < Math.abs(s) ||
         0 < Math.abs(i) ||

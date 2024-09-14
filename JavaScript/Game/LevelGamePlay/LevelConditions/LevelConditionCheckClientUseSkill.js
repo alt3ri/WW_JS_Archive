@@ -19,7 +19,7 @@ class LevelConditionCheckClientUseSkill extends LevelGeneralBase_1.LevelConditio
         !1)
       : (o = e.LimitParams.get("SkillId"))
         ? !!(n = Global_1.Global.BaseCharacter) &&
-          !!(n = n.GetEntityNoBlueprint()?.GetComponent(33)) &&
+          !!(n = n.GetEntityNoBlueprint()?.GetComponent(34)) &&
           !!n.GetSkill(Number(o))?.Active
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(

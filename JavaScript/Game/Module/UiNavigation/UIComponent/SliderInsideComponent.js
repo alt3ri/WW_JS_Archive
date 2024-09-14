@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.SliderReduceInsideComponent =
+  (exports.SettingSliderReduceInsideComponent =
+    exports.SettingSliderIncreaseInsideComponent =
+    exports.SliderReduceInsideComponent =
     exports.SliderIncreaseInsideComponent =
     exports.SliderInsideComponent =
       void 0);
@@ -16,13 +18,13 @@ class SliderInsideComponent extends SliderComponent_1.SliderComponent {
     );
   }
   OnRefreshSelfHotKeyState(e) {
-    var t = this.GetBindButtonTag();
-    StringUtils_1.StringUtils.IsEmpty(t) ||
+    var n = this.GetBindButtonTag();
+    StringUtils_1.StringUtils.IsEmpty(n) ||
       ((e = e.GetFocusListener()) &&
       (e =
         UiNavigationNewController_1.UiNavigationNewController.GetFocusListenerInsideListenerByTag(
           e,
-          t,
+          n,
         ))
         ? this.SetVisibleMode(2, e.IsListenerActive())
         : this.SetVisibleMode(2, !1));
@@ -33,8 +35,8 @@ class SliderIncreaseInsideComponent extends (exports.SliderInsideComponent =
   OnRelease(e) {
     this.SetValue(INTERVAL);
   }
-  OnInputAxis(e, t) {
-    t <= 0 || this.SetValue(t * INTERVAL);
+  OnInputAxis(e, n) {
+    n <= 0 || this.SetValue(n * INTERVAL);
   }
 }
 exports.SliderIncreaseInsideComponent = SliderIncreaseInsideComponent;
@@ -42,9 +44,24 @@ class SliderReduceInsideComponent extends SliderInsideComponent {
   OnRelease(e) {
     this.SetValue(-INTERVAL);
   }
-  OnInputAxis(e, t) {
-    0 <= t || this.SetValue(t * INTERVAL);
+  OnInputAxis(e, n) {
+    0 <= n || this.SetValue(n * INTERVAL);
   }
 }
 exports.SliderReduceInsideComponent = SliderReduceInsideComponent;
+const DEAD_AREA = 0.073,
+  SETTING_INTERVAL = 0.01;
+class SettingSliderIncreaseInsideComponent extends SliderIncreaseInsideComponent {
+  OnInputAxis(e, n) {
+    n <= DEAD_AREA || this.SetValue(n * SETTING_INTERVAL);
+  }
+}
+exports.SettingSliderIncreaseInsideComponent =
+  SettingSliderIncreaseInsideComponent;
+class SettingSliderReduceInsideComponent extends SliderReduceInsideComponent {
+  OnInputAxis(e, n) {
+    n >= -DEAD_AREA || this.SetValue(n * SETTING_INTERVAL);
+  }
+}
+exports.SettingSliderReduceInsideComponent = SettingSliderReduceInsideComponent;
 //# sourceMappingURL=SliderInsideComponent.js.map

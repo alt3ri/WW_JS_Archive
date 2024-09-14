@@ -5,6 +5,8 @@ const UE = require("ue"),
   CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
   Transform_1 = require("../../../../Core/Utils/Math/Transform"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   UiLayerType_1 = require("../../../Ui/Define/UiLayerType"),
   UiLayer_1 = require("../../../Ui/UiLayer"),
@@ -31,8 +33,18 @@ class CommonDropDown extends UiPanelBase_1.UiPanelBase {
       (this.ije = () => {
         var t = this.GetItem(1);
         t.bIsUIActive
-          ? this.vLt()
-          : (t.SetUIActive(!0), (this.cLt = !0), this.MLt().finally(void 0));
+          ? (this.vLt(),
+            EventSystem_1.EventSystem.Emit(
+              EventDefine_1.EEventName.OnDropDownListVisibleChanged,
+              !1,
+            ))
+          : (t.SetUIActive(!0),
+            (this.cLt = !0),
+            this.MLt().finally(void 0),
+            EventSystem_1.EventSystem.Emit(
+              EventDefine_1.EEventName.OnDropDownListVisibleChanged,
+              !0,
+            ));
       }),
       (this.sGe = (t, i, s) => {
         (i = this.CreateDropDownItem(i, t)), (t = this.CLt(t));

@@ -27,8 +27,8 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
         this.kpe,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.InputControllerChange,
-        this.XBo,
+        EventDefine_1.EEventName.ShowTypeChange,
+        this.aEa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RemoveEntity,
@@ -68,25 +68,32 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleInputEnableChanged,
-        this.cna,
+        this.Kaa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleInputVisibleChanged,
-        this.mna,
+        this.$aa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiFollowerAimStateChanged,
         this.HRn,
       ),
-      Info_1.Info.IsInTouch() ||
-        (EventSystem_1.EventSystem.Add(
-          EventDefine_1.EEventName.OpenView,
-          this.FQe,
-        ),
-        EventSystem_1.EventSystem.Add(
-          EventDefine_1.EEventName.CloseView,
-          this.$Ge,
-        )),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnPlayerFollowerCreate,
+        this.mDn,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnPlayerFollowerDestroy,
+        this.dDn,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OpenView,
+        this.FQe,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.CloseView,
+        this.$Ge,
+      ),
       InputDistributeController_1.InputDistributeController.BindAction(
         InputMappingsDefine_1.actionMappings.组合主键,
         this.RZe,
@@ -102,8 +109,8 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
         this.kpe,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.InputControllerChange,
-        this.XBo,
+        EventDefine_1.EEventName.ShowTypeChange,
+        this.aEa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RemoveEntity,
@@ -143,32 +150,32 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleInputEnableChanged,
-        this.cna,
+        this.Kaa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleInputVisibleChanged,
-        this.mna,
+        this.$aa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiFollowerAimStateChanged,
         this.HRn,
       ),
-      EventSystem_1.EventSystem.Has(
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnPlayerFollowerCreate,
+        this.mDn,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnPlayerFollowerDestroy,
+        this.dDn,
+      ),
+      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OpenView,
         this.FQe,
-      ) &&
-        EventSystem_1.EventSystem.Remove(
-          EventDefine_1.EEventName.OpenView,
-          this.FQe,
-        ),
-      EventSystem_1.EventSystem.Has(
+      ),
+      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
         this.$Ge,
-      ) &&
-        EventSystem_1.EventSystem.Remove(
-          EventDefine_1.EEventName.CloseView,
-          this.$Ge,
-        ),
+      ),
       InputDistributeController_1.InputDistributeController.UnBindAction(
         InputMappingsDefine_1.actionMappings.组合主键,
         this.RZe,
@@ -190,7 +197,8 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
       : 0;
   }
 }
-((exports.SkillButtonUiController = SkillButtonUiController).kQe = void 0),
+((exports.SkillButtonUiController = SkillButtonUiController).kQe =
+  Stats_1.Stat.Create("[ChangeRole]SkillButtonUiController")),
   (SkillButtonUiController.Uyo = (e, t, n) => {
     ModelManager_1.ModelManager.SkillButtonUiModel.ExecuteMultiSkillIdChanged(
       e,
@@ -206,12 +214,14 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
     );
   }),
   (SkillButtonUiController.xie = (e, t) => {
-    SkillButtonUiController.wyo(e, 1);
+    SkillButtonUiController.kQe.Start(),
+      SkillButtonUiController.wyo(e, 1),
+      SkillButtonUiController.kQe.Stop();
   }),
   (SkillButtonUiController.kpe = () => {
     ModelManager_1.ModelManager.SkillButtonUiModel.CreateAllSkillButtonEntityData();
   }),
-  (SkillButtonUiController.XBo = () => {
+  (SkillButtonUiController.aEa = () => {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e && SkillButtonUiController.wyo(e);
   }),
@@ -235,7 +245,7 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
   (SkillButtonUiController.Dut = (e) => {
     ModelManager_1.ModelManager.SkillButtonUiModel.OnActionKeyChanged(e);
   }),
-  (SkillButtonUiController.cna = (e, t) => {
+  (SkillButtonUiController.Kaa = (e, t) => {
     ModelManager_1.ModelManager.SkillButtonUiModel.OnInputEnableChanged(e, t);
   }),
   (SkillButtonUiController.HRn = (e) => {
@@ -243,16 +253,28 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
       e,
     );
   }),
-  (SkillButtonUiController.mna = (e, t) => {
+  (SkillButtonUiController.$aa = (e, t) => {
     ModelManager_1.ModelManager.SkillButtonUiModel.OnInputVisibleChanged(e, t);
+  }),
+  (SkillButtonUiController.mDn = (e) => {
+    ModelManager_1.ModelManager.SkillButtonUiModel.CreateSkillButtonFollowerEntityData(
+      e,
+    );
+  }),
+  (SkillButtonUiController.dDn = () => {
+    ModelManager_1.ModelManager.SkillButtonUiModel.ClearSkillButtonFollowerEntityData();
   }),
   (SkillButtonUiController.FQe = (e) => {
     "MenuView" === e &&
-      ModelManager_1.ModelManager.SkillButtonUiModel.OnOpenMenuView();
+      ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.AddChangeKeyReason(
+        0,
+      );
   }),
   (SkillButtonUiController.$Ge = (e) => {
     "MenuView" === e &&
-      ModelManager_1.ModelManager.SkillButtonUiModel.OnCloseMenuView();
+      ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.RemoveChangeKeyReason(
+        0,
+      );
   }),
   (SkillButtonUiController.RZe = (e, t) => {
     t = 0 === t;

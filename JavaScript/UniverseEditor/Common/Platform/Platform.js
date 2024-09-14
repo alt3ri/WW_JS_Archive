@@ -1,13 +1,10 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.getPlatform = exports.setPlatform = exports.Platform = void 0);
-class Platform {
-  constructor() {
-    (this.LogLevel = 0), (this.IsPipelineEnv = !1);
-  }
-}
-exports.Platform = Platform;
-let pf = void 0;
+Object.defineProperty(exports, "__esModule", { value: !0 });
+let pf =
+  (exports.isNodeEnvironment =
+  exports.getPlatform =
+  exports.setPlatform =
+    void 0);
 function setPlatform(t) {
   pf = t;
 }
@@ -15,5 +12,23 @@ function getPlatform() {
   if (pf) return pf;
   throw new Error("Platform is not set");
 }
-(exports.setPlatform = setPlatform), (exports.getPlatform = getPlatform);
+function isNodeEnvironment() {
+  try {
+    return (
+      "[object process]" === Object.prototype.toString.call(global.process)
+    );
+  } catch (t) {
+    return !1;
+  }
+}
+function init() {
+  var t;
+  isNodeEnvironment()
+    ? ((t = require("./PlatformNodeJs")["platformNodeJs"]), setPlatform(t))
+    : ((t = require("./PlatformUe")["platformUe"]), setPlatform(t));
+}
+(exports.setPlatform = setPlatform),
+  (exports.getPlatform = getPlatform),
+  (exports.isNodeEnvironment = isNodeEnvironment),
+  init();
 //# sourceMappingURL=Platform.js.map

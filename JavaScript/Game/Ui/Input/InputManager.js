@@ -17,9 +17,9 @@ const puerts_1 = require("puerts"),
   InputMappingsDefine_1 = require("../InputDistribute/InputMappingsDefine"),
   LguiEventSystemManager_1 = require("../LguiEventSystem/LguiEventSystemManager"),
   UiManager_1 = require("../UiManager"),
+  ViewHotKeyHandleDefine_1 = require("./Handle/ViewHotKeyHandleDefine"),
   Input_1 = require("./Input"),
   InputViewRecord_1 = require("./InputViewRecord"),
-  ViewHotKeyHandle_1 = require("./ViewHotKeyHandle"),
   ViewHotKeyHandleContainer_1 = require("./ViewHotKeyHandleContainer");
 class InputManager {
   static Init() {
@@ -31,9 +31,9 @@ class InputManager {
         EventDefine_1.EEventName.UiManagerDestroy,
         this.ht,
       ),
-      InputManager.AMa();
+      InputManager.Wya();
   }
-  static AMa() {
+  static Wya() {
     var e =
       ConfigManager_1.ConfigManager.ViewHotKeyConfig.GetAllOpenAndCloseViewHotKeyConfig();
     if (e)
@@ -42,6 +42,7 @@ class InputManager {
             ActionName: n.ActionName,
             InputControllerType: n.InputControllerType,
             ViewName: n.ViewName,
+            ViewParam: n.ViewParam,
             IsPressTrigger: n.IsPressTrigger,
             PressStartTime: n.PressStartTime,
             PressTriggerTime: n.PressTriggerTime,
@@ -49,29 +50,37 @@ class InputManager {
             ReleaseInvalidTime: n.ReleaseInvalidTime,
             IsPressClose: n.IsPressClose,
             IsReleaseClose: n.IsReleaseClose,
+            IsAllowOpenViewByShortcutKey: () =>
+              this.IsAllowOpenViewByShortcutKey(),
+            IsAllowCloseViewByShortcutKey: () =>
+              this.IsAllowCloseViewByShortcutKey(),
           },
-          t = new ViewHotKeyHandle_1.ViewHotKeyHandle(t);
-        this.UMa.Add(t);
+          t =
+            ViewHotKeyHandleDefine_1.ViewHotKeyHandleFactory.CreateViewHotKeyHandle(
+              t,
+              n.HandleType,
+            );
+        this.Qya.Add(t);
       }
   }
-  static SSa() {
-    this.UMa.ForEach((e) => {
-      e.BindAction();
+  static kIa() {
+    this.Qya.ForEach((e) => {
+      e.Bind();
     });
   }
   static RegisterOpenViewFunc(e, t) {
-    e = this.UMa.Get(e);
+    e = this.Qya.Get(e);
     if (e) for (const n of e) n.BindOpenViewCallback(t);
   }
   static RegisterCloseViewFunc(e, t) {
-    e = this.UMa.Get(e);
+    e = this.Qya.Get(e);
     if (e) for (const n of e) n.BindCloseViewCallback(t);
   }
   static GetViewHotKeyHandle(e) {
-    return this.UMa.Get(e);
+    return this.Qya.Get(e);
   }
   static GetAllViewHotKeyHandle() {
-    return this.UMa.GetAll();
+    return this.Qya.GetAll();
   }
   static smr() {
     InputDistributeController_1.InputDistributeController.BindAction(
@@ -319,8 +328,8 @@ class InputManager {
           ),
         (a = Global_1.Global.CharacterController),
         n
-          ? ((a.bShowMouseCursor = !0), this.YVs())
-          : ((a.bShowMouseCursor = !1), this.JVs()),
+          ? ((a.bShowMouseCursor = !0), this.g9s())
+          : ((a.bShowMouseCursor = !1), this.f9s()),
         t &&
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnShowMouseCursor,
@@ -334,21 +343,21 @@ class InputManager {
           ["value", e],
         );
   }
-  static YVs() {
+  static g9s() {
     var e = Global_1.Global.CharacterController;
-    this.QVs ||
-      UE.KuroInputFunctionLibrary.HasInputModeReply(this.QVs) ||
-      (this.QVs = UE.KuroInputFunctionLibrary.SetGameAndUIInputMode(
+    this.m9s ||
+      UE.KuroInputFunctionLibrary.HasInputModeReply(this.m9s) ||
+      (this.m9s = UE.KuroInputFunctionLibrary.SetGameAndUIInputMode(
         e,
         "InputManager设置输入模式",
       ));
   }
-  static JVs() {
+  static f9s() {
     var e;
-    this.QVs &&
+    this.m9s &&
       ((e = Global_1.Global.CharacterController),
-      UE.KuroInputFunctionLibrary.ReplyInputMode(e, this.QVs),
-      (this.QVs = void 0));
+      UE.KuroInputFunctionLibrary.ReplyInputMode(e, this.m9s),
+      (this.m9s = void 0));
   }
   static Bmr() {
     var e, t, n;
@@ -400,8 +409,8 @@ class InputManager {
     new InputViewRecord_1.InputViewRecord()),
   (InputManager.DisableCloseViewByShortcutKeyViewRecord =
     new InputViewRecord_1.InputViewRecord()),
-  (InputManager.QVs = void 0),
-  (InputManager.UMa =
+  (InputManager.m9s = void 0),
+  (InputManager.Qya =
     new ViewHotKeyHandleContainer_1.ViewHotKeyHandleContainer()),
   (InputManager.IsAutoMoveCursorToCenter = !0),
   (InputManager.il = () => {
@@ -411,7 +420,7 @@ class InputManager {
       InputManager.Umr.Clear(),
       InputManager.DisableShortcutKeyViewRecord.Clear(),
       InputManager.DisableCloseViewByShortcutKeyViewRecord.Clear(),
-      InputManager.SSa()),
+      InputManager.kIa()),
       UE.KuroInputFunctionLibrary.ClearInputModeReply();
   }),
   (InputManager.ht = () => {
@@ -420,7 +429,7 @@ class InputManager {
       InputManager.Umr.Clear(),
       InputManager.DisableShortcutKeyViewRecord.Clear(),
       InputManager.DisableCloseViewByShortcutKeyViewRecord.Clear(),
-      InputManager.UMa?.Clear(),
+      InputManager.Qya?.Clear(),
       (InputManager.gU = !1));
   }),
   (InputManager.amr = (e, t) => {
@@ -432,8 +441,8 @@ class InputManager {
         : UiManager_1.UiManager.OpenView("GmView"));
   }),
   (InputManager.hmr = (e, t) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "InputManager",
         8,
         "按Alt尝试显示鼠标",

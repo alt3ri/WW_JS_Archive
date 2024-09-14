@@ -20,6 +20,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.createDir =
     exports.existFile =
     exports.writeFile =
+    exports.readBatchFilesAsync =
+    exports.readFileAsync =
     exports.readFile =
     exports.getUserDirPath =
     exports.getSavePath =
@@ -63,20 +65,54 @@ function removeExtension(t) {
 function getFileNameWithOutExt(t) {
   return removeExtension(getFileName(t));
 }
+(exports.getFileName = getFileName),
+  (exports.getFileExt = getFileExt),
+  (exports.coverFullPathToName = coverFullPathToName),
+  (exports.getDirName = getDirName),
+  (exports.getDir = getDir),
+  (exports.removeExtension = removeExtension),
+  (exports.getFileNameWithOutExt = getFileNameWithOutExt);
+let projectDir = void 0;
 function getProjectPath(t) {
-  return (0, Platform_1.getPlatform)().GetProjectPath(t ?? "");
+  return (
+    void 0 === projectDir &&
+      (projectDir = (0, Platform_1.getPlatform)().GetProjectPath("")),
+    t ? "" + projectDir + (t ?? "") : projectDir
+  );
 }
+exports.getProjectPath = getProjectPath;
+let tsRoot = void 0;
 function getTsRoot() {
-  return getProjectPath("TypeScript");
+  return (tsRoot = void 0 === tsRoot ? getProjectPath("TypeScript") : tsRoot);
 }
+exports.getTsRoot = getTsRoot;
+let savePath = void 0;
 function getSavePath(t) {
-  return (0, Platform_1.getPlatform)().GetSavePath(t ?? "");
+  return (
+    void 0 === savePath &&
+      (savePath = (0, Platform_1.getPlatform)().GetSavePath("")),
+    t ? "" + savePath + (t ?? "") : savePath
+  );
 }
+exports.getSavePath = getSavePath;
+let userDir = void 0;
 function getUserDirPath(t) {
-  return (0, Platform_1.getPlatform)().GetUserDirPath(t ?? "");
+  return (
+    void 0 === userDir &&
+      (userDir = (0, Platform_1.getPlatform)().GetUserDirPath("")),
+    t ? "" + userDir + (t ?? "") : userDir
+  );
 }
 function readFile(t) {
   return (0, Platform_1.getPlatform)().ReadFile(t);
+}
+async function readFileAsync(t) {
+  var e = await (0, Platform_1.getPlatform)().ReadFileAsync(t);
+  if (e.IsSuccess) return e.FileContent;
+  throw new Error("Failed to read file: " + t);
+}
+async function readBatchFilesAsync(t) {
+  return (0, Platform_1.getPlatform)().ReadBatchFilesAsync(t);
 }
 function writeFile(t, e) {
   (0, Platform_1.getPlatform)().WriteFile(t, e);
@@ -136,18 +172,10 @@ function readJsRootNameFromIni() {
       : "JavaScript"
     : "";
 }
-(exports.getFileName = getFileName),
-  (exports.getFileExt = getFileExt),
-  (exports.coverFullPathToName = coverFullPathToName),
-  (exports.getDirName = getDirName),
-  (exports.getDir = getDir),
-  (exports.removeExtension = removeExtension),
-  (exports.getFileNameWithOutExt = getFileNameWithOutExt),
-  (exports.getProjectPath = getProjectPath),
-  (exports.getTsRoot = getTsRoot),
-  (exports.getSavePath = getSavePath),
-  (exports.getUserDirPath = getUserDirPath),
+(exports.getUserDirPath = getUserDirPath),
   (exports.readFile = readFile),
+  (exports.readFileAsync = readFileAsync),
+  (exports.readBatchFilesAsync = readBatchFilesAsync),
   (exports.writeFile = writeFile),
   (exports.existFile = existFile),
   (exports.createDir = createDir),

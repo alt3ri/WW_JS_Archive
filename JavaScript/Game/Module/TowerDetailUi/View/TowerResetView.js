@@ -52,7 +52,7 @@ class TowerResetView extends UiViewBase_1.UiViewBase {
         this.sbi,
       );
       var t = [];
-      for (const i of e.Formation) t.push(i.O6n);
+      for (const i of e.Formation) t.push(i.Q6n);
       this.tFe.RefreshByData(t);
       var r = ModelManager_1.ModelManager.TowerModel.GetDifficultyStars(
         e.Difficulties,

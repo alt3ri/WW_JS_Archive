@@ -8,7 +8,7 @@ class TsAnimNotifyStateNextAtt extends UE.KuroAnimNotifyState {
     var e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
-      ((e = e.CharacterActorComponent?.Entity?.GetComponent(33))?.Valid &&
+      ((e = e.CharacterActorComponent?.Entity?.GetComponent(34))?.Valid &&
         (e.SetSkillAcceptInput(!0), e.CallAnimBreakPoint()),
       !0)
     );
@@ -18,8 +18,8 @@ class TsAnimNotifyStateNextAtt extends UE.KuroAnimNotifyState {
       e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
-      ((r = e.CharacterActorComponent?.Entity?.GetComponent(33)),
-      (e = e.CharacterActorComponent?.Entity?.GetComponent(159)),
+      ((r = e.CharacterActorComponent?.Entity?.GetComponent(34)),
+      (e = e.CharacterActorComponent?.Entity?.GetComponent(160)),
       r?.Valid && r.SetSkillAcceptInput(!1),
       e?.Valid &&
         e.HasBuffAuthority() &&

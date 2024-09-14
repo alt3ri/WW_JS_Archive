@@ -15,19 +15,19 @@ class Range {
 }
 class PlotCleanRange {
   constructor() {
-    (this.ONn = !1),
+    (this.WNn = !1),
       (this.VYi = !1),
-      (this.kNn = new Map()),
-      (this.VNn = !1),
-      (this.Hjs = []),
+      (this.QNn = new Map()),
+      (this.$Nn = !1),
+      (this.uWs = []),
       (this.Lz = Vector_1.Vector.Create()),
       (this.Jpe = (e, t) => {
         var o;
-        this.jNn(t) &&
+        this.JNn(t) &&
           (void 0 !==
             (o = t.Entity?.Disable(
               "PlotCleanRange.OnCreateEntity.DisableEntity",
-            )) && this.kNn.set(t, o),
+            )) && this.QNn.set(t, o),
           Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info(
             "Plot",
@@ -39,21 +39,21 @@ class PlotCleanRange {
       });
   }
   Open(e) {
-    this.ONn = !0;
+    this.WNn = !0;
     const t = new Set();
     e.EntityIds.forEach((e) => {
       t.add(e);
     }),
-      this.VNn || (this.VNn = !e.IsCleanPasserByNpc);
+      this.$Nn || (this.$Nn = !e.IsCleanPasserByNpc);
     var o,
       n = Vector_1.Vector.Create(),
       i = (n.FromConfigVector(e.Center), new Range(n, e.Radius * e.Radius, t));
-    this.Hjs.push(i), this.WNn(e.IsCleanSimpleNpc);
+    this.uWs.push(i), this.zNn(e.IsCleanSimpleNpc);
     for (const r of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
-      this.jNn(r, i) &&
+      this.JNn(r, i) &&
         void 0 !==
           (o = r.Entity?.Disable("PlotCleanRange.Open.DisableEntity")) &&
-        this.kNn.set(r, o);
+        this.QNn.set(r, o);
     EventSystem_1.EventSystem.Has(
       EventDefine_1.EEventName.CreateEntity,
       this.Jpe,
@@ -63,7 +63,7 @@ class PlotCleanRange {
         this.Jpe,
       );
     const l = [];
-    this.kNn.forEach((e, t) => {
+    this.QNn.forEach((e, t) => {
       l.push([t.PbDataId, t.CreatureDataId]);
     }),
       Log_1.Log.CheckInfo() &&
@@ -73,23 +73,23 @@ class PlotCleanRange {
         ]);
   }
   Close() {
-    if (this.ONn) {
-      this.KNn(),
+    if (this.WNn) {
+      this.ZNn(),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.CreateEntity,
           this.Jpe,
         );
-      for (var [e, t] of this.kNn)
+      for (var [e, t] of this.QNn)
         e.Valid && e.Entity && e.Entity.Enable(t, "PlotCleanRange.Close");
-      (this.Hjs.length = 0),
-        (this.VNn = !1),
-        this.kNn.clear(),
-        (this.ONn = !1),
+      (this.uWs.length = 0),
+        (this.$Nn = !1),
+        this.QNn.clear(),
+        (this.WNn = !1),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Plot", 27, "[PlotCleanRange] 恢复清场");
     }
   }
-  WNn(e) {
+  zNn(e) {
     this.VYi ||
       (e &&
         ((this.VYi = !0),
@@ -97,15 +97,15 @@ class PlotCleanRange {
           Log_1.Log.Info("Plot", 27, "[PlotCleanRange] 演出清理SimpleNPC"),
         SimpleNpcController_1.SimpleNpcController.SetClearOutState(0, !0)));
   }
-  KNn() {
+  ZNn() {
     this.VYi &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Plot", 27, "[PlotCleanRange] 演出恢复SimpleNPC"),
       SimpleNpcController_1.SimpleNpcController.SetClearOutState(0, !1),
       (this.VYi = !1));
   }
-  jNn(e, t) {
-    if (this.kNn.has(e)) return !1;
+  JNn(e, t) {
+    if (this.QNn.has(e)) return !1;
     if (!e.Entity?.Valid)
       return (
         Log_1.Log.CheckDebug() &&
@@ -131,7 +131,7 @@ class PlotCleanRange {
           ),
         !1
       );
-    if (o.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player)
+    if (o.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player)
       return (
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
@@ -158,7 +158,7 @@ class PlotCleanRange {
       );
     if (2 === o.GetSubEntityType())
       return (
-        !this.VNn ||
+        !this.$Nn ||
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
@@ -169,9 +169,9 @@ class PlotCleanRange {
           ),
         !1)
       );
-    if (e.Entity.GetComponent(194))
+    if (e.Entity.GetComponent(196))
       return (
-        !this.VNn ||
+        !this.$Nn ||
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
@@ -205,7 +205,7 @@ class PlotCleanRange {
     let i = !1;
     if (t) i = this.zsn(e, o, t);
     else
-      for (const t of this.Hjs)
+      for (const t of this.uWs)
         if (this.zsn(e, o, t)) {
           i = !0;
           break;

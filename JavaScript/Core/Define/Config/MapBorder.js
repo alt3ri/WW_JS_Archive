@@ -8,6 +8,9 @@ class MapBorder {
   get BorderId() {
     return this.borderid();
   }
+  get MapId() {
+    return this.mapid();
+  }
   get ConditionId() {
     return this.conditionid();
   }
@@ -27,12 +30,16 @@ class MapBorder {
     var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  conditionid() {
+  mapid() {
     var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
+  conditionid() {
+    var t = this.J7.__offset(this.z7, 8);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
   prefabpath(t) {
-    var r = this.J7.__offset(this.z7, 8);
+    var r = this.J7.__offset(this.z7, 10);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
 }

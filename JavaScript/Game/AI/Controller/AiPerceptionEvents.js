@@ -331,7 +331,7 @@ class AiPerceptionEvents {
     var i;
     this.dre &&
       !this.gre.has(t.Entity.Id) &&
-      (i = t.Entity.GetComponent(92))?.Valid &&
+      (i = t.Entity.GetComponent(93))?.Valid &&
       i.IsDestroyed &&
       (this.gre.add(t.Entity.Id), this.dre.Callback.Broadcast(t.Owner, !0));
   }

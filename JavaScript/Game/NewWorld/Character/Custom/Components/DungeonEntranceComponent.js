@@ -37,7 +37,7 @@ let DungeonEntranceComponent = class DungeonEntranceComponent extends EntityComp
   }
   OnStart() {
     return (
-      (this.cen = this.Entity.GetComponent(119)),
+      (this.cen = this.Entity.GetComponent(120)),
       (this.men = new Array()),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
@@ -88,7 +88,7 @@ let DungeonEntranceComponent = class DungeonEntranceComponent extends EntityComp
   }
 };
 (DungeonEntranceComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(74)],
+  [(0, RegisterComponent_1.RegisterComponent)(75)],
   DungeonEntranceComponent,
 )),
   (exports.DungeonEntranceComponent = DungeonEntranceComponent);

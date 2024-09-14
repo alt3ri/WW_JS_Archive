@@ -54,8 +54,8 @@ class TsBasePlayerController extends UE.BasePlayerController {
         (this.TsTouchHandle.Reset(), (this.TsTouchHandle = void 0)),
       super.ReceiveDestroyed());
   }
-  ReceiveTick(e) {
-    super.ReceiveTick(e), this.PlayerInputHandle?.Tick(e);
+  ReceiveTick(t) {
+    super.ReceiveTick(t), this.PlayerInputHandle?.Tick(t);
   }
   OnReceivedPlayer() {
     UE.KuroInputFunctionLibrary.ResetInputMode(this);
@@ -157,59 +157,59 @@ class TsBasePlayerController extends UE.BasePlayerController {
         this.AddTouchBinding(1, this, new UE.FName(this.OnTouchEnd.name)),
         this.AddTouchBinding(2, this, new UE.FName(this.OnTouchMove.name)));
   }
-  OnInputAction(e, t, i) {
+  OnInputAction(t, e, i) {
     LogReportModel_1.LogReportModel.RecordOperateTime(),
-      this.PlayerInputHandle.InputAction(e, t, i);
+      this.PlayerInputHandle.InputAction(t, e, i);
   }
-  OnInputAxis(e, t, i = !1) {
-    LogReportModel_1.LogReportModel.RecordOperateTime(!0, e, t),
-      this.PlayerInputHandle.InputAxis(e, t, i);
+  OnInputAxis(t, e, i = !1) {
+    LogReportModel_1.LogReportModel.RecordOperateTime(!0, t, e),
+      this.PlayerInputHandle.InputAxis(t, e, i);
   }
-  OnTouchBegin(e, t) {
-    this.PlayerInputHandle.TouchBegin(e, t),
+  OnTouchBegin(t, e) {
+    this.PlayerInputHandle.TouchBegin(t, e),
       LogReportModel_1.LogReportModel.RecordOperateTime();
   }
-  OnTouchEnd(e, t) {
-    this.PlayerInputHandle.TouchEnd(e, t);
+  OnTouchEnd(t, e) {
+    this.PlayerInputHandle.TouchEnd(t, e);
   }
-  OnTouchMove(e, t) {
-    this.PlayerInputHandle.TouchMove(e, t);
+  OnTouchMove(t, e) {
+    this.PlayerInputHandle.TouchMove(t, e);
   }
-  OnPressAnyKey(e) {
-    ModelManager_1.ModelManager.PlatformModel.OnPressAnyKey(e),
-      LogReportModel_1.LogReportModel.RecordOperateTime(),
-      this.PlayerInputHandle.PressAnyKey(e);
+  OnPressAnyKey(t) {
+    LogReportModel_1.LogReportModel.RecordOperateTime(),
+      this.PlayerInputHandle.PressAnyKey(t),
+      ModelManager_1.ModelManager.PlatformModel.OnPressAnyKey(t);
   }
-  OnReleaseAnyKey(e) {
-    this.PlayerInputHandle.ReleaseAnyKey(e);
+  OnReleaseAnyKey(t) {
+    this.PlayerInputHandle.ReleaseAnyKey(t);
   }
-  AddActionHandle(t) {
+  AddActionHandle(e) {
     if (Info_1.Info.UseFastInputCallback) {
       this.TsActionHandleMap || (this.TsActionHandleMap = new Map());
-      let e = this.TsActionHandleMap.get(t);
-      e ||
-        ((e = new TsPureActionHandle_1.TsPureActionHandle()).Initialize(this),
-        this.TsActionHandleMap.set(t, e)),
-        (this.OnInputActionCallback = (e, t, i) => {
-          this.OnInputAction(e, t, i);
+      let t = this.TsActionHandleMap.get(e);
+      t ||
+        ((t = new TsPureActionHandle_1.TsPureActionHandle()).Initialize(this),
+        this.TsActionHandleMap.set(e, t)),
+        (this.OnInputActionCallback = (t, e, i) => {
+          this.OnInputAction(t, e, i);
         }),
-        e.AddActionBinding(t, this.OnInputActionCallback);
+        t.AddActionBinding(e, this.OnInputActionCallback);
     } else {
-      let e = this.GetActionHandle(t);
-      (e = e || this.NewActionHandle(t)),
-        (this.OnInputActionCallback = (e, t, i) => {
-          this.OnInputAction(e, t, i);
+      let t = this.GetActionHandle(e);
+      (t = t || this.NewActionHandle(e)),
+        (this.OnInputActionCallback = (t, e, i) => {
+          this.OnInputAction(t, e, i);
         }),
-        e.AddActionBinding(t, this.OnInputActionCallback);
+        t.AddActionBinding(e, this.OnInputActionCallback);
     }
   }
-  NewActionHandle(e) {
-    var t;
+  NewActionHandle(t) {
+    var e;
     if (this.ActionHandleClass && this.ActionHandleClass.IsValid())
       return (
-        (t = UE.NewObject(this.ActionHandleClass, this)).Initialize(this),
-        this.ActionHandleMap.Add(e, t),
-        t
+        (e = UE.NewObject(this.ActionHandleClass, this)).Initialize(this),
+        this.ActionHandleMap.Add(t, e),
+        e
       );
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -219,60 +219,60 @@ class TsBasePlayerController extends UE.BasePlayerController {
         ["ControllerName", this.GetName()],
       );
   }
-  RemoveActionHandle(e) {
-    var t = this.GetActionHandle(e);
-    t && (t.Reset(), this.ActionHandleMap.Remove(e));
+  RemoveActionHandle(t) {
+    var e = this.GetActionHandle(t);
+    e && (e.Reset(), this.ActionHandleMap.Remove(t));
   }
-  GetActionHandle(e) {
-    return this.ActionHandleMap.Get(e);
+  GetActionHandle(t) {
+    return this.ActionHandleMap.Get(t);
   }
   ClearActionHandle() {
     if (Info_1.Info.UseFastInputCallback) {
       if (this.TsActionHandleMap) {
         for (const i of this.TsActionHandleMap) {
-          var e = i[1];
-          if (!e) return;
-          e.Reset();
+          var t = i[1];
+          if (!t) return;
+          t.Reset();
         }
         this.TsActionHandleMap.clear();
       }
     } else {
-      for (let e = 0; e < this.ActionHandleMap.Num(); e++) {
-        var t = this.ActionHandleMap.GetKey(e),
-          t = this.ActionHandleMap.Get(t);
-        if (!t) return;
-        t.Reset();
+      for (let t = 0; t < this.ActionHandleMap.Num(); t++) {
+        var e = this.ActionHandleMap.GetKey(t),
+          e = this.ActionHandleMap.Get(e);
+        if (!e) return;
+        e.Reset();
       }
       this.ActionHandleMap.Empty();
     }
   }
-  AddAxisHandle(t) {
+  AddAxisHandle(e) {
     if (Info_1.Info.UseFastInputCallback) {
       this.TsAxisHandleMap || (this.TsAxisHandleMap = new Map());
-      let e = this.TsAxisHandleMap.get(t);
-      e ||
-        ((e = new TsPureAxisHandle_1.TsPureAxisHandle()).Initialize(this),
-        this.TsAxisHandleMap.set(t, e)),
-        (this.OnInputAxisCallbackNew = (e, t, i) => {
-          this.OnInputAxis(e, t, i);
+      let t = this.TsAxisHandleMap.get(e);
+      t ||
+        ((t = new TsPureAxisHandle_1.TsPureAxisHandle()).Initialize(this),
+        this.TsAxisHandleMap.set(e, t)),
+        (this.OnInputAxisCallbackNew = (t, e, i) => {
+          this.OnInputAxis(t, e, i);
         }),
-        e.AddAxisBinding(t, this.OnInputAxisCallbackNew);
+        t.AddAxisBinding(e, this.OnInputAxisCallbackNew);
     } else {
-      let e = this.GetAxisHandle(t);
-      (e = e || this.NewAxisHandle(t)),
-        (this.OnInputAxisCallback = (e, t) => {
-          this.OnInputAxis(e, t);
+      let t = this.GetAxisHandle(e);
+      (t = t || this.NewAxisHandle(e)),
+        (this.OnInputAxisCallback = (t, e) => {
+          this.OnInputAxis(t, e);
         }),
-        e.AddAxisBinding(t, this.OnInputAxisCallback);
+        t.AddAxisBinding(e, this.OnInputAxisCallback);
     }
   }
-  NewAxisHandle(e) {
-    var t;
+  NewAxisHandle(t) {
+    var e;
     if (this.AxisHandleClass && this.AxisHandleClass.IsValid())
       return (
-        (t = UE.NewObject(this.AxisHandleClass, this)).Initialize(this),
-        this.AxisHandleMap.Add(e, t),
-        t
+        (e = UE.NewObject(this.AxisHandleClass, this)).Initialize(this),
+        this.AxisHandleMap.Add(t, e),
+        e
       );
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -282,73 +282,88 @@ class TsBasePlayerController extends UE.BasePlayerController {
         ["ControllerName", this.GetName()],
       );
   }
-  RemoveAxisHandle(e) {
-    var t = this.GetActionHandle(e);
-    t && (t.Reset(), this.ActionHandleMap.Remove(e));
+  RemoveAxisHandle(t) {
+    var e = this.GetActionHandle(t);
+    e && (e.Reset(), this.ActionHandleMap.Remove(t));
   }
-  GetAxisHandle(e) {
-    return this.AxisHandleMap.Get(e);
+  GetAxisHandle(t) {
+    return this.AxisHandleMap.Get(t);
   }
   ClearAxisHandle() {
     if (Info_1.Info.UseFastInputCallback) {
       if (this.TsAxisHandleMap) {
         for (const i of this.TsAxisHandleMap) {
-          var e = i[1];
-          if (!e) return;
-          e.Reset();
+          var t = i[1];
+          if (!t) return;
+          t.Reset();
         }
         this.TsAxisHandleMap.clear();
       }
     } else {
-      for (let e = 0; e < this.AxisHandleMap.Num(); e++) {
-        var t = this.AxisHandleMap.GetKey(e),
-          t = this.AxisHandleMap.Get(t);
-        if (!t) return;
-        t.Reset();
+      for (let t = 0; t < this.AxisHandleMap.Num(); t++) {
+        var e = this.AxisHandleMap.GetKey(t),
+          e = this.AxisHandleMap.Get(e);
+        if (!e) return;
+        e.Reset();
       }
       this.AxisHandleMap.Empty();
     }
   }
-  GetInputPosition(e = 0) {
+  GetInputPosition(t = 0) {
     return Info_1.Info.IsInKeyBoard()
       ? this.GetCursorPosition()
       : Info_1.Info.IsInTouch()
-        ? this.GetTouchPosition(e)
+        ? this.GetTouchPosition(t)
         : void 0;
   }
   GetCursorPosition() {
-    var e = (0, puerts_1.$ref)(0),
-      t = (0, puerts_1.$ref)(0);
-    if (this.GetMousePosition(e, t))
+    var t = (0, puerts_1.$ref)(0),
+      e = (0, puerts_1.$ref)(0);
+    if (this.GetMousePosition(t, e))
       return (
-        (this.CurrentInputPosition.X = (0, puerts_1.$unref)(e)),
-        (this.CurrentInputPosition.Y = (0, puerts_1.$unref)(t)),
+        (this.CurrentInputPosition.X = (0, puerts_1.$unref)(t)),
+        (this.CurrentInputPosition.Y = (0, puerts_1.$unref)(e)),
         this.CurrentInputPosition
       );
   }
-  GetTouchPosition(e) {
-    var t = (0, puerts_1.$ref)(0),
+  GetTouchPosition(t) {
+    var e = (0, puerts_1.$ref)(0),
       i = (0, puerts_1.$ref)(0);
     return (
-      this.GetInputTouchState(e, t, i, void 0),
-      (this.CurrentInputPosition.X = (0, puerts_1.$unref)(t)),
+      this.GetInputTouchState(t, e, i, void 0),
+      (this.CurrentInputPosition.X = (0, puerts_1.$unref)(e)),
       (this.CurrentInputPosition.Y = (0, puerts_1.$unref)(i)),
       this.CurrentInputPosition
     );
   }
-  IsInTouch(e) {
-    var t = (0, puerts_1.$ref)(!1);
+  IsInTouch(t) {
+    var e = (0, puerts_1.$ref)(!1);
     return (
-      this.GetInputTouchState(e, void 0, void 0, t), (0, puerts_1.$unref)(t)
+      this.GetInputTouchState(t, void 0, void 0, e), (0, puerts_1.$unref)(e)
     );
   }
-  SetIsPrintKeyName(e) {
-    this.PlayerInputHandle.IsPrintKeyName = e;
+  SetIsPrintKeyName(t) {
+    this.PlayerInputHandle.IsPrintKeyName = t;
   }
-  SimulateTouch(e, t, i) {
+  SimulateTouch(t, e, i) {
     i
-      ? this.PlayerInputHandle.TouchBegin(e, t)
-      : this.PlayerInputHandle.TouchEnd(e, t);
+      ? this.PlayerInputHandle.TouchBegin(t, e)
+      : this.PlayerInputHandle.TouchEnd(t, e);
+  }
+  SetCustomAction(t, e) {
+    this.PlayerInputHandle?.SetCustomAction(t, e);
+  }
+  ResetAllCustomAction(t) {
+    this.PlayerInputHandle?.ResetAllCustomAction(t);
+  }
+  ResetCustomAction(t, e) {
+    this.PlayerInputHandle?.ResetCustomAction(t, e);
+  }
+  SetActionEnable(t, e) {
+    this.PlayerInputHandle?.SetActionEnable(t, e);
+  }
+  GetCurrentPlatformCustomActionKeyNameList(t) {
+    return this.PlayerInputHandle?.GetCurrentPlatformCustomActionKeyNameList(t);
   }
 }
 (exports.TsBasePlayerController = TsBasePlayerController),

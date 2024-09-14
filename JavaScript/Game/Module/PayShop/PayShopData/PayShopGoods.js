@@ -5,6 +5,8 @@ const CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
   MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
   LevelGeneralCommons_1 = require("../../../LevelGamePlay/LevelGeneralCommons"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
@@ -41,13 +43,11 @@ class PayShopGoods {
     return this.Pe.Locked;
   }
   GetConditionTextId() {
-    var t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
-      this.Pe.Id,
-    ).BuyConditionId;
+    var t = this.Pe.GetBuyConditionId();
     return 0 !== t
-      ? LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
+      ? (LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
           t,
-        ) ?? ""
+        ) ?? "")
       : "";
   }
   GetDiscountLabel() {
@@ -500,6 +500,56 @@ class PayShopGoods {
   }
   CheckIfMonthCardItem() {
     return this.GetGoodsData().CheckIfMonthCardItem();
+  }
+  GetIfNeedRemind() {
+    return !(!this.vYa() && !this.MYa());
+  }
+  vYa() {
+    return (
+      !(
+        this.IsLocked() ||
+        !this.IfCanBuy() ||
+        this.IsSoldOut() ||
+        !this.CheckGoodIfShow() ||
+        this.IsDirect()
+      ) && 0 === this.GetPriceData().NowPrice
+    );
+  }
+  MYa() {
+    return (
+      !(!this.IfCanBuy() || this.IsSoldOut() || !this.CheckGoodIfShow()) &&
+      this.Pe.GetIfNeedRemind()
+    );
+  }
+  CheckGoodIfShow() {
+    return !(
+      !this.IsShowInShop() ||
+      !this.InSellTime() ||
+      !this.GetGoodsData().Show ||
+      (this.GetGoodsData().HasBuyLimit() &&
+        0 === this.GetGoodsData().GetRemainingCount() &&
+        !this.GetGoodsData().IsWeeklyRefresh() &&
+        !this.GetGoodsData().IfShowAfterSoldOut()) ||
+      (this.GetGoodsData().HasBuyLimit() &&
+        0 === this.GetGoodsData().GetRemainingCount() &&
+        this.GetGoodsData().IsWeeklyRefresh() &&
+        this.GetGoodsData().UpdateTime >= this.GetGoodsData().EndTime &&
+        !this.IsPermanentSell())
+    );
+  }
+  SaveRemindState(t) {
+    0 === this.Pe.SaveRemindState(t) &&
+      (EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RefreshPayShopEntranceRedDot,
+      ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RefreshPayShopInstanceRedDot,
+        this.PayShopId,
+      ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RefreshPayShopTabRedDot,
+        this.GetTabId(),
+      ));
   }
 }
 exports.PayShopGoods = PayShopGoods;

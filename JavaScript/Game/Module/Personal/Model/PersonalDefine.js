@@ -12,13 +12,13 @@ const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
   (exports.MAX_NAME_LENGTH = 12),
   (exports.STOP_AUDIO_EVENT_NAME = "stop_gacha_role_audio");
 class PersonalCardData {
-  constructor(t, s, o) {
+  constructor(t, s, i) {
     (this.CardId = 0),
       (this.IsRead = !1),
       (this.IsUnLock = !1),
       (this.CardId = t),
       (this.IsRead = s),
-      (this.IsUnLock = o);
+      (this.IsUnLock = i);
   }
   RefreshData(t, s) {
     (this.IsRead = t), (this.IsUnLock = s);
@@ -27,7 +27,7 @@ class PersonalCardData {
 exports.PersonalCardData = PersonalCardData;
 class RoleShowEntry {
   constructor(t, s) {
-    (this.O6n = t), (this.P6n = s);
+    (this.Q6n = t), (this.F6n = s);
   }
 }
 exports.RoleShowEntry = RoleShowEntry;
@@ -47,7 +47,9 @@ class PersonalInfoData {
       (this.Name = ""),
       (this.PlayerId = 0),
       (this.LastModifyNameTime = 0),
-      (this.ModifyName = StringUtils_1.EMPTY_STRING);
+      (this.ModifyName = StringUtils_1.EMPTY_STRING),
+      (this.PsnUserId = void 0),
+      (this.PsnOnlineId = void 0);
   }
   GetUnlockCardDataCount() {
     let s = 0;

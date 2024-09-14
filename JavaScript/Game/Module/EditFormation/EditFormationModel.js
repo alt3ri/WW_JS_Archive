@@ -24,16 +24,16 @@ class EditFormationModel extends ModelBase_1.ModelBase {
     let o = 0;
     var r = new Map();
     for (const u of t) {
-      var e = u.q5n,
+      var e = u.W5n,
         i = e === ModelManager_1.ModelManager.PlayerInfoModel.GetId();
-      for (const h of u.xVn) {
-        var a = h.AVn;
+      for (const h of u.kVn) {
+        var a = h.GVn;
         if (i || !(0 < a)) {
-          i && h.UVn && (o = a);
+          i && h.OVn && (o = a);
           let t = r.get(a);
           t || ((t = new Array()), r.set(a, t));
-          for (const g of h.sUs) {
-            var n = i && g.O6n === h.RVn;
+          for (const g of h.dUs) {
+            var n = i && g.Q6n === h.NVn;
             t.push([g, e, n]);
           }
         }
@@ -47,7 +47,7 @@ class EditFormationModel extends ModelBase_1.ModelBase {
         var d = m[0],
           l = m[1],
           M = m[2];
-        f.AddRoleData(d.O6n, d.P6n, l, M);
+        f.AddRoleData(d.Q6n, d.F6n, l, M);
       }
       s === o && (this.a5t = f);
     }

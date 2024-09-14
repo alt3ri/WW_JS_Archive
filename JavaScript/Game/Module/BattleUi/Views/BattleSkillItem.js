@@ -39,7 +39,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       (this.ait = void 0),
       (this.hit = void 0),
       (this.lit = void 0),
-      (this._it = void 0),
+      (this.CoolDownUiText = void 0),
       (this.uit = void 0),
       (this.cit = -0),
       (this.mit = -0),
@@ -76,6 +76,8 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       (this.wit = !1),
       (this.Bit = !1),
       (this.bit = !1),
+      (this.CdFixedPoint = 1),
+      (this.IsHideNumComp = !1),
       (this.qit = 1),
       (this.Git = 1),
       (this.Nit = void 0),
@@ -105,7 +107,8 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
         (this.cit -= BattleUiDefine_1.SKILL_COOLDOWN_LOOP_INTERVAL),
           (this.cit = Math.round(10 * this.cit) / 10),
           0 < this.cit
-            ? this.bit || this._it.SetText(this.cit.toFixed(1))
+            ? this.bit ||
+              this.CoolDownUiText.SetText(this.cit.toFixed(this.CdFixedPoint))
             : this.FinishSkillCoolDown();
       });
   }
@@ -122,12 +125,13 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
   }
   get GetNumComponent() {
     var t;
-    return (
-      this.NumComponent ||
-        ((t = this.GetItem(8)),
-        (this.NumComponent = new BattleSkillNumItem_1.BattleSkillNumItem(t))),
-      this.NumComponent
-    );
+    if (!this.IsHideNumComp)
+      return (
+        this.NumComponent ||
+          ((t = this.GetItem(8)),
+          (this.NumComponent = new BattleSkillNumItem_1.BattleSkillNumItem(t))),
+        this.NumComponent
+      );
   }
   get GetSwitchComponent() {
     var t;
@@ -173,7 +177,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       (this.Eit = t),
       (this.ait = this.GetButton(5)),
       (this.lit = this.GetItem(0)),
-      (this._it = this.GetText(2)),
+      (this.CoolDownUiText = this.GetText(2)),
       (this.uit = this.GetSprite(1)),
       (this.Lit = this.GetTexture(4)),
       (this.Dit = this.GetSprite(3)),
@@ -192,8 +196,8 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
         this.GetUiNiagara(10),
       )),
       this.GetUiNiagara(6).SetNiagaraUIActive(!1, !1),
-      this.GetUiNiagara(7).SetNiagaraUIActive(!1, !1),
-      this.Ore();
+      this.GetUiNiagara(7).SetNiagaraUIActive(!1, !0),
+      this.AddEvents();
   }
   async InitializeAsync() {
     var t;
@@ -261,7 +265,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
         : (this.qit = this.Git);
   }
   Reset() {
-    this.kre(),
+    this.RemoveEvents(),
       this.Deactivate(),
       (this.ait = void 0),
       (this.KeyItem = void 0),
@@ -279,7 +283,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
   Tick(t) {
     this.Wit(t);
   }
-  Ore() {
+  AddEvents() {
     this.fit ||
       (this.GetPointEventButton().OnPointDownCallBack.Bind(() => {
         this.OnSkillButtonPressed();
@@ -310,7 +314,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       ),
       (this.fit = !0));
   }
-  kre() {
+  RemoveEvents() {
     this.fit &&
       (this.GetPointEventButton() &&
         (this.GetPointEventButton().OnPointDownCallBack.Unbind(),
@@ -607,15 +611,21 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
   Yit() {
     var t,
       i = this.SkillButtonData.GetGroupSkillCdInfo();
-    i && ((t = i.CurRemainingCd), (i = i.CurMaxCd), this.Jit(t, i));
+    i
+      ? this.IsHideNumComp && 0 < i.RemainingCount
+        ? this.Jit(0, 0)
+        : ((t = i.CurRemainingCd), (i = i.CurMaxCd), this.Jit(t, i))
+      : this.SkillButtonData.HasCdComponent() || this.Jit(0, 0);
   }
   Jit(t, i, s = !1) {
-    (this.bit = s),
+    BattleSkillItem.zit.Start(),
+      (this.bit = s),
       0 < t && 0 < i
         ? this.SkillButtonData.IsCdVisible()
           ? this.Zit(t, i)
           : this.eot(t)
-        : this.FinishSkillCoolDown();
+        : this.FinishSkillCoolDown(),
+      BattleSkillItem.zit.Stop();
   }
   Zit(t, i, s) {
     const e = this.SkillButtonData?.GetSkillId();
@@ -655,8 +665,8 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
           (this.dit = Time_1.Time.WorldTimeSeconds - (i - t)),
           (this.OnCoolDownFinishedCallback = s),
           this.bit
-            ? this._it.SetText("")
-            : this._it.SetText(this.cit.toFixed(1)),
+            ? this.CoolDownUiText.SetText("")
+            : this.CoolDownUiText.SetText(this.cit.toFixed(this.CdFixedPoint)),
           (this.hit = TimerSystem_1.TimerSystem.Forever(
             this.kit,
             BattleUiDefine_1.SKILL_COOLDOWN_INTERVAL,
@@ -993,7 +1003,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
           this.GetUltraComponent.RefreshUltraTipsEffect(t)));
   }
   SetLimitUseSkillCount(t) {
-    this.GetNumComponent.SetRemainingCount(t);
+    this.GetNumComponent?.SetRemainingCount(t);
   }
   RefreshLimitCount(t = !1) {
     var i, s;
@@ -1001,9 +1011,9 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       ((s =
         void 0 !== (i = this.SkillButtonData.GetGroupSkillCdInfo()) &&
         1 < i.LimitCount),
-      t &&
-        (this.NumComponent || s) &&
-        this.GetNumComponent.SetComponentActive(s),
+      ((this.NumComponent?.TargetActive ?? !1) === s && !t) ||
+        (!this.NumComponent && !s) ||
+        this.GetNumComponent?.SetComponentActive(s),
       s) &&
       this.SetLimitUseSkillCount(i.RemainingCount);
   }
@@ -1052,5 +1062,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
             this.RootItem.SetAlpha(this.qit)));
   }
 }
-(exports.BattleSkillItem = BattleSkillItem).zit = void 0;
+(exports.BattleSkillItem = BattleSkillItem).zit = Stats_1.Stat.Create(
+  "[SkillButton]PlaySkillCd",
+);
 //# sourceMappingURL=BattleSkillItem.js.map

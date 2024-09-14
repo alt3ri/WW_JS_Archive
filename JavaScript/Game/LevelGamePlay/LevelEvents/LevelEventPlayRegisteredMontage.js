@@ -23,18 +23,26 @@ class LevelEventPlayRegisteredMontage extends LevelGeneralBase_1.LevelEventBase 
       (this.gLe = void 0),
       (this.j3 = void 0),
       (this.sRe = (e) => {
+        var t;
         !(
           ObjectUtils_1.ObjectUtils.IsValid(e) &&
           ObjectUtils_1.ObjectUtils.IsValid(this.rRe) &&
           EntitySystem_1.EntitySystem.Get(this.E0)?.IsInit
         ) ||
-        (1 === (e = (this.nRe = e).CompositeSections.Num())
+        (1 === (t = (this.nRe = e).CompositeSections.Num())
           ? this.aRe()
-          : 3 === e && this.hRe(),
+          : 3 === t && this.hRe(),
+        EntitySystem_1.EntitySystem.Get(this.E0)
+          .GetComponent(172)
+          ?.ExpressionController?.ChangeFaceForExpression(
+            e,
+            this.gLe?.FaceExpressionId,
+          ),
         this.IsAsync)
           ? this.FinishExecute(!0)
           : (this.rRe.OnMontageEnded.Add(this.nse),
-            EventSystem_1.EventSystem.Add(
+            EventSystem_1.EventSystem.AddWithTarget(
+              ModelManager_1.ModelManager.CreatureModel?.GetEntityById(this.E0),
               EventDefine_1.EEventName.RemoveEntity,
               this.zpe,
             ));
@@ -42,11 +50,16 @@ class LevelEventPlayRegisteredMontage extends LevelGeneralBase_1.LevelEventBase 
       (this.nse = (e, t) => {
         e === this.nRe &&
           (this.rRe.OnMontageEnded.Remove(this.nse),
-          EventSystem_1.EventSystem.Has(
+          (e = ModelManager_1.ModelManager.CreatureModel?.GetEntityById(
+            this.E0,
+          )),
+          EventSystem_1.EventSystem.HasWithTarget(
+            e,
             EventDefine_1.EEventName.RemoveEntity,
             this.zpe,
           ) &&
-            EventSystem_1.EventSystem.Remove(
+            EventSystem_1.EventSystem.RemoveWithTarget(
+              e,
               EventDefine_1.EEventName.RemoveEntity,
               this.zpe,
             ),
@@ -57,10 +70,19 @@ class LevelEventPlayRegisteredMontage extends LevelGeneralBase_1.LevelEventBase 
           (this.j3 && (this.j3.Remove(), (this.j3 = void 0)),
           this.rRe.OnMontageEnded.Remove(this.nse),
           this.FinishExecute(!0),
-          EventSystem_1.EventSystem.Remove(
+          (t = ModelManager_1.ModelManager.CreatureModel?.GetEntityById(
+            this.E0,
+          )),
+          EventSystem_1.EventSystem.HasWithTarget(
+            t,
             EventDefine_1.EEventName.RemoveEntity,
             this.zpe,
-          ));
+          )) &&
+          EventSystem_1.EventSystem.RemoveWithTarget(
+            t,
+            EventDefine_1.EEventName.RemoveEntity,
+            this.zpe,
+          );
       });
   }
   ExecuteInGm(e, t) {
@@ -74,7 +96,7 @@ class LevelEventPlayRegisteredMontage extends LevelGeneralBase_1.LevelEventBase 
       this.gLe.EntityId,
     );
     if (e)
-      if (((this.E0 = e.Id), e.Entity.GetComponent(39)?.IsAiDriver))
+      if (((this.E0 = e.Id), e.Entity.GetComponent(40)?.IsAiDriver))
         (t = e.Entity.GetComponent(1)),
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -86,7 +108,7 @@ class LevelEventPlayRegisteredMontage extends LevelGeneralBase_1.LevelEventBase 
             ),
           this.FinishExecute(!0);
       else if (
-        ((this.rRe = e.Entity.GetComponent(162)?.MainAnimInstance),
+        ((this.rRe = e.Entity.GetComponent(163)?.MainAnimInstance),
         ObjectUtils_1.ObjectUtils.IsValid(this.rRe))
       ) {
         let e = void 0;

@@ -28,28 +28,28 @@ const AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem"),
   FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
   ENTITY_TYPE_VOLUME_CONTROLS = [
     [
-      Protocol_1.Aki.Protocol.wks.Proto_Animal,
+      Protocol_1.Aki.Protocol.kks.Proto_Animal,
       "entity_type_volume_control_animal",
     ],
     [
-      Protocol_1.Aki.Protocol.wks.Proto_Custom,
+      Protocol_1.Aki.Protocol.kks.Proto_Custom,
       "entity_type_volume_control_custom_other",
     ],
     [
-      Protocol_1.Aki.Protocol.wks.Proto_Monster,
+      Protocol_1.Aki.Protocol.kks.Proto_Monster,
       "entity_type_volume_control_monster",
     ],
-    [Protocol_1.Aki.Protocol.wks.Proto_Npc, "entity_type_volume_control_npc"],
+    [Protocol_1.Aki.Protocol.kks.Proto_Npc, "entity_type_volume_control_npc"],
     [
-      Protocol_1.Aki.Protocol.wks.Proto_Player,
+      Protocol_1.Aki.Protocol.kks.Proto_Player,
       "entity_type_volume_control_player_role",
     ],
     [
-      Protocol_1.Aki.Protocol.wks.Proto_SceneItem,
+      Protocol_1.Aki.Protocol.kks.Proto_SceneItem,
       "entity_type_volume_control_scene_item",
     ],
     [
-      Protocol_1.Aki.Protocol.wks.Proto_Vision,
+      Protocol_1.Aki.Protocol.kks.Proto_Vision,
       "entity_type_volume_control_vision",
     ],
   ];
@@ -107,8 +107,8 @@ let CharacterAudioComponent = class CharacterAudioComponent extends EntityCompon
               SocketName: FNameUtil_1.FNameUtil.GetDynamicFName(t),
             }))?.IsValid()
           ? (((i = this.CreatureData?.GetEntityType()) !==
-              Protocol_1.Aki.Protocol.wks.Proto_Npc &&
-              i !== Protocol_1.Aki.Protocol.wks.Proto_Monster) ||
+              Protocol_1.Aki.Protocol.kks.Proto_Npc &&
+              i !== Protocol_1.Aki.Protocol.kks.Proto_Monster) ||
               (e.bEnableOcclusion = !0),
             this.BindGameSyncs(o),
             this.Z3r(),
@@ -141,7 +141,7 @@ let CharacterAudioComponent = class CharacterAudioComponent extends EntityCompon
   }
 };
 (CharacterAudioComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(43)],
+  [(0, RegisterComponent_1.RegisterComponent)(44)],
   CharacterAudioComponent,
 )),
   (exports.CharacterAudioComponent = CharacterAudioComponent);

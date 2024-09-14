@@ -62,10 +62,10 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
                 i,
                 t.RogueGainEntry,
               ),
-              s = 0 < o.Q2s.length;
+              s = 0 < o.tqs.length;
             if (s) {
               h.IsShowCommon = !0;
-              for (const r of o.Q2s) {
+              for (const r of o.tqs) {
                 h.ExtraRogueGainEntry = new RogueGainEntry_1.RogueGainEntry(r);
                 break;
               }
@@ -245,14 +245,14 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       ((s = s[0]),
       (i = (e =
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          s.J4n,
-        ) >= s.o9n)
+          s.s5n,
+        ) >= s.m9n)
         ? "RogueSpecialRefreshCost"
         : "RogueSpecialRefreshCost_Not"),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), i, s.o9n),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), i, s.m9n),
       this.RefreshButtonItem.SetEnableClick(0 < t && e),
       (i = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCurrencyConfig(
-        s.J4n,
+        s.s5n,
       )),
       this.SetTextureByPath(i.IconSmall, this.GetTexture(7)));
   }

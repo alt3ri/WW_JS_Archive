@@ -18,8 +18,10 @@ class SkillTree {
     return this.nodegroup();
   }
   get ParentNodes() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.parentnodesLength(), (t) =>
-      this.parentnodes(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.parentnodesLength(),
+      this.parentnodes,
+      this,
     );
   }
   get NodeType() {
@@ -29,8 +31,10 @@ class SkillTree {
     return this.coordinate();
   }
   get Condition() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.conditionLength(), (t) =>
-      this.condition(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.conditionLength(),
+      this.condition,
+      this,
     );
   }
   get SkillId() {
@@ -45,23 +49,33 @@ class SkillTree {
   get PropertyNodeParam() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.propertynodeparamLength(),
-      (t) => this.propertynodeparam(t),
+      this.propertynodeparam,
+      this,
     );
   }
   get PropertyNodeIcon() {
     return this.propertynodeicon();
   }
   get Property() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.propertyLength(), (t) =>
-      this.property(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.propertyLength(),
+      this.property,
+      this,
     );
   }
   get Consume() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.consumeLength(),
-      (t) => this.consume(t)?.key(),
-      (t) => this.consume(t)?.value(),
+      this.consumeKey,
+      this.consumeValue,
+      this,
     );
+  }
+  consumeKey(t) {
+    return this.consume(t)?.key();
+  }
+  consumeValue(t) {
+    return this.consume(t)?.value();
   }
   get UnLockCondition() {
     return this.unlockcondition();

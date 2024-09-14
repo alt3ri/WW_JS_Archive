@@ -15,7 +15,6 @@ const UE = require("ue"),
   InstanceDungeonController_1 = require("../../InstanceDungeon/InstanceDungeonController"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
   GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
-  AdventureDefine_1 = require("../AdventureDefine"),
   NewSoundLordItem_1 = require("./NewSoundLordItem"),
   NewSoundNormalItem_1 = require("./NewSoundNormalItem"),
   NewSoundTeachItem_1 = require("./NewSoundTeachItem"),
@@ -35,8 +34,7 @@ class NewSoundDetectItem extends GridProxyAbstract_1.GridProxyAbstract {
       }),
       (this.P8e = () => {
         if (
-          ModelManager_1.ModelManager.CreatureModel.GetInstanceId() !==
-          AdventureDefine_1.BigWorldID
+          ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
         )
           ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
             "DungeonDetection",
@@ -90,8 +88,8 @@ class NewSoundDetectItem extends GridProxyAbstract_1.GridProxyAbstract {
               ),
               ControllerHolder_1.ControllerHolder.AdventureGuideController.RequestForDetection(
                 2 !== t.Conf.Secondary
-                  ? Protocol_1.Aki.Protocol.X6n.Proto_Dungeon
-                  : Protocol_1.Aki.Protocol.X6n.Proto_SilentArea,
+                  ? Protocol_1.Aki.Protocol.r8n.Proto_Dungeon
+                  : Protocol_1.Aki.Protocol.r8n.Proto_SilentArea,
                 [t.Conf.DungeonId],
                 this.Pe.Conf.Id,
               ))
@@ -103,7 +101,7 @@ class NewSoundDetectItem extends GridProxyAbstract_1.GridProxyAbstract {
                 !0,
               ),
               ControllerHolder_1.ControllerHolder.AdventureGuideController.RequestForDetection(
-                Protocol_1.Aki.Protocol.X6n.Proto_SilentArea,
+                Protocol_1.Aki.Protocol.r8n.Proto_SilentArea,
                 e.Conf.LevelPlayList,
                 this.Pe.Conf.Id,
               ));

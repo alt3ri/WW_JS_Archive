@@ -57,13 +57,13 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
         1010,
         new Map([
           [
-            Protocol_1.Aki.Protocol.O4n.Proto_ErrPlayerNotInBigWorld,
+            Protocol_1.Aki.Protocol.Q4n.Proto_ErrPlayerNotInBigWorld,
             "ExplorePositionError",
           ],
-          [Protocol_1.Aki.Protocol.O4n.Proto_ErrInFighting, "ExploreFighting"],
-          [Protocol_1.Aki.Protocol.O4n.Proto_ErrNotHostPlayer, "OnylHostUse"],
+          [Protocol_1.Aki.Protocol.Q4n.Proto_ErrInFighting, "ExploreFighting"],
+          [Protocol_1.Aki.Protocol.Q4n.Proto_ErrNotHostPlayer, "OnylHostUse"],
           [
-            Protocol_1.Aki.Protocol.O4n.Proto_ErrConsumeNotEnough,
+            Protocol_1.Aki.Protocol.Q4n.Proto_ErrConsumeNotEnough,
             "ExploreTeleporterItemLack",
           ],
         ]),
@@ -72,29 +72,29 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
         1011,
         new Map([
           [
-            Protocol_1.Aki.Protocol.O4n.Proto_ErrPlayerNotInBigWorld,
+            Protocol_1.Aki.Protocol.Q4n.Proto_ErrPlayerNotInBigWorld,
             "ExplorePositionError",
           ],
-          [Protocol_1.Aki.Protocol.O4n.Proto_ErrInFighting, "ExploreFighting"],
-          [Protocol_1.Aki.Protocol.O4n.Proto_ErrNotHostPlayer, "OnylHostUse"],
+          [Protocol_1.Aki.Protocol.Q4n.Proto_ErrInFighting, "ExploreFighting"],
+          [Protocol_1.Aki.Protocol.Q4n.Proto_ErrNotHostPlayer, "OnylHostUse"],
           [
-            Protocol_1.Aki.Protocol.O4n.Proto_ErrNotHaveCountryAccess,
+            Protocol_1.Aki.Protocol.Q4n.Proto_ErrNotHaveCountryAccess,
             "ExploreUnauthorized",
           ],
           [
-            Protocol_1.Aki.Protocol.O4n.Proto_ErrSkillIsEffect,
+            Protocol_1.Aki.Protocol.Q4n.Proto_ErrSkillIsEffect,
             "ExploreActivating",
           ],
           [
-            Protocol_1.Aki.Protocol.O4n.Proto_ErrNoSoundBox,
+            Protocol_1.Aki.Protocol.Q4n.Proto_ErrNoSoundBox,
             "Exolore_ShengXiaNoDetect",
           ],
           [
-            Protocol_1.Aki.Protocol.O4n.Proto_SoundBoxExploreFull,
+            Protocol_1.Aki.Protocol.Q4n.Proto_SoundBoxExploreFull,
             "ExploreShengXiaCollectAll",
           ],
           [
-            Protocol_1.Aki.Protocol.O4n.Proto_ErrConsumeNotEnough,
+            Protocol_1.Aki.Protocol.Q4n.Proto_ErrConsumeNotEnough,
             "ExploreShengXiaItemLack",
           ],
         ]),
@@ -103,13 +103,13 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
         1012,
         new Map([
           [
-            Protocol_1.Aki.Protocol.O4n.Proto_ErrPlayerNotInBigWorld,
+            Protocol_1.Aki.Protocol.Q4n.Proto_ErrPlayerNotInBigWorld,
             "ExplorePositionError",
           ],
-          [Protocol_1.Aki.Protocol.O4n.Proto_ErrInFighting, "ExploreFighting"],
-          [Protocol_1.Aki.Protocol.O4n.Proto_ErrNotHostPlayer, "OnylHostUse"],
+          [Protocol_1.Aki.Protocol.Q4n.Proto_ErrInFighting, "ExploreFighting"],
+          [Protocol_1.Aki.Protocol.Q4n.Proto_ErrNotHostPlayer, "OnylHostUse"],
           [
-            Protocol_1.Aki.Protocol.O4n.Proto_ErrNotHaveCountryAccess,
+            Protocol_1.Aki.Protocol.Q4n.Proto_ErrNotHaveCountryAccess,
             "ExploreUnauthorized",
           ],
         ]),
@@ -117,32 +117,32 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
       this.qAi.set(
         1011,
         new Set([
-          Protocol_1.Aki.Protocol.O4n.NRs,
-          Protocol_1.Aki.Protocol.O4n.Proto_ErrSkillIsEffect,
+          Protocol_1.Aki.Protocol.Q4n.KRs,
+          Protocol_1.Aki.Protocol.Q4n.Proto_ErrSkillIsEffect,
         ]),
       ),
       this.qAi.set(
         1012,
         new Set([
-          Protocol_1.Aki.Protocol.O4n.NRs,
-          Protocol_1.Aki.Protocol.O4n.Proto_ErrTreasureBoxAllActive,
+          Protocol_1.Aki.Protocol.Q4n.KRs,
+          Protocol_1.Aki.Protocol.Q4n.Proto_ErrTreasureBoxAllActive,
         ]),
       ),
-      this.qAi.set(1010, new Set([Protocol_1.Aki.Protocol.O4n.NRs])),
+      this.qAi.set(1010, new Set([Protocol_1.Aki.Protocol.Q4n.KRs])),
       this.GAi.set(
         1011,
-        new Set([Protocol_1.Aki.Protocol.O4n.Proto_ExploreToolNotConfirm]),
+        new Set([Protocol_1.Aki.Protocol.Q4n.Proto_ExploreToolNotConfirm]),
       ),
       this.GAi.set(
         1012,
         new Set([
-          Protocol_1.Aki.Protocol.O4n.Proto_ExploreToolNotConfirm,
-          Protocol_1.Aki.Protocol.O4n.Proto_ErrTreasureBoxAllActive,
+          Protocol_1.Aki.Protocol.Q4n.Proto_ExploreToolNotConfirm,
+          Protocol_1.Aki.Protocol.Q4n.Proto_ErrTreasureBoxAllActive,
         ]),
       ),
       this.GAi.set(
         1010,
-        new Set([Protocol_1.Aki.Protocol.O4n.Proto_ExploreToolNotConfirm]),
+        new Set([Protocol_1.Aki.Protocol.Q4n.Proto_ExploreToolNotConfirm]),
       ),
       (this.NAi = !1),
       EventSystem_1.EventSystem.Add(
@@ -184,7 +184,7 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
     return this.BAi.get(e);
   }
   GetRespTipsId(e, o) {
-    return this.bAi.get(e.PhantomSkillId)?.get(o.hvs);
+    return this.bAi.get(e.PhantomSkillId)?.get(o.Cvs);
   }
   GetRespConfirmBoxId(e, o) {
     if (this.IsRespMeanCheckPass(e, o))
@@ -198,10 +198,10 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
       }
   }
   IsRespMeanSuccess(e, o) {
-    return this.qAi.get(e.PhantomSkillId)?.has(o.hvs) ?? !1;
+    return this.qAi.get(e.PhantomSkillId)?.has(o.Cvs) ?? !1;
   }
   IsRespMeanCheckPass(e, o) {
-    return this.GAi.get(e.PhantomSkillId)?.has(o.hvs) ?? !1;
+    return this.GAi.get(e.PhantomSkillId)?.has(o.Cvs) ?? !1;
   }
   SetCharExploreSkillBusy(e) {
     Log_1.Log.CheckInfo() &&

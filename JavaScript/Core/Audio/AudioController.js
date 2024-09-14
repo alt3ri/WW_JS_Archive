@@ -120,21 +120,26 @@ class AudioController {
     AudioController.w6.DeleteCallback(t, o);
   }
   static PlayAudioByEventPath(o, e, i, r, l, s = !0, a = "") {
+    this.B6.Start();
     var n = AudioController.GetAudioEvent(o, !1);
     if (o && n) {
       AudioController.w6.SetPlayFlag(o);
       let t = 0;
-      return (t = e
-        ? s
-          ? UE.AkGameplayStatics.PostEvent(n, e, i, r, l, a)
-          : UE.AkGameplayStatics.PostEventAtLocation(
-              n,
-              e.K2_GetActorLocation(),
-              new UE.Rotator(0, 0, 0),
-              a,
-              e.GetWorld(),
-            )
-        : n.PostOnActor(void 0, r, i ?? 0, !1));
+      return (
+        (t = e
+          ? s
+            ? UE.AkGameplayStatics.PostEvent(n, e, i, r, l, a)
+            : UE.AkGameplayStatics.PostEventAtLocation(
+                n,
+                e.K2_GetActorLocation(),
+                new UE.Rotator(0, 0, 0),
+                a,
+                e.GetWorld(),
+              )
+          : n.PostOnActor(void 0, r, i ?? 0, !1)),
+        this.B6.Stop(),
+        t
+      );
     }
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -142,7 +147,8 @@ class AudioController {
         22,
         "没有对应的音频事件资源，请检查是否已经加载！",
         ["eventPath", o],
-      );
+      ),
+      this.B6.Stop();
   }
   static P6(t, o, e, i, r = !0) {
     var l = AudioController.GetAudioEvent(t, !1);
@@ -310,5 +316,5 @@ class AudioController {
 ((exports.AudioController = AudioController).w6 = new AudioPool_1.AudioPool()),
   (AudioController.V6 = new Map()),
   (AudioController.k6 = new Map()),
-  (AudioController.B6 = void 0);
+  (AudioController.B6 = Stats_1.Stat.Create("PlayAudioByEventPath"));
 //# sourceMappingURL=AudioController.js.map

@@ -17,8 +17,10 @@ class ActivitySign {
     return this.prefabresource();
   }
   get SignRewards() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.signrewardsLength(), (t) =>
-      this.signrewards(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.signrewardsLength(),
+      this.signrewards,
+      this,
     );
   }
   get ImportantRewardIndex() {
@@ -31,8 +33,10 @@ class ActivitySign {
     return this.importantrewardtype();
   }
   get PreviewList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.previewlistLength(), (t) =>
-      this.previewlist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.previewlistLength(),
+      this.previewlist,
+      this,
     );
   }
   __init(t, i) {

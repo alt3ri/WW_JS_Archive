@@ -1,4 +1,5 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputController = void 0);
 const cpp_1 = require("cpp"),
@@ -22,6 +23,10 @@ class InputController extends ControllerBase_1.ControllerBase {
   static InitializeEnvironment() {
     Info_1.Info.UseFastInputCallback &&
       cpp_1.FKuroInputInterface.InitializeEnvironment(),
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "Kuro.DataTable.ReadRowPassByPointer 0",
+      ),
       Info_1.Info.AxisInputOptimize
         ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
@@ -147,12 +152,12 @@ class InputController extends ControllerBase_1.ControllerBase {
       var e = this.Model.GetPressTimes();
       switch (n) {
         case 1:
-          var i = Time_1.Time.WorldTimeSeconds;
-          e.set(t, i);
+          var r = Time_1.Time.WorldTimeSeconds;
+          e.set(t, r);
           for (const u of this.Model.GetHandlers()) {
-            var r = u.GetInputFilter();
-            if (r.BlockAction(t)) break;
-            r.ListenToAction(t) && u.HandlePressEvent(t, i);
+            var i = u.GetInputFilter();
+            if (i.BlockAction(t)) break;
+            i.ListenToAction(t) && u.HandlePressEvent(t, r);
           }
           break;
         case 2:
@@ -169,16 +174,39 @@ class InputController extends ControllerBase_1.ControllerBase {
       }
     }
   }
-  static SetMoveControlEnabled(t, n, e, i) {
-    (this.GMe = t), (this.NMe = n), (this.OMe = e), (this.kMe = i);
+  static SetMoveControlEnabled(t, n, e, r) {
+    if (
+      ((this.GMe = t),
+      (this.NMe = n),
+      (this.OMe = e),
+      (this.kMe = r),
+      Info_1.Info.AxisInputOptimize &&
+        (this.Model.NextFrameRefreshAxisValues(), !(t && n && e && r)))
+    ) {
+      var i = this.Model.GetAxisValues(),
+        o = i.get(InputEnums_1.EInputAxis.MoveForward),
+        p = i.get(InputEnums_1.EInputAxis.MoveRight),
+        s = this.Model.GetHandlers();
+      if (o && ((!t && 0 < o) || (!n && o < 0))) {
+        i.set(InputEnums_1.EInputAxis.MoveForward, 0);
+        for (const u of s)
+          u.ClearSingleAxisInput(InputEnums_1.EInputAxis.MoveForward, !1);
+      }
+      if (p && ((!r && 0 < p) || (!e && p < 0))) {
+        i.set(InputEnums_1.EInputAxis.MoveRight, 0);
+        for (const a of s)
+          a.ClearSingleAxisInput(InputEnums_1.EInputAxis.MoveRight, !1);
+      }
+    }
   }
   static InputAxis(t, n, e = !0) {
-    var i = this.Model.GetAxisValues();
+    var r = this.Model.GetAxisValues();
     if (Info_1.Info.AxisInputOptimize) {
-      if (((this.HIa = e), i.get(t) === n)) return;
-    } else if (0 === n && i.has(t)) return;
+      if ((e && this.qja.add(t), r.get(t) === n)) return;
+    } else if (0 === n && r.has(t)) return;
     if (
       (ModelManager_1.ModelManager.InputModel.IsOpenInputAxisLog &&
+        3 === t &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Input",
@@ -196,12 +224,12 @@ class InputController extends ControllerBase_1.ControllerBase {
       if (!this.kMe && 0 < n) return;
       if (!this.OMe && n < 0) return;
     }
-    i.set(t, n),
+    r.set(t, n),
       ModelManager_1.ModelManager.InputModel.IsOpenInputAxisLog &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Input", 8, "[InputLog][InputController]完成接收输入", [
           "axisSet",
-          i,
+          r,
         ]);
   }
   static PreProcessInput(t, n) {
@@ -211,41 +239,46 @@ class InputController extends ControllerBase_1.ControllerBase {
   static PostProcessInput(t, n) {
     if (this.Model) {
       var e,
-        i,
-        r = this.Model.GetHandlers();
-      for ([e, i] of this.Model.GetAxisValues())
-        for (const I of r) {
-          var o = I.GetInputFilter();
+        r,
+        i = this.Model.GetHandlers();
+      InputController.FMe.Start();
+      for ([e, r] of this.Model.GetAxisValues())
+        for (const _ of i) {
+          var o = _.GetInputFilter();
           if (o.BlockAxis(e)) {
-            I.ClearInputAxis(!1);
+            _.ClearSingleAxisInput(e, !1);
             break;
           }
           o.ListenToAxis(e) &&
             (ModelManager_1.ModelManager.InputModel.IsOpenInputAxisLog &&
+              3 === e &&
               Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Input",
                 8,
                 "[InputLog][InputController]开始处理轴输入",
                 ["axis", e],
-                ["value", i],
+                ["value", r],
               ),
-            I.HandleInputAxis(e, i));
+            _.HandleInputAxis(e, r));
         }
+      InputController.FMe.Stop();
       var p,
         s,
         u = Time_1.Time.WorldTimeSeconds;
+      InputController.VMe.Start();
       for ([p, s] of this.Model.GetPressTimes()) {
         var a = this.qMe(s, u);
         if (a !== KEY_RELEASED_TIME)
-          for (const l of r) {
-            var _ = l.GetInputFilter();
-            if (_.BlockAction(p)) break;
-            _.ListenToAction(p) && l.HandleHoldEvent(p, a);
+          for (const I of i) {
+            var l = I.GetInputFilter();
+            if (l.BlockAction(p)) break;
+            l.ListenToAction(p) && I.HandleHoldEvent(p, a);
           }
       }
+      InputController.VMe.Stop(), InputController.HMe.Start();
       try {
-        for (const f of r) f.PostProcessInput(t, n);
+        for (const f of i) f.PostProcessInput(t, n);
       } catch (t) {
         t instanceof Error
           ? Log_1.Log.CheckError() &&
@@ -255,12 +288,16 @@ class InputController extends ControllerBase_1.ControllerBase {
             ])
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("Json", 8, "PostProcessInput", ["error", t]);
+      } finally {
+        InputController.HMe.Stop();
       }
       if (Info_1.Info.AxisInputOptimize) {
-        if (this.HIa) {
-          (this.HIa = !1), this.Model.GetAxisValues().clear();
-          for (const g of r) g.ClearInputAxis(!0);
+        for (const E of this.qja) {
+          this.Model.GetAxisValues().has(E) &&
+            this.Model.GetAxisValues().delete(E);
+          for (const g of i) g.ClearSingleAxisInput(E, !0);
         }
+        this.qja.clear();
       } else this.Model.GetAxisValues().clear();
       ModelManager_1.ModelManager.InputModel.IsOpenInputAxisLog &&
         Log_1.Log.CheckInfo() &&
@@ -285,23 +322,28 @@ class InputController extends ControllerBase_1.ControllerBase {
     UE.BasePlayerController.SetKuroForceFeedbackConfig(t, n);
   }
 }
-((exports.InputController = InputController).HMe = void 0),
-  (InputController.FMe = void 0),
-  (InputController.VMe = void 0),
+(exports.InputController = InputController),
+  ((_a = InputController).HMe = Stats_1.Stat.Create(
+    "InputController.PostProcessInput",
+  )),
+  (InputController.FMe = Stats_1.Stat.Create(
+    "InputController.HandleInputAxis",
+  )),
+  (InputController.VMe = Stats_1.Stat.Create("InputController.HandleHold")),
   (InputController.GMe = !0),
   (InputController.NMe = !0),
   (InputController.OMe = !0),
   (InputController.kMe = !0),
   (InputController.wMe = (t, n, e) => {
     var e = e.GetInputAxis(),
-      i =
+      r =
         (InputController.InputAxis(e, n, !1),
         Global_1.Global.CharacterController);
-    i &&
+    r &&
       0 < n &&
       e !== InputEnums_1.EInputAxis.Zoom &&
       Info_1.Info.IsInKeyBoard() &&
-      !i.bShowMouseCursor &&
+      !r.bShowMouseCursor &&
       InputManager_1.InputManager.MoveCursorToCenter();
   }),
   (InputController.BMe = (t, n, e) => {
@@ -327,11 +369,12 @@ class InputController extends ControllerBase_1.ControllerBase {
     var n,
       e = ModelManager_1.ModelManager.InputDistributeModel;
     for ([n] of InputController.Model.GetPressTimes()) {
-      var i = e.GetActionInputDistributeTagName(InputEnums_1.EInputAction[n]);
-      !i ||
-        e.IsTagMatchAnyCurrentInputTag(i) ||
+      var r = e.GetActionInputDistributeTagName(InputEnums_1.EInputAction[n]);
+      !r ||
+        e.IsTagMatchAnyCurrentInputTag(r) ||
         InputController.InputAction(n, 2);
     }
+    _a.Model.NextFrameRefreshAxisValues();
   }),
-  (InputController.HIa = !1);
+  (InputController.qja = new Set());
 //# sourceMappingURL=InputController.js.map

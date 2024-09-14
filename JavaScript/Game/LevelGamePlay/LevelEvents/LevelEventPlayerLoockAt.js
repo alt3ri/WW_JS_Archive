@@ -12,34 +12,6 @@ const Quat_1 = require("../../../Core/Utils/Math/Quat"),
   tmpQuat = Quat_1.Quat.Create(),
   tmpRotator = Rotator_1.Rotator.Create();
 class LevelEventPlayerLoockAt extends LevelGeneralBase_1.LevelEventBase {
-  Execute(t, e) {
-    var r = parseFloat(t.get("PosX")),
-      a = parseFloat(t.get("PosY")),
-      o = parseFloat(t.get("PosZ")),
-      t = "false" !== t.get("CameraMove")?.toLowerCase(),
-      r = Vector_1.Vector.Create(r, a, o),
-      a = Global_1.Global.BaseCharacter;
-    a &&
-      ((o = a.CharacterActorComponent),
-      r.Subtraction(o.ActorLocationProxy, tmpVector),
-      MathUtils_1.MathUtils.LookRotationUpFirst(
-        tmpVector,
-        o.ActorUpProxy,
-        tmpQuat,
-      ),
-      tmpQuat.IsNearZero() ||
-        (tmpQuat.Rotator(tmpRotator),
-        o.SetActorRotation(
-          tmpRotator.ToUeRotator(),
-          "LevelEventPlayerLoockAt",
-          !1,
-        ),
-        o.SetInputRotator(tmpRotator),
-        t &&
-          CameraBlueprintFunctionLibrary_1.default.SetCameraRotation(
-            tmpRotator.ToUeRotator(),
-          )));
-  }
   ExecuteNew(t, e) {
     var r, a, o;
     t &&

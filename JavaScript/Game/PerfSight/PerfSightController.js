@@ -7,7 +7,6 @@ const cpp_1 = require("cpp"),
   Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
   Stats_1 = require("../../Core/Common/Stats"),
-  Time_1 = require("../../Core/Common/Time"),
   CommonDefine_1 = require("../../Core/Define/CommonDefine"),
   EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
   ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
@@ -49,7 +48,8 @@ class PerfSightController extends ControllerBase_1.ControllerBase {
         if (!Info_1.Info.IsMobilePlatform()) return !0;
         PerfSight_1.PerfSight.SetVersionIden(e);
       }
-      PerfSightController.sCe();
+      PerfSight_1.PerfSight.MarkLevelLoad("BeforeLogin"),
+        PerfSightController.sCe();
     }
     return !0;
   }
@@ -59,8 +59,8 @@ class PerfSightController extends ControllerBase_1.ControllerBase {
         (PerfSightController.aCe(),
         PerfSightController.StopRecord(),
         PerfSightController.RemoveTimer(),
-        PerfSightController.Jla(),
-        PerfSightController.STa()),
+        PerfSightController.zua(),
+        PerfSightController.swa()),
       super.OnClear()
     );
   }
@@ -87,30 +87,30 @@ class PerfSightController extends ControllerBase_1.ControllerBase {
       (TimerSystem_1.RealTimeTimerSystem.Remove(PerfSightController.j3),
       (PerfSightController.j3 = void 0));
   }
-  static STa() {
+  static swa() {
     if (0 < this.oWe.size) {
-      for (const e of this.oWe) this.ETa(e, !1);
+      for (const e of this.oWe) this.awa(e, !1);
       this.oWe.clear();
     }
   }
-  static zla() {
-    PerfSightController.Jla(),
-      PerfSightController.Zla
+  static Zua() {
+    PerfSightController.zua(),
+      PerfSightController.eca
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Performance",
             55,
             "PerfSightController.PositionTimer,请检查",
           )
-        : (PerfSightController.Zla = TimerSystem_1.RealTimeTimerSystem.Forever(
-            PerfSightController.e1a,
+        : (PerfSightController.eca = TimerSystem_1.RealTimeTimerSystem.Forever(
+            PerfSightController.tca,
             CommonDefine_1.MILLIONSECOND_PER_SECOND,
           ));
   }
-  static Jla() {
-    PerfSightController.Zla &&
-      (TimerSystem_1.RealTimeTimerSystem.Remove(PerfSightController.Zla),
-      (PerfSightController.Zla = void 0));
+  static zua() {
+    PerfSightController.eca &&
+      (TimerSystem_1.RealTimeTimerSystem.Remove(PerfSightController.eca),
+      (PerfSightController.eca = void 0));
   }
   static StartRecord(e) {
     PerfSightController.IsRecording
@@ -201,7 +201,7 @@ class PerfSightController extends ControllerBase_1.ControllerBase {
         Log_1.Log.Info("Performance", 55, "MarkLevelLoadCompleted"),
       PerfSight_1.PerfSight.MarkLevelLoadCompleted());
   }
-  static ETa(e, r) {
+  static awa(e, r) {
     var t,
       o = EntitySystem_1.EntitySystem.Get(e);
     o &&
@@ -209,52 +209,56 @@ class PerfSightController extends ControllerBase_1.ControllerBase {
       (t = o.GetBaseInfo()) &&
       t.Category.MonsterMatchType >= BOSS_TYPE &&
       (r
-        ? (cpp_1.FPerfSightHelper.BeginExtTagUtf8(
+        ? (cpp_1.FKuroPerfSightHelper.BeginExtTag(
             `Battle_${o.GetModelConfig().描述}_` + o.GetPbDataId(),
           ),
           this.oWe.add(e))
-        : (cpp_1.FPerfSightHelper.EndExtTagUtf8(
+        : (cpp_1.FKuroPerfSightHelper.EndExtTag(
             `Battle_${o.GetModelConfig().描述}_` + o.GetPbDataId(),
           ),
           this.oWe.delete(e)));
   }
   static OnTick(e) {
     PerfSight_1.PerfSight.IsEnable &&
-      PerfSight_1.PerfSight.PostFrame(e, Time_1.Time.Frame);
+      (PerfSightController.MJ.Start(),
+      cpp_1.FKuroPerfSightHelper.PostFrame(e),
+      PerfSightController.MJ.Stop());
   }
 }
 (exports.PerfSightController = PerfSightController),
   ((_a = PerfSightController).IsTickEvenPausedInternal = !0),
   (PerfSightController.j3 = void 0),
-  (PerfSightController.Zla = void 0),
+  (PerfSightController.eca = void 0),
   (PerfSightController.IsEnable = !0),
   (PerfSightController.IsRecording = !1),
   (PerfSightController.oWe = new Set()),
-  (PerfSightController.MJ = void 0),
+  (PerfSightController.MJ = Stats_1.Stat.Create(
+    "PerfSightController.PostFrame",
+  )),
   (PerfSightController.LHe = () => {
     PerfSightController.StopRecord(),
       PerfSightController.StartRecord("Persistent");
   }),
-  (PerfSightController.e1a = () => {
+  (PerfSightController.tca = () => {
     var e =
       Global_1.Global.BaseCharacter?.CharacterActorComponent
         ?.ActorLocationProxy;
     e &&
-      PerfSight_1.PerfSight.PostValueF3(
+      cpp_1.FKuroPerfSightHelper.PostValueFloat3(
         "PositionAnalysis",
         "position",
         e.X,
         e.Y,
         e.Z,
-        Time_1.Time.Frame,
       );
   }),
   (PerfSightController.Wvi = () => {
+    PerfSight_1.PerfSight.MarkLevelFin();
     var e = ModelManager_1.ModelManager.FunctionModel.PlayerId.toString();
     PerfSight_1.PerfSight.SetUserId(e),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Performance", 55, "SetUserId", ["playerId", e]),
-      PerfSightController.zla();
+      PerfSightController.Zua();
   }),
   (PerfSightController.Ilt = () => {
     ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() ||
@@ -268,13 +272,13 @@ class PerfSightController extends ControllerBase_1.ControllerBase {
   }),
   (PerfSightController.Zpe = (e) => {
     e
-      ? PerfSight_1.PerfSight.BeginExtTag("Battle")
-      : (PerfSight_1.PerfSight.EndExtTag("Battle"), _a.STa());
+      ? cpp_1.FKuroPerfSightHelper.BeginExtTag("Battle")
+      : (cpp_1.FKuroPerfSightHelper.EndExtTag("Battle"), _a.swa());
   }),
   (PerfSightController.lWe = (e) => {
-    _a.ETa(e, !0);
+    for (const r of e) _a.awa(r, !0);
   }),
   (PerfSightController.cWe = (e) => {
-    _a.ETa(e, !1);
+    for (const r of e) _a.awa(r, !1);
   });
 //# sourceMappingURL=PerfSightController.js.map

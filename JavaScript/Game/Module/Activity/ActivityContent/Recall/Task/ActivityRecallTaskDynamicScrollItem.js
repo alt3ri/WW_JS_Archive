@@ -7,7 +7,7 @@ const UE = require("ue"),
   ActivityRecallTaskTitlePanel_1 = require("./ActivityRecallTaskTitlePanel");
 class ActivityRecallTaskDynamicScrollItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.k_a = void 0), (this.gLt = void 0);
+    super(...arguments), (this.Yda = void 0), (this.gLt = void 0);
   }
   async Init(t) {
     await super.CreateByActorAsync(t.GetOwner(), void 0, !0);
@@ -19,11 +19,11 @@ class ActivityRecallTaskDynamicScrollItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    this.k_a =
+    this.Yda =
       new ActivityRecallTaskScrollItemPanel_1.ActivityRecallTaskScrollItemPanel();
     var t = this.GetItem(0).GetOwner(),
       t =
-        (await this.k_a.CreateThenShowByActorAsync(t, void 0, !0),
+        (await this.Yda.CreateThenShowByActorAsync(t, void 0, !0),
         (this.gLt =
           new ActivityRecallTaskTitlePanel_1.ActivityRecallTaskTitlePanel()),
         this.GetItem(1).GetOwner());
@@ -31,19 +31,19 @@ class ActivityRecallTaskDynamicScrollItem extends UiPanelBase_1.UiPanelBase {
   }
   GetUsingItem(t) {
     return 0 === t.ItemType
-      ? this.N_a(1)
+      ? this.Jda(1)
       : 1 === t.ItemType
-        ? this.N_a(0)
+        ? this.Jda(0)
         : void 0;
   }
-  N_a(t) {
+  Jda(t) {
     return this.GetItem(t).GetOwner();
   }
   Update(t, e) {
     var i = 0 === t.ItemType;
     this.gLt.SetUiActive(i),
-      this.k_a.SetUiActive(!i),
-      i ? this.gLt.RefreshByData(t) : i || this.k_a.RefreshByData(t);
+      this.Yda.SetUiActive(!i),
+      i ? this.gLt.RefreshByData(t) : i || this.Yda.RefreshByData(t);
   }
   ClearItem() {
     this.Destroy();

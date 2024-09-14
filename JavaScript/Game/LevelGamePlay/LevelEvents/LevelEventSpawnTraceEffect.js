@@ -12,7 +12,7 @@ class LevelEventSpawnTraceEffect extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, o) {
     e
       ? 6 !== o.Type ||
-        o.BtType !== Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest
+        o.BtType !== Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("Event", 19, "该事件仅用于任务行为树内配置")
         : (this.FRe = o.TreeConfigId)

@@ -147,15 +147,15 @@ class TsDecoratorVarCompare extends UE.BTDecorator_BlueprintBase {
   }
   ParseValue(r) {
     if (r)
-      switch ((0, IVar_1.getVarTypeByIndex)(r.XIs)) {
+      switch ((0, IVar_1.getVarTypeByIndex)(r.iTs)) {
         case "Boolean":
-          return r.YIs;
+          return r.rTs;
         case "Float":
-          return r.ZIs;
+          return r.sTs;
         case "Int":
-          return MathUtils_1.MathUtils.LongToNumber(r.JIs);
+          return MathUtils_1.MathUtils.LongToNumber(r.oTs);
         case "String":
-          return r.zIs;
+          return r.nTs;
         default:
           return;
       }

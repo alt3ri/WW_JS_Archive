@@ -18,32 +18,48 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configCharacterAudioConfigByIdWithDefaultId.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configCharacterAudioConfigByIdWithDefaultId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configCharacterAudioConfigByIdWithDefaultId.GetConfig(";
 exports.configCharacterAudioConfigByIdWithDefaultId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, i, n, e, C = !0) => {
-    if (
-      (r = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+  GetConfig: (o, i, n, t, C = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var a = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${i}#${n}#${t})`),
+      e =
+        (a.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
       if (C) {
-        var d = KEY_PREFIX + `#${o}#${i}#${n}#${e})`;
-        const a = ConfigCommon_1.ConfigCommon.GetConfig(d);
-        if (a) return a;
+        var f = KEY_PREFIX + `#${o}#${i}#${n}#${t})`;
+        const d = ConfigCommon_1.ConfigCommon.GetConfig(f);
+        if (d)
+          return (
+            a.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            d
+          );
       }
       if (
-        (r =
+        (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, i, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 3, n, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 4, e, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 4, t, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(
               handleId,
@@ -52,38 +68,43 @@ exports.configCharacterAudioConfigByIdWithDefaultId = {
               ["Id", o],
               ["Id", i],
               ["Id", n],
-              ["Id", e],
+              ["Id", t],
             ))
       ) {
-        var r,
-          d = void 0;
+        f = void 0;
         if (
-          (([r, d] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, f] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
             ["Id", i],
             ["Id", n],
-            ["Id", e],
+            ["Id", t],
           )),
-          r)
+          e)
         ) {
-          const a =
+          const d =
             CharacterAudioConfig_1.CharacterAudioConfig.getRootAsCharacterAudioConfig(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(d.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(f.buffer)),
             );
           return (
             C &&
-              ((r = KEY_PREFIX + `#${o}#${i}#${n}#${e})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(r, a)),
+              ((e = KEY_PREFIX + `#${o}#${i}#${n}#${t})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(e, d)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            a
+            a.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            d
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    a.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=CharacterAudioConfigByIdWithDefaultId.js.map

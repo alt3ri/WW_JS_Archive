@@ -108,7 +108,7 @@ class WuYinQuBattleStateIdleToFighting extends WuYinQuBattleStateBase_1.default 
             ));
   }
   OnUpdate(e) {
-    var t, i;
+    var t, i, s;
     this.j3 > this.Owner.WuYinQuFightingData.IdleToFightingTransitionTime
       ? this.StateMachine.Switch(1)
       : ((this.j3 += e / 1e3),
@@ -127,6 +127,14 @@ class WuYinQuBattleStateIdleToFighting extends WuYinQuBattleStateBase_1.default 
             e,
           )),
         (i = this.Owner.WuYinQuFightingData.GlobalMPC) &&
+          ((s = this.Owner.K2_GetActorLocation()),
+          UE.KismetMaterialLibrary.SetVectorParameterValue(
+            this.Owner.GetWorld(),
+            i,
+            WuYinQuBattleNameDefines_1.WuYinQuBattleNameDefines
+              .GlobalLandscapeCenterAndIntensity,
+            new UE.LinearColor(s.X, s.Y, s.Z, 1),
+          ),
           UE.KismetMaterialLibrary.SetVectorParameterValue(
             this.Owner.GetWorld(),
             i,
@@ -138,7 +146,7 @@ class WuYinQuBattleStateIdleToFighting extends WuYinQuBattleStateBase_1.default 
               0,
               0,
             ),
-          ),
+          )),
         i &&
           UE.KismetMaterialLibrary.SetScalarParameterValue(
             this.Owner.GetWorld(),

@@ -22,28 +22,28 @@ class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityCo
             "Activity",
             38,
             "[ActivitySevenDaySign][OnNotify]收到签到状态通知",
-            ["ActivityId", e.T6n],
-            ["SignIndex", e.r5n],
-            ["SignState", e.jps],
+            ["ActivityId", e.w6n],
+            ["SignIndex", e.c5n],
+            ["SignState", e.zps],
           ),
           ModelManager_1.ModelManager.ActivityModel.GetActivityById(
-            e.T6n,
+            e.w6n,
           )?.UpdateActivityData(e),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.ActivityViewRefreshCurrent,
-            e.T6n,
+            e.w6n,
           ),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-            e.T6n,
+            e.w6n,
           );
       });
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(23634, this.w3e);
+    Net_1.Net.Register(22089, this.w3e);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(23634);
+    Net_1.Net.UnRegister(22089);
   }
   OnOpenView(e) {}
   OnGetActivityResource(e) {
@@ -106,13 +106,13 @@ class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityCo
   }
   static GetRewardByDay(t, i) {
     var e = Protocol_1.Aki.Protocol.I$n.create();
-    (e.T6n = t),
-      (e.r5n = i),
-      Net_1.Net.Call(14006, e, (e) => {
-        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+    (e.w6n = t),
+      (e.c5n = i),
+      Net_1.Net.Call(20045, e, (e) => {
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              15799,
+              e.Q4n,
+              29228,
             )
           : (ModelManager_1.ModelManager.ActivityModel.GetActivityById(
               t,

@@ -17,61 +17,80 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configItemExchangeLimitByItemId.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configItemExchangeLimitByItemId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configItemExchangeLimitByItemId.GetConfig(";
 exports.configItemExchangeLimitByItemId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (e, o = !0) => {
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (o) {
-        var i = KEY_PREFIX + `#${e})`;
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (t) return t;
+  GetConfig: (t, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${t})`),
+      i =
+        (e.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
+      if (n) {
+        var o = KEY_PREFIX + `#${t})`;
+        const m = ConfigCommon_1.ConfigCommon.GetConfig(o);
+        if (m)
+          return (
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            m
+          );
       }
       if (
-        (n =
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
+        (i =
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, t, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
               "ItemId",
-              e,
+              t,
             ]))
       ) {
-        var n,
-          i = void 0;
+        o = void 0;
         if (
-          (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, o] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
-            ["ItemId", e],
+            ["ItemId", t],
           )),
-          n)
+          i)
         ) {
-          const t =
+          const m =
             ItemExchangeLimit_1.ItemExchangeLimit.getRootAsItemExchangeLimit(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(o.buffer)),
             );
           return (
-            o &&
-              ((n = KEY_PREFIX + `#${e})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(n, t)),
+            n &&
+              ((i = KEY_PREFIX + `#${t})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, m)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            m
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    e.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=ItemExchangeLimitByItemId.js.map

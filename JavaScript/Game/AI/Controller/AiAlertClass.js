@@ -70,11 +70,13 @@ class AiAlertClass {
                 EventDefine_1.EEventName.AddEavesdropMark,
                 this.Hte.Entity?.Id,
                 this.Hte.Owner,
+                t.ShowDist,
               )
           : ModelManager_1.ModelManager.AlertMarkModel?.AddPendingMarkInfo(
               this.Hte.Entity?.Id,
               this.Hte.Owner,
               t.AlertnessType,
+              t.ShowDist,
             )));
   }
   get AiAlertConfig() {
@@ -120,7 +122,7 @@ class AiAlertClass {
                 MathUtils_1.MathUtils.MillisecondToSecond,
           );
           for (const n of this.Bte.AiPerception.Enemies) {
-            var e = EntitySystem_1.EntitySystem.GetComponent(n, 159);
+            var e = EntitySystem_1.EntitySystem.GetComponent(n, 160);
             e?.Valid &&
               e.RemoveBuff(
                 CharacterBuffIds_1.buffId.StealthIgnoreHateBuff,
@@ -138,7 +140,7 @@ class AiAlertClass {
           var h = EntitySystem_1.EntitySystem.Get(_);
           if (
             h.GetComponent(0).GetEntityType() !==
-            Protocol_1.Aki.Protocol.wks.Proto_Player
+            Protocol_1.Aki.Protocol.kks.Proto_Player
           )
             this.Vte = !1;
           else {
@@ -164,7 +166,7 @@ class AiAlertClass {
           ) {
             this.qte = exports.MAX_ALERT;
             for (const a of this.Bte.AiPerception.Enemies) {
-              var r = EntitySystem_1.EntitySystem.GetComponent(a, 159);
+              var r = EntitySystem_1.EntitySystem.GetComponent(a, 160);
               r?.Valid &&
                 r.RemoveBuff(
                   CharacterBuffIds_1.buffId.StealthIgnoreHateBuff,
@@ -195,7 +197,7 @@ class AiAlertClass {
         this.Kte();
         break;
       case 3:
-        this.c2n();
+        this.S2n();
     }
   }
   Wte() {
@@ -242,7 +244,7 @@ class AiAlertClass {
           EventDefine_1.EEventName.OnStalkAlert,
         ));
   }
-  c2n() {
+  S2n() {
     this.qte >= exports.MAX_ALERT &&
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnEavesdropFound,

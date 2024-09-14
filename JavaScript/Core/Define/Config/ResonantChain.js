@@ -33,26 +33,38 @@ class ResonantChain {
     return this.bgdescription();
   }
   get BuffIds() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buffidsLength(), (t) =>
-      this.buffids(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buffidsLength(),
+      this.buffids,
+      this,
     );
   }
   get AddProp() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.addpropLength(), (t) =>
-      this.addprop(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.addpropLength(),
+      this.addprop,
+      this,
     );
   }
   get ActivateConsume() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.activateconsumeLength(),
-      (t) => this.activateconsume(t)?.key(),
-      (t) => this.activateconsume(t)?.value(),
+      this.activateconsumeKey,
+      this.activateconsumeValue,
+      this,
     );
+  }
+  activateconsumeKey(t) {
+    return this.activateconsume(t)?.key();
+  }
+  activateconsumeValue(t) {
+    return this.activateconsume(t)?.value();
   }
   get AttributesDescriptionParams() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.attributesdescriptionparamsLength(),
-      (t) => this.attributesdescriptionparams(t),
+      this.attributesdescriptionparams,
+      this,
     );
   }
   get NodeIcon() {

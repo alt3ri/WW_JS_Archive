@@ -1,22 +1,4 @@
 "use strict";
-var __decorate =
-  (this && this.__decorate) ||
-  function (a, e, t, i) {
-    var r,
-      n = arguments.length,
-      o =
-        n < 3
-          ? e
-          : null === i
-            ? (i = Object.getOwnPropertyDescriptor(e, t))
-            : i;
-    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      o = Reflect.decorate(a, e, t, i);
-    else
-      for (var s = a.length - 1; 0 <= s; s--)
-        (r = a[s]) && (o = (n < 3 ? r(o) : 3 < n ? r(e, t, o) : r(e, t)) || o);
-    return 3 < n && o && Object.defineProperty(e, t, o), o;
-  };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraAnimationManager = void 0);
 const UE = require("ue"),
@@ -755,7 +737,7 @@ class UiCameraAnimationManager {
       a.ResetFightCameraLogic(!1));
   }
 }
-(UiCameraAnimationManager.LPo = 0),
+((exports.UiCameraAnimationManager = UiCameraAnimationManager).LPo = 0),
   (UiCameraAnimationManager.aPo = new Map()),
   (UiCameraAnimationManager.lPo = new Stack_1.Stack()),
   (UiCameraAnimationManager.CurrentCameraHandle = void 0),
@@ -769,16 +751,5 @@ class UiCameraAnimationManager {
   (UiCameraAnimationManager.UiCamera = void 0),
   (UiCameraAnimationManager.UiCameraSpringStructure = void 0),
   (UiCameraAnimationManager.UiCameraPostEffectComponent = void 0),
-  (UiCameraAnimationManager.UiCameraSequenceComponent = void 0),
-  __decorate(
-    [
-      (0, PerformanceDecorators_1.PerformanceFunctionEx)(
-        "UiCameraAnimationManager.Tick",
-      ),
-    ],
-    UiCameraAnimationManager,
-    "Tick",
-    null,
-  ),
-  (exports.UiCameraAnimationManager = UiCameraAnimationManager);
+  (UiCameraAnimationManager.UiCameraSequenceComponent = void 0);
 //# sourceMappingURL=UiCameraAnimationManager.js.map

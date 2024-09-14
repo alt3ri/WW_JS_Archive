@@ -5,7 +5,6 @@ const UE = require("ue"),
   Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   Stats_1 = require("../../../../Core/Common/Stats"),
-  Time_1 = require("../../../../Core/Common/Time"),
   ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
@@ -31,8 +30,9 @@ class DamageView extends UiPanelBase_1.UiPanelBase {
       (this.gFt = void 0),
       (this.fFt = void 0),
       (this.pFt = -0),
-      (this.ejs = void 0),
-      (this.vFt = 0);
+      (this.Sjs = void 0),
+      (this.vFt = 0),
+      (this.bge = 1);
   }
   Init() {
     var i = BattleUiControl_1.BattleUiControl.Pool.GetDamageView();
@@ -58,11 +58,12 @@ class DamageView extends UiPanelBase_1.UiPanelBase {
     (this.dFt = this.GetText(0)),
       (this.CFt = this.GetText(2)),
       (this.vFt = this.dFt.GetSize()),
-      Info_1.Info.IsInTouch() && this.RefreshFontSize();
+      (this.bge = 1),
+      Info_1.Info.IsMobilePlatform() && this.RefreshFontSize();
   }
   RefreshFontSize() {
     var i;
-    Info_1.Info.IsInTouch()
+    Info_1.Info.IsMobilePlatform()
       ? ((i = Math.floor(this.vFt * MOBLIE_FONT_SIZE_SCALE)),
         this.dFt.SetFontSize(i),
         this.CFt.SetFontSize(i))
@@ -76,7 +77,10 @@ class DamageView extends UiPanelBase_1.UiPanelBase {
   }
   InitializeData(e, s, a, r, h = !1, o = !1, _ = !1, n = "") {
     if (r) {
-      (this.gFt = r), this.uFt.DeepCopy(s), (this.fFt = a);
+      DamageView.MFt.Start(),
+        (this.gFt = r),
+        this.uFt.DeepCopy(s),
+        (this.fFt = a);
       let i = r.GetRandomOffsetX(),
         t = r.GetRandomOffsetY();
       h && ((i *= CRITICAL_OFFSET_SCALE), (t *= CRITICAL_OFFSET_SCALE));
@@ -100,34 +104,36 @@ class DamageView extends UiPanelBase_1.UiPanelBase {
         this.IFt(a, h, s),
         this.TFt(),
         this.SetActive(!0),
-        this.dFt.SetAlpha(0);
+        this.dFt.SetAlpha(0),
+        DamageView.MFt.Stop();
     }
   }
   ClearData() {
     (this.gFt = void 0),
-      this.tjs(),
+      this.Ejs(),
       this.SetActive(!1),
       this.SetCriticalNiagaraVisible(!1);
   }
   SFt(i, t, e) {
-    this.pFt = Time_1.Time.Now + ANIM_TIME;
+    this.pFt = ANIM_TIME;
     (i = this.gFt.GetSequencePath(i, t, e)), (t = DamageView.LFt.get(i));
     if (void 0 === t)
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Battle", 18, "缺少伤害数字动画", ["sequencePath", i]);
     else {
-      this.ejs = this.GetItem(t)
+      this.Sjs = this.GetItem(t)
         .GetOwner()
         .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass());
-      var s = this.ejs.Num();
-      for (let i = 0; i < s; i++) this.ejs.Get(i).Play();
+      var s = this.Sjs.Num();
+      for (let i = 0; i < s; i++) this.Sjs.Get(i).Play();
     }
   }
-  tjs() {
-    if (this.ejs) {
-      var t = this.ejs.Num();
-      for (let i = 0; i < t; i++) this.ejs.Get(i).Stop();
-      this.ejs = void 0;
+  Ejs() {
+    if (this.Sjs) {
+      this.SetTimeScale(1);
+      var t = this.Sjs.Num();
+      for (let i = 0; i < t; i++) this.Sjs.Get(i).Stop();
+      this.Sjs = void 0;
     }
   }
   Tick(i) {
@@ -137,7 +143,8 @@ class DamageView extends UiPanelBase_1.UiPanelBase {
         ((t = this.GetUiNiagara(3)).SetNiagaraSystem(this.FUn),
         t.ActivateSystem(!0),
         (this.FUn = void 0)),
-      Time_1.Time.Now > this.pFt
+      (this.pFt -= i * this.bge),
+      this.pFt <= 0
         ? DamageUiManager_1.DamageUiManager.RemoveDamageView(this)
         : ((t =
             DamageUiManager_1.DamageUiManager.ProjectWorldLocationToScreenPosition(
@@ -212,6 +219,18 @@ class DamageView extends UiPanelBase_1.UiPanelBase {
     i = DamageUiManager_1.DamageUiManager.ScreenPositionToLguiPosition(i);
     if (i) return (i.X = i.X + this.cFt), (i.Y = i.Y + this.mFt), i;
   }
+  SetTimeScale(t) {
+    if (this.Sjs && this.bge !== t) {
+      this.bge = t;
+      var e = this.Sjs.Num();
+      for (let i = 0; i < e; i++) {
+        var s = this.Sjs.Get(i).GetPlayTween()?.GetTweener();
+        s && s.SetSpeed(t);
+      }
+      var i = this.GetUiNiagara(3)?.GetOwner();
+      i && (i.CustomTimeDilation = t);
+    }
+  }
 }
 ((exports.DamageView = DamageView).LFt = new Map([
   ["Ani_OwnDamageSequence", 5],
@@ -222,5 +241,5 @@ class DamageView extends UiPanelBase_1.UiPanelBase {
   ["Ani_SpecialDamage", 10],
   ["Ani_SpecialCriticalDamage", 11],
 ])),
-  (DamageView.MFt = void 0);
+  (DamageView.MFt = Stats_1.Stat.Create("[DamageView]InitializeDamageView"));
 //# sourceMappingURL=DamageView.js.map

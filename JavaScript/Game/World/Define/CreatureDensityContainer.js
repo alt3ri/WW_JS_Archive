@@ -12,7 +12,9 @@ class CreatureDensityItem {
 exports.CreatureDensityItem = CreatureDensityItem;
 class CreatureDensityContainer {
   constructor() {
-    (this.DensityArray = new Array()), (this.CreatureDensityMap = new Map());
+    (this.DensityArray = new Array()),
+      (this.CreatureDensityMap = new Map()),
+      (this.PbDataDensityMap = new Map());
   }
   GetLevel(t) {
     for (; this.DensityArray.length <= t; ) this.DensityArray.push(new Map());
@@ -21,10 +23,13 @@ class CreatureDensityContainer {
   GetItem(t) {
     return this.CreatureDensityMap.get(t);
   }
+  GetItemByPbDataId(t) {
+    return this.PbDataDensityMap.get(t);
+  }
   AddItem(t, e, s) {
     var r = new CreatureDensityItem(t, e, s);
     for (
-      this.CreatureDensityMap.set(t, r);
+      this.CreatureDensityMap.set(t, r), this.PbDataDensityMap.set(s.v9n, r);
       this.DensityArray.length <= r.DensityLevel;
 
     )
@@ -33,15 +38,16 @@ class CreatureDensityContainer {
   }
   RemoveItem(t) {
     var e = this.CreatureDensityMap.get(t);
-    return (
-      !!e &&
-      (this.CreatureDensityMap.delete(t),
-      this.DensityArray[e.DensityLevel].delete(t),
-      !0)
-    );
+    if (e)
+      return (
+        this.CreatureDensityMap.delete(t),
+        this.PbDataDensityMap.delete(e.EntityData.v9n),
+        this.DensityArray[e.DensityLevel].delete(t),
+        e
+      );
   }
   Clear() {
-    this.CreatureDensityMap.clear();
+    this.CreatureDensityMap.clear(), this.PbDataDensityMap.clear();
     for (const t of this.DensityArray) t.clear();
   }
 }

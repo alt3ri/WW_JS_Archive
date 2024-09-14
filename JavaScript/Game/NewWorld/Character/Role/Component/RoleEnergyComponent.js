@@ -21,7 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleEnergyComponent = void 0);
 const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   energyAttrIds = [EAttributeId.Proto_Energy, EAttributeId.Proto_EnergyMax];
 let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.EntityComponent {
@@ -38,7 +38,7 @@ let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.En
   OnStart() {
     return (
       (this.n$t = this.Entity.CheckGetComponent(3)),
-      (this.$te = this.Entity.CheckGetComponent(158)),
+      (this.$te = this.Entity.CheckGetComponent(159)),
       this.$te.AddListeners(energyAttrIds, this.Qin, "RoleEnergyComponent"),
       this.Qin(),
       !0
@@ -49,7 +49,7 @@ let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.En
   }
 };
 (RoleEnergyComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(82)],
+  [(0, RegisterComponent_1.RegisterComponent)(83)],
   RoleEnergyComponent,
 )),
   (exports.RoleEnergyComponent = RoleEnergyComponent);

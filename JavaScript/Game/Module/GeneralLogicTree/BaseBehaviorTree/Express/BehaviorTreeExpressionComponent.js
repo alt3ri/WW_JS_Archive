@@ -40,7 +40,7 @@ class BehaviorTreeExpressionComponent {
             n = this.Yre.GetNode(e.NodeId);
           if (n)
             switch (i) {
-              case Protocol_1.Aki.Protocol.bNs.Proto_CQNS_Progress:
+              case Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Progress:
                 n.ContainTag(0) &&
                   (s = n.TrackTarget) &&
                   ((r = this.Yre.IsOccupied),
@@ -60,7 +60,7 @@ class BehaviorTreeExpressionComponent {
                     this.Yre.IsTracking,
                   );
                 break;
-              case Protocol_1.Aki.Protocol.bNs.Proto_CQNS_Finished:
+              case Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Finished:
                 this.TQt.NodeTrackMarkEnd(n.NodeId),
                   this.IQt.NodeTrackEffectEnd(n.NodeId),
                   n instanceof ReachAreaBehaviorNode_1.ReachAreaBehaviorNode &&
@@ -85,19 +85,19 @@ class BehaviorTreeExpressionComponent {
       (this.wQt = (t, i) => {
         if (t && 6 === t.Type && i && t.TreeIncId === this.Yre.TreeIncId) {
           let e = void 0;
-          switch (i.zfs) {
-            case "uEs":
-              e = i.uEs.vEs;
+          switch (i.nvs) {
+            case "vEs":
+              e = i.vEs.TEs;
               break;
-            case "aEs":
-              e = i.aEs.mEs;
+            case "mEs":
+              e = i.mEs.SEs;
               break;
-            case "lEs":
+            case "gEs":
               e = [];
-              for (const s of i.lEs.SEs) e.concat(s.yEs);
+              for (const s of i.gEs.DEs) e.concat(s.PEs);
               break;
-            case "dEs":
-              e = i.dEs.P4n;
+            case "MEs":
+              e = i.MEs.F4n;
           }
           this.TQt.GetNodeTrackMarkCreator(t.NodeId)?.OnNodeProgressChanged(e);
         }
@@ -140,20 +140,12 @@ class BehaviorTreeExpressionComponent {
   }
   tQt() {
     EventSystem_1.EventSystem.Add(
-      EventDefine_1.EEventName.OnLogicTreeChildQuestNodeStatusChange,
-      this.RSe,
+      EventDefine_1.EEventName.ActiveBattleView,
+      this.PQt,
     ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.ActiveBattleView,
-        this.PQt,
-      ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DisActiveBattleView,
         this.xQt,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnLogicTreeNodeProgressChange,
-        this.wQt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GeneralLogicTreeApplyExpressionOccupation,
@@ -162,6 +154,16 @@ class BehaviorTreeExpressionComponent {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GeneralLogicTreeReleaseExpressionOccupation,
         this.bQt,
+      ),
+      EventSystem_1.EventSystem.AddWithTarget(
+        this.Yre,
+        EventDefine_1.EEventName.OnLogicTreeChildQuestNodeStatusChange,
+        this.RSe,
+      ),
+      EventSystem_1.EventSystem.AddWithTarget(
+        this.Yre,
+        EventDefine_1.EEventName.OnLogicTreeNodeProgressChange,
+        this.wQt,
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Yre,
@@ -181,20 +183,12 @@ class BehaviorTreeExpressionComponent {
   }
   iQt() {
     EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.OnLogicTreeChildQuestNodeStatusChange,
-      this.RSe,
+      EventDefine_1.EEventName.ActiveBattleView,
+      this.PQt,
     ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.ActiveBattleView,
-        this.PQt,
-      ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.DisActiveBattleView,
         this.xQt,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnLogicTreeNodeProgressChange,
-        this.wQt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GeneralLogicTreeApplyExpressionOccupation,
@@ -203,6 +197,16 @@ class BehaviorTreeExpressionComponent {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GeneralLogicTreeReleaseExpressionOccupation,
         this.bQt,
+      ),
+      EventSystem_1.EventSystem.RemoveWithTarget(
+        this.Yre,
+        EventDefine_1.EEventName.OnLogicTreeChildQuestNodeStatusChange,
+        this.RSe,
+      ),
+      EventSystem_1.EventSystem.RemoveWithTarget(
+        this.Yre,
+        EventDefine_1.EEventName.OnLogicTreeNodeProgressChange,
+        this.wQt,
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Yre,
@@ -235,6 +239,9 @@ class BehaviorTreeExpressionComponent {
   GetNodeTrackPosition(e) {
     return this.TQt.GetNodeTrackMarkCreator(e)?.GetTrackPosition();
   }
+  GetDungeonId(e) {
+    return this.TQt.GetNodeTrackMarkCreator(e)?.DungeonId;
+  }
   GetDefaultMark(e) {
     return this.TQt.GetNodeTrackMarkCreator(e)?.GetDefaultMark();
   }
@@ -257,8 +264,8 @@ class BehaviorTreeExpressionComponent {
   RQt(e, t, i) {
     return (
       0 === i &&
-      t === Protocol_1.Aki.Protocol.DNs.t5n &&
-      this.Yre.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
+      t === Protocol_1.Aki.Protocol.BNs._5n &&
+      this.Yre.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
       !(
         !e.ContainTag(0) ||
         e.ContainTag(3) ||
@@ -273,7 +280,7 @@ class BehaviorTreeExpressionComponent {
           e.NodeId,
           this.Yre.CreateShowBridge(),
         ),
-        this.Yre.RemoveTag(9),
+        this.Yre.RemoveTag(8),
         0)
       )
     );

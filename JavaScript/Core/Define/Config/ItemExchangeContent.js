@@ -19,9 +19,16 @@ class ItemExchangeContent {
   get Consume() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.consumeLength(),
-      (t) => this.consume(t)?.key(),
-      (t) => this.consume(t)?.value(),
+      this.consumeKey,
+      this.consumeValue,
+      this,
     );
+  }
+  consumeKey(t) {
+    return this.consume(t)?.key();
+  }
+  consumeValue(t) {
+    return this.consume(t)?.value();
   }
   __init(t, e) {
     return (this.z7 = t), (this.J7 = e), this;

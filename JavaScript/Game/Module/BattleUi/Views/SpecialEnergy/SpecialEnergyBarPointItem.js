@@ -26,7 +26,7 @@ class SpecialEnergyBarPointItem extends UiPanelBase_1.UiPanelBase {
       (this.kdt = 0),
       (this.Fdt = !1),
       (this.Vdt = 1),
-      (this.yNn = void 0);
+      (this.PNn = void 0);
   }
   InitPrefabInfo(t, i, s = !0) {
     (this.wdt = t), (this.Bdt = i), (this.bdt = s);
@@ -119,11 +119,11 @@ class SpecialEnergyBarPointItem extends UiPanelBase_1.UiPanelBase {
   }
   ReplaceFullEffect(t) {
     var i = this.GetUiNiagara(1);
-    this.yNn || (this.yNn = i.NiagaraSystemReference), i.SetNiagaraSystem(t);
+    this.PNn || (this.PNn = i.NiagaraSystemReference), i.SetNiagaraSystem(t);
   }
   OnBeforeDestroy() {
-    this.yNn &&
-      (this.GetUiNiagara(1).SetNiagaraSystem(this.yNn), (this.yNn = void 0));
+    this.PNn &&
+      (this.GetUiNiagara(1).SetNiagaraSystem(this.PNn), (this.PNn = void 0));
   }
 }
 exports.SpecialEnergyBarPointItem = SpecialEnergyBarPointItem;

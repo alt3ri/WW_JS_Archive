@@ -64,26 +64,38 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
                             EventSystem_1.EventSystem.Emit(
                               EventDefine_1.EEventName.ComboTeachingCloseGuide,
                             ),
-                            UiManager_1.UiManager.IsViewOpen(
+                            (UiManager_1.UiManager.IsViewOpen(
                               "ComboTeachingView",
-                            ) &&
-                              (this.CloseMe(),
-                              UiManager_1.UiManager.OpenView(
+                            ) ||
+                              UiManager_1.UiManager.IsViewHide(
                                 "ComboTeachingView",
-                                this.KIt.NextRoleGuideID,
-                              ));
+                              )) &&
+                              this.CloseMe((e) => {
+                                e &&
+                                  UiManager_1.UiManager.OpenView(
+                                    "ComboTeachingView",
+                                    this.KIt.NextRoleGuideID,
+                                  );
+                              });
                         }, 200)
                       : ((ModelManager_1.ModelManager.ComboTeachingModel.IsClose =
                           !0),
                         EventSystem_1.EventSystem.Emit(
                           EventDefine_1.EEventName.ComboTeachingCloseGuide,
                         ),
-                        UiManager_1.UiManager.IsViewOpen("ComboTeachingView") &&
-                          (this.CloseMe(),
-                          UiManager_1.UiManager.OpenView(
+                        (UiManager_1.UiManager.IsViewOpen(
+                          "ComboTeachingView",
+                        ) ||
+                          UiManager_1.UiManager.IsViewHide(
                             "ComboTeachingView",
-                            this.KIt.NextRoleGuideID,
-                          )))
+                          )) &&
+                          this.CloseMe((e) => {
+                            e &&
+                              UiManager_1.UiManager.OpenView(
+                                "ComboTeachingView",
+                                this.KIt.NextRoleGuideID,
+                              );
+                          }))
                     : this.$It ||
                       ((this.$It = !0),
                       (ModelManager_1.ModelManager.ComboTeachingModel.UseSkillId = 0),
@@ -114,9 +126,13 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
                             EventSystem_1.EventSystem.Emit(
                               EventDefine_1.EEventName.ComboTeachingFinish,
                             ),
-                              UiManager_1.UiManager.IsViewOpen(
+                              (UiManager_1.UiManager.IsViewOpen(
                                 "ComboTeachingView",
-                              ) && this.CloseMe(),
+                              ) ||
+                                UiManager_1.UiManager.IsViewHide(
+                                  "ComboTeachingView",
+                                )) &&
+                                this.CloseMe(),
                               (ModelManager_1.ModelManager.ComboTeachingModel.IsClose =
                                 !0),
                               EventSystem_1.EventSystem.Emit(
@@ -160,7 +176,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
           if (e)
             if (
               e.GetComponent(0)?.GetEntityType() !==
-              Protocol_1.Aki.Protocol.wks.Proto_Player
+              Protocol_1.Aki.Protocol.kks.Proto_Player
             )
               return;
           (ModelManager_1.ModelManager.ComboTeachingModel.IsEmit = !1),
@@ -175,7 +191,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
         if (
           e &&
           e.GetComponent(0)?.GetEntityType() !==
-            Protocol_1.Aki.Protocol.wks.Proto_Player
+            Protocol_1.Aki.Protocol.kks.Proto_Player
         )
           return;
         (ModelManager_1.ModelManager.ComboTeachingModel.UseSkillId = 0),
@@ -189,7 +205,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
       (this.OnHit = (e) => {
         var t;
         this.$It ||
-          ((t = e.Attacker.GetComponent(33)),
+          ((t = e.Attacker.GetComponent(34)),
           (ModelManager_1.ModelManager.ComboTeachingModel.HitSkillId =
             t?.CurrentSkill?.SkillId ?? 0),
           this.XIt[this.WIt]?.OnBulletHit(e));
@@ -322,7 +338,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
     else {
       var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint(),
         e = EntitySystem_1.EntitySystem.Get(e);
-      const t = e?.GetComponent(188),
+      const t = e?.GetComponent(190),
         i =
           (ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.forEach(
             (e) => {
@@ -332,7 +348,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
             },
           ),
           (ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.length = 0),
-          e?.GetComponent(159));
+          e?.GetComponent(160));
       ModelManager_1.ModelManager.ComboTeachingModel.AddBuffList.forEach(
         (e) => {
           i?.GetBuffTotalStackById(BigInt(e)) &&
@@ -352,8 +368,8 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
         ));
     (e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
       (e = EntitySystem_1.EntitySystem.Get(e));
-    const t = e?.GetComponent(188),
-      i = e?.GetComponent(159);
+    const t = e?.GetComponent(190),
+      i = e?.GetComponent(160);
     ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.forEach((e) => {
       t?.RemoveTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e));
     }),
@@ -394,16 +410,16 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
         (this.XIt[e].CurConfig = this.KIt), this.XIt[e].Refresh(this.WIt);
       else {
         var n = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(3), this.GetItem(0));
-        const a = new ComboTeachingNode_1.ComboTeachingNode(e, this.KIt);
-        a.CreateThenShowByActorAsync(n.GetOwner()).then(() => {
-          a.Refresh(this.WIt);
+        const s = new ComboTeachingNode_1.ComboTeachingNode(e, this.KIt);
+        s.CreateThenShowByActorAsync(n.GetOwner()).then(() => {
+          s.Refresh(this.WIt);
         }),
-          this.XIt.push(a);
+          this.XIt.push(s);
       }
     var e = this.GetItem(3).GetWidth() + 220 * (this.XIt.length - 1),
-      s = this.GetItem(0).GetParentAsUIItem().GetWidth();
-    s < e &&
-      ((this.JIt = (e - s) / 2), this.GetItem(0).SetAnchorOffsetX(this.JIt)),
+      a = this.GetItem(0).GetParentAsUIItem().GetWidth();
+    a < e &&
+      ((this.JIt = (e - a) / 2), this.GetItem(0).SetAnchorOffsetX(this.JIt)),
       this.GetItem(3).SetUIActive(!1),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(1),
@@ -450,7 +466,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
         (ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime = 0),
       Global_1.Global.BaseCharacter &&
         ((t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
-        (EntitySystem_1.EntitySystem.Get(t)?.GetComponent(163)).IsJump) &&
+        (EntitySystem_1.EntitySystem.Get(t)?.GetComponent(164)).IsJump) &&
         0 === ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime &&
         (ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime =
           BEFORE_JUMP_TIME),

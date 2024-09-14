@@ -15,13 +15,13 @@ const UE = require("ue"),
   TouchFingerDefine_1 = require("../../../Ui/TouchFinger/TouchFingerDefine"),
   TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager"),
   UiLayer_1 = require("../../../Ui/UiLayer"),
+  MapComponent_1 = require("../../Map/Base/MapComponent"),
   WorldMapUtil_1 = require("../WorldMapUtil"),
-  WorldMapComponentBase_1 = require("./WorldMapComponentBase"),
   MULTI_TOUCH_DELAY_TIME = 0.5,
   SCALE_STEP = 0.05;
-class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponentBase {
-  constructor(t, e) {
-    super(t),
+class WorldMapInteractComponent extends MapComponent_1.MapComponent {
+  constructor() {
+    super(...arguments),
       (this.SFo = !1),
       (this.yFo = !1),
       (this.IFo = -0),
@@ -34,7 +34,6 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
       (this.PFo = void 0),
       (this.xFo = -0),
       (this.wFo = void 0),
-      (this.BFo = void 0),
       (this.Ngo = (t) => {
         (this.SFo = !1),
           t &&
@@ -127,18 +126,9 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
               2,
             ));
       });
-    t = t
-      .GetRootActor()
-      .GetComponentByClass(UE.UIDraggableComponent.StaticClass());
-    ObjectUtils_1.ObjectUtils.IsValid(t) &&
-      ((this.wFo = new Map()),
-      t.OnPointerDownCallBack.Bind(this.Ngo),
-      t.OnPointerDragCallBack.Bind(this.vKe),
-      t.OnPointerUpCallBack.Bind(this.GFo),
-      t.OnPointerScrollCallBack.Bind(this.OFo),
-      (this.PFo = Vector2D_1.Vector2D.Create()),
-      (this.AFo = Vector2D_1.Vector2D.Create()),
-      (this.BFo = e));
+  }
+  get ComponentType() {
+    return 2;
   }
   get IsJoystickMoving() {
     return this.TFo || this.LFo;
@@ -167,7 +157,40 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
       ((this.yFo = t), this.yFo) ||
       (this.IFo = Time_1.Time.NowSeconds);
   }
-  AddEventListener() {
+  get MKa() {
+    var t = this.Parent;
+    if (void 0 !== t) return t;
+    this.LogError(64, "[地图系统]->二级界面组件没有附加到容器下！");
+  }
+  get BFo() {
+    return this.MKa.UiParams;
+  }
+  get PYe() {
+    return this.MKa.ViewPortSize;
+  }
+  OnAdd() {
+    var t = this.MKa.Map.GetRootActor().GetComponentByClass(
+      UE.UIDraggableComponent.StaticClass(),
+    );
+    ObjectUtils_1.ObjectUtils.IsValid(t) &&
+      ((this.wFo = new Map()),
+      t.OnPointerDownCallBack.Bind(this.Ngo),
+      t.OnPointerDragCallBack.Bind(this.vKe),
+      t.OnPointerUpCallBack.Bind(this.GFo),
+      t.OnPointerScrollCallBack.Bind(this.OFo),
+      (this.PFo = Vector2D_1.Vector2D.Create()),
+      (this.AFo = Vector2D_1.Vector2D.Create()));
+  }
+  OnEnable() {
+    this.dde();
+  }
+  OnDisable() {
+    this.Cde();
+  }
+  OnRemove() {
+    (this.AFo = void 0), (this.PFo = void 0);
+  }
+  dde() {
     InputDistributeController_1.InputDistributeController.BindTouches(
       [
         InputMappingsDefine_1.touchIdMappings.Touch1,
@@ -188,7 +211,7 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
         this.VFo,
       );
   }
-  RemoveEventListener() {
+  Cde() {
     InputDistributeController_1.InputDistributeController.UnBindTouches(
       [
         InputMappingsDefine_1.touchIdMappings.Touch1,
@@ -208,9 +231,6 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
         EventDefine_1.EEventName.NavigationTriggerMapZoom,
         this.VFo,
       );
-  }
-  OnDestroy() {
-    super.OnDestroy(), (this.AFo = void 0), (this.PFo = void 0);
   }
   CheckTouch() {
     var t = this.wFo.get(TouchFingerDefine_1.EFingerIndex.One),
@@ -269,12 +289,7 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
   }
   bFo(t) {
     t = this.qFo(t.X, t.Y);
-    return !(
-      t.X < 0 ||
-      t.X > this.ViewportSize.X ||
-      t.Y < 0 ||
-      t.Y > this.ViewportSize.Y
-    );
+    return !(t.X < 0 || t.X > this.PYe.X || t.Y < 0 || t.Y > this.PYe.Y);
   }
   qFo(t, e) {
     t = Vector2D_1.Vector2D.Create(t, e);
@@ -284,8 +299,8 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
           t.ToUeVector2D(!0),
         ),
       ),
-      (t.X = MathCommon_1.MathCommon.Clamp(t.X, 0, this.ViewportSize.X)),
-      (t.Y = MathCommon_1.MathCommon.Clamp(t.Y, 0, this.ViewportSize.Y)),
+      (t.X = MathCommon_1.MathCommon.Clamp(t.X, 0, this.PYe.X)),
+      (t.Y = MathCommon_1.MathCommon.Clamp(t.Y, 0, this.PYe.Y)),
       t
     );
   }

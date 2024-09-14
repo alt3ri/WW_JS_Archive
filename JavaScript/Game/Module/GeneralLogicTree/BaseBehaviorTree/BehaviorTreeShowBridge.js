@@ -15,7 +15,7 @@ class BehaviorTreeShowBridge {
       (this.lQt = void 0),
       (this.QuestType = void 0),
       (this.TrackIconConfigId = 0),
-      (this.ShowByCustom = !1),
+      (this.IsInChallenge = !1),
       (this.IsNewQuest = !1),
       (this.TrackTextConfig = void 0);
   }
@@ -36,20 +36,20 @@ class BehaviorTreeShowBridge {
       (this.BtType = i.BtType),
       (this.TreeIncId = i.TreeIncId),
       (this.TreeConfigId = i.TreeConfigId),
-      (this.IsNewQuest = i.ContainTag(9)),
+      (this.IsNewQuest = i.ContainTag(8)),
       this.UpdateToNew();
   }
   UpdateToNew() {
     var i = this.Yre;
     if (this.Yre) {
       (this.TrackIconConfigId = i.TaskMarkTableId),
-        (this.ShowByCustom = this.Yre.IsChallengeUi());
+        (this.IsInChallenge = this.Yre.IsChallengeUi());
       var i = this.Yre.GetTrackTextExpressInfo();
       (this.TrackTextConfig =
         new GeneralLogicTreeDefine_1.TreeTrackTextExpressionInfo()),
         this.TrackTextConfig.SetMainTitle(i.MainTitle);
       for (const e of i.SubTitles) this.TrackTextConfig.AddSubTitle(e);
-      this.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest
+      this.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest
         ? ((i = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
             this.TreeConfigId,
           )),

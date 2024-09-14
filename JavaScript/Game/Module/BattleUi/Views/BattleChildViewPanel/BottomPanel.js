@@ -12,7 +12,8 @@ const UE = require("ue"),
   RoleStateView_1 = require("../RoleStateView"),
   SpecialEnergyBarContainer_1 = require("../SpecialEnergy/SpecialEnergyBarContainer"),
   BattleChildViewPanel_1 = require("./BattleChildViewPanel");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
+const RoleTopBuffView_1 = require("../RoleTopBuffView");
 class BottomPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
@@ -20,29 +21,34 @@ class BottomPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this._Je = void 0),
       (this.uJe = void 0),
       (this.cJe = void 0),
+      (this.dQa = void 0),
       (this.mJe = (e) => {
         this.uJe?.RefreshVisible();
       }),
       (this.xie = () => {
         var e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
         e &&
-          (e.IsPhantom() && 0 < e.RoleConfig.SpecialEnergyBarId
+          (BottomPanel.kQe.Start(),
+          e.IsPhantom() && 0 < e.RoleConfig.SpecialEnergyBarId
             ? (this.lJe.Refresh(void 0), this.uJe.Refresh(void 0))
             : (this.lJe.Refresh(e), this.uJe.Refresh(e)),
           this._Je.Refresh(e),
-          this.cJe.OnChangeRole(e));
+          this.cJe.OnChangeRole(e),
+          this.dQa.OnChangeRole(e),
+          BottomPanel.kQe.Stop());
       }),
       (this.zpe = (e) => {
         this.lJe.GetEntityId() === e.Id && this.lJe.Refresh(void 0),
           this.uJe.GetEntityId() === e.Id && this.uJe.Refresh(void 0),
           this._Je.GetEntityId() === e.Id && this._Je.Refresh(void 0),
-          this.cJe.OnRemoveEntity(e.Id);
+          this.cJe.OnRemoveEntity(e.Id),
+          this.dQa.OnRemoveEntity(e.Id);
       }),
       (this.dJe = (e, t) => {
         var i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
         if (i?.Valid && t && i.Id === e)
-          for (const s of t.PSs)
-            s.QMs === EAttributeId.Proto_Life &&
+          for (const s of t.GSs)
+            s.tSs === EAttributeId.Proto_Life &&
               this.lJe.RefreshHpAndShield(!0);
       }),
       (this.AQe = (e, t, i, s) => {
@@ -57,28 +63,42 @@ class BottomPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       [2, UE.UIItem],
       [3, UE.UIItem],
       [4, UE.UIItem],
+      [5, UE.UIItem],
     ];
   }
   async InitializeAsync() {
-    await Promise.all([this.CJe(), this.gJe(), this.fJe(), this.pJe()]);
+    await Promise.all([
+      this.CJe(),
+      this.gJe(),
+      this.fJe(),
+      this.pJe(),
+      this.CQa(),
+    ]);
     var e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
     this.lJe.Refresh(e),
       this.uJe.Refresh(e),
       this._Je.Refresh(e),
-      this.cJe.OnChangeRole(e);
+      this.cJe.OnChangeRole(e),
+      this.dQa.OnChangeRole(e);
   }
   Reset() {
     (this.lJe = void 0),
       (this.uJe = void 0),
       (this._Je = void 0),
       (this.cJe = void 0),
+      (this.dQa = void 0),
       super.Reset();
   }
   OnShowBattleChildViewPanel() {
     this.lJe?.SetNiagaraActive(!1);
   }
   OnTickBattleChildViewPanel(e) {
-    this.lJe?.Tick(e), this._Je?.Tick(e), this.cJe?.Tick(e);
+    BottomPanel.vJe.Start(),
+      this.lJe?.Tick(e),
+      this._Je?.Tick(e),
+      this.cJe?.Tick(e),
+      this.dQa?.Tick(e),
+      BottomPanel.vJe.Stop();
   }
   async CJe() {
     var e = this.GetItem(0);
@@ -111,6 +131,14 @@ class BottomPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       this.GetItem(4),
     )),
       await this.cJe.ShowAsync();
+  }
+  async CQa() {
+    var e = this.GetItem(5);
+    (this.dQa = await this.NewStaticChildViewAsync(
+      e.GetOwner(),
+      RoleTopBuffView_1.RoleTopBuffView,
+    )),
+      await this.dQa.ShowAsync();
   }
   AddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -157,5 +185,8 @@ class BottomPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       );
   }
 }
-((exports.BottomPanel = BottomPanel).vJe = void 0), (BottomPanel.kQe = void 0);
+((exports.BottomPanel = BottomPanel).vJe = Stats_1.Stat.Create(
+  "[BattleView]BottomPanelTick",
+)),
+  (BottomPanel.kQe = Stats_1.Stat.Create("[ChangeRole]BottomPanel"));
 //# sourceMappingURL=BottomPanel.js.map

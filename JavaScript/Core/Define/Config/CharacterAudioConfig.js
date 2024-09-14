@@ -16,9 +16,16 @@ class CharacterAudioConfig {
   get HpLost() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.hplostLength(),
-      (t) => this.hplost(t)?.key(),
-      (t) => this.hplost(t)?.value(),
+      this.hplostKey,
+      this.hplostValue,
+      this,
     );
+  }
+  hplostKey(t) {
+    return this.hplost(t)?.key();
+  }
+  hplostValue(t) {
+    return this.hplost(t)?.value();
   }
   get Chest() {
     return this.chest();
@@ -35,9 +42,16 @@ class CharacterAudioConfig {
   get Rankup() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.rankupLength(),
-      (t) => this.rankup(t)?.key(),
-      (t) => this.rankup(t)?.value(),
+      this.rankupKey,
+      this.rankupValue,
+      this,
     );
+  }
+  rankupKey(t) {
+    return this.rankup(t)?.key();
+  }
+  rankupValue(t) {
+    return this.rankup(t)?.value();
   }
   get JoinTeam() {
     return this.jointeam();

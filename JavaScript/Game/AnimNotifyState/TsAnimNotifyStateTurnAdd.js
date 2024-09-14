@@ -17,7 +17,7 @@ class TurningParams {
       (this.PreFrameAngle = 0);
   }
   CalcTurningRate(e) {
-    var r = e.Entity.GetComponent(162),
+    var r = e.Entity.GetComponent(163),
       r =
         ((this.EndAngle = r.MainAnimInstance.GetMainAnimsCurveValueWithDelta(
           CharacterNameDefines_1.CharacterNameDefines.ROOT_LOOK,
@@ -65,13 +65,13 @@ class TsAnimNotifyStateTurnAdd extends UE.KuroAnimNotifyState {
     var i = t.CharacterActorComponent;
     if (!i?.Valid) return !1;
     if (i.GetSequenceBinding()) return !1;
-    if (!i.IsAutonomousProxy) return !1;
+    if (!i.IsMoveAutonomousProxy) return !1;
     TsAnimNotifyStateTurnAdd.Initialize();
     var n = new TurningParams(),
       t =
         (n.CalcTurningRate(i),
         TsAnimNotifyStateTurnAdd.CachedMap.set(t, n),
-        i.Entity.GetComponent(165));
+        i.Entity.GetComponent(166));
     return t && (t.IsTurning = !0), !0;
   }
   K2_NotifyTick(t, e, r) {
@@ -85,8 +85,8 @@ class TsAnimNotifyStateTurnAdd extends UE.KuroAnimNotifyState {
       !!(i = t.CharacterActorComponent)?.Valid &&
       !i.GetSequenceBinding() &&
       !(
-        !i.IsAutonomousProxy ||
-        !(a = i.Entity.GetComponent(162))?.Valid ||
+        !i.IsMoveAutonomousProxy ||
+        !(a = i.Entity.GetComponent(163))?.Valid ||
         !(t = TsAnimNotifyStateTurnAdd.CachedMap.get(t))?.NeedTurn ||
         ((n = t.AddRate),
         (a = a.MainAnimInstance.GetMainAnimsCurveValueWithDelta(
@@ -111,9 +111,9 @@ class TsAnimNotifyStateTurnAdd extends UE.KuroAnimNotifyState {
     var r = t.CharacterActorComponent;
     if (!r?.Valid) return !1;
     if (r.GetSequenceBinding()) return !1;
-    if (!r.IsAutonomousProxy) return !1;
+    if (!r.IsMoveAutonomousProxy) return !1;
     TsAnimNotifyStateTurnAdd.CachedMap?.delete(t);
-    t = r.Entity.GetComponent(165);
+    t = r.Entity.GetComponent(166);
     return (
       t && (t.IsTurning = !1),
       Log_1.Log.CheckInfo() &&

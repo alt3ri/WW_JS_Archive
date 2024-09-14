@@ -11,6 +11,8 @@ const UE = require("ue"),
   ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiManager_1 = require("../../../../Ui/UiManager"),
+  ActivityMowingRiskController_1 = require("../../../Activity/ActivityContent/MowingRisk/Controller/ActivityMowingRiskController"),
+  MowingRiskInBattleView_1 = require("../../../Activity/ActivityContent/MowingRisk/View/MowingRiskInBattleView"),
   ActivityController_1 = require("../../../Activity/ActivityController"),
   FunctionController_1 = require("../../../Functional/FunctionController"),
   InstanceDungeonController_1 = require("../../../InstanceDungeon/InstanceDungeonController"),
@@ -20,6 +22,7 @@ const UE = require("ue"),
   TowerDefenceController_1 = require("../../../TowerDefence/TowerDefenceController"),
   TowerDefenceInBattleView_1 = require("../../../TowerDefence/View/TowerDefenceInBattleView"),
   TowerController_1 = require("../../../TowerDetailUi/TowerController"),
+  BattleDungeonGuideButton_1 = require("../BattleChildView/BattleDungeonGuideButton"),
   BattleEntranceButton_1 = require("../BattleChildView/BattleEntranceButton"),
   BattleOnlineButton_1 = require("../BattleChildView/BattleOnlineButton"),
   BattleQuestButton_1 = require("../BattleChildView/BattleQuestButton"),
@@ -42,7 +45,8 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.Yet = void 0),
       (this.Jet = void 0),
       (this.zet = void 0),
-      (this.gca = void 0),
+      (this.fCa = void 0),
+      (this.n8a = void 0),
       (this.Zet = void 0),
       (this.fDn = void 0),
       (this.Oze = !1),
@@ -59,8 +63,15 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.ett = () => {
         this.Zet?.SetOtherHide(!1), this.zet.EndShow();
       }),
-      (this.fca = (t) => {
-        t ? this.gca?.StartShow() : this.gca?.EndShow();
+      (this.pCa = (t) => {
+        t ? this.fCa?.StartShow() : this.fCa?.EndShow();
+      }),
+      (this.s8a = (t) => {
+        this.n8a?.CustomSetActive(t),
+          t &&
+            ((t =
+              ModelManager_1.ModelManager.MowingRiskModel.BuildInBattleRootData()),
+            this.n8a?.RefreshByCustomData(t));
       }),
       (this.ttt = (t) => {
         for (const e of this.Het) e.SetGmHide(!t);
@@ -191,6 +202,7 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       [18, UE.UIExtendToggle],
       [19, UE.UIItem],
       [20, UE.UIItem],
+      [21, UE.UIItem],
     ]),
       (this.BtnBindInfo = [[18, this.Ett]]);
   }
@@ -214,9 +226,13 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         this.btt(),
         this.qtt(),
         this.Gtt(),
-        this.pca(),
+        this.vCa(),
+        this.a8a(),
       ]),
       this.Ntt();
+  }
+  OnSeamlessTravelFinish() {
+    this.Ntt();
   }
   OnShowBattleChildViewPanel() {
     ModelManager_1.ModelManager.BattleUiModel.ChildViewData.SetChildrenVisible(
@@ -228,7 +244,8 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     for (const t of this.Het) t.ShowBattleVisibleChildView();
     this.zet.ShowBattleVisibleChildView(),
       this.Zet.ShowBattleVisibleChildView(),
-      this.gca.ShowBattleVisibleChildView();
+      this.fCa.ShowBattleVisibleChildView(),
+      this.n8a.ShowBattleVisibleChildView();
   }
   OnHideBattleChildViewPanel() {
     ModelManager_1.ModelManager.BattleUiModel?.ChildViewData.SetChildrenVisible(
@@ -239,7 +256,8 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       this.Vet.HideBattleVisibleChildView();
     for (const t of this.Het) t.HideBattleVisibleChildView();
     this.zet.HideBattleVisibleChildView(),
-      this.gca.HideBattleVisibleChildView();
+      this.fCa.HideBattleVisibleChildView(),
+      this.n8a.HideBattleVisibleChildView();
   }
   Ntt() {
     this.Oze = Info_1.Info.IsInGamepad();
@@ -247,7 +265,8 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     this.Ott(),
       this.ott(),
       this.ktt(),
-      this.vca(),
+      this.MCa(),
+      this.l8a(),
       this.Ftt(),
       this.EDn(),
       Log_1.Log.CheckInfo() &&
@@ -266,7 +285,7 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     this.Vet.Reset(), (this.Vet = void 0), (this.Het = void 0), super.Reset();
   }
   OnTickBattleChildViewPanel(t) {
-    this.Vet.RefreshShow();
+    TopPanel.vJe.Start(), this.Vet.RefreshShow(), TopPanel.vJe.Stop();
   }
   AddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -311,7 +330,11 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TowerDefenseShowInBattleView,
-        this.fca,
+        this.pCa,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.MowingRiskInBattleViewSetActive,
+        this.s8a,
       );
   }
   RemoveEvents() {
@@ -357,7 +380,11 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TowerDefenseShowInBattleView,
-        this.fca,
+        this.pCa,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.MowingRiskInBattleViewSetActive,
+        this.s8a,
       );
   }
   Ott() {
@@ -375,10 +402,15 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       !ModelManager_1.ModelManager.TowerModel.CheckInTower(),
     );
   }
-  vca() {
+  MCa() {
     TowerDefenceController_1.TowerDefenseController.CheckInInstanceDungeon()
-      ? this.gca?.StartShow()
-      : this.gca?.EndShow();
+      ? this.fCa?.StartShow()
+      : this.fCa?.EndShow();
+  }
+  l8a() {
+    var t =
+      ActivityMowingRiskController_1.ActivityMowingRiskController.Instance.CheckInInstanceDungeon();
+    this.s8a(t);
   }
   Ftt() {
     var t = ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike();
@@ -465,11 +497,18 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       SilentAreaInfoView_1.SilentAreaView,
     );
   }
-  async pca() {
+  async vCa() {
     var t = this.GetItem(20);
-    this.gca = await this.NewDynamicChildViewAsync(
+    this.fCa = await this.NewDynamicChildViewAsync(
       t.GetOwner(),
       TowerDefenceInBattleView_1.TowerDefenseInBattleView,
+    );
+  }
+  async a8a() {
+    var t = this.GetItem(21);
+    this.n8a = await this.NewDynamicChildViewAsync(
+      t.GetOwner(),
+      MowingRiskInBattleView_1.MowingRiskInBattleView,
     );
   }
   async Gtt() {
@@ -520,9 +559,22 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       this.Xet.BindOnClicked(this.Ctt);
   }
   async wtt() {
-    var t = this.GetItem(12);
-    (this.$et = await this.Vtt(t, void 0, void 0)),
-      this.$et.BindOnClicked(this.gtt);
+    var t = this.GetItem(12),
+      e = {
+        RedDotName: void 0,
+        FunctionType: void 0,
+        HideInGamepad: !1,
+        HideByRoleConfig: !0,
+        ChildType: 3,
+      };
+    (this.$et = await this.NewStaticChildViewAsync(
+      t.GetOwner(),
+      BattleDungeonGuideButton_1.BattleDungeonGuideButton,
+      e,
+    )),
+      this.Het.push(this.$et),
+      this.$et.BindOnClicked(this.gtt),
+      this.$et.SetOtherHide(!0);
   }
   async Btt() {
     var t = this.GetItem(13);
@@ -542,5 +594,7 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       this.Jet.BindOnClicked(this.Mtt);
   }
 }
-(exports.TopPanel = TopPanel).vJe = void 0;
+(exports.TopPanel = TopPanel).vJe = Stats_1.Stat.Create(
+  "[BattleView]TopPanelTick",
+);
 //# sourceMappingURL=TopPanel.js.map

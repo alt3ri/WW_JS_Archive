@@ -58,26 +58,37 @@ class RogueParam {
   get GuideInstArray() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.guideinstarrayLength(),
-      (t) => this.guideinstarray(t),
+      this.guideinstarray,
+      this,
     );
   }
   get GuideInstRoleIdArray() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.guideinstroleidarrayLength(),
-      (t) => this.guideinstroleidarray(t),
+      this.guideinstroleidarray,
+      this,
     );
   }
   get DungeonList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.dungeonlistLength(), (t) =>
-      this.dungeonlist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.dungeonlistLength(),
+      this.dungeonlist,
+      this,
     );
   }
   get DungeonRoleOpenTimeMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.dungeonroleopentimemapLength(),
-      (t) => this.dungeonroleopentimemap(t)?.key(),
-      (t) => this.dungeonroleopentimemap(t)?.value(),
+      this.dungeonroleopentimemapKey,
+      this.dungeonroleopentimemapValue,
+      this,
     );
+  }
+  dungeonroleopentimemapKey(t) {
+    return this.dungeonroleopentimemap(t)?.key();
+  }
+  dungeonroleopentimemapValue(t) {
+    return this.dungeonroleopentimemap(t)?.value();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;

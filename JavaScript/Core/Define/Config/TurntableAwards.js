@@ -19,9 +19,16 @@ class TurntableAwards {
   get RewardItem() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.rewarditemLength(),
-      (t) => this.rewarditem(t)?.key(),
-      (t) => this.rewarditem(t)?.value(),
+      this.rewarditemKey,
+      this.rewarditemValue,
+      this,
     );
+  }
+  rewarditemKey(t) {
+    return this.rewarditem(t)?.key();
+  }
+  rewarditemValue(t) {
+    return this.rewarditem(t)?.value();
   }
   get IsSpecial() {
     return this.isspecial();
@@ -51,10 +58,10 @@ class TurntableAwards {
     return this.rewarditem(t);
   }
   rewarditem(t, i) {
-    var s = this.J7.__offset(this.z7, 10);
-    return s
+    var r = this.J7.__offset(this.z7, 10);
+    return r
       ? (i || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
           this.J7,
         )
       : null;

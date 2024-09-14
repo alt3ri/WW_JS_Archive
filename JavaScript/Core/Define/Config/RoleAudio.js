@@ -34,20 +34,29 @@ class RoleAudio {
   get LostHealthEventMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.losthealtheventmapLength(),
-      (t) => this.losthealtheventmap(t)?.key(),
-      (t) => this.losthealtheventmap(t)?.value(),
+      this.losthealtheventmapKey,
+      this.losthealtheventmapValue,
+      this,
     );
+  }
+  losthealtheventmapKey(t) {
+    return this.losthealtheventmap(t)?.key();
+  }
+  losthealtheventmapValue(t) {
+    return this.losthealtheventmap(t)?.value();
   }
   get LowStrengthEventList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.lowstrengtheventlistLength(),
-      (t) => this.lowstrengtheventlist(t),
+      this.lowstrengtheventlist,
+      this,
     );
   }
   get BreakUpEventList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.breakupeventlistLength(),
-      (t) => this.breakupeventlist(t),
+      this.breakupeventlist,
+      this,
     );
   }
   get ExtremeDodgeEvent() {
@@ -119,10 +128,10 @@ class RoleAudio {
     return this.losthealtheventmap(t);
   }
   losthealtheventmap(t, e) {
-    var i = this.J7.__offset(this.z7, 20);
-    return i
+    var s = this.J7.__offset(this.z7, 20);
+    return s
       ? (e || new DicIntString_1.DicIntString()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
       : null;
@@ -135,9 +144,9 @@ class RoleAudio {
     return this.lowstrengtheventlist(t);
   }
   lowstrengtheventlist(t, e) {
-    var i = this.J7.__offset(this.z7, 22);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, e)
+    var s = this.J7.__offset(this.z7, 22);
+    return s
+      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, e)
       : null;
   }
   lowstrengtheventlistLength() {
@@ -148,9 +157,9 @@ class RoleAudio {
     return this.breakupeventlist(t);
   }
   breakupeventlist(t, e) {
-    var i = this.J7.__offset(this.z7, 24);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, e)
+    var s = this.J7.__offset(this.z7, 24);
+    return s
+      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, e)
       : null;
   }
   breakupeventlistLength() {

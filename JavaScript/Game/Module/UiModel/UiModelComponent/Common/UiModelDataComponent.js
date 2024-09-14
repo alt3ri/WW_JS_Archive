@@ -13,14 +13,13 @@ var __decorate =
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(e, t, i, o);
     else
-      for (var h = e.length - 1; 0 <= h; h--)
-        (n = e[h]) && (r = (s < 3 ? n(r) : 3 < s ? n(t, i, r) : n(t, i)) || r);
+      for (var l = e.length - 1; 0 <= l; l--)
+        (n = e[l]) && (r = (s < 3 ? n(r) : 3 < s ? n(t, i, r) : n(t, i)) || r);
     return 3 < s && r && Object.defineProperty(t, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelDataComponent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log"),
-  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine"),
   UiModelComponentBase_1 = require("../UiModelComponentBase");
@@ -33,11 +32,9 @@ let UiModelDataComponent = class UiModelDataComponent extends UiModelComponentBa
       (this.ModelType = void 0),
       (this.Xwr = 0),
       (this.yne = !1),
-      (this.mjs = !1),
-      (this.Qfa = void 0),
-      (this.djs = !1),
+      (this.uSa = void 0),
       (this.$wr = 1),
-      (this.vjs = !1);
+      (this.kjs = !1);
   }
   GetModelLoadState() {
     return this.Xwr;
@@ -58,26 +55,16 @@ let UiModelDataComponent = class UiModelDataComponent extends UiModelComponentBa
     return this.yne;
   }
   GetLoadingVisible() {
-    return this.Qfa;
+    return this.uSa;
   }
   ClearLoadingVisible() {
-    this.Qfa = void 0;
+    this.uSa = void 0;
   }
-  SetVisible(e, t = !1) {
-    if (1 === this.Xwr) this.Qfa = e;
+  SetVisible(e) {
+    if (1 === this.Xwr) this.uSa = e;
     else {
-      if (this.yne === e) return this.Cjs(), !1;
-      if (t) return (this.mjs = !0), (this.djs = e), (this.NeedTick = !0);
-      this.Cjs(),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "Character",
-            59,
-            "UiModelDataComponent_SetVisible",
-            ["visible", e],
-            ["ModelType", this.ModelType],
-          ),
-        (this.yne = e),
+      if (this.yne === e) return !1;
+      (this.yne = e),
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Owner,
           EventDefine_1.EEventName.OnUiModelVisibleChange,
@@ -85,9 +72,6 @@ let UiModelDataComponent = class UiModelDataComponent extends UiModelComponentBa
         );
     }
     return !0;
-  }
-  Cjs() {
-    (this.mjs = !1), (this.djs = !1);
   }
   GetDitherEffectValue() {
     return this.$wr;
@@ -101,13 +85,10 @@ let UiModelDataComponent = class UiModelDataComponent extends UiModelComponentBa
       );
   }
   GetLoadingIconFollowState() {
-    return this.vjs;
+    return this.kjs;
   }
   SetLoadingIconFollowState(e) {
-    this.vjs = e;
-  }
-  OnTick(e) {
-    this.mjs && this.SetVisible(this.djs), (this.NeedTick = !1);
+    this.kjs = e;
   }
 };
 (UiModelDataComponent = __decorate(

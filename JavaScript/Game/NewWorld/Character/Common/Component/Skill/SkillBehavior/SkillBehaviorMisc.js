@@ -14,8 +14,7 @@ const UE = require("ue"),
   QueryTypeDefine_1 = require("../../../../../../../Core/Define/QueryTypeDefine"),
   Vector_1 = require("../../../../../../../Core/Utils/Math/Vector"),
   TraceElementCommon_1 = require("../../../../../../../Core/Utils/TraceElementCommon"),
-  ColorUtils_1 = require("../../../../../../Utils/ColorUtils"),
-  CharacterActorComponent_1 = require("../../CharacterActorComponent");
+  ColorUtils_1 = require("../../../../../../Utils/ColorUtils");
 (exports.queryExtent = new UE.Vector(1, 1, 500)),
   (exports.angles = [0, 270, 90, 180]),
   (exports.paramMap = new Map()),
@@ -23,6 +22,7 @@ const UE = require("ue"),
 let lineTraceWall = void 0,
   lineTraceGround = void 0,
   lineTraceWater = void 0;
+const DELTA_HEIGHT = -1e3;
 function getEndSkillBehaviorParamList(e) {
   return (
     exports.paramMap.has(e) || exports.paramMap.set(e, []),
@@ -103,14 +103,12 @@ function traceWall(e, r, t, o) {
     o = o.HitResult;
   return n && o.bBlockingHit
     ? (TraceElementCommon_1.TraceElementCommon.GetHitLocation(o, 0, t),
-      r.Equals(t) ? void 0 : (backward(e.ScaledRadius, r, t, t), [!0, t]))
-    : [!1, t];
+      r.Equals(t) ? void 0 : (backward(e.ScaledRadius, r, t, t), [o, t]))
+    : [void 0, t];
 }
 function traceWater(e, r, t) {
   var o = Vector_1.Vector.Create(),
-    e =
-      (o.Set(r.X, r.Y, r.Z - CharacterActorComponent_1.FIX_SPAWN_TRACE_HEIGHT),
-      getLineTrace(e.Actor, t, 2)),
+    e = (o.Set(r.X, r.Y, r.Z - DELTA_HEIGHT), getLineTrace(e.Actor, t, 2)),
     t =
       (TraceElementCommon_1.TraceElementCommon.SetStartLocation(e, r),
       TraceElementCommon_1.TraceElementCommon.SetEndLocation(e, o),
@@ -125,9 +123,7 @@ function traceWater(e, r, t) {
 }
 function traceGround(e, r, t) {
   var o = Vector_1.Vector.Create(),
-    n =
-      (o.Set(r.X, r.Y, r.Z + CharacterActorComponent_1.FIX_SPAWN_TRACE_HEIGHT),
-      getLineTrace(e.Actor, t, 1)),
+    n = (o.Set(r.X, r.Y, r.Z + DELTA_HEIGHT), getLineTrace(e.Actor, t, 1)),
     r =
       (TraceElementCommon_1.TraceElementCommon.SetStartLocation(n, r),
       TraceElementCommon_1.TraceElementCommon.SetEndLocation(n, o),

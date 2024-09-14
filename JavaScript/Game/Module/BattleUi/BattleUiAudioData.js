@@ -6,7 +6,12 @@ const Time_1 = require("../../../Core/Common/Time"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   DEFAULT_COOL_DOWN = 500,
-  audioIds = ["play_ui_fb_concerto_energy", "play_ui_fb_concerto_energy_rogue"];
+  audioIds = [
+    "play_ui_fb_concerto_energy",
+    "play_ui_fb_concerto_energy_rogue",
+    "play_scene_ui_fight_focus_on",
+    "play_scene_ui_fight_focus_switch",
+  ];
 class BattleUiAudioInfo {
   constructor() {
     (this.AudioType = 0), (this.CoolDownEndTime = 0), (this.UiChildType = 0);

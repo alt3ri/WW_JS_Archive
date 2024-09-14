@@ -17,12 +17,13 @@ class TsAnimNotifyStateCounterAttack extends UE.KuroAnimNotifyState {
     if (t instanceof TsBaseCharacter_1.default) {
       t = t.CharacterActorComponent?.Entity;
       if (!t?.Valid) return !1;
-      var e = t.GetComponent(33),
-        t = t.GetComponent(52);
+      var e = t.GetComponent(34),
+        t = t.GetComponent(53);
       if (!e?.Valid || !t?.Valid) return !1;
       if (!this.弹反设置) return !1;
       if (
-        (e?.SetCurSkillAnIndex(this.exportIndex),
+        (e?.SetCurAnInfo(this.exportIndex, i.GetName()),
+        t.SetCounterAttackAnsInfo(this.exportIndex),
         this.弹反摄像机预设 || this.弹反特效预设)
       )
         return (
@@ -72,13 +73,13 @@ class TsAnimNotifyStateCounterAttack extends UE.KuroAnimNotifyState {
     if (s instanceof TsBaseCharacter_1.default) {
       var e = s.CharacterActorComponent?.Entity;
       if (!e?.Valid) return !1;
-      var r = e.GetComponent(33),
-        e = e.GetComponent(52);
+      var r = e.GetComponent(34),
+        e = e.GetComponent(53);
       if (!r?.Valid || !e?.Valid) return !1;
       var h = e.IsTriggerCounterAttack;
       if ((e.CounterAttackEnd(), !h)) {
         if (FNameUtil_1.FNameUtil.IsNothing(this.生成子弹ID)) return !1;
-        r?.SetCurSkillAnIndex(this.exportIndex),
+        r?.SetCurAnInfo(this.exportIndex, i.GetName()),
           BulletUtil_1.BulletUtil.CreateBulletFromAN(
             s,
             this.生成子弹ID.toString(),
@@ -98,9 +99,9 @@ class TsAnimNotifyStateCounterAttack extends UE.KuroAnimNotifyState {
           )) &&
           4 !== e) ||
         ((h = UE.KismetSystemLibrary.GetOuterObject(this)),
-        (r = UE.KismetSystemLibrary.GetPathName(h)),
+        (i = UE.KismetSystemLibrary.GetPathName(h)),
         UE.BPL_BulletPreview_C.ShowBulletPreview(
-          r,
+          i,
           this.生成子弹ID,
           s,
           t,

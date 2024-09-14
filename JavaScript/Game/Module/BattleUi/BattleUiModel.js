@@ -73,6 +73,7 @@ class BattleUiModel extends ModelBase_1.ModelBase {
       (this.PXe = !1),
       (this.IsInBattleSettlement = !1),
       (this.xXe = !1),
+      (this.Aja = !1),
       (this.wXe = void 0),
       (this.BXe = !1),
       (this.bXe = void 0),
@@ -532,6 +533,21 @@ class BattleUiModel extends ModelBase_1.ModelBase {
   ExistBattleInteract() {
     return this.xXe;
   }
+  get ChatScrollViewVisible() {
+    return this.Aja;
+  }
+  set ChatScrollViewVisible(t) {
+    this.Aja !== t &&
+      ((this.Aja = t),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.BattleUiChatScrollViewVisibleChanged,
+      ));
+  }
+  IsEnableChangeInputControllerOnMobile() {
+    return !ModelManager_1.ModelManager.PanelQteModel.IsInQte;
+  }
 }
-(exports.BattleUiModel = BattleUiModel).jXe = void 0;
+(exports.BattleUiModel = BattleUiModel).jXe = Stats_1.Stat.Create(
+  "SkillButtonEntityDataNextTick",
+);
 //# sourceMappingURL=BattleUiModel.js.map

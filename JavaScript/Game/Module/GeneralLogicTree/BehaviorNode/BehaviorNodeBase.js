@@ -18,7 +18,8 @@ class BehaviorNodeBase extends BehaviorTreeTagComponent_1.BehaviorTreeTagContain
       (this.NodeType = void 0),
       (this.Blackboard = void 0),
       (this.TrackTarget = void 0),
-      (this.TrackTextConfig = ""),
+      (this.TrackTextConfig = void 0),
+      (this.MultiTrackText = void 0),
       (this.TrackTextRuleInner = 0),
       (this.CreateContext = (e, t) =>
         LevelGeneralContextDefine_1.GeneralLogicTreeContext.Create(
@@ -47,46 +48,48 @@ class BehaviorNodeBase extends BehaviorTreeTagComponent_1.BehaviorTreeTagContain
   }
   get IsProcessing() {
     return (
-      this.Status === Protocol_1.Aki.Protocol.DNs.t5n ||
-      this.Status === Protocol_1.Aki.Protocol.DNs.Proto_Completing
+      this.Status === Protocol_1.Aki.Protocol.BNs._5n ||
+      this.Status === Protocol_1.Aki.Protocol.BNs.Proto_Completing
     );
   }
   get IsSuccess() {
-    return this.Status === Protocol_1.Aki.Protocol.DNs.Proto_CompletedSuccess;
+    return this.Status === Protocol_1.Aki.Protocol.BNs.Proto_CompletedSuccess;
   }
   get IsFailure() {
     return (
-      this.Status === Protocol_1.Aki.Protocol.DNs.Proto_CompletedFailed ||
-      this.Status === Protocol_1.Aki.Protocol.DNs.Proto_Destroy
+      this.Status === Protocol_1.Aki.Protocol.BNs.Proto_CompletedFailed ||
+      this.Status === Protocol_1.Aki.Protocol.BNs.Proto_Destroy
     );
   }
   Init(e, t, s, i, o) {
     (this.Blackboard = e),
       (this.InnerTreeIncId = e.TreeIncId),
       (this.InnerTreeConfigId = e.TreeConfigId),
-      (this.InnerStatus = Protocol_1.Aki.Protocol.DNs.Proto_NotActive),
+      (this.InnerStatus = Protocol_1.Aki.Protocol.BNs.Proto_NotActive),
       (this.BtType = o),
       (this.Context = this.CreateContext(void 0, this.InnerNodeId)),
-      this.OnCreate(i) && this.UpdateStatus(t, s.w6n);
+      this.OnCreate(i) && this.UpdateStatus(t, s.H6n);
   }
   Destroy() {
     this.OnDestroy(),
       this.Context?.Release(),
       (this.Context = void 0),
-      (this.Blackboard = void 0);
+      (this.Blackboard = void 0),
+      (this.TrackTextConfig = void 0),
+      (this.MultiTrackText = void 0);
   }
   UpdateStatus(e, t) {
     var s = this.InnerStatus;
     if (((this.InnerStatus = t), s !== this.InnerStatus)) {
       switch (this.InnerStatus) {
-        case Protocol_1.Aki.Protocol.DNs.t5n:
+        case Protocol_1.Aki.Protocol.BNs._5n:
           this.OnNodeActive();
           break;
-        case Protocol_1.Aki.Protocol.DNs.Proto_CompletedSuccess:
+        case Protocol_1.Aki.Protocol.BNs.Proto_CompletedSuccess:
           this.OnNodeDeActive(!0);
           break;
-        case Protocol_1.Aki.Protocol.DNs.Proto_CompletedFailed:
-        case Protocol_1.Aki.Protocol.DNs.Proto_Destroy:
+        case Protocol_1.Aki.Protocol.BNs.Proto_CompletedFailed:
+        case Protocol_1.Aki.Protocol.BNs.Proto_Destroy:
           this.OnNodeDeActive(!1);
       }
       switch (e) {
@@ -113,11 +116,17 @@ class BehaviorNodeBase extends BehaviorTreeTagComponent_1.BehaviorTreeTagContain
   UpdateProgress(e) {
     e &&
       this.OnUpdateProgress((e = e)) &&
-      EventSystem_1.EventSystem.Emit(
+      (EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnLogicTreeNodeProgressChange,
         this.Context,
         e,
-      );
+      ),
+      EventSystem_1.EventSystem.EmitWithTarget(
+        this.Blackboard,
+        EventDefine_1.EEventName.OnLogicTreeNodeProgressChange,
+        this.Context,
+        e,
+      ));
   }
   OnUpdateProgress(e) {
     return !1;
@@ -136,7 +145,7 @@ class BehaviorNodeBase extends BehaviorTreeTagComponent_1.BehaviorTreeTagContain
   OnNodeDeActive(e) {}
   OnDestroy() {
     this.IsProcessing &&
-      this.UpdateStatus(2, Protocol_1.Aki.Protocol.DNs.Proto_Destroy);
+      this.UpdateStatus(2, Protocol_1.Aki.Protocol.BNs.Proto_Destroy);
   }
 }
 exports.BehaviorNodeBase = BehaviorNodeBase;

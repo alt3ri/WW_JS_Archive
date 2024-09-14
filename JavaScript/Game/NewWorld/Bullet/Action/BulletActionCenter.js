@@ -8,6 +8,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   BulletActionAttachParentEffect_1 = require("./BulletActionAttachParentEffect"),
   BulletActionBase_1 = require("./BulletActionBase"),
   BulletActionChild_1 = require("./BulletActionChild"),
+  BulletActionDelayDestroyBullet_1 = require("./BulletActionDelayDestroyBullet"),
   BulletActionDestroyBullet_1 = require("./BulletActionDestroyBullet"),
   BulletActionInfo_1 = require("./BulletActionInfo"),
   BulletActionInitBullet_1 = require("./BulletActionInitBullet"),
@@ -32,7 +33,7 @@ class BulletActionCenter {
     this.f5o = void 0;
   }
   LTe() {
-    (this.f5o = new Array(17)),
+    (this.f5o = new Array(18)),
       this.SXi(
         0,
         BulletActionInfo_1.BulletActionInfoSimple,
@@ -123,6 +124,12 @@ class BulletActionCenter {
         16,
         BulletActionInfo_1.BulletActionInfoSimple,
         BulletActionAttachParentEffect_1.BulletActionAttachParentEffect,
+        !0,
+      ),
+      this.SXi(
+        17,
+        BulletActionInfo_1.BulletActionInfoDestroyBullet,
+        BulletActionDelayDestroyBullet_1.BulletActionDelayDestroyBullet,
         !0,
       );
   }

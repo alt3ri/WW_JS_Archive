@@ -19,11 +19,11 @@ const UE = require("ue"),
 class TowerDefenseInBattleView extends BattleVisibleChildView_1.BattleVisibleChildView {
   constructor() {
     super(...arguments),
-      (this.LJs = void 0),
-      (this.kzs = void 0),
+      (this.EZs = void 0),
+      (this.Hea = void 0),
       (this.qbi = 1),
       (this.eTt = (e) => {
-        this.LJs?.SetActive(e), e && this.LJs?.Refresh();
+        this.EZs?.SetActive(e), e && this.EZs?.Refresh();
       }),
       (this.Cke = () => {
         var e = this.GetExtendToggle(0);
@@ -32,12 +32,12 @@ class TowerDefenseInBattleView extends BattleVisibleChildView_1.BattleVisibleChi
             ? e.SetToggleState(0, !0)
             : e.SetToggleState(1, !0));
       }),
-      (this.DJs = () => {
+      (this.yZs = () => {
         var e = this.GetExtendToggle(0);
         e && 1 === e.GetToggleState() && e.SetToggleState(0, !0);
       }),
-      (this.AJs = () => {
-        this.UJs(), this.LJs?.Refresh(), this.Fzs();
+      (this.IZs = () => {
+        this.TZs(), this.EZs?.Refresh(), this.jea();
       });
   }
   OnRegisterComponent() {
@@ -53,22 +53,22 @@ class TowerDefenseInBattleView extends BattleVisibleChildView_1.BattleVisibleChi
     super.Initialize(e),
       this.InitChildType(4),
       this.SetVisible(1, !1),
-      this.RJs();
+      this.LZs();
   }
   Reset() {
-    super.Reset(), this.xJs();
+    super.Reset(), this.DZs();
   }
   async OnBeforeStartAsync() {
     var e = new TowerDefenseInBattlePanel(),
       t = this.GetItem(3);
     await e.GetOrCreateAsync(t, "UiItem_HoverTipsD"),
-      (this.LJs = e),
-      (this.kzs = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
+      (this.EZs = e),
+      (this.Hea = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   OnStart() {
     this.GetSprite(2).SetUIActive(!0),
-      this.kzs.PlayLevelSequenceByName("Start"),
-      this.kzs.StopCurrentSequence(!1, !0);
+      this.Hea.PlayLevelSequenceByName("Start"),
+      this.Hea.StopCurrentSequence(!1, !0);
   }
   OnAfterDestroy() {
     ModelManager_1.ModelManager.BattleUiModel?.EnvironmentKeyData?.SetEnvironmentKeyVisible(
@@ -78,7 +78,7 @@ class TowerDefenseInBattleView extends BattleVisibleChildView_1.BattleVisibleChi
   }
   StartShow() {
     this.SetVisible(1, !0),
-      this.AJs(),
+      this.IZs(),
       ModelManager_1.ModelManager.BattleUiModel?.EnvironmentKeyData?.SetEnvironmentKeyVisible(
         5,
         !0,
@@ -91,35 +91,35 @@ class TowerDefenseInBattleView extends BattleVisibleChildView_1.BattleVisibleChi
         !1,
       );
   }
-  RJs() {
+  LZs() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.BattleUiToggleTowerDefenseInfoView,
       this.Cke,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TowerDefenseOnPhantomInfoUpdateNotify,
-        this.AJs,
+        this.IZs,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeRole,
-        this.DJs,
+        this.yZs,
       );
   }
-  xJs() {
+  DZs() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.BattleUiToggleTowerDefenseInfoView,
       this.Cke,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TowerDefenseOnPhantomInfoUpdateNotify,
-        this.AJs,
+        this.IZs,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChangeRole,
-        this.DJs,
+        this.yZs,
       );
   }
-  UJs() {
+  TZs() {
     var e =
       TowerDefenceController_1.TowerDefenseController.GetLevelContentInBattle();
     this.GetText(1).SetText(e),
@@ -127,10 +127,10 @@ class TowerDefenseInBattleView extends BattleVisibleChildView_1.BattleVisibleChi
         TowerDefenceController_1.TowerDefenseController.GetProgressInBattle(),
       );
   }
-  Fzs() {
+  jea() {
     var e = TowerDefenceController_1.TowerDefenseController.GetLevelInBattle();
     e !== this.qbi &&
-      ((this.qbi = e), this.kzs.PlayLevelSequenceByName("Start"));
+      ((this.qbi = e), this.Hea.PlayLevelSequenceByName("Start"));
   }
 }
 exports.TowerDefenseInBattleView = TowerDefenseInBattleView;
@@ -159,11 +159,12 @@ class TowerDefenseInBattlePanel extends BattleChildView_1.BattleChildView {
 }
 class TowerDefenseInBattleInfoItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.DOt = void 0), (this.PJs = void 0);
+    super(...arguments), (this.DOt = void 0), (this.AZs = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
       [0, UE.UIText],
+      [4, UE.UIText],
       [1, UE.UIItem],
       [2, UE.UIVerticalLayout],
       [3, UE.UIItem],
@@ -173,7 +174,7 @@ class TowerDefenseInBattleInfoItem extends UiPanelBase_1.UiPanelBase {
     var e = new SmallItemGrid_1.SmallItemGrid();
     await e.CreateThenShowByActorAsync(this.GetItem(1).GetOwner()),
       (this.DOt = e),
-      (this.PJs = new GenericLayout_1.GenericLayout(
+      (this.AZs = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(2),
         TowerDefenceController_1.TowerDefenseController.BuildPhantomSkillInBattleItem,
       ));
@@ -186,14 +187,27 @@ class TowerDefenseInBattleInfoItem extends UiPanelBase_1.UiPanelBase {
         this.DOt?.SetToggleInteractive(!1),
         TowerDefenceController_1.TowerDefenseController.BuildPhantomSkillInBattleLayoutData()),
       e =
-        (this.PJs.RefreshByData(e),
+        (this.AZs.RefreshByData(e),
         TowerDefenceController_1.TowerDefenseController.GetExpDataInBattle());
-    LguiUtil_1.LguiUtil.SetLocalTextNew(
-      this.GetText(0),
-      "TowerDefence_LV",
-      e.Exp,
-      0 === e.Threshold ? e.Exp : e.Threshold,
-    );
+    void 0 === e
+      ? this.GetText(0)?.SetUIActive(!1)
+      : (this.GetText(0)?.SetUIActive(!0),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(
+          this.GetText(0),
+          "TowerDefence_LV",
+          e.Exp,
+          0 === e.Threshold ? e.Exp : e.Threshold,
+        )),
+      this.GetText(4)?.SetUIActive(!0),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(
+        this.GetText(4),
+        TowerDefenceController_1.TowerDefenseController.BuildCurrentPhantomNameTextIdInBattle(),
+      ),
+      this.GetText(0)?.SetUIActive(!0),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(
+        this.GetText(0),
+        "PrefabTextItem_992018199_Text",
+      );
   }
 }
 class TowerDefensePhantomSkillInBattleItem extends GridProxyAbstract_1.GridProxyAbstract {
@@ -202,22 +216,21 @@ class TowerDefensePhantomSkillInBattleItem extends GridProxyAbstract_1.GridProxy
       [0, UE.UISprite],
       [1, UE.UIText],
       [2, UE.UIText],
+      [3, UE.UISprite],
     ];
   }
   Refresh(e, t, i) {
-    var s = UE.Color.FromHex(e.IsUnlock ? "adfb5aff" : "adadadff"),
-      r = this.GetSprite(0);
-    this.SetSpriteByPath(
-      e.IsUnlock
-        ? "/Game/Aki/UI/UIResources/Common/Atlas/SP_ComFinish.SP_ComFinish"
-        : "/Game/Aki/UI/UIResources/Common/Atlas/SP_ComFinishNo.SP_ComFinishNo",
-      r,
-      !1,
-    ),
-      this.GetText(1)?.SetColor(s),
-      r.SetColor(s),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e.Skill),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.Description);
+    var s = UE.Color.FromHex(e.IsUnlock ? "adfb5aff" : "adadadff");
+    this.GetText(1)?.SetColor(s),
+      this.GetSprite(0).SetUIActive(e.IsUnlock),
+      this.GetSprite(3).SetUIActive(!e.IsUnlock),
+      e.DescriptionArgs
+        ? LguiUtil_1.LguiUtil.SetLocalTextNew(
+            this.GetText(2),
+            e.Description,
+            ...e.DescriptionArgs,
+          )
+        : LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.Description);
   }
 }
 exports.TowerDefensePhantomSkillInBattleItem =

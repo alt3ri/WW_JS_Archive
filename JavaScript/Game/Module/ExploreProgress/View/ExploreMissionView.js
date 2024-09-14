@@ -12,8 +12,8 @@ class ExploreMissionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.L9e = 0),
-      (this.VHs = []),
-      (this.HHs = void 0),
+      (this.ejs = []),
+      (this.tjs = void 0),
       (this.cHe = () => {
         return new ExploreMissionItem_1.ExploreMissionItem();
       });
@@ -34,9 +34,9 @@ class ExploreMissionView extends UiViewBase_1.UiViewBase {
     if (e) {
       for (const r of e) {
         var s = new ExploreAreaMissionData_1.ExploreAreaMissionData(r);
-        this.VHs.push(s);
+        this.ejs.push(s);
       }
-      this.VHs.sort((i, e) => {
+      this.ejs.sort((i, e) => {
         var s = i.IsQuestVisible();
         return s !== e.IsQuestVisible()
           ? s
@@ -52,24 +52,24 @@ class ExploreMissionView extends UiViewBase_1.UiViewBase {
                 : -1
               : i.QuestId - e.QuestId;
       }),
-        (this.HHs = new LoopScrollView_1.LoopScrollView(
+        (this.tjs = new LoopScrollView_1.LoopScrollView(
           this.GetLoopScrollViewComponent(0),
           this.GetItem(1)?.GetOwner(),
           this.cHe,
         )),
-        this.HHs.RefreshByData(this.VHs);
+        this.tjs.RefreshByData(this.ejs);
       let i = 0;
-      for (const t of this.VHs) 3 === t.QuestStatus && i++;
+      for (const t of this.ejs) 3 === t.QuestStatus && i++;
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(2),
         "ExploreMissionProgress",
         i,
-        this.VHs.length,
+        this.ejs.length,
       );
     }
   }
   OnBeforeDestroy() {
-    (this.L9e = 0), (this.VHs.length = 0);
+    (this.L9e = 0), (this.ejs.length = 0);
   }
 }
 exports.ExploreMissionView = ExploreMissionView;

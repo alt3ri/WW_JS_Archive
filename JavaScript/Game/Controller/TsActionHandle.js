@@ -15,29 +15,37 @@ class TsActionHandle extends UE.Object {
       (this.OnPressStat = void 0),
       (this.OnReleaseStat = void 0);
   }
-  Initialize(i) {
-    (this.PlayerController = i),
-      (this.OnPressStat = void 0),
-      (this.OnReleaseStat = void 0);
+  Initialize(t) {
+    (this.PlayerController = t),
+      (this.OnPressStat = Stats_1.Stat.Create(
+        "TsActionHandle.OnPressAction",
+        "",
+        StatDefine_1.BATTLESTAT_GROUP,
+      )),
+      (this.OnReleaseStat = Stats_1.Stat.Create(
+        "TsActionHandle.OnReleaseAction",
+        "",
+        StatDefine_1.BATTLESTAT_GROUP,
+      ));
   }
   Reset() {
     (this.PlayerController = void 0),
       (this.ActionName = void 0),
       (this.OnInputActionCallback = void 0);
   }
-  AddActionBinding(i, t) {
-    t
-      ? ((this.ActionName = i),
-        (this.OnInputActionCallback = t),
-        (t = FNameUtil_1.FNameUtil.GetDynamicFName(i)),
+  AddActionBinding(t, i) {
+    i
+      ? ((this.ActionName = t),
+        (this.OnInputActionCallback = i),
+        (i = FNameUtil_1.FNameUtil.GetDynamicFName(t)),
         this.PlayerController.AddActionBinding(
-          t,
+          i,
           0,
           this,
           new UE.FName(this.OnPressAction.name),
         ),
         this.PlayerController.AddActionBinding(
-          t,
+          i,
           1,
           this,
           new UE.FName(this.OnReleaseAction.name),
@@ -45,16 +53,20 @@ class TsActionHandle extends UE.Object {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Controller", 8, "添加Action输入绑定时，回调不存在", [
           "actionName",
-          i,
+          t,
         ]);
   }
-  OnPressAction(i) {
-    this.OnInputActionCallback &&
-      this.OnInputActionCallback(this.ActionName, !0, i);
+  OnPressAction(t) {
+    this.OnPressStat.Start(),
+      this.OnInputActionCallback &&
+        this.OnInputActionCallback(this.ActionName, !0, t),
+      this.OnPressStat.Stop();
   }
-  OnReleaseAction(i) {
-    this.OnInputActionCallback &&
-      this.OnInputActionCallback(this.ActionName, !1, i);
+  OnReleaseAction(t) {
+    this.OnReleaseStat.Start(),
+      this.OnInputActionCallback &&
+        this.OnInputActionCallback(this.ActionName, !1, t),
+      this.OnReleaseStat.Stop();
   }
 }
 (exports.TsActionHandle = TsActionHandle), (exports.default = TsActionHandle);

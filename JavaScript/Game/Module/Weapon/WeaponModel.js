@@ -19,6 +19,7 @@ class WeaponModel extends ModelBase_1.ModelBase {
       (this.Dko = new Map()),
       (this.Rko = 0),
       (this.BlueprintWeaponBreachLevel = 0),
+      (this.BlueprintWeaponEquippedRoleId = 0),
       (this.Uko = (e, t) => t.QualityId - e.QualityId);
   }
   AddWeaponData(e) {
@@ -84,17 +85,17 @@ class WeaponModel extends ModelBase_1.ModelBase {
     return this.Lko.get(e);
   }
   WeaponRoleLoadEquip(e) {
-    for (const r of e.sort((e, t) => e.ojn - t.ojn)) {
-      var t = r.ojn,
-        n = r.njn;
+    for (const r of e.sort((e, t) => e.mjn - t.mjn)) {
+      var t = r.mjn,
+        n = r.djn;
       this.ChangeWeaponEquip(n, t);
     }
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.EquipWeapon);
   }
   WeaponLevelUpResponse(e) {
-    this.SetWeaponLevelData(e.T5n, e.ajn, e.sjn),
+    this.SetWeaponLevelData(e.w5n, e.gjn, e.Cjn),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.WeaponLevelUp),
-      this.wOo(e.rvs);
+      this.wOo(e._vs);
   }
   wOo(e) {
     var t = [];

@@ -55,7 +55,7 @@ class SliderItem extends UiPanelBase_1.UiPanelBase {
 }
 exports.SliderItem = SliderItem;
 class ListSliderControl {
-  constructor(t, i, s, h, e, o, r = 1, n = void 0, a = void 0) {
+  constructor(t, i, s, h, e, o, r = 1, a = void 0, n = void 0) {
     (this.l0i = void 0),
       (this._0i = void 0),
       (this.eGe = void 0),
@@ -102,9 +102,9 @@ class ListSliderControl {
           (this.f0i = r),
           (this.p0i = 0),
           (this.C0i =
-            n ?? ConfigManager_1.ConfigManager.RewardConfig.GetShowTime()),
+            a ?? ConfigManager_1.ConfigManager.RewardConfig.GetShowTime()),
           (this.g0i =
-            a ?? ConfigManager_1.ConfigManager.RewardConfig.GetSliderTime()),
+            n ?? ConfigManager_1.ConfigManager.RewardConfig.GetSliderTime()),
           (this.y0i = s()));
   }
   DisEnableParentLayout() {
@@ -127,16 +127,7 @@ class ListSliderControl {
   Tick(h) {
     if ((this.L0i(), this.D0i(), this.E0i)) {
       if (this.m0i.length <= 0 && !this.r0i())
-        return this.IsFinish
-          ? void 0
-          : (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info(
-                "ItemHint",
-                11,
-                "[ListSliderControl::Tick]已播放完毕,执行结束回调",
-              ),
-            (this.IsFinish = !0),
-            void this.I0i());
+        return this.IsFinish ? void 0 : ((this.IsFinish = !0), void this.I0i());
       this.IsFinish && (this.IsFinish = !1);
       let t = h,
         i = (t > TimerSystem_1.MIN_TIME && (t = TimerSystem_1.MIN_TIME), 0),
@@ -151,13 +142,7 @@ class ListSliderControl {
           (this.S0i !== s && ((this.S0i = s), this.P0i()),
           1 === this.hn &&
             this.v0i > LOAD_LIMIT_TIME &&
-            (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info(
-                "ItemHint",
-                11,
-                "[ListSliderControl::Tick]异步加载格子时间过长,重置状态",
-              ),
-            (this.T0i.Status = 5),
+            ((this.T0i.Status = 5),
             (this.T0i = void 0),
             (this.hn = 0),
             (this.v0i = 0)),
@@ -185,21 +170,9 @@ class ListSliderControl {
           (this.T0i &&
             (this.T0i.SetActive(!0), this.T0i.Play(), (this.T0i = void 0)),
           (this.v0i = 0),
-          (this.hn = 0),
-          Log_1.Log.CheckInfo()) &&
-          Log_1.Log.Info(
-            "ItemHint",
-            11,
-            "[ListSliderControl::Tick]资源使用完成,到None",
-          ),
+          (this.hn = 0)),
           0 === this.hn &&
-            (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info(
-                "ItemHint",
-                11,
-                "[ListSliderControl::Tick]资源正在加载中,到Loading",
-              ),
-            (this.hn = 1),
+            ((this.hn = 1),
             this.x0i().then((t) => {
               (this.T0i = t),
                 this.T0i.AsyncLoadUiResource().then(
@@ -207,13 +180,7 @@ class ListSliderControl {
                     this.T0i &&
                       (this.T0i.InitData(),
                       this.T0i.SetActive(!1),
-                      (this.hn = 2),
-                      Log_1.Log.CheckInfo()) &&
-                      Log_1.Log.Info(
-                        "ItemHint",
-                        11,
-                        "[ListSliderControl::Tick]资源开始完成,到Loaded",
-                      );
+                      (this.hn = 2));
                   },
                   () => {
                     (this.T0i.Status = 5),
@@ -300,13 +267,6 @@ class ListSliderControl {
       if (5 !== i.Status) return;
       (i.Status = 0),
         t.shift(),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "ItemHint",
-            11,
-            "[ListSliderControl::RecycleItem]对象进行回收",
-            ["当前剩余数量", t.length],
-          ),
         i.SetActive(!1),
         this.d0i.push(i),
         1 === this.f0i ? this.w0i() : 0 === this.f0i && this.p0i++;

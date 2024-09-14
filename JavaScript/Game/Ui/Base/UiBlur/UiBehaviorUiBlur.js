@@ -5,19 +5,19 @@ const UiLayerType_1 = require("../../Define/UiLayerType"),
   UiBlurLogic_1 = require("./UiBlurLogic");
 class UiBehaviourUiBlur {
   constructor() {
-    (this.A_r = void 0), (this.CurrentView = void 0), (this.hXn = !1);
+    (this.A_r = void 0), (this.CurrentView = void 0), (this.fXn = !1);
   }
   OnAfterUiStart() {
     0 != (this.A_r & UiLayerType_1.UIBLUR_TYPE) &&
-      ((this.hXn = !0),
+      ((this.fXn = !0),
       UiBlurLogic_1.UiBlurLogic.SetNormalUiRenderAfterBlur(this.CurrentView));
   }
   OnAfterUiShow() {
-    this.hXn &&
+    this.fXn &&
       UiBlurLogic_1.UiBlurLogic.SetNormalUiRenderAfterBlur(this.CurrentView);
   }
   ChangeNeedBlurState(i) {
-    this.hXn = i;
+    this.fXn = i;
   }
   SetCurrentLayer(i) {
     this.A_r = i;
@@ -26,7 +26,7 @@ class UiBehaviourUiBlur {
     this.CurrentView = i;
   }
   OnBeforeDestroy() {
-    this.hXn &&
+    this.fXn &&
       this.A_r === UiLayerType_1.ELayerType.Pop &&
       UiBlurLogic_1.UiBlurLogic.ResumeTopUiRenderAfterBlur();
   }

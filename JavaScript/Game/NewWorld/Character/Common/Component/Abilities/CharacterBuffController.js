@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../../../Core/Common/Log"),
+const Info_1 = require("../../../../../../Core/Common/Info"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
   Stats_1 = require("../../../../../../Core/Common/Stats"),
   BuffById_1 = require("../../../../../../Core/Define/ConfigQuery/BuffById"),
+  BuffGetAll_1 = require("../../../../../../Core/Define/ConfigQuery/BuffGetAll"),
   ControllerBase_1 = require("../../../../../../Core/Framework/ControllerBase"),
   Macro_1 = require("../../../../../../Core/Preprocessor/Macro"),
   GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils"),
@@ -12,10 +14,19 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   BuffTypes_1 = require("./Buff/BuffTypes"),
   CharacterAttributeTypes_1 = require("./CharacterAttributeTypes"),
   ExtraEffectBaseTypes_1 = require("./ExtraEffect/ExtraEffectBaseTypes"),
+  ExtraEffectDefine_1 = require("./ExtraEffect/ExtraEffectDefine"),
   ExtraEffectLibrary_1 = require("./ExtraEffect/ExtraEffectLibrary"),
-  ExtraEffectManager_1 = require("./ExtraEffect/ExtraEffectManager");
+  ExtraEffectManager_1 = require("./ExtraEffect/ExtraEffectManager"),
+  UE = require("ue");
 class BuffController extends ControllerBase_1.ControllerBase {
-  static SetHandlePrefix(e, a) {
+  static OnInit() {
+    if (BuffController.eJa && !UE.KuroStaticLibrary.IsLowMemoryDevice()) {
+      var e = BuffGetAll_1.configBuffGetAll.GetConfigList(!1);
+      if (e) for (const f of e) BuffController.AddBuffRef(f);
+    }
+    return super.OnInit();
+  }
+  static SetHandlePrefix(e, f) {
     var t = (1 << ActiveBuffConfigs_1.BUFF_HANDLE_PREFIX_BYTE) - 1,
       t =
         ((e < 0 || t < e) &&
@@ -25,7 +36,7 @@ class BuffController extends ControllerBase_1.ControllerBase {
               20,
               "Invalid Buff Handle prefix.",
               ["prefix", e],
-              ["handleStart", a],
+              ["handleStart", f],
             ),
           (e &= t)),
         Log_1.Log.CheckDebug() &&
@@ -34,11 +45,11 @@ class BuffController extends ControllerBase_1.ControllerBase {
             20,
             "Set GameplayEffect Handle prefix.",
             ["prefix", e],
-            ["handleStart", a],
+            ["handleStart", f],
           ),
         ModelManager_1.ModelManager.BuffModel);
     (t.HandlePrefix = Math.floor(e) << ActiveBuffConfigs_1.BUFF_HANDLE_ID_BYTE),
-      (t.LastHandle = Math.max(a, t.LastHandle));
+      (t.LastHandle = Math.max(f, t.LastHandle));
   }
   static GenerateHandle() {
     var e = ModelManager_1.ModelManager.BuffModel;
@@ -48,11 +59,11 @@ class BuffController extends ControllerBase_1.ControllerBase {
     );
   }
   static GetBuffDefinition(e) {
-    var a = ModelManager_1.ModelManager.BuffModel.Get(e);
+    var f = ModelManager_1.ModelManager.BuffModel.Get(e);
     return (
-      a ||
-      ((a = BuffById_1.configBuffById.GetConfig(e))
-        ? BuffController.AddBuffRef(a)
+      f ||
+      ((f = BuffById_1.configBuffById.GetConfig(e))
+        ? BuffController.AddBuffRef(f)
         : void CombatLog_1.CombatLog.Error(
             "Buff",
             void 0,
@@ -62,148 +73,148 @@ class BuffController extends ControllerBase_1.ControllerBase {
     );
   }
   static ParseExtraEffect(e) {
-    var a, t, f;
+    var f, t, a;
     if (e && e.ExtraEffectID)
       return (
-        ((a =
+        ((f =
           new ExtraEffectBaseTypes_1.ExtraEffectParameters()).ExtraEffectId =
           e.ExtraEffectID),
-        (a.ExtraEffectParameters = e.ExtraEffectParameters),
-        (a.ExtraEffectGrowParameters1 = e.ExtraEffectParametersGrow1),
-        (a.ExtraEffectGrowParameters2 = e.ExtraEffectParametersGrow2),
-        (a.ExtraEffectRequirement = e.ExtraEffectRequirements),
-        (a.ExtraEffectRequirementPara = e.ExtraEffectReqPara),
-        (a.ExtraEffectRequirementSetting = e.ExtraEffectReqSetting),
-        (a.ExtraEffectCd = e.ExtraEffectCD),
-        (a.ExtraEffectRemoveStackNum = e.ExtraEffectRemoveStackNum),
-        (a.ExtraEffectProbability = e.ExtraEffectProbability),
+        (f.ExtraEffectParameters = e.ExtraEffectParameters),
+        (f.ExtraEffectGrowParameters1 = e.ExtraEffectParametersGrow1),
+        (f.ExtraEffectGrowParameters2 = e.ExtraEffectParametersGrow2),
+        (f.ExtraEffectRequirement = e.ExtraEffectRequirements),
+        (f.ExtraEffectRequirementPara = e.ExtraEffectReqPara),
+        (f.ExtraEffectRequirementSetting = e.ExtraEffectReqSetting),
+        (f.ExtraEffectCd = e.ExtraEffectCD),
+        (f.ExtraEffectRemoveStackNum = e.ExtraEffectRemoveStackNum),
+        (f.ExtraEffectProbability = e.ExtraEffectProbability),
         (t =
           ExtraEffectLibrary_1.BuffExtraEffectLibrary.ResolveRequireAndLimits(
             e.Id,
-            a,
+            f,
             1,
           )),
-        (f = require("./ExtraEffect/ExtraEffectDefine")?.getBuffExecutionClass(
-          e.ExtraEffectID,
-        )) && ((f = f.Create(e.Id, t, a)), (a.ExecutionEffect = f)),
-        a
+        (a = (0, ExtraEffectDefine_1.getBuffExecutionClass)(e.ExtraEffectID)) &&
+          ((a = a.Create(e.Id, t, f)), (f.ExecutionEffect = a)),
+        f
       );
   }
   static vQo(e) {
-    var a = [e];
-    for (const f of e.RelatedExtraEffectBuffId) {
-      var t = BuffById_1.configBuffById.GetConfig(f);
-      t && a.push(t);
+    var f = [e];
+    for (const a of e.RelatedExtraEffectBuffId) {
+      var t = BuffById_1.configBuffById.GetConfig(a);
+      t && f.push(t);
     }
-    return a;
+    return f;
   }
   static AddBuffRef(e) {
-    var a = new BuffTypes_1.BuffDefinition(),
+    this.MQo.Start();
+    var f = new BuffTypes_1.BuffDefinition(),
       t =
-        ((a.Id = e.Id),
-        (a.Desc = ""),
-        (a.StackLimitCount = e.StackLimitCount),
-        (a.FormationPolicy = e.FormationPolicy),
-        (a.StackingType = e.StackingType),
-        (a.DefaultStackCount = e.DefaultStackCount),
-        (a.StackAppendCount = e.StackAppendCount),
-        (a.Probability = e.Probability),
-        (a.DurationMagnitude = e.DurationMagnitude),
-        (a.DurationPolicy = e.DurationPolicy),
-        (a.DurationMagnitude2 = e.DurationMagnitude2),
-        (a.DurationCalculationPolicy = e.DurationCalculationPolicy),
-        (a.DurationAffectedByBulletTime = e.bDurationAffectedByBulletTime),
-        (a.Period = e.Period),
-        (a.PeriodicInhibitionPolicy = e.PeriodicInhibitionPolicy),
-        (a.ExecutePeriodicOnAdd = e.bExecutePeriodicEffectOnApplication),
-        (a.StackDurationRefreshPolicy = e.StackDurationRefreshPolicy),
-        (a.StackPeriodResetPolicy = e.StackPeriodResetPolicy),
-        (a.StackExpirationRemoveNumber = e.StackExpirationRemoveNumber),
-        (a.DenyOverflowAdd = e.bDenyOverflowApplication),
-        (a.ClearStackOnOverflow = e.bClearStackOnOverflow),
+        ((f.Id = e.Id),
+        Info_1.Info.IsBuildShipping || (f.Desc = ""),
+        (f.StackLimitCount = e.StackLimitCount),
+        (f.FormationPolicy = e.FormationPolicy),
+        (f.StackingType = e.StackingType),
+        (f.DefaultStackCount = e.DefaultStackCount),
+        (f.StackAppendCount = e.StackAppendCount),
+        (f.Probability = e.Probability),
+        (f.DurationMagnitude = e.DurationMagnitude),
+        (f.DurationPolicy = e.DurationPolicy),
+        (f.DurationMagnitude2 = e.DurationMagnitude2),
+        (f.DurationCalculationPolicy = e.DurationCalculationPolicy),
+        (f.DurationAffectedByBulletTime = e.bDurationAffectedByBulletTime),
+        (f.Period = e.Period),
+        (f.PeriodicInhibitionPolicy = e.PeriodicInhibitionPolicy),
+        (f.ExecutePeriodicOnAdd = e.bExecutePeriodicEffectOnApplication),
+        (f.StackDurationRefreshPolicy = e.StackDurationRefreshPolicy),
+        (f.StackPeriodResetPolicy = e.StackPeriodResetPolicy),
+        (f.StackExpirationRemoveNumber = e.StackExpirationRemoveNumber),
+        (f.DenyOverflowAdd = e.bDenyOverflowApplication),
+        (f.ClearStackOnOverflow = e.bClearStackOnOverflow),
         0 < e.GameAttributeID &&
-          a.Modifiers.push({
+          f.Modifiers.push({
             AttributeId: e.GameAttributeID,
             Value1: e.ModifierMagnitude,
             Value2: e.ModifierMagnitude2,
             CalculationPolicy: e.CalculationPolicy,
           }),
-        (a.PrematureExpirationEffects = e.PrematureExpirationEffects),
-        (a.RoutineExpirationEffects = e.RoutineExpirationEffects),
-        (a.OverflowEffects = e.OverflowEffects),
-        (a.GameplayCueIds = e.GameplayCueIds),
+        (f.PrematureExpirationEffects = e.PrematureExpirationEffects),
+        (f.RoutineExpirationEffects = e.RoutineExpirationEffects),
+        (f.OverflowEffects = e.OverflowEffects),
+        (f.GameplayCueIds = e.GameplayCueIds),
         0 < e.RemoveBuffWithTags.length &&
-          (a.RemoveBuffWithTags = e.RemoveBuffWithTags.map((e) =>
+          (f.RemoveBuffWithTags = e.RemoveBuffWithTags.map((e) =>
             GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
           ).filter((e) => void 0 !== e)),
         0 < e.GrantedTags.length &&
-          (a.GrantedTags = e.GrantedTags.map((e) =>
+          (f.GrantedTags = e.GrantedTags.map((e) =>
             GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
           ).filter((e) => void 0 !== e)),
         0 < e.ApplicationSourceTagRequirements.length &&
-          (a.AddInstigatorTagRequirements =
+          (f.AddInstigatorTagRequirements =
             e.ApplicationSourceTagRequirements.map((e) =>
               GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
             ).filter((e) => void 0 !== e)),
         0 < e.ApplicationSourceTagIgnores.length &&
-          (a.AddInstigatorTagIgnores = e.ApplicationSourceTagIgnores.map((e) =>
+          (f.AddInstigatorTagIgnores = e.ApplicationSourceTagIgnores.map((e) =>
             GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
           ).filter((e) => void 0 !== e)),
         0 < e.ApplicationTagRequirements.length &&
-          (a.AddTagRequirements = e.ApplicationTagRequirements.map((e) =>
+          (f.AddTagRequirements = e.ApplicationTagRequirements.map((e) =>
             GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
           ).filter((e) => void 0 !== e)),
         0 < e.ApplicationTagIgnores.length &&
-          (a.AddTagIgnores = e.ApplicationTagIgnores.map((e) =>
+          (f.AddTagIgnores = e.ApplicationTagIgnores.map((e) =>
             GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
           ).filter((e) => void 0 !== e)),
         0 < e.OngoingTagRequirements.length &&
-          (a.ActivateTagRequirements = e.OngoingTagRequirements.map((e) =>
+          (f.ActivateTagRequirements = e.OngoingTagRequirements.map((e) =>
             GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
           ).filter((e) => void 0 !== e)),
         0 < e.OngoingTagIgnores.length &&
-          (a.ActivateTagIgnores = e.OngoingTagIgnores.map((e) =>
+          (f.ActivateTagIgnores = e.OngoingTagIgnores.map((e) =>
             GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
           ).filter((e) => void 0 !== e)),
         0 < e.RemovalTagRequirements.length &&
-          (a.RemoveTagExistAll = e.RemovalTagRequirements.map((e) =>
+          (f.RemoveTagExistAll = e.RemovalTagRequirements.map((e) =>
             GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
           ).filter((e) => void 0 !== e)),
         0 < e.RemovalTagIgnores.length &&
-          (a.RemoveTagIgnores = e.RemovalTagIgnores.map((e) =>
+          (f.RemoveTagIgnores = e.RemovalTagIgnores.map((e) =>
             GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
           ).filter((e) => void 0 !== e)),
         0 < e.GrantedApplicationImmunityTags.length &&
-          (a.ImmuneTags = e.GrantedApplicationImmunityTags.map((e) =>
+          (f.ImmuneTags = e.GrantedApplicationImmunityTags.map((e) =>
             GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
           ).filter((e) => void 0 !== e)),
         0 < e.GrantedApplicationImmunityTagIgnores.length &&
-          (a.ImmuneTagIgnores = e.GrantedApplicationImmunityTagIgnores.map(
+          (f.ImmuneTagIgnores = e.GrantedApplicationImmunityTagIgnores.map(
             (e) => GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
           ).filter((e) => void 0 !== e)),
         this.vQo(e));
     for (const o of t)
       if (o && this.EQo(o))
         if (43 === o.ExtraEffectID) {
-          a.RemoveTagExistAny = a.RemoveTagExistAny ?? [];
-          for (const s of o.ExtraEffectParameters[0]
+          f.RemoveTagExistAny = f.RemoveTagExistAny ?? [];
+          for (const u of o.ExtraEffectParameters[0]
             .split("#")
             .map((e) =>
               GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e?.trim()),
             )
             .filter((e) => void 0 !== e))
-            a.RemoveTagExistAny.push(s);
+            f.RemoveTagExistAny.push(u);
         } else {
-          var f = this.ParseExtraEffect(o);
-          f && a.EffectInfos.push(f);
+          var a = this.ParseExtraEffect(o);
+          a && f.EffectInfos.push(a);
         }
     if (e.BuffAction) {
-      a.BuffAction = [];
-      for (const u of e.BuffAction ?? []) {
-        var r = u.split("#").map((e) => e.trim());
+      f.BuffAction = [];
+      for (const s of e.BuffAction ?? []) {
+        var r = s.split("#").map((e) => e.trim());
         const c = [
           ["BuffId", e.Id],
-          ["Action", u],
+          ["Action", s],
         ];
         if (r.length < 2)
           CombatLog_1.CombatLog.Error(
@@ -224,7 +235,7 @@ class BuffController extends ControllerBase_1.ControllerBase {
             case 15:
             case 16:
               try {
-                a.BuffAction.push({
+                f.BuffAction.push({
                   Type: i,
                   Buffs: r.slice(1).map((e) => BigInt(e)),
                 });
@@ -245,7 +256,7 @@ class BuffController extends ControllerBase_1.ControllerBase {
             case 6:
             case 7:
             case 8:
-              a.BuffAction.push({
+              f.BuffAction.push({
                 Type: i,
                 Tags: r
                   .slice(1)
@@ -278,10 +289,11 @@ class BuffController extends ControllerBase_1.ControllerBase {
       }
     }
     return (
-      (a.HasBuffEffect = this.HasBuffEffects(a.EffectInfos)),
-      (a.HasBuffPeriodExecution = this.HasBuffPeriodExecutions(a.EffectInfos)),
-      ModelManager_1.ModelManager.BuffModel.Add(e.Id, a),
-      a
+      (f.HasBuffEffect = this.HasBuffEffects(f.EffectInfos)),
+      (f.HasBuffPeriodExecution = this.HasBuffPeriodExecutions(f.EffectInfos)),
+      ModelManager_1.ModelManager.BuffModel.Add(e.Id, f),
+      this.MQo.Stop(),
+      f
     );
   }
   static CreateDynamicBuffRef() {
@@ -294,14 +306,14 @@ class BuffController extends ControllerBase_1.ControllerBase {
     switch (e.ExtraEffectID) {
       case 14:
         if (2 <= e.ExtraEffectParameters.length) {
-          var a = Number(e.ExtraEffectParameters[0]);
-          if (CharacterAttributeTypes_1.stateAttributeIds.has(a)) break;
+          var f = Number(e.ExtraEffectParameters[0]);
+          if (CharacterAttributeTypes_1.stateAttributeIds.has(f)) break;
           CombatLog_1.CombatLog.Error(
             "Buff",
             void 0,
             "带有锁定属性额外效果14的Buff配置的属性Id不是状态属性（生命、能量等），此效果无效(如锁定生命，应该填生命属性的Id而不是上限属性的Id)",
             ["BuffId", e.Id],
-            ["AttributeId", a],
+            ["AttributeId", f],
           );
         } else
           CombatLog_1.CombatLog.Error(
@@ -314,14 +326,14 @@ class BuffController extends ControllerBase_1.ControllerBase {
       case 15:
       case 16:
         if (1 <= e.ExtraEffectParameters.length) {
-          a = Number(e.ExtraEffectParameters[0]);
-          if (CharacterAttributeTypes_1.stateAttributeIds.has(a)) break;
+          f = Number(e.ExtraEffectParameters[0]);
+          if (CharacterAttributeTypes_1.stateAttributeIds.has(f)) break;
           CombatLog_1.CombatLog.Error(
             "Buff",
             void 0,
             "带有锁定属性上下限额外效果的Buff配置的属性Id不是状态属性（生命、能量等），此效果无效(如锁定生命，应该填生命属性的Id而不是上限属性的Id)",
             ["BuffId", e.Id],
-            ["AttributeId", a],
+            ["AttributeId", f],
           );
         } else
           CombatLog_1.CombatLog.Error(
@@ -335,28 +347,30 @@ class BuffController extends ControllerBase_1.ControllerBase {
     return !0;
   }
   static HasBuffEffects(e) {
-    for (const a of e)
+    for (const f of e)
       if (
         !ExtraEffectManager_1.ExtraEffectManager.IsInitExecution(
-          a.ExtraEffectId,
+          f.ExtraEffectId,
         ) &&
         !ExtraEffectManager_1.ExtraEffectManager.IsPeriodExecution(
-          a.ExtraEffectId,
+          f.ExtraEffectId,
         )
       )
         return !0;
     return !1;
   }
   static HasBuffPeriodExecutions(e) {
-    for (const a of e)
+    for (const f of e)
       if (
         ExtraEffectManager_1.ExtraEffectManager.IsPeriodExecution(
-          a.ExtraEffectId,
+          f.ExtraEffectId,
         )
       )
         return !0;
     return !1;
   }
 }
-(BuffController.MQo = void 0), (exports.default = BuffController);
+(BuffController.eJa = !0),
+  (BuffController.MQo = Stats_1.Stat.Create("BuffController.AddBuffRef")),
+  (exports.default = BuffController);
 //# sourceMappingURL=CharacterBuffController.js.map

@@ -50,8 +50,10 @@ class MapMark {
     return this.showpriority();
   }
   get ShowRange() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.showrangeLength(), (t) =>
-      this.showrange(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.showrangeLength(),
+      this.showrange,
+      this,
     );
   }
   get LockMarkPic() {
@@ -71,6 +73,9 @@ class MapMark {
   }
   get Scale() {
     return this.scale();
+  }
+  get CornerScale() {
+    return this.cornerscale();
   }
   get FirstReward() {
     return this.firstreward();
@@ -196,16 +201,20 @@ class MapMark {
     var t = this.J7.__offset(this.z7, 44);
     return t ? this.J7.readFloat32(this.z7 + t) : 1;
   }
-  firstreward() {
+  cornerscale() {
     var t = this.J7.__offset(this.z7, 46);
-    return t ? this.J7.readFloat32(this.z7 + t) : 0;
+    return t ? this.J7.readFloat32(this.z7 + t) : 1;
   }
-  reward() {
+  firstreward() {
     var t = this.J7.__offset(this.z7, 48);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
-  multimapfloorid() {
+  reward() {
     var t = this.J7.__offset(this.z7, 50);
+    return t ? this.J7.readFloat32(this.z7 + t) : 0;
+  }
+  multimapfloorid() {
+    var t = this.J7.__offset(this.z7, 52);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

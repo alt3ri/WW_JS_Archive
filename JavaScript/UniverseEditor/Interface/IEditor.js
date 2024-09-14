@@ -24,7 +24,17 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.EEntityActorLoadMode =
     exports.multiplyValue =
     exports.EDITOR_SAVE_CONFIG_PATH =
+    exports.MAX_MAP_SIZE =
+    exports.GRID_SIZE =
+    exports.WORLD_PARTITION_MAP_SIZE =
+    exports.WORLD_PARTITION_BOUNDS_SIZE =
       void 0),
+  (exports.WORLD_PARTITION_BOUNDS_SIZE = 50400),
+  (exports.WORLD_PARTITION_MAP_SIZE = 48 * exports.WORLD_PARTITION_BOUNDS_SIZE),
+  (exports.GRID_SIZE = 85e3),
+  (exports.MAX_MAP_SIZE =
+    Math.ceil(exports.WORLD_PARTITION_MAP_SIZE / exports.GRID_SIZE) *
+    exports.GRID_SIZE),
   (exports.EDITOR_SAVE_CONFIG_PATH =
     "Saved/Editor/JsonConfig/EditorSaveConfig.json"),
   (exports.multiplyValue = null),
@@ -53,9 +63,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       exports.EActorDeleteMode || (exports.EActorDeleteMode = {})),
   ),
   (function (e) {
-    (e[(e.Moderate = 6)] = "Moderate"),
-      (e[(e.Abundant = 8)] = "Abundant"),
-      (e[(e.Plentiful = 10)] = "Plentiful");
+    (e[(e.Moderate = 8)] = "Moderate"),
+      (e[(e.Abundant = 10)] = "Abundant"),
+      (e[(e.Plentiful = 12)] = "Plentiful");
   })(
     (EMaximumDisplayCountInSelector =
       exports.EMaximumDisplayCountInSelector ||

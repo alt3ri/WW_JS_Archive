@@ -9,32 +9,32 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
   FriendController_1 = require("../FriendController");
-var Proto_FriendApplyOperator = Protocol_1.Aki.Protocol.E5s;
+var Proto_FriendApplyOperator = Protocol_1.Aki.Protocol.A6s;
 class FriendMultipleApplyItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(),
-      (this.Uta = void 0),
+      (this.$ra = void 0),
       (this.pNi = void 0),
       (this.T8t = () => {
         FriendController_1.FriendController.RequestFriendApplyHandle(
-          [this.Uta.ApplyPlayerData.PlayerId],
+          [this.$ra.ApplyPlayerData.PlayerId],
           Proto_FriendApplyOperator.Proto_Approve,
         ),
-          this.Uta &&
+          this.$ra &&
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.FriendOnMultiItemAction,
-              this.Uta.ApplyPlayerData.PlayerId,
+              this.$ra.ApplyPlayerData.PlayerId,
             );
       }),
       (this.I8t = () => {
         FriendController_1.FriendController.RequestFriendApplyHandle(
-          [this.Uta.ApplyPlayerData.PlayerId],
+          [this.$ra.ApplyPlayerData.PlayerId],
           Proto_FriendApplyOperator.Proto_Reject,
         ),
-          this.Uta &&
+          this.$ra &&
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.FriendOnMultiItemAction,
-              this.Uta.ApplyPlayerData.PlayerId,
+              this.$ra.ApplyPlayerData.PlayerId,
             );
       });
   }
@@ -56,7 +56,7 @@ class FriendMultipleApplyItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.pNi = this.GetSprite(3);
   }
   Refresh(e, t, r) {
-    var e = (this.Uta = e).ApplyPlayerData,
+    var e = (this.$ra = e).ApplyPlayerData,
       i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
         e.PlayerHeadPhoto,
       )?.Card;
@@ -65,15 +65,15 @@ class FriendMultipleApplyItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetText(2).SetText(e.PlayerLevel.toString());
   }
   UpdateCountDownProgressBar() {
-    this.Uta &&
+    this.$ra &&
       (this.pNi.SetFillAmount(
-        this.Uta.ApplyTimeLeftTime /
+        this.$ra.ApplyTimeLeftTime /
           ModelManager_1.ModelManager.FriendModel.ApplyCdTime,
       ),
-      this.Uta.ApplyTimeLeftTime <= 0) &&
+      this.$ra.ApplyTimeLeftTime <= 0) &&
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.FriendOnMultiItemAction,
-        this.Uta.ApplyPlayerData.PlayerId,
+        this.$ra.ApplyPlayerData.PlayerId,
       );
   }
 }

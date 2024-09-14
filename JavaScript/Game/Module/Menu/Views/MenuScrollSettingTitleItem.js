@@ -6,7 +6,7 @@ const UE = require("ue"),
   MenuScrollSettingBaseItem_1 = require("./MenuScrollSettingBaseItem");
 class MenuScrollSettingTitleItem extends MenuScrollSettingBaseItem_1.MenuScrollSettingBaseItem {
   constructor() {
-    super(...arguments), (this.Pe = void 0), (this.$pt = void 0);
+    super(...arguments), (this.$pt = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -19,14 +19,14 @@ class MenuScrollSettingTitleItem extends MenuScrollSettingBaseItem_1.MenuScrollS
       (this.$pt = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   OnBeforeDestroy() {
-    this.$pt && (this.$pt = void 0), this.Pe && (this.Pe = void 0);
+    this.$pt && (this.$pt = void 0), this.Data && (this.Data = void 0);
   }
   Update(e) {
-    (this.Pe = e), this.mGe();
+    (this.Data = e), this.mGe();
   }
   mGe() {
-    this.SetSpriteByPath(this.Pe.MenuDataSubImage, this.GetSprite(0), !1),
-      this.GetText(1).ShowTextNew(this.Pe.MenuDataSubName ?? "");
+    this.SetSpriteByPath(this.Data.SubImage, this.GetSprite(0), !1),
+      this.GetText(1).ShowTextNew(this.Data.SubName ?? "");
   }
   PlaySequenceFromName(e) {
     this.$pt?.PlayLevelSequenceByName(e);

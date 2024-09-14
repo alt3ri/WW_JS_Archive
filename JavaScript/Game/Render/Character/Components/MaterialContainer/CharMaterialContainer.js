@@ -2,10 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharMaterialContainer = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   Log_1 = require("../../../../../Core/Common/Log"),
   Stats_1 = require("../../../../../Core/Common/Stats"),
   FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
   Global_1 = require("../../../../Global"),
+  GlobalData_1 = require("../../../../GlobalData"),
   RenderConfig_1 = require("../../../Config/RenderConfig"),
   RenderModuleConfig_1 = require("../../../Manager/RenderModuleConfig"),
   RenderUtil_1 = require("../../../Utils/RenderUtil"),
@@ -17,32 +19,36 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
     super(...arguments),
       (this.AllBodyInfoList = void 0),
       (this.Zhr = ""),
-      (this.Gna = new Array()),
-      (this.xW = void 0);
+      (this.Cha = new Array()),
+      (this.xW = void 0),
+      (this.q3a = 0);
+  }
+  static GetMaxUpdateParamsPerFrame() {
+    return (
+      CharMaterialContainer.G3a < 0 &&
+        (CharMaterialContainer.G3a = Info_1.Info.IsGameRunning()
+          ? GlobalData_1.GlobalData.IsEs3
+            ? 16
+            : 32
+          : 9999),
+      CharMaterialContainer.G3a
+    );
   }
   Awake(e) {
     super.Awake(e);
     e = this.RenderComponent.GetOwner();
     if (e?.IsValid()) {
       (this.Zhr = e.GetName()), (this.AllBodyInfoList = new Map());
-      var t = e.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass()),
-        o = t.Num();
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "RenderCharacter",
-          41,
-          "CharMaterialContainer.Awake",
-          ["Actor", this.Zhr],
-          ["skeletalCompsNum", o],
-        );
+      var o = e.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass()),
+        n = o.Num();
       let r = !1;
-      for (let e = 0; e < o; e++) {
-        var n,
-          i = t.Get(e);
+      for (let e = 0; e < n; e++) {
+        var t,
+          i = o.Get(e);
         i?.IsValid()
-          ? ((n = i.GetName()),
+          ? ((t = i.GetName()),
             i.SkeletalMesh?.IsValid()
-              ? ((i = this.AddSkeletalComponent(i, n)),
+              ? ((i = this.AddSkeletalComponent(i, t)),
                 (r = r || i),
                 i ||
                   (Log_1.Log.CheckInfo() &&
@@ -51,7 +57,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
                       14,
                       "材质容器部位初始化失败",
                       ["Actor", this.Zhr],
-                      ["部位名称", n],
+                      ["部位名称", t],
                     )))
               : Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
@@ -59,7 +65,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
                   41,
                   "资产的SkeletalMeshComponent的SkeletalMesh为空",
                   ["Actor", this.Zhr],
-                  ["SkeletalName", n],
+                  ["SkeletalName", t],
                 ))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -78,19 +84,19 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
               "无Mesh类型材质控制器初始化",
               ["Actor", this.Zhr],
             ));
-      this.Zhr;
-      this.xW = void 0;
+      e = "Render_CharMaterialContainer_" + this.Zhr;
+      this.xW = Stats_1.Stat.Create(e);
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("RenderCharacter", 14, "Actor 为空");
   }
-  AddSkeletalComponent(e, r, t = !0) {
-    var o, n;
+  AddSkeletalComponent(e, r, o = !0) {
+    var n, t;
     return r
       ? e
         ? e.GetOwner()
           ? e.SkeletalMesh
-            ? ((o = e.bHiddenInGame),
+            ? ((n = e.bHiddenInGame),
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "RenderCharacter",
@@ -99,18 +105,18 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
                   ["Actor", this.Zhr],
                   ["SkeletalName", r],
                   ["SkeletalComponent", e.SkeletalMesh.GetName()],
-                  ["isHidden", o],
+                  ["isHidden", n],
                 ),
-              o && e.SetHiddenInGame(!1),
-              (n = new CharBodyInfo_1.CharBodyInfo()).Init(
+              n && e.SetHiddenInGame(!1),
+              (t = new CharBodyInfo_1.CharBodyInfo()).Init(
                 this.Zhr,
                 r,
                 e,
-                t,
+                o,
                 this,
               ),
-              this.AllBodyInfoList.set(r, n),
-              o && e.SetHiddenInGame(!0),
+              this.AllBodyInfoList.set(r, t),
+              n && e.SetHiddenInGame(!0),
               !0)
             : (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
@@ -158,9 +164,9 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
   RevertAlphaTestCommon() {
     for (const e of this.AllBodyInfoList.values()) e.RevertAlphaTestCommon();
   }
-  SetColor(r, t, e = 0, o = -1, n = 0) {
+  SetColor(r, o, e = 0, n = -1, t = 0) {
     if (!FNameUtil_1.FNameUtil.IsEmpty(r)) {
-      0 <= o &&
+      0 <= n &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
@@ -170,29 +176,29 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       var i = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
       for (let e = 0; e < i.length; e++) {
         var a = this.AllBodyInfoList.get(i[e]);
-        a && a.SetColor(r, t, n);
+        a && a.SetColor(r, o, t);
       }
     }
   }
-  RevertColor(r, e = 0, t = -1, o = 0) {
+  RevertColor(r, e = 0, o = -1, n = 0) {
     if (!FNameUtil_1.FNameUtil.IsEmpty(r)) {
-      0 <= t &&
+      0 <= o &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
           41,
           "SetColor: 不支持指定SectionIndex",
         );
-      var n = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
-      for (let e = 0; e < n.length; e++) {
-        var i = this.AllBodyInfoList.get(n[e]);
-        i && i.RevertColor(r, o);
+      var t = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
+      for (let e = 0; e < t.length; e++) {
+        var i = this.AllBodyInfoList.get(t[e]);
+        i && i.RevertColor(r, n);
       }
     }
   }
-  SetFloat(r, t, e = 0, o = -1, n = 0) {
+  SetFloat(r, o, e = 0, n = -1, t = 0) {
     if (!FNameUtil_1.FNameUtil.IsEmpty(r)) {
-      0 <= o &&
+      0 <= n &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
@@ -202,29 +208,29 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       var i = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
       for (let e = 0; e < i.length; e++) {
         var a = this.AllBodyInfoList.get(i[e]);
-        a && a.SetFloat(r, t, n);
+        a && a.SetFloat(r, o, t);
       }
     }
   }
-  RevertFloat(r, e = 0, t = -1, o = 0) {
+  RevertFloat(r, e = 0, o = -1, n = 0) {
     if (!FNameUtil_1.FNameUtil.IsEmpty(r)) {
-      0 <= t &&
+      0 <= o &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
           41,
           "SetColor: 不支持指定SectionIndex",
         );
-      var n = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
-      for (let e = 0; e < n.length; e++) {
-        var i = this.AllBodyInfoList.get(n[e]);
-        i && i.RevertFloat(r, o);
+      var t = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
+      for (let e = 0; e < t.length; e++) {
+        var i = this.AllBodyInfoList.get(t[e]);
+        i && i.RevertFloat(r, n);
       }
     }
   }
-  SetTexture(r, t, e = 0, o = -1, n = 0) {
-    if (!FNameUtil_1.FNameUtil.IsEmpty(r) && void 0 !== t) {
-      0 <= o &&
+  SetTexture(r, o, e = 0, n = -1, t = 0) {
+    if (!FNameUtil_1.FNameUtil.IsEmpty(r) && void 0 !== o) {
+      0 <= n &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
@@ -234,23 +240,23 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       var i = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
       for (let e = 0; e < i.length; e++) {
         var a = this.AllBodyInfoList.get(i[e]);
-        a && a.SetTexture(r, t, n);
+        a && a.SetTexture(r, o, t);
       }
     }
   }
-  RevertTexture(r, e = 0, t = -1, o = 0) {
+  RevertTexture(r, e = 0, o = -1, n = 0) {
     if (!FNameUtil_1.FNameUtil.IsEmpty(r)) {
-      0 <= t &&
+      0 <= o &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
           41,
           "SetColor: 不支持指定SectionIndex",
         );
-      var n = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
-      for (let e = 0; e < n.length; e++) {
-        var i = this.AllBodyInfoList.get(n[e]);
-        i && i.RevertTexture(r, o);
+      var t = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
+      for (let e = 0; e < t.length; e++) {
+        var i = this.AllBodyInfoList.get(t[e]);
+        i && i.RevertTexture(r, n);
       }
     }
   }
@@ -258,22 +264,43 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
     for (const r of this.AllBodyInfoList.values()) r.SetStarScarEnergy(e);
   }
   LateUpdate() {
+    this.xW.Start(), ++this.q3a;
     var e = this.GetRenderingComponent().GetCachedOwner();
     let r = void 0;
     if (e instanceof UE.Character && e !== Global_1.Global.BaseCharacter) {
-      var t = e.GetVelocity().SizeSquared(),
-        o =
+      var o = e.GetVelocity().SizeSquared(),
+        n =
           CharRenderingComponent_1.CharRenderingComponent.MotionVelocitySquared;
       r = 0;
-      for (let e = o.length - 1; 0 <= e; e--)
-        if (t > o[e]) {
+      for (let e = n.length - 1; 0 <= e; e--)
+        if (o > n[e]) {
           r =
             CharRenderingComponent_1.CharRenderingComponent
               .MotionMeshShadingRate[e];
           break;
         }
     }
-    for (const n of this.AllBodyInfoList.values()) n.Update(r);
+    var t = [];
+    for (const a of this.AllBodyInfoList.values())
+      for (let e = 0; e <= t.length; ++e) {
+        if (e === t.length) {
+          t.push(a);
+          break;
+        }
+        if (t[e].LastUpdateCounter > a.LastUpdateCounter) {
+          t.splice(e, 0, a);
+          break;
+        }
+      }
+    let i = 0;
+    for (const f of t)
+      if (
+        ((i += f.Update(r)),
+        (f.LastUpdateCounter = this.q3a),
+        i > CharMaterialContainer.GetMaxUpdateParamsPerFrame())
+      )
+        break;
+    this.xW.Stop();
   }
   Destroy() {
     for (const e of this.AllBodyInfoList.values())
@@ -288,15 +315,16 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
   }
   StateEnter(e) {
     var r = e.DataCache;
-    0 === r.MaterialModifyType
-      ? (r.UseRim && this.elr(e),
-        r.UseDissolve && this.tlr(e),
-        r.UseOutline && this.ilr(e),
-        r.UseColor && this.olr(e),
-        r.UseTextureSample && this.rlr(e),
-        r.UseMotionOffset && this.nlr(e),
-        r.UseDitherEffect && this.slr(e))
-      : 1 === r.MaterialModifyType && this.alr(e);
+    (e.HasReverted = !1),
+      0 === r.MaterialModifyType
+        ? (r.UseRim && this.elr(e),
+          r.UseDissolve && this.tlr(e),
+          r.UseOutline && this.ilr(e),
+          r.UseColor && this.olr(e),
+          r.UseTextureSample && this.rlr(e),
+          r.UseMotionOffset && this.nlr(e),
+          r.UseDitherEffect && this.slr(e))
+        : 1 === r.MaterialModifyType && this.alr(e);
   }
   StateUpdate(e) {
     var r = e.DataCache;
@@ -341,31 +369,32 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
           "DataAsset",
           r.DataName,
         ]);
-      for (const o of e.SpecifiedMaterialIndexMap.keys()) {
-        var t = this.AllBodyInfoList.get(o);
-        t.SkeletalComp.IsValid() && t.SkeletalComp.SetHiddenInGame(!0);
+      for (const n of e.SpecifiedMaterialIndexMap.keys()) {
+        var o = this.AllBodyInfoList.get(n);
+        o.SkeletalComp.IsValid() && o.SkeletalComp.SetHiddenInGame(!0);
       }
     }
   }
   alr(r) {
-    var t = r.DataCache;
-    if (t.ReplaceMaterialInterface)
+    var o = r.DataCache;
+    if (o.ReplaceMaterialInterface)
       if (
-        ((r.ReplaceMaterial =
+        (RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateMaterialReplace.Start(),
+        (r.ReplaceMaterial =
           UE.KismetMaterialLibrary.CreateDynamicMaterialInstance(
             this.GetRenderingComponent(),
-            t.ReplaceMaterialInterface,
+            o.ReplaceMaterialInterface,
           )),
         r.ReplaceMaterial)
       ) {
-        this.Gna.length = 0;
+        this.Cha.length = 0;
         for (const e of r.SpecifiedMaterialIndexMap.keys()) {
-          var o = r.SpecifiedMaterialIndexMap.get(e),
-            n = this.AllBodyInfoList.get(e);
-          this.Gna.push(e);
-          for (let e = 0; e < o.length; e++) {
-            var i = n.MaterialSlotList[o[e]];
-            t.RevertMaterial
+          var n = r.SpecifiedMaterialIndexMap.get(e),
+            t = this.AllBodyInfoList.get(e);
+          this.Cha.push(e);
+          for (let e = 0; e < n.length; e++) {
+            var i = t.MaterialSlotList[n[e]];
+            o.RevertMaterial
               ? i.SetReplaceMaterial(r.ReplaceMaterial)
               : i.SetDynamicMaterial(r.ReplaceMaterial);
           }
@@ -376,58 +405,62 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
             41,
             "材质替换",
             ["Actor", this.Zhr],
-            ["替换材质名称", t.DataName],
+            ["替换材质名称", o.DataName],
             ["材质名称", r.ReplaceMaterial?.GetName()],
-            ["是否永久性的", !t.RevertMaterial],
-            ["body array", this.Gna.join()],
-          );
+            ["是否永久性的", !o.RevertMaterial],
+            ["body array", this.Cha.join()],
+          ),
+          RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateMaterialReplace.Stop();
       } else
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
             14,
             "材质替换失败，不存在替换材质:",
-            ["替换材质名称", t.DataName],
+            ["替换材质名称", o.DataName],
           );
     else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("RenderCharacter", 14, "材质替换失败，不存在替换材质", [
           "替换材质名称",
-          t.DataName,
+          o.DataName,
         ]);
   }
   glr(e) {
     var r = e.DataCache;
     if (r.UseParameterModify) {
-      var t = e.ReplaceMaterial,
-        o = e.InterpolateFactor;
+      RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateMaterialReplace.Start();
+      var o = e.ReplaceMaterial,
+        n = e.InterpolateFactor;
       if (void 0 !== r.FloatParameterNames)
         for (let e = 0; e < r.FloatParameterNames.length; e++) {
-          var n = RenderUtil_1.RenderUtil.GetFloatFromGroup(
+          var t = RenderUtil_1.RenderUtil.GetFloatFromGroup(
             r.FloatParameterValues[e],
-            o,
+            n,
           );
-          t.SetScalarParameterValue(r.FloatParameterNames[e], n);
+          o.SetScalarParameterValue(r.FloatParameterNames[e], t);
         }
       if (void 0 !== r.ColorParameterNames)
         for (let e = 0; e < r.ColorParameterNames.length; e++) {
           var i = RenderUtil_1.RenderUtil.GetColorFromGroup(
             r.ColorParameterValues[e],
-            o,
+            n,
           );
-          t.SetVectorParameterValue(r.ColorParameterNames[e], i);
+          o.SetVectorParameterValue(r.ColorParameterNames[e], i);
         }
+      RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateMaterialReplace.Stop();
     }
   }
-  Tlr(t) {
-    var e = t.DataCache;
+  Tlr(o) {
+    var e = o.DataCache;
     if (e.RevertMaterial) {
+      RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateMaterialReplace.Start();
       let r = !1;
-      for (const i of t.SpecifiedMaterialIndexMap.keys()) {
-        var o = t.SpecifiedMaterialIndexMap.get(i),
-          n = this.AllBodyInfoList.get(i);
-        for (let e = 0; e < o.length; e++)
-          n.MaterialSlotList[o[e]].RevertReplaceMaterial(t.ReplaceMaterial) ||
+      for (const i of o.SpecifiedMaterialIndexMap.keys()) {
+        var n = o.SpecifiedMaterialIndexMap.get(i),
+          t = this.AllBodyInfoList.get(i);
+        for (let e = 0; e < n.length; e++)
+          t.MaterialSlotList[n[e]].RevertReplaceMaterial(o.ReplaceMaterial) ||
             (r = !0);
       }
       Log_1.Log.CheckInfo() &&
@@ -437,317 +470,345 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
           "材质替换Revert",
           ["Actor", this.Zhr],
           ["替换材质名称", e.DataName],
-          ["材质名称", t.ReplaceMaterial?.GetName()],
+          ["材质名称", o.ReplaceMaterial?.GetName()],
           ["是否永久性的", !e.RevertMaterial],
           ["MaterialMiss", r],
         ),
-        (t.ReplaceMaterial = void 0);
+        (o.ReplaceMaterial = void 0),
+        RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateMaterialReplace.Stop();
     }
   }
   elr(e) {
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
-      var t = e.SpecifiedMaterialIndexMap.get(i),
-        o = this.AllBodyInfoList.get(i);
-      if (r) o.UseBattleCommon();
+      var o = e.SpecifiedMaterialIndexMap.get(i),
+        n = this.AllBodyInfoList.get(i);
+      if (r) n.UseBattleCommon();
       else
-        for (let e = 0; e < t.length; e++) {
-          var n = o.MaterialSlotList[t[e]];
-          n.SectionIndex !== RenderConfig_1.INVALID_SECTION_INDEX &&
-            o.UseBattle(n.SectionIndex);
+        for (let e = 0; e < o.length; e++) {
+          var t = n.MaterialSlotList[o[e]];
+          t.SectionIndex !== RenderConfig_1.INVALID_SECTION_INDEX &&
+            n.UseBattle(t.SectionIndex);
         }
     }
   }
   hlr(e) {
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateRim.Start();
     var r = e.DataCache,
-      t = e.InterpolateFactor,
-      o = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.RimRange, t),
-      n = RenderUtil_1.RenderUtil.GetColorFromGroup(r.RimColor, t),
-      i = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.RimIntensity, t);
-    for (const d of e.SpecifiedMaterialIndexMap.keys()) {
-      var a = e.SpecifiedMaterialIndexMap.get(d),
-        f = this.AllBodyInfoList.get(d);
+      o = e.InterpolateFactor,
+      n = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.RimRange, o),
+      t = RenderUtil_1.RenderUtil.GetColorFromGroup(r.RimColor, o),
+      i = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.RimIntensity, o);
+    for (const _ of e.SpecifiedMaterialIndexMap.keys()) {
+      var a = e.SpecifiedMaterialIndexMap.get(_),
+        f = this.AllBodyInfoList.get(_);
       for (let e = 0; e < a.length; e++) {
-        var _ = f.MaterialSlotList[a[e]];
-        _.SetFloat(RenderConfig_1.RenderConfig.UseRim, 1),
-          _.SetFloat(RenderConfig_1.RenderConfig.RimUseTex, r.RimUseTex),
-          _.SetColor(RenderConfig_1.RenderConfig.RimChannel, r.RimChannel),
-          _.SetFloat(RenderConfig_1.RenderConfig.RimRange, o),
-          _.SetColor(RenderConfig_1.RenderConfig.RimColor, n),
-          _.SetFloat(RenderConfig_1.RenderConfig.RimIntensity, i);
+        var d = f.MaterialSlotList[a[e]];
+        d.SetFloat(RenderConfig_1.RenderConfig.UseRim, 1),
+          d.SetFloat(RenderConfig_1.RenderConfig.RimUseTex, r.RimUseTex),
+          d.SetColor(RenderConfig_1.RenderConfig.RimChannel, r.RimChannel),
+          d.SetFloat(RenderConfig_1.RenderConfig.RimRange, n),
+          d.SetColor(RenderConfig_1.RenderConfig.RimColor, t),
+          d.SetFloat(RenderConfig_1.RenderConfig.RimIntensity, i);
       }
     }
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateRim.Stop();
   }
   flr(e) {
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateRim.Start();
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
-      var t = e.SpecifiedMaterialIndexMap.get(i),
-        o = this.AllBodyInfoList.get(i);
-      r && o.RevertBattleCommon();
-      for (let e = 0; e < t.length; e++) {
-        var n = o.MaterialSlotList[t[e]];
-        n.RevertProperty(RenderConfig_1.RenderConfig.UseRim),
-          n.RevertProperty(RenderConfig_1.RenderConfig.RimUseTex),
-          n.RevertProperty(RenderConfig_1.RenderConfig.RimChannel),
-          n.RevertProperty(RenderConfig_1.RenderConfig.RimRange),
-          n.RevertProperty(RenderConfig_1.RenderConfig.RimColor),
-          n.RevertProperty(RenderConfig_1.RenderConfig.RimIntensity),
+      var o = e.SpecifiedMaterialIndexMap.get(i),
+        n = this.AllBodyInfoList.get(i);
+      r && n.RevertBattleCommon();
+      for (let e = 0; e < o.length; e++) {
+        var t = n.MaterialSlotList[o[e]];
+        t.RevertProperty(RenderConfig_1.RenderConfig.UseRim),
+          t.RevertProperty(RenderConfig_1.RenderConfig.RimUseTex),
+          t.RevertProperty(RenderConfig_1.RenderConfig.RimChannel),
+          t.RevertProperty(RenderConfig_1.RenderConfig.RimRange),
+          t.RevertProperty(RenderConfig_1.RenderConfig.RimColor),
+          t.RevertProperty(RenderConfig_1.RenderConfig.RimIntensity),
           r ||
-            n.SectionIndex === RenderConfig_1.INVALID_SECTION_INDEX ||
-            o.RevertBattle(n.SectionIndex);
+            t.SectionIndex === RenderConfig_1.INVALID_SECTION_INDEX ||
+            n.RevertBattle(t.SectionIndex);
       }
     }
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateRim.Stop();
   }
   tlr(e) {
     var r = e.SelectedAllParts;
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateDissolve.Start();
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
-      var t = e.SpecifiedMaterialIndexMap.get(i),
-        o = this.AllBodyInfoList.get(i);
-      if (r) o.UseBattleMaskCommon();
+      var o = e.SpecifiedMaterialIndexMap.get(i),
+        n = this.AllBodyInfoList.get(i);
+      if (r) n.UseBattleMaskCommon();
       else
-        for (let e = 0; e < t.length; e++) {
-          var n = o.MaterialSlotList[t[e]];
-          n.SectionIndex !== RenderConfig_1.INVALID_SECTION_INDEX &&
-            o.UseBattleMask(n.SectionIndex);
+        for (let e = 0; e < o.length; e++) {
+          var t = n.MaterialSlotList[o[e]];
+          t.SectionIndex !== RenderConfig_1.INVALID_SECTION_INDEX &&
+            n.UseBattleMask(t.SectionIndex);
         }
     }
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateDissolve.Stop();
   }
   llr(e) {
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateDissolve.Start();
     var r = e.DataCache,
-      t = e.InterpolateFactor,
-      o = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.DissolveProgress, t),
-      n = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.DissolveSmooth, t),
+      o = e.InterpolateFactor,
+      n = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.DissolveProgress, o),
+      t = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.DissolveSmooth, o),
       i = RenderUtil_1.RenderUtil.GetFloatFromGroup(
         r.DissolveColorIntensity,
-        t,
+        o,
       ),
-      a = RenderUtil_1.RenderUtil.GetColorFromGroup(r.DissolveColor, t);
-    for (const s of e.SpecifiedMaterialIndexMap.keys()) {
-      var f = e.SpecifiedMaterialIndexMap.get(s),
-        _ = this.AllBodyInfoList.get(s);
+      a = RenderUtil_1.RenderUtil.GetColorFromGroup(r.DissolveColor, o);
+    for (const C of e.SpecifiedMaterialIndexMap.keys()) {
+      var f = e.SpecifiedMaterialIndexMap.get(C),
+        d = this.AllBodyInfoList.get(C);
       for (let e = 0; e < f.length; e++) {
-        var d = _.MaterialSlotList[f[e]];
-        d.SetFloat(RenderConfig_1.RenderConfig.UseDissolve, 1),
-          d.SetColor(
+        var _ = d.MaterialSlotList[f[e]];
+        _.SetFloat(RenderConfig_1.RenderConfig.UseDissolve, 1),
+          _.SetColor(
             RenderConfig_1.RenderConfig.DissolveChannelSwitch,
             r.DissolveChannel,
           ),
-          d.SetFloat(RenderConfig_1.RenderConfig.DissolveProgress, o),
-          d.SetFloat(RenderConfig_1.RenderConfig.DissolveSmooth, n),
-          d.SetFloat(RenderConfig_1.RenderConfig.DissolveMulti, i),
-          d.SetColor(RenderConfig_1.RenderConfig.DissolveEmission, a);
+          _.SetFloat(RenderConfig_1.RenderConfig.DissolveProgress, n),
+          _.SetFloat(RenderConfig_1.RenderConfig.DissolveSmooth, t),
+          _.SetFloat(RenderConfig_1.RenderConfig.DissolveMulti, i),
+          _.SetColor(RenderConfig_1.RenderConfig.DissolveEmission, a);
       }
     }
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateDissolve.Stop();
   }
   plr(e) {
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateDissolve.Start();
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
-      var t = e.SpecifiedMaterialIndexMap.get(i),
-        o = this.AllBodyInfoList.get(i);
-      r && o.RevertBattleMaskCommon();
-      for (let e = 0; e < t.length; e++) {
-        var n = o.MaterialSlotList[t[e]];
-        n.RevertProperty(RenderConfig_1.RenderConfig.UseDissolve),
-          n.RevertProperty(RenderConfig_1.RenderConfig.DissolveChannelSwitch),
-          n.RevertProperty(RenderConfig_1.RenderConfig.DissolveProgress),
-          n.RevertProperty(RenderConfig_1.RenderConfig.DissolveSmooth),
-          n.RevertProperty(RenderConfig_1.RenderConfig.DissolveMulti),
-          n.RevertProperty(RenderConfig_1.RenderConfig.DissolveEmission),
+      var o = e.SpecifiedMaterialIndexMap.get(i),
+        n = this.AllBodyInfoList.get(i);
+      r && n.RevertBattleMaskCommon();
+      for (let e = 0; e < o.length; e++) {
+        var t = n.MaterialSlotList[o[e]];
+        t.RevertProperty(RenderConfig_1.RenderConfig.UseDissolve),
+          t.RevertProperty(RenderConfig_1.RenderConfig.DissolveChannelSwitch),
+          t.RevertProperty(RenderConfig_1.RenderConfig.DissolveProgress),
+          t.RevertProperty(RenderConfig_1.RenderConfig.DissolveSmooth),
+          t.RevertProperty(RenderConfig_1.RenderConfig.DissolveMulti),
+          t.RevertProperty(RenderConfig_1.RenderConfig.DissolveEmission),
           r ||
-            n.SectionIndex === RenderConfig_1.INVALID_SECTION_INDEX ||
-            o.RevertBattleMask(n.SectionIndex);
+            t.SectionIndex === RenderConfig_1.INVALID_SECTION_INDEX ||
+            n.RevertBattleMask(t.SectionIndex);
       }
     }
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateDissolve.Stop();
   }
   ilr(e) {
     if (e.DataCache.UseOuterOutlineEffect) {
+      RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateOutline.Start();
       var r = e.SelectedAllParts;
       for (const i of e.SpecifiedMaterialIndexMap.keys()) {
-        var t = e.SpecifiedMaterialIndexMap.get(i),
-          o = this.AllBodyInfoList.get(i);
-        if (r) o.UseOutlineStencilTestCommon();
+        var o = e.SpecifiedMaterialIndexMap.get(i),
+          n = this.AllBodyInfoList.get(i);
+        if (r) n.UseOutlineStencilTestCommon();
         else
-          for (let e = 0; e < t.length; e++) {
-            var n = o.MaterialSlotList[t[e]];
-            n.SectionIndex !== RenderConfig_1.INVALID_SECTION_INDEX &&
-              o.UseOutlineStencilTest(n.SectionIndex);
+          for (let e = 0; e < o.length; e++) {
+            var t = n.MaterialSlotList[o[e]];
+            t.SectionIndex !== RenderConfig_1.INVALID_SECTION_INDEX &&
+              n.UseOutlineStencilTest(t.SectionIndex);
           }
       }
+      RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateOutline.Stop();
     }
   }
   _lr(e) {
     var r = e.DataCache,
-      t = e.InterpolateFactor,
-      o = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.OutlineWidth, t),
-      n = RenderUtil_1.RenderUtil.GetColorFromGroup(r.OutlineColor, t),
-      i = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.OutlineIntensity, t);
-    for (const d of e.SpecifiedMaterialIndexMap.keys()) {
-      var a = e.SpecifiedMaterialIndexMap.get(d),
-        f = this.AllBodyInfoList.get(d);
+      o = e.InterpolateFactor,
+      n =
+        (RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateOutline.Start(),
+        RenderUtil_1.RenderUtil.GetFloatFromGroup(r.OutlineWidth, o)),
+      t = RenderUtil_1.RenderUtil.GetColorFromGroup(r.OutlineColor, o),
+      i = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.OutlineIntensity, o);
+    for (const _ of e.SpecifiedMaterialIndexMap.keys()) {
+      var a = e.SpecifiedMaterialIndexMap.get(_),
+        f = this.AllBodyInfoList.get(_);
       for (let e = 0; e < a.length; e++) {
-        var _ = f.MaterialSlotList[a[e]];
-        _.SetFloat(RenderConfig_1.RenderConfig.OutlineUseTex, r.OutlineUseTex),
-          _.SetFloat(RenderConfig_1.RenderConfig.OutlineWidth, o),
-          _.SetColor(RenderConfig_1.RenderConfig.OutlineColor, n),
-          _.SetFloat(RenderConfig_1.RenderConfig.OutlineColorIntensity, i);
+        var d = f.MaterialSlotList[a[e]];
+        d.SetFloat(RenderConfig_1.RenderConfig.OutlineUseTex, r.OutlineUseTex),
+          d.SetFloat(RenderConfig_1.RenderConfig.OutlineWidth, n),
+          d.SetColor(RenderConfig_1.RenderConfig.OutlineColor, t),
+          d.SetFloat(RenderConfig_1.RenderConfig.OutlineColorIntensity, i);
       }
     }
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateOutline.Stop();
   }
   vlr(e) {
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateOutline.Start();
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
-      var t = e.SpecifiedMaterialIndexMap.get(i),
-        o = this.AllBodyInfoList.get(i);
-      r && o.RevertOutlineStencilTestCommon();
-      for (let e = 0; e < t.length; e++) {
-        var n = o.MaterialSlotList[t[e]];
-        n.RevertProperty(RenderConfig_1.RenderConfig.OutlineUseTex),
-          n.RevertProperty(RenderConfig_1.RenderConfig.OutlineWidth),
-          n.RevertProperty(RenderConfig_1.RenderConfig.OutlineColor),
-          n.RevertProperty(RenderConfig_1.RenderConfig.OutlineColorIntensity),
+      var o = e.SpecifiedMaterialIndexMap.get(i),
+        n = this.AllBodyInfoList.get(i);
+      r && n.RevertOutlineStencilTestCommon();
+      for (let e = 0; e < o.length; e++) {
+        var t = n.MaterialSlotList[o[e]];
+        t.RevertProperty(RenderConfig_1.RenderConfig.OutlineUseTex),
+          t.RevertProperty(RenderConfig_1.RenderConfig.OutlineWidth),
+          t.RevertProperty(RenderConfig_1.RenderConfig.OutlineColor),
+          t.RevertProperty(RenderConfig_1.RenderConfig.OutlineColorIntensity),
           r ||
-            n.SectionIndex === RenderConfig_1.INVALID_SECTION_INDEX ||
-            o.RevertOutlineStencilTest(n.SectionIndex);
+            t.SectionIndex === RenderConfig_1.INVALID_SECTION_INDEX ||
+            n.RevertOutlineStencilTest(t.SectionIndex);
       }
     }
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateOutline.Stop();
   }
   olr(e) {
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
-      var t = e.SpecifiedMaterialIndexMap.get(i),
-        o = this.AllBodyInfoList.get(i);
-      if (r) o.UseBattleCommon();
+      var o = e.SpecifiedMaterialIndexMap.get(i),
+        n = this.AllBodyInfoList.get(i);
+      if (r) n.UseBattleCommon();
       else
-        for (let e = 0; e < t.length; e++) {
-          var n = o.MaterialSlotList[t[e]];
-          n.SectionIndex !== RenderConfig_1.INVALID_SECTION_INDEX &&
-            o.UseBattle(n.SectionIndex);
+        for (let e = 0; e < o.length; e++) {
+          var t = n.MaterialSlotList[o[e]];
+          t.SectionIndex !== RenderConfig_1.INVALID_SECTION_INDEX &&
+            n.UseBattle(t.SectionIndex);
         }
     }
   }
   ulr(e) {
     var r = e.DataCache;
     if (r.UseColor) {
-      var t = e.InterpolateFactor,
-        o = RenderUtil_1.RenderUtil.GetColorFromGroup(r.BaseColor, t),
-        n = RenderUtil_1.RenderUtil.GetColorFromGroup(r.EmissionColor, t),
-        i = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.EmissionIntensity, t),
-        a = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.BaseColorIntensity, t);
-      for (const s of e.SpecifiedMaterialIndexMap.keys()) {
-        var f = e.SpecifiedMaterialIndexMap.get(s),
-          _ = this.AllBodyInfoList.get(s);
+      RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateModifyOtherParameters.Start();
+      var o = e.InterpolateFactor,
+        n = RenderUtil_1.RenderUtil.GetColorFromGroup(r.BaseColor, o),
+        t = RenderUtil_1.RenderUtil.GetColorFromGroup(r.EmissionColor, o),
+        i = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.EmissionIntensity, o),
+        a = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.BaseColorIntensity, o);
+      for (const C of e.SpecifiedMaterialIndexMap.keys()) {
+        var f = e.SpecifiedMaterialIndexMap.get(C),
+          d = this.AllBodyInfoList.get(C);
         for (let e = 0; e < f.length; e++) {
-          var d = _.MaterialSlotList[f[e]];
-          d.SetFloat(RenderConfig_1.RenderConfig.BaseUseTex, r.BaseUseTex),
-            d.SetColor(RenderConfig_1.RenderConfig.BaseColor, o),
-            d.SetFloat(RenderConfig_1.RenderConfig.BaseColorIntensity, a),
-            d.SetFloat(
+          var _ = d.MaterialSlotList[f[e]];
+          _.SetFloat(RenderConfig_1.RenderConfig.BaseUseTex, r.BaseUseTex),
+            _.SetColor(RenderConfig_1.RenderConfig.BaseColor, n),
+            _.SetFloat(RenderConfig_1.RenderConfig.BaseColorIntensity, a),
+            _.SetFloat(
               RenderConfig_1.RenderConfig.EmissionUseTex,
               r.EmissionUseTex,
             ),
-            d.SetColor(RenderConfig_1.RenderConfig.EmissionColor, n),
-            d.SetFloat(RenderConfig_1.RenderConfig.EmissionIntensity, i);
+            _.SetColor(RenderConfig_1.RenderConfig.EmissionColor, t),
+            _.SetFloat(RenderConfig_1.RenderConfig.EmissionIntensity, i);
         }
       }
+      RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateModifyOtherParameters.Stop();
     }
   }
   Mlr(e) {
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateModifyOtherParameters.Start();
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
-      var t = e.SpecifiedMaterialIndexMap.get(i),
-        o = this.AllBodyInfoList.get(i);
-      r && o.RevertBattleCommon();
-      for (let e = 0; e < t.length; e++) {
-        var n = o.MaterialSlotList[t[e]];
-        n.RevertProperty(RenderConfig_1.RenderConfig.BaseUseTex),
-          n.RevertProperty(RenderConfig_1.RenderConfig.BaseColor),
-          n.RevertProperty(RenderConfig_1.RenderConfig.BaseColorIntensity),
-          n.RevertProperty(RenderConfig_1.RenderConfig.EmissionUseTex),
-          n.RevertProperty(RenderConfig_1.RenderConfig.EmissionColor),
-          n.RevertProperty(RenderConfig_1.RenderConfig.EmissionIntensity),
+      var o = e.SpecifiedMaterialIndexMap.get(i),
+        n = this.AllBodyInfoList.get(i);
+      r && n.RevertBattleCommon();
+      for (let e = 0; e < o.length; e++) {
+        var t = n.MaterialSlotList[o[e]];
+        t.RevertProperty(RenderConfig_1.RenderConfig.BaseUseTex),
+          t.RevertProperty(RenderConfig_1.RenderConfig.BaseColor),
+          t.RevertProperty(RenderConfig_1.RenderConfig.BaseColorIntensity),
+          t.RevertProperty(RenderConfig_1.RenderConfig.EmissionUseTex),
+          t.RevertProperty(RenderConfig_1.RenderConfig.EmissionColor),
+          t.RevertProperty(RenderConfig_1.RenderConfig.EmissionIntensity),
           r ||
-            n.SectionIndex === RenderConfig_1.INVALID_SECTION_INDEX ||
-            o.RevertBattle(n.SectionIndex);
+            t.SectionIndex === RenderConfig_1.INVALID_SECTION_INDEX ||
+            n.RevertBattle(t.SectionIndex);
       }
     }
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateModifyOtherParameters.Stop();
   }
   rlr(e) {
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
-      var t = e.SpecifiedMaterialIndexMap.get(i),
-        o = this.AllBodyInfoList.get(i);
-      if (r) o.UseBattleCommon();
+      var o = e.SpecifiedMaterialIndexMap.get(i),
+        n = this.AllBodyInfoList.get(i);
+      if (r) n.UseBattleCommon();
       else
-        for (let e = 0; e < t.length; e++) {
-          var n = o.MaterialSlotList[t[e]];
-          n.SectionIndex !== RenderConfig_1.INVALID_SECTION_INDEX &&
-            o.UseBattle(n.SectionIndex);
+        for (let e = 0; e < o.length; e++) {
+          var t = n.MaterialSlotList[o[e]];
+          t.SectionIndex !== RenderConfig_1.INVALID_SECTION_INDEX &&
+            n.UseBattle(t.SectionIndex);
         }
     }
   }
   clr(e) {
     var r = e.DataCache,
-      t = e.InterpolateFactor,
-      o = RenderUtil_1.RenderUtil.GetColorFromGroup(r.TextureScaleAndOffset, t),
-      n = RenderUtil_1.RenderUtil.GetColorFromGroup(r.TextureSpeed, t),
-      i = RenderUtil_1.RenderUtil.GetColorFromGroup(r.TextureColorTint, t),
-      a = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.Rotation, t),
-      f = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.TextureMaskRange, t),
-      _ = r.MaskTexture;
-    for (const C of e.SpecifiedMaterialIndexMap.keys()) {
-      var d = e.SpecifiedMaterialIndexMap.get(C),
-        s = this.AllBodyInfoList.get(C);
-      for (let e = 0; e < d.length; e++) {
-        var R = s.MaterialSlotList[d[e]];
+      o =
+        (RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateSampleTexture.Start(),
+        e.InterpolateFactor),
+      n = RenderUtil_1.RenderUtil.GetColorFromGroup(r.TextureScaleAndOffset, o),
+      t = RenderUtil_1.RenderUtil.GetColorFromGroup(r.TextureSpeed, o),
+      i = RenderUtil_1.RenderUtil.GetColorFromGroup(r.TextureColorTint, o),
+      a = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.Rotation, o),
+      f = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.TextureMaskRange, o),
+      d = r.MaskTexture;
+    for (const l of e.SpecifiedMaterialIndexMap.keys()) {
+      var _ = e.SpecifiedMaterialIndexMap.get(l),
+        C = this.AllBodyInfoList.get(l);
+      for (let e = 0; e < _.length; e++) {
+        var R = C.MaterialSlotList[_[e]];
         R.SetFloat(RenderConfig_1.RenderConfig.UseTexture, 1),
           R.SetFloat(
             RenderConfig_1.RenderConfig.TextureUseMask,
             r.UseAlphaToMask,
           ),
           R.SetFloat(RenderConfig_1.RenderConfig.TextureMaskRange, f),
-          R.SetColor(RenderConfig_1.RenderConfig.TextureScaleAndOffset, o),
-          R.SetColor(RenderConfig_1.RenderConfig.TextureSpeed, n),
+          R.SetColor(RenderConfig_1.RenderConfig.TextureScaleAndOffset, n),
+          R.SetColor(RenderConfig_1.RenderConfig.TextureSpeed, t),
           R.SetColor(RenderConfig_1.RenderConfig.TextureColor, i),
           R.SetFloat(RenderConfig_1.RenderConfig.TextureRotation, a),
           R.SetFloat(
             RenderConfig_1.RenderConfig.TextureUseScreenUv,
             r.UseScreenUv,
           ),
-          _ && R.SetTexture(RenderConfig_1.RenderConfig.NoiseTexture, _),
+          d && R.SetTexture(RenderConfig_1.RenderConfig.NoiseTexture, d),
           R.SetColor(
             RenderConfig_1.RenderConfig.TextureUvSwitch,
             r.UvSelection,
           );
       }
     }
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateSampleTexture.Stop();
   }
   Elr(e) {
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateSampleTexture.Start();
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
-      var t = e.SpecifiedMaterialIndexMap.get(i),
-        o = this.AllBodyInfoList.get(i);
-      r && o.RevertBattleCommon();
-      for (let e = 0; e < t.length; e++) {
-        var n = o.MaterialSlotList[t[e]];
-        n.RevertProperty(RenderConfig_1.RenderConfig.UseTexture),
-          n.RevertProperty(RenderConfig_1.RenderConfig.TextureUseScreenUv),
-          n.RevertProperty(RenderConfig_1.RenderConfig.TextureUseMask),
-          n.RevertProperty(RenderConfig_1.RenderConfig.TextureMaskRange),
-          n.RevertProperty(RenderConfig_1.RenderConfig.TextureUvSwitch),
-          n.RevertProperty(RenderConfig_1.RenderConfig.TextureScaleAndOffset),
-          n.RevertProperty(RenderConfig_1.RenderConfig.TextureSpeed),
-          n.RevertProperty(RenderConfig_1.RenderConfig.TextureColor),
-          n.RevertProperty(RenderConfig_1.RenderConfig.TextureRotation),
-          n.RevertProperty(RenderConfig_1.RenderConfig.NoiseTexture),
+      var o = e.SpecifiedMaterialIndexMap.get(i),
+        n = this.AllBodyInfoList.get(i);
+      r && n.RevertBattleCommon();
+      for (let e = 0; e < o.length; e++) {
+        var t = n.MaterialSlotList[o[e]];
+        t.RevertProperty(RenderConfig_1.RenderConfig.UseTexture),
+          t.RevertProperty(RenderConfig_1.RenderConfig.TextureUseScreenUv),
+          t.RevertProperty(RenderConfig_1.RenderConfig.TextureUseMask),
+          t.RevertProperty(RenderConfig_1.RenderConfig.TextureMaskRange),
+          t.RevertProperty(RenderConfig_1.RenderConfig.TextureUvSwitch),
+          t.RevertProperty(RenderConfig_1.RenderConfig.TextureScaleAndOffset),
+          t.RevertProperty(RenderConfig_1.RenderConfig.TextureSpeed),
+          t.RevertProperty(RenderConfig_1.RenderConfig.TextureColor),
+          t.RevertProperty(RenderConfig_1.RenderConfig.TextureRotation),
+          t.RevertProperty(RenderConfig_1.RenderConfig.NoiseTexture),
           r ||
-            n.SectionIndex === RenderConfig_1.INVALID_SECTION_INDEX ||
-            o.RevertBattle(n.SectionIndex);
+            t.SectionIndex === RenderConfig_1.INVALID_SECTION_INDEX ||
+            n.RevertBattle(t.SectionIndex);
       }
     }
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateSampleTexture.Stop();
   }
   nlr(e) {
-    for (const t of e.SpecifiedMaterialIndexMap.keys()) {
-      var r = this.AllBodyInfoList.get(t);
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateMotionOffset.Start();
+    for (const o of e.SpecifiedMaterialIndexMap.keys()) {
+      var r = this.AllBodyInfoList.get(o);
       if (r.SkeletalComp?.IsValid()) {
         (e.TargetSkeletalMesh = r.SkeletalComp),
           (e.MotionStartLocation = e.TargetSkeletalMesh.GetSocketLocation(
@@ -758,112 +819,128 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
         break;
       }
     }
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateMotionOffset.Stop();
   }
   mlr(e) {
     var r = e.DataCache;
     if (e.TargetSkeletalMesh) {
-      var t = e.InterpolateFactor,
-        o = Math.pow(t.Factor, r.MotionOffsetLength),
-        n = e.TargetSkeletalMesh.GetSocketLocation(
+      RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateMotionOffset.Start();
+      var o = e.InterpolateFactor,
+        n = Math.pow(o.Factor, r.MotionOffsetLength),
+        t = e.TargetSkeletalMesh.GetSocketLocation(
           RenderConfig_1.RenderConfig.RootName,
         ),
-        o =
+        n =
           (RenderUtil_1.RenderUtil.LerpVector(
             e.MotionStartLocation,
+            t,
             n,
-            o,
             e.MotionEndLocation,
           ),
-          e.MotionEndLocation[0] - n.X),
-        i = e.MotionEndLocation[1] - n.Y,
-        n = e.MotionEndLocation[2] - n.Z,
-        a = Math.sqrt(o * o + i * i + n * n),
-        f = new UE.LinearColor(o, i, n, a),
-        _ = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.MotionNoiseSpeed, t);
-      for (const C of e.SpecifiedMaterialIndexMap.keys()) {
-        var d = e.SpecifiedMaterialIndexMap.get(C),
-          s = this.AllBodyInfoList.get(C);
-        for (let e = 0; e < d.length; e++) {
-          var R = s.MaterialSlotList[d[e]];
+          e.MotionEndLocation[0] - t.X),
+        i = e.MotionEndLocation[1] - t.Y,
+        t = e.MotionEndLocation[2] - t.Z,
+        a = Math.sqrt(n * n + i * i + t * t),
+        f =
+          a < 100
+            ? new UE.LinearColor(n, i, t, a)
+            : new UE.LinearColor(0, 0, 0, 0),
+        d =
+          a < 100
+            ? RenderUtil_1.RenderUtil.GetFloatFromGroup(r.MotionNoiseSpeed, o)
+            : 0;
+      for (const l of e.SpecifiedMaterialIndexMap.keys()) {
+        var _ = e.SpecifiedMaterialIndexMap.get(l),
+          C = this.AllBodyInfoList.get(l);
+        for (let e = 0; e < _.length; e++) {
+          var R = C.MaterialSlotList[_[e]];
           R.SetFloat(
             RenderConfig_1.RenderConfig.MotionRange,
             r.MotionAffectVertexRange,
           ),
             R.SetColor(RenderConfig_1.RenderConfig.MotionOffset, f),
-            R.SetFloat(RenderConfig_1.RenderConfig.MotionNoiseSpeed, _);
+            R.SetFloat(RenderConfig_1.RenderConfig.MotionNoiseSpeed, d);
         }
       }
+      RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateMotionOffset.Stop();
     }
   }
   Slr(e) {
-    for (const n of e.SpecifiedMaterialIndexMap.keys()) {
-      var r = e.SpecifiedMaterialIndexMap.get(n),
-        t = this.AllBodyInfoList.get(n);
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateMotionOffset.Start();
+    for (const t of e.SpecifiedMaterialIndexMap.keys()) {
+      var r = e.SpecifiedMaterialIndexMap.get(t),
+        o = this.AllBodyInfoList.get(t);
       for (let e = 0; e < r.length; e++) {
-        var o = t.MaterialSlotList[r[e]];
-        o.RevertProperty(RenderConfig_1.RenderConfig.MotionRange),
-          o.RevertProperty(RenderConfig_1.RenderConfig.MotionOffset),
-          o.RevertProperty(RenderConfig_1.RenderConfig.MotionNoiseSpeed);
+        var n = o.MaterialSlotList[r[e]];
+        n.RevertProperty(RenderConfig_1.RenderConfig.MotionRange),
+          n.RevertProperty(RenderConfig_1.RenderConfig.MotionOffset),
+          n.RevertProperty(RenderConfig_1.RenderConfig.MotionNoiseSpeed);
       }
     }
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateMotionOffset.Stop();
   }
   slr(e) {
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateDither.Start();
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
-      var t = e.SpecifiedMaterialIndexMap.get(i),
-        o = this.AllBodyInfoList.get(i);
-      if (r) o.UseAlphaTestCommon();
+      var o = e.SpecifiedMaterialIndexMap.get(i),
+        n = this.AllBodyInfoList.get(i);
+      if (r) n.UseAlphaTestCommon();
       else
-        for (let e = 0; e < t.length; e++) {
-          var n = o.MaterialSlotList[t[e]];
-          n.SectionIndex !== RenderConfig_1.INVALID_SECTION_INDEX &&
-            o.UseAlphaTest(n.SectionIndex);
+        for (let e = 0; e < o.length; e++) {
+          var t = n.MaterialSlotList[o[e]];
+          t.SectionIndex !== RenderConfig_1.INVALID_SECTION_INDEX &&
+            n.UseAlphaTest(t.SectionIndex);
         }
     }
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateDither.Stop();
   }
   dlr(e) {
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateDither.Start();
     var r = e.DataCache,
-      t = e.InterpolateFactor,
-      o = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.DitherValue, t);
+      o = e.InterpolateFactor,
+      n = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.DitherValue, o);
     for (const f of e.SpecifiedMaterialIndexMap.keys()) {
-      var n = e.SpecifiedMaterialIndexMap.get(f),
+      var t = e.SpecifiedMaterialIndexMap.get(f),
         i = this.AllBodyInfoList.get(f);
-      for (let e = 0; e < n.length; e++) {
-        var a = i.MaterialSlotList[n[e]];
+      for (let e = 0; e < t.length; e++) {
+        var a = i.MaterialSlotList[t[e]];
         a.SetFloat(RenderConfig_1.RenderConfig.UseDitherEffect2, 1),
-          a.SetFloat(RenderConfig_1.RenderConfig.DitherValue2, o);
+          a.SetFloat(RenderConfig_1.RenderConfig.DitherValue2, n);
       }
     }
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateDither.Stop();
   }
   ylr(e) {
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
-      var t = e.SpecifiedMaterialIndexMap.get(i),
-        o = this.AllBodyInfoList.get(i);
-      r && o.RevertAlphaTestCommon();
-      for (let e = 0; e < t.length; e++) {
-        var n = o.MaterialSlotList[t[e]];
-        n.RevertProperty(RenderConfig_1.RenderConfig.DitherValue2),
-          n.RevertProperty(RenderConfig_1.RenderConfig.UseDitherEffect2),
+      var o = e.SpecifiedMaterialIndexMap.get(i),
+        n = this.AllBodyInfoList.get(i);
+      r && n.RevertAlphaTestCommon();
+      for (let e = 0; e < o.length; e++) {
+        var t = n.MaterialSlotList[o[e]];
+        t.RevertProperty(RenderConfig_1.RenderConfig.DitherValue2),
+          t.RevertProperty(RenderConfig_1.RenderConfig.UseDitherEffect2),
           r ||
-            n.SectionIndex === RenderConfig_1.INVALID_SECTION_INDEX ||
-            o.RevertAlphaTest(n.SectionIndex);
+            t.SectionIndex === RenderConfig_1.INVALID_SECTION_INDEX ||
+            n.RevertAlphaTest(t.SectionIndex);
       }
     }
   }
   Clr(e) {
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateCustomMaterialEffect.Start();
     var r = e.DataCache,
-      t = e.InterpolateFactor;
-    for (const d of e.SpecifiedMaterialIndexMap.keys()) {
-      var o = e.SpecifiedMaterialIndexMap.get(d),
-        n = this.AllBodyInfoList.get(d);
-      for (let e = 0; e < o.length; e++) {
-        var i = n.MaterialSlotList[o[e]];
+      o = e.InterpolateFactor;
+    for (const _ of e.SpecifiedMaterialIndexMap.keys()) {
+      var n = e.SpecifiedMaterialIndexMap.get(_),
+        t = this.AllBodyInfoList.get(_);
+      for (let e = 0; e < n.length; e++) {
+        var i = t.MaterialSlotList[n[e]];
         if (void 0 !== r.CustomTextureParameterNames)
           for (let e = 0; e < r.CustomTextureParameterNames.length; e++) {
             var a = RenderUtil_1.RenderUtil.GetTextureFromGroup(
               r.CustomTextureParameterValues[e],
-              t,
+              o,
             );
             a && i.SetTexture(r.CustomTextureParameterNames[e], a);
           }
@@ -871,40 +948,41 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
           for (let e = 0; e < r.CustomFloatParameterNames.length; e++) {
             var f = RenderUtil_1.RenderUtil.GetFloatFromGroup(
               r.CustomFloatParameterValues[e],
-              t,
+              o,
             );
             i.SetFloat(r.CustomFloatParameterNames[e], f);
           }
         if (void 0 !== r.CustomColorParameterNames)
           for (let e = 0; e < r.CustomColorParameterNames.length; e++) {
-            var _ = RenderUtil_1.RenderUtil.GetColorFromGroup(
+            var d = RenderUtil_1.RenderUtil.GetColorFromGroup(
               r.CustomColorParameterValues[e],
-              t,
+              o,
             );
-            i.SetColor(r.CustomColorParameterNames[e], _);
+            i.SetColor(r.CustomColorParameterNames[e], d);
           }
       }
     }
+    RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateCustomMaterialEffect.Stop();
   }
   Ilr(e) {
     var r = e.DataCache;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
-      var t = e.SpecifiedMaterialIndexMap.get(i),
-        o = this.AllBodyInfoList.get(i);
-      for (let e = 0; e < t.length; e++) {
-        var n = o.MaterialSlotList[t[e]];
+      var o = e.SpecifiedMaterialIndexMap.get(i),
+        n = this.AllBodyInfoList.get(i);
+      for (let e = 0; e < o.length; e++) {
+        var t = n.MaterialSlotList[o[e]];
         if (void 0 !== r.CustomTextureParameterNames)
           for (let e = 0; e < r.CustomTextureParameterNames.length; e++)
-            n.RevertProperty(r.CustomTextureParameterNames[e]);
+            t.RevertProperty(r.CustomTextureParameterNames[e]);
         if (void 0 !== r.CustomFloatParameterNames)
           for (let e = 0; e < r.CustomFloatParameterNames.length; e++)
-            n.RevertProperty(r.CustomFloatParameterNames[e]);
+            t.RevertProperty(r.CustomFloatParameterNames[e]);
         if (void 0 !== r.CustomColorParameterNames)
           for (let e = 0; e < r.CustomColorParameterNames.length; e++)
-            n.RevertProperty(r.CustomColorParameterNames[e]);
+            t.RevertProperty(r.CustomColorParameterNames[e]);
       }
     }
   }
 }
-exports.CharMaterialContainer = CharMaterialContainer;
+(exports.CharMaterialContainer = CharMaterialContainer).G3a = -1;
 //# sourceMappingURL=CharMaterialContainer.js.map

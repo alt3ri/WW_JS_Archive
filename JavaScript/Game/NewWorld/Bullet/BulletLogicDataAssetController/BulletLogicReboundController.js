@@ -16,7 +16,7 @@ class BulletLogicReboundController extends BulletLogicController_1.BulletLogicCo
     super(t, e),
       (this.n$t = void 0),
       (this.a7o = void 0),
-      (this.n$t = e.GetComponent(154)),
+      (this.n$t = e.GetComponent(155)),
       (this.a7o = this.Bullet.GetBulletInfo());
   }
   OnInit() {
@@ -30,7 +30,7 @@ class BulletLogicReboundController extends BulletLogicController_1.BulletLogicCo
         UE.KismetSystemLibrary.IsValidSoftObjectReference(
           this.LogicController.EffectRebound,
         ) &&
-        ((t = (e = t.Attacker).GetComponent(52)),
+        ((t = (e = t.Attacker).GetComponent(53)),
         (e = e.GetComponent(3)),
         (r = UE.KismetMathLibrary.TransformLocation(
           e.ActorTransform,
@@ -86,7 +86,7 @@ class BulletLogicReboundController extends BulletLogicController_1.BulletLogicCo
               SyncType: 1,
               ParentId: this.Bullet.Id,
               SkillId: this.a7o.BulletInitParams.SkillId,
-              Source: Protocol_1.Aki.Protocol.C4s.Proto_ReboundSource,
+              Source: Protocol_1.Aki.Protocol.E4s.Proto_ReboundSource,
               DtType: this.a7o.BulletInitParams.DtType,
             },
             l,

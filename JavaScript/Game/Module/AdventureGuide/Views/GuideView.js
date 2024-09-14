@@ -43,12 +43,12 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
         (ModelManager_1.ModelManager.AdventureGuideModel.CurrentGuideTabName =
           i),
           this.U6e(!1);
-        for (const n of this.TabComponent.GetCurrencyItemList())
-          n.SetUiActive(
+        for (const o of this.TabComponent.GetCurrencyItemList())
+          o.SetUiActive(
             "NewSoundAreaView" === i || "DisposableChallengeView" === i,
           );
-        var o = this.TabComponent.GetTabItemByIndex(e);
-        this.TabViewComponent.ToggleCallBack(t, i, o, this.T6e), (this.I6e = e);
+        var n = this.TabComponent.GetTabItemByIndex(e);
+        this.TabViewComponent.ToggleCallBack(t, i, n, this.T6e), (this.I6e = e);
       }),
       (this.yqe = (e) => {
         e = this.TabDataList[e];
@@ -75,15 +75,12 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
           (ModelManager_1.ModelManager.AdventureGuideModel.CurrentGuideTabName =
             e);
       }),
-      (this.w6e = (e) => {
-        StringUtils_1.StringUtils.IsEmpty(e)
+      (this.w6e = (e, t) => {
+        StringUtils_1.StringUtils.IsEmpty(e) &&
+        StringUtils_1.StringUtils.IsEmpty(t)
           ? this.GetText(5).SetText("")
           : (this.D6e || this.U6e(!0),
-            LguiUtil_1.LguiUtil.SetLocalTextNew(
-              this.GetText(5),
-              "Text_RefreshText_Text",
-              e,
-            ));
+            LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), t, e));
       }),
       (this.B6e = () => {
         UiManager_1.UiManager.CloseView("AdventureGuideView");
@@ -143,17 +140,17 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
     var e,
       t,
       i,
-      o = this.T6e[0];
-    o
-      ? (this.I6e = this.x6e(o))
-      : ((o =
+      n = this.T6e[0];
+    n
+      ? (this.I6e = this.x6e(n))
+      : ((n =
           ModelManager_1.ModelManager.DailyActivityModel.CheckIsRewardWaitTake()),
         (e = ModelManager_1.ModelManager.DailyActivityModel.CheckIsFinish()),
         (t =
           ControllerHolder_1.ControllerHolder.AdventureGuideController.CheckCanGetTaskAward()),
         (i =
           ModelManager_1.ModelManager.AdventureGuideModel.GetAllTaskFinish()),
-        (this.I6e = o
+        (this.I6e = n
           ? this.x6e("DailyActivityTabView")
           : this.x6e(
               t
@@ -164,11 +161,11 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
                     : "AdventureTargetView"
                   : "DailyActivityTabView",
             )));
-    let n = void 0;
-    (n = ModelManager_1.ModelManager.FunctionModel.IsOpen(10066)
+    let o = void 0;
+    (o = ModelManager_1.ModelManager.FunctionModel.IsOpen(10066)
       ? [ItemDefines_1.EItemId.OverPower, ItemDefines_1.EItemId.Power]
       : [ItemDefines_1.EItemId.Power]),
-      await this.TabComponent.SetCurrencyItemList(n);
+      await this.TabComponent.SetCurrencyItemList(o);
     for (const r of this.TabComponent.GetCurrencyItemList())
       r.SetButtonFunction(() => {
         PowerController_1.PowerController.OpenPowerView();
@@ -211,16 +208,16 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
     var t = this.TabDataList.length,
       i = this.TabComponent.CreateTabItemDataByLength(t);
     for (let e = 0; e < t; e++) {
-      var o = this.TabDataList[e].ChildViewName;
-      "AdventureTargetView" === o
+      var n = this.TabDataList[e].ChildViewName;
+      "AdventureTargetView" === n
         ? (i[e].RedDotName = "AdventureManual")
-        : "DailyActivityTabView" === o &&
+        : "DailyActivityTabView" === n &&
           (i[e].RedDotName = "AdventureDailyActivityTab");
     }
     await this.TabComponent.RefreshTabItemAsync(i);
   }
   U6e(e) {
-    e && this.w6e(""), this.GetItem(4).SetUIActive(e), (this.D6e = e);
+    e && this.w6e("", ""), this.GetItem(4).SetUIActive(e), (this.D6e = e);
   }
   OnBeforeDestroy() {
     (ModelManager_1.ModelManager.AdventureGuideModel.CurrentGuideTabName =

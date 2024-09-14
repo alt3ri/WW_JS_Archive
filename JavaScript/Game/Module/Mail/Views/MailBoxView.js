@@ -500,7 +500,7 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
   }
   vIi() {
     (this.Qyi = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.Qyi.SetHelpBtnActive(!1),
+      this.Qyi.SetHelpBtnActive(!0),
       this.Qyi.SetCloseBtnActive(!0),
       this.Qyi.SetCloseCallBack(this.I5t),
       this.Qyi.SetTitle(
@@ -619,7 +619,7 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
   DIi(i) {
     const t = [];
     i.GetAttachmentInfo().forEach((i) => {
-      t.push([{ IncId: 0, ItemId: i.J4n }, i.o9n]);
+      t.push([{ IncId: 0, ItemId: i.s5n }, i.m9n]);
     }),
       this.Yyi.ReloadData(t),
       this.GetItem(15).SetUIActive(0 < t.length);

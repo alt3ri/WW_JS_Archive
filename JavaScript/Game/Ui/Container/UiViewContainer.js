@@ -167,6 +167,7 @@ class UiViewContainer {
           );
     }
   }
+  async BeforeClearContainerAsync() {}
 }
 exports.UiViewContainer = UiViewContainer;
 //# sourceMappingURL=UiViewContainer.js.map

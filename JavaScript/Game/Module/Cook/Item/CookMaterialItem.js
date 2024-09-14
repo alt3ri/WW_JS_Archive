@@ -63,13 +63,13 @@ class CookMaterialItemContent extends UiPanelBase_1.UiPanelBase {
     this.RefreshHave(t);
   }
   RefreshHave(t = 1) {
-    var t = this.wGt.MVn * t,
+    var t = this.wGt.UVn * t,
       i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-        this.wGt.f8n,
+        this.wGt.L8n,
       );
     let e = void 0;
-    (e = this.wGt.G6n
-      ? i < this.wGt.MVn
+    (e = this.wGt.K6n
+      ? i < this.wGt.UVn
         ? StringUtils_1.StringUtils.Format(
             CommonDefine_1.MATERIAL_NOT_ENOUGHT_TEXT_PATTERN,
             i.toString(),
@@ -88,16 +88,16 @@ class CookMaterialItemContent extends UiPanelBase_1.UiPanelBase {
   }
   Kbe() {
     var t;
-    this.wGt.G6n
+    this.wGt.K6n
       ? (this.GetTexture(1).SetUIActive(!0),
-        (t = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(this.wGt.f8n)),
+        (t = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(this.wGt.L8n)),
         this.SetTextureByPath(t.Icon, this.GetTexture(1)))
       : this.GetTexture(1).SetUIActive(!1);
   }
   BGt() {
-    this.wGt.G6n
+    this.wGt.K6n
       ? (this.GetSprite(0).SetUIActive(!0),
-        this.SetItemQualityIcon(this.GetSprite(0), this.wGt.f8n))
+        this.SetItemQualityIcon(this.GetSprite(0), this.wGt.L8n))
       : this.GetSprite(0).SetUIActive(!1);
   }
   OnBeforeDestroy() {}

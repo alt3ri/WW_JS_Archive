@@ -17,25 +17,37 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configGuideFocusNewByGuideId.Init"),
+  getConfigStat = Stats_1.Stat.Create("configGuideFocusNewByGuideId.GetConfig"),
   CONFIG_STAT_PREFIX = "configGuideFocusNewByGuideId.GetConfig(";
 exports.configGuideFocusNewByGuideId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, e = !0) => {
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      n =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (n) {
       if (e) {
-        var i = KEY_PREFIX + `#${o})`;
-        const d = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (d) return d;
+        var t = KEY_PREFIX + `#${o})`;
+        const d = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (d)
+          return (
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            d
+          );
       }
       if (
         (n =
@@ -46,10 +58,9 @@ exports.configGuideFocusNewByGuideId = {
               o,
             ]))
       ) {
-        var n,
-          i = void 0;
+        t = void 0;
         if (
-          (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([n, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -58,19 +69,25 @@ exports.configGuideFocusNewByGuideId = {
           n)
         ) {
           const d = GuideFocusNew_1.GuideFocusNew.getRootAsGuideFocusNew(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
             e &&
               ((n = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(n, d)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             d
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=GuideFocusNewByGuideId.js.map

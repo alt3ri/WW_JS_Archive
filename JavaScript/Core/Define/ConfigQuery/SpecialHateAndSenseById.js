@@ -17,25 +17,39 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configSpecialHateAndSenseById.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configSpecialHateAndSenseById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configSpecialHateAndSenseById.GetConfig(";
 exports.configSpecialHateAndSenseById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (e, n = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var o = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${e})`),
+      i =
+        (o.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
       if (n) {
-        var o = KEY_PREFIX + `#${e})`;
-        const a = ConfigCommon_1.ConfigCommon.GetConfig(o);
-        if (a) return a;
+        var t = KEY_PREFIX + `#${e})`;
+        const a = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (a)
+          return (
+            o.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
         (i =
@@ -46,10 +60,9 @@ exports.configSpecialHateAndSenseById = {
               e,
             ]))
       ) {
-        var i,
-          o = void 0;
+        t = void 0;
         if (
-          (([i, o] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -59,19 +72,25 @@ exports.configSpecialHateAndSenseById = {
         ) {
           const a =
             SpecialHateAndSense_1.SpecialHateAndSense.getRootAsSpecialHateAndSense(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(o.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
             );
           return (
             n &&
               ((i = KEY_PREFIX + `#${e})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(i, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            o.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    o.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=SpecialHateAndSenseById.js.map

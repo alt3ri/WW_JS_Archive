@@ -27,10 +27,16 @@ class EnvironmentCache {
 }
 class GameAudioController extends ControllerBase_1.ControllerBase {
   static UpdatePlayerLocation(e) {
+    this.Nme = e;
+    e = this.Nme.ToUeVector();
     this.xin(e), this.$Tn(e), this.kWe(e);
   }
   static OnInit() {
     return (
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.AfterLoadMap,
+        this.h2a,
+      ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDone,
         this.nye,
@@ -51,13 +57,17 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.WeatherChange,
         this.dIe,
       ),
-      Net_1.Net.Register(27998, GameAudioController.UUn),
+      Net_1.Net.Register(28679, GameAudioController.UUn),
       !0
     );
   }
   static OnClear() {
     return (
       EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.AfterLoadMap,
+        this.h2a,
+      ),
+      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDone,
         this.nye,
       ),
@@ -77,7 +87,7 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.WeatherChange,
         this.dIe,
       ),
-      Net_1.Net.UnRegister(27998),
+      Net_1.Net.UnRegister(28679),
       !0
     );
   }
@@ -182,21 +192,23 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
     if (t?.IsValid()) {
       var o,
         n,
-        i = t.GetEnvironmentStates(e);
+        i,
+        a,
+        r = t.GetEnvironmentStates(e);
       for ([o, n] of this.VWe.entries()) {
-        var r = i.Get(o);
-        r
-          ? (i.Remove(o),
-            r !== n &&
-              (this.VWe.set(o, r),
-              UE.KuroAudioStatics.SetState(o, r),
+        var _ = r.Get(o);
+        _
+          ? (r.Remove(o),
+            _ !== n &&
+              (this.VWe.set(o, _),
+              UE.KuroAudioStatics.SetState(o, _),
               Log_1.Log.CheckInfo()) &&
               Log_1.Log.Info(
                 "Audio",
                 57,
                 "[Game.Environment] SetState",
                 ["Group", o],
-                ["State", r],
+                ["State", _],
               ))
           : (this.VWe.delete(o),
             UE.KuroAudioStatics.SetState(o, "none"),
@@ -209,21 +221,19 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
                 ["State", "none"],
               ));
       }
-      for (let e = 0; e < i.Num(); e++) {
-        var a = i.GetKey(e),
-          _ = i.Get(a);
-        _ &&
-          (this.VWe.set(a, _),
-          UE.KuroAudioStatics.SetState(a, _),
+      for (let e = 0; e < r.Num(); e++)
+        r.IsValidIndex(e) &&
+          ((i = r.GetKey(e)), (a = r.Get(i))) &&
+          (this.VWe.set(i, a),
+          UE.KuroAudioStatics.SetState(i, a),
           Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info(
             "Audio",
             57,
             "[Game.Environment] SetState",
-            ["Group", a],
-            ["State", _],
+            ["Group", i],
+            ["State", a],
           );
-      }
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -234,16 +244,41 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
   }
   static UpdateAudioState(e) {
     for (const t of e)
-      t.F4n
-        ? UE.KuroAudioStatics.SetState(t.ISs, t.F4n)
-        : UE.KuroAudioStatics.SetState(t.ISs, "none");
+      t.Y4n
+        ? UE.KuroAudioStatics.SetState(t.USs, t.Y4n)
+        : UE.KuroAudioStatics.SetState(t.USs, "none");
   }
 }
 (exports.GameAudioController = GameAudioController),
   ((_a = GameAudioController).HWe = void 0),
+  (GameAudioController.Nme = void 0),
   (GameAudioController.YTn = new EnvironmentCache()),
   (GameAudioController.VWe = new Map()),
   (GameAudioController.ZUn = new StateRef_1.StateRef("weather_type", "none")),
+  (GameAudioController.h2a = () => {
+    var e = UE.KuroAudioStatics.GetAudioEnvironmentSubsystem(Info_1.Info.World);
+    e?.IsValid()
+      ? e.EnvironmentUpdatedDelegate.Add(() => {
+          var e;
+          _a.Nme &&
+            ((e = _a.Nme.ToUeVector()),
+            _a.xin(e),
+            _a.$Tn(e),
+            _a.kWe(e),
+            Log_1.Log.CheckDebug()) &&
+            Log_1.Log.Debug(
+              "Audio",
+              57,
+              "[Game.Environment] EnvironmentUpdatedDelegate",
+            );
+        })
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error(
+          "Audio",
+          57,
+          "[Game.Controller] AudioEnvironmentSubsystem 无效",
+        );
+  }),
   (GameAudioController.nye = () => {
     _a.zUn();
   }),
@@ -283,6 +318,7 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
           _a.HWe.ExitEvent,
         ]),
       (_a.HWe = void 0),
+      (_a.Nme = void 0),
       AudioSystem_1.AudioSystem.PostEvent("on_world_cleanup");
   }),
   (GameAudioController.Ilt = () => {
@@ -292,6 +328,6 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
     _a.zUn();
   }),
   (GameAudioController.UUn = (e) => {
-    _a.UpdateAudioState(e.TSs);
+    _a.UpdateAudioState(e.wSs);
   });
 //# sourceMappingURL=GameAudioController.js.map

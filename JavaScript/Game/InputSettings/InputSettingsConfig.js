@@ -13,6 +13,7 @@ const ActionMappingAll_1 = require("../../Core/Define/ConfigQuery/ActionMappingA
   CombinationAxisAll_1 = require("../../Core/Define/ConfigQuery/CombinationAxisAll"),
   GamepadKeyById_1 = require("../../Core/Define/ConfigQuery/GamepadKeyById"),
   GamepadKeyByKeyName_1 = require("../../Core/Define/ConfigQuery/GamepadKeyByKeyName"),
+  PcKeyAll_1 = require("../../Core/Define/ConfigQuery/PcKeyAll"),
   PcKeyById_1 = require("../../Core/Define/ConfigQuery/PcKeyById"),
   PcKeyByKeyName_1 = require("../../Core/Define/ConfigQuery/PcKeyByKeyName"),
   PlatformIconById_1 = require("../../Core/Define/ConfigQuery/PlatformIconById"),
@@ -58,6 +59,9 @@ class InputSettingsConfig extends ConfigBase_1.ConfigBase {
   }
   GetPcKeyConfig(e) {
     return PcKeyByKeyName_1.configPcKeyByKeyName.GetConfig(e);
+  }
+  GetPcKeyConfigList() {
+    return PcKeyAll_1.configPcKeyAll.GetConfigList();
   }
   GetPcKeyConfigById(e) {
     return PcKeyById_1.configPcKeyById.GetConfig(e);

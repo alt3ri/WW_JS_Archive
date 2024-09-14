@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.GuideConfig = void 0);
+  (exports.GuideConfig = exports.inputControllerType2IndexInConfig = void 0);
 const UE = require("ue"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   GuideFocusNewByGuideId_1 = require("../../../Core/Define/ConfigQuery/GuideFocusNewByGuideId"),
@@ -14,6 +14,11 @@ const UE = require("ue"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder");
+exports.inputControllerType2IndexInConfig = new Map([
+  [1, 0],
+  [2, 1],
+  [3, 2],
+]);
 class GuideConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments), (this.fJt = new UE.Vector(0, 0, 0));
@@ -66,10 +71,13 @@ class GuideConfig extends ConfigBase_1.ConfigBase {
   }
   GetOrderedStepIdsOfGroup(e, r) {
     const i = [];
+    e = this.GetGroup(e);
+    const u = exports.inputControllerType2IndexInConfig.get(r);
     return (
-      this.GetGroup(e)?.Step.forEach((e) => {
-        "T" === this.GetStep(e).Controller[r] && i.push(e);
-      }),
+      void 0 !== u &&
+        e?.Step.forEach((e) => {
+          "T" === this.GetStep(e).Controller[u] && i.push(e);
+        }),
       i
     );
   }

@@ -13,9 +13,16 @@ class RecordConfig {
   get LimitParams() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.limitparamsLength(),
-      (t) => this.limitparams(t)?.key(),
-      (t) => this.limitparams(t)?.value(),
+      this.limitparamsKey,
+      this.limitparamsValue,
+      this,
     );
+  }
+  limitparamsKey(t) {
+    return this.limitparams(t)?.key();
+  }
+  limitparamsValue(t) {
+    return this.limitparams(t)?.value();
   }
   get ProgressNeed() {
     return this.progressneed();

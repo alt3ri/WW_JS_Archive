@@ -23,20 +23,29 @@ class CookProcessed {
   get ConsumeItemsId() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.consumeitemsidLength(),
-      (t) => this.consumeitemsid(t),
+      this.consumeitemsid,
+      this,
     );
   }
   get LeastItemId() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.leastitemidLength(),
-      (t) => this.leastitemid(t)?.key(),
-      (t) => this.leastitemid(t)?.value(),
+      this.leastitemidKey,
+      this.leastitemidValue,
+      this,
     );
+  }
+  leastitemidKey(t) {
+    return this.leastitemid(t)?.key();
+  }
+  leastitemidValue(t) {
+    return this.leastitemid(t)?.value();
   }
   get InterationId() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.interationidLength(),
-      (t) => this.interationid(t),
+      this.interationid,
+      this,
     );
   }
   __init(t, i) {

@@ -5,12 +5,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.branchToStream =
     exports.streamToDepotBranch =
     exports.isBranchInRange =
+    exports.isBranchDefined =
     exports.isReachBranch =
     exports.isWorkspacePreBranch =
     exports.isHigherBranch =
     exports.isLowerBranch =
     exports.getHigherBranches =
     exports.getLowerBranches =
+    exports.getPlannedBranchSegment =
     exports.getBranchSegment =
     exports.getLatestBranch =
     exports.getEarliestBranch =
@@ -20,12 +22,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getDefaultPlannedBranch =
     exports.getAllPlannedBranches =
     exports.getAllDepotBranches =
+    exports.getPlannedBranchDefineData =
     exports.getBranchDefineData =
       void 0);
 const BranchConfig_1 = require("./BranchConfig"),
   Util_1 = require("./Misc/Util");
 function getBranchDefineData(r) {
   return BranchConfig_1.allBranchConfig.find((e) => e.Branch === r);
+}
+function getPlannedBranchDefineData(r) {
+  return BranchConfig_1.allPlannedBranchConfig.find((e) => e.Branch === r);
 }
 function getAllDepotBranches() {
   return BranchConfig_1.allBranchConfig.map((e) => e.Branch);
@@ -45,13 +51,13 @@ function isInDevelopmentBranch() {
 }
 function getAllBranches(e = !0) {
   var r,
-    t = Array.from(getAllDepotBranches());
+    n = Array.from(getAllDepotBranches());
   return e
     ? ((e = getAllPlannedBranches()),
-      (r = t.findIndex((e) => "development" === e)),
-      t.splice(r, 1),
-      [...t, ...e])
-    : t;
+      (r = n.findIndex((e) => "development" === e)),
+      n.splice(r, 1),
+      [...n, ...e])
+    : n;
 }
 function getEarliestBranch() {
   return getAllDepotBranches()[0];
@@ -62,23 +68,26 @@ function getLatestBranch() {
 function getBranchSegment(e) {
   return getBranchDefineData(e)?.IdSegment;
 }
+function getPlannedBranchSegment(e) {
+  return getPlannedBranchDefineData(e)?.IdSegment;
+}
 function getLowerBranches(e, r = !0) {
-  var t = [];
-  for (const n of getAllBranches(r)) {
-    if (e === n) break;
-    t.push(n);
+  var n = [];
+  for (const t of getAllBranches(r)) {
+    if (e === t) break;
+    n.push(t);
   }
-  return t;
+  return n;
 }
 function getHigherBranches(r, e = !0) {
-  var t = [],
-    n = getAllBranches(e);
-  for (let e = n.length - 1; 0 <= e; e--) {
-    var a = n[e];
+  var n = [],
+    t = getAllBranches(e);
+  for (let e = t.length - 1; 0 <= e; e--) {
+    var a = t[e];
     if (r === a) break;
-    t.push(a);
+    n.push(a);
   }
-  return t;
+  return n;
 }
 function isLowerBranch(e, r) {
   return getLowerBranches(r).includes(e);
@@ -88,25 +97,28 @@ function isHigherBranch(e, r) {
 }
 function isWorkspacePreBranch(r) {
   var e = getAllBranches(!1),
-    t = (0, Util_1.getWorkspaceBranch)(),
-    n = e.findIndex((e) => e === r);
-  return -1 !== n && e[n + 1] === t;
+    n = (0, Util_1.getWorkspaceBranch)(),
+    t = e.findIndex((e) => e === r);
+  return -1 !== t && e[t + 1] === n;
 }
 function isReachBranch(e, r) {
-  var t = (0, Util_1.getWorkspaceBranch)();
-  return !!t && (t === e || getLowerBranches(t).includes(e));
+  var n = (0, Util_1.getWorkspaceBranch)();
+  return !!n && (n === e || getLowerBranches(n).includes(e));
 }
-function isBranchInRange(r, t, e) {
-  var n = getAllBranches(!0);
-  if (!n.includes(r) || !n.includes(t))
-    throw new Error(`分支区间非法, 有不存在的分支：[${r}, ${t}]`);
+function isBranchDefined(e) {
+  return getAllBranches().includes(e);
+}
+function isBranchInRange(r, n, e) {
+  var t = getAllBranches(!0);
+  if (!t.includes(r) || !t.includes(n))
+    throw new Error(`分支区间非法, 有不存在的分支：[${r}, ${n}]`);
   var a = e ?? (0, Util_1.getWorkspaceBranch)();
   let o = -1,
     c = -1,
     s = -1;
-  for (let e = 0; e < n.length; e++) {
-    var h = n[e];
-    h === r && (o = e), h === t && (c = e), h === a && (s = e);
+  for (let e = 0; e < t.length; e++) {
+    var h = t[e];
+    h === r && (o = e), h === n && (c = e), h === a && (s = e);
   }
   return s >= o && s <= c;
 }
@@ -121,19 +133,20 @@ function getBranchOrder(r) {
 }
 function getNearestSourceBranch(e, r) {
   var r = r ?? (0, Util_1.getWorkspaceBranch)(),
-    t = getBranchOrder(r);
-  let n = -1;
+    n = getBranchOrder(r);
+  let t = -1;
   for (const c of e) {
     var a = getBranchOrder(c),
-      o = t - a;
-    o < 0 || (o < t - n && (n = a));
+      o = n - a;
+    o < 0 || (o < n - t && (t = a));
   }
-  return -1 === n ? r : getAllDepotBranches()[n];
+  return -1 === t ? r : getAllDepotBranches()[t];
 }
 function getBranchShortName(r) {
   return BranchConfig_1.allBranchConfig.find((e) => e.Branch === r).ShortName;
 }
 (exports.getBranchDefineData = getBranchDefineData),
+  (exports.getPlannedBranchDefineData = getPlannedBranchDefineData),
   (exports.getAllDepotBranches = getAllDepotBranches),
   (exports.getAllPlannedBranches = getAllPlannedBranches),
   (exports.getDefaultPlannedBranch = getDefaultPlannedBranch),
@@ -143,12 +156,14 @@ function getBranchShortName(r) {
   (exports.getEarliestBranch = getEarliestBranch),
   (exports.getLatestBranch = getLatestBranch),
   (exports.getBranchSegment = getBranchSegment),
+  (exports.getPlannedBranchSegment = getPlannedBranchSegment),
   (exports.getLowerBranches = getLowerBranches),
   (exports.getHigherBranches = getHigherBranches),
   (exports.isLowerBranch = isLowerBranch),
   (exports.isHigherBranch = isHigherBranch),
   (exports.isWorkspacePreBranch = isWorkspacePreBranch),
   (exports.isReachBranch = isReachBranch),
+  (exports.isBranchDefined = isBranchDefined),
   (exports.isBranchInRange = isBranchInRange),
   (exports.streamToDepotBranch = streamToDepotBranch),
   (exports.branchToStream = branchToStream),

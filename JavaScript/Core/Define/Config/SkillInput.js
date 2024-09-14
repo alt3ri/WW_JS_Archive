@@ -10,13 +10,17 @@ class SkillInput {
     return this.id();
   }
   get InputArray() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.inputarrayLength(), (t) =>
-      this.inputarray(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.inputarrayLength(),
+      this.inputarray,
+      this,
     );
   }
   get SkillArray() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.skillarrayLength(), (t) =>
-      this.skillarray(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.skillarrayLength(),
+      this.skillarray,
+      this,
     );
   }
   get Description() {
@@ -39,9 +43,9 @@ class SkillInput {
     return this.inputarray(t);
   }
   inputarray(t, i) {
-    var r = this.J7.__offset(this.z7, 6);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
+    var s = this.J7.__offset(this.z7, 6);
+    return s
+      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   inputarrayLength() {

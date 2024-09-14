@@ -55,7 +55,7 @@ let InteractItemComponent = class InteractItemComponent extends EntityComponent_
   }
 };
 (InteractItemComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(93)],
+  [(0, RegisterComponent_1.RegisterComponent)(94)],
   InteractItemComponent,
 )),
   (exports.InteractItemComponent = InteractItemComponent);

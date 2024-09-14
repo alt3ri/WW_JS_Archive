@@ -12,14 +12,14 @@ const UE = require("ue"),
 class ActivityRecallEntryItemPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.y_a = void 0),
+      (this.bda = void 0),
       (this.Lo = void 0),
-      (this.I_a = () => {
+      (this.Bda = () => {
         var [e] = ActivityRecallHelper_1.ActivityRecallHelper.CheckIfEntryOpen(
           this.Lo,
         );
         if (e)
-          switch (this.y_a) {
+          switch (this.bda) {
             case 2:
               ActivityRecallHelper_1.ActivityRecallHelper.ReportRecallLog1023(
                 3,
@@ -57,10 +57,10 @@ class ActivityRecallEntryItemPanel extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIButtonComponent],
       [3, UE.UITexture],
     ]),
-      (this.BtnBindInfo = [[2, this.I_a]]);
+      (this.BtnBindInfo = [[2, this.Bda]]);
   }
   RefreshData(e, i) {
-    this.y_a = e;
+    this.bda = e;
     e = void 0 !== (this.Lo = i);
     this.SetUiActive(e), e && this.Og();
   }
@@ -79,7 +79,7 @@ class ActivityRecallEntryItemPanel extends UiPanelBase_1.UiPanelBase {
         (i = this.Lo.Title),
         LguiUtil_1.LguiUtil.SetLocalTextNew(e, i),
         (this.GetText(1).text = ""),
-        (e = this.Wca(this.Lo)),
+        (e = this.QCa(this.Lo)),
         (i = this.GetTexture(3)),
         ([t] = ActivityRecallHelper_1.ActivityRecallHelper.CheckIfEntryOpen(
           this.Lo,
@@ -87,7 +87,7 @@ class ActivityRecallEntryItemPanel extends UiPanelBase_1.UiPanelBase {
         i.SetUIActive(t),
         this.SetTextureByPath(e, i));
   }
-  Wca(e) {
+  QCa(e) {
     var i = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
     return 1 === i ? e.IconPath : 0 === i ? e.IconPathF : "";
   }

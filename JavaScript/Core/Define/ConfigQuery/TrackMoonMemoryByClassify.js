@@ -17,31 +17,44 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0,
+const initStat = Stats_1.Stat.Create("configTrackMoonMemoryByClassify.Init"),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configTrackMoonMemoryByClassify.GetConfigList",
+  ),
   CONFIG_LIST_STAT_PREFIX = "configTrackMoonMemoryByClassify.GetConfigList(";
 exports.configTrackMoonMemoryByClassify = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfigList: (o, n = !0) => {
-    var i;
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${o})`),
+      t =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
       if (n) {
         var e = KEY_PREFIX + `#${o})`;
-        const a = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (a) return a;
+        const r = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (r)
+          return (
+            i.Stop(),
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            r
+          );
       }
       if (
-        (i = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair))
+        (t = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair))
       ) {
-        const a = new Array();
+        const r = new Array();
         for (;;) {
           if (
             1 !==
@@ -51,32 +64,43 @@ exports.configTrackMoonMemoryByClassify = {
             ])
           )
             break;
-          var r = void 0;
+          var a = void 0;
           if (
-            (([i, r] = ConfigCommon_1.ConfigCommon.GetValue(
+            (([t, a] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
               0,
               ...logPair,
               ["Classify", o],
             )),
-            !i)
+            !t)
           )
-            return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
-          r = TrackMoonMemory_1.TrackMoonMemory.getRootAsTrackMoonMemory(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(r.buffer)),
+            return (
+              ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+              i.Stop(),
+              getConfigListStat.Stop(),
+              void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+            );
+          a = TrackMoonMemory_1.TrackMoonMemory.getRootAsTrackMoonMemory(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
           );
-          a.push(r);
+          r.push(a);
         }
         return (
           n &&
             ((e = KEY_PREFIX + `#${o})`),
-            ConfigCommon_1.ConfigCommon.SaveConfig(e, a, a.length)),
+            ConfigCommon_1.ConfigCommon.SaveConfig(e, r, r.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          a
+          i.Stop(),
+          getConfigListStat.Stop(),
+          ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+          r
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=TrackMoonMemoryByClassify.js.map

@@ -14,7 +14,7 @@ class LockReasonItem extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.hno = ""),
       (this.lno = ""),
-      (this.Gfa = ""),
+      (this.rSa = ""),
       (this.$mt = BigInt(0)),
       (this.YP = () => {
         var e =
@@ -28,12 +28,15 @@ class LockReasonItem extends UiPanelBase_1.UiPanelBase {
           ),
           UiManager_1.UiManager.CloseView("QuestLockPreview"));
       }),
-      (this.hno = e.QuestName),
+      (this.hno =
+        ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeName(
+          e.TreeIncId,
+        )),
       (this.lno =
         ConfigManager_1.ConfigManager.QuestNewConfig.GetOccupationResourceName(
           e.ResourceName,
         )),
-      (this.Gfa =
+      (this.rSa =
         ConfigManager_1.ConfigManager.QuestNewConfig.GetOccupationType(
           e.ResourceName,
         )),
@@ -55,13 +58,13 @@ class LockReasonItem extends UiPanelBase_1.UiPanelBase {
     let e = "";
     var t =
       (e =
-        "Area" === this.Gfa
-          ? MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+        "Area" === this.rSa
+          ? (MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
               "Text_OccupiedArea",
-            ) ?? ""
-          : MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+            ) ?? "")
+          : (MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
               "Text_OccupiedRole",
-            ) ?? "") +
+            ) ?? "")) +
       ":" +
       this.lno;
     this.GetText(1)?.SetText(t);

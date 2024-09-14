@@ -26,7 +26,7 @@ const CsvLoader_1 = require("./CsvLoader");
     Name: "Type",
     CnName: "类型",
     Type: "Int",
-    RenderType: 46,
+    RenderType: 47,
     Default: "1",
   }),
   (0, CsvLoader_1.createCsvField)({
@@ -39,7 +39,7 @@ const CsvLoader_1 = require("./CsvLoader");
     Name: "Difficulty",
     CnName: "难度",
     Type: "Int",
-    RenderType: 47,
+    RenderType: 48,
     Default: "0",
   }),
 ]),

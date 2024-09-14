@@ -18,7 +18,7 @@ class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
       (this.Xst = void 0),
       (this.hJ = 0),
       (this.o$e = (e) => {
-        e === this.E0 && this.KSa();
+        e === this.E0 && this.vTa();
       }),
       (this.Yst = (e, t, i) => {
         e === this.E0 && this.RefreshVisible();
@@ -49,7 +49,7 @@ class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
           (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.hJ),
           (this.hJ = 0)),
         this.Jst(this.Wst.ElementType),
-        this.KSa(),
+        this.vTa(),
         this.RefreshVisible())
       : ((this.Wst = void 0),
         (this.E0 = void 0),
@@ -100,7 +100,7 @@ class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
       s.SetColor(this.Wst.ElementColor),
       (this.Xst = e));
   }
-  KSa() {
+  vTa() {
     this.GetSprite(0).SetFillAmount(this.GetElementPercent());
   }
   GetElementPercent() {

@@ -23,7 +23,7 @@ class DailyAdventureTaskController extends UiControllerBase_1.UiControllerBase {
       }
       case 4:
         var l = Number(r[0]);
-        DailyAdventureTaskController.Ona(l);
+        DailyAdventureTaskController.gha(l);
     }
   }
   static dOe(e) {
@@ -37,7 +37,7 @@ class DailyAdventureTaskController extends UiControllerBase_1.UiControllerBase {
   static COe(e) {
     RoleController_1.RoleController.OpenRoleMainView(0, 0, [], e);
   }
-  static Ona(e) {
+  static gha(e) {
     SkipTaskManager_1.SkipTaskManager.RunByConfigId(e);
   }
 }

@@ -13,7 +13,9 @@ class LockCursorUnit extends HudUnitBase_1.HudUnitBase {
       (this.Cce = -0),
       (this.Dxt = 0),
       (this.SPe = void 0),
-      (this.Vti = !1);
+      (this.Vti = !1),
+      (this.I3a = 0),
+      (this.T3a = 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -34,11 +36,11 @@ class LockCursorUnit extends HudUnitBase_1.HudUnitBase {
       (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   Tick(t) {
-    var e;
+    var i;
     this.Fti < 0 ||
       (this.Cce > this.Fti
         ? this.SetBarPercent(1)
-        : ((e = this.Cce / this.Fti), this.SetBarPercent(e), (this.Cce += t)));
+        : ((i = this.Cce / this.Fti), this.SetBarPercent(i), (this.Cce += t)));
   }
   OnBeforeDestroy() {
     this.SPe.Clear(), (this.SPe = void 0);
@@ -66,24 +68,32 @@ class LockCursorUnit extends HudUnitBase_1.HudUnitBase {
       this.SetBarPercent(1);
   }
   UpdateShowTargetState(t) {
-    t = t?.Entity?.GetComponent(188);
-    (this.Vti = t?.HasTag(-625862347) ?? !1), this.SetVisible(!this.Vti, 2);
+    var i = t?.Entity?.Id ?? 0,
+      i = (this.I3a !== i && (this.I3a = i), t?.Entity?.GetComponent(190));
+    (this.Vti = i?.HasTag(-625862347) ?? !1), this.SetVisible(!this.Vti, 2);
   }
   RefreshManualLockVisible() {
-    var t =
-      ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
-        188,
-      );
-    let e = 3;
-    this.Vti
-      ? ((e = 0), this.Hti(!1, !1))
-      : t.HasTag(-1150819426)
-        ? ((e = 1), this.Hti(!0, !0))
-        : ((t = t.HasTag(1260125908)) && (e = 2), this.Hti(t, !1)),
-      this.Euo(e),
-      this.jti(!this.Vti),
-      this.GetItem(1).SetUIActive(!this.Vti),
-      this.GetSprite(4).SetUIActive(!this.Vti);
+    var i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    if (i?.Valid) {
+      var i = i.Entity.GetComponent(190);
+      let t = 3;
+      this.Vti
+        ? ((t = 0), this.Hti(!1, !1))
+        : i.HasTag(-1150819426)
+          ? ((t = 1), this.Hti(!0, !0))
+          : ((i = i.HasTag(1260125908)) && (t = 2), this.Hti(i, !1)),
+        this.L3a(t),
+        this.Euo(t),
+        this.jti(!this.Vti),
+        this.GetItem(1).SetUIActive(!this.Vti),
+        this.GetSprite(4).SetUIActive(!this.Vti);
+    }
+  }
+  L3a(t) {
+    1 === t &&
+      (t !== this.Dxt
+        ? (this.D3a(), (this.T3a = this.I3a))
+        : this.T3a !== this.I3a && ((this.T3a = this.I3a), this.A3a()));
   }
   Euo(t) {
     t !== this.Dxt &&
@@ -93,22 +103,22 @@ class LockCursorUnit extends HudUnitBase_1.HudUnitBase {
           t,
         ]),
       0 === this.Dxt
-        ? (this.bco(), 2 === t && this.jGn())
-        : 2 === this.Dxt && this.WGn(),
+        ? (this.bco(), 2 === t && this.ZGn())
+        : 2 === this.Dxt && this.eOn(),
       (this.Dxt = t));
   }
-  Hti(t, e) {
-    var i = this.GetItem(2),
+  Hti(t, i) {
+    var e = this.GetItem(2),
       s = this.GetItem(5);
-    e
-      ? (i.IsUIActiveSelf() !== t && i.SetUIActive(t),
+    i
+      ? (e.IsUIActiveSelf() !== t && e.SetUIActive(t),
         s.IsUIActiveSelf() && s.SetUIActive(!1))
-      : (i.IsUIActiveSelf() && i.SetUIActive(!1),
+      : (e.IsUIActiveSelf() && e.SetUIActive(!1),
         s.IsUIActiveSelf() !== t && s.SetUIActive(t));
   }
   jti(t) {
-    var e = this.GetSprite(3);
-    e.IsUIActiveSelf() !== t && e.SetUIActive(t);
+    var i = this.GetSprite(3);
+    i.IsUIActiveSelf() !== t && i.SetUIActive(t);
   }
   SetBarPercent(t) {
     this.GetSprite(3).SetFillAmount(t);
@@ -119,11 +129,17 @@ class LockCursorUnit extends HudUnitBase_1.HudUnitBase {
   bco() {
     this.SPe.PlaySequencePurely("Start");
   }
-  jGn() {
+  ZGn() {
     this.SPe.PlaySequencePurely("Lock");
   }
-  WGn() {
+  eOn() {
     this.SPe.PlaySequencePurely("Unlock");
+  }
+  D3a() {
+    ModelManager_1.ModelManager.BattleUiModel.AudioData?.PlayAudio(2, 17);
+  }
+  A3a() {
+    ModelManager_1.ModelManager.BattleUiModel.AudioData?.PlayAudio(3, 17);
   }
 }
 exports.LockCursorUnit = LockCursorUnit;

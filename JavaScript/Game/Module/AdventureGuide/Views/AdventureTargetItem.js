@@ -27,7 +27,7 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.qOe = () => {
         this.JVe ||
           ((this.JVe = !0),
-          this.Pe.Status === Protocol_1.Aki.Protocol.Eks.Proto_Finish &&
+          this.Pe.Status === Protocol_1.Aki.Protocol.Aks.Proto_Finish &&
             ControllerHolder_1.ControllerHolder.AdventureGuideController.RequestForAdventureReward(
               this.AdventureId,
             ).finally(() => {
@@ -38,7 +38,7 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.zVe = () => {
         this.JVe ||
           ((this.JVe = !0),
-          this.Pe.Status === Protocol_1.Aki.Protocol.Eks.Proto_UnFinish &&
+          this.Pe.Status === Protocol_1.Aki.Protocol.Aks.Proto_UnFinish &&
             (this.Ju(), (this.JVe = !1)));
       });
   }
@@ -107,7 +107,7 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.eGe.RefreshByDataAsync(l).then(() => {
       for (const e of this.eGe.GetLayoutItemList())
         e.SetReceivedVisible(
-          t.Status === Protocol_1.Aki.Protocol.Eks.Proto_Received,
+          t.Status === Protocol_1.Aki.Protocol.Aks.Proto_Received,
         );
       this.GetScrollViewWithScrollbar(6).ScrollTo(this.eGe.GetGrid(0));
     }),
@@ -123,26 +123,26 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   r6e(e, t) {
     this.GetItem(7).SetUIActive(
-      e === Protocol_1.Aki.Protocol.Eks.Proto_UnFinish && !t,
+      e === Protocol_1.Aki.Protocol.Aks.Proto_UnFinish && !t,
     );
   }
   e6e(e) {
     this.GetItem(8).SetUIActive(
-      e === Protocol_1.Aki.Protocol.Eks.Proto_Received,
+      e === Protocol_1.Aki.Protocol.Aks.Proto_Received,
     );
   }
   t6e(e) {
     this.GetButton(9).RootUIComp.SetUIActive(
-      e === Protocol_1.Aki.Protocol.Eks.Proto_Finish,
+      e === Protocol_1.Aki.Protocol.Aks.Proto_Finish,
     );
   }
   i6e(e, t) {
     this.GetButton(2).RootUIComp.SetUIActive(
-      e === Protocol_1.Aki.Protocol.Eks.Proto_UnFinish && t,
+      e === Protocol_1.Aki.Protocol.Aks.Proto_UnFinish && t,
     );
   }
   o6e(e) {
-    this.GetItem(4).SetUIActive(e === Protocol_1.Aki.Protocol.Eks.Proto_Finish);
+    this.GetItem(4).SetUIActive(e === Protocol_1.Aki.Protocol.Aks.Proto_Finish);
   }
   Ju() {
     if (this.Pe?.AdventureTaskBase.JumpTo) {

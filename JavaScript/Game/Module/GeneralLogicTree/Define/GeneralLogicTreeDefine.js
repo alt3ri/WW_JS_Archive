@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.SilentAreaShowInfo =
+  (exports.ChallengeCountDownViewParams =
+    exports.SilentAreaShowInfo =
     exports.TreeTrackTextExpressionInfo =
     exports.checkSubTitleSame =
     exports.checkMainTitleSame =
@@ -23,33 +24,33 @@ const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   (exports.CHALLENGELEVELPLAY_TRACKICONID = 9),
   (exports.OUTRANGEFAILED_TIMERTYPE = "FailedNodeOutRangeTimerType"),
   (exports.NPCFARAWAY_TIMERTYPE = "NpcFarAwayOutRangeTimerType");
-class NodeInfo extends Protocol_1.Aki.Protocol.ANs {
+class NodeInfo extends Protocol_1.Aki.Protocol.qNs {
   constructor() {
     super(...arguments), (this.NodeId = 0);
   }
 }
 (exports.NodeInfo = NodeInfo),
   (exports.btTypeLogString = {
-    [Protocol_1.Aki.Protocol.tps.Proto_BtTypeInvalid]: "无效",
-    [Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest]: "任务",
-    [Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay]: "玩法",
-    [Protocol_1.Aki.Protocol.tps.Proto_BtTypeInst]: "副本",
+    [Protocol_1.Aki.Protocol.hps.Proto_BtTypeInvalid]: "无效",
+    [Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest]: "任务",
+    [Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay]: "玩法",
+    [Protocol_1.Aki.Protocol.hps.Proto_BtTypeInst]: "副本",
   }),
   (exports.btNodeStatusLogString = {
-    [Protocol_1.Aki.Protocol.DNs.Proto_NotActive]: "0-未激活",
-    [Protocol_1.Aki.Protocol.DNs.t5n]: "1-激活",
-    [Protocol_1.Aki.Protocol.DNs.Proto_Completing]: "2-完成中",
-    [Protocol_1.Aki.Protocol.DNs.Proto_CompletedSuccess]: "3-成功完成",
-    [Protocol_1.Aki.Protocol.DNs.Proto_CompletedFailed]: "4-失败完成",
-    [Protocol_1.Aki.Protocol.DNs.Proto_Destroy]: "6-销毁",
+    [Protocol_1.Aki.Protocol.BNs.Proto_NotActive]: "0-未激活",
+    [Protocol_1.Aki.Protocol.BNs._5n]: "1-激活",
+    [Protocol_1.Aki.Protocol.BNs.Proto_Completing]: "2-完成中",
+    [Protocol_1.Aki.Protocol.BNs.Proto_CompletedSuccess]: "3-成功完成",
+    [Protocol_1.Aki.Protocol.BNs.Proto_CompletedFailed]: "4-失败完成",
+    [Protocol_1.Aki.Protocol.BNs.Proto_Destroy]: "6-销毁",
   }),
   (exports.btChildQuestNodeStatusLogString = {
-    [Protocol_1.Aki.Protocol.bNs.Proto_CQNS_NotActive]: "0-未激活",
-    [Protocol_1.Aki.Protocol.bNs.Proto_CQNS_Enter]: "1-进入",
-    [Protocol_1.Aki.Protocol.bNs.Proto_CQNS_EnterAction]: "2-执行进入行为中",
-    [Protocol_1.Aki.Protocol.bNs.Proto_CQNS_Progress]: "3-进行中",
-    [Protocol_1.Aki.Protocol.bNs.Proto_CQNS_Finished]: "4-完成",
-    [Protocol_1.Aki.Protocol.bNs.Proto_CQNS_FinishAction]: "5-完成行为",
+    [Protocol_1.Aki.Protocol.FNs.Proto_CQNS_NotActive]: "0-未激活",
+    [Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Enter]: "1-进入",
+    [Protocol_1.Aki.Protocol.FNs.Proto_CQNS_EnterAction]: "2-执行进入行为中",
+    [Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Progress]: "3-进行中",
+    [Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Finished]: "4-完成",
+    [Protocol_1.Aki.Protocol.FNs.Proto_CQNS_FinishAction]: "5-完成行为",
   });
 class BtCustomUiConfig {
   constructor(t, o) {
@@ -135,4 +136,10 @@ class SilentAreaShowInfo {
   }
 }
 exports.SilentAreaShowInfo = SilentAreaShowInfo;
+class ChallengeCountDownViewParams {
+  constructor(t, o) {
+    (this.TimerEndTime = t), (this.UiTitleKey = o);
+  }
+}
+exports.ChallengeCountDownViewParams = ChallengeCountDownViewParams;
 //# sourceMappingURL=GeneralLogicTreeDefine.js.map

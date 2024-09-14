@@ -9,7 +9,7 @@ class AppPathMisc {
   GetPatchSaveDir() {
     return (
       this.sIr ||
-        (this.sIr = UE.BlueprintPathsLibrary.ProjectSavedDir() + "Resources/"),
+        (this.sIr = UE.KuroLauncherLibrary.GameSavedDir() + "Resources/"),
       this.sIr
     );
   }

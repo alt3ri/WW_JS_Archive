@@ -19,9 +19,16 @@ class GachaPool {
   get UrlMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.urlmapLength(),
-      (t) => this.urlmap(t)?.key(),
-      (t) => this.urlmap(t)?.value(),
+      this.urlmapKey,
+      this.urlmapValue,
+      this,
     );
+  }
+  urlmapKey(t) {
+    return this.urlmap(t)?.key();
+  }
+  urlmapValue(t) {
+    return this.urlmap(t)?.value();
   }
   __init(t, r) {
     return (this.z7 = t), (this.J7 = r), this;

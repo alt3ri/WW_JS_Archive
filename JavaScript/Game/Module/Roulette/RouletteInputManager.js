@@ -203,7 +203,7 @@ class RouletteInputGamepad extends RouletteInputBase {
   constructor(t, i, s, e) {
     super(t, i),
       (this.k0o = Vector_1.Vector.Create()),
-      (this.WMa = 0.4),
+      (this.aIa = 0.4),
       (this.F0o = void 0),
       (this.V0o = (t, i) => {
         switch (t) {
@@ -218,7 +218,7 @@ class RouletteInputGamepad extends RouletteInputBase {
             this.k0o.X = i;
         }
       }),
-      (this.WMa = e ?? this.WMa);
+      (this.aIa = e ?? this.aIa);
   }
   OnInit() {
     this.k0o.Set(0, 0, 0);
@@ -247,8 +247,8 @@ class RouletteInputGamepad extends RouletteInputBase {
   InputTick(t) {
     (!this.NeedEmptyChoose && 0 === this.k0o.X && 0 === this.k0o.Y) ||
       (this.NeedEmptyChoose &&
-      Math.abs(this.k0o.X) <= this.WMa &&
-      Math.abs(this.k0o.Y) <= this.WMa
+      Math.abs(this.k0o.X) <= this.aIa &&
+      Math.abs(this.k0o.Y) <= this.aIa
         ? (this.AreaIndex = 0)
         : ((this.Angle = AngleCalculator.GetVectorAngle(
             this.ForwardVector,
@@ -260,7 +260,8 @@ class RouletteInputGamepad extends RouletteInputBase {
 (exports.RouletteInputGamepad = RouletteInputGamepad),
   (exports.rouletteInputManager = {
     [0]: RouletteInputKeyboard,
-    1: RouletteInputGamepad,
-    2: RouletteInputTouch,
+    1: RouletteInputKeyboard,
+    2: RouletteInputGamepad,
+    3: RouletteInputTouch,
   });
 //# sourceMappingURL=RouletteInputManager.js.map

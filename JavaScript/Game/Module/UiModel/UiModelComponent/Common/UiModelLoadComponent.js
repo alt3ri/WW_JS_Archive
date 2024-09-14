@@ -4,18 +4,18 @@ var __decorate =
   function (e, t, i, s) {
     var o,
       r = arguments.length,
-      h =
+      n =
         r < 3
           ? t
           : null === s
             ? (s = Object.getOwnPropertyDescriptor(t, i))
             : s;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      h = Reflect.decorate(e, t, i, s);
+      n = Reflect.decorate(e, t, i, s);
     else
-      for (var n = e.length - 1; 0 <= n; n--)
-        (o = e[n]) && (h = (r < 3 ? o(h) : 3 < r ? o(t, i, h) : o(t, i)) || h);
-    return 3 < r && h && Object.defineProperty(t, i, h), h;
+      for (var h = e.length - 1; 0 <= h; h--)
+        (o = e[h]) && (n = (r < 3 ? o(n) : 3 < r ? o(t, i, n) : o(t, i)) || n);
+    return 3 < r && n && Object.defineProperty(t, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelLoadComponent = void 0);
@@ -34,8 +34,8 @@ let UiModelLoadComponent = class UiModelLoadComponent extends UiModelComponentBa
       (this.LoadHandleId =
         UiModelResourcesManager_1.UiModelResourcesManager.InvalidValue),
       (this.ResourceLoadCache = void 0),
-      (this.CNn = UE.NewArray(UE.SkeletalMesh)),
-      (this.mNn =
+      (this.INn = UE.NewArray(UE.SkeletalMesh)),
+      (this.ENn =
         UiModelResourcesManager_1.UiModelResourcesManager.StreamingInvalidValue),
       (this.LoadFinishCallBack = void 0);
   }
@@ -44,7 +44,7 @@ let UiModelLoadComponent = class UiModelLoadComponent extends UiModelComponentBa
       (this.UiModelDataComponent = this.Owner.CheckGetComponent(0));
   }
   OnEnd() {
-    this.CancelLoad(), this.gNn();
+    this.CancelLoad(), this.TNn();
   }
   GetMainMeshPath() {
     return ModelUtil_1.ModelUtil.GetModelConfig(
@@ -74,12 +74,12 @@ let UiModelLoadComponent = class UiModelLoadComponent extends UiModelComponentBa
       (this.LoadFinishCallBack = i),
       this.LoadModel(t);
   }
-  LoadModel(n) {
+  LoadModel(h) {
     1 === this.UiModelDataComponent?.GetModelLoadState() &&
       (this.CancelLoad(), Log_1.Log.CheckWarn()) &&
       Log_1.Log.Warn("Character", 44, "取消上一个模型加载"),
       this.UiModelDataComponent?.ClearLoadingVisible(),
-      n && this.UiModelDataComponent?.SetVisible(!1),
+      h && this.UiModelDataComponent?.SetVisible(!1),
       this.UiModelDataComponent?.SetModelLoadState(1);
     const l = this.GetMainMeshPath(),
       a = this.GetAnimClassPath(),
@@ -95,33 +95,33 @@ let UiModelLoadComponent = class UiModelLoadComponent extends UiModelComponentBa
       UiModelResourcesManager_1.UiModelResourcesManager.LoadUiModelResources(
         e,
         (e, t) => {
-          this.gNn(), (this.ResourceLoadCache = t);
+          this.TNn(), (this.ResourceLoadCache = t);
           var i = UE.NewArray(UE.SkeletalMesh),
             t = this.GetLoadedResource(l),
             s = (i.Add(t), this.GetLoadedResource(a));
           let o = void 0;
           if (d) {
             o = [];
-            for (const h of d) {
-              var r = this.GetLoadedResource(h);
+            for (const n of d) {
+              var r = this.GetLoadedResource(n);
               o.push(r), i.Add(r);
             }
           }
           this.UiModelActorComponent?.ChangeMesh(t, s, o),
-            n
-              ? (this.mNn =
+            h
+              ? (this.ENn =
                   UiModelResourcesManager_1.UiModelResourcesManager.LoadMeshesComponentsBundleStreaming(
                     i,
                     void 0,
                     () => {
-                      this.FinishLoad(),
-                        this.UiModelDataComponent?.GetLoadingVisible() ?? !0
-                          ? this.UiModelDataComponent?.SetVisible(!0, !0)
-                          : this.UiModelDataComponent?.SetVisible(!1, !1),
+                      this.FinishLoad();
+                      var e =
+                        this.UiModelDataComponent?.GetLoadingVisible() ?? !0;
+                      this.UiModelDataComponent?.SetVisible(e),
                         this.UiModelDataComponent?.ClearLoadingVisible();
                     },
                   ))
-              : (this.FinishLoad(), this.CNn.Empty());
+              : (this.FinishLoad(), this.INn.Empty());
         },
       );
   }
@@ -156,13 +156,13 @@ let UiModelLoadComponent = class UiModelLoadComponent extends UiModelComponentBa
           ((e = this.GetLoadedResource(s)), t.Add(e));
     return t;
   }
-  gNn() {
-    this.mNn !==
+  TNn() {
+    this.ENn !==
       UiModelResourcesManager_1.UiModelResourcesManager.StreamingInvalidValue &&
       (UiModelResourcesManager_1.UiModelResourcesManager.ReleaseMeshesComponentsBundleStreaming(
-        this.mNn,
+        this.ENn,
       ),
-      (this.mNn =
+      (this.ENn =
         UiModelResourcesManager_1.UiModelResourcesManager.StreamingInvalidValue));
   }
 };

@@ -58,7 +58,6 @@ class AnimNotifyAddMeshMaterialControllerData extends UE.KuroAnimNotifyState {
             GlobalData_1.GlobalData.IsUiSceneOpen &&
               ++o.CharRenderingComponent.IsUiUpdate,
             o.CharRenderingComponent.SetLogicOwner(r),
-            o.CharRenderingComponent.AddComponentByCase(0, e),
             (o.HandleId = o.CharRenderingComponent.AddMaterialControllerData(
               this.MaterialAssetData,
             ));

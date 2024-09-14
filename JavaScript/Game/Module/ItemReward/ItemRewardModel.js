@@ -80,7 +80,21 @@ class ItemRewardModel extends ModelBase_1.ModelBase {
         this.q0i
       );
   }
-  RefreshExploreRewardDataFromConfig(e, t = !0, i, s, r, a, o, n, h, l, d, m) {
+  RefreshExploreRewardDataFromConfig(
+    e,
+    t = !0,
+    i,
+    s,
+    r,
+    a,
+    o,
+    n,
+    h,
+    l,
+    d,
+    m,
+    u,
+  ) {
     e =
       ConfigManager_1.ConfigManager.ItemRewardConfig.GetExploreRewardDisplayConfig(
         e,
@@ -115,6 +129,7 @@ class ItemRewardModel extends ModelBase_1.ModelBase {
         o && this.q0i.SetTargetReached(o),
         n && this.q0i.SetStateToggle(n),
         m && this.q0i.SetExploreFriendDataList(m),
+        u && this.q0i.SetScoreReached(u),
         this.q0i
       );
   }

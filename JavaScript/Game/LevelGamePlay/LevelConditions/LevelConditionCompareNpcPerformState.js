@@ -8,7 +8,7 @@ class LevelConditionCompareNpcPerformState extends LevelGeneralBase_1.LevelCondi
     if (e) {
       var a = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(
         e.EntityId,
-      )?.Entity?.GetComponent(171);
+      )?.Entity?.GetComponent(172);
       if (a?.PerformGroupController) {
         var t = a.PerformGroupController.IsPerformStateEnabled(e.State);
         switch (e.Compare) {

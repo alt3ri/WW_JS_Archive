@@ -190,8 +190,8 @@ class InteractionModel extends ModelBase_1.ModelBase {
     return (
       (this.x_i = e.length),
       e.sort((t, e) => {
-        (t = t.GetComponent(181)),
-          (e = e.GetComponent(181)),
+        (t = t.GetComponent(182)),
+          (e = e.GetComponent(182)),
           (t = t.GetInteractController().InteractEntity.Priority);
         return e.GetInteractController().InteractEntity.Priority - t;
       }),
@@ -205,10 +205,10 @@ class InteractionModel extends ModelBase_1.ModelBase {
     var e;
     return (
       !!t?.Valid &&
-      !t.GetComponent(207)?.GetIsDisableOneClickCollection() &&
+      !t.GetComponent(213)?.GetIsDisableOneClickCollection() &&
       !(
-        !(e = t.GetComponent(181))?.IsPawnInteractive() ||
-        (!t.GetComponent(104)?.IsDropItem() &&
+        !(e = t.GetComponent(182))?.IsPawnInteractive() ||
+        (!t.GetComponent(105)?.IsDropItem() &&
           !e.IsCollection() &&
           (!e.IsAnimationItem() ||
             !(e = t.GetComponent(0))?.Valid ||
@@ -328,7 +328,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
   }
   GetInteractController(t) {
     if (t) {
-      t = t.GetComponent(181);
+      t = t.GetComponent(182);
       if (t) return t.GetInteractController();
     }
   }
@@ -423,7 +423,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
     return this.L_i;
   }
   LockInteraction(t, e) {
-    t = t?.GetComponent(181);
+    t = t?.GetComponent(182);
     t && t.Valid && t.SetServerLockInteract(e, "Interacting Notify");
   }
   GetInteractEntityIds() {
@@ -451,7 +451,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
     this.LockInteractionEntity &&
       ((t = EntitySystem_1.EntitySystem.GetComponent(
         this.LockInteractionEntity,
-        181,
+        182,
       )),
       (this.LockInteractionEntity = void 0),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.ShowBattleView(1),

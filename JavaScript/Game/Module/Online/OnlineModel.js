@@ -7,10 +7,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  PlatformSdkManagerNew_1 = require("../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   OnlineHallData_1 = require("./OnlineHallData");
 (exports.onlineContinuingChallengeIcon = {
@@ -30,7 +30,7 @@ class OnlineModel extends ModelBase_1.ModelBase {
       (this.eNi = void 0),
       (this.tNi = void 0),
       (this.WorldTeamPlayerFightInfo = []),
-      (this.iNi = Protocol_1.Aki.Protocol.$8s.Proto_ConfirmJoin),
+      (this.iNi = Protocol_1.Aki.Protocol.Y8s.Proto_ConfirmJoin),
       (this.oNi = void 0),
       (this.rNi = 0),
       (this.nNi = 0),
@@ -47,13 +47,16 @@ class OnlineModel extends ModelBase_1.ModelBase {
       (this.gNi = !0),
       (this.fNi = new Map()),
       (this.CachePlayerData = void 0),
-      (this.WCa = (e, t) => {
+      (this.HallViewIsShowSearching = !1),
+      (this.Ffa = (e, t) => {
         var i = ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel;
         return (e.PlayerOriginWorldLevel > i && t.PlayerOriginWorldLevel > i) ||
           (e.PlayerOriginWorldLevel <= i && t.PlayerOriginWorldLevel <= i)
           ? t.PlayerLastOfflineTime - e.PlayerLastOfflineTime
           : e.PlayerOriginWorldLevel - t.PlayerOriginWorldLevel;
-      });
+      }),
+      (this.X2a = new Map()),
+      (this.OtherScenePlayerDataList = []);
   }
   OnInit() {
     return (
@@ -104,8 +107,13 @@ class OnlineModel extends ModelBase_1.ModelBase {
       this.mNi && this.mNi.clear(),
       (this.dNi = -1),
       (this.CNi = -1),
-      (this.gNi = !0)
+      (this.gNi = !0),
+      this.X2a.clear(),
+      !0
     );
+  }
+  OnChangeMode() {
+    return this.X2a.clear(), !0;
   }
   ClearOnlineTeamMap() {
     this.hNi && this.hNi.clear();
@@ -168,7 +176,13 @@ class OnlineModel extends ModelBase_1.ModelBase {
     this.aNi = e;
   }
   SetPermissionsSetting(e) {
-    this.iNi = e;
+    (this.iNi = e),
+      ModelManager_1.ModelManager.GameModeModel?.IsMulti &&
+        this.GetIsMyTeam() &&
+        ((e = this.GetGameJoinTypeToPlayStationJoinType()),
+        PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.SetPlayerSessionJoinAbleUserType(
+          e,
+        ));
   }
   CleanSearchResultList() {
     this.tNi.length = 0;
@@ -192,7 +206,7 @@ class OnlineModel extends ModelBase_1.ModelBase {
     this.ZGi.push(e);
   }
   SortWorldList(e) {
-    (e ? this.eNi : this.ZGi)?.sort(this.WCa);
+    (e ? this.eNi : this.ZGi)?.sort(this.Ffa);
   }
   PushCurrentApplyList(e) {
     this.oNi.set(e.PlayerId, e), -1 === this.rNi && (this.rNi = e.PlayerId);
@@ -306,13 +320,13 @@ class OnlineModel extends ModelBase_1.ModelBase {
   }
   RefreshWorldTeamRoleInfo(e) {
     for (const r of e) {
-      var t = this.GetWorldTeamPlayerFightInfo(r.q5n);
+      var t = this.GetWorldTeamPlayerFightInfo(r.W5n);
       if (t)
-        for (const s of r.xVn)
-          if (-1 === s.AVn) {
+        for (const s of r.kVn)
+          if (-1 === s.GVn) {
             var i = new Array();
-            for (const n of s.sUs)
-              i.push(new OnlineHallData_1.WorldTeamRoleInfo(n.O6n, n.P6n));
+            for (const n of s.dUs)
+              i.push(new OnlineHallData_1.WorldTeamRoleInfo(n.Q6n, n.F6n));
             t.RoleInfos = i;
           }
     }
@@ -358,17 +372,62 @@ class OnlineModel extends ModelBase_1.ModelBase {
     this.fNi.clear();
   }
   SetRoleActivated(e, t) {
-    e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(e, {
-      ParamType: 2,
-      IsControl: !0,
-    }).EntityHandle;
-    e?.Valid &&
-      e?.Entity &&
-      ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
-        e.Entity,
-        t,
-        "[OnlineModel.SetRoleActivated] 传送中隐藏",
-      );
+    let i = this.X2a.get(e);
+    if (t && i) {
+      for (const r of i) {
+        const s =
+          ModelManager_1.ModelManager.CreatureModel.GetEntityById(r)?.Entity;
+        s?.Valid && s.EnableByKey(0, !0);
+      }
+      this.X2a.delete(e);
+    } else {
+      const s = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(e, {
+        ParamType: 2,
+        IsControl: !0,
+      })?.EntityHandle?.Entity;
+      s?.Valid &&
+        (i || ((i = new Set()), this.X2a.set(e, i)),
+        i.has(s.Id) || (s.DisableByKey(0, !0), i.add(s.Id)));
+    }
+  }
+  RemovePlayerDisableHandles(e) {
+    this.X2a.delete(e);
+  }
+  GetGameJoinTypeToPlayStationJoinType() {
+    let e = 0;
+    switch (ModelManager_1.ModelManager.OnlineModel.CurrentPermissionsSetting) {
+      case Protocol_1.Aki.Protocol.Y8s.Proto_ConfirmJoin:
+      case Protocol_1.Aki.Protocol.Y8s.Proto_DirectJoin:
+        e = 4;
+        break;
+      case Protocol_1.Aki.Protocol.Y8s.Proto_OnlyFriendJoin:
+        e = 2;
+        break;
+      case Protocol_1.Aki.Protocol.Y8s.Proto_ForbidJoin:
+        e = 1;
+        break;
+      default:
+        e = 0;
+    }
+    return e;
+  }
+  ClearOtherScenePlayerDataList() {
+    this.OtherScenePlayerDataList.length = 0;
+  }
+  DeleteOtherScenePlayerDataList(e) {
+    for (const t of this.OtherScenePlayerDataList)
+      t.PlayerId === e &&
+        this.OtherScenePlayerDataList.splice(
+          this.OtherScenePlayerDataList.indexOf(t),
+          1,
+        );
+  }
+  PushOtherScenePlayerDataList(e) {
+    this.OtherScenePlayerDataList.push(e);
+  }
+  GetOtherScenePlayerDataByPlayerId(e) {
+    for (const t of this.OtherScenePlayerDataList)
+      if (t.PlayerId === e) return t;
   }
 }
 exports.OnlineModel = OnlineModel;

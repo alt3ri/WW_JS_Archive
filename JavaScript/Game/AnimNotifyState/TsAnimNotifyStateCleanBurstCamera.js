@@ -42,7 +42,7 @@ class TsAnimNotifyStateCleanBurstCamera extends UE.KuroAnimNotifyState {
     return (
       this.TsNoHitEffect &&
         ((t = a.GetEntityNoBlueprint())
-          ? (t = t.GetComponent(188)) &&
+          ? (t = t.GetComponent(190)) &&
             t.TagContainer.UpdateExactTag(2, -1728163740, 1)
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
@@ -66,7 +66,7 @@ class TsAnimNotifyStateCleanBurstCamera extends UE.KuroAnimNotifyState {
       (this.TsNoHitEffect &&
         (t = t.GetOwner()) instanceof TsBaseCharacter_1.default &&
         ((s = t.GetEntityNoBlueprint())
-          ? (s = s.GetComponent(188)) &&
+          ? (s = s.GetComponent(190)) &&
             s.TagContainer.UpdateExactTag(2, -1728163740, -1)
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
@@ -90,7 +90,7 @@ class TsAnimNotifyStateCleanBurstCamera extends UE.KuroAnimNotifyState {
     return "大招时显隐Mesh和特效";
   }
   HideEffect(t, e) {
-    t.Entity.GetComponent(33)?.CurrentSkill?.SetEffectHidden(e),
+    t.Entity.GetComponent(34)?.CurrentSkill?.SetEffectHidden(e),
       t.Entity.GetComponent(19)?.SetHidden(e);
   }
 }

@@ -27,10 +27,13 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
       (this.GameplayCueComponent = void 0),
       (this.MoveComponent = void 0),
       (this.FightStateComponent = void 0),
+      (this.UnifiedStateComponent = void 0),
       (this.AiController = void 0),
       (this.SummonerAiController = void 0),
       (this.IsReferenceNode = !1),
       (this.IsOverrideNode = !1),
+      (this.IsConduitNode = !1),
+      (this.IsAnimStateMachine = !1),
       (this.OverrideNodeUuid = 0),
       (this.SkillId = 0),
       (this.TakeControlType = 0),
@@ -51,29 +54,30 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
       (this.WaitSwitchState = !1),
       (this.RemoteSwitchPending = void 0),
       (this.RemoteSwitchMessageId = void 0),
-      (this.bqn = void 0),
-      (this.qqn = void 0),
+      (this.jqn = void 0),
+      (this.Wqn = void 0),
       i.Entity &&
         ((this.Entity = i.Entity),
-        (this.AiComponent = this.Entity.GetComponent(39)),
-        (this.TagComponent = this.Entity.GetComponent(188)),
-        (this.AttributeComponent = this.Entity.GetComponent(158)),
-        (this.SkillComponent = this.Entity.GetComponent(33)),
-        (this.BuffComponent = this.Entity.GetComponent(159)),
+        (this.AiComponent = this.Entity.GetComponent(40)),
+        (this.TagComponent = this.Entity.GetComponent(190)),
+        (this.AttributeComponent = this.Entity.GetComponent(159)),
+        (this.SkillComponent = this.Entity.GetComponent(34)),
+        (this.BuffComponent = this.Entity.GetComponent(160)),
         (this.ActorComponent = this.Entity.GetComponent(3)),
         (this.MontageComponent = this.Entity.GetComponent(22)),
-        (this.AnimationComponent = this.Entity.GetComponent(162)),
-        (this.HitComponent = this.Entity.GetComponent(52)),
-        (this.TimeScaleComponent = this.Entity.GetComponent(109)),
+        (this.AnimationComponent = this.Entity.GetComponent(163)),
+        (this.HitComponent = this.Entity.GetComponent(53)),
+        (this.TimeScaleComponent = this.Entity.GetComponent(110)),
         (this.GameplayCueComponent = this.Entity.GetComponent(19)),
-        (this.MoveComponent = this.Entity.GetComponent(163)),
-        (this.FightStateComponent = this.Entity.GetComponent(47)),
+        (this.MoveComponent = this.Entity.GetComponent(164)),
+        (this.FightStateComponent = this.Entity.GetComponent(48)),
+        (this.UnifiedStateComponent = this.Entity.GetComponent(161)),
         (this.AiController = this.AiComponent.AiController),
         (s = this.Entity.GetComponent(0).GetSummonerId())) &&
         ((s =
           ModelManager_1.ModelManager.CreatureModel.GetEntity(
             s,
-          )?.Entity.GetComponent(39)),
+          )?.Entity.GetComponent(40)),
         (this.SummonerAiController = s?.AiController)),
       (this.Uuid = h.Uuid),
       (this.Name = h.Name);
@@ -82,11 +86,13 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
       ((this.IsReferenceNode = !!s),
       (this.OverrideNodeUuid = h.OverrideCommonUuid),
       (this.IsOverrideNode = !!h.OverrideCommonUuid),
+      (this.IsConduitNode = h.IsConduitNode),
+      (this.IsAnimStateMachine = h.IsAnimStateMachine),
       this.IsReferenceNode)
     ) {
       let t = this.Owner.GetNodeByUuid(s);
       (t = t || new AiStateMachineBase(i, void 0, this.Owner.GetNodeData(s))),
-        (this.bqn = t),
+        (this.jqn = t),
         void this.Owner.RegisterNode(this);
     } else {
       if (
@@ -102,11 +108,11 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
             )),
         h.BindStates?.length)
       )
-        for (const v of h.BindStates) {
+        for (const f of h.BindStates) {
           var t =
             ModelManager_1.ModelManager.AiStateMachineModel.AiStateMachineFactory.CreateState(
               this,
-              v,
+              f,
             );
           t && this.BindStates.push(t);
         }
@@ -146,22 +152,22 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
         for (const S of h.Transitions) {
           var n,
             d,
-            f = this.Owner.GetNodeByUuid(S.From);
-          f
+            v = this.Owner.GetNodeByUuid(S.From);
+          v
             ? (n = this.Owner.GetNodeByUuid(S.To))
               ? (d = new AiStateMachineTransition_1.AiStateMachineTransition(
-                  f,
+                  v,
                   S,
                 ))
                 ? ((this.HasTaskFinishCondition ||= d.HasTaskFinishCondition),
-                  f.TransitionMap || (f.TransitionMap = new Map()),
-                  f.TransitionMap.set(n.Uuid, d))
+                  v.TransitionMap || (v.TransitionMap = new Map()),
+                  v.TransitionMap.set(n.Uuid, d))
                 : CombatLog_1.CombatLog.Error(
                     "StateMachineNew",
                     this.Entity,
                     "初始化状态机失败，条件创建失败",
                     ["node", this.Name],
-                    ["from", f.Name],
+                    ["from", v.Name],
                     ["to", n.Name],
                   )
               : CombatLog_1.CombatLog.Error(
@@ -185,10 +191,10 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
   get MappingNode() {
     var t;
     return (
-      this.bqn ||
+      this.jqn ||
         ((t = this.Owner.NodeReferenceMap.get(this.Uuid)),
-        (this.bqn = this.Owner.GetNodeByUuid(t))),
-      this.bqn
+        (this.jqn = this.Owner.GetNodeByUuid(t))),
+      this.jqn
     );
   }
   get CurrentLeafNode() {
@@ -294,21 +300,21 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
       var i,
         s = this.RootNode.Uuid;
       this.Task &&
-        (((i = Protocol_1.Aki.Protocol.E4n.create()).N4n =
-          Protocol_1.Aki.Protocol.fFs.Proto_BT_Task),
-        (i.k4n = s),
-        (i.F4n = this.Uuid),
+        (((i = Protocol_1.Aki.Protocol.x4n.create()).X4n =
+          Protocol_1.Aki.Protocol.IFs.Proto_BT_Task),
+        (i.$4n = s),
+        (i.Y4n = this.Uuid),
         (s = CombatMessage_1.CombatNet.Call(
-          21177,
+          26668,
           this.Entity,
           i,
           (t) => {
-            t.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+            t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
               CombatLog_1.CombatLog.Warn(
                 "StateMachineNew",
                 this.Entity,
                 `FsmStateBehaviorRequest 节点Task行为失败 [${this.Name}|${this.Uuid}]`,
-                ["ErrorCode", t.O4n],
+                ["ErrorCode", t.Q4n],
               );
           },
           this.RootNode.CurrentMessageIdCache,
@@ -333,16 +339,27 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
   OnTick(t) {
     if (!this.IsReferenceNode) {
       if (((this.ElapseTime += t), this.BindStates))
-        for (const h of this.BindStates) h.Tick(t);
-      if ((this.Task?.Tick(t), this.TransitionMap)) {
-        for (var [, i] of this.TransitionMap) i.Tick();
-        if (!this.jre)
-          for (var [, s] of this.TransitionMap)
-            !this.RootNode.WaitSwitchState &&
-              s.CheckPredictionCondition() &&
-              this.TrySwitch(s.To);
-      }
+        for (const i of this.BindStates) i.Tick(t);
+      this.Task?.Tick(t);
     }
+  }
+  TickTransition() {
+    if (this.TransitionMap) {
+      for (var [, t] of this.TransitionMap) t.Tick();
+      if (!this.jre)
+        for (var [, i] of this.TransitionMap) {
+          var s =
+            (this.RootNode.IsAnimStateMachine &&
+              this.ActorComponent.IsMoveAutonomousProxy) ||
+            this.IsConduitNode;
+          if (
+            ((i.CanPrediction() && !this.RootNode.WaitSwitchState) || s) &&
+            i.GetResult()
+          )
+            return void this.TrySwitch(i.To);
+        }
+    }
+    this.CurrentNode && this.CurrentNode.TickTransition();
   }
   OnControl() {
     1 === this.TakeControlType
@@ -372,12 +389,12 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
         this.CurrentNode && this.CurrentNode.OnControl());
   }
   ActiveByReferenceNode(t) {
-    this.qqn || (this.qqn = new Set()),
-      this.qqn.add(t),
+    this.Wqn || (this.Wqn = new Set()),
+      this.Wqn.add(t),
       this.Activated || this.Enter();
   }
   DeactiveByReferenceNode(t) {
-    this.qqn.delete(t), this.qqn && 0 === this.qqn.size && this.Exit();
+    this.Wqn.delete(t), this.Wqn && 0 === this.Wqn.size && this.Exit();
   }
   ForceActive(t = !0) {
     var i;
@@ -388,19 +405,23 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
   }
   TrySwitch(i) {
     const s = this.Owner.GetNodeByUuid(i);
-    var t = Protocol_1.Aki.Protocol.Z3n.create();
-    (t.k4n = this.RootNode.Uuid),
-      (t.V4n = this.Uuid),
-      (t.H4n = s.Uuid),
+    var t = Protocol_1.Aki.Protocol.h4n.create();
+    (t.$4n = this.RootNode.Uuid),
+      (t.J4n = this.Uuid),
+      (t.z4n = s.Uuid),
       (this.RootNode.WaitSwitchState = !0),
       (this.RootNode.LastState = this.CurrentLeafNode.Uuid),
+      (this.Owner.AnyChange = !0),
       (this.RootNode.CurrentMessageIdCache = CombatMessage_1.CombatNet.Call(
-        15085,
+        24430,
         this.Entity,
         t,
         (t) => {
           if (this.Owner?.Entity) {
-            if (t._Ms.O4n === Protocol_1.Aki.Protocol.O4n.NRs)
+            if (
+              t.fMs.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs ||
+              this.RootNode.IsAnimStateMachine
+            )
               CombatLog_1.CombatLog.Info(
                 "StateMachineNew",
                 this.Entity,
@@ -412,7 +433,7 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
                 "StateMachineNew",
                 this.Entity,
                 `客户端先行切换状态 失败 [${this.Name}|${this.Uuid}] => [${s?.Name}|${s?.Uuid}]`,
-                ["ErrorCode", t._Ms],
+                ["ErrorCode", t.fMs],
               ),
               this.RootNode.RemoteSwitchPending)
             ) {
@@ -430,11 +451,13 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
                 t.ForceActive(!0),
                 (this.RootNode.CurrentMessageIdCache = void 0),
                 this.ActorComponent.IsAutonomousProxy &&
-                  (((t = Protocol_1.Aki.Protocol.e4n.create()).k4n =
+                  (((t = Protocol_1.Aki.Protocol.l4n.create()).$4n =
                     this.RootNode.Uuid),
-                  (t.F4n = i),
-                  CombatMessage_1.CombatNet.Call(14914, this.Entity, t));
+                  (t.Y4n = i),
+                  CombatMessage_1.CombatNet.Call(22140, this.Entity, t)),
+                (this.RootNode.LastState = 0);
             } else {
+              if (!this.RootNode.LastState) return;
               t = this.Owner.GetNodeByUuid(this.RootNode.LastState);
               if (!t) return;
               CombatLog_1.CombatLog.Warn(
@@ -479,8 +502,8 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
       );
   }
   HandleServerDebugInfo(t) {
-    for (const i of t.VTs)
-      this.TransitionMap.get(i.$Ts)?.HandleServerDebugInfo(i.HTs);
+    for (const i of t.XTs)
+      this.TransitionMap.get(i.YTs)?.HandleServerDebugInfo(i.JTs);
   }
   OnCharSkillEnd(t) {
     this.Activated &&

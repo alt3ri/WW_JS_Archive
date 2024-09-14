@@ -50,22 +50,22 @@ class LongShanView extends UiViewBase_1.UiViewBase {
       (this.HOe = () => new PageDot_1.PageDot()),
       (this.jOe = (e, i) => {
         var t, n;
-        return e.aMs !== i.aMs
-          ? e.aMs
+        return e.mMs !== i.mMs
+          ? e.mMs
             ? 1
             : -1
-          : e.sMs !== i.sMs
-            ? e.sMs
+          : e.dMs !== i.dMs
+            ? e.dMs
               ? -1
               : 1
             : (t = LongShanTaskById_1.configLongShanTaskById.GetConfig(
-                  e.J4n,
+                  e.s5n,
                 ).SortId) !==
                 (n = LongShanTaskById_1.configLongShanTaskById.GetConfig(
-                  i.J4n,
+                  i.s5n,
                 ).SortId)
               ? t - n
-              : e.J4n - i.J4n;
+              : e.s5n - i.s5n;
       }),
       (this.WOe = () => {
         var e =
@@ -78,7 +78,7 @@ class LongShanView extends UiViewBase_1.UiViewBase {
               "LongShanStage_ProgressPercentage",
               t,
             ),
-            e.GetStageInfoById(i).nMs);
+            e.GetStageInfoById(i).cMs);
         t.sort(this.jOe), this.OOe?.RefreshByData(t, void 0, !0);
       }),
       (this.KOe = () => {

@@ -64,38 +64,38 @@ class CookController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(12235, (e) => {
+    Net_1.Net.Register(23542, (e) => {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Cook", 50, "10264_服务端主动推送厨师数据"),
-        ModelManager_1.ModelManager.CookModel.UpdateCookerInfo(e.vPs),
+        ModelManager_1.ModelManager.CookModel.UpdateCookerInfo(e.TPs),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.UpdateCookerInfo,
         );
     }),
-      Net_1.Net.Register(29821, (e) => {
+      Net_1.Net.Register(26682, (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Cook", 50, "10265_服务端主动推送配方更新"),
-          ModelManager_1.ModelManager.CookModel.UpdateCookingDataList(e.pPs),
+          ModelManager_1.ModelManager.CookModel.UpdateCookingDataList(e.LPs),
           ModelManager_1.ModelManager.CookModel.UpdateMachiningDataList(
-            e.MPs,
+            e.RPs,
             !0,
           );
       });
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(12235), Net_1.Net.UnRegister(29821);
+    Net_1.Net.UnRegister(23542), Net_1.Net.UnRegister(26682);
   }
   static CheckCanShowExpItem() {
     return 0 !== ModelManager_1.ModelManager.CookModel.GetCookerInfo().AddExp;
   }
   static Oqt(e) {
-    ModelManager_1.ModelManager.CookModel.CreateCookerInfo(e.vPs),
-      ModelManager_1.ModelManager.CookModel.CreateCookingDataList(e.pPs),
+    ModelManager_1.ModelManager.CookModel.CreateCookerInfo(e.TPs),
+      ModelManager_1.ModelManager.CookModel.CreateCookingDataList(e.LPs),
       ModelManager_1.ModelManager.CookModel.UpdateCookingDataByServerConfig(
-        e.SPs,
+        e.DPs,
       ),
-      ModelManager_1.ModelManager.CookModel.UpdateMachiningDataList(e.MPs, !1),
-      ModelManager_1.ModelManager.CookModel.SaveLimitRefreshTime(e.EPs);
+      ModelManager_1.ModelManager.CookModel.UpdateMachiningDataList(e.RPs, !1),
+      ModelManager_1.ModelManager.CookModel.SaveLimitRefreshTime(e.APs);
   }
   static async SendCookingDataRequestAsync() {
     Log_1.Log.CheckDebug() &&
@@ -104,9 +104,9 @@ class CookController extends UiControllerBase_1.UiControllerBase {
         50,
         "10260_客户端请求烹饪系统相关数据(异步刷新用)",
       );
-    var e = new Protocol_1.Aki.Protocol.pZn(),
-      e = await Net_1.Net.CallAsync(24863, e);
-    return e.hvs === Protocol_1.Aki.Protocol.O4n.NRs
+    var e = new Protocol_1.Aki.Protocol.LZn(),
+      e = await Net_1.Net.CallAsync(22615, e);
+    return e.Cvs === Protocol_1.Aki.Protocol.Q4n.KRs
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Cook",
@@ -116,8 +116,8 @@ class CookController extends UiControllerBase_1.UiControllerBase {
         CookController.Oqt(e),
         !0)
       : (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          e.hvs,
-          22625,
+          e.Cvs,
+          17574,
           void 0,
           !0,
           !1,
@@ -127,14 +127,14 @@ class CookController extends UiControllerBase_1.UiControllerBase {
         !1);
   }
   static SendCookFormulaRequest(t) {
-    var e = new Protocol_1.Aki.Protocol.lZn();
-    (e.fVn = t),
-      Net_1.Net.Call(1155, Protocol_1.Aki.Protocol.lZn.create(e), (e) => {
+    var e = new Protocol_1.Aki.Protocol.gZn();
+    (e.LVn = t),
+      Net_1.Net.Call(27145, Protocol_1.Aki.Protocol.gZn.create(e), (e) => {
         var o;
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Cook", 50, "10252_食物配方解锁请求返回"),
-          e.hvs === Protocol_1.Aki.Protocol.O4n.NRs
-            ? (ModelManager_1.ModelManager.CookModel.UnlockCookMenuData(e.fVn),
+          e.Cvs === Protocol_1.Aki.Protocol.Q4n.KRs
+            ? (ModelManager_1.ModelManager.CookModel.UnlockCookMenuData(e.LVn),
               (o =
                 ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(t)),
               (o = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
@@ -148,28 +148,28 @@ class CookController extends UiControllerBase_1.UiControllerBase {
                 EventDefine_1.EEventName.UpdateFormula,
               ))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.hvs,
-                5961,
+                e.Cvs,
+                18531,
               );
       });
   }
   static SendCookFoodRequest(e, o, t) {
-    var r = new Protocol_1.Aki.Protocol.uZn();
-    (r.J4n = e),
-      (r.O6n = o),
-      (r.pVn = t),
-      (r.vVn =
+    var r = new Protocol_1.Aki.Protocol.vZn();
+    (r.s5n = e),
+      (r.Q6n = o),
+      (r.DVn = t),
+      (r.AVn =
         ModelManager_1.ModelManager.CookModel.CurrentInteractCreatureDataLongId),
-      Net_1.Net.Call(17750, Protocol_1.Aki.Protocol.uZn.create(r), (e) => {
+      Net_1.Net.Call(28606, Protocol_1.Aki.Protocol.vZn.create(r), (e) => {
         var o;
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Cook", 50, "10254_食物烹饪请求返回"),
-          e.hvs === Protocol_1.Aki.Protocol.O4n.NRs
+          e.Cvs === Protocol_1.Aki.Protocol.Q4n.KRs
             ? ((o = ModelManager_1.ModelManager.CookModel.GetCookingDataById(
-                e.J4n,
-              )) && (o.LastRoleId = e.O6n),
-              (o = e.dPs),
-              0 !== e.CPs.length && o.push(...e.CPs),
+                e.s5n,
+              )) && (o.LastRoleId = e.Q6n),
+              (o = e.MPs),
+              0 !== e.EPs.length && o.push(...e.EPs),
               ModelManager_1.ModelManager.CookModel.UpdateCookItemList(o),
               CookController.kqt(e),
               CookController.PlayCookSuccessDisplay(() => {
@@ -182,8 +182,8 @@ class CookController extends UiControllerBase_1.UiControllerBase {
                 EventDefine_1.EEventName.CookSuccess,
               ))
             : (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.hvs,
-                20327,
+                e.Cvs,
+                20909,
               ),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.CookFail,
@@ -210,12 +210,12 @@ class CookController extends UiControllerBase_1.UiControllerBase {
       (_ = [a])),
       (o.LastExp = t);
     var l = [];
-    for (const g of e.dPs) {
-      var C = new RewardItemData_1.RewardItemData(g.f8n, g.MVn);
+    for (const g of e.MPs) {
+      var C = new RewardItemData_1.RewardItemData(g.L8n, g.UVn);
       l.push(C);
     }
-    for (const M of e.CPs) {
-      var s = new RewardItemData_1.RewardItemData(M.f8n, M.MVn);
+    for (const M of e.EPs) {
+      var s = new RewardItemData_1.RewardItemData(M.L8n, M.UVn);
       l.push(s);
     }
     ItemRewardController_1.ItemRewardController.SetItemList(l),
@@ -223,27 +223,29 @@ class CookController extends UiControllerBase_1.UiControllerBase {
   }
   static Fqt(e) {
     var o = new Array();
-    for (const t of e) t.G6n && o.push(t);
+    for (const t of e) t.K6n && o.push(t);
     return o;
   }
   static SendFoodProcessRequest(e, o, t) {
-    var r = new Protocol_1.Aki.Protocol.dZn();
-    (r.J4n = e),
-      (r.SVn = CookController.Fqt(o)),
-      (r.pVn = t),
-      Net_1.Net.Call(8196, Protocol_1.Aki.Protocol.dZn.create(r), (e) => {
+    var r = new Protocol_1.Aki.Protocol.MZn();
+    (r.s5n = e),
+      (r.RVn = CookController.Fqt(o)),
+      (r.DVn = t),
+      (r.AVn =
+        ModelManager_1.ModelManager.CookModel.CurrentInteractCreatureDataLongId),
+      Net_1.Net.Call(18002, Protocol_1.Aki.Protocol.MZn.create(r), (e) => {
         var o, t;
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Cook", 50, "10256_食物加工返回"),
-          e.hvs === Protocol_1.Aki.Protocol.O4n.NRs
+          e.Cvs === Protocol_1.Aki.Protocol.Q4n.KRs
             ? ((o = ModelManager_1.ModelManager.CookModel.GetMachiningDataById(
-                e.J4n,
+                e.s5n,
               )),
-              (t = e._Ps),
+              (t = e.fPs),
               o &&
-                ((o.IsUnLock = t), 0 !== e.fPs.length) &&
-                (o.UnlockList = e.fPs),
-              ModelManager_1.ModelManager.CookModel.UpdateCookItemList(e.gPs),
+                ((o.IsUnLock = t), 0 !== e.IPs.length) &&
+                (o.UnlockList = e.IPs),
+              ModelManager_1.ModelManager.CookModel.UpdateCookItemList(e.yPs),
               t
                 ? CookController.PlayCookSuccessDisplay(() => {
                     ItemRewardController_1.ItemRewardController.OpenCompositeRewardView(
@@ -256,7 +258,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
                       !1,
                     );
                   }),
-              e._Ps
+              e.fPs
                 ? EventSystem_1.EventSystem.Emit(
                     EventDefine_1.EEventName.MachiningSuccess,
                   )
@@ -264,57 +266,57 @@ class CookController extends UiControllerBase_1.UiControllerBase {
                     EventDefine_1.EEventName.MachiningStudyFail,
                   ))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.hvs,
-                3064,
+                e.Cvs,
+                27149,
               );
       });
   }
   static SendCertificateLevelRewardRequest() {
-    var e = new Protocol_1.Aki.Protocol.CZn();
-    Net_1.Net.Call(29520, Protocol_1.Aki.Protocol.CZn.create(e), (e) => {
+    var e = new Protocol_1.Aki.Protocol.EZn();
+    Net_1.Net.Call(26434, Protocol_1.Aki.Protocol.EZn.create(e), (e) => {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Cook", 50, "10258_领取厨师等级奖励返回"),
-        e.hvs === Protocol_1.Aki.Protocol.O4n.NRs
+        e.Cvs === Protocol_1.Aki.Protocol.Q4n.KRs
           ? EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.UpgradeCookerLevel,
             )
           : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.hvs,
-              3969,
+              e.Cvs,
+              16878,
             );
     });
   }
   static SendFixToolRequest(o, e) {
-    var t = new Protocol_1.Aki.Protocol.aZn();
-    (t.EVn = o),
-      (t.P4n = e),
-      Net_1.Net.Call(5979, Protocol_1.Aki.Protocol.aZn.create(t), (e) => {
+    var t = new Protocol_1.Aki.Protocol.mZn();
+    (t.xVn = o),
+      (t.F4n = e),
+      Net_1.Net.Call(24850, Protocol_1.Aki.Protocol.mZn.create(t), (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Cook", 50, "10250_请求修复厨具返回"),
-          e.hvs === Protocol_1.Aki.Protocol.O4n.NRs
+          e.Cvs === Protocol_1.Aki.Protocol.Q4n.KRs
             ? (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("Cook", 50, "请求修复厨具成功", ["修复Id", o]),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.FixSuccess,
               ))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.hvs,
-                8873,
+                e.Cvs,
+                15710,
               );
       });
   }
   static SendInteractiveUpdateRequest(e) {
-    var o = new Protocol_1.Aki.Protocol.SZn();
-    (o.yVn = e),
-      Net_1.Net.Call(27687, Protocol_1.Aki.Protocol.SZn.create(o), (e) => {
+    var o = new Protocol_1.Aki.Protocol.DZn();
+    (o.PVn = e),
+      Net_1.Net.Call(15674, Protocol_1.Aki.Protocol.DZn.create(o), (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Cook", 50, "10262_交互跟新请求"),
-          e.hvs === Protocol_1.Aki.Protocol.O4n.NRs
+          e.Cvs === Protocol_1.Aki.Protocol.Q4n.KRs
             ? Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Cook", 50, "请求交互更新成功", ["交互Id", e.yVn])
+              Log_1.Log.Info("Cook", 50, "请求交互更新成功", ["交互Id", e.PVn])
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.hvs,
-                12792,
+                e.Cvs,
+                15478,
               );
       });
   }
@@ -438,11 +440,11 @@ class CookController extends UiControllerBase_1.UiControllerBase {
   }
   static CheckTmpListHasLock() {
     for (const o of ModelManager_1.ModelManager.CookModel.GetTmpMachiningItemList()) {
-      if (!o.G6n) return !0;
+      if (!o.K6n) return !0;
       var e = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-        o.f8n,
+        o.L8n,
       );
-      if (o.MVn > e) return !0;
+      if (o.UVn > e) return !0;
     }
     return !1;
   }
@@ -605,7 +607,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
       ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId;
     if (e) {
       e = EntitySystem_1.EntitySystem.Get(e);
-      if (e) return e.GetComponent(180);
+      if (e) return e.GetComponent(181);
     }
   }
 }

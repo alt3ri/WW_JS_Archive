@@ -64,49 +64,53 @@ class CharMaterialSlot {
         : t.SetMaterial(this.MaterialIndex, this.DynamicMaterial));
   }
   UpdateMaterialParam() {
-    if (this.IsDynamicMaterialValid()) {
-      var t = this.DynamicMaterial;
-      if (this.Llr) {
-        this.Llr = !1;
-        for (const E of this.FloatParamMap.keys()) {
-          var i,
-            s = this.FloatParamMap.get(E);
-          s[CACHE_INDEX] !== s[TARGET_INDEX] &&
-            ((s[CACHE_INDEX] = s[TARGET_INDEX]),
-            (i = FNameUtil_1.FNameUtil.GetDynamicFName(E)),
-            t.SetScalarParameterValue(i, s[TARGET_INDEX]));
-        }
-      }
-      if (this.Dlr) {
-        this.Dlr = !1;
-        for (const o of this.VectorParamMap.keys()) {
-          var h,
-            e = this.VectorParamMap.get(o);
-          e[CACHE_INDEX] !== e[TARGET_INDEX] &&
-            ((e[CACHE_INDEX] = e[TARGET_INDEX]),
-            (e = new UE.LinearColor(
-              e[TARGET_INDEX].ColorR,
-              e[TARGET_INDEX].ColorG,
-              e[TARGET_INDEX].ColorB,
-              e[TARGET_INDEX].ColorA,
-            )),
-            (h = FNameUtil_1.FNameUtil.GetDynamicFName(o)),
-            t.SetVectorParameterValue(h, e));
-        }
-      }
-      if (this.Rlr) {
-        this.Rlr = !1;
-        for (const _ of this.TextureParamMap.keys()) {
-          var r = this.TextureParamMap.get(_),
-            a = r[TARGET_INDEX];
-          void 0 !== a &&
-            r[CACHE_INDEX] !== a &&
-            ((r[CACHE_INDEX] = a),
-            (r = FNameUtil_1.FNameUtil.GetDynamicFName(_)),
-            t.SetTextureParameterValue(r, a));
-        }
+    if (!this.IsDynamicMaterialValid()) return 0;
+    var t = this.DynamicMaterial;
+    let i = 0;
+    if (this.Llr) {
+      this.Llr = !1;
+      for (const o of this.FloatParamMap.keys()) {
+        var s,
+          h = this.FloatParamMap.get(o);
+        h[CACHE_INDEX] !== h[TARGET_INDEX] &&
+          ((h[CACHE_INDEX] = h[TARGET_INDEX]),
+          (s = FNameUtil_1.FNameUtil.GetDynamicFName(o)),
+          t.SetScalarParameterValue(s, h[TARGET_INDEX]),
+          ++i);
       }
     }
+    if (this.Dlr) {
+      this.Dlr = !1;
+      for (const _ of this.VectorParamMap.keys()) {
+        var e,
+          r = this.VectorParamMap.get(_);
+        r[CACHE_INDEX] !== r[TARGET_INDEX] &&
+          ((r[CACHE_INDEX] = r[TARGET_INDEX]),
+          (r = new UE.LinearColor(
+            r[TARGET_INDEX].ColorR,
+            r[TARGET_INDEX].ColorG,
+            r[TARGET_INDEX].ColorB,
+            r[TARGET_INDEX].ColorA,
+          )),
+          (e = FNameUtil_1.FNameUtil.GetDynamicFName(_)),
+          t.SetVectorParameterValue(e, r),
+          ++i);
+      }
+    }
+    if (this.Rlr) {
+      this.Rlr = !1;
+      for (const T of this.TextureParamMap.keys()) {
+        var a = this.TextureParamMap.get(T),
+          E = a[TARGET_INDEX];
+        void 0 !== E &&
+          a[CACHE_INDEX] !== E &&
+          ((a[CACHE_INDEX] = E),
+          (a = FNameUtil_1.FNameUtil.GetDynamicFName(T)),
+          t.SetTextureParameterValue(a, E),
+          ++i);
+      }
+    }
+    return i;
   }
   SetReplaceMaterial(t) {
     this.ReplaceMaterialArray.push(t), (this.MaterialDirty = !0);

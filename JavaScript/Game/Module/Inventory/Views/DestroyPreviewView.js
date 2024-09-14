@@ -91,7 +91,7 @@ class DestroyPreviewView extends UiViewBase_1.UiViewBase {
   Kmi() {
     var e = [];
     for (const i of this.kmi) {
-      var t = { f8n: i[0].ItemId, L9n: i[0].IncId, o9n: i[1] };
+      var t = { L8n: i[0].ItemId, b9n: i[0].IncId, m9n: i[1] };
       e.push(t);
     }
     ControllerHolder_1.ControllerHolder.InventoryController.ItemDestructRequest(

@@ -11,22 +11,22 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class PartStatePanel {
   constructor() {
     (this.smt = new Map()),
-      (this.amt = (t, e, r) => {
-        var i = EntitySystem_1.EntitySystem.Get(t);
+      (this.amt = (t, e, a) => {
+        var r = EntitySystem_1.EntitySystem.Get(t);
         if (FNameUtil_1.FNameUtil.IsNothing(e))
-          i &&
-            (r
-              ? this.ActivatePartStateByRole(i)
-              : this.DestroyPartStateFromRole(i));
-        else if (i) {
-          var s,
-            a = i.GetComponent(60).Parts;
-          if (!(a.length <= 0))
-            for (const o of a)
+          r &&
+            (a
+              ? this.ActivatePartStateByRole(r)
+              : this.DestroyPartStateFromRole(r));
+        else if (r) {
+          var i,
+            s = r.GetComponent(61).Parts;
+          if (!(s.length <= 0))
+            for (const o of s)
               o.BoneName.op_Equality(e) &&
-                (r
-                  ? this.ActivatePartState(i, o)
-                  : ((s = o.Index), this.DestroyPartState(t, s)));
+                (a
+                  ? this.ActivatePartState(r, o)
+                  : ((i = o.Index), this.DestroyPartState(t, i)));
         }
       });
   }
@@ -50,23 +50,23 @@ class PartStatePanel {
   }
   OnCreateEntity(t) {
     if (t) {
-      var e = t.GetComponent(60);
+      var e = t.GetComponent(61);
       if (e) {
         e = e.Parts;
         if (e && 0 !== e.length) {
-          var r,
-            i = t.GetComponent(1).Owner.Mesh;
-          for (const s of e)
-            s.IsPartStateVisible &&
-              ((r = s.PartSocketName),
-              i.DoesSocketExist(r)
-                ? this.ActivatePartState(t, s)
+          var a,
+            r = t.GetComponent(1).Owner.Mesh;
+          for (const i of e)
+            i.IsPartStateVisible &&
+              ((a = i.PartSocketName),
+              r.DoesSocketExist(a)
+                ? this.ActivatePartState(t, i)
                 : Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Battle",
                     8,
                     "[BattleView]激活部位血条时找不到部位插槽:",
-                    ["SocketName", r],
+                    ["SocketName", a],
                   ));
         }
       }
@@ -74,13 +74,13 @@ class PartStatePanel {
   }
   ActivatePartStateByRole(t) {
     if (t) {
-      var e = t.GetComponent(60).Parts;
-      if (0 !== e.length) for (const r of e) this.ActivatePartState(t, r);
+      var e = t.GetComponent(61).Parts;
+      if (0 !== e.length) for (const a of e) this.ActivatePartState(t, a);
     }
   }
   ActivatePartState(t, e) {
-    var r = this.GetPartState(t.Id, e.Index);
-    r ? r.InitializePartState(t, e) : this.hmt(t, e);
+    var a = this.GetPartState(t.Id, e.Index);
+    a ? a.InitializePartState(t, e) : this.hmt(t, e);
   }
   DestroyAllParStates() {
     for (const t of this.smt.values()) for (const e of t.values()) e.Destroy();
@@ -90,25 +90,27 @@ class PartStatePanel {
     var t = t.Id,
       e = this.GetAllPartStates(t);
     if (e) {
-      for (const r of e.values()) r.Destroy();
+      for (const a of e.values()) a.Destroy();
       this.smt.get(t).clear();
     }
   }
   DestroyPartState(t, e) {
-    var r = this.GetPartState(t, e);
-    r && (r.Destroy(), (r = this.smt.get(t))) && r.delete(e);
+    var a = this.GetPartState(t, e);
+    a && (a.Destroy(), (a = this.smt.get(t))) && a.delete(e);
   }
   Tick(t) {
-    for (const e of this.smt.values()) for (const r of e.values()) r.Tick(t);
+    PartStatePanel.vJe.Start();
+    for (const e of this.smt.values()) for (const a of e.values()) a.Tick(t);
+    PartStatePanel.vJe.Stop();
   }
   hmt(t, e) {
-    var r = t.Id,
+    var a = t.Id,
       t = new PartState_1.PartState(t, e);
-    let i = this.smt.get(r);
+    let r = this.smt.get(a);
     return (
-      i
-        ? i.set(e.Index, t)
-        : ((i = new Map()).set(e.Index, t), this.smt.set(r, i)),
+      r
+        ? r.set(e.Index, t)
+        : ((r = new Map()).set(e.Index, t), this.smt.set(a, r)),
       t
     );
   }
@@ -120,5 +122,7 @@ class PartStatePanel {
     return this.smt.get(t);
   }
 }
-(exports.PartStatePanel = PartStatePanel).vJe = void 0;
+(exports.PartStatePanel = PartStatePanel).vJe = Stats_1.Stat.Create(
+  "[BattleView]PartStatePanelTick",
+);
 //# sourceMappingURL=PartStatePanel.js.map

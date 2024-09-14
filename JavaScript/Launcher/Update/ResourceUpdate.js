@@ -202,7 +202,7 @@ class ResourceUpdate {
       _ = !1,
       L =
         (UE.KuroLauncherLibrary.GetFileSize(a) === r &&
-          ((_ = UE.KuroLauncherLibrary.CheckFileSha1(a, o))
+          ((_ = !0)
             ? (d = !1)
             : u.Infos.push("file size equal and sha1 different.")),
         UE.KuroLauncherLibrary.GetFileSize(h));

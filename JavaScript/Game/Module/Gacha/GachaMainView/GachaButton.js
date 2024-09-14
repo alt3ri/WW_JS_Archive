@@ -179,8 +179,8 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
     (this.ojt = e), (this.rjt = r);
     var r = e.GachaInfo;
     for (const o of r.GachaConsumes)
-      if (o.qUs === this.Times) {
-        this.rjt = o.GUs;
+      if (o.$Us === this.Times) {
+        this.rjt = o.HUs;
         break;
       }
     ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(r.ItemId) &&

@@ -42,7 +42,7 @@ class BulletUtil {
       return !1;
     var o = e.Entity.GetComponent(0);
     if (11 === t.BulletCamp)
-      return o.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Vision
+      return o.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Vision
         ? o.GetPlayerId() === t.AttackerPlayerId
         : ((r = ModelManager_1.ModelManager.GameModeModel.IsMulti
             ? ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
@@ -64,7 +64,7 @@ class BulletUtil {
               !1));
     var r = t.AttackerCamp;
     let l = 0;
-    o.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_Player &&
+    o.GetEntityType() !== Protocol_1.Aki.Protocol.kks.Proto_Player &&
       (l = o.GetEntityCamp());
     o = 2 * CampUtils_1.CampUtils.GetCampRelationship(r, l);
     return e === t.AttackerActorComp
@@ -74,8 +74,8 @@ class BulletUtil {
   static DoesEntityContainsTag(t, e) {
     return (
       !!t &&
-      (!!t.GetComponent(180)?.HasTag(e) ||
-        (!!(t = t.GetComponent(188)) && t.HasTag(e)))
+      (!!t.GetComponent(181)?.HasTag(e) ||
+        (!!(t = t.GetComponent(190)) && t.HasTag(e)))
     );
   }
   static GetCurrentRole(t) {
@@ -118,17 +118,18 @@ class BulletUtil {
       )
     );
   }
-  static SummonBullet(t, e, o, r, l = void 0, i = void 0) {
-    var a =
+  static SummonBullet(t, e, o, r, l = void 0, i = void 0, a = !0) {
+    var n =
       BulletController_1.BulletController.GetActionCenter().CreateBulletActionInfo(
         11,
       );
-    (a.ChildrenType = e),
-      (a.Victim = o),
-      (a.IsStayInCharacter = r),
-      l && (a.ParentImpactPoint = Vector_1.Vector.Create(l)),
-      i && (a.ParentLastPosition = Vector_1.Vector.Create(i)),
-      BulletController_1.BulletController.GetActionRunner().AddAction(t, a);
+    (n.ChildrenType = e),
+      (n.Victim = o),
+      (n.IsStayInCharacter = r),
+      (n.CreateOnAuthority = a),
+      l && (n.ParentImpactPoint = Vector_1.Vector.Create(l)),
+      i && (n.ParentLastPosition = Vector_1.Vector.Create(i)),
+      BulletController_1.BulletController.GetActionRunner().AddAction(t, n);
   }
   static CheckSupport(t, e) {
     t = t.BulletDataMain.Execution.SupportCamp;
@@ -189,7 +190,17 @@ class BulletUtil {
       s = a + l;
     let u = n;
     0 <= n && ((t.TimeScaleId += 1), (u = t.TimeScaleId));
-    n = new PawnTimeScaleComponent_1.TimeScale(a, s, e, o, r, l, u, i);
+    n = new PawnTimeScaleComponent_1.TimeScale(
+      a,
+      s,
+      e,
+      o,
+      r,
+      l,
+      u,
+      i,
+      (0, PawnTimeScaleComponent_1.getSourceGroup)(i),
+    );
     return t.TimeScaleList.Push(n), t.TimeScaleMap.set(u, n), u;
   }
   static RemoveTimeScale(t, e) {
@@ -211,7 +222,7 @@ class BulletUtil {
     if (3 === r) return !1;
     if (
       (0, RegisterComponent_1.isComponentInstance)(e, 3) &&
-      e.Entity.GetComponent(188)?.HasTag(855966206)
+      e.Entity.GetComponent(190)?.HasTag(855966206)
     )
       return !1;
     var l = t.AttackerActorComp,
@@ -255,7 +266,7 @@ class BulletUtil {
   static SetHitRotator(t, e, o) {
     return (
       BulletUtil.GetHitRotator(t, e, this.TmpRotator) &&
-        !e.Entity.GetComponent(188)?.HasTag(1447214865) &&
+        !e.Entity.GetComponent(190)?.HasTag(1447214865) &&
         (this.TmpRotator2.Set(0, o, 0),
         this.TmpRotator.Quaternion(this.TmpQuat),
         this.TmpRotator2.Quaternion(this.TmpQuat2),
@@ -273,7 +284,7 @@ class BulletUtil {
   }
   static GetOverrideHitAnimByAngle(t, e, o) {
     let r = e;
-    var e = (0, RegisterComponent_1.isComponentInstance)(t, 185),
+    var e = (0, RegisterComponent_1.isComponentInstance)(t, 187),
       l = ModelManager_1.ModelManager.BulletModel,
       i = l.SelfAdaptBeHitAnim.has(r);
     return (
@@ -362,13 +373,13 @@ class BulletUtil {
   }
   static CreateBulletFromAN(t, e, o, r, l, i, a, n, s) {
     var u = t.GetEntityNoBlueprint();
-    let _ = u?.GetComponent(192);
+    let _ = u?.GetComponent(194);
     s &&
       ((s = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
         u,
-        Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantCustom,
+        Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeConcomitantCustom,
       )?.Entity),
-      (_ = s?.GetComponent(192)));
+      (_ = s?.GetComponent(194)));
     (u = _?.CreateAnimNotifyContent(void 0, e)),
       (s = BulletController_1.BulletController.CreateBulletCustomTarget(
         t,

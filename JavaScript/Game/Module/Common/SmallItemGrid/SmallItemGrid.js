@@ -178,7 +178,7 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
           : m
             ? this.pwt(m)
             : r
-              ? this.FYs(r)
+              ? this.Gzs(r)
               : this.UTt(e),
         this.GetSprite(0)),
       a =
@@ -254,7 +254,7 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
     );
   }
   SetReceivedVisible(t) {
-    this.RefreshComponent(
+    return this.RefreshComponent(
       SmallItemGridReceivedComponent_1.SmallItemGridReceivedComponent,
       t,
       t,
@@ -296,7 +296,7 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
         this.SetTextureByPath(t, e),
         e.SetUIActive(!0));
   }
-  FYs(t) {
+  Gzs(t) {
     var e = this.GetTexture(1);
     void 0 === t
       ? e.SetUIActive(!1)

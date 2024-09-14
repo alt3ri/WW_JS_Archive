@@ -38,14 +38,14 @@ class AchievementController extends ControllerBase_1.ControllerBase {
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(13954, AchievementController.nbe),
-      Net_1.Net.Register(9354, AchievementController.sbe),
-      Net_1.Net.Register(9889, AchievementController.abe);
+    Net_1.Net.Register(16681, AchievementController.nbe),
+      Net_1.Net.Register(23222, AchievementController.sbe),
+      Net_1.Net.Register(15112, AchievementController.abe);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(13954),
-      Net_1.Net.UnRegister(9354),
-      Net_1.Net.UnRegister(9889);
+    Net_1.Net.UnRegister(16681),
+      Net_1.Net.UnRegister(23222),
+      Net_1.Net.UnRegister(15112);
   }
   static OpenAchievementMainView() {
     UiManager_1.UiManager.OpenView("AchievementMainView");
@@ -65,49 +65,49 @@ class AchievementController extends ControllerBase_1.ControllerBase {
   }
   static RequestGetAchievementReward(e, t) {
     var r = new Protocol_1.Aki.Protocol.o$n();
-    (r.J4n = t),
-      (r.E6n = e),
-      Net_1.Net.Call(4368, r, (e) => {
-        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+    (r.s5n = t),
+      (r.x6n = e),
+      Net_1.Net.Call(20809, r, (e) => {
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.O4n,
-            21429,
+            e.Q4n,
+            24256,
           );
       });
   }
   static RequestAchievementFinish(e) {
     var t = new Protocol_1.Aki.Protocol.l$n();
-    (t.J4n = e),
-      Net_1.Net.Call(23255, t, (e) => {
-        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+    (t.s5n = e),
+      Net_1.Net.Call(29877, t, (e) => {
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.O4n,
-            22144,
+            e.Q4n,
+            28247,
           );
       });
   }
   static hbe(e) {
     var t = ModelManager_1.ModelManager.AchievementModel.GetAchievementData(
-        e.J4n,
+        e.s5n,
       ).GetFinishState(),
       r =
         (ModelManager_1.ModelManager.AchievementModel.OnAchievementProgressNotify(
           e,
         ),
         ModelManager_1.ModelManager.AchievementModel.GetAchievementData(
-          e.J4n,
+          e.s5n,
         ).GetFinishState());
     t !== r &&
       2 !== r &&
       0 !== r &&
       ((t = ModelManager_1.ModelManager.AchievementModel.GetAchievementData(
-        e.J4n,
+        e.s5n,
       )),
       ModelManager_1.ModelManager.AchievementModel?.IsHideAchievementGroup(
         t.GetGroupId(),
       ) ||
         (ModelManager_1.ModelManager.AchievementModel.CurrentFinishAchievementArray.push(
-          e.J4n,
+          e.s5n,
         ),
         this.lbe()));
   }
@@ -133,18 +133,18 @@ class AchievementController extends ControllerBase_1.ControllerBase {
 (exports.AchievementController = AchievementController),
   ((_a = AchievementController).obe = async () => {
     var e = new Protocol_1.Aki.Protocol.i$n(),
-      e = await Net_1.Net.CallAsync(15942, e);
+      e = await Net_1.Net.CallAsync(29079, e);
     ModelManager_1.ModelManager.AchievementModel.PhraseBaseData(e);
   }),
   (AchievementController.nbe = (e) => {
-    AchievementController.hbe(e.ovs);
+    AchievementController.hbe(e.uvs);
   }),
   (AchievementController.rbe = () => {
     _a.lbe();
   }),
   (AchievementController.abe = (t) => {
-    var r = t.evs.length;
-    for (let e = 0; e < r; e++) AchievementController.hbe(t.evs[e]);
+    var r = t.avs.length;
+    for (let e = 0; e < r; e++) AchievementController.hbe(t.avs[e]);
   }),
   (AchievementController.sbe = (e) => {
     ModelManager_1.ModelManager.AchievementModel.OnAchievementGroupProgressNotify(

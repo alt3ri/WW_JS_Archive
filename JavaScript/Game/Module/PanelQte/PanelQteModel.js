@@ -81,6 +81,14 @@ class PanelQteModel extends ModelBase_1.ModelBase {
   GetLeftTime() {
     return this.EOi;
   }
+  GetLeftTimeNoScale() {
+    var e;
+    return !(this.EOi <= 0) && this.IsInQte
+      ? 0 === (e = this.s1t.GetWorldTimeDilation())
+        ? this.EOi
+        : this.EOi / e
+      : 0;
+  }
   ResetLeftTime(e) {
     this.hJ === e &&
       (0 < this.EOi

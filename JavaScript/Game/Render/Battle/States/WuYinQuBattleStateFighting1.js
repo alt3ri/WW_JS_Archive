@@ -42,8 +42,8 @@ class WuYinQuBattleStateFighting1 extends WuYinQuBattleStateBase_1.default {
                 .GlobalBlackStoneErosion,
               1,
             ))
-        : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("RenderBattle", 12, "没有配置有效的战斗氛围数据");
+        : Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn("RenderBattle", 12, "没有配置有效的战斗氛围数据");
   }
   OnUpdate(e) {}
   OnExit(e) {

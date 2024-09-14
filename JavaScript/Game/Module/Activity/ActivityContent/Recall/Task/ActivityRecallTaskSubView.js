@@ -6,7 +6,6 @@ const UE = require("ue"),
   TimeUtil_1 = require("../../../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
-  UiSequencePlayer_1 = require("../../../../../Ui/Base/UiSequencePlayer"),
   ExploreProgressController_1 = require("../../../../ExploreProgress/ExploreProgressController"),
   GenericLayout_1 = require("../../../../Util/Layout/GenericLayout"),
   DynScrollView_1 = require("../../../../Util/ScrollView/DynScrollView"),
@@ -18,16 +17,16 @@ class ActivityRecallTaskSubView extends ActivityRecallDefine_1.ActivityMainSubVi
   constructor() {
     super(...arguments),
       (this.VZt = void 0),
-      (this.W_a = void 0),
-      (this.Q_a = void 0),
-      (this.B_a = void 0),
-      (this.K_a = void 0),
-      (this.$_a = (e, i, t) => {
+      (this.ima = void 0),
+      (this.rma = void 0),
+      (this.jda = void 0),
+      (this.oma = void 0),
+      (this.nma = (e, i, t) => {
         var r =
           new ActivityRecallTaskDynamicScrollItem_1.ActivityRecallTaskDynamicScrollItem();
-        return this.W_a.push(r), r;
+        return this.ima.push(r), r;
       }),
-      (this.X_a = () => {
+      (this.sma = () => {
         return new ActivityRecallTaskHorItemPanel_1.ActivityRecallTaskHorItemPanel();
       }),
       (this.kOe = () => {
@@ -44,22 +43,19 @@ class ActivityRecallTaskSubView extends ActivityRecallDefine_1.ActivityMainSubVi
     ];
   }
   async OnBeforeStartAsync() {
-    (this.W_a = []),
+    (this.ima = []),
       (this.VZt = new DynScrollView_1.DynamicScrollView(
         this.GetUIDynScrollViewComponent(0),
         this.GetItem(3),
         new ActivityRecallTaskDynamicItem_1.ActivityRecallTaskDynamicItem(),
-        this.$_a,
+        this.nma,
       )),
       await ExploreProgressController_1.ExploreProgressController.AllExploreProgressAsyncRequest(),
-      await this.VZt.Init(),
-      (this.SequencePlayer = new UiSequencePlayer_1.UiSequencePlayer(
-        this.GetRootItem(),
-      ));
+      await this.VZt.Init();
   }
   OnBeforeShow() {
     super.OnBeforeShow(),
-      (this.B_a = TimerSystem_1.RealTimeTimerSystem.Forever(
+      (this.jda = TimerSystem_1.RealTimeTimerSystem.Forever(
         this.kOe,
         TimeUtil_1.TimeUtil.InverseMillisecond,
       ));
@@ -69,39 +65,40 @@ class ActivityRecallTaskSubView extends ActivityRecallDefine_1.ActivityMainSubVi
   }
   OnBeforeDestroy() {
     this.VZt && (this.VZt.ClearChildren(), (this.VZt = void 0)),
-      (this.W_a = void 0);
+      (this.ima = void 0);
   }
   jm() {
-    TimerSystem_1.RealTimeTimerSystem.Has(this.B_a) &&
-      (TimerSystem_1.RealTimeTimerSystem.Remove(this.B_a), (this.B_a = void 0));
+    TimerSystem_1.RealTimeTimerSystem.Has(this.jda) &&
+      (TimerSystem_1.RealTimeTimerSystem.Remove(this.jda), (this.jda = void 0));
   }
   OnStart() {
-    this.K_a = new GenericLayout_1.GenericLayout(
-      this.GetHorizontalLayout(2),
-      this.X_a,
-    );
+    super.OnStart(),
+      (this.oma = new GenericLayout_1.GenericLayout(
+        this.GetHorizontalLayout(2),
+        this.sma,
+      ));
   }
-  Y_a() {
+  ama() {
     var e = this.GetText(4),
       i = this.ActivityRecallData.GetRecallTaskScore();
-    e.SetText(i.toString()),
-      (this.Q_a = this.Q_a ?? []),
+    e.SetText("x" + i),
+      (this.rma = this.rma ?? []),
       ConfigManager_1.ConfigManager.ActivityRecallConfig.GetAllRecallScoreRewardConfigList().forEach(
         (e, i) => {
-          i >= this.Q_a.length &&
-            this.Q_a.push(
+          i >= this.rma.length &&
+            this.rma.push(
               new ActivityRecallDefine_1.ActivityRecallTaskScoreRewardGridData(),
             );
-          i = this.Q_a[i];
+          i = this.rma[i];
           (i.Config = e),
             (i.RewardState =
               this.ActivityRecallData.GetRecallTaskScoreRewardState(e));
         },
       ),
-      this.K_a.RefreshByData(this.Q_a);
+      this.oma.RefreshByData(this.rma);
   }
-  J_a() {
-    var e = this.z_a();
+  hma() {
+    var e = this.lma();
     this.VZt.RefreshByData(e);
   }
   mGe() {
@@ -110,19 +107,19 @@ class ActivityRecallTaskSubView extends ActivityRecallDefine_1.ActivityMainSubVi
         ModelManager_1.ModelManager.ActivityModel.GetTimeVisibleAndRemainTime(
           this.ActivityRecallData,
         );
-    (e.text = t), e.SetUIActive(i);
+    e.SetText(t), e.SetUIActive(i);
   }
-  z_a() {
+  lma() {
     var e = [],
       i = this.ActivityRecallData.GetRecallTaskConfigMap();
     for (const s in ActivityRecallDefine_1.EActivityRecallTaskType) {
       var t = Number(s),
         r = i.get(t);
-      void 0 !== r && 0 < r.length && this.Z_a(e, t, r);
+      void 0 !== r && 0 < r.length && this._ma(e, t, r);
     }
     return e;
   }
-  Z_a(t, r, e) {
+  _ma(t, r, e) {
     var i = new ActivityRecallDefine_1.ActivityRecallTaskDynamicData(),
       i = ((i.ItemType = 0), (i.TaskType = r), t.push(i), [...e]);
     i.sort((e, i) => {
@@ -140,7 +137,7 @@ class ActivityRecallTaskSubView extends ActivityRecallDefine_1.ActivityMainSubVi
     this.Og();
   }
   Og() {
-    this.Y_a(), this.J_a(), this.mGe();
+    this.ama(), this.hma(), this.mGe();
   }
 }
 exports.ActivityRecallTaskSubView = ActivityRecallTaskSubView;

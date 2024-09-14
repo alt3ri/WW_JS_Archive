@@ -11,10 +11,14 @@ class Time {
     this.A9 =
       t + NetInfo_1.NetInfo.RttMs / 2 - cpp_1.KuroTime.GetMilliseconds64();
   }
-  static SyncTime(t, e, i) {
+  static SetServerFlowTimeStamp(t) {
+    this.AWa = t + NetInfo_1.NetInfo.RttMs / 2 - Time.WorldTime;
+  }
+  static SyncTime(t, e, i, s) {
     Time.SetServerTimeStamp(t),
-      Time.SetServerTimeOffset(e),
-      Time.SetTimeCheckServerStopTimeStamp(i);
+      Time.SetServerFlowTimeStamp(e),
+      Time.SetServerTimeOffset(i),
+      Time.SetServerStopTimeOffset(s);
   }
   static get TimeDilation() {
     return this.R9;
@@ -22,13 +26,16 @@ class Time {
   static get ServerStopTimeStamp() {
     return this.U9 + this.WorldTime + NetInfo_1.NetInfo.RttMs;
   }
+  static get ServerFlowTimeStamp() {
+    return this.AWa + this.WorldTime + NetInfo_1.NetInfo.RttMs;
+  }
   static get CombatServerTime() {
     return Math.floor(this.P9 + this.Now + NetInfo_1.NetInfo.RttMs / 2);
   }
   static SetServerTimeOffset(t) {
     this.P9 = t;
   }
-  static SetTimeCheckServerStopTimeStamp(t) {
+  static SetServerStopTimeOffset(t) {
     this.U9 = t;
   }
   static SetTimeDilation(t) {
@@ -73,6 +80,7 @@ class Time {
   (Time.q9 = 0),
   (Time.x9 = 0),
   (Time.A9 = 0),
+  (Time.AWa = 0),
   (Time.U9 = 0),
   (Time.P9 = 0),
   (Time.R9 = 1),

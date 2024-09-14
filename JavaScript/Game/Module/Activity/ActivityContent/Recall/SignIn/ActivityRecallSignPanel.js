@@ -16,16 +16,16 @@ class ActivityRecallSignPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.LNe = void 0),
-      (this.P_a = []),
-      (this.G1a = void 0),
-      (this.w_a = void 0),
-      (this.B_a = void 0),
+      (this.$da = []),
+      (this.Kca = void 0),
+      (this.Hda = void 0),
+      (this.jda = void 0),
       (this.$pt = void 0),
       (this.kOe = (e) => {
-        this.G1a.IsActivityOpen() && this.mGe();
+        this.mGe();
       }),
       (this.u6e = (e) => {
-        e = this.G1a.GetSignRewardEntityId(e + 1);
+        e = this.Kca.GetSignRewardEntityId(e + 1);
         ActivityRecallHelper_1.ActivityRecallHelper.ActivityRecallController.RequestClaimSignReward(
           e,
         );
@@ -62,10 +62,10 @@ class ActivityRecallSignPanel extends UiPanelBase_1.UiPanelBase {
           new ActivityRecallSignInRewardItem_1.ActivityRecallSignInRewardItem();
         i.RegisterItemClickCallBack(this.u6e),
           await i.CreateThenShowByActorAsync(e.GetOwner()),
-          this.P_a.push(i);
+          this.$da.push(i);
       }),
     ]),
-      (this.B_a = TimerSystem_1.RealTimeTimerSystem.Forever(
+      (this.jda = TimerSystem_1.RealTimeTimerSystem.Forever(
         this.kOe,
         TimeUtil_1.TimeUtil.InverseMillisecond,
       )),
@@ -87,31 +87,31 @@ class ActivityRecallSignPanel extends UiPanelBase_1.UiPanelBase {
     this.jm();
   }
   RefreshByData(e) {
-    (this.G1a = e),
-      (this.w_a =
+    (this.Kca = e),
+      (this.Hda =
         ConfigManager_1.ConfigManager.ActivityRecallConfig.GetSignRewardIds(
           e.Id,
         )),
       this.mGe(),
-      this.b_a();
+      this.Wda();
   }
   mGe() {
     this.LNe.SetTitleByTextId("RecallActivity_Sign_Title");
     var [e, i] =
       ModelManager_1.ModelManager.ActivityModel.GetTimeVisibleAndRemainTime(
-        this.G1a,
+        this.Kca,
       );
     this.LNe.SetTimeTextVisible(e), e && this.LNe.SetTimeTextByText(i);
   }
-  b_a() {
-    this.P_a.forEach((e, i) => {
-      var t = this.w_a[i];
-      e.RefreshByData(this.G1a, i, t);
+  Wda() {
+    this.$da.forEach((e, i) => {
+      var t = this.Hda[i];
+      e.RefreshByData(this.Kca, i, t);
     });
   }
   jm() {
-    TimerSystem_1.RealTimeTimerSystem.Has(this.B_a) &&
-      (TimerSystem_1.RealTimeTimerSystem.Remove(this.B_a), (this.B_a = void 0));
+    TimerSystem_1.RealTimeTimerSystem.Has(this.jda) &&
+      (TimerSystem_1.RealTimeTimerSystem.Remove(this.jda), (this.jda = void 0));
   }
 }
 exports.ActivityRecallSignPanel = ActivityRecallSignPanel;

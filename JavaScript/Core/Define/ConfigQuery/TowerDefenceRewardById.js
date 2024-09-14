@@ -17,25 +17,37 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configTowerDefenceRewardById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configTowerDefenceRewardById.GetConfig"),
   CONFIG_STAT_PREFIX = "configTowerDefenceRewardById.GetConfig(";
 exports.configTowerDefenceRewardById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (e, o = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${e})`),
+      i =
+        (n.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
       if (o) {
-        var n = KEY_PREFIX + `#${e})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (r) return r;
+        var t = KEY_PREFIX + `#${e})`;
+        const f = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (f)
+          return (
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            f
+          );
       }
       if (
         (i =
@@ -46,10 +58,9 @@ exports.configTowerDefenceRewardById = {
               e,
             ]))
       ) {
-        var i,
-          n = void 0;
+        t = void 0;
         if (
-          (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -57,21 +68,27 @@ exports.configTowerDefenceRewardById = {
           )),
           i)
         ) {
-          const r =
+          const f =
             TowerDefenceReward_1.TowerDefenceReward.getRootAsTowerDefenceReward(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
             );
           return (
             o &&
               ((i = KEY_PREFIX + `#${e})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(i, r)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, f)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            r
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            f
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    n.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=TowerDefenceRewardById.js.map

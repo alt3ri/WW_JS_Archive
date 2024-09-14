@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 class SkillButtonTypeFormationData {
   constructor() {
     (this.SkillIconPath = void 0),
+      (this.EnableSkillId = 0),
       (this.IsLongPressControlCamera = !1),
       (this.LongPressTime = 0),
       (this.IgnoreHiddenTag = !1),
@@ -11,6 +12,7 @@ class SkillButtonTypeFormationData {
   }
   Clear() {
     (this.SkillIconPath = void 0),
+      (this.EnableSkillId = 0),
       (this.IsLongPressControlCamera = !1),
       (this.LongPressTime = 0),
       (this.IgnoreHiddenTag = !1),

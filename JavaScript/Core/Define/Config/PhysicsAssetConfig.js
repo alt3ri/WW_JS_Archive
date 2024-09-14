@@ -13,8 +13,10 @@ class PhysicsAssetConfig {
     return this.physicsassetpath();
   }
   get BoneNames() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.bonenamesLength(), (s) =>
-      this.bonenames(s),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.bonenamesLength(),
+      this.bonenames,
+      this,
     );
   }
   __init(s, t) {

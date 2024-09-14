@@ -107,9 +107,9 @@ class MailModel extends ModelBase_1.ModelBase {
     for (const r of Object.keys(e)) {
       var a = this.GetMailInstanceById(r);
       a.GetAttachmentInfo().forEach((e) => {
-        var t = i.get(e.J4n),
-          t = e.o9n + (t ?? 0);
-        i.set(e.J4n, t);
+        var t = i.get(e.s5n),
+          t = e.m9n + (t ?? 0);
+        i.set(e.s5n, t);
       }),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Mail", 28, "邮件数据：领取邮件奖励", ["key", r]),
@@ -172,12 +172,12 @@ class MailModel extends ModelBase_1.ModelBase {
       t && this.ReloadMailList();
   }
   OnMailInfoSynced(e) {
-    for (const i of e.Zxs) {
+    for (const i of e.sbs) {
       ModelManager_1.ModelManager.MailModel.GetMailListLength() >=
         ModelManager_1.ModelManager.MailModel.GetMailCapacity() &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error("Mail", 28, "[MailError]MailBox is fulfilled");
-      var t = new Protocol_1.Aki.Protocol.p6s(i);
+      var t = new Protocol_1.Aki.Protocol.L5s(i);
       this.AddMail(t, !1);
     }
     this.ReloadMailList();
@@ -208,24 +208,24 @@ class MailModel extends ModelBase_1.ModelBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Mail", 28, "邮件数据：创建邮件 ", [
         "mailInformation.Proto_Id",
-        e.J4n,
+        e.s5n,
       ]);
-    var t = e.F4n,
+    var t = e.Y4n,
       i = new MailInstance_1.MailData(),
       a =
         (ObjectUtils_1.ObjectUtils.CopyValue(e, i),
-        (i.Id = e.J4n),
-        (i.ConfigId = e._9n),
-        e.Wxs);
+        (i.Id = e.s5n),
+        (i.ConfigId = e.v9n),
+        e.Zxs);
     (i.Time = a.low),
-      (i.Level = e.P6n),
-      (i.Title = e.Qxs),
-      i.SetText(e.y8n),
-      (i.Sender = e.Xxs),
-      (i.ValidTime = e.Yxs),
-      (i.FinishValidTime = e.Jxs),
-      (i.AttachmentInfos = e.zxs),
-      (i.ReadTime = MathUtils_1.MathUtils.LongToNumber(e.Kxs)),
+      (i.Level = e.F6n),
+      (i.Title = e.tbs),
+      i.SetText(e.P8n),
+      (i.Sender = e.ibs),
+      (i.ValidTime = e.rbs),
+      (i.FinishValidTime = e.obs),
+      (i.AttachmentInfos = e.nbs),
+      (i.ReadTime = MathUtils_1.MathUtils.LongToNumber(e.ebs)),
       this.jyi(i),
       this.kyi(i),
       this.SetMailStatusByStatusCode(t, i),

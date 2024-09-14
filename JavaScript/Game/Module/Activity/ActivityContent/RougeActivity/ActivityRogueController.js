@@ -40,7 +40,7 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
   }
   OnCreateActivityData(e) {
     return (
-      (ActivityRogueController.ActivityId = e.J4n),
+      (ActivityRogueController.ActivityId = e.s5n),
       new ActivityRogueData_1.ActivityRougeData()
     );
   }
@@ -68,38 +68,32 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
     );
   }
   static ActivityFunctionExecute(e) {
-    var t =
+    e =
       ConfigManager_1.ConfigManager.ActivityRogueConfig?.GetActivityUniversalConfig(
         e,
       );
-    if (t) {
-      var r,
+    if (e) {
+      var t,
         i,
-        o = t.FunctionParams;
-      switch (t.FunctionType) {
+        r = e.FunctionParams;
+      switch (e.FunctionType) {
         case 0:
           break;
         case 1: {
           let e = void 0;
-          o && 1 <= o.length && (e = Number(o[0])), this.EFe(e);
+          r && 1 <= r.length && (e = Number(r[0])), this.EFe(e);
           break;
         }
         case 2:
-          o.length < 1 || ((r = o[0]), (i = o.slice(1)), this.SFe(r, i));
+          r.length < 1 || ((t = r[0]), (i = r.slice(1)), this.SFe(t, i));
       }
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Activity",
           38,
           "肉鸽活动功能触发",
-          ["Type", t.FunctionType],
-          ["Params", o],
-        );
-      e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(e);
-      e &&
-        ModelManager_1.ModelManager.ActivityModel.SendActivityViewJumpClickLogData(
-          e,
-          t.FunctionType,
+          ["Type", e.FunctionType],
+          ["Params", r],
         );
     }
   }
@@ -107,8 +101,8 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
     UiManager_1.UiManager.OpenView("QuestView", e);
   }
   static SFe(e, t) {
-    var r = ActivityRogueController.OpenViewFuncMap.get(e);
-    r ? r(t) : UiManager_1.UiManager.OpenView(e, t);
+    var i = ActivityRogueController.OpenViewFuncMap.get(e);
+    i ? i(t) : UiManager_1.UiManager.OpenView(e, t);
   }
   static MFe() {
     this.OpenViewFuncMap.set("WorldMapView", this.yFe),

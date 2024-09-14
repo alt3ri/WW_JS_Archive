@@ -13,7 +13,7 @@ class RoleBuffView extends BattleChildView_1.BattleChildView {
       (this.Wst = void 0),
       (this.E0 = void 0),
       (this.lmt = new Map()),
-      (this.okn = new BuffItemContainer_1.BuffItemContainer());
+      (this.mkn = new BuffItemContainer_1.BuffItemContainer());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -22,7 +22,7 @@ class RoleBuffView extends BattleChildView_1.BattleChildView {
     ];
   }
   OnStart() {
-    super.OnStart(), this.okn.Init(this.GetItem(1));
+    super.OnStart(), this.mkn.Init(this.GetItem(1));
   }
   OnBeforeDestroy() {
     this.Refresh(void 0), this._mt();
@@ -31,8 +31,8 @@ class RoleBuffView extends BattleChildView_1.BattleChildView {
     e
       ? ((this.Wst = e),
         (this.E0 = e?.EntityHandle?.Id),
-        this.okn.RefreshBuff(e?.EntityHandle))
-      : ((this.Wst = void 0), (this.E0 = void 0), this.okn.ClearAll());
+        this.mkn.RefreshBuff(e?.EntityHandle))
+      : ((this.Wst = void 0), (this.E0 = void 0), this.mkn.ClearAll());
   }
   IsValid() {
     return void 0 !== this.Wst?.EntityHandle;
@@ -41,13 +41,13 @@ class RoleBuffView extends BattleChildView_1.BattleChildView {
     return this.E0;
   }
   Tick(e) {
-    this.okn.Tick(e), this.umt();
+    this.mkn.Tick(e), this.umt();
   }
   AddBuff(e, t) {
-    this.okn.AddBuffByCue(e, t, !0);
+    this.mkn.AddBuffByCue(e, t, !0);
   }
   RemoveBuff(e, t) {
-    this.okn.RemoveBuffByCue(e, t, !0);
+    this.mkn.RemoveBuffByCue(e, t, !0);
   }
   umt() {
     let t = 0;

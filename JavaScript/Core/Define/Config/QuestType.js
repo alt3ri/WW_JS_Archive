@@ -28,8 +28,10 @@ class QuestType {
     return this.needreddot();
   }
   get MapId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.mapidLength(), (t) =>
-      this.mapid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.mapidLength(),
+      this.mapid,
+      this,
     );
   }
   __init(t, s) {

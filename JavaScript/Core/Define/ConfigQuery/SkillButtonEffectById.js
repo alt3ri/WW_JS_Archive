@@ -17,25 +17,37 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configSkillButtonEffectById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configSkillButtonEffectById.GetConfig"),
   CONFIG_STAT_PREFIX = "configSkillButtonEffectById.GetConfig(";
 exports.configSkillButtonEffectById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, n = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (n) {
-        var t = KEY_PREFIX + `#${o})`;
-        const e = ConfigCommon_1.ConfigCommon.GetConfig(t);
-        if (e) return e;
+  GetConfig: (o, t = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      i =
+        (n.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
+      if (t) {
+        var f = KEY_PREFIX + `#${o})`;
+        const e = ConfigCommon_1.ConfigCommon.GetConfig(f);
+        if (e)
+          return (
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
+          );
       }
       if (
         (i =
@@ -46,10 +58,9 @@ exports.configSkillButtonEffectById = {
               o,
             ]))
       ) {
-        var i,
-          t = void 0;
+        f = void 0;
         if (
-          (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, f] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -59,19 +70,25 @@ exports.configSkillButtonEffectById = {
         ) {
           const e =
             SkillButtonEffect_1.SkillButtonEffect.getRootAsSkillButtonEffect(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(f.buffer)),
             );
           return (
-            n &&
+            t &&
               ((i = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(i, e)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             e
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    n.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=SkillButtonEffectById.js.map

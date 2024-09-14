@@ -5,7 +5,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 const TEN_THOUSANDTH_RATIO = 1e4;
 class UseBuffItemRoleData {
   constructor(t, e, r, i, s, o, u, a) {
@@ -112,15 +112,15 @@ class UseBuffItemRoleData {
       }
     else if (101 === o) {
       if (s.length < 2) return r;
-      var o = e.GetComponent(158),
+      var o = e.GetComponent(159),
         _ = Number(s[0]) / TEN_THOUSANDTH_RATIO,
-        o = o.GetCurrentValue(EAttributeId.e5n);
+        o = o.GetCurrentValue(EAttributeId.l5n);
       r += _ * o + Number(s[1]);
     }
     return r;
   }
   J0t(t, e) {
-    return t.GetComponent(158).GetCurrentValue(e);
+    return t.GetComponent(159).GetCurrentValue(e);
   }
 }
 exports.UseBuffItemRoleData = UseBuffItemRoleData;

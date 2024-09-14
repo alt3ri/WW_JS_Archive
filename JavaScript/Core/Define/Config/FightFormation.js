@@ -10,19 +10,24 @@ class FightFormation {
     return this.id();
   }
   get LimitRole() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.limitroleLength(), (t) =>
-      this.limitrole(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.limitroleLength(),
+      this.limitrole,
+      this,
     );
   }
   get LimitCount() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.limitcountLength(), (t) =>
-      this.limitcount(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.limitcountLength(),
+      this.limitcount,
+      this,
     );
   }
   get LitmitElement() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.litmitelementLength(),
-      (t) => this.litmitelement(t),
+      this.litmitelement,
+      this,
     );
   }
   get Content() {
@@ -31,17 +36,22 @@ class FightFormation {
   get RecommendFormation() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.recommendformationLength(),
-      (t) => this.recommendformation(t),
+      this.recommendformation,
+      this,
     );
   }
   get TrialRole() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.trialroleLength(), (t) =>
-      this.trialrole(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.trialroleLength(),
+      this.trialrole,
+      this,
     );
   }
   get AutoRole() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.autoroleLength(), (t) =>
-      this.autorole(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.autoroleLength(),
+      this.autorole,
+      this,
     );
   }
   get ChooseRole() {

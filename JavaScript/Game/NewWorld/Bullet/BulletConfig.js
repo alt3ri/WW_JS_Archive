@@ -4,8 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.BulletDataCacheInfo =
     exports.PreloadBulletConfig =
       void 0);
-const puerts_1 = require("puerts"),
-  UE = require("ue"),
+const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   Stats_1 = require("../../../Core/Common/Stats"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
@@ -67,16 +66,16 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
       BulletConfig.N9o.clear();
   }
   GetBulletData(t, e, l = !0, a = -1) {
-    var o = t.CheckGetComponent(33),
+    var o = t.GetComponent(34),
       i = t.Id;
-    let r = BulletConfig.N9o.get(i),
-      n = !0,
+    let n = BulletConfig.N9o.get(i),
+      r = !0,
       u =
-        (r || ((r = t.CheckGetComponent(0).GetModelId()), (n = !1)),
-        BulletConfig.O9o.get(r));
+        (n || ((n = t.CheckGetComponent(0).GetModelId()), (r = !1)),
+        BulletConfig.O9o.get(n));
     if (u) {
       var s = u.BulletDataMap.get(e);
-      if (s) return n || (BulletConfig.N9o.set(i, r), u.EntityCount++), s;
+      if (s) return r || (BulletConfig.N9o.set(i, n), u.EntityCount++), s;
     }
     let C = this.F9o(a, e);
     if (C) return C;
@@ -85,7 +84,7 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
       B =
         ((g = u
           ? ((f = u.DataTable), u.DataTableExtra)
-          : ((f = o.DtBulletInfo), o.DtBulletInfoExtra)),
+          : ((f = o?.DtBulletInfo), o?.DtBulletInfoExtra)),
         DataTableUtil_1.DataTableUtil.GetDataTableRow(f, e));
     if ((B = B || DataTableUtil_1.DataTableUtil.GetDataTableRow(g, e))) {
       const C = new BulletDataMain_1.BulletDataMain(B, e);
@@ -95,10 +94,10 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
               (((u = new BulletDataCacheInfo()).DataTable = f),
               (u.DataTableExtra = g),
               (u.EntityCount = 0),
-              BulletConfig.O9o.set(r, u)),
+              BulletConfig.O9o.set(n, u)),
             u.BulletDataMap.set(e, C),
-            n) ||
-            (BulletConfig.N9o.set(i, r), u.EntityCount++),
+            r) ||
+            (BulletConfig.N9o.set(i, n), u.EntityCount++),
           C)
         : void CombatLog_1.CombatLog.Error("Bullet", void 0, "子弹配置非法", [
             "",
@@ -177,11 +176,16 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
   }
   GetBulletHitData(e, l) {
     if (l !== FNameUtil_1.FNameUtil.EMPTY && l !== FNameUtil_1.FNameUtil.NONE) {
-      (e = e.CheckGetComponent(33)), (l = l.toString());
-      let t = DataTableUtil_1.DataTableUtil.GetDataTableRow(e.DtHitEffect, l);
+      (e = e.GetComponent(34)), (l = l.toString());
+      let t = void 0;
       return (t =
         (t =
-          !t && e.DtHitEffectExtra
+          e &&
+          !(t = DataTableUtil_1.DataTableUtil.GetDataTableRow(
+            e.DtHitEffect,
+            l,
+          )) &&
+          e.DtHitEffectExtra
             ? DataTableUtil_1.DataTableUtil.GetDataTableRow(
                 e.DtHitEffectExtra,
                 l,
@@ -198,7 +202,12 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
       ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike() &&
         this.H9o(2);
     var t = ConfigManager_1.ConfigManager.WorldConfig.GetCommonBulletData();
-    return this.W9o(t, void 0, 0, 0, preloadCommonBulletRowNames), !0;
+    return (
+      BulletConfig.j9o.Start(),
+      this.W9o(t, void 0, 0, 0, preloadCommonBulletRowNames),
+      BulletConfig.j9o.Stop(),
+      !0
+    );
   }
   H9o(e) {
     var l,
@@ -219,44 +228,38 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
   PreloadBulletData(t) {
     var e, l;
     t?.GetComponent(0)?.IsRole() &&
-      ((e = t.CheckGetComponent(33)),
+      (BulletConfig.j9o.Start(),
+      (e = t.CheckGetComponent(34)),
       (l = t.CheckGetComponent(0).GetModelId()),
-      this.W9o(e.DtBulletInfo, e.DtBulletInfoExtra, l, t.Id));
+      this.W9o(e.DtBulletInfo, e.DtBulletInfoExtra, l, t.Id),
+      BulletConfig.j9o.Stop());
   }
-  W9o(t, l, a, o, i = void 0) {
+  W9o(e, l, a, o, i = void 0) {
     if (
       !GlobalData_1.GlobalData.IsPlayInEditor &&
-      t &&
+      e &&
       void 0 !== a &&
       !BulletConfig.O9o.has(a)
     ) {
-      let e = i;
-      if (!e) {
-        e = [];
-        var i = (0, puerts_1.$ref)(void 0),
-          r =
-            (UE.DataTableFunctionLibrary.GetDataTableRowNames(t, i),
-            (0, puerts_1.$unref)(i));
-        if (!r) return;
-        var n = r.Num();
-        if (n <= 0) return;
-        for (let t = 0; t < n; t++) {
-          var u = r.Get(t).toString();
-          e.push(u);
-        }
+      let t = i;
+      if (!t) {
+        t = [];
+        i = new Array();
+        DataTableUtil_1.DataTableUtil.GetDataTableAllRowNamesFromTable(e, i);
+        for (const n of i) t.push(n);
       }
       (i = new BulletDataCacheInfo()),
         (l =
-          ((i.DataTable = t),
+          ((i.DataTable = e),
           (i.DataTableExtra = l),
           ModelManager_1.ModelManager.CharacterModel.IsValid(o) &&
             ((i.EntityCount = 1), BulletConfig.N9o.set(o, a)),
           BulletConfig.O9o.set(a, i),
           new PreloadBulletConfig()));
       (l.ModelId = a),
-        (l.DataTable = t),
+        (l.DataTable = e),
         (l.CurIndex = 0),
-        (l.RowNames = e),
+        (l.RowNames = t),
         this.G9o ? this.q9o.push(l) : (this.G9o = l);
     }
   }
@@ -270,6 +273,7 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
         )
           return;
       }
+      BulletConfig.K9o.Start();
       var t,
         e,
         l = BulletConfig.O9o.get(this.G9o.ModelId);
@@ -295,15 +299,18 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
                 ["index", this.G9o?.CurIndex],
               ),
           this.G9o.CurIndex++)
-        : (this.G9o.CurIndex = this.G9o.RowNames.length);
+        : (this.G9o.CurIndex = this.G9o.RowNames.length),
+        BulletConfig.K9o.Stop();
     }
   }
   ClearPreload() {
     (this.G9o = void 0), (this.q9o.length = 0);
   }
 }
-((exports.BulletConfig = BulletConfig).j9o = void 0),
-  (BulletConfig.K9o = void 0),
+((exports.BulletConfig = BulletConfig).j9o = Stats_1.Stat.Create(
+  "BulletConfigPreload",
+)),
+  (BulletConfig.K9o = Stats_1.Stat.Create("BulletConfigTickPreload")),
   (BulletConfig.O9o = new Map()),
   (BulletConfig.k9o = new Map()),
   (BulletConfig.N9o = new Map());

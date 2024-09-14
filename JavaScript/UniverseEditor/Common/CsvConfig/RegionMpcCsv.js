@@ -24,13 +24,13 @@ const CsvLoader_1 = require("./CsvLoader"),
       CnName: "区域Id",
       Type: "Int",
       ExportType: "CS",
-      RenderType: 44,
+      RenderType: 45,
     }),
     (0, CsvLoader_1.createCsvField)({
       ExportType: "CS",
       Name: "MpcData",
       CnName: "MPC材质DA",
-      RenderType: 43,
+      RenderType: 44,
     }),
   ];
 class RegionMpcCsvLoader extends CsvLoader_1.CsvLoader {

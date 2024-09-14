@@ -30,7 +30,7 @@ class BulletDataExecution {
       this.Y6o = !0;
       var t = this.Pe.GB组.ToAssetPathName();
       if (t && 0 < t.length && "None" !== t) {
-        var i = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+        var i = ResourceSystem_1.ResourceSystem.Load(
             t,
             UE.KuroBpDataAssetGroup,
           )?.Data,

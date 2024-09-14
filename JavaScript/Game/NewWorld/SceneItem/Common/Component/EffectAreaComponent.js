@@ -62,7 +62,7 @@ let EffectAreaComponent = class EffectAreaComponent extends EntityComponent_1.En
   }
 };
 (EffectAreaComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(200)],
+  [(0, RegisterComponent_1.RegisterComponent)(202)],
   EffectAreaComponent,
 )),
   (exports.EffectAreaComponent = EffectAreaComponent);

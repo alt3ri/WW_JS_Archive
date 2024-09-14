@@ -12,7 +12,9 @@ class InputCombinationAxisBinding {
       (this.sEe = void 0),
       (this.Lo = void 0),
       (this.aEe = 0),
-      (this.mEe = void 0);
+      (this.mEe = void 0),
+      (this.JXa = 0),
+      (this.ZXa = 0);
   }
   Initialize(t) {
     (this.Mne = t.Id),
@@ -21,8 +23,8 @@ class InputCombinationAxisBinding {
       (this.aEe = this.Lo.AxisType),
       (this.mEe = this.Lo.SecondaryKeyScaleMap);
     for (var [i, s] of t.PcKeyMap) this.uEe.set(i, s);
-    for (var [e, o] of t.GamepadKeyMap) this.uEe.set(e, o);
-    this.dEe();
+    for (var [e, r] of t.GamepadKeyMap) this.uEe.set(e, r);
+    (this.JXa = t.KeyboardVersion), (this.ZXa = t.GamepadVersion), this.dEe();
   }
   Clear() {
     (this.hEe = void 0),
@@ -30,7 +32,9 @@ class InputCombinationAxisBinding {
       (this.uEe = void 0),
       (this.sEe = void 0),
       (this.aEe = 0),
-      (this.Lo = void 0);
+      (this.Lo = void 0),
+      (this.JXa = 0),
+      (this.ZXa = 0);
   }
   dEe() {
     this.hEe.clear(), this.lEe.clear();
@@ -44,6 +48,18 @@ class InputCombinationAxisBinding {
   }
   GetAxisName() {
     return this.sEe;
+  }
+  SetKeyboardVersion(t) {
+    this.JXa = t;
+  }
+  GetKeyboardVersion() {
+    return this.JXa;
+  }
+  SetGamepadVersion(t) {
+    this.ZXa = t;
+  }
+  GetGamepadVersion() {
+    return this.ZXa;
   }
   GetCombinationAxisKeyMap() {
     return InputSettings_1.InputSettings.GetCombinationAxisKeyMap(this.sEe);

@@ -28,9 +28,16 @@ class AccessPath {
   get FunctionOpenCheckMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.functionopencheckmapLength(),
-      (t) => this.functionopencheckmap(t)?.key(),
-      (t) => this.functionopencheckmap(t)?.value(),
+      this.functionopencheckmapKey,
+      this.functionopencheckmapValue,
+      this,
     );
+  }
+  functionopencheckmapKey(t) {
+    return this.functionopencheckmap(t)?.key();
+  }
+  functionopencheckmapValue(t) {
+    return this.functionopencheckmap(t)?.value();
   }
   get SortIndex() {
     return this.sortindex();

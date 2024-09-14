@@ -14,8 +14,8 @@ var SceneItemReferenceComponent_1,
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
         r = Reflect.decorate(e, t, i, s);
       else
-        for (var a = e.length - 1; 0 <= a; a--)
-          (o = e[a]) &&
+        for (var h = e.length - 1; 0 <= h; h--)
+          (o = e[h]) &&
             (r = (n < 3 ? o(r) : 3 < n ? o(t, i, r) : o(t, i)) || r);
       return 3 < n && r && Object.defineProperty(t, i, r), r;
     };
@@ -48,6 +48,7 @@ const UE = require("ue"),
   StaticSceneUtils_1 = require("../../LevelGamePlay/StaticScene/StaticSceneUtils"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterNameDefines_1 = require("../Character/Common/CharacterNameDefines"),
   ReferenceTriggerVolumeLogic_1 = require("../TriggerItems/ReferenceTriggerVolumeLogic"),
   DEBUG_DETAIL_KEY_PREFIX = "SceneItemReferenceComponent",
   WALL_COMMON_COLLISION_NAME = new UE.FName("InvisibleWallCommon"),
@@ -86,6 +87,7 @@ let SceneItemReferenceComponent =
       super(...arguments),
         (this.EIe = void 0),
         (this.Hte = void 0),
+        (this.mBe = void 0),
         (this.Xte = void 0),
         (this.Lo = void 0),
         (this.Qvn = void 0),
@@ -94,6 +96,8 @@ let SceneItemReferenceComponent =
         (this.aln = void 0),
         (this.$vn = void 0),
         (this.gU = !0),
+        (this.x7a = !1),
+        (this.P7a = void 0),
         (this.Yvn = void 0),
         (this.Jvn = void 0),
         (this.zvn = new Map()),
@@ -105,37 +109,44 @@ let SceneItemReferenceComponent =
         (this.oMn = void 0),
         (this.rMn = void 0),
         (this.nMn = new Queue_1.Queue()),
-        (this.Bxn = !1),
-        (this.bxn = void 0),
-        (this.qxn = void 0),
-        (this.Gxn = void 0),
-        (this.sMn = (e) => {
-          (this.gU = !1), this.iMn?.clear(), this.Oxn();
+        (this.yxn = !1),
+        (this.Ixn = void 0),
+        (this.Txn = void 0),
+        (this.Lxn = void 0),
+        (this.w7a = (e) => {
+          (this.gU = !1),
+            (this.x7a = !0),
+            (this.yxn = !1),
+            this.iMn?.clear(),
+            this.aMn();
         }),
-        (this.Oxn = () => {
+        (this.sMn = (e) => {
+          (this.gU = !1), this.iMn?.clear(), this.Dxn();
+        }),
+        (this.Dxn = () => {
           var e;
-          this.qxn
-            ? this.Gxn === this.bxn
-              ? ((this.qxn = void 0), (this.Gxn = void 0), (this.bxn = void 0))
+          this.Txn
+            ? this.Lxn === this.Ixn
+              ? ((this.Txn = void 0), (this.Lxn = void 0), (this.Ixn = void 0))
               : ((e = LevelGeneralContextDefine_1.EntityContext.Create(
                   this.Entity.Id,
                 )),
                 ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsNew(
-                  this.qxn,
+                  this.Txn,
                   e,
-                  this.Oxn,
+                  this.Dxn,
                 ),
-                (this.bxn = this.Gxn),
-                (this.qxn = void 0),
-                (this.Gxn = void 0))
-            : (this.Bxn = !1);
+                (this.Ixn = this.Lxn),
+                (this.Txn = void 0),
+                (this.Lxn = void 0))
+            : (this.yxn = !1);
         }),
         (this.den = () => {
           var e;
           this.Uai
             ? this.aMn()
             : ((e = this.EIe.GetPbDataId()),
-              ModelManager_1.ModelManager.SundryModel?.IsEnableDebugDetail(
+              ModelManager_1.ModelManager.SundryModel?.GetModuleDebugLevel(
                 DEBUG_DETAIL_KEY_PREFIX + "_" + e,
               ) &&
                 Log_1.Log.CheckInfo() &&
@@ -152,7 +163,7 @@ let SceneItemReferenceComponent =
           this.Uai
             ? this.aMn(!0)
             : ((e = this.EIe.GetPbDataId()),
-              ModelManager_1.ModelManager.SundryModel?.IsEnableDebugDetail(
+              ModelManager_1.ModelManager.SundryModel?.GetModuleDebugLevel(
                 DEBUG_DETAIL_KEY_PREFIX + "_" + e,
               ) &&
                 Log_1.Log.CheckInfo() &&
@@ -169,9 +180,12 @@ let SceneItemReferenceComponent =
           0 <= t &&
             (this.Qvn.splice(t, 1),
             this.Qvn.length <= 0 && ((this.Uai = !0), this.aMn()),
-            this.rMn) &&
-            (t = this.aln.GetActor(e)) instanceof UE.Volume &&
-            this.rMn.AddVolume(e.toString(), t);
+            (t = this.aln.GetActor(e)),
+            this.rMn &&
+              t instanceof UE.Volume &&
+              this.rMn.AddVolume(e.toString(), t),
+            t instanceof UE.StaticMeshActor) &&
+            t.Tags.Add(CharacterNameDefines_1.CharacterNameDefines.INVALID_POS);
         }),
         (this.lMn = (e) => {
           this.Xvn.has(e.toString()) &&
@@ -181,14 +195,51 @@ let SceneItemReferenceComponent =
             this.$vn && (this.$vn.Clear(), (this.$vn = void 0)),
             this.rMn) &&
             this.rMn.RemoveVolume(e.toString());
+        }),
+        (this.PKs = (e, t, i) => {
+          var s,
+            o,
+            n = this.zvn.get(e.GetName());
+          void 0 !== n &&
+            (n <= 0
+              ? Log_1.Log.CheckError() &&
+                Log_1.Log.Error(
+                  "SceneItem",
+                  7,
+                  "[AirWall]hitCd小于0, 短时间内会多次触发，不允许往下执行",
+                )
+              : ((s = TimeUtil_1.TimeUtil.GetServerTime()),
+                (void 0 !== (o = this.eMn.get(e.GetName())) && s < o) ||
+                  (this.eMn.set(e.GetName(), s + n),
+                  this.gme || (this.gme = Vector_1.Vector.Create(0, 0, 0)),
+                  this.tMn || (this.tMn = Quat_1.Quat.Create(0, 0, 0, 1)),
+                  Vector_1.Vector.CrossProduct(
+                    Vector_1.Vector.ForwardVectorProxy,
+                    Vector_1.Vector.Create(i),
+                    this.gme,
+                  ),
+                  this.gme.Normalize(),
+                  (o = Math.acos(
+                    Vector_1.Vector.DotProduct(
+                      Vector_1.Vector.ForwardVectorProxy,
+                      Vector_1.Vector.Create(i),
+                    ),
+                  )),
+                  Quat_1.Quat.ConstructorByAxisAngle(this.gme, o, this.tMn),
+                  this.gMn(e, this.tMn.ToUeQuat(), t.ToUeVector()))));
         });
     }
     static get Dependencies() {
-      return [185, 180];
+      return [187, 181];
     }
     OnInitData(e) {
       e = e.GetParam(SceneItemReferenceComponent_1)[0];
-      return (this.Lo = e), !0;
+      return (
+        (this.Lo = e),
+        (this.mBe = this.Entity.CheckGetComponent(120)),
+        (this.P7a = this.mBe.StateTagId),
+        !0
+      );
     }
     OnInit() {
       return (
@@ -206,9 +257,10 @@ let SceneItemReferenceComponent =
           GlobalData_1.GlobalData.World,
           UE.KuroActorSubsystem.StaticClass(),
         )),
-        (this.Hte = this.Entity.GetComponent(185)),
-        (this.Xte = this.Entity.GetComponent(180)),
+        (this.Hte = this.Entity.GetComponent(187)),
+        (this.Xte = this.Entity.GetComponent(181)),
         (this.EIe = this.Entity.GetComponent(0)),
+        (this.x7a = this.mBe.StateTagId === this.P7a),
         this._Mn(),
         this.uMn(),
         this.aln.OnAddToSubsystem.Add(this.hMn),
@@ -280,7 +332,12 @@ let SceneItemReferenceComponent =
       for (const i of this.Qvn) {
         var t = this.aln.GetActor(new UE.FName(i));
         t
-          ? this.rMn && t instanceof UE.Volume && this.rMn.AddVolume(i, t)
+          ? this.rMn && t instanceof UE.Volume
+            ? this.rMn.AddVolume(i, t)
+            : t instanceof UE.StaticMeshActor &&
+              t.Tags.Add(
+                CharacterNameDefines_1.CharacterNameDefines.INVALID_POS,
+              )
           : e.push(i);
       }
       (this.Qvn = e), this.Qvn.length <= 0 && ((this.Uai = !0), this.aMn());
@@ -315,44 +372,63 @@ let SceneItemReferenceComponent =
             ));
     }
     aMn(e = !1) {
-      for (const s of this.Lo.ActorRefGroups) {
-        var t,
-          i = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(s.EntityState);
-        i &&
-          this.Xte.HasTag(i) &&
-          0 < s.Actions?.length &&
-          (!e && 0 < this.nMn.Size && this.nMn.Front === i
+      var t, i, s, o;
+      if (!this.x7a)
+        return this.yxn
+          ? void 0
+          : (t = this.Lo.ActorRefGroups.find((e) => {
+                e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
+                  e.EntityState,
+                );
+                return e && e === this.P7a;
+              }))
+            ? ((i = LevelGeneralContextDefine_1.EntityContext.Create(
+                this.Entity.Id,
+              )),
+              ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsNew(
+                t.Actions,
+                i,
+                this.w7a,
+              ),
+              void (this.yxn = !0))
+            : void (this.x7a = !0);
+      for (const n of this.Lo.ActorRefGroups)
+        0 !== n.Actions?.length &&
+          (s = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
+            n.EntityState,
+          )) &&
+          this.Xte.HasTag(s) &&
+          (!e && 0 < this.nMn.Size && this.nMn.Front === s
             ? this.nMn.Pop()
-            : ((t = this.EIe.GetPbDataId()),
-              ModelManager_1.ModelManager.SundryModel?.IsEnableDebugDetail(
-                DEBUG_DETAIL_KEY_PREFIX + "_" + t,
+            : ((o = this.EIe.GetPbDataId()),
+              ModelManager_1.ModelManager.SundryModel?.GetModuleDebugLevel(
+                DEBUG_DETAIL_KEY_PREFIX + "_" + o,
               ) &&
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "SceneItem",
                   40,
                   "[RefComp] [疑难杂症] 执行对应状态的action",
-                  ["PbDataId", t],
+                  ["PbDataId", o],
                   ["CreatureDataId", this.EIe?.GetCreatureDataId()],
                   ["EntityId", this.Entity.Id],
-                  ["State", s.EntityState],
+                  ["State", n.EntityState],
                   ["IsPrechange", e],
-                  ["Actions", s.Actions],
+                  ["Actions", n.Actions],
                 ),
-              (t = LevelGeneralContextDefine_1.EntityContext.Create(
+              (o = LevelGeneralContextDefine_1.EntityContext.Create(
                 this.Entity.Id,
               )),
-              this.Bxn
-                ? ((this.qxn = s.Actions), (this.Gxn = i))
+              this.yxn
+                ? ((this.Txn = n.Actions), (this.Lxn = s))
                 : (ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsNew(
-                    s.Actions,
-                    t,
+                    n.Actions,
+                    o,
                     this.sMn,
                   ),
-                  (this.bxn = i),
-                  (this.Bxn = !0)),
-              e && this.nMn.Push(i)));
-      }
+                  (this.Ixn = s),
+                  (this.yxn = !0)),
+              e && this.nMn.Push(s)));
     }
     OnClear() {
       if (
@@ -591,15 +667,15 @@ let SceneItemReferenceComponent =
           break;
         case IAction_1.EToggleAirWall.Close:
       }
-      for (const a of e.ActorRefs) {
-        var s = a.PathName.split(".");
+      for (const h of e.ActorRefs) {
+        var s = h.PathName.split(".");
         if (s.length < PATH_LENGTH)
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelEvent",
               7,
               "[ReferenceComponent:ChangeMaterial]actor路径错误",
-              ["RefPath", a],
+              ["RefPath", h],
             );
         else {
           var s = s[1] + "." + s[2],
@@ -654,14 +730,14 @@ let SceneItemReferenceComponent =
           this.eMn.clear();
       }
     }
-    CMn(r, a, h) {
-      var e = h.AirWallEffectData ?? "";
+    CMn(r, h, a) {
+      var e = a.AirWallEffectData ?? "";
       if (e) {
-        const c = a.GetTransform();
-        c.SetScale3D(Vector_1.Vector.OneVector),
+        const _ = h.GetTransform();
+        _.SetScale3D(Vector_1.Vector.OneVector),
           EffectSystem_1.EffectSystem.SpawnEffect(
             GlobalData_1.GlobalData.World,
-            c,
+            _,
             e,
             "[SceneItemReferenceComponent.SpawnAirWallEffect]",
             new EffectContext_1.EffectContext(this.Entity.Id),
@@ -679,20 +755,20 @@ let SceneItemReferenceComponent =
                     ["PbDataId", this.EIe?.GetPbDataId()],
                   )
                 : this.Jvn?.length &&
-                  a?.IsValid() &&
-                  ((e = a.BrushComponent.Bounds),
+                  h?.IsValid() &&
+                  ((e = h.BrushComponent.Bounds),
                   (i = EffectSystem_1.EffectSystem.GetNiagaraComponent(t)),
-                  a.SetActorEnableCollision(!1),
-                  a.RootComponent.SetMobility(2),
-                  a.K2_SetActorRotation(Rotator_1.Rotator.ZeroRotator, !0),
+                  h.SetActorEnableCollision(!1),
+                  h.RootComponent.SetMobility(2),
+                  h.K2_SetActorRotation(Rotator_1.Rotator.ZeroRotator, !0),
                   (s = new Rotator_1.Rotator(
-                    c.Rotator().Pitch,
-                    c.Rotator().Yaw,
-                    c.Rotator().Roll,
+                    _.Rotator().Pitch,
+                    _.Rotator().Yaw,
+                    _.Rotator().Roll,
                   )),
-                  (n = h.AirWallEffectThickness ?? DEFAULT_THICKNESS),
+                  (n = a.AirWallEffectThickness ?? DEFAULT_THICKNESS),
                   (n = e?.BoxExtent.X - n / 2),
-                  (o = h.AirWallEffectHeight ?? 0),
+                  (o = a.AirWallEffectHeight ?? 0),
                   i?.SetFloatParameter(PLANEWIDTH, 2 * e?.BoxExtent.X),
                   i?.SetFloatParameter(CIRCLERADIUS, n),
                   o && i?.SetFloatParameter(PLANEHEIGHT, o),
@@ -701,9 +777,9 @@ let SceneItemReferenceComponent =
                     EffectSystem_1.EffectSystem.GetEffectActor(
                       t,
                     )?.K2_AddActorWorldOffset(n.ToUeVector(), !1, void 0, !0)),
-                  a.K2_SetActorRotation(s.ToUeRotator(), !0),
-                  a.RootComponent.SetMobility(0),
-                  a.SetActorEnableCollision(!0),
+                  h.K2_SetActorRotation(s.ToUeRotator(), !0),
+                  h.RootComponent.SetMobility(0),
+                  h.SetActorEnableCollision(!0),
                   this.Yvn.set(r, t));
             },
             void 0,
@@ -711,13 +787,18 @@ let SceneItemReferenceComponent =
             !0,
           );
       }
-      e = h.HitEffectData ?? "";
+      e = a.HitEffectData ?? "";
       e &&
-        (this.Zvn.set(a.GetName(), e),
-        this.zvn.set(a.GetName(), h.HitCd || DEFAULT_HIT_CD),
-        a.OnActorHit.Add((e, t, i, s) => {
+        (this.Zvn.set(h.GetName(), e),
+        this.zvn.set(h.GetName(), a.HitCd || DEFAULT_HIT_CD),
+        h.OnActorHit.Add((e, t, i, s) => {
           this.ExecuteHitWall(e, t, i, s);
-        }));
+        }),
+        EventSystem_1.EventSystem.AddWithTarget(
+          h,
+          EventDefine_1.EEventName.BulletHitAirWall,
+          this.PKs,
+        ));
     }
     ExecuteHitWall(e, t, i, s) {
       var o, n;
@@ -734,7 +815,7 @@ let SceneItemReferenceComponent =
           : s.bBlockingHit &&
             (t = t.CharacterActorComponent) &&
             t.CreatureData.GetEntityType() ===
-              Protocol_1.Aki.Protocol.wks.Proto_Player &&
+              Protocol_1.Aki.Protocol.kks.Proto_Player &&
             t.IsWorldOwner() &&
             ((t = TimeUtil_1.TimeUtil.GetServerTime()),
             (void 0 !== (n = this.eMn.get(e.GetName())) && t < n) ||
@@ -773,7 +854,7 @@ let SceneItemReferenceComponent =
       this.rMn?.RemoveOnPlayerOverlapCallback(e);
     }
     OnChangeTimeDilation(e) {
-      var t = this.Entity.GetComponent(109)?.CurrentTimeScale ?? 1;
+      var t = this.Entity.GetComponent(110)?.CurrentTimeScale ?? 1;
       this.$vn?.SetTimeDilation(e * t);
     }
     IsValidPlatFormPath(e) {
@@ -782,7 +863,7 @@ let SceneItemReferenceComponent =
   });
 (SceneItemReferenceComponent = SceneItemReferenceComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(149)],
+    [(0, RegisterComponent_1.RegisterComponent)(150)],
     SceneItemReferenceComponent,
   )),
   (exports.SceneItemReferenceComponent = SceneItemReferenceComponent);

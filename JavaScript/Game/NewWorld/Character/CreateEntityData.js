@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CreateEntityData = void 0);
-const Log_1 = require("../../../Core/Common/Log"),
+const Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
@@ -24,6 +25,7 @@ class CreateEntityData {
       (this.RegisterToGameBudgetController = !0),
       (this.ComponentsKey = 0n),
       (this.EnableMovement = !1),
+      (this.TemplateData = void 0),
       (this.ComponentDataMap = new Map()),
       (this.Components = new Array()),
       (this.ComponentSet = new Set());
@@ -31,11 +33,11 @@ class CreateEntityData {
   Init(t) {
     return (
       (this.EntityData = t),
-      (this.CreatureDataId = MathUtils_1.MathUtils.LongToNumber(t.J4n)),
-      (this.EntityType = this.EntityData.HHn),
-      (this.PbDataId = this.EntityData._9n),
-      (this.ConfigType = this.EntityData.jHn),
-      (this.PrefabId = this.EntityData.pEs),
+      (this.CreatureDataId = MathUtils_1.MathUtils.LongToNumber(t.s5n)),
+      (this.EntityType = this.EntityData.zHn),
+      (this.PbDataId = this.EntityData.v9n),
+      (this.ConfigType = this.EntityData.ZHn),
+      (this.PrefabId = this.EntityData.LEs),
       this.InitPbEntityData()
         ? !!this.InitComponentData()
         : (Log_1.Log.CheckError() &&
@@ -55,7 +57,7 @@ class CreateEntityData {
     let t = void 0,
       e = void 0;
     switch (this.ConfigType) {
-      case Protocol_1.Aki.Protocol.YTs.Proto_Global:
+      case Protocol_1.Aki.Protocol.rLs.Proto_Global:
         (t = ModelManager_1.ModelManager.CreatureModel.GetDynamicEntityData(
           this.PbDataId,
         )),
@@ -63,7 +65,7 @@ class CreateEntityData {
             t.BlueprintType,
           ));
         break;
-      case Protocol_1.Aki.Protocol.YTs.P6n:
+      case Protocol_1.Aki.Protocol.rLs.F6n:
         if (
           !(t = ModelManager_1.ModelManager.CreatureModel.GetEntityData(
             this.PbDataId,
@@ -83,7 +85,7 @@ class CreateEntityData {
           t.BlueprintType,
         );
         break;
-      case Protocol_1.Aki.Protocol.YTs.Proto_Template:
+      case Protocol_1.Aki.Protocol.rLs.Proto_Template:
         if (
           !(e = ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(
             this.PbDataId,
@@ -105,7 +107,7 @@ class CreateEntityData {
           );
         t = { BlueprintType: e.BlueprintType, Name: e.Name, Id: e.Id };
         break;
-      case Protocol_1.Aki.Protocol.YTs.iTs:
+      case Protocol_1.Aki.Protocol.rLs.lTs:
         if (
           (t = ModelManager_1.ModelManager.CreatureModel.GetEntityPrefab(
             this.PrefabId,
@@ -126,7 +128,7 @@ class CreateEntityData {
         );
     }
     return (
-      e
+      (this.TemplateData = e)
         ? (this.PbEntityInitData = (0, IEntity_1.decompressEntityData)(t, e))
         : (this.PbEntityInitData = t),
       this.PbEntityInitData?.ComponentsData &&
@@ -138,10 +140,10 @@ class CreateEntityData {
   }
   InitComponentData() {
     this.ComponentDataMap.clear();
-    var t = this.EntityData.jEs;
+    var t = this.EntityData.zEs;
     if (t)
       for (const i of t) {
-        var e = i.h3s;
+        var e = i.C3s;
         this.ComponentDataMap.set(e, i);
       }
     return !0;
@@ -169,6 +171,36 @@ class CreateEntityData {
           this.ComponentSet.add(t),
           (this.ComponentsKey |= 1n << BigInt(e)),
           !0);
+  }
+  AddDebugComponent(t) {
+    if (Info_1.Info.IsBuildDevelopmentOrDebug) {
+      var e = t.Id;
+      if (e < 0)
+        return (
+          Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Entity", 3, "组件没有在RegisterComponent注册", [
+              "Type",
+              t.name,
+            ]),
+          !1
+        );
+      if (this.ComponentSet.has(t))
+        return (
+          Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Entity",
+              3,
+              "重复注册组件",
+              ["Type", t.name],
+              ["Id", e],
+            ),
+          !1
+        );
+      this.Components.push(t),
+        this.ComponentSet.add(t),
+        (this.ComponentsKey |= 1n << BigInt(e));
+    }
+    return !0;
   }
   HasComponent(t) {
     return this.ComponentSet.has(t);
@@ -211,7 +243,7 @@ class CreateEntityData {
     return !(!e || !t);
   }
   static IsFollowShooter(t) {
-    return !!t.ComponentDataMap.get("Oys");
+    return !!t.ComponentDataMap.get("Gih");
   }
   static GetMonsterComponent(t) {
     if (t.PbEntityInitData)

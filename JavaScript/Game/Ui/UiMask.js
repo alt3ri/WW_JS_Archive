@@ -10,8 +10,8 @@ class UiMask {
     (this.YCr = 0), (this.IRe = void 0), (this.JCr = i);
   }
   kot() {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "UiMask",
         11,
         "[UiMask]添加定时器",
@@ -31,8 +31,8 @@ class UiMask {
   }
   xHe() {
     void 0 !== this.IRe &&
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "UiMask",
           11,
           "[UiMask]移除定时器",

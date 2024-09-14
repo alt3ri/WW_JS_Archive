@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.skipClassMap = void 0);
-const SkipTaskAdventureGuide_1 = require("./SkipTask/SkipTaskAdventureGuide"),
+const SkipTaskActivity_1 = require("./SkipTask/SkipTaskActivity"),
+  SkipTaskAdventureGuide_1 = require("./SkipTask/SkipTaskAdventureGuide"),
   SkipTaskEnterEntrance_1 = require("./SkipTask/SkipTaskEnterEntrance"),
+  SkipTaskHelp_1 = require("./SkipTask/SkipTaskHelp"),
   SkipTaskPayShop_1 = require("./SkipTask/SkipTaskPayShop"),
   SkipTaskQuest_1 = require("./SkipTask/SkipTaskQuest"),
   SkipTaskRogueActivity_1 = require("./SkipTask/SkipTaskRogueActivity"),
@@ -14,6 +16,7 @@ const SkipTaskAdventureGuide_1 = require("./SkipTask/SkipTaskAdventureGuide"),
   SkipToBusinessMainViewDirect_1 = require("./SkipTask/SkipToBusinessMainViewDirect"),
   SkipToBusinessRoleView_1 = require("./SkipTask/SkipToBusinessRoleView"),
   SkipToDyMarkEntity_1 = require("./SkipTask/SkipToDyMarkEntity"),
+  SkipToEnrichmentArea_1 = require("./SkipTask/SkipToEnrichmentArea"),
   SkipToTaskView_1 = require("./SkipTask/SkipToTaskView"),
   SkipToTaskViewDirect_1 = require("./SkipTask/SkipToTaskViewDirect");
 exports.skipClassMap = new Map([
@@ -32,5 +35,8 @@ exports.skipClassMap = new Map([
   [12, SkipToTaskView_1.SkipToTaskView],
   [13, SkipToBusinessMainViewDirect_1.SkipToBusinessMainViewDirect],
   [14, SkipToTaskViewDirect_1.SkipToTaskViewDirect],
+  [15, SkipToEnrichmentArea_1.SkipToEnrichmentArea],
+  [16, SkipTaskHelp_1.SkipTaskHelp],
+  [17, SkipTaskActivity_1.SkipTaskActivity],
 ]);
 //# sourceMappingURL=SkipInterfaceDefine.js.map

@@ -9,33 +9,34 @@ const UE = require("ue"),
   UiViewBase_1 = require("../../../../../../Ui/Base/UiViewBase"),
   PopupCaptionItem_1 = require("../../../../../../Ui/Common/PopupCaptionItem"),
   TabViewComponent_1 = require("../../../../../Common/TabComponent/TabViewComponent"),
+  ActivityMoonChasingController_1 = require("../../Activity/ActivityMoonChasingController"),
   RewardGrandItem_1 = require("./RewardGrandItem"),
   RewardInstanceController_1 = require("./RewardInstanceController"),
   RewardMainTabItem_1 = require("./RewardMainTabItem");
 class RewardMainView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.oOn = new RewardInstanceController_1.RewardInstanceController()),
+      (this.mOn = new RewardInstanceController_1.RewardInstanceController()),
       (this.Caption = void 0),
       (this.GrandItem = void 0),
       (this.TabItemList = []),
       (this.TabViewComponent = void 0),
-      (this.GIa = !0),
-      (this.nOn = (e) => {
+      (this.txa = !0),
+      (this.dOn = (e) => {
         e ===
         ModelManager_1.ModelManager.MoonChasingRewardModel.GetSpecialTaskData()
           .TaskId
-          ? this.gla()
+          ? this.fua()
           : this.jFi();
       }),
-      (this.b0a = () => {
+      (this.oMa = () => {
         this.jFi();
       }),
       (this.m2e = () => {
         this.CloseMe();
       }),
       (this.pqe = (e) => {
-        this.oOn.TabItemToggleClick(e);
+        this.mOn.TabItemToggleClick(e);
       });
   }
   OnRegisterComponent() {
@@ -48,29 +49,32 @@ class RewardMainView extends UiViewBase_1.UiViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.GIa = this.OpenParam ?? !0),
-      this.oOn.RegisterMainView(this),
-      await this.oOn.InitMainView(),
-      this.oOn.RefreshTabList();
+    (this.txa = this.OpenParam ?? !0),
+      this.mOn.RegisterMainView(this),
+      await this.mOn.InitMainView(),
+      this.mOn.RefreshTabList();
+  }
+  OnBeforeShow() {
+    ActivityMoonChasingController_1.ActivityMoonChasingController.CheckIsActivityClose();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.TakenRewardTargetData,
-      this.nOn,
+      this.dOn,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.MoonChasingRefreshRewardRedDot,
-        this.b0a,
+        this.oMa,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.TakenRewardTargetData,
-      this.nOn,
+      this.dOn,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.MoonChasingRefreshRewardRedDot,
-        this.b0a,
+        this.oMa,
       );
   }
   async InitCaption() {
@@ -82,9 +86,9 @@ class RewardMainView extends UiViewBase_1.UiViewBase {
   async InitGrandItem() {
     (this.GrandItem = new RewardGrandItem_1.RewardGrandItem()),
       await this.GrandItem.CreateByActorAsync(this.GetItem(4).GetOwner()),
-      this.gla();
+      this.fua();
   }
-  gla() {
+  fua() {
     this.GrandItem.SetActive(!1);
     var e =
       ModelManager_1.ModelManager.MoonChasingRewardModel.GetSpecialTaskData();
@@ -125,8 +129,21 @@ class RewardMainView extends UiViewBase_1.UiViewBase {
     this.TabItemList[e].SetToggleState(t ? 1 : 0, i);
   }
   SwitchTabView(e, t) {
-    var i = e.ChildViewName;
-    this.TabViewComponent.ToggleCallBack(e, i, this.TabItemList[t], this.GIa);
+    var i = e.ChildViewName,
+      e =
+        (this.TabViewComponent.ToggleCallBack(
+          e,
+          i,
+          this.TabItemList[t],
+          this.txa,
+        ),
+        this.TabItemList[0].GetRootItem()),
+      i = this.TabItemList[1].GetRootItem(),
+      n = e.GetHierarchyIndex(),
+      a = i.GetHierarchyIndex();
+    (a < n && 0 === t) ||
+      (n < a && 1 === t) ||
+      (e.SetHierarchyIndex(a), i.SetHierarchyIndex(n));
   }
 }
 exports.RewardMainView = RewardMainView;

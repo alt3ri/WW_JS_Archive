@@ -2,10 +2,10 @@
 var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    var o,
-      h = arguments.length,
+    var h,
+      o = arguments.length,
       r =
-        h < 3
+        o < 3
           ? e
           : null === s
             ? (s = Object.getOwnPropertyDescriptor(e, i))
@@ -14,8 +14,8 @@ var __decorate =
       r = Reflect.decorate(t, e, i, s);
     else
       for (var n = t.length - 1; 0 <= n; n--)
-        (o = t[n]) && (r = (h < 3 ? o(r) : 3 < h ? o(e, i, r) : o(e, i)) || r);
-    return 3 < h && r && Object.defineProperty(e, i, r), r;
+        (h = t[n]) && (r = (o < 3 ? h(r) : 3 < o ? h(e, i, r) : h(e, i)) || r);
+    return 3 < o && r && Object.defineProperty(e, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RangeComponent = void 0);
@@ -23,12 +23,14 @@ const puerts_1 = require("puerts"),
   UE = require("ue"),
   ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem"),
   Log_1 = require("../../../../../Core/Common/Log"),
+  Queue_1 = require("../../../../../Core/Container/Queue"),
   CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   Net_1 = require("../../../../../Core/Net/Net"),
   ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
@@ -55,10 +57,11 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
       (this.Uen = 0),
       (this.Aen = void 0),
       (this.Pen = void 0),
-      (this.Kca = void 0),
+      (this.$Ca = void 0),
       (this.xen = !1),
       (this.wen = !1),
-      (this.g$s = !1),
+      (this.pJa = !1),
+      (this.jKs = !1),
       (this.Ben = void 0),
       (this.ben = void 0),
       (this.qen = void 0),
@@ -70,8 +73,11 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
       (this.Hen = void 0),
       (this.jen = void 0),
       (this.Wen = void 0),
-      (this.f$s = !0),
-      (this.v$s = !0),
+      (this.WKs = !0),
+      (this.KKs = !0),
+      (this.W8a = !1),
+      (this.Q8a = new Queue_1.Queue()),
+      (this.K8a = void 0),
       (this.Ken = (t) => {
         t && (this.Ien?.IsValid() || this.Ren)
           ? (this.Qen(),
@@ -79,7 +85,11 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
               EventDefine_1.EEventName.OnChangeRole,
               this.Xen,
             ),
-            EventSystem_1.EventSystem.Add(
+            EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+              this,
+              ModelManager_1.ModelManager.CreatureModel.GetEntityById(
+                this.Entity.Id,
+              ),
               EventDefine_1.EEventName.RemoveEntity,
               this.zpe,
             ),
@@ -87,8 +97,13 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
               EventDefine_1.EEventName.AddEntity,
               this.GUe,
             ),
+            RoleTriggerController_1.RoleTriggerController.IsInitTrigger ||
+              EventSystem_1.EventSystem.Add(
+                EventDefine_1.EEventName.RoleTriggerInit,
+                this.vJa,
+              ),
             (this.wen = !0),
-            this.p$s())
+            this.QKs())
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "SceneGameplay",
@@ -99,33 +114,38 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
               ["PlayerId", this.EIe.GetPlayerId()],
             );
       }),
-      (this.p$s = () => {
-        this.GetIsLocalSetupComplete() &&
-          (ModelManager_1.ModelManager.SundryModel?.IsEnableDebugDetail(
-            DEBUG_DETAIL_KEY,
-          ) &&
+      (this.vJa = () => {
+        this.QKs();
+      }),
+      (this.QKs = () => {
+        this.GetIsLocalSetupComplete() ||
+          (this.MJa() &&
+            (ModelManager_1.ModelManager.SundryModel?.GetModuleDebugLevel(
+              DEBUG_DETAIL_KEY,
+            ) &&
+              Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info(
+                "SceneItem",
+                40,
+                "[RangeComponent] 完成初始化(开始)",
+                ["CreatureDataId", this.EIe.GetCreatureDataId()],
+                ["ConfigId", this.EIe.GetPbDataId()],
+              ),
+            this.Yen(),
+            this.zen(!1),
+            this.GetIsNotServerRange() || this.$Ks(),
+            (this.pJa = !0),
+            ModelManager_1.ModelManager.SundryModel?.GetModuleDebugLevel(
+              DEBUG_DETAIL_KEY,
+            )) &&
             Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "SceneItem",
               40,
-              "[RangeComponent] 完成初始化(开始)",
+              "[RangeComponent] 完成初始化(结束)",
               ["CreatureDataId", this.EIe.GetCreatureDataId()],
               ["ConfigId", this.EIe.GetPbDataId()],
-            ),
-          this.Yen(),
-          this.zen(!1),
-          this.GetIsNotServerRange() || this.M$s(),
-          ModelManager_1.ModelManager.SundryModel?.IsEnableDebugDetail(
-            DEBUG_DETAIL_KEY,
-          )) &&
-          Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "SceneItem",
-            40,
-            "[RangeComponent] 完成初始化(结束)",
-            ["CreatureDataId", this.EIe.GetCreatureDataId()],
-            ["ConfigId", this.EIe.GetPbDataId()],
-          );
+            ));
       }),
       (this.Zen = void 0),
       (this.otn = (t, e) => {
@@ -133,6 +153,21 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
       }),
       (this.rtn = (t, e) => {
         this.ttn(e, !1);
+      }),
+      (this.$8a = () => {
+        for (
+          this.K8a &&
+            TimerSystem_1.TimerSystem.Has(this.K8a) &&
+            TimerSystem_1.TimerSystem.Remove(this.K8a),
+            this.K8a = void 0;
+          !this.Q8a.Empty;
+
+        ) {
+          var [t, e, ...i] = this.Q8a.Pop();
+          t
+            ? EventSystem_1.EventSystem.EmitWithTarget(t, e, ...i)
+            : EventSystem_1.EventSystem.Emit(e, ...i);
+        }
       }),
       (this.Xen = (t, e) => {
         t?.Valid &&
@@ -154,7 +189,14 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
       (this.zpe = (t, e) => {
         e?.Valid &&
           (e.Id === this.Entity.Id
-            ? (this.stn(!1), this.atn())
+            ? (EventSystem_1.EventSystem.RemoveWithTargetUseKey(
+                this,
+                e,
+                EventDefine_1.EEventName.RemoveEntity,
+                this.zpe,
+              ),
+              this.stn(!1),
+              this.atn())
             : this.Oen?.has(e.Id) && this.htn(e, !1, !1));
       }),
       (this.ltn = (t) => {
@@ -192,28 +234,27 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
     return this.jen;
   }
   GetIsLocalSetupComplete() {
-    return this.xen && this.wen;
+    return this.pJa;
   }
   GetIsSetupComplete() {
-    return this.GetIsNotServerRange()
-      ? this.xen && this.wen
-      : this.xen && this.wen && this.g$s;
+    return this.GetIsNotServerRange() ? this.pJa : this.pJa && this.jKs;
   }
   GetIsNotServerRange() {
-    return !this.f$s && !this.v$s;
+    return !this.WKs && !this.KKs;
   }
   GetShapeConfig() {
     return this.bjo;
   }
   OnInitData() {
     (this.EIe = this.Entity.GetComponent(0)),
-      (this.Men = this.Entity.GetComponent(149));
+      (this.Men = this.Entity.GetComponent(150));
     var t = this.EIe?.GetPbEntityInitData();
     return (
       !!t &&
-      (this.S$s(t)
-        ? (this.E$s(t),
-          ModelManager_1.ModelManager.SundryModel?.IsEnableDebugDetail(
+      (this.XKs(t)
+        ? (this.YKs(t),
+          this.X8a(t),
+          ModelManager_1.ModelManager.SundryModel?.GetModuleDebugLevel(
             DEBUG_DETAIL_KEY,
           ) &&
             Log_1.Log.CheckInfo() &&
@@ -223,8 +264,8 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
               "[RangeComponent] 初始化网络节省配置完成",
               ["CreatureDataId", this.EIe.GetCreatureDataId()],
               ["ConfigId", this.EIe.GetPbDataId()],
-              ["ReqEntityAccessRange", this.f$s],
-              ["ReqPlayerAccessRange", this.v$s],
+              ["ReqEntityAccessRange", this.WKs],
+              ["ReqPlayerAccessRange", this.KKs],
             ),
           (this.Oen = new Map()),
           (this.Fen = !1),
@@ -260,7 +301,7 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
           !1))
     );
   }
-  S$s(t) {
+  XKs(t) {
     var e = (0, IComponent_1.getComponent)(t.ComponentsData, "RangeComponent"),
       i = (0, IComponent_1.getComponent)(t.ComponentsData, "BeamCastComponent"),
       s = (0, IComponent_1.getComponent)(t.ComponentsData, "FanComponent");
@@ -288,14 +329,14 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
         !0)
     );
   }
-  E$s(t) {
+  YKs(t) {
     var i = (0, IComponent_1.getComponent)(
         t.ComponentsData,
         "TriggerComponent",
       ),
       s = (0, IComponent_1.getComponent)(t.ComponentsData, "TrampleComponent"),
       e = (0, IComponent_1.getComponent)(t.ComponentsData, "RangeComponent"),
-      o = (0, IComponent_1.getComponent)(
+      h = (0, IComponent_1.getComponent)(
         t.ComponentsData,
         "EffectAreaComponent",
       ),
@@ -304,7 +345,7 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
         "ClientTriggerComponent",
       );
     if (e) {
-      if (i ?? s ?? o ?? t) {
+      if (i ?? s ?? h ?? t) {
         let t = !1,
           e = !1;
         i &&
@@ -315,10 +356,15 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
             ? ((e = !0), (t = !0))
             : (e = !0)),
           s && ((e = !0), (t = !0)),
-          (this.f$s = t),
-          (this.v$s = e);
+          (this.WKs = t),
+          (this.KKs = e);
       }
-    } else (this.f$s = !1), (this.v$s = !1);
+    } else (this.WKs = !1), (this.KKs = !1);
+  }
+  X8a(t) {
+    (0, IComponent_1.getComponent)(t.ComponentsData, "BeamCastComponent")
+      ? (this.W8a = !0)
+      : (this.W8a = !1);
   }
   OnStart() {
     return (
@@ -329,7 +375,7 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
     );
   }
   OnActivate() {
-    (this.xen = !0), this.p$s();
+    (this.xen = !0), this.QKs();
   }
   OnEnd() {
     return (
@@ -349,14 +395,7 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
           EventDefine_1.EEventName.OnChangeRole,
           this.Xen,
         ),
-      EventSystem_1.EventSystem.Has(
-        EventDefine_1.EEventName.RemoveEntity,
-        this.zpe,
-      ) &&
-        EventSystem_1.EventSystem.Remove(
-          EventDefine_1.EEventName.RemoveEntity,
-          this.zpe,
-        ),
+      EventSystem_1.EventSystem.RemoveAllTargetUseKey(this),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.AddEntity,
         this.GUe,
@@ -365,18 +404,37 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
           EventDefine_1.EEventName.AddEntity,
           this.GUe,
         ),
+      EventSystem_1.EventSystem.Has(
+        EventDefine_1.EEventName.RoleTriggerInit,
+        this.vJa,
+      ) &&
+        EventSystem_1.EventSystem.Remove(
+          EventDefine_1.EEventName.RoleTriggerInit,
+          this.vJa,
+        ),
+      this.K8a &&
+        TimerSystem_1.TimerSystem.Has(this.K8a) &&
+        (TimerSystem_1.TimerSystem.Remove(this.K8a), (this.K8a = void 0)),
       this.atn(),
       (this.Sen = void 0),
       (this.yen = void 0),
       this.Den &&
         (this.Ien?.IsValid() && ActorSystem_1.ActorSystem.Put(this.Ien),
-        this.Kca?.IsValid()) &&
-        ActorSystem_1.ActorSystem.Put(this.Kca),
+        this.$Ca?.IsValid()) &&
+        ActorSystem_1.ActorSystem.Put(this.$Ca),
       (this.Ien = void 0),
-      (this.Kca = void 0),
+      (this.$Ca = void 0),
       (this.Den = !1),
       this.Wen?.clear(),
       !0
+    );
+  }
+  MJa() {
+    return !(
+      !this.xen ||
+      !this.wen ||
+      this.Entity.IsEnd ||
+      !RoleTriggerController_1.RoleTriggerController.IsInitTrigger
     );
   }
   async InitRangeActorAsync() {
@@ -391,13 +449,13 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
           e(this.utn(i));
           break;
         case "Cylinder": {
-          const o =
+          const h =
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "BaseCylinderStaticMeshForRange",
             ) ?? "None";
           this.Ben && ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.Ben),
             (this.Ben = ResourceSystem_1.ResourceSystem.LoadAsync(
-              o,
+              h,
               UE.Object,
               (t) => {
                 (this.Ben = void 0),
@@ -408,7 +466,7 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
                           "Entity",
                           40,
                           "[RangeComponent] 基础静态网格体配置错误",
-                          ["MeshPath", o],
+                          ["MeshPath", h],
                         ),
                       e(!1));
               },
@@ -492,11 +550,11 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
       (this.Sen.SetCollisionProfileName(TRIGGER_COMPONENT_TAG, !1), this.Uen)
     ) {
       if (
-        ((this.Kca = ActorSystem_1.ActorSystem.Get(
+        ((this.$Ca = ActorSystem_1.ActorSystem.Get(
           UE.Actor.StaticClass(),
           MathUtils_1.MathUtils.DefaultTransform,
         )),
-        (this.Aen = this.Kca?.AddComponentByClass(
+        (this.Aen = this.$Ca?.AddComponentByClass(
           UE.BoxComponent.StaticClass(),
           !1,
           MathUtils_1.MathUtils.DefaultTransform,
@@ -551,11 +609,11 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
       (this.Sen.SetCollisionProfileName(TRIGGER_COMPONENT_TAG, !1), this.Uen)
     ) {
       if (
-        ((this.Kca = ActorSystem_1.ActorSystem.Get(
+        ((this.$Ca = ActorSystem_1.ActorSystem.Get(
           UE.Actor.StaticClass(),
           MathUtils_1.MathUtils.DefaultTransform,
         )),
-        (this.Aen = this.Kca?.AddComponentByClass(
+        (this.Aen = this.$Ca?.AddComponentByClass(
           UE.SphereComponent.StaticClass(),
           !1,
           MathUtils_1.MathUtils.DefaultTransform,
@@ -615,11 +673,11 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
       this.Uen)
     ) {
       if (
-        ((this.Kca = ActorSystem_1.ActorSystem.Get(
+        ((this.$Ca = ActorSystem_1.ActorSystem.Get(
           UE.Actor.StaticClass(),
           MathUtils_1.MathUtils.DefaultTransform,
         )),
-        (this.Pen = this.Kca?.AddComponentByClass(
+        (this.Pen = this.$Ca?.AddComponentByClass(
           UE.StaticMeshComponent.StaticClass(),
           !1,
           MathUtils_1.MathUtils.DefaultTransform,
@@ -688,7 +746,7 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
       if ("Volume" !== e.Type && "ActorRefVolume" !== e.Type) {
         var i = this.EIe.GetTransform(),
           s = this.Entity.GetComponent(1)?.Owner,
-          o = new UE.Vector(e.Center.X ?? 0, e.Center.Y ?? 0, e.Center.Z ?? 0);
+          h = new UE.Vector(e.Center.X ?? 0, e.Center.Y ?? 0, e.Center.Z ?? 0);
         let t = void 0;
         "Box" === e.Type &&
           e.Rotator &&
@@ -699,15 +757,15 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
           )),
           this.Ien.K2_SetActorTransform(i, !1, void 0, !0),
           s?.IsValid() && this.Ien.K2_AttachToActor(s, void 0, 2, 2, 1, !1),
-          this.Ien.K2_AddActorLocalOffset(o, !1, void 0, !1),
+          this.Ien.K2_AddActorLocalOffset(h, !1, void 0, !1),
           t && this.Ien.K2_AddActorLocalRotation(t, !1, void 0, !1),
           this.Uen &&
-            this.Kca &&
-            (this.Kca?.K2_SetActorTransform(i, !1, void 0, !0),
-            s?.IsValid() && this.Kca?.K2_AttachToActor(s, void 0, 2, 2, 1, !1),
-            this.Kca?.K2_AddActorLocalOffset(o, !1, void 0, !1),
+            this.$Ca &&
+            (this.$Ca?.K2_SetActorTransform(i, !1, void 0, !0),
+            s?.IsValid() && this.$Ca?.K2_AttachToActor(s, void 0, 2, 2, 1, !1),
+            this.$Ca?.K2_AddActorLocalOffset(h, !1, void 0, !1),
             t) &&
-            this.Kca?.K2_AddActorLocalRotation(t, !1, void 0, !1);
+            this.$Ca?.K2_AddActorLocalRotation(t, !1, void 0, !1);
       }
     }
   }
@@ -803,9 +861,9 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
       case "Cylinder":
         this.Ien?.IsValid()
           ? this.Uen
-            ? this.Kca?.IsValid()
+            ? this.$Ca?.IsValid()
               ? (this.Ien.OnActorBeginOverlap.Add(this.otn),
-                this.Kca.OnActorEndOverlap.Add(this.rtn))
+                this.$Ca.OnActorEndOverlap.Add(this.rtn))
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "SceneGameplay",
@@ -857,7 +915,7 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
     this.Ien?.IsValid() &&
       (this.Ien.OnActorBeginOverlap.Remove(this.otn),
       this.Ien.OnActorEndOverlap.Remove(this.rtn)),
-      this.Kca?.IsValid() && this.Kca.OnActorEndOverlap.Remove(this.rtn),
+      this.$Ca?.IsValid() && this.$Ca.OnActorEndOverlap.Remove(this.rtn),
       "ActorRefVolume" === t.Type &&
         this.Men &&
         this.Men.RemoveOnPlayerOverlapCallback(this.ltn);
@@ -867,13 +925,15 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
       var s = this.ftn(t);
       if (s?.Valid) {
         if (s.Id === this.Entity.Id) return;
-        var o = ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
-          h = s.Entity.GetComponent(0);
+        var h = ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
+          o = s.Entity.GetComponent(0);
         if (
-          (h?.IsRole() && h.GetPlayerId() !== o) ??
-          (h?.IsVision() && h.GetSummonerPlayerId() !== o)
+          (o?.IsRole() && o.GetPlayerId() !== h) ??
+          (o?.IsVision() && o.GetSummonerPlayerId() !== h)
         )
           return;
+        o = s.Entity.GetComponent(187);
+        if (o && !o.IsReadyForOverlap) return;
       }
       t === RoleTriggerController_1.RoleTriggerController.GetMyRoleTrigger() &&
         (this.Fen = e),
@@ -889,8 +949,8 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
           s = i?.Num() ?? 0;
         if (0 < s)
           for (let t = 0; t < s; t++) {
-            var o = i.Get(t);
-            this.ttn(o, !0, e);
+            var h = i.Get(t);
+            this.ttn(h, !0, e);
           }
       } else
         Log_1.Log.CheckError() &&
@@ -932,18 +992,18 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
       this.Oen.clear(),
       this.ken.clear();
   }
-  M$s() {
+  $Ks() {
     var t = [],
       e = this.Ven;
-    if (this.f$s)
+    if (this.WKs)
       for (var [, i] of this.Oen) {
         i = i.Entity?.GetComponent(0)?.GetCreatureDataId();
         if (!i) break;
         t.push(i);
       }
     this.ReqInitRange(t, e, (t) => {
-      t && t.O4n === Protocol_1.Aki.Protocol.O4n.NRs
-        ? (this.g$s = !0)
+      t && t.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
+        ? (this.jKs = !0)
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "SceneItem",
@@ -972,19 +1032,35 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
       if (Array.isArray(t)) {
         if (!t.length) return;
       } else t = [t];
-      var o = [];
+      var h = [];
       for (const r of t) {
         let t = !1;
         if (
           (i
-            ? this.Oen.has(r.Id) || (this.Oen.set(r.Id, r), (t = !0))
-            : this.Oen.has(r.Id) && (this.Oen.delete(r.Id), (t = !0)),
+            ? this.Oen.has(r.Id) ||
+              (this.Oen.set(r.Id, r),
+              EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+                this,
+                r,
+                EventDefine_1.EEventName.RemoveEntity,
+                this.zpe,
+              ),
+              (t = !0))
+            : this.Oen.has(r.Id) &&
+              (this.Oen.delete(r.Id),
+              EventSystem_1.EventSystem.RemoveWithTargetUseKey(
+                this,
+                r,
+                EventDefine_1.EEventName.RemoveEntity,
+                this.zpe,
+              ),
+              (t = !0)),
           t)
         ) {
           for (let t = this.qen.length - 1; 0 <= t; t--) {
-            var h = this.qen[t];
+            var o = this.qen[t];
             try {
-              h?.(i, r);
+              o?.(i, r);
             } catch (t) {
               Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
@@ -996,16 +1072,16 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
                 );
             }
           }
-          EventSystem_1.EventSystem.EmitWithTarget(
+          this.Y8a(
             this.Entity,
             EventDefine_1.EEventName.OnEntityInOutRangeLocal,
             i,
             r,
           );
         }
-        t && s && o.push(r);
+        t && s && h.push(r);
       }
-      s && this.ReqEntityAccessRange(i, o);
+      s && this.ReqEntityAccessRange(i, h);
     }
   }
   ntn(t, e, i, s = !0) {
@@ -1021,9 +1097,9 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
         t)
       ) {
         for (let t = this.ben.length - 1; 0 <= t; t--) {
-          var o = this.ben[t];
+          var h = this.ben[t];
           try {
-            o?.(i);
+            h?.(i);
           } catch (t) {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -1033,7 +1109,7 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
               );
           }
         }
-        EventSystem_1.EventSystem.EmitWithTarget(
+        this.Y8a(
           this.Entity,
           EventDefine_1.EEventName.OnMyPlayerInOutRangeLocal,
           i,
@@ -1063,12 +1139,23 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
           );
       }
     }
-    EventSystem_1.EventSystem.EmitWithTarget(
+    this.Y8a(
       this.Entity,
       EventDefine_1.EEventName.OnActorInOutRangeLocal,
       i,
       e,
     );
+  }
+  Y8a(...t) {
+    var e, i;
+    this.W8a
+      ? (this.Q8a.Push(t),
+        (this.K8a && TimerSystem_1.TimerSystem.Has(this.K8a)) ||
+          (this.K8a = TimerSystem_1.TimerSystem.Next(this.$8a)))
+      : (([t, e, ...i] = t),
+        t
+          ? EventSystem_1.EventSystem.EmitWithTarget(t, e, ...i)
+          : EventSystem_1.EventSystem.Emit(e, ...i));
   }
   AddOnPlayerOverlapCallback(t) {
     this.ben?.push(t);
@@ -1133,10 +1220,10 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
     });
   }
   ReqMyPlayerAccessRange(t, e) {
-    var i, s, o;
-    this.v$s &&
-      (i = (o = e.Entity?.GetComponent(0))?.GetCreatureDataId()) &&
-      (ModelManager_1.ModelManager.SundryModel?.IsEnableDebugDetail(
+    var i, s, h;
+    this.KKs &&
+      (i = (h = e.Entity?.GetComponent(0))?.GetCreatureDataId()) &&
+      (ModelManager_1.ModelManager.SundryModel?.GetModuleDebugLevel(
         DEBUG_DETAIL_KEY,
       ) &&
         ((s = e.Entity?.GetComponent(1)), Log_1.Log.CheckInfo()) &&
@@ -1147,28 +1234,28 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
           ["PbDataId", this.EIe?.GetPbDataId()],
           ["CreatureDataId", this.EIe?.GetCreatureDataId()],
           ["IsEnter", t],
-          ["OtherPbDataId", o?.GetPbDataId()],
+          ["OtherPbDataId", h?.GetPbDataId()],
           ["OtherCreatureId", i],
           ["OtherLocation", s?.ActorLocationProxy],
         ),
-      e.Entity?.GetComponent(59)?.CollectSampleAndSend(!0),
-      ((o = Protocol_1.Aki.Protocol.Igs.create()).HWn =
+      e.Entity?.GetComponent(60)?.CollectSampleAndSend(!0),
+      ((h = Protocol_1.Aki.Protocol.Ugs.create()).zWn =
         this.EIe.GetCreatureDataId()),
-      (o.Q5n = t
-        ? Protocol_1.Aki.Protocol.Q5n.Proto_RangeEnter
-        : Protocol_1.Aki.Protocol.Q5n.Proto_RangeLeave),
-      Net_1.Net.Call(28572, o, () => {}));
+      (h.i6n = t
+        ? Protocol_1.Aki.Protocol.i6n.Proto_RangeEnter
+        : Protocol_1.Aki.Protocol.i6n.Proto_RangeLeave),
+      Net_1.Net.Call(22323, h, () => {}));
   }
   ReqEntityAccessRange(t, e) {
-    if (this.f$s && e?.length) {
+    if (this.WKs && e?.length) {
       var i = [];
       for (const r of e) {
         var s,
-          o = r.Entity?.GetComponent(0),
-          h = o?.GetCreatureDataId();
-        h &&
-          (i.push(h),
-          ModelManager_1.ModelManager.SundryModel?.IsEnableDebugDetail(
+          h = r.Entity?.GetComponent(0),
+          o = h?.GetCreatureDataId();
+        o &&
+          (i.push(o),
+          ModelManager_1.ModelManager.SundryModel?.GetModuleDebugLevel(
             DEBUG_DETAIL_KEY,
           ) &&
             ((s = r.Entity?.GetComponent(1)), Log_1.Log.CheckInfo()) &&
@@ -1179,27 +1266,27 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
               ["PbDataId", this.EIe?.GetPbDataId()],
               ["CreatureDataId", this.EIe?.GetCreatureDataId()],
               ["IsEnter", t],
-              ["OtherPbDataId", o?.GetPbDataId()],
-              ["OtherCreatureId", h],
+              ["OtherPbDataId", h?.GetPbDataId()],
+              ["OtherCreatureId", o],
               ["OtherPos", s?.ActorLocationProxy],
             ),
-          r.Entity?.GetComponent(59)?.CollectSampleAndSend(!0));
+          r.Entity?.GetComponent(60)?.CollectSampleAndSend(!0));
       }
-      e = Protocol_1.Aki.Protocol.Egs.create();
-      (e.HWn = this.EIe.GetCreatureDataId()),
-        (e._$s = i),
-        (e.Q5n = t
-          ? Protocol_1.Aki.Protocol.Q5n.Proto_RangeEnter
-          : Protocol_1.Aki.Protocol.Q5n.Proto_RangeLeave),
-        Net_1.Net.Call(9318, e, () => {});
+      e = Protocol_1.Aki.Protocol.Ags.create();
+      (e.zWn = this.EIe.GetCreatureDataId()),
+        (e.HKs = i),
+        (e.i6n = t
+          ? Protocol_1.Aki.Protocol.i6n.Proto_RangeEnter
+          : Protocol_1.Aki.Protocol.i6n.Proto_RangeLeave),
+        Net_1.Net.Call(28245, e, () => {});
     }
   }
   ReqInitRange(t, e, i = () => {}) {
-    var s = Protocol_1.Aki.Protocol.o$s.create();
-    (s.HWn = this.EIe.GetCreatureDataId()),
-      (s.u$s = t),
-      (s.c$s = e),
-      Net_1.Net.Call(10029, s, i);
+    var s = Protocol_1.Aki.Protocol.v$s.create();
+    (s.zWn = this.EIe.GetCreatureDataId()),
+      (s.JKs = t),
+      (s.zKs = e),
+      Net_1.Net.Call(20820, s, i);
   }
   IsOverlappingPlayer() {
     var t = this.bjo,
@@ -1224,7 +1311,7 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
           ["ConfigId", this.EIe.GetPbDataId()],
         ),
       this.Uen) &&
-      (this.Kca?.K2_SetActorRelativeLocation(t, !1, void 0, !0),
+      (this.$Ca?.K2_SetActorRelativeLocation(t, !1, void 0, !0),
       this.Aen?.SetBoxExtent(e.op_Addition(this.Uen), !0));
   }
   SetRangeActorParent(t) {
@@ -1232,14 +1319,14 @@ let RangeComponent = class RangeComponent extends EntityComponent_1.EntityCompon
       (this.Ien.K2_DetachFromActor(1, 1, 1),
       this.Ien.K2_AttachToActor(t, void 0, 1, 1, 1, !1),
       this.Ien.K2_SetActorTransform(t.GetTransform(), !1, void 0, !0),
-      this.Kca?.IsValid()) &&
-      (this.Kca.K2_DetachFromActor(1, 1, 1),
-      this.Kca.K2_AttachToActor(t, void 0, 1, 1, 1, !1),
-      this.Kca.K2_SetActorTransform(t.GetTransform(), !1, void 0, !0));
+      this.$Ca?.IsValid()) &&
+      (this.$Ca.K2_DetachFromActor(1, 1, 1),
+      this.$Ca.K2_AttachToActor(t, void 0, 1, 1, 1, !1),
+      this.$Ca.K2_SetActorTransform(t.GetTransform(), !1, void 0, !0));
   }
 };
 (RangeComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(76)],
+  [(0, RegisterComponent_1.RegisterComponent)(77)],
   RangeComponent,
 )),
   (exports.RangeComponent = RangeComponent);

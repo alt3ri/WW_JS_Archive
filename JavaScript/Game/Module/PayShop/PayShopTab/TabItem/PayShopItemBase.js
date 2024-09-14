@@ -55,9 +55,7 @@ class PayShopItemBaseSt {
       (this.GetTextTipsColor = () => t.GetTextTipsColor()),
       (this.GetSpriteTextBgColor = () => t.GetSpriteTextBgColor()),
       (this.GetDirectPriceTextFunc = () => t.GetDirectPriceText());
-    (this.RedDotExistFunc = () =>
-      !(!t.IfCanBuy() || t.IsLocked() || t.IsSoldOut() || this.IsDirect) &&
-      0 === t.GetPriceData().NowPrice),
+    (this.RedDotExistFunc = () => t.GetIfNeedRemind()),
       (this.xrr = LanguageSystem_1.LanguageSystem.PackageLanguage);
   }
   PhrasePromPayItemData(t) {
@@ -86,7 +84,7 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
       (this.q3i = !1),
       (this.hJ = ResourceSystem_1.ResourceSystem.InvalidId),
       (this.G3i = void 0),
-      (this.rkn = ""),
+      (this.ckn = ""),
       (this.Gsi = () => {
         HelpController_1.HelpController.OpenHelpById(
           PayShopDefine_1.MONTH_CARD_HELP_ID,
@@ -240,8 +238,8 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
     !this.Pe.IsDirect &&
       this.Pe.PriceData.OwnNumber() < this.Pe.PriceData.NowPrice &&
       (t = REDCOLOR),
-      (this.G3i && this.G3i === this.Pe.PriceData && this.rkn === t) ||
-        ((this.rkn = t),
+      (this.G3i && this.G3i === this.Pe.PriceData && this.ckn === t) ||
+        ((this.ckn = t),
         (this.G3i = this.Pe?.PriceData),
         (i = this.GetText(8)),
         this.Pe.IsDirect

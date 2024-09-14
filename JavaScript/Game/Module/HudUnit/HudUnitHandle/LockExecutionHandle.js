@@ -16,7 +16,7 @@ const UE = require("ue"),
 class LockExecutionHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
-      (this.Uua = new Vector2D_1.Vector2D()),
+      (this.Nma = new Vector2D_1.Vector2D()),
       (this.koi = void 0),
       (this.sDe = void 0),
       (this.v$e = !1),
@@ -92,9 +92,9 @@ class LockExecutionHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       Math.pow(e.X - t.X, 2) + Math.pow(e.Y - t.Y, 2) + Math.pow(e.Z - t.Z, 2) <
       this.Foi
     )) &&
-    HudUnitUtils_1.HudUnitUtils.PositionUtil.ProjectWorldToScreen(t, this.Uua)
+    HudUnitUtils_1.HudUnitUtils.PositionUtil.ProjectWorldToScreen(t, this.Nma)
       ? ((this.dce = !0),
-        this.koi.GetRootItem().SetAnchorOffset(this.Uua.ToUeVector2D(!0)))
+        this.koi.GetRootItem().SetAnchorOffset(this.Nma.ToUeVector2D(!0)))
       : (this.dce = !1);
   }
   uoi() {

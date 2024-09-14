@@ -18,7 +18,7 @@ class GameplayCueUIEffect extends GameplayCueBase_1.GameplayCueBase {
     t &&
       EventSystem_1.EventSystem.Emit(
         t,
-        this.Entity.Id,
+        this.EntityHandle.Id,
         this.CueConfig,
         e,
         this.ActiveHandleId,

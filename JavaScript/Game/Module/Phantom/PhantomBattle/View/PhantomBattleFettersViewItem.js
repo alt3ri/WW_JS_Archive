@@ -151,7 +151,8 @@ class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
   h8i() {
     var e =
       ModelManager_1.ModelManager.CalabashModel.GetPhantomFetterGroupList();
-    this.vpt.UpdateData(this.Z6i, e), this.Mpt.UpdateData(this.Z6i, e);
+    this.vpt.UpdateData(this.Z6i, e, this.dFe),
+      this.Mpt.UpdateData(this.Z6i, e, this.dFe);
   }
   s8i(e) {
     this.GetItem(8).SetUIActive(0 < e.length),
@@ -161,10 +162,10 @@ class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
   }
   l8i(t) {
     var i = new Array(),
-      r = t.length;
-    for (let e = 0; e < r; e++)
+      s = t.length;
+    for (let e = 0; e < s; e++)
       i.push(new VisionDetailMonsterItemData(t[e], 0, this.dFe));
-    var e = 0 < r,
+    var e = 0 < s,
       e =
         (e && this.H1i.RefreshByData(i),
         this.GetGridLayout(9).RootUIComp.SetUIActive(e),
@@ -196,12 +197,12 @@ class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
     this.GetText(2).ShowTextNew(e);
   }
   nOe(e) {
-    const r = new Array();
+    const s = new Array();
     e.forEach((e, t) => {
       var i = new DescData();
-      (i.Key = t), (i.Value = e), r.push(i);
+      (i.Key = t), (i.Value = e), s.push(i);
     }),
-      this.eGe.RefreshByData(r, void 0, !0),
+      this.eGe.RefreshByData(s, void 0, !0),
       "Switch" === this.SPe?.GetCurrentSequence()
         ? this.SPe?.ReplaySequenceByKey("Switch")
         : (this.SPe?.StopCurrentSequence(),
@@ -326,19 +327,19 @@ class VisionDetailMonsterItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallI
         this.u8i,
       ),
       e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(t.RoleId),
-      r = e?.GetPhantomData()?.GetDataMap();
-    let s = 0;
-    if (r)
-      for (var [, o] of r)
+      s = e?.GetPhantomData()?.GetDataMap();
+    let r = 0;
+    if (s)
+      for (var [, o] of s)
         if (o?.GetConfig().MonsterId === this.u8i) {
-          s = e?.GetRoleId();
+          r = e?.GetRoleId();
           break;
         }
-    r =
+    s =
       ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
         this.u8i,
       );
-    if (r) {
+    if (s) {
       i = void 0 !== i;
       let e = void 0;
       0 < t.QualityId &&
@@ -353,10 +354,10 @@ class VisionDetailMonsterItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallI
         ItemConfigId: e,
         BottomText: "",
         IsNotFoundVisible: !i,
-        MonsterId: r.MonsterInfoId,
+        MonsterId: s.MonsterInfoId,
         IconHidden: !i,
       };
-      (a.VisionRoleHeadInfo = s), this.Apply(a);
+      (a.VisionRoleHeadInfo = r), this.Apply(a);
     }
   }
 }

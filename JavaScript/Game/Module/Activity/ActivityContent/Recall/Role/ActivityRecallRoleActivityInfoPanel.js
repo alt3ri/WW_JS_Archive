@@ -11,16 +11,16 @@ const UE = require("ue"),
 class ActivityRecallRoleActivityInfoPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.n_a = void 0),
-      (this.l_a = void 0),
-      (this.A_a = () => {
-        var e = this.n_a.GachaId;
-        ModelManager_1.ModelManager.GachaModel.GetGachaInfo(e) ||
+      (this.gda = void 0),
+      (this.Mda = void 0),
+      (this.Gda = () => {
+        var i = this.gda.GachaId;
+        ModelManager_1.ModelManager.GachaModel.GetGachaInfo(i) ||
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
             "RecallActivity_Tips_01",
           ),
           ActivityRecallHelper_1.ActivityRecallHelper.ReportRecallLog1024(2),
-          UiManager_1.UiManager.OpenView("GachaMainView", e);
+          UiManager_1.UiManager.OpenView("GachaMainView", i);
       });
   }
   OnRegisterComponent() {
@@ -34,16 +34,16 @@ class ActivityRecallRoleActivityInfoPanel extends UiPanelBase_1.UiPanelBase {
   async OnBeforeStartAsync() {
     this.GetItem(0).SetUIActive(!1), this.GetItem(1).SetUIActive(!1);
     this.GetItem(2).SetUIActive(!1);
-    var e = this.GetItem(3);
-    (this.l_a = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
-      await this.l_a.CreateThenShowByActorAsync(e.GetOwner());
+    var i = this.GetItem(3);
+    (this.Mda = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(void 0)),
+      await this.Mda.CreateThenShowByActorAsync(i.GetOwner());
   }
   OnStart() {
-    this.l_a.FunctionButton?.BindCallback(this.A_a),
-      this.l_a.FunctionButton.RefreshTextNew("RecallActivity_Go");
+    this.Mda.FunctionButton.SetFunction(this.Gda),
+      this.Mda.FunctionButton.SetLocalTextNew("RecallActivity_Go");
   }
-  RefreshByData(e) {
-    this.n_a = e;
+  RefreshByData(i) {
+    this.gda = i;
   }
 }
 exports.ActivityRecallRoleActivityInfoPanel =

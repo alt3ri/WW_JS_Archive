@@ -15,17 +15,22 @@ class TsAxisHandle extends UE.Object {
       (this.OnInputAxisCallback = void 0);
   }
   Initialize(i) {
-    (this.PlayerController = i), (this.OnInputStat = void 0);
+    (this.PlayerController = i),
+      (this.OnInputStat = Stats_1.Stat.Create(
+        "TsAxisHandle.OnInputAxis",
+        "",
+        StatDefine_1.BATTLESTAT_GROUP,
+      ));
   }
   Reset() {
     (this.PlayerController = void 0),
       (this.AxisName = void 0),
       (this.OnInputAxisCallback = void 0);
   }
-  AddAxisBinding(i, s) {
-    s
+  AddAxisBinding(i, t) {
+    t
       ? ((this.AxisName = i),
-        (this.OnInputAxisCallback = s),
+        (this.OnInputAxisCallback = t),
         this.PlayerController.AddAxisBinding(
           FNameUtil_1.FNameUtil.GetDynamicFName(i),
           this,
@@ -38,7 +43,9 @@ class TsAxisHandle extends UE.Object {
         ]);
   }
   OnInputAxis(i) {
-    this.OnInputAxisCallback(this.AxisName, i);
+    this.OnInputStat.Start(),
+      this.OnInputAxisCallback(this.AxisName, i),
+      this.OnInputStat.Stop();
   }
 }
 (exports.TsAxisHandle = TsAxisHandle), (exports.default = TsAxisHandle);

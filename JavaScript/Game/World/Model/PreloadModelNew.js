@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PreloadModelNew = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
+  PbDataPreloadAll_1 = require("../../../Core/Define/ConfigQuery/PbDataPreloadAll"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   PreCreateEffect_1 = require("../../Effect/PreCreateEffect"),
   GlobalData_1 = require("../../GlobalData"),
@@ -18,9 +19,12 @@ class PreloadModelNew extends ModelBase_1.ModelBase {
       (this.BulletJsonExportPath = void 0),
       (this.StateMachineJsonExportPath = void 0),
       (this.PreCreateEffect = new PreCreateEffect_1.PreCreateEffect()),
-      (this.CommonAssetElement = new PreloadDefine_1.CommonAssetElement()),
+      (this.CommonAssetElement = new PreloadDefine_1.CommonAssetElement(
+        void 0,
+      )),
       (this.PreloadAssetMap = new Map()),
-      (this.AEr = new Map()),
+      (this.PbDataPreloadDataMap = new Map()),
+      (this.AllEntityAssetMap = new Map()),
       (this.PEr = new Map()),
       (this.REr = void 0),
       (this.LoadingNeedWaitEntitySet = new Set());
@@ -50,8 +54,15 @@ class PreloadModelNew extends ModelBase_1.ModelBase {
       )),
       this.PreCreateEffect.RegisterTick(),
       this.PreCreateEffect.Init(),
+      this.SFa(),
       !0
     );
+  }
+  SFa() {
+    for (const t of PbDataPreloadAll_1.configPbDataPreloadAll.GetConfigList())
+      this.PbDataPreloadDataMap.has(t.MapId) ||
+        this.PbDataPreloadDataMap.set(t.MapId, new Map()),
+        this.PbDataPreloadDataMap.get(t.MapId)?.set(t.PbDataId, t);
   }
   OnClear() {
     return (
@@ -85,19 +96,21 @@ class PreloadModelNew extends ModelBase_1.ModelBase {
       this.LoadingNeedWaitEntitySet.clear();
   }
   AddEntityAsset(t, e) {
-    return !this.AEr.has(t) && (this.AEr.set(t, e), !0);
+    return (
+      !this.AllEntityAssetMap.has(t) && (this.AllEntityAssetMap.set(t, e), !0)
+    );
   }
   HasEntityAsset(t) {
-    return this.AEr.has(t);
+    return this.AllEntityAssetMap.has(t);
   }
   GetEntityAssetElement(t) {
-    return this.AEr.get(t);
+    return this.AllEntityAssetMap.get(t);
   }
   RemoveEntityAsset(t) {
-    return this.AEr.delete(t);
+    return this.AllEntityAssetMap.delete(t);
   }
   ClearEntityAsset() {
-    this.AEr.clear();
+    this.AllEntityAssetMap.clear();
   }
   AddNeedWaitEntity(t) {
     this.LoadingNeedWaitEntitySet.add(t);
@@ -108,7 +121,7 @@ class PreloadModelNew extends ModelBase_1.ModelBase {
   AddCommonSkill(t, e, i) {
     return this.PEr.has(t)
       ? (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Preload", 3, "[预加载] 重复添加技能", [
+          Log_1.Log.Error("Preload", 4, "[预加载] 重复添加技能", [
             "SkillId",
             t,
           ]),

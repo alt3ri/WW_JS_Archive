@@ -12,23 +12,44 @@ class SCreatureGenBlackboardMaps {
   get MapString() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.mapstringLength(),
-      (t) => this.mapstring(t)?.key(),
-      (t) => this.mapstring(t)?.value(),
+      this.mapstringKey,
+      this.mapstringValue,
+      this,
     );
+  }
+  mapstringKey(t) {
+    return this.mapstring(t)?.key();
+  }
+  mapstringValue(t) {
+    return this.mapstring(t)?.value();
   }
   get MapInt() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.mapintLength(),
-      (t) => this.mapint(t)?.key(),
-      (t) => this.mapint(t)?.value(),
+      this.mapintKey,
+      this.mapintValue,
+      this,
     );
+  }
+  mapintKey(t) {
+    return this.mapint(t)?.key();
+  }
+  mapintValue(t) {
+    return this.mapint(t)?.value();
   }
   get MapBool() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.mapboolLength(),
-      (t) => this.mapbool(t)?.key(),
-      (t) => this.mapbool(t)?.value(),
+      this.mapboolKey,
+      this.mapboolValue,
+      this,
     );
+  }
+  mapboolKey(t) {
+    return this.mapbool(t)?.key();
+  }
+  mapboolValue(t) {
+    return this.mapbool(t)?.value();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;

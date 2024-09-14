@@ -21,16 +21,23 @@ class ObjectSystem {
     );
   }
   static Create(t) {
-    Stats_1.Stat.Enable && !this.sY.get(t) && this.sY.set(t, void 0);
     let e = void 0,
-      s = 0,
-      i = 0;
-    if (this.Objects.length < this.aY)
-      (s = this.Objects.length),
-        (e = new t(0, s)),
-        this.Objects.push(e),
+      s =
+        (!Stats_1.Stat.Enable ||
+          (e = this.sY.get(t)) ||
+          ((e = Stats_1.Stat.Create("ObjectSystem.Create." + t.name)),
+          this.sY.set(t, e)),
+        void 0),
+      i = 0,
+      h = 0;
+    if (this.Objects.length <= this.aY)
+      (i = this.Objects.length),
+        e?.Start(),
+        (s = new t(0, i)),
+        e?.Stop(),
+        this.Objects.push(s),
         this.rY.push(1),
-        (i = 1);
+        (h = 1);
     else {
       if (!(0 < this.nY.length))
         return void (
@@ -43,13 +50,15 @@ class ObjectSystem {
             ["Effects.length", this.Objects.length],
           )
         );
-      (s = this.nY.pop()),
-        (e = new t(0, s)),
-        (this.Objects[s] = e),
-        (i = ++this.rY[s]) > this.hY && ((i = 1), (this.rY[s] = i));
+      (i = this.nY.pop()),
+        e?.Start(),
+        (s = new t(0, i)),
+        e?.Stop(),
+        (this.Objects[i] = s),
+        (h = ++this.rY[i]) > this.hY && ((h = 1), (this.rY[i] = h));
     }
-    t = (s << this.VersionDigit) | i;
-    return (e.Id = t), e;
+    t = (i << this.VersionDigit) | h;
+    return (s.Id = t), s;
   }
   static CreateExternal(t) {
     let e = 0,
@@ -90,7 +99,7 @@ class ObjectSystem {
   (ObjectSystem.lY = 32),
   (ObjectSystem._Y = 16),
   (ObjectSystem.VersionDigit = ObjectSystem.lY - ObjectSystem._Y),
-  (ObjectSystem.aY = (1 << ObjectSystem._Y) - 1),
+  (ObjectSystem.aY = (1 << (ObjectSystem._Y - 1)) - 1),
   (ObjectSystem.hY = (1 << ObjectSystem.VersionDigit) - 1),
   (ObjectSystem.Objects = new Array()),
   (ObjectSystem.rY = new Array()),

@@ -10,18 +10,24 @@ class LoadingLevelArea {
     return this.id();
   }
   get LevelRange() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.levelrangeLength(), (t) =>
-      this.levelrange(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.levelrangeLength(),
+      this.levelrange,
+      this,
     );
   }
   get AreaId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.areaidLength(), (t) =>
-      this.areaid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.areaidLength(),
+      this.areaid,
+      this,
     );
   }
   get MapId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.mapidLength(), (t) =>
-      this.mapid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.mapidLength(),
+      this.mapid,
+      this,
     );
   }
   get ConditionGroup() {

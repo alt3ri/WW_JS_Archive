@@ -13,8 +13,10 @@ class Filter {
     return this.datatype();
   }
   get RuleList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.rulelistLength(), (t) =>
-      this.rulelist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.rulelistLength(),
+      this.rulelist,
+      this,
     );
   }
   get IsSupportSelectAll() {

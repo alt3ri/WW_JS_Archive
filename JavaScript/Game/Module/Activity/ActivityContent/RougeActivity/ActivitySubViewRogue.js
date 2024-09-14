@@ -49,7 +49,7 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
               (e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData) &&
             ((e =
               ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-                e.MHn,
+                e.UHn,
               )),
             ((i = new PayShopViewData_1.PayShopViewData()).ShowShopIdList = [
               e.ShopId,
@@ -79,11 +79,7 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
               this.ActivityBaseData.Id,
             )
           : ((i = this.ActivityBaseData.GetUnFinishPreGuideQuestId()),
-            UiManager_1.UiManager.OpenView("QuestView", i),
-            ModelManager_1.ModelManager.ActivityModel.SendActivityViewJumpClickLogData(
-              this.ActivityBaseData,
-              1,
-            )),
+            UiManager_1.UiManager.OpenView("QuestView", i)),
           (this.ActivityBaseData.FunctionBtnRedDot = !1);
       });
   }
@@ -120,7 +116,9 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
         ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
         await this.UNe.CreateThenShowByActorAsync(i.GetOwner()),
         this.GetItem(3));
-    (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
+    (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(
+      this.ActivityBaseData,
+    )),
       await this.ANe.CreateThenShowByActorAsync(i.GetOwner());
   }
   OnStart() {
@@ -140,18 +138,25 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
       this.UNe.SetTitleByTextId("CollectActivity_reward"),
       this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
       this.UNe.RefreshItemLayout(t),
-      this.ANe.FunctionButton?.BindCallback(this.DFe),
+      this.ANe.FunctionButton.SetFunction(this.DFe),
       (e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         "CollectActivity_Button_ahead",
       )),
       this.ANe.FunctionButton.SetText(e),
       this.OnRefreshView());
   }
-  OnBeforeShow() {
-    RedDotController_1.RedDotController.BindRedDot(
-      "RoguelikeAchievement",
-      this.GetItem(6),
-    ),
+  async OnBeforeHideSelfAsync() {
+    RedDotController_1.RedDotController.UnBindRedDot("RoguelikeAchievement"),
+      RedDotController_1.RedDotController.UnBindRedDot("RoguelikeShop");
+  }
+  OnRefreshView() {
+    this._Fe(),
+      this.FNe(),
+      this.BNe(),
+      RedDotController_1.RedDotController.BindRedDot(
+        "RoguelikeAchievement",
+        this.GetItem(6),
+      ),
       RedDotController_1.RedDotController.BindRedDot(
         "RoguelikeShop",
         this.GetItem(7),
@@ -162,25 +167,15 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
     var i = this.ActivityBaseData.GetPreGuideQuestFinishState();
     this.GetItem(8).SetUIActive(i), this.GetItem(9).SetUIActive(i);
   }
-  OnBeforeHide() {
-    RedDotController_1.RedDotController.UnBindRedDot("RoguelikeAchievement"),
-      RedDotController_1.RedDotController.UnBindRedDot("RoguelikeShop");
-  }
-  OnRefreshView() {
-    this._Fe(), this.FNe(), this.BNe();
-  }
   OnTimer(i) {
-    this.OnRefreshView();
+    this._Fe(), this.FNe(), this.BNe();
   }
   BNe() {
     this.ANe?.SetFunctionRedDotVisible(this.ActivityBaseData.RedPointShowState);
   }
   FNe() {
-    var i;
-    0 === this.ActivityBaseData.GetRogueActivityState()
-      ? (([, i] = this.GetTimeVisibleAndRemainTime()),
-        this.LNe.SetTimeTextByText(i))
-      : this.LNe.SetTimeTextByTextId("Rogue_Function_End_Tip");
+    var [, i] = this.GetTimeVisibleAndRemainTime();
+    this.LNe.SetTimeTextByText(i);
   }
   _Fe() {
     var i,
@@ -197,9 +192,10 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
             this.ANe.SetPanelConditionVisible(2 === i),
             this.ANe.SetLockTextByTextId("Rogue_Function_End_Tip"))
         : (this.ANe.FunctionButton?.SetUiActive(!1),
-          (e = this.GetCurrentLockConditionText()),
-          this.ANe.SetLockTextByTextId(e),
-          this.ANe.SetPanelConditionVisible(!0)));
+          this.ANe.SetPerformanceConditionLock(
+            this.ActivityBaseData.ConditionGroupId,
+            this.ActivityBaseData.Id,
+          )));
   }
 }
 exports.ActivitySubViewRogue = ActivitySubViewRogue;

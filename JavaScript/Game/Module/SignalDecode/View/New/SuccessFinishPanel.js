@@ -16,7 +16,7 @@ class SuccessFinishPanel extends UiPanelBase_1.UiPanelBase {
       (this.AMo = () => {
         var e = ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayId;
         GeneralLogicTreeController_1.GeneralLogicTreeController.RequestFinishUiGameplay(
-          Protocol_1.Aki.Protocol.t3s.Proto_MorseCode,
+          Protocol_1.Aki.Protocol.h3s.Proto_MorseCode,
           e.toString(),
         ),
           UiManager_1.UiManager.CloseView("SignalDecodeView");

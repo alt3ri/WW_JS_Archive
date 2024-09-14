@@ -32,18 +32,18 @@ class GachaShareTenPanel extends UiPanelBase_1.UiPanelBase {
     e.sort((e, a) => {
       var r =
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-            e.WVn.f8n,
+            e.e9n.L8n,
           )?.QualityId ?? 0,
         t =
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-            a.WVn.f8n,
+            a.e9n.L8n,
           )?.QualityId ?? 0;
       return r === t
         ? ((e = n(
-            ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(e.WVn.f8n),
+            ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(e.e9n.L8n),
           )),
           n(
-            ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(a.WVn.f8n),
+            ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(a.e9n.L8n),
           ) - e)
         : t - r;
     }),

@@ -31,16 +31,30 @@ class TrackMoonEntrust {
   get CapacityMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.capacitymapLength(),
-      (t) => this.capacitymap(t)?.key(),
-      (t) => this.capacitymap(t)?.value(),
+      this.capacitymapKey,
+      this.capacitymapValue,
+      this,
     );
+  }
+  capacitymapKey(t) {
+    return this.capacitymap(t)?.key();
+  }
+  capacitymapValue(t) {
+    return this.capacitymap(t)?.value();
   }
   get Consume() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.consumeLength(),
-      (t) => this.consume(t)?.key(),
-      (t) => this.consume(t)?.value(),
+      this.consumeKey,
+      this.consumeValue,
+      this,
     );
+  }
+  consumeKey(t) {
+    return this.consume(t)?.key();
+  }
+  consumeValue(t) {
+    return this.consume(t)?.value();
   }
   get Star() {
     return this.star();
@@ -51,19 +65,29 @@ class TrackMoonEntrust {
   get IdeaSuccRatio() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.ideasuccratioLength(),
-      (t) => this.ideasuccratio(t)?.key(),
-      (t) => this.ideasuccratio(t)?.value(),
+      this.ideasuccratioKey,
+      this.ideasuccratioValue,
+      this,
     );
   }
+  ideasuccratioKey(t) {
+    return this.ideasuccratio(t)?.key();
+  }
+  ideasuccratioValue(t) {
+    return this.ideasuccratio(t)?.value();
+  }
   get IdeaSuccMul() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.ideasuccmulLength(), (t) =>
-      this.ideasuccmul(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.ideasuccmulLength(),
+      this.ideasuccmul,
+      this,
     );
   }
   get AttributionSuccRatio() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.attributionsuccratioLength(),
-      (t) => this.attributionsuccratio(t),
+      this.attributionsuccratio,
+      this,
     );
   }
   get AttributeMaxValue() {

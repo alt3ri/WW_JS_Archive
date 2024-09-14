@@ -473,7 +473,7 @@ class SimpleLevelSequenceActor {
                     ),
                 CameraController_1.CameraController.EnterCameraMode(
                   3,
-                  this.NPe ?? 1,
+                  1 === this.jPe ? 0 : (this.NPe ?? 1),
                   0,
                   0,
                   e,

@@ -17,28 +17,42 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configDevicePlatformByPidAndVid.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configDevicePlatformByPidAndVid.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configDevicePlatformByPidAndVid.GetConfig(";
 exports.configDevicePlatformByPidAndVid = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, i = !0) => {
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      e =
+        (n.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
       if (i) {
-        var e = KEY_PREFIX + `#${o})`;
-        const d = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (d) return d;
+        var t = KEY_PREFIX + `#${o})`;
+        const f = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (f)
+          return (
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            f
+          );
       }
       if (
-        (n =
+        (e =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,31 +60,36 @@ exports.configDevicePlatformByPidAndVid = {
               o,
             ]))
       ) {
-        var n,
-          e = void 0;
+        t = void 0;
         if (
-          (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["PidAndVid", o],
           )),
-          n)
+          e)
         ) {
-          const d = DevicePlatform_1.DevicePlatform.getRootAsDevicePlatform(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
+          const f = DevicePlatform_1.DevicePlatform.getRootAsDevicePlatform(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
             i &&
-              ((n = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(n, d)),
+              ((e = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(e, f)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            d
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            f
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    n.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=DevicePlatformByPidAndVid.js.map

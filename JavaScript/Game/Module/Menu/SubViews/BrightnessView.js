@@ -55,11 +55,11 @@ class BrightnessView extends UiViewBase_1.UiViewBase {
           this.nBi(t, !1);
       }),
       (this.hBi = () => {
-        var t = this.MenuDataIns.MenuDataSliderDefault,
+        var t = this.MenuDataIns.SliderDefault,
           t = MenuTool_1.FunctionItemViewTool.GetSliderPosition(
-            this.MenuDataIns.MenuDataSliderRange,
+            this.MenuDataIns.SliderRange,
             t * this.eBi,
-            this.MenuDataIns.MenuDataSliderDigits,
+            this.MenuDataIns.SliderDigits,
           );
         this.GetSlider(2).SetValue(t, !0);
       });
@@ -96,15 +96,15 @@ class BrightnessView extends UiViewBase_1.UiViewBase {
     }),
       (this.iBi = this.OpenParam),
       (this.MenuDataIns = this.iBi[0]);
-    var t = this.MenuDataIns.MenuDataSliderRange[0],
-      i = this.MenuDataIns.MenuDataSliderRange[1],
+    var t = this.MenuDataIns.SliderRange[0],
+      i = this.MenuDataIns.SliderRange[1],
       t =
         ((this.eBi = 0.5 * Math.abs(i - t)),
         (this.tBi =
           MenuController_1.MenuController.GetTargetConfig(
-            this.MenuDataIns.MenuDataFunctionId,
+            this.MenuDataIns.FunctionId,
           ) * this.eBi),
-        this.iBi[1](this.MenuDataIns.MenuDataFunctionId, this.tBi / this.eBi),
+        this.iBi[1](this.MenuDataIns.FunctionId, this.tBi / this.eBi),
         MathUtils_1.MathUtils.RangeClamp(
           this.tBi,
           t,
@@ -128,8 +128,8 @@ class BrightnessView extends UiViewBase_1.UiViewBase {
       ));
   }
   OnBeforeDestroy() {
-    var t = this.MenuDataIns.MenuDataSliderRange[0],
-      i = this.MenuDataIns.MenuDataSliderRange[1],
+    var t = this.MenuDataIns.SliderRange[0],
+      i = this.MenuDataIns.SliderRange[1],
       s = this.GetSlider(2).GetValue(),
       s = MathUtils_1.MathUtils.RangeClamp(
         s,
@@ -139,9 +139,9 @@ class BrightnessView extends UiViewBase_1.UiViewBase {
         i,
       );
     this.IsConfirm && this.tBi !== s
-      ? (this.iBi[1](this.MenuDataIns.MenuDataFunctionId, s / this.eBi),
+      ? (this.iBi[1](this.MenuDataIns.FunctionId, s / this.eBi),
         (this.IsConfirm = !1))
-      : this.iBi[1](this.MenuDataIns.MenuDataFunctionId, this.tBi / this.eBi),
+      : this.iBi[1](this.MenuDataIns.FunctionId, this.tBi / this.eBi),
       this.Vwt?.Clear(),
       this.oBi?.Clear(),
       (this.Vwt = void 0),

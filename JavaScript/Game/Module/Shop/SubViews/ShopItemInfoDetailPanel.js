@@ -187,7 +187,6 @@ class ShopItemInfoDetailPanel extends UiPanelBase_1.UiPanelBase {
         ModelManager_1.ModelManager.ShopModel.OpenItemInfo),
       e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
         t.ItemId,
-        !0,
       ),
       s =
         (LguiUtil_1.LguiUtil.SetLocalText(

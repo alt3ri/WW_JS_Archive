@@ -23,28 +23,28 @@ class TowerDefenseSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       (this.DNe = void 0),
       (this.UNe = void 0),
       (this.ANe = void 0),
-      (this.jJs = () => {
+      (this.kZs = () => {
         var e;
-        this.ActivityBaseData.GetPreGuideQuestFinishState()
-          ? ((e = {
-              MarkId:
-                TowerDefenceController_1.TowerDefenseController.GetMarkIdByActivityId(
-                  this.ActivityBaseData.Id,
-                ),
-              MarkType: 0,
-              OpenAreaId: 0,
-            }),
-            WorldMapController_1.WorldMapController.OpenView(2, !1, e))
-          : ((e = this.ActivityBaseData.GetUnFinishPreGuideQuestId()),
-            UiManager_1.UiManager.OpenView("QuestView", e),
-            ModelManager_1.ModelManager.ActivityModel.SendActivityViewJumpClickLogData(
-              this.ActivityBaseData,
-              1,
-            )),
-          (ModelManager_1.ModelManager.TowerDefenseModel.IsEnterInActivityClicked =
-            !0);
+        (ModelManager_1.ModelManager.TowerDefenseModel.IsEnterInActivityClicked =
+          !0),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+            this.ActivityBaseData.Id,
+          ),
+          this.ActivityBaseData.GetPreGuideQuestFinishState()
+            ? ((e = {
+                MarkId:
+                  TowerDefenceController_1.TowerDefenseController.GetMarkIdByActivityId(
+                    this.ActivityBaseData.Id,
+                  ),
+                MarkType: 0,
+                OpenAreaId: 0,
+              }),
+              WorldMapController_1.WorldMapController.OpenView(2, !1, e))
+            : ((e = this.ActivityBaseData.GetUnFinishPreGuideQuestId()),
+              UiManager_1.UiManager.OpenView("QuestView", e));
       }),
-      (this.cTa = () => {
+      (this.XPa = () => {
         this.ANe.SetRewardRedDotVisible(
           TowerDefenceController_1.TowerDefenseController.CheckHasReward(),
         );
@@ -61,13 +61,13 @@ class TowerDefenseSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RefreshCommonActivityRewardPopUpView,
-      this.cTa,
+      this.XPa,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RefreshCommonActivityRewardPopUpView,
-      this.cTa,
+      this.XPa,
     );
   }
   async OnBeforeStartAsync() {
@@ -81,14 +81,16 @@ class TowerDefenseSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       r =
         ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
         this.GetItem(3));
-    (this.ANe = new ActivityFunctionalArea_1.ActivityFunctionalArea()),
+    (this.ANe = new ActivityFunctionalArea_1.ActivityFunctionalArea(
+      this.ActivityBaseData,
+    )),
       await Promise.all([
         this.LNe.CreateThenShowByActorAsync(e.GetOwner()),
         this.DNe.CreateThenShowByActorAsync(t.GetOwner()),
         this.UNe.CreateThenShowByActorAsync(i.GetOwner()),
         this.ANe.CreateThenShowByActorAsync(r.GetOwner()),
       ]),
-      this.ANe.FunctionButton.SetFunction(this.jJs),
+      this.ANe.FunctionButton.SetFunction(this.kZs),
       this.ANe.SetRewardButtonFunction(
         TowerDefenceController_1.TowerDefenseController.HandleOnClickReward,
       );
@@ -101,8 +103,8 @@ class TowerDefenseSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       this.jqe(),
       this.VNe(),
       this.Eyn(),
-      this.cTa(),
-      this.mTa());
+      this.XPa(),
+      this.YPa());
   }
   OnTimer(e) {
     this.FNe(), this.VNe();
@@ -153,13 +155,16 @@ class TowerDefenseSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
                 "BossRushEnterText",
               )),
             this.ANe.FunctionButton.SetText(e))
-          : this.ANe.SetLockTextByTextId(this.GetCurrentLockConditionText()))
+          : this.ANe.SetPerformanceConditionLock(
+              this.ActivityBaseData.ConditionGroupId,
+              this.ActivityBaseData.Id,
+            ))
       : (this.ANe.SetPanelConditionVisible(!0),
         this.ANe.SetLockTextByTextId("TowerDefence_Cantplay"),
         this.ANe.SetRewardButtonVisible(!1),
         this.ANe.SetFunctionButtonVisible(!1));
   }
-  mTa() {
+  YPa() {
     this.ANe.FunctionButton.SetRedDotVisible(
       TowerDefenceController_1.TowerDefenseController.CheckHasNewStage(),
     );

@@ -84,6 +84,8 @@ class FilterLogic {
           .GetVisionDestroyAttribute,
         27: FilterTypeFunctionLibrary_1.FilterTypeFunctionLibrary
           .GetRoleTagFilterList,
+        28: FilterTypeFunctionLibrary_1.FilterTypeFunctionLibrary
+          .GetItemDeprecateFilterList,
       });
   }
   jLt(e) {

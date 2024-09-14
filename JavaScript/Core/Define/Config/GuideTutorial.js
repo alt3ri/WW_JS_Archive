@@ -16,8 +16,10 @@ class GuideTutorial {
     return this.tutorialorder();
   }
   get PageId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.pageidLength(), (t) =>
-      this.pageid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.pageidLength(),
+      this.pageid,
+      this,
     );
   }
   get PageReplaceConditionGroupId() {
@@ -26,7 +28,8 @@ class GuideTutorial {
   get ReplacePageId() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.replacepageidLength(),
-      (t) => this.replacepageid(t),
+      this.replacepageid,
+      this,
     );
   }
   get GroupName() {

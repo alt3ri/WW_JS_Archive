@@ -19,6 +19,7 @@ const puerts_1 = require("puerts"),
   CombatMessage_1 = require("../Module/CombatMessage/CombatMessage"),
   EntityHandle_1 = require("../NewWorld/Character/EntityHandle"),
   SceneInteractionManager_1 = require("../Render/Scene/Interaction/SceneInteractionManager"),
+  WaitEntityTask_1 = require("../World/Define/WaitEntityTask"),
   SHOW_FAKE_ERROR_CODE_TIPS_INTERVAL = 1e3;
 class LevelGamePlayController extends ControllerBase_1.ControllerBase {
   static HandleScanResponse(e) {
@@ -29,8 +30,8 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
         UE.BPI_CreatureInterface_C.StaticClass(),
       ) ||
       ((e = e), !(e = EntitySystem_1.EntitySystem.Get(e.GetEntityId()))) ||
-      (e.GetComponent(73)?.StartProcess(),
-      e.GetComponent(61)?.ShowScanEffect(),
+      (e.GetComponent(74)?.StartProcess(),
+      e.GetComponent(62)?.ShowScanEffect(),
       0)
     );
   }
@@ -74,14 +75,15 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
   }
   static OnInit() {
     return (
-      Net_1.Net.Register(23301, LevelGamePlayController._Ue),
-      Net_1.Net.Register(18662, LevelGamePlayController.uUe),
-      Net_1.Net.Register(16721, LevelGamePlayController.cUe),
-      Net_1.Net.Register(27240, LevelGamePlayController.mUe),
-      Net_1.Net.Register(24082, LevelGamePlayController.dUe),
-      Net_1.Net.Register(14789, (e) => {
-        this.OnEnableNearbyTrackingNotify(e);
-      }),
+      Net_1.Net.Register(26763, LevelGamePlayController._Ue),
+      Net_1.Net.Register(18924, LevelGamePlayController.uUe),
+      Net_1.Net.Register(15885, LevelGamePlayController.cUe),
+      Net_1.Net.Register(25095, LevelGamePlayController.mUe),
+      Net_1.Net.Register(15374, LevelGamePlayController.dUe),
+      Net_1.Net.Register(
+        27866,
+        LevelGamePlayController.OnEnableNearbyTrackingNotify,
+      ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSceneItemVisionCaptureAdd,
         this.CUe,
@@ -96,11 +98,12 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
   }
   static OnClear() {
     return (
-      Net_1.Net.UnRegister(23301),
-      Net_1.Net.UnRegister(18662),
-      Net_1.Net.UnRegister(16721),
-      Net_1.Net.UnRegister(27240),
-      Net_1.Net.UnRegister(24082),
+      Net_1.Net.UnRegister(26763),
+      Net_1.Net.UnRegister(18924),
+      Net_1.Net.UnRegister(15885),
+      Net_1.Net.UnRegister(25095),
+      Net_1.Net.UnRegister(15374),
+      Net_1.Net.UnRegister(27866),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSceneItemVisionCaptureAdd,
         this.CUe,
@@ -113,41 +116,41 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
     );
   }
   static ThrowDamageChangeRequest(e, t) {
-    var r = Protocol_1.Aki.Protocol.Sms.create();
-    (r.P4n = MathUtils_1.MathUtils.NumberToLong(
+    var r = Protocol_1.Aki.Protocol.Dms.create();
+    (r.F4n = MathUtils_1.MathUtils.NumberToLong(
       ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e),
     )),
-      (r.C5n = MathUtils_1.MathUtils.BigIntToLong(t)),
-      Net_1.Net.Call(14519, r, (e) => {
-        switch (e.O4n) {
-          case Protocol_1.Aki.Protocol.O4n.NRs:
-          case Protocol_1.Aki.Protocol.O4n.Proto_ErrThrowDamageEntityNotExit:
-          case Protocol_1.Aki.Protocol.O4n
+      (r.I5n = MathUtils_1.MathUtils.BigIntToLong(t)),
+      Net_1.Net.Call(24959, r, (e) => {
+        switch (e.Q4n) {
+          case Protocol_1.Aki.Protocol.Q4n.KRs:
+          case Protocol_1.Aki.Protocol.Q4n.Proto_ErrThrowDamageEntityNotExit:
+          case Protocol_1.Aki.Protocol.Q4n
             .Proto_ErrThrowDamageReqEntityIsAlreadyDead:
             break;
           default:
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              10416,
+              e.Q4n,
+              22800,
             );
         }
       });
   }
   static ManipulatableBeCastOrDrop2Server(e, t) {
-    var r = Protocol_1.Aki.Protocol.yds.create();
-    (r.P4n = MathUtils_1.MathUtils.NumberToLong(
+    var r = Protocol_1.Aki.Protocol.Uds.create();
+    (r.F4n = MathUtils_1.MathUtils.NumberToLong(
       ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e),
     )),
-      (r.g5n = t ? 1 : 2),
-      Net_1.Net.Call(14858, r, (e) => {
-        switch (e.O4n) {
-          case Protocol_1.Aki.Protocol.O4n.NRs:
-          case Protocol_1.Aki.Protocol.O4n.Proto_ErrBeControlledEntityNotExist:
+      (r.T5n = t ? 1 : 2),
+      Net_1.Net.Call(20527, r, (e) => {
+        switch (e.Q4n) {
+          case Protocol_1.Aki.Protocol.Q4n.KRs:
+          case Protocol_1.Aki.Protocol.Q4n.Proto_ErrBeControlledEntityNotExist:
             break;
           default:
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              10416,
+              e.Q4n,
+              22800,
             );
         }
       });
@@ -155,19 +158,19 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
   static async GetRewardTreasureBoxRequest(e) {
     if (this.fUe?.get(e)) return !1;
     this.fUe.set(e, !0);
-    var t = Protocol_1.Aki.Protocol.Tms.create(),
+    var t = Protocol_1.Aki.Protocol.wms.create(),
       t =
-        ((t.P4n = MathUtils_1.MathUtils.NumberToLong(
+        ((t.F4n = MathUtils_1.MathUtils.NumberToLong(
           ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e),
         )),
-        await Net_1.Net.CallAsync(18905, t));
+        await Net_1.Net.CallAsync(27451, t));
     return (
       this.fUe.delete(e),
       !!t &&
-        (t.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+        (t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              t.O4n,
-              24972,
+              t.Q4n,
+              26500,
             ),
             !1)
           : (EventSystem_1.EventSystem.Emit(
@@ -177,22 +180,22 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
     );
   }
   static ElevatorStateChangeRequest(e, t, r, a) {
-    var o = Protocol_1.Aki.Protocol.kZn.create();
-    (o.P4n = MathUtils_1.MathUtils.NumberToLong(
+    var o = Protocol_1.Aki.Protocol.WZn.create();
+    (o.F4n = MathUtils_1.MathUtils.NumberToLong(
       ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e),
     )),
-      (o.f5n = t),
-      (o.F4n = r),
-      Net_1.Net.Call(18267, o, (e) => {
+      (o.L5n = t),
+      (o.Y4n = r),
+      Net_1.Net.Call(24055, o, (e) => {
         if ((a(), e))
-          switch (e.O4n) {
-            case Protocol_1.Aki.Protocol.O4n.NRs:
-            case Protocol_1.Aki.Protocol.O4n.Proto_ErrElevatorLocked:
+          switch (e.Q4n) {
+            case Protocol_1.Aki.Protocol.Q4n.KRs:
+            case Protocol_1.Aki.Protocol.Q4n.Proto_ErrElevatorLocked:
               break;
             default:
               ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.O4n,
-                28903,
+                e.Q4n,
+                15801,
               );
           }
       });
@@ -205,7 +208,7 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
         i,
         _ = (e =
           t instanceof EntityHandle_1.EntityHandle ? t.Entity : t).GetComponent(
-          185,
+          187,
         );
       _.IsMoveAutonomousProxy &&
         ((n = new UE.Transform()),
@@ -215,7 +218,7 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
           .GetMainCollisionActor(_.GetSceneInteractionLevelHandleId())
           .GetActorBounds(!1, i, l),
         n.SetLocation((0, puerts_1.$unref)(i)),
-        (_ = e.GetComponent(142)),
+        (_ = e.GetComponent(143)),
         (l = r ?? "ResetPositionTip"),
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           l,
@@ -225,7 +228,7 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
               ? _.ResetItemLocationAndRotation(a, !0)
               : _.ResetItemLocationAndRotation(),
             (n = Global_1.Global.BaseCharacter) &&
-              ((i = n.CharacterActorComponent.Entity.GetComponent(56)),
+              ((i = n.CharacterActorComponent.Entity.GetComponent(57)),
               t.Id === i.GetHoldingEntity()?.Id) &&
               i.StopManipualte())
           : Log_1.Log.CheckDebug() &&
@@ -243,49 +246,51 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
         );
   }
   static EntityFollowTrackRequest(e, t) {
-    var r = Protocol_1.Aki.Protocol.xds.create();
-    (r.P4n = MathUtils_1.MathUtils.NumberToLong(e)),
-      Net_1.Net.Call(25800, r, t);
+    var r = Protocol_1.Aki.Protocol.Nds.create();
+    (r.F4n = MathUtils_1.MathUtils.NumberToLong(e)),
+      Net_1.Net.Call(20847, r, t);
   }
   static EntityBuffProducerRequest(e, t) {
-    var r = Protocol_1.Aki.Protocol.res.create();
-    (r.p5n = MathUtils_1.MathUtils.NumberToLong(e)),
-      Net_1.Net.Call(11292, r, t);
+    var r = Protocol_1.Aki.Protocol._es.create();
+    (r.D5n = MathUtils_1.MathUtils.NumberToLong(e)),
+      Net_1.Net.Call(24695, r, t);
   }
   static ShootTargetHitGearStateChangeRequest(e, t) {
-    var r = Protocol_1.Aki.Protocol.pms.create();
-    (r.P4n = MathUtils_1.MathUtils.NumberToLong(
+    var r = Protocol_1.Aki.Protocol.Lms.create();
+    (r.F4n = MathUtils_1.MathUtils.NumberToLong(
       ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e),
     )),
-      Net_1.Net.Call(13283, r, t);
+      Net_1.Net.Call(16494, r, t);
   }
-  static OnEnableNearbyTrackingNotify(e) {
-    var t = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
-    if (t === e.n5n)
-      for (const a of e.v5n) {
-        var r =
-          ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(a);
-        r && (r = r.Entity.GetComponent(146)) && (r.EnableTracking = !1);
-      }
+  static OnEnableNearbyTrackingNotify(t) {
+    for (const e of t.PSs) {
+      const r = MathUtils_1.MathUtils.LongToNumber(e);
+      WaitEntityTask_1.WaitEntityTask.Create(r, (e) => {
+        e &&
+          (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(r)) &&
+          (e = e.Entity.GetComponent(147)) &&
+          (e.EnableTracking = t.yIs);
+      });
+    }
   }
   static EntityAdsorbRequest(e, t) {
-    var r = Protocol_1.Aki.Protocol.bes.create();
-    (r.P4n = e), Net_1.Net.Call(29942, r, t);
+    var r = Protocol_1.Aki.Protocol.Fes.create();
+    (r.F4n = e), Net_1.Net.Call(19484, r, t);
   }
   static RequestChairSit(e, t, r) {
-    var a = Protocol_1.Aki.Protocol.Yds.create(),
+    var a = Protocol_1.Aki.Protocol.rms.create(),
       e =
-        ((a.P4n = MathUtils_1.MathUtils.NumberToLong(e)),
-        (a.M5n = t),
+        ((a.F4n = MathUtils_1.MathUtils.NumberToLong(e)),
+        (a.U5n = t),
         Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.GetComponent(
           0,
         ).GetCreatureDataId());
-    e && (a.S5n = CombatMessage_1.CombatNet.CreateCombatCommon(e)),
-      (a.E5n = r),
-      Net_1.Net.Call(14933, a, (e) => {
+    e && (a.R5n = CombatMessage_1.CombatNet.CreateCombatCommon(e)),
+      (a.x5n = r),
+      Net_1.Net.Call(22679, a, (e) => {
         Global_1.Global.BaseCharacter.CharacterActorComponent?.Entity.GetComponent(
           26,
-        )?.OnResponseSit(t, e.O4n);
+        )?.OnResponseSit(t, e.Q4n);
       });
   }
 }
@@ -298,17 +303,17 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
         "World",
         18,
         "服务端通知耐久度变化",
-        ["CreatureDataId", e.P4n],
-        ["耐久度", e.Oqs],
+        ["CreatureDataId", e.F4n],
+        ["耐久度", e.jqs],
       );
     var t,
       r,
       a = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-        MathUtils_1.MathUtils.LongToNumber(e.P4n),
+        MathUtils_1.MathUtils.LongToNumber(e.F4n),
       );
     a?.Valid &&
       ((t = a.Entity.GetComponent(0)),
-      (e = e.Oqs),
+      (e = e.jqs),
       (r = t.GetDurabilityValue()),
       t.SetDurabilityValue(e),
       EventSystem_1.EventSystem.Emit(
@@ -319,25 +324,25 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
       ));
   }),
   (LevelGamePlayController._Ue = (e) => {
-    var t = MathUtils_1.MathUtils.LongToNumber(e.J4n),
+    var t = MathUtils_1.MathUtils.LongToNumber(e.s5n),
       t = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
     t &&
-      (t.Entity.GetComponent(0).UpdateEntityCommonTags(e.eSs),
-      t.Entity.GetComponent(180).SyncTagsFromServer(e.eSs));
+      (t.Entity.GetComponent(0).UpdateEntityCommonTags(e.aSs),
+      t.Entity.GetComponent(181).SyncTagsFromServer(e.aSs));
   }),
   (LevelGamePlayController.dUe = (e) => {
-    var t = MathUtils_1.MathUtils.LongToNumber(e.P4n),
+    var t = MathUtils_1.MathUtils.LongToNumber(e.F4n),
       t = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
     t
-      ? (t = t.Entity.GetComponent(125)) && t.SetTargetFloor(e.y5n)
+      ? (t = t.Entity.GetComponent(126)) && t.SetTargetFloor(e.P5n)
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("SceneItem", 36, "OnElevatorMoveNotify No Entity", [
           "id",
-          e.P4n,
+          e.F4n,
         ]);
   }),
   (LevelGamePlayController.mUe = (e) => {
-    e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e.P4n);
+    e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e.F4n);
     LevelGamePlayController.OnManipulatableItemExitAreaInternal(e, void 0);
   }),
   (LevelGamePlayController.CUe = (e, t) => {

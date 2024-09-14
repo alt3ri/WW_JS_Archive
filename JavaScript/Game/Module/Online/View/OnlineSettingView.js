@@ -12,7 +12,7 @@ const UE = require("ue"),
 class OnlineSettingView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.hOi = Protocol_1.Aki.Protocol.$8s.Proto_ConfirmJoin),
+      (this.hOi = Protocol_1.Aki.Protocol.Y8s.Proto_ConfirmJoin),
       (this.lOi = void 0),
       (this.Bpt = (e) => this.hOi !== e),
       (this._Oi = () => {

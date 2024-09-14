@@ -10,7 +10,7 @@ class LevelEventToggleScanSplineEffect extends LevelGeneralBase_1.LevelEventBase
   ExecuteNew(e, o) {
     if (e) {
       (6 === o.Type &&
-        o.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest) ||
+        o.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest) ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Event", 32, "该事件仅用于任务行为树内配置"));
       var r = o,

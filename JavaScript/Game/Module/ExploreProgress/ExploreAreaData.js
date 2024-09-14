@@ -35,10 +35,10 @@ class ExploreAreaData {
     });
   }
   Refresh(t) {
-    this.VVt = t.DPs;
+    this.VVt = t.BPs;
     var e = ConfigManager_1.ConfigManager.ExploreProgressConfig;
-    for (const a of t.wVn) {
-      var r = e.GetExploreProgressConfigById(a.APs).ExploreType;
+    for (const a of t.HVn) {
+      var r = e.GetExploreProgressConfigById(a.qPs).ExploreType;
       this.HVt.get(r)?.Refresh(a);
     }
   }

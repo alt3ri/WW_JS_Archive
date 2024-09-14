@@ -10,17 +10,17 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class BlockInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
   OnRefresh() {
     var t;
-    return this.v$e() &&
-      ModelManager_1.ModelManager.SeamlessTravelModel.InSeamlessTraveling
+    return ModelManager_1.ModelManager.SeamlessTravelModel.IsSeamlessTravel ||
+      ModelManager_1.ModelManager.TeleportModel.IsInSeamlessTeleport
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Input",
-            8,
-            "[InputDistribute]无缝加载过渡场景中，只允许角色移动输入",
+            51,
+            "[InputDistribute]无缝加载过渡场景中，只允许角色轴向输入",
           ),
         this.SetInputDistributeTag(
           InputDistributeDefine_1.inputDistributeTagDefine.FightInputRoot
-            .AxisInput.MoveInputTag,
+            .AxisInputTag,
         ),
         !0)
       : this.v$e()
@@ -48,7 +48,7 @@ class BlockInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
               InputDistributeDefine_1.inputDistributeTagDefine.BlockAllInputTag,
             ),
             !0)
-          : this.NMa()
+          : this.iIa()
             ? (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Input",
@@ -72,84 +72,97 @@ class BlockInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
                     .BlockAllInputTag,
                 ),
                 !0)
-              : this.Pdr()
+              : ModelManager_1.ModelManager.DeadReviveModel.BlockAllInput
                 ? (Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "Input",
-                      46,
-                      "[InputDistribute]黑幕中，则设置输入分发tag为 MouseInputTag",
+                      49,
+                      "[InputDistribute]死亡界面打开中设置输入分发tag为 BlockAllInputTag",
                     ),
                   this.SetInputDistributeTag(
-                    InputDistributeDefine_1.inputDistributeTagDefine.UiInputRoot
-                      .MouseInputTag,
+                    InputDistributeDefine_1.inputDistributeTagDefine
+                      .BlockAllInputTag,
                   ),
                   !0)
-                : CameraController_1.CameraController.IsSequenceCameraInCinematic()
+                : this.Pdr()
                   ? (Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
                         "Input",
-                        8,
-                        "[InputDistribute]玩家角色在播放处决中，大招中等镜头时，只允许角色技能输入，设置输入分发tag为 CharacterSkillInputTag",
+                        46,
+                        "[InputDistribute]黑幕中，则设置输入分发tag为 MouseInputTag",
                       ),
                     this.SetInputDistributeTag(
                       InputDistributeDefine_1.inputDistributeTagDefine
-                        .FightInputRoot.ActionInput.CharacterSkillInputTag,
+                        .UiInputRoot.MouseInputTag,
                     ),
                     !0)
-                  : ModelManager_1.ModelManager.MapModel?.IsInUnopenedAreaPullback()
+                  : CameraController_1.CameraController.IsSequenceCameraInCinematic()
                     ? (Log_1.Log.CheckInfo() &&
                         Log_1.Log.Info(
                           "Input",
                           8,
-                          "[InputDistribute]角色进入未开放区域启动拉回，设置输入分发tag为 MouseInputTag",
+                          "[InputDistribute]玩家角色在播放处决中，大招中等镜头时，只允许角色技能输入，设置输入分发tag为 CharacterSkillInputTag",
                         ),
                       this.SetInputDistributeTag(
                         InputDistributeDefine_1.inputDistributeTagDefine
-                          .UiInputRoot.MouseInputTag,
+                          .FightInputRoot.ActionInput.CharacterSkillInputTag,
                       ),
                       !0)
-                    : (t =
-                          ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
-                            188,
-                          )) && t.HasTag(191377386)
+                    : ModelManager_1.ModelManager.MapModel?.IsInUnopenedAreaPullback()
                       ? (Log_1.Log.CheckInfo() &&
                           Log_1.Log.Info(
                             "Input",
                             8,
-                            "[InputDistribute]角色落水中，则设置输入分发tag为 MouseInputTag",
+                            "[InputDistribute]角色进入未开放区域启动拉回，设置输入分发tag为 MouseInputTag",
                           ),
                         this.SetInputDistributeTag(
                           InputDistributeDefine_1.inputDistributeTagDefine
                             .UiInputRoot.MouseInputTag,
                         ),
                         !0)
-                      : ModelManager_1.ModelManager.MenuModel?.IsWaitForKeyInput
+                      : (t =
+                            ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
+                              190,
+                            )) && t.HasTag(191377386)
                         ? (Log_1.Log.CheckInfo() &&
                             Log_1.Log.Info(
                               "Input",
                               8,
-                              "[InputDistribute]玩家设置按键中，则设置输入分发tag为 NavigationTag",
-                            ),
-                          this.SetInputDistributeTags([
-                            InputDistributeDefine_1.inputDistributeTagDefine
-                              .UiInputRoot.NavigationTag,
-                            InputDistributeDefine_1.inputDistributeTagDefine
-                              .UiInputRoot.MouseInputTag,
-                          ]),
-                          !0)
-                        : !!ModelManager_1.ModelManager.GeneralLogicTreeModel
-                            .DisableInput &&
-                          (Log_1.Log.CheckInfo() &&
-                            Log_1.Log.Info(
-                              "Input",
-                              8,
-                              "[InputDistribute]行为配置禁用输入 设置输入分发tag为 BlockAllInputTag",
+                              "[InputDistribute]角色落水中，则设置输入分发tag为 MouseInputTag",
                             ),
                           this.SetInputDistributeTag(
                             InputDistributeDefine_1.inputDistributeTagDefine
-                              .BlockAllInputTag,
+                              .UiInputRoot.MouseInputTag,
                           ),
-                          !0);
+                          !0)
+                        : ModelManager_1.ModelManager.MenuModel
+                              ?.IsWaitForKeyInput
+                          ? (Log_1.Log.CheckInfo() &&
+                              Log_1.Log.Info(
+                                "Input",
+                                8,
+                                "[InputDistribute]玩家设置按键中，则设置输入分发tag为 NavigationTag",
+                              ),
+                            this.SetInputDistributeTags([
+                              InputDistributeDefine_1.inputDistributeTagDefine
+                                .UiInputRoot.NavigationTag,
+                              InputDistributeDefine_1.inputDistributeTagDefine
+                                .UiInputRoot.MouseInputTag,
+                            ]),
+                            !0)
+                          : !!ModelManager_1.ModelManager.GeneralLogicTreeModel
+                              .DisableInput &&
+                            (Log_1.Log.CheckInfo() &&
+                              Log_1.Log.Info(
+                                "Input",
+                                8,
+                                "[InputDistribute]行为配置禁用输入 设置输入分发tag为 BlockAllInputTag",
+                              ),
+                            this.SetInputDistributeTag(
+                              InputDistributeDefine_1.inputDistributeTagDefine
+                                .BlockAllInputTag,
+                            ),
+                            !0);
   }
   v$e() {
     return ModelManager_1.ModelManager.LoadingModel.IsLoading;
@@ -159,7 +172,7 @@ class BlockInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
       1 === ModelManager_1.ModelManager.ReConnectModel.GetReConnectStatus()
     );
   }
-  NMa() {
+  iIa() {
     return ModelManager_1.ModelManager.KuroSdkModel.GetSdkFocusState();
   }
   Pdr() {

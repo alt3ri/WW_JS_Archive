@@ -6,16 +6,19 @@ const Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
   ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  ModelManager_1 = require("../../Manager/ModelManager"),
-  PlayerEntity_1 = require("../../NewWorld/Player/PlayerEntity");
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class FormationDataController extends ControllerBase_1.ControllerBase {
   static get Model() {
     return ModelManager_1.ModelManager.FormationDataModel;
   }
   static OnInit() {
     return (
+      Net_1.Net.Register(24494, FormationDataController.kVa),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.InputControllerChange,
         this.lqt,
@@ -25,6 +28,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
   }
   static OnClear() {
     return (
+      Net_1.Net.UnRegister(24494),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.InputControllerChange,
         this.lqt,
@@ -47,38 +51,22 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
   static SetTimeDilation(t) {
     for (const e of this.ebe.values()) e.IsInit && e.SetTimeDilation(t);
   }
-  static CreatePlayerEntity(t) {
-    var e = EntitySystem_1.EntitySystem.Create(
-      PlayerEntity_1.PlayerEntity,
-      void 0,
-      { PlayerId: t },
-    );
-    if (e)
-      return (
-        EntitySystem_1.EntitySystem.Init(e),
-        EntitySystem_1.EntitySystem.Start(e),
-        EntitySystem_1.EntitySystem.Activate(e),
-        this.ebe.set(t, e),
-        e
-      );
+  static RegisterPlayerEntity(t, e) {
+    this.ebe.set(t, e),
+      ModelManager_1.ModelManager.CreatureModel.GetPlayerId() === t &&
+        this.Wea();
+  }
+  static UnRegisterPlayerEntity(t) {
+    this.ebe.delete(t);
   }
   static GetPlayerEntity(t) {
     return this.ebe.get(t);
   }
-  static RefreshPlayerEntities(t) {
-    for (const e of this.ebe.values())
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Character", 20, "清除编队实体", [
-          "PlayerId",
-          e.PlayerId,
-        ]),
-        EntitySystem_1.EntitySystem.Destroy(e);
+  static RefreshPlayerEntities() {
     this.ebe.clear();
-    for (const a of t)
-      this.CreatePlayerEntity(a.q5n)
-        ?.GetComponent(183)
-        ?.AddInitPlayerBuff(a._Rs);
-    this.Vzs();
+  }
+  static IsPlayerExist(t) {
+    return this.ebe.has(t);
   }
   static MarkAggroDirty() {
     this.tbe = !0;
@@ -88,7 +76,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
       this.tbe = !1;
       var t =
         ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
-          160,
+          161,
         )?.GetAggroSet();
       const a = this.Model.PlayerAggroSet;
       (this.ibe.length = 0),
@@ -99,28 +87,35 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
       for (const r of a.values()) t?.has(r) || this.bie.push(r);
       for (const o of this.ibe) this.Model.PlayerAggroSet.add(o);
       for (const i of this.bie) this.Model.PlayerAggroSet.delete(i);
-      for (const n of this.ibe) {
-        EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnAggroAdd, n);
-        var e = EntitySystem_1.EntitySystem.Get(n)
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnAggroAdd,
+        this.ibe,
+      );
+      for (const s of this.ibe) {
+        var e = EntitySystem_1.EntitySystem.Get(s)
           ?.GetComponent(0)
           ?.GetBaseInfo();
         !e ||
           (3 !== (e = e.Category.MonsterMatchType) && 2 !== e) ||
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnBossFight,
-            n,
+            s,
           );
       }
-      for (const s of this.bie)
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.OnAggroRemoved,
-          s,
-        );
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnAggroRemoved,
+        this.bie,
+      );
     }
   }
   static NotifyInFight(t) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Battle", 25, "NotifyInFight: " + t),
+      t &&
+        ResourceSystem_1.ResourceSystem.ResetLoadMode(
+          GlobalData_1.GlobalData.World,
+          !0,
+        ),
       FormationDataController.wK !== t &&
         ((FormationDataController.wK = t),
         EventSystem_1.EventSystem.Emit(
@@ -129,7 +124,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
         ));
   }
   static AddPlayerTag(t, e) {
-    var a = this.GetPlayerEntity(t)?.GetComponent(184);
+    var a = this.GetPlayerEntity(t)?.GetComponent(185);
     a
       ? a?.AddTag(e)
       : Log_1.Log.CheckError() &&
@@ -139,7 +134,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
         ]);
   }
   static RemovePlayerTag(t, e) {
-    var a = this.GetPlayerEntity(t)?.GetComponent(184);
+    var a = this.GetPlayerEntity(t)?.GetComponent(185);
     a
       ? a?.RemoveTag(e)
       : Log_1.Log.CheckError() &&
@@ -149,9 +144,9 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
         ]);
   }
   static GetPlayerTagCount(t, e) {
-    var a = this.GetPlayerEntity(t)?.GetComponent(184);
+    var a = this.GetPlayerEntity(t)?.GetComponent(185);
     return a
-      ? a?.GetTagCount(e) ?? 0
+      ? (a?.GetTagCount(e) ?? 0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Battle", 20, "找不到对应的PlayerTag组件", [
             "PlayerId",
@@ -160,9 +155,9 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
         0);
   }
   static HasPlayerTag(t, e) {
-    var a = this.GetPlayerEntity(t)?.GetComponent(184);
+    var a = this.GetPlayerEntity(t)?.GetComponent(185);
     return a
-      ? a?.HasTag(e) ?? !1
+      ? (a?.HasTag(e) ?? !1)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Battle", 20, "找不到对应的PlayerTag组件", [
             "PlayerId",
@@ -172,39 +167,52 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
   }
   static SetKeyboardLockEnemyMode(t) {
     (ModelManager_1.ModelManager.FormationDataModel.KeyboardLockEnemyMode = t),
-      this.Vzs();
+      this.Wea();
   }
   static SetGamepadLockEnemyMode(t) {
     (ModelManager_1.ModelManager.FormationDataModel.GamepadLockEnemyMode = t),
-      this.Vzs();
+      this.Wea();
   }
-  static Vzs() {
-    var t = ModelManager_1.ModelManager.FormationDataModel;
-    let e = t.KeyboardLockEnemyMode;
-    Info_1.Info.IsInGamepad() && (e = t.GamepadLockEnemyMode);
-    var a = ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
-      r = -2091266968;
-    switch (
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Character", 20, "刷新索敌模式Tag", [
-          "lockEnemyMode",
-          e,
-        ]),
-      e)
-    ) {
-      case 0:
-        this.HasPlayerTag(a, r) && this.RemovePlayerTag(a, r);
-        break;
-      case 1:
-        this.HasPlayerTag(a, r) || this.AddPlayerTag(a, r);
+  static Wea() {
+    var e = ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
+    if (this.IsPlayerExist(e)) {
+      var a = ModelManager_1.ModelManager.FormationDataModel;
+      let t = a.KeyboardLockEnemyMode;
+      Info_1.Info.IsInGamepad() && (t = a.GamepadLockEnemyMode);
+      var r = -2091266968;
+      switch (
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Character", 8, "刷新索敌模式Tag", [
+            "lockEnemyMode",
+            t,
+          ]),
+        t)
+      ) {
+        case 0:
+          this.HasPlayerTag(e, r) && this.RemovePlayerTag(e, r);
+          break;
+        case 1:
+          this.HasPlayerTag(e, r) || this.AddPlayerTag(e, r);
+      }
     }
   }
 }
 (exports.FormationDataController = FormationDataController),
   ((_a = FormationDataController).lqt = (t, e) => {
-    _a.Vzs();
+    _a.Wea();
   }),
   (FormationDataController.ebe = new Map()),
+  (FormationDataController.kVa = (t) => {
+    var e = t.W5n,
+      a = _a.GetPlayerEntity(e)?.GetComponent(206);
+    a
+      ? a.UpdateFollowers(t.jih)
+      : Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn("Battle", 49, "找不到对应的PlayerFollower组件", [
+          "PlayerId",
+          e,
+        ]);
+  }),
   (FormationDataController.ibe = []),
   (FormationDataController.bie = []),
   (FormationDataController.tbe = !1),

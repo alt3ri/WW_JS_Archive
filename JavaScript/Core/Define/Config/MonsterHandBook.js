@@ -19,18 +19,24 @@ class MonsterHandBook {
     return this.meshid();
   }
   get Scale() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.scaleLength(), (t) =>
-      this.scale(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.scaleLength(),
+      this.scale,
+      this,
     );
   }
   get Position() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.positionLength(), (t) =>
-      this.position(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.positionLength(),
+      this.position,
+      this,
     );
   }
   get Rotator() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.rotatorLength(), (t) =>
-      this.rotator(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.rotatorLength(),
+      this.rotator,
+      this,
     );
   }
   get StandAnim() {
@@ -46,8 +52,10 @@ class MonsterHandBook {
     return this.fightskilldescrtption();
   }
   get PhantomItem() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.phantomitemLength(), (t) =>
-      this.phantomitem(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.phantomitemLength(),
+      this.phantomitem,
+      this,
     );
   }
   __init(t, i) {

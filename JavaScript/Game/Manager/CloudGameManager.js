@@ -19,11 +19,11 @@ class CloudGameManager {
       CloudGameManager.IsCloudGame &&
         ((e = new ue_1.KuroCloudGameWrapper()),
         (CloudGameManager.KuroCloudGameWrapper =
-          e).CloudGameOnReceiveDataDelegate.Bind(CloudGameManager.exn),
-        e.CloudGameOnReceiveDataWithKeyDelegate.Bind(CloudGameManager.txn));
+          e).CloudGameOnReceiveDataDelegate.Bind(CloudGameManager.bBn),
+        e.CloudGameOnReceiveDataWithKeyDelegate.Bind(CloudGameManager.qBn));
   }
   static BindFunction(e, a) {
-    CloudGameManager.ixn.set(e, a);
+    CloudGameManager.GBn.set(e, a);
   }
   static SendData(e) {
     ue_1.KuroCloudGameWrapper.SendDataToPipeBinary(e);
@@ -31,11 +31,11 @@ class CloudGameManager {
 }
 ((exports.CloudGameManager = CloudGameManager).lXi = !1),
   (CloudGameManager.KuroCloudGameWrapper = void 0),
-  (CloudGameManager.ixn = new Map()),
-  (CloudGameManager.exn = (e) => {
+  (CloudGameManager.GBn = new Map()),
+  (CloudGameManager.bBn = (e) => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("CloudGame", 17, "OnReceiveData:", ["key", e]);
-    var a = CloudGameManager.ixn.get(e);
+    var a = CloudGameManager.GBn.get(e);
     a
       ? a(e)
       : Log_1.Log.CheckError() &&
@@ -44,7 +44,7 @@ class CloudGameManager {
           e,
         ]);
   }),
-  (CloudGameManager.txn = (e, a) => {
+  (CloudGameManager.qBn = (e, a) => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "CloudGame",
@@ -53,7 +53,7 @@ class CloudGameManager {
         ["key", e],
         ["data", a],
       );
-    var o = CloudGameManager.ixn.get(e);
+    var o = CloudGameManager.GBn.get(e);
     o
       ? o(a)
       : Log_1.Log.CheckError() &&

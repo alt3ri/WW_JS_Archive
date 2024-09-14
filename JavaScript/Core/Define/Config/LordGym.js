@@ -31,8 +31,10 @@ class LordGym {
     return this.helpid();
   }
   get MonsterList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.monsterlistLength(), (t) =>
-      this.monsterlist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.monsterlistLength(),
+      this.monsterlist,
+      this,
     );
   }
   get MonsterLevel() {

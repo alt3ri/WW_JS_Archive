@@ -24,7 +24,7 @@ class NpcPerformUnderAttackState extends StateBase_1.StateBase {
     this.otr = t;
   }
   CanChangeFrom(t) {
-    var e = this.Owner.Entity.GetComponent(171);
+    var e = this.Owner.Entity.GetComponent(172);
     return this.pir && 1 === t && !e.IsInPlot;
   }
   SetDefaultDirect(t) {
@@ -39,8 +39,8 @@ class NpcPerformUnderAttackState extends StateBase_1.StateBase {
   }
   OnEnter(t) {
     (this.Gtr = t),
-      this.Owner.Entity.GetComponent(171)?.HasBrain &&
-        this.Owner.Entity.GetComponent(37)?.StopMove(!1),
+      this.Owner.Entity.GetComponent(172)?.HasBrain &&
+        this.Owner.Entity.GetComponent(38)?.StopMove(!1),
       this.pir ||
         TimerSystem_1.TimerSystem.Delay(() => {
           this.StateMachine.Switch(this.Gtr);

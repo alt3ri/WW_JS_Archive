@@ -16,16 +16,16 @@ class InfluenceReputationModel extends ModelBase_1.ModelBase {
   }
   SetInfluenceInfoList(e) {
     for (const t of e) {
-      var n = this.Xni.get(t.d9n);
+      var n = this.Xni.get(t.y9n);
       n
-        ? (n.SetRelation(t.hws), n.SetReceiveReward(t.C9n))
+        ? (n.SetRelation(t.Cws), n.SetReceiveReward(t.I9n))
         : this.Xni.set(
-            t.d9n,
-            new InfluenceInstance_1.InfluenceInstance(t.d9n, t.C9n, t.hws),
+            t.y9n,
+            new InfluenceInstance_1.InfluenceInstance(t.y9n, t.I9n, t.Cws),
           ),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.RedDotInfluence,
-          t.d9n,
+          t.y9n,
         );
     }
   }

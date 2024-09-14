@@ -10,6 +10,7 @@ class LordGymModel extends ModelBase_1.ModelBase {
       (this.UnLockLordGym = []),
       (this.ReadLoadGymIds = []),
       (this.FirstUnLockLordGym = []),
+      (this.EntranceEntityId = 0),
       (this.LordGymRecord = new Map());
   }
   OnInit() {

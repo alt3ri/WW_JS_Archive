@@ -19,7 +19,7 @@ const CsvLoader_1 = require("./CsvLoader"),
     (0, CsvLoader_1.createCsvField)({
       Name: "ModelId",
       CnName: "模型Id",
-      RenderType: 31,
+      RenderType: 32,
       Type: "Int",
     }),
     (0, CsvLoader_1.createCsvField)({
@@ -37,12 +37,12 @@ const CsvLoader_1 = require("./CsvLoader"),
     (0, CsvLoader_1.createCsvField)({
       Name: "ActionMontage",
       CnName: "动作蒙太奇",
-      RenderType: 27,
+      RenderType: 28,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "ExpressionMontage",
       CnName: "表情蒙太奇",
-      RenderType: 27,
+      RenderType: 28,
     }),
   ];
 class MontageCsvLoader extends CsvLoader_1.CsvLoader {
@@ -65,7 +65,7 @@ const abpMontageCsvFields = [
   (0, CsvLoader_1.createCsvField)({
     Name: "Abp",
     CnName: "ABP",
-    RenderType: 28,
+    RenderType: 29,
     Type: "String",
     ExportType: "",
   }),
@@ -86,12 +86,12 @@ const abpMontageCsvFields = [
   (0, CsvLoader_1.createCsvField)({
     Name: "Montage",
     CnName: "蒙太奇",
-    RenderType: 27,
+    RenderType: 28,
   }),
   (0, CsvLoader_1.createCsvField)({
     Name: "MaleVariant",
     CnName: "男主变体",
-    RenderType: 27,
+    RenderType: 28,
   }),
 ];
 class AbpMontageCsvLoader extends CsvLoader_1.CsvLoader {

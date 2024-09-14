@@ -16,7 +16,7 @@ class LevelEventExecution extends LevelGeneralBase_1.LevelEventBase {
   MDe() {
     var e = EntitySystem_1.EntitySystem.Get(this.E0);
     e &&
-      ((e = e.GetComponent(78))
+      ((e = e.GetComponent(79))
         ? e.StartExecution()
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error("Battle", 4, "Can not find ExecutionComponent"));

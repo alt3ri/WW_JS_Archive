@@ -28,11 +28,11 @@ class TsTaskPatrolWithEvents extends TsTaskAbortImmediatelyBase_1.default {
     var t = e.AiController;
     if (t) {
       const s = t.CharAiDesignComp.Entity,
-        i = ((this.PatrolComp = s.GetComponent(40)), this.TsSplineId),
-        o = s.GetComponent(40);
+        i = ((this.PatrolComp = s.GetComponent(41)), this.TsSplineId),
+        o = s.GetComponent(41);
       o &&
         (o.HasPatrolRecord(this.TsSplineId)
-          ? o.ResumePatrol("PatrolWithEvents")
+          ? o.ResumePatrol(this.TsSplineId, "PatrolWithEvents")
           : ((t = {
               DebugMode: !1,
               UseNearestPoint: this.TsStartWithNearestPoint,
@@ -71,7 +71,7 @@ class TsTaskPatrolWithEvents extends TsTaskAbortImmediatelyBase_1.default {
         this.FinishExecute(!1);
   }
   OnAbort() {
-    this.PatrolComp.PausePatrol("PatrolWithEvents");
+    this.PatrolComp.PausePatrol(this.TsSplineId, "PatrolWithEvents");
   }
   OnClear() {
     this.AIOwner instanceof TsAiController_1.default &&

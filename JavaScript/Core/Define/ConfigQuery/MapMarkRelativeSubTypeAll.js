@@ -17,54 +17,73 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0;
+const initStat = Stats_1.Stat.Create("configMapMarkRelativeSubTypeAll.Init"),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configMapMarkRelativeSubTypeAll.GetConfigList",
+  );
 exports.configMapMarkRelativeSubTypeAll = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfigList: (e = !0) => {
-    var o;
+  GetConfigList: (o = !0) => {
+    var t;
     if (
-      (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
+      (ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start(),
+      (t = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair)))
     ) {
-      if (e) {
-        var i = KEY_PREFIX + ")";
-        const n = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (n) return n;
+      if (o) {
+        var e = KEY_PREFIX + ")";
+        const n = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (n)
+          return (
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            n
+          );
       }
       const n = new Array();
       for (;;) {
         if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        var a = void 0;
+        var i = void 0;
         if (
-          (([o, a] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([t, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
           )),
-          !o)
+          !t)
         )
-          return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
-        a =
-          MapMarkRelativeSubType_1.MapMarkRelativeSubType.getRootAsMapMarkRelativeSubType(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
+          return (
+            ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            getConfigListStat.Stop(),
+            void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
           );
-        n.push(a);
+        i =
+          MapMarkRelativeSubType_1.MapMarkRelativeSubType.getRootAsMapMarkRelativeSubType(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+          );
+        n.push(i);
       }
       return (
-        e &&
-          ((i = KEY_PREFIX + ")"),
-          ConfigCommon_1.ConfigCommon.SaveConfig(i, n, n.length)),
+        o &&
+          ((e = KEY_PREFIX + ")"),
+          ConfigCommon_1.ConfigCommon.SaveConfig(e, n, n.length)),
         ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+        getConfigListStat.Stop(),
+        ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
         n
       );
     }
+    getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=MapMarkRelativeSubTypeAll.js.map

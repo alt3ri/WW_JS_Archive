@@ -116,18 +116,18 @@ let PasserbyGeneratorComponent = class PasserbyGeneratorComponent extends Entity
     );
   }
   Uin(e, t) {
-    var o = Protocol_1.Aki.Protocol.Yes.create();
-    (o.P4n = MathUtils_1.MathUtils.NumberToLong(
+    var o = Protocol_1.Aki.Protocol.rts.create();
+    (o.F4n = MathUtils_1.MathUtils.NumberToLong(
       this.Hte.CreatureData.GetCreatureDataId(),
     )),
-      (o.WWn = e),
-      (o.KWn = t),
-      Net_1.Net.Call(6794, o, (e) => {
+      (o.eKn = e),
+      (o.tKn = t),
+      Net_1.Net.Call(17028, o, (e) => {
         e &&
-          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+          e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.O4n,
-            29867,
+            e.Q4n,
+            23198,
           );
       });
   }
@@ -148,7 +148,7 @@ let PasserbyGeneratorComponent = class PasserbyGeneratorComponent extends Entity
   }
 };
 (PasserbyGeneratorComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(194)],
+  [(0, RegisterComponent_1.RegisterComponent)(196)],
   PasserbyGeneratorComponent,
 )),
   (exports.PasserbyGeneratorComponent = PasserbyGeneratorComponent);

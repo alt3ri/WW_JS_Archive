@@ -10,7 +10,7 @@ class FlowActionChangeInteractOptionText extends FlowActionBase_1.FlowActionBase
       t = ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId;
     t &&
       (t = EntitySystem_1.EntitySystem.Get(t)) &&
-      (t = t.GetComponent(181)) &&
+      (t = t.GetComponent(182)) &&
       (t = t.GetInteractController()) &&
       (t = t.CurrentInteractOption) &&
       ((e = this.ActionInfo.Params), (t.TidContent = e.TidContent));

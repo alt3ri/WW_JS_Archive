@@ -104,6 +104,13 @@ class ActivitySubViewRoleTrial extends ActivitySubViewBase_1.ActivitySubViewBase
       [9, UE.UIItem],
       [10, UE.UIItem],
       [11, UE.UIButtonComponent],
+      [12, UE.UITexture],
+      [13, UE.UITexture],
+      [14, UE.UITexture],
+      [15, UE.UITexture],
+      [16, UE.UITexture],
+      [17, UE.UITexture],
+      [18, UE.UITexture],
     ]),
       (this.BtnBindInfo = [
         [6, this.X2e],
@@ -130,7 +137,9 @@ class ActivitySubViewRoleTrial extends ActivitySubViewBase_1.ActivitySubViewBase
           new ActivityRoleDescribeComponent_1.ActivityRoleDescribeComponent()),
         await this.j2e.CreateThenShowByActorAsync(i.GetOwner()),
         this.GetItem(8));
-    (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
+    (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(
+      this.ActivityBaseData,
+    )),
       await this.ANe.CreateThenShowByActorAsync(i.GetOwner()),
       (this.tFe = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(2),
@@ -147,11 +156,9 @@ class ActivitySubViewRoleTrial extends ActivitySubViewBase_1.ActivitySubViewBase
         ),
         i?.DescTheme && this.LNe.SetSubTitleByTextId(i.DescTheme),
         this.FNe(),
-        this.DNe.SetContentVisible(!StringUtils_1.StringUtils.IsEmpty(i?.Desc)),
-        i?.Desc && this.DNe.SetContentByTextId(i.Desc),
         this.UNe.SetTitleByTextId("CollectActivity_reward"),
         this.UNe.InitGridLayout(this.W2e),
-        this.ANe.FunctionButton?.BindCallback(this.hFe),
+        this.ANe.FunctionButton.SetFunction(this.hFe),
         this.ActivityBaseData.RoleIdList);
     if (0 !== i.length) {
       const t =
@@ -198,8 +205,10 @@ class ActivitySubViewRoleTrial extends ActivitySubViewBase_1.ActivitySubViewBase
     this.ANe.SetPanelConditionVisible(!i),
       this.ANe.FunctionButton.SetUiActive(i),
       i ||
-        ((i = this.GetCurrentLockConditionText()),
-        this.ANe.SetLockTextByTextId(i));
+        this.ANe.SetPerformanceConditionLock(
+          this.ActivityBaseData.ConditionGroupId,
+          this.ActivityBaseData.Id,
+        );
   }
   OnTimer(i) {
     this.FNe();
@@ -217,17 +226,26 @@ class ActivitySubViewRoleTrial extends ActivitySubViewBase_1.ActivitySubViewBase
       ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialInfoConfigByRoleId(
         i,
       );
-    this.j2e.Update(i);
-    const e = this.GetTexture(1);
-    e.SetUIActive(!1),
-      this.SetTextureByPath(t.RoleStand, e, void 0, () => {
-        e.SetUIActive(!0);
-      });
-    var s,
-      t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i);
-    t &&
-      ((t = t.PartyId),
-      (t = ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(t)),
+    let e = t.Introduction;
+    StringUtils_1.StringUtils.IsEmpty(e) &&
+      (e = this.ActivityBaseData.LocalConfig.Desc);
+    var s = !StringUtils_1.StringUtils.IsEmpty(e),
+      s =
+        (this.DNe.SetContentVisible(s),
+        s && this.DNe.SetContentByTextId(e),
+        this.j2e.Update(i),
+        this.GetTexture(1)),
+      s = (this.SetTextureShowUntilLoaded(t.RoleStand, s), this.GetTexture(12)),
+      r = this.GetTexture(13),
+      s =
+        (t.RoleStand2 &&
+          (this.SetTextureShowUntilLoaded(t.RoleStand2, s),
+          this.SetTextureShowUntilLoaded(t.RoleStand2, r)),
+        this.jja(t.UiConfigId),
+        ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i));
+    s &&
+      ((r = s.PartyId),
+      (t = ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(r)),
       StringUtils_1.StringUtils.IsEmpty(t?.Logo) ||
         ((s = this.GetTexture(0)), this.SetTextureByPath(t.Logo, s))),
       this.jqe(i);
@@ -236,6 +254,17 @@ class ActivitySubViewRoleTrial extends ActivitySubViewBase_1.ActivitySubViewBase
     "Switch" === this.iFe.GetCurrentSequence()
       ? this.iFe.ReplaySequenceByKey("Switch")
       : this.iFe.PlayLevelSequenceByName("Switch", !1);
+  }
+  jja(i) {
+    i =
+      ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialUiConfigById(
+        i,
+      );
+    this.GetTexture(14).SetColor(UE.Color.FromHex(i?.Color1 ?? "")),
+      this.GetTexture(15).SetColor(UE.Color.FromHex(i?.Color2 ?? "")),
+      this.GetTexture(16).SetColor(UE.Color.FromHex(i?.Color3 ?? "")),
+      this.GetTexture(17).SetColor(UE.Color.FromHex(i?.Color4 ?? "")),
+      this.GetTexture(18).SetColor(UE.Color.FromHex(i?.Color5 ?? ""));
   }
   jqe(i) {
     var t = this.ActivityBaseData.GetRewardDataByRoleId(i),
@@ -275,6 +304,7 @@ class RoleItem extends GridProxyAbstract_1.GridProxyAbstract {
       [2, UE.UISprite],
       [3, UE.UITexture],
       [4, UE.UIItem],
+      [5, UE.UITexture],
     ]),
       (this.BtnBindInfo = [[0, this.cFe]]);
   }
@@ -287,6 +317,7 @@ class RoleItem extends GridProxyAbstract_1.GridProxyAbstract {
   Refresh(i) {
     this.RoleId = i;
     var t,
+      e,
       i = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
         ActivityRoleTrialController_1.ActivityRoleTrialController
           .CurrentActivityId,
@@ -296,27 +327,19 @@ class RoleItem extends GridProxyAbstract_1.GridProxyAbstract {
         ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialInfoConfigByRoleId(
           this.RoleId,
         )),
-      (t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
+      (e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
         t.TrialRoleId,
       )),
-      this.SetRoleIcon(
-        t.GetRoleConfig().Card,
-        this.GetTexture(3),
-        t.GetRoleId(),
-      ),
-      this.mFe(t.GetRoleConfig().QualityId),
+      t.RoleIcon &&
+        (this.SetTextureShowUntilLoaded(t.RoleIcon, this.GetTexture(3)),
+        this.SetTextureShowUntilLoaded(t.RoleIcon, this.GetTexture(5))),
+      this.mFe(e.GetRoleConfig().QualityId),
       this.BNe(i));
   }
   mFe(i) {
     var t = this.GetSprite(1),
-      e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-        "SP_RoleIconANormal" + i,
-      ),
-      e = (this.SetSpriteByPath(e, t, !1), this.GetSprite(2)),
-      t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-        "SP_RoleIconAHold" + i,
-      );
-    this.SetSpriteByPath(t, e, !1);
+      i = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(i);
+    t.SetColor(UE.Color.FromHex(i?.RoleTrialQualityColor ?? ""));
   }
   BNe(i) {
     i = i.GetRewardStateByRoleId(this.RoleId);

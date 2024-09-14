@@ -34,8 +34,8 @@ class AimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       (this.coi = () => {
         this.moi(), this.doi();
       }),
-      (this.HRn = (t) => {
-        (this.VRn = t), this.uoi();
+      (this.HRn = (t, e) => {
+        (this.VRn = t && e), this.uoi();
       });
   }
   OnInitialize() {
@@ -70,7 +70,7 @@ class AimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       );
   }
   OnTick(t) {
-    this.doi();
+    AimHandle.Ult.Start(), this.doi(), AimHandle.Ult.Stop();
   }
   OnShowHud() {
     super.OnShowHud(), this.moi(), this.doi();
@@ -83,12 +83,12 @@ class AimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         let t = !1;
         this.VRn
           ? (t = !0)
-          : ((e = i.Entity.GetComponent(160).DirectionState),
+          : ((e = i.Entity.GetComponent(161).DirectionState),
             !(t =
               e ===
               CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection) &&
               this._oi &&
-              (t = i.Entity.GetComponent(188).HasTag(aimTagId))),
+              (t = i.Entity.GetComponent(190).HasTag(aimTagId))),
           this.noi.SetTargetVisible(t, !1);
       } else this.noi.SetTargetVisible(!1, !0);
     }
@@ -116,18 +116,18 @@ class AimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
               return void this.noi.SetAimStatus(1);
             var n = t.Entity.GetComponent(0),
               h = n?.GetEntityType();
-            if (h === Protocol_1.Aki.Protocol.wks.Proto_Npc)
+            if (h === Protocol_1.Aki.Protocol.kks.Proto_Npc)
               return void this.noi.SetAimStatus(1);
-            if (h === Protocol_1.Aki.Protocol.wks.Proto_SceneItem)
-              return void (void 0 === t.Entity.GetComponent(140) ||
+            if (h === Protocol_1.Aki.Protocol.kks.Proto_SceneItem)
+              return void (void 0 === t.Entity.GetComponent(141) ||
               7 !== n.GetBaseInfo().Camp
                 ? this.noi.SetAimStatus(1)
                 : this.noi.SetAimStatus(2));
-            if (h === Protocol_1.Aki.Protocol.wks.Proto_Animal)
+            if (h === Protocol_1.Aki.Protocol.kks.Proto_Animal)
               return void (this.goi(n.GetBaseInfo().Camp)
                 ? this.noi.SetAimStatus(1)
                 : this.noi.SetAimStatus(2));
-            if (h !== Protocol_1.Aki.Protocol.wks.Proto_Monster)
+            if (h !== Protocol_1.Aki.Protocol.kks.Proto_Monster)
               return void this.noi.SetAimStatus(1);
             h = r.Get(e);
             if (h?.IsValid()) {
@@ -135,7 +135,7 @@ class AimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
               if ("CollisionCylinder" !== h)
                 return this.goi(n.GetBaseInfo().Camp)
                   ? void this.noi.SetAimStatus(1)
-                  : t.Entity.GetComponent(60)?.IsWeakness(h)
+                  : t.Entity.GetComponent(61)?.IsWeakness(h)
                     ? void this.noi.SetAimStatus(3)
                     : void this.noi.SetAimStatus(2);
             }
@@ -202,5 +202,7 @@ class AimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     if (t) return this.hoi.HitResult;
   }
 }
-(exports.AimHandle = AimHandle).Ult = void 0;
+(exports.AimHandle = AimHandle).Ult = Stats_1.Stat.Create(
+  "[BattleView]AimHandleTick",
+);
 //# sourceMappingURL=AimHandle.js.map

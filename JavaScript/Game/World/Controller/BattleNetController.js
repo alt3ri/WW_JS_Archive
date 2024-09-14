@@ -16,13 +16,13 @@ class BattleNetController {
     var r,
       t = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e);
     return ModelManager_1.ModelManager.CreatureModel.GetEntity(t)
-      ? (((r = Protocol_1.Aki.Protocol.Jus.create()).J4n =
+      ? (((r = Protocol_1.Aki.Protocol.ocs.create()).s5n =
           MathUtils_1.MathUtils.NumberToLong(t)),
         !(
-          !(r = await Net_1.Net.CallAsync(10338, r)) ||
-          (0 !== r.A9n &&
+          !(r = await Net_1.Net.CallAsync(29641, r)) ||
+          (0 !== r.G9n &&
             (Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn("Level", 30, "幻象收复失败", ["ErrCode", r.A9n]),
+              Log_1.Log.Warn("Level", 30, "幻象收复失败", ["ErrCode", r.G9n]),
             1))
         ))
       : (Log_1.Log.CheckError() &&

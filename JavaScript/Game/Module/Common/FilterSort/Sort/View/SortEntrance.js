@@ -65,9 +65,10 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.UpdateDataListFunction = i),
       (this.hDt = void 0),
-      (this.Oma = !1),
+      (this.bfa = !1),
       (this._Dt = 1),
       (this.Mne = 0),
+      (this.Wka = void 0),
       (this.vUt = 1),
       (this.ypt = []),
       (this.lDt = []),
@@ -134,11 +135,24 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
   }
   OnBeforeDestroy() {
     this.lLt?.Destroy(),
+      this.Qka(),
       ModelManager_1.ModelManager.SortModel.DeleteSortResultData(this.Mne);
   }
-  mDt(t) {
+  Qka() {
+    var t;
+    this.Wka &&
+      0 !== this._Dt &&
+      ((t = this.hDt.ConvertToStorageData()),
+      ModelManager_1.ModelManager.SortModel.SetSortConfigData(
+        this.Wka,
+        this._Dt,
+        t,
+      ));
+  }
+  mDt(t, i) {
     (this._Dt = t),
-      (this.Mne = ConfigManager_1.ConfigManager.SortConfig.GetSortId(t));
+      (this.Mne = ConfigManager_1.ConfigManager.SortConfig.GetSortId(t)),
+      (this.Wka = i ?? void 0);
   }
   VUt() {
     var t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
@@ -148,33 +162,58 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
     var t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
     this.vUt = t.DataId;
   }
-  dDt() {
-    var t, i;
-    (this.hDt = ModelManager_1.ModelManager.SortModel.GetSortResultData(
-      this.Mne,
-    )),
-      (this.hDt && !this.Oma) ||
-        ((i = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne)
-          .BaseSortList[0]),
-        (t = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleName(
-          i,
-          this.vUt,
-        )),
-        void 0 === this.hDt &&
-          ((this.hDt = new SortViewData_1.SortResultData()),
-          this.hDt.SetConfigId(this.Mne),
-          this.hDt.SetSelectBaseSort([i, t]),
-          (i = this.GetExtendToggle(2)),
-          this.hDt.SetIsAscending(1 === i.GetToggleState()),
-          ModelManager_1.ModelManager.SortModel.SetSortResultData(
-            this.Mne,
-            this.hDt,
+  dDt(t) {
+    if (
+      ((this.hDt = ModelManager_1.ModelManager.SortModel.GetSortResultData(
+        this.Mne,
+      )),
+      !this.hDt || this.bfa)
+    ) {
+      var i = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne),
+        i = t?.SelectBaseSort ?? i.BaseSortList[0];
+      if (void 0 === this.hDt) {
+        var s = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleName(
+            i,
+            this.vUt,
+          ),
+          i =
+            ((this.hDt = new SortViewData_1.SortResultData()),
+            this.hDt.SetConfigId(this.Mne),
+            this.hDt.SetSelectBaseSort([i, s]),
+            this.GetExtendToggle(2));
+        if (
+          (void 0 !== t?.IsAscending
+            ? this.hDt.SetIsAscending(t?.IsAscending)
+            : this.hDt.SetIsAscending(1 === i.GetToggleState()),
+          t?.SelectAttributeSort && 0 < t.SelectAttributeSort.length)
+        ) {
+          var e = new Map();
+          for (const a of t.SelectAttributeSort) {
+            var h = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleName(
+              a,
+              this.vUt,
+            );
+            e.set(a, h);
+          }
+          this.hDt.SetSelectAttributeSort(e);
+        }
+        ModelManager_1.ModelManager.SortModel.SetSortResultData(
+          this.Mne,
+          this.hDt,
+        );
+      }
+      this.bfa &&
+        ((s = this.hDt.GetSelectBaseSort()) &&
+          ((i = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleName(
+            s[0],
+            this.vUt,
           )),
-        this.Oma &&
-          ((i = this.hDt.GetSelectBaseSort()) && (i[1] = t), (this.Oma = !1)));
+          (s[1] = i)),
+        (this.bfa = !1));
+    }
   }
   OUt(t) {
-    this.qUt.SetActive(t), t ? this.MLt().finally(void 0) : this.TLt();
+    this.qUt.SetActive(t), t ? this.MLt() : this.TLt();
   }
   AUt() {
     if ((this.OUt(!1), !this.GUt)) {
@@ -250,8 +289,27 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
         this.kUt(),
         this.qpt(!0));
   }
+  UpdateDataWithConfig(t, i, s, ...e) {
+    this.Qka(),
+      this.mDt(t, i),
+      this.WUt(),
+      this.Mne <= 0 ||
+        ((this.ypt = s),
+        (this.lDt = e),
+        (t = ModelManager_1.ModelManager.SortModel.GetSortConfigData(
+          i,
+          this._Dt,
+        )),
+        this.VUt(),
+        this.HUt(),
+        this.dDt(t),
+        this.AUt(),
+        this.jUt(),
+        this.kUt(),
+        this.qpt(!0));
+  }
   SetResultDataDirty() {
-    this.Oma = !0;
+    this.bfa = !0;
   }
   SetSortToggleState(t) {
     t = t ? 1 : 0;

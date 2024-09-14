@@ -16,7 +16,7 @@ class ItemTipsView extends UiViewBase_1.UiViewBase {
       (this.IncId = 0),
       (this.ConfigId = 0),
       (this.ItemTipsComponent = void 0),
-      (this.EQs = void 0),
+      (this.kXs = void 0),
       (this.Jvt = () => {
         this.CloseMe();
       }),
@@ -38,18 +38,40 @@ class ItemTipsView extends UiViewBase_1.UiViewBase {
       ConfigManager_1.ConfigManager.PowerConfig.GetPowerCurrencyIds().includes(
         this.ConfigId,
       )
-        ? ((this.EQs = new PowerTipsItem_1.PowerTipsItem()),
-          await this.EQs.CreateThenShowByResourceIdAsync(
+        ? ((this.kXs = new PowerTipsItem_1.PowerTipsItem()),
+          await this.kXs.CreateByResourceIdAsync(
             "UiItem_ItemTips1",
             this.GetItem(1),
           ),
-          this.EQs.SetBackBackCallBack(this.DoCloseMe))
+          this.kXs.SetBackBackCallBack(this.DoCloseMe),
+          this.AddChild(this.kXs))
         : ((this.ItemTipsComponent =
             new ItemTipsComponent_1.ItemTipsComponent()),
-          await this.ItemTipsComponent.CreateThenShowByResourceIdAsync(
+          await this.ItemTipsComponent.CreateByResourceIdAsync(
             "UiItem_TipsScreenTips",
             this.GetItem(1),
-          ));
+          ),
+          this.AddChild(this.ItemTipsComponent)),
+      this.Og();
+  }
+  Og() {
+    var e,
+      i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+        this.ConfigId,
+      ).ItemType,
+      t = ItemTipsUtilTool_1.ItemTipsComponentUtilTool.GetTipsDataById(
+        this.ConfigId,
+        this.IncId,
+      );
+    ConfigManager_1.ConfigManager.PowerConfig.GetPowerCurrencyIds().includes(
+      this.ConfigId,
+    )
+      ? (((e = new PowerTipsData_1.PowerTipsData()).ItemId = this.ConfigId),
+        this.kXs.RefreshByData(e))
+      : (this.ItemTipsComponent.Refresh(t),
+        void 0 === this.IncId &&
+          this.ItemTipsComponent.SetTipsComponentLockButton(!1),
+        0 === i && this.ItemTipsComponent.SetTipsNumShow(!1));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -63,28 +85,6 @@ class ItemTipsView extends UiViewBase_1.UiViewBase {
       this.DoCloseMe,
     );
   }
-  OnBeforeShow() {
-    var e,
-      i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-        this.ConfigId,
-      ).ItemType,
-      t = ItemTipsUtilTool_1.ItemTipsComponentUtilTool.GetTipsDataById(
-        this.ConfigId,
-        this.IncId,
-      );
-    (ConfigManager_1.ConfigManager.PowerConfig.GetPowerCurrencyIds().includes(
-      this.ConfigId,
-    )
-      ? (((e = new PowerTipsData_1.PowerTipsData()).ItemId = this.ConfigId),
-        this.EQs.RefreshByData(e),
-        this.EQs)
-      : (this.ItemTipsComponent.Refresh(t),
-        void 0 === this.IncId &&
-          this.ItemTipsComponent.SetTipsComponentLockButton(!1),
-        0 === i && this.ItemTipsComponent.SetTipsNumShow(!1),
-        this.ItemTipsComponent)
-    )?.SetActive(!0);
-  }
   OnBeforeDestroy() {
     var e = this.OpenParam;
     EventSystem_1.EventSystem.Emit(
@@ -93,8 +93,11 @@ class ItemTipsView extends UiViewBase_1.UiViewBase {
       e.ItemUid,
     );
   }
-  OnBeforeHide() {
-    this.ItemTipsComponent?.SetActive(!1), this.EQs?.SetActive(!1);
+  async OnBeforeHideAsync() {
+    await this.ItemTipsComponent?.PlayCloseSequence(),
+      await this.kXs?.PlayCloseSequence(),
+      this.ItemTipsComponent?.SetActive(!1),
+      this.kXs?.SetActive(!1);
   }
 }
 exports.ItemTipsView = ItemTipsView;

@@ -20,29 +20,56 @@ class CombinationAxis {
   get PcKeyMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.pckeymapLength(),
-      (t) => this.pckeymap(t)?.key(),
-      (t) => this.pckeymap(t)?.value(),
+      this.pckeymapKey,
+      this.pckeymapValue,
+      this,
     );
+  }
+  pckeymapKey(t) {
+    return this.pckeymap(t)?.key();
+  }
+  pckeymapValue(t) {
+    return this.pckeymap(t)?.value();
   }
   get GamepadKeyMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.gamepadkeymapLength(),
-      (t) => this.gamepadkeymap(t)?.key(),
-      (t) => this.gamepadkeymap(t)?.value(),
+      this.gamepadkeymapKey,
+      this.gamepadkeymapValue,
+      this,
     );
+  }
+  gamepadkeymapKey(t) {
+    return this.gamepadkeymap(t)?.key();
+  }
+  gamepadkeymapValue(t) {
+    return this.gamepadkeymap(t)?.value();
   }
   get SecondaryKeyScaleMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.secondarykeyscalemapLength(),
-      (t) => this.secondarykeyscalemap(t)?.key(),
-      (t) => this.secondarykeyscalemap(t)?.value(),
+      this.secondarykeyscalemapKey,
+      this.secondarykeyscalemapValue,
+      this,
     );
+  }
+  secondarykeyscalemapKey(t) {
+    return this.secondarykeyscalemap(t)?.key();
+  }
+  secondarykeyscalemapValue(t) {
+    return this.secondarykeyscalemap(t)?.value();
   }
   get MobileIconPath() {
     return this.mobileiconpath();
   }
   get DisplayName() {
     return this.displayname();
+  }
+  get KeyboardVersion() {
+    return this.keyboardversion();
+  }
+  get GamepadVersion() {
+    return this.gamepadversion();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
@@ -69,10 +96,10 @@ class CombinationAxis {
     return this.pckeymap(t);
   }
   pckeymap(t, i) {
-    var s = this.J7.__offset(this.z7, 10);
-    return s
+    var e = this.J7.__offset(this.z7, 10);
+    return e
       ? (i || new DicStringString_1.DicStringString()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + e) + 4 * t),
           this.J7,
         )
       : null;
@@ -85,10 +112,10 @@ class CombinationAxis {
     return this.gamepadkeymap(t);
   }
   gamepadkeymap(t, i) {
-    var s = this.J7.__offset(this.z7, 12);
-    return s
+    var e = this.J7.__offset(this.z7, 12);
+    return e
       ? (i || new DicStringString_1.DicStringString()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + e) + 4 * t),
           this.J7,
         )
       : null;
@@ -101,10 +128,10 @@ class CombinationAxis {
     return this.secondarykeyscalemap(t);
   }
   secondarykeyscalemap(t, i) {
-    var s = this.J7.__offset(this.z7, 14);
-    return s
+    var e = this.J7.__offset(this.z7, 14);
+    return e
       ? (i || new DicStringFloat_1.DicStringFloat()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + e) + 4 * t),
           this.J7,
         )
       : null;
@@ -120,6 +147,14 @@ class CombinationAxis {
   displayname(t) {
     var i = this.J7.__offset(this.z7, 18);
     return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
+  keyboardversion() {
+    var t = this.J7.__offset(this.z7, 20);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  gamepadversion() {
+    var t = this.J7.__offset(this.z7, 22);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.CombinationAxis = CombinationAxis;

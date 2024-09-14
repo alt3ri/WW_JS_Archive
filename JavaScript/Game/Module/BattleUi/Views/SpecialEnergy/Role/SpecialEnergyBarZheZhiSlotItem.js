@@ -5,18 +5,18 @@ const SpecialEnergyBarSlotItem_1 = require("../SpecialEnergyBarSlotItem"),
   SpecialEnergyBarZheZhiEffectItem_1 = require("./SpecialEnergyBarZheZhiEffectItem");
 class SpecialEnergyBarZheZhiSlotItem extends SpecialEnergyBarSlotItem_1.SpecialEnergyBarSlotItem {
   constructor() {
-    super(...arguments), (this.lua = void 0);
+    super(...arguments), (this.vma = void 0);
   }
   async OnBeforeStartAsync() {
-    (this.lua =
+    (this.vma =
       new SpecialEnergyBarZheZhiEffectItem_1.SpecialEnergyBarZheZhiEffectItem()),
-      await this.lua.InitAsync(this.RootItem);
+      await this.vma.InitAsync(this.RootItem);
   }
   SetEffectItemVisible(e) {
-    this.lua?.SetVisible(e);
+    this.vma?.SetVisible(e);
   }
   SetEffectItemNiagaraParam(e, t) {
-    this.lua?.SetNiagaraParam(e, t);
+    this.vma?.SetNiagaraParam(e, t);
   }
 }
 exports.SpecialEnergyBarZheZhiSlotItem = SpecialEnergyBarZheZhiSlotItem;

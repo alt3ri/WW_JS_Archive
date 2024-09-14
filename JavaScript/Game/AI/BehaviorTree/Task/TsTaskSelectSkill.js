@@ -29,7 +29,7 @@ class TsTaskSelectSkill extends TsTaskAbortImmediatelyBase_1.default {
     l
       ? (this.InitTsVariables(),
         l.AiSkill
-          ? (i = l.CharAiDesignComp.Entity.GetComponent(33)).Valid
+          ? (i = l.CharAiDesignComp.Entity.GetComponent(34)).Valid
             ? (o = l.AiHateList.GetCurrentTarget())?.Valid
               ? this.SelectSkillWithTarget(l, i, o.Entity.GetComponent(3))
                 ? this.FinishExecute(!0)
@@ -53,7 +53,7 @@ class TsTaskSelectSkill extends TsTaskAbortImmediatelyBase_1.default {
   }
   SelectSkillWithTarget(t, e, r) {
     var i = t.CharActorComp,
-      o = i.Entity.GetComponent(188),
+      o = i.Entity.GetComponent(190),
       l = Vector_1.Vector.Create(),
       s =
         (MathUtils_1.MathUtils.InverseTransformPositionNoScale(
@@ -134,7 +134,7 @@ class TsTaskSelectSkill extends TsTaskAbortImmediatelyBase_1.default {
   }
   SelectSkillWithoutTarget(s, a) {
     var t = s.CharActorComp;
-    const h = t.Entity.GetComponent(188);
+    const h = t.Entity.GetComponent(190);
     let _ = 0,
       c = 0,
       k = 0;

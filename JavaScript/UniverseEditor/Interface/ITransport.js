@@ -26,7 +26,7 @@ function packageToString(t) {
 class Stcp {
   constructor(t, e, s, i) {
     (this.Name = t),
-      (this.Jkn = e),
+      (this.sFn = e),
       (this.x5 = s),
       (this.IsServer = i),
       (this.S5 = []),
@@ -61,19 +61,19 @@ class Stcp {
     this.IsServer ||
       (0 !== this.S5.length &&
         ((t = { Type: EPackage.Connect, ConnectId: this.M5 }),
-        this.Jkn.Send(t),
+        this.sFn.Send(t),
         (this.w5 = EConnectStatus.Connecting)));
   }
   k5() {
     var t;
     this.IsServer ||
-      ((t = { Type: EPackage.Connect, ConnectId: this.M5 }), this.Jkn.Send(t));
+      ((t = { Type: EPackage.Connect, ConnectId: this.M5 }), this.sFn.Send(t));
   }
   b5() {
     var t;
     (0 === this.S5.length && !this.L5) ||
       ((t = this.O5()),
-      this.Jkn.Send(t),
+      this.sFn.Send(t),
       0 === this.S5.length && (this.L5 = !1),
       this.A5(this.Name + " send " + packageToString(t)));
   }
@@ -99,7 +99,7 @@ class Stcp {
   }
   U5(t) {
     t = { Type: EPackage.ConnectAck, ConnectId: t };
-    this.Jkn.Send(t);
+    this.sFn.Send(t);
   }
   B5(t) {
     if (t.Type !== EPackage.Message)
@@ -164,7 +164,7 @@ class Stcp {
   }
   X5() {
     if (this.W3.length >= Stcp.MaxSeqId) return !1;
-    var t = this.Jkn.Recv();
+    var t = this.sFn.Recv();
     if (!t) return !1;
     if (0 < this.N5) this.N5--;
     else
@@ -294,6 +294,7 @@ const gameRpcServiceConfig = {
     DisablePlayerClientComponent: (t) => !1,
     GetCameraTransform: () => ({}),
     PlayDaEffect: (t, e) => [!1, ""],
+    GetTrackLevelPlayId: () => 0,
     IsEntityExist: (t) => !1,
     IsEntityInitDone: (t) => !1,
     IsSceneItemComponentInitDone: (t) => !1,

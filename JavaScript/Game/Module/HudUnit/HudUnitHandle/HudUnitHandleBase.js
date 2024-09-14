@@ -33,7 +33,11 @@ class HudUnitHandleBase {
   Initialize() {
     (this.R$e = Global_1.Global.CharacterController),
       (this.x$e = Global_1.Global.CharacterCameraManager),
-      (this.Toi = UiLayer_1.UiLayer.GetBattleViewUnit(1));
+      (this.Toi = UiLayer_1.UiLayer.GetBattleViewUnit(1)),
+      this.OnAddEvents(),
+      this.OnInitialize();
+  }
+  InitCursorAxis() {
     var t =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "MonsterCursorWidthToScreenPercent",
@@ -42,10 +46,7 @@ class HudUnitHandleBase {
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "MonsterCursorHeightToScreenPercent",
         ) / CommonDefine_1.PERCENTAGE_FACTOR;
-    (this.Loi = this.Toi.GetWidth() * t),
-      (this.Doi = this.Toi.GetHeight() * i),
-      this.OnAddEvents(),
-      this.OnInitialize();
+    (this.Loi = this.Toi.GetWidth() * t), (this.Doi = this.Toi.GetHeight() * i);
   }
   Destroy() {
     this.OnDestroyed(),
@@ -73,6 +74,7 @@ class HudUnitHandleBase {
   OnHideHud() {
     this.IsHudVisible = !1;
   }
+  OnInputControllerChanged(t, i) {}
   async NewHudUnit(t, i, e = !0, s = !1) {
     t = new t();
     if ((await t.Initialize(i, e, s), !this.IsDestroyed))

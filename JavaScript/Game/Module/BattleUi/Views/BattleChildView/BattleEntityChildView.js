@@ -60,19 +60,19 @@ class BattleEntityChildView extends BattleChildView_1.BattleChildView {
     return ObjectSystem_1.ObjectSystem.IsValid(this.Jh);
   }
   ListenForAttributeChanged(t, e, i) {
-    t = t.GetComponent(158);
+    t = t.GetComponent(159);
     t && (t.AddListener(e, i), this.GYe.set(e, i));
   }
   RemoveListenAttributeChanged(t, e, i) {
-    t = t.GetComponent(158);
+    t = t.GetComponent(159);
     t && (t.RemoveListener(e, i), this.GYe.delete(e));
   }
   kYe(t) {
-    var e = t.GetComponent(158);
+    var e = t.GetComponent(159);
     if (e) for (var [i, s] of this.GYe) e.RemoveListener(i, s);
   }
   ListenForTagCountChanged(e, i, s) {
-    e = e.GetComponent(188);
+    e = e.GetComponent(190);
     if (e) {
       let t = void 0;
       "number" == typeof i
@@ -90,7 +90,7 @@ class BattleEntityChildView extends BattleChildView_1.BattleChildView {
     }
   }
   ListenForTagSignificantChanged(t, e, i) {
-    var t = t.GetComponent(188);
+    var t = t.GetComponent(190);
     t && ((t = t.ListenForTagAddOrRemove(e, i)), this.i$e.push(t));
   }
   ListenForTagAddNewOrRemovedWithTag(t, e, i, s) {

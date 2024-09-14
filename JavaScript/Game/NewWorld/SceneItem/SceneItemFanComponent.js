@@ -158,7 +158,7 @@ let SceneItemFanComponent =
         (this.Ome = void 0),
         (this.BCn = void 0),
         (this.bCn = void 0),
-        (this.jSa = void 0),
+        (this.gTa = void 0),
         (this.cz = void 0),
         (this.mWi = void 0),
         (this._9r = void 0),
@@ -171,7 +171,6 @@ let SceneItemFanComponent =
         (this.jnn = void 0),
         (this.FCn = !1),
         (this.VCn = void 0),
-        (this.gIe = (t, i) => {}),
         (this.HCn = void 0),
         (this.SceneInteractionLoadCompleted = !1),
         (this.Rnn = () => {
@@ -199,16 +198,16 @@ let SceneItemFanComponent =
           if (!this.IsAnyRotating) {
             let t = void 0;
             (t = this.QCn ? this : this.ACn) &&
-              (i || (this.SGn = s), t.$Cn(i, this), (this.SGn = void 0));
+              (i || (this.RGn = s), t.$Cn(i, this), (this.RGn = void 0));
           }
         }),
         (this.YCn = void 0),
         (this.JCn = void 0),
-        (this.SGn = void 0),
+        (this.RGn = void 0),
         (this.zCn = void 0),
         (this.ZCn = !1),
         (this.egn = (i, s, t) => {
-          const h = i.GetComponent(137);
+          const h = i.GetComponent(138);
           if (s && !this.tgn && h) h.ign();
           else {
             if (h)
@@ -223,7 +222,7 @@ let SceneItemFanComponent =
               } else this.NCn.set(i.Id, s);
             var e;
             t
-              ? (t = i.GetComponent(180)) &&
+              ? (t = i.GetComponent(181)) &&
                 (s
                   ? (t.RemoveServerTagByIdLocal(-1152559349, ""),
                     t.HasTag(-3775711) || t.AddServerTagByIdLocal(-3775711, ""))
@@ -234,13 +233,13 @@ let SceneItemFanComponent =
               : ((t = this.n$t.CreatureData.GetCreatureDataId()),
                 (e = i.GetComponent(0)?.GetCreatureDataId()) &&
                   this.rgn(t, e, s, (t) => {
-                    0 !== t?.A9n
+                    0 !== t?.G9n
                       ? Log_1.Log.CheckWarn() &&
                         Log_1.Log.Warn(
                           "Level",
                           37,
                           "SendBaoziStateRequest Failed",
-                          ["ErrorCode", t?.A9n],
+                          ["ErrorCode", t?.G9n],
                         )
                       : (this.NCn.set(i.Id, s), !s && h && h.lgn(!1, !1));
                   }));
@@ -268,11 +267,11 @@ let SceneItemFanComponent =
                   )),
               this.PCn)
             )
-              for (const s of this.PCn) s?.GetComponent(137)?.lgn(!1, !1);
+              for (const s of this.PCn) s?.GetComponent(138)?.lgn(!1, !1);
             this.lgn(!0);
           } else -1152559349 === t && i && this.lgn(!1, !1);
           if (this.QCn && (-1152559349 === t || 1298716444 === t) && i) {
-            if (this.PCn) for (const h of this.PCn) h?.GetComponent(137)?.agn();
+            if (this.PCn) for (const h of this.PCn) h?.GetComponent(138)?.agn();
             1298716444 === t && this.sAn();
           }
           if (i)
@@ -287,12 +286,12 @@ let SceneItemFanComponent =
         (this.cgn = void 0),
         (this.mgn = void 0),
         (this.dgn = void 0),
-        (this.oXs = void 0),
-        (this.nXs = void 0),
+        (this.XYs = void 0),
+        (this.YYs = void 0),
         (this.Cgn = void 0),
         (this.ggn = void 0),
         (this.tgn = !1),
-        (this.sXs = !1),
+        (this.JYs = !1),
         (this.fgn = 0),
         (this.pgn = 0),
         (this.fle = 0),
@@ -313,7 +312,7 @@ let SceneItemFanComponent =
                 "[FanComponent] OnEnterLogicRange RootComponent Is Undefined",
                 ["EntityId", this.Entity.Id],
               ),
-            this.ZCa());
+            this.gva());
         }),
         (this.KHr = (i) => {
           var t, s;
@@ -338,13 +337,13 @@ let SceneItemFanComponent =
           ) {
             if (
               (this.Ign(i),
-              this.GCn?.NeedTick() && this.GCn.Tick(i, this.sXs),
+              this.GCn?.NeedTick() && this.GCn.Tick(i, this.JYs),
               0 < this.ngn)
             ) {
               this.ngn -= i;
               let t = !0;
               for (const r of this.PCn) {
-                var h = r.GetComponent(137);
+                var h = r.GetComponent(138);
                 if (h && !this.tgn && !h.dce()) {
                   t = !1;
                   break;
@@ -380,7 +379,7 @@ let SceneItemFanComponent =
                     );
                 n?.Valid &&
                   n.Entity &&
-                  ((e = n.Entity.GetComponent(137))
+                  ((e = n.Entity.GetComponent(138))
                     ? e.Valid &&
                       e.SceneInteractionLoadCompleted &&
                       (e.SetRoot(this),
@@ -407,17 +406,17 @@ let SceneItemFanComponent =
                 (this.zCn = void 0),
                 this.Lgn());
             }
-            if (this.oXs && this.nXs)
-              for (let t = this.nXs.length - 1; -1 < t; t--)
-                this.nXs[t] <= i
-                  ? ((s = this.oXs[t]),
-                    this.oXs.splice(t, 1),
-                    this.nXs.splice(t, 1),
+            if (this.XYs && this.YYs)
+              for (let t = this.YYs.length - 1; -1 < t; t--)
+                this.YYs[t] <= i
+                  ? ((s = this.XYs[t]),
+                    this.XYs.splice(t, 1),
+                    this.YYs.splice(t, 1),
                     EffectSystem_1.EffectSystem.SetEffectIgnoreVisibilityOptimize(
                       s,
                       !1,
                     ))
-                  : (this.nXs[t] -= i);
+                  : (this.YYs[t] -= i);
           }
         }),
         (this.Dgn = void 0),
@@ -480,7 +479,7 @@ let SceneItemFanComponent =
     }
     OnStart() {
       if (
-        (this.Entity.GetComponent(140).RegisterComponent(this),
+        (this.Entity.GetComponent(141).RegisterComponent(this),
         this.FCn ||
           EventSystem_1.EventSystem.AddWithTarget(
             this,
@@ -492,26 +491,20 @@ let SceneItemFanComponent =
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
           this.Rnn,
         ),
-        this.Entity.GetComponent(108)?.SetLogicRange(FAN_LOGIC_RANGE),
+        this.Entity.GetComponent(109)?.SetLogicRange(FAN_LOGIC_RANGE),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.EnterLogicRange,
           this.Jsn,
         ),
-        0 < this.TCn.size &&
-          EventSystem_1.EventSystem.AddWithTarget(
-            this.Entity,
-            EventDefine_1.EEventName.OnLevelTagChanged,
-            this.gIe,
-          ),
-        (this.n$t = this.Entity.GetComponent(185)),
+        (this.n$t = this.Entity.GetComponent(187)),
         !this.n$t)
       )
         return !1;
       if (
-        ((this.Xte = this.Entity.GetComponent(180)),
-        (this.kCn = this.Entity.GetComponent(147)),
-        (this.jnn = this.Entity.GetComponent(76)),
+        ((this.Xte = this.Entity.GetComponent(181)),
+        (this.kCn = this.Entity.GetComponent(148)),
+        (this.jnn = this.Entity.GetComponent(77)),
         0 < this.TCn.size)
       ) {
         for (const i of this.TCn)
@@ -534,9 +527,9 @@ let SceneItemFanComponent =
         (this.Ngn = Vector_1.Vector.Create()),
         (this.cz = Vector_1.Vector.Create()),
         (this.YJo = Vector_1.Vector.Create());
-      var t = this.n$t.CreatureData?.ComponentDataMap.get("Ays")?.Ays;
+      var t = this.n$t.CreatureData?.ComponentDataMap.get("qys")?.qys;
       return (
-        t && (this.ICn = t.kIs),
+        t && (this.ICn = t.WIs),
         !Info_1.Info.EnableForceTick &&
           this.Active &&
           ComponentForceTickController_1.ComponentForceTickController.RegisterTick(
@@ -628,13 +621,13 @@ let SceneItemFanComponent =
           }
         if (i) {
           t || (this.mWi.Radius = 0.7 * FAN_SPHERE_TRACE_RADIUS);
-          var n = h.e0n(this.mWi, this.OCn, i, this.jSa);
+          var n = h.e0n(this.mWi, this.OCn, i, this.gTa);
           if (-1 < n) {
             if (
               (this.o0n &&
                 this.xgn === s &&
                 ((this.wgn = !1), (this.Bgn = !1), this.T0n(this.xgn)),
-              0 < i.EntityId)
+              ModelManager_1.ModelManager.CharacterModel?.IsValid(i.EntityId))
             ) {
               this.GCn?.SpliceToEntity(i.EntityId);
               for (let t = this._9r.length - 1; t >= s; t--) {
@@ -654,11 +647,11 @@ let SceneItemFanComponent =
             }
             var a = this._9r[s],
               a =
-                (a.HitLocation?.DeepCopy(this.jSa),
-                a.Location?.DeepCopy(this.jSa),
+                (a.HitLocation?.DeepCopy(this.gTa),
+                a.Location?.DeepCopy(this.gTa),
                 h.r0n().Quaternion().RotateVector(h.UCn, this.BCn),
                 this.BCn.AdditionEqual(h.n$t.ActorLocationProxy),
-                this.s0n(s, this.BCn.ToUeVector(), this.jSa.ToUeVector()),
+                this.s0n(s, this.BCn.ToUeVector(), this.gTa.ToUeVector()),
                 Math.min(
                   this._9r.length - 1,
                   Math.min(this.Cgn.length - 1, this.xgn),
@@ -667,7 +660,7 @@ let SceneItemFanComponent =
               (h = EffectSystem_1.EffectSystem.GetEffectActor(this.Cgn[a])) &&
               (this.fTn(a, !1, 1),
               h.K2_SetActorLocationAndRotation(
-                this.jSa.ToUeVector(),
+                this.gTa.ToUeVector(),
                 this._9r[a].HitRotator.ToUeRotator(),
                 !1,
                 void 0,
@@ -697,13 +690,13 @@ let SceneItemFanComponent =
           s = !1;
         for (let t = 0; t < r; t++) {
           var a = _.Get(t);
-          if (a !== this.SGn) {
+          if (a !== this.RGn) {
             a =
               ModelManager_1.ModelManager.SceneInteractionModel.GetEntityByBaseItem(
                 a,
               );
             if (a?.Id !== this.Entity.Id) {
-              var f = a?.Entity?.GetComponent(137);
+              var f = a?.Entity?.GetComponent(138);
               if (f) {
                 if (s) {
                   i = !0;
@@ -735,30 +728,43 @@ let SceneItemFanComponent =
       return -2;
     }
     jCn() {
-      if (((this.wCn = Rotator_1.Rotator.Create()), 0 !== this._se)) {
-        var t = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(
-          this._se,
-        );
-        if (t) {
-          t = t.Entity.GetComponent(185);
-          if (t)
-            return (
-              t.ActorLocationProxy.Subtraction(
-                this.n$t.ActorLocationProxy,
-                this.cz,
-              ),
-              void MathUtils_1.MathUtils.LookRotationUpFirst(
-                this.cz,
-                this.h0n(),
-                this.wCn,
-              )
+      if (!this.wCn) {
+        if (((this.wCn = Rotator_1.Rotator.Create()), 0 !== this._se)) {
+          var t =
+            ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(
+              this._se,
             );
+          if (t) {
+            t = t.Entity.GetComponent(187);
+            if (t)
+              return (
+                t.ActorLocationProxy.Subtraction(
+                  this.n$t.ActorLocationProxy,
+                  this.cz,
+                ),
+                void MathUtils_1.MathUtils.LookRotationUpFirst(
+                  this.cz,
+                  this.h0n(),
+                  this.wCn,
+                )
+              );
+          }
         }
+        this.wCn.DeepCopy(this.r0n());
       }
-      this.wCn.DeepCopy(this.r0n()),
-        (this.ICn = this.ICn % this.MCn),
+      (this.ICn = this.ICn % this.MCn),
         (this.fle = (this.ICn + this.ECn) * this.yCn),
         (this.hwe.Yaw = this.fle),
+        Info_1.Info.IsBuildShipping ||
+          (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "Level",
+              37,
+              "[FanComponent]InitRotation",
+              ["PbDataId", this.Entity.GetComponent(0)?.GetPbDataId()],
+              ["StartRotator", this.fle],
+              ["InitRotator", this.wCn.Yaw],
+            )),
         MathUtils_1.MathUtils.ComposeRotator(this.hwe, this.wCn, this.Ome),
         this.Sgn(this.Ome, "SceneItemFanComponent Rotate");
     }
@@ -785,16 +791,6 @@ let SceneItemFanComponent =
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
           this.Rnn,
         ),
-        EventSystem_1.EventSystem.HasWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.OnLevelTagChanged,
-          this.gIe,
-        ) &&
-          EventSystem_1.EventSystem.RemoveWithTarget(
-            this.Entity,
-            EventDefine_1.EEventName.OnLevelTagChanged,
-            this.gIe,
-          ),
         this.Xte?.RemoveTagAddOrRemoveListener(-511894810, this.oFe),
         this.Xte?.RemoveTagAddOrRemoveListener(-3775711, this.oFe),
         this.Xte?.RemoveTagAddOrRemoveListener(-1152559349, this.oFe),
@@ -811,7 +807,7 @@ let SceneItemFanComponent =
         (this.YJo = void 0),
         this.Hnr &&
           (ActorSystem_1.ActorSystem.Put(this.Hnr), (this.Hnr = void 0)),
-        this.ACn && this.ACn.e0a(this.Entity),
+        this.ACn && this.ACn.fva(this.Entity),
         (this.ACn = void 0),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Level", 37, "[Fan.WaitChild]Clear Root", [
@@ -825,7 +821,7 @@ let SceneItemFanComponent =
             !0,
           ),
         (this.rvi = 0),
-        (this.jSa = void 0),
+        (this.gTa = void 0),
         (this._9r = void 0),
         (this.qCn = void 0),
         (this.Hgn = void 0),
@@ -861,8 +857,8 @@ let SceneItemFanComponent =
         this.Cgn = void 0;
       }
       return (
-        (this.oXs = void 0),
-        (this.nXs = void 0),
+        (this.XYs = void 0),
+        (this.YYs = void 0),
         (this.n$t = void 0),
         (this.Xte = void 0),
         (this.kCn = void 0),
@@ -917,7 +913,7 @@ let SceneItemFanComponent =
           e = n.Y,
           o = n.Z;
         for (const a of this.PCn) {
-          var r = a.GetComponent(185);
+          var r = a.GetComponent(187);
           r &&
             ((n = r.ActorLocationProxy),
             (t = Math.min(t, n.X)),
@@ -944,27 +940,27 @@ let SceneItemFanComponent =
           (this.$gn = Vector_1.Vector.Create()),
           (this.Ygn = Vector_1.Vector.Create()),
           (this.Jgn = Vector_1.Vector.Create()),
-          (this.jSa = Vector_1.Vector.Create()),
+          (this.gTa = Vector_1.Vector.Create()),
           (this.GCn = new SporeStruct()),
           this.GCn.Init(this.egn),
           (this.NCn = new Map()),
           (this.cgn = new Array()),
           (this.mgn = new Array()),
           (this.dgn = new Array()),
-          (this.oXs = new Array()),
-          (this.nXs = new Array()),
+          (this.XYs = new Array()),
+          (this.YYs = new Array()),
           (this.Cgn = new Array()),
           (this.ggn = UE.NewArray(UE.Vector)),
           (this.hgn = this.Xte.HasTag(-3775711)),
           this.hgn && this.PCn)
         )
-          for (const f of this.PCn) f?.GetComponent(137)?.aXs();
+          for (const f of this.PCn) f?.GetComponent(138)?.zYs();
         TimerSystem_1.TimerSystem.Next(() => {
           this.hgn && this.Tgn(void 0, !0), this.Zgn();
         }),
           this._gn();
         for (const v of this.PCn) {
-          var _ = v.GetComponent(137);
+          var _ = v.GetComponent(138);
           _ && _._gn();
         }
       }
@@ -1008,11 +1004,11 @@ let SceneItemFanComponent =
       var i = this.n$t.CreatureData.GetCreatureDataId();
       this.f0n(i, t, (t) => {
         (this.Egn = !1),
-          0 !== t?.A9n
+          0 !== t?.G9n
             ? Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn("Level", 37, "SetFanStateResponse Failed", [
                 "ErrorCode",
-                t?.A9n,
+                t?.G9n,
               ])
             : this.hgn ||
               ((this.hgn = !0), this.tgn ? this.Tgn() : (this.ngn = 5e3));
@@ -1052,7 +1048,7 @@ let SceneItemFanComponent =
       }
       this.mgn && (this.mgn.length = 0);
       for (const e of this.PCn) {
-        var t = e.GetComponent(137);
+        var t = e.GetComponent(138);
         t && t.Zgn(0);
       }
     }
@@ -1081,19 +1077,19 @@ let SceneItemFanComponent =
       this.Xte?.RemoveTag(1174613996),
         this.Xte?.RemoveTag(942900915),
         this.Xte?.RemoveTag(-216276934);
-      var t = this.kCn?.EntityInSocket?.Entity?.GetComponent(180);
+      var t = this.kCn?.EntityInSocket?.Entity?.GetComponent(181);
       t &&
         (t.RemoveTag(1174613996),
         t.RemoveTag(942900915),
         t.RemoveTag(-216276934)),
         0 !== this.ugn &&
-          ((t = EntitySystem_1.EntitySystem.GetComponent(this.ugn, 180)) &&
+          ((t = EntitySystem_1.EntitySystem.GetComponent(this.ugn, 181)) &&
             (t.RemoveTag(1174613996),
             t.RemoveTag(942900915),
             t.RemoveTag(-216276934)),
           (this.ugn = 0));
     }
-    aXs() {
+    zYs() {
       this.Xte && !this.Xte.HasTag(-1018185327) && this.Xte.AddTag(1174613996);
     }
     lgn(t, i = void 0) {
@@ -1111,7 +1107,7 @@ let SceneItemFanComponent =
               : (this.Xte.HasTag(1174613996) || this.Xte.AddTag(1174613996),
                 this.Xte.RemoveTag(942900915),
                 this.Xte.RemoveTag(-216276934))),
-          (s = this.kCn?.EntityInSocket?.Entity?.GetComponent(180))) &&
+          (s = this.kCn?.EntityInSocket?.Entity?.GetComponent(181))) &&
           ((this.ugn = this.kCn.EntityInSocket.Entity.Id),
           t
             ? (s.RemoveTag(1174613996),
@@ -1123,7 +1119,7 @@ let SceneItemFanComponent =
               s.RemoveTag(942900915),
               s.RemoveTag(-216276934))));
     }
-    dWs(t) {
+    qWs(t) {
       for (const i of this._9r) if (i.EntityId === t) return !0;
       return !1;
     }
@@ -1150,7 +1146,7 @@ let SceneItemFanComponent =
                 );
             else if (this.o0n) this.Bgn = !0;
             else {
-              (this.sXs = t), this.xCn.clear();
+              (this.JYs = t), this.xCn.clear();
               for (let t = this.PCn.length - 1; -1 < t; t--) {
                 var h = this.PCn[t];
                 h?.Valid ? this.xCn.add(h.Id) : this.PCn.splice(t, 1);
@@ -1290,7 +1286,7 @@ let SceneItemFanComponent =
           S = m.Actors;
         for (let t = 0; t < E; t++) {
           var C = S.Get(t);
-          if (C !== this.SGn) {
+          if (C !== this.RGn) {
             C =
               ModelManager_1.ModelManager.SceneInteractionModel.GetEntityByBaseItem(
                 C,
@@ -1298,10 +1294,10 @@ let SceneItemFanComponent =
             if (C?.Id !== this.Entity.Id)
               if (C && o.has(C?.Id)) {
                 if (C) {
-                  var I = C.Entity.GetComponent(137);
+                  var I = C.Entity.GetComponent(138);
                   if (!I || !I.a0n()) {
                     if ((s && (h = !0), I)) {
-                      var p = I.Entity.GetComponent(185)?.ActorLocationProxy;
+                      var p = I.Entity.GetComponent(187)?.ActorLocationProxy;
                       p &&
                         (this.pgn = Vector_1.Vector.Dist(
                           p,
@@ -1333,7 +1329,7 @@ let SceneItemFanComponent =
         }
         if (
           (e &&
-            (n = e.Entity.GetComponent(185)?.ActorLocationProxy) &&
+            (n = e.Entity.GetComponent(187)?.ActorLocationProxy) &&
             (this.fgn = Vector_1.Vector.Dist(n, this.n$t.ActorLocationProxy)),
           (r.IsBlockInMiddle = h),
           i)
@@ -1351,7 +1347,7 @@ let SceneItemFanComponent =
           for (const L of d)
             L &&
               o.has(L.Id) &&
-              (f = L.Entity.GetComponent(185)) &&
+              (f = L.Entity.GetComponent(187)) &&
               (f = Vector_1.Vector.Dist(
                 this.n$t.ActorLocationProxy,
                 f.ActorLocationProxy,
@@ -1365,7 +1361,7 @@ let SceneItemFanComponent =
           for (const F of d)
             F &&
               o.has(F.Id) &&
-              (o.delete(F.Id), (c = F.Entity.GetComponent(185))) &&
+              (o.delete(F.Id), (c = F.Entity.GetComponent(187))) &&
               ((c = Vector_1.Vector.Dist(
                 c.ActorLocationProxy,
                 this.n$t.ActorLocationProxy,
@@ -1385,15 +1381,15 @@ let SceneItemFanComponent =
       if (!this.QCn) return !!this.ACn && this.ACn.IsAnyRotating;
       if (this.PCn)
         for (const i of this.PCn) {
-          var t = i.GetComponent(137);
+          var t = i.GetComponent(138);
           if (t && 0 < t.Mgn) return !0;
         }
       return !1;
     }
-    e0a(t) {
+    fva(t) {
       this.PCn && -1 < (t = this.PCn.indexOf(t)) && this.PCn.splice(t, 1);
     }
-    ZCa() {
+    gva() {
       var t,
         i,
         s = this.Entity.GetComponent(0)?.GetPbDataId() ?? 0;
@@ -1401,7 +1397,7 @@ let SceneItemFanComponent =
         (t = ModelManager_1.ModelManager.CreatureModel.GetOwnerEntity(s)) &&
         (t =
           ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t)) &&
-        (i = t.Entity?.GetComponent(137)) &&
+        (i = t.Entity?.GetComponent(138)) &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneItem",
@@ -1409,9 +1405,9 @@ let SceneItemFanComponent =
             "[FanComponent] TryToResetRoot Successs",
             ["EntityId", this.Entity.Id],
           ),
-        (this.ACn = i).t0a(this, s));
+        (this.ACn = i).vva(this, s));
     }
-    t0a(t, i) {
+    vva(t, i) {
       var s;
       this.PCn &&
         (s = this.Entity.GetComponent(0))?.Valid &&
@@ -1426,7 +1422,7 @@ let SceneItemFanComponent =
             ["EntityId", this.Entity.Id],
           ),
         this.PCn.push(t.Entity),
-        this.Tgn(void 0, !1, !0));
+        this.Tgn(void 0, !1));
     }
     ExecuteInteract() {
       Log_1.Log.CheckInfo() &&
@@ -1463,6 +1459,20 @@ let SceneItemFanComponent =
                   (this.vgn = (this.ICn + this.ECn) * this.yCn),
                   (this.Mgn = this.RCn),
                   (this.hwe.Yaw = this.vgn),
+                  Info_1.Info.IsBuildShipping ||
+                    (Log_1.Log.CheckDebug() &&
+                      Log_1.Log.Debug(
+                        "Level",
+                        37,
+                        "[FanComponent]StartRotate",
+                        [
+                          "PbDataId",
+                          this.Entity.GetComponent(0)?.GetPbDataId(),
+                        ],
+                        ["StartRotator", this.fle],
+                        ["EndRotator", this.vgn],
+                        ["CurrentRotateCount", this.ICn],
+                      )),
                   this.ACn?.S0n(this.Entity.Id, this.fle, this.vgn, this.wCn),
                   this.Xte?.AddTag(-687845e3),
                   this.y0n(),
@@ -1470,13 +1480,13 @@ let SceneItemFanComponent =
                     this.n$t.CreatureData.GetCreatureDataId(),
                     this.ICn,
                     (t) => {
-                      0 !== t?.A9n &&
+                      0 !== t?.G9n &&
                         Log_1.Log.CheckWarn() &&
                         Log_1.Log.Warn(
                           "Level",
                           37,
                           "SendFanNumberOfTurnsRequest Failed",
-                          ["ErrorCode", t?.A9n],
+                          ["ErrorCode", t?.G9n],
                         );
                     },
                   ))
@@ -1486,7 +1496,7 @@ let SceneItemFanComponent =
                     37,
                     "[FanComponent.ExecuteInteract] RootComponent Is Undefined",
                   ),
-                this.ZCa());
+                this.gva());
     }
     hAn(s) {
       if (this._9r) {
@@ -1502,7 +1512,7 @@ let SceneItemFanComponent =
           for (let t = i + 1; t < this._9r.length; t++) {
             var e = EntitySystem_1.EntitySystem.GetComponent(
               this._9r[t].EntityId,
-              137,
+              138,
             );
             e && e.Zgn(0),
               this.fTn(t, !0, 2),
@@ -1598,7 +1608,7 @@ let SceneItemFanComponent =
     }
     ygn() {
       this.QCn ||
-        (this.ACn?.dWs(this.Entity.Id) && this.ACn?.Tgn(),
+        (this.ACn?.qWs(this.Entity.Id) && this.ACn?.Tgn(),
         this.Xte?.RemoveTag(-687845e3));
     }
     T0n(t) {
@@ -1606,7 +1616,7 @@ let SceneItemFanComponent =
         ? ((t = this._9r[t - 1]),
           (t = ModelManager_1.ModelManager.CreatureModel?.GetEntityById(
             t.EntityId,
-          )?.Entity?.GetComponent(137)) && t.Zgn())
+          )?.Entity?.GetComponent(138)) && t.Zgn())
         : this.Zgn();
     }
     r0n() {
@@ -1646,7 +1656,7 @@ let SceneItemFanComponent =
       var t,
         i,
         s,
-        h = this.Entity.GetComponent(181);
+        h = this.Entity.GetComponent(182);
       h
         ? (h = h.GetInteractController())
           ? ((t = new CodeDefineLevelConditionInfo_1.LevelConditionGroup()),
@@ -1696,7 +1706,7 @@ let SceneItemFanComponent =
     l0n() {
       var t;
       this.Itn &&
-        (t = this.Entity.GetComponent(181)) &&
+        (t = this.Entity.GetComponent(182)) &&
         (t = t.GetInteractController()) &&
         (t.RemoveClientInteractOption(this.Itn), (this.Itn = void 0));
     }
@@ -1749,17 +1759,17 @@ let SceneItemFanComponent =
           this.xgn < this.dgn.length &&
           ((e = this.dgn[this.xgn]),
           EffectSystem_1.EffectSystem.SetEffectIgnoreVisibilityOptimize(e, !0),
-          -1 < (e = this.oXs.indexOf(e))) &&
-          (this.oXs.splice(e, 1), this.nXs.splice(e, 1)),
+          -1 < (e = this.XYs.indexOf(e))) &&
+          (this.XYs.splice(e, 1), this.YYs.splice(e, 1)),
           0 < this.xgn &&
             ((e = this.dgn[this.xgn - 1]),
-            this.oXs.includes(e) ||
-              (this.oXs.push(e),
-              this.nXs.push(WAIT_RESUME_IGNORE_VISIBILITY_OPTIMIZE_TIME))),
+            this.XYs.includes(e) ||
+              (this.XYs.push(e),
+              this.YYs.push(WAIT_RESUME_IGNORE_VISIBILITY_OPTIMIZE_TIME))),
           0 === this.xgn
             ? this.lgn(!0, !0)
             : ((e = this._9r[this.xgn - 1].EntityId),
-              (e = EntitySystem_1.EntitySystem.GetComponent(e, 137)) &&
+              (e = EntitySystem_1.EntitySystem.GetComponent(e, 138)) &&
                 this.xgn < this._9r.length &&
                 (this.xgn === this._9r.length - 1
                   ? e.lgn(!0, this._9r[this.xgn].IsBlockInMiddle)
@@ -1807,7 +1817,7 @@ let SceneItemFanComponent =
             this.Ngn.DeepCopy(this.YJo),
             this.tgn || this.Ngn.AdditionEqual(this.cz),
             Vector_1.Vector.Dist(this.Ggn, this.Ngn)),
-          a = this.sXs ? FIRST_SPLINE_MOVE_SPEED : SPLINE_MOVE_SEPPD;
+          a = this.JYs ? FIRST_SPLINE_MOVE_SPEED : SPLINE_MOVE_SEPPD;
         (this.Ogn = (_ / a) * TimeUtil_1.TimeUtil.InverseMillisecond),
           (this.kgn = h
             ? (e / SPLINE_MOVE_SEPPD) * TimeUtil_1.TimeUtil.InverseMillisecond
@@ -1834,9 +1844,9 @@ let SceneItemFanComponent =
         (this.o0n = !1),
           this.xgn - 1 < this.dgn.length &&
             ((a = this.dgn[this.xgn - 1]),
-            this.oXs.includes(a) ||
-              (this.oXs.push(a),
-              this.nXs.push(WAIT_RESUME_IGNORE_VISIBILITY_OPTIMIZE_TIME))),
+            this.XYs.includes(a) ||
+              (this.XYs.push(a),
+              this.YYs.push(WAIT_RESUME_IGNORE_VISIBILITY_OPTIMIZE_TIME))),
           this.xgn === this._9r.length &&
             1 < this.Cgn.length &&
             ((e = this._9r[this.xgn - 1]),
@@ -1952,7 +1962,7 @@ let SceneItemFanComponent =
                   !0,
                 ),
                 t?.K2_AttachToActor(h, void 0, 1, 1, 1, !1),
-                t?.SetActorHiddenInGame(!0),
+                EffectSystem_1.EffectSystem.SetEffectHidden(s, !0),
                 this.Cgn?.push(s))
               : this.Cgn?.push(-1)))
         : (this.cgn?.push(h),
@@ -1977,9 +1987,7 @@ let SceneItemFanComponent =
           for (let t = e; t < this.cgn.length; t++)
             this.ggn.Empty(),
               this.mgn[t].SetSplinePoints(this.ggn, 1),
-              EffectSystem_1.EffectSystem.GetEffectActor(
-                this.dgn[t],
-              )?.SetActorHiddenInGame(!0);
+              EffectSystem_1.EffectSystem.SetEffectHidden(this.dgn[t], !0);
         else {
           e <= this.cgn.length &&
             (-1 === this.dgn[h] && this.zgn(i, h, this.dgn),
@@ -2024,9 +2032,7 @@ let SceneItemFanComponent =
               ["hide", i],
               ["logIndex", s],
             ),
-          EffectSystem_1.EffectSystem.GetEffectActor(
-            this.Cgn[t],
-          )?.SetActorHiddenInGame(i));
+          EffectSystem_1.EffectSystem.SetEffectHidden(this.Cgn[t], i));
     }
     zgn(i, s, h) {
       if (this.cgn && !(this.cgn.length <= s)) {
@@ -2066,29 +2072,29 @@ let SceneItemFanComponent =
       }
     }
     I0n(t, i, s) {
-      var h = Protocol_1.Aki.Protocol.vts.create();
-      (h.P4n = MathUtils_1.MathUtils.NumberToLong(t)),
-        (h.zWn = i),
-        Net_1.Net.Call(4772, h, s);
+      var h = Protocol_1.Aki.Protocol.Tts.create();
+      (h.F4n = MathUtils_1.MathUtils.NumberToLong(t)),
+        (h.aKn = i),
+        Net_1.Net.Call(27902, h, s);
     }
     rgn(t, i, s, h) {
-      var e = Protocol_1.Aki.Protocol.Mts.create();
-      (e.ZWn = MathUtils_1.MathUtils.NumberToLong(t)),
-        (e.eKn = MathUtils_1.MathUtils.NumberToLong(i)),
-        (e.qHn = s ? 1 : 0),
-        Net_1.Net.Call(4474, e, h);
+      var e = Protocol_1.Aki.Protocol.Rts.create();
+      (e.hKn = MathUtils_1.MathUtils.NumberToLong(t)),
+        (e.lKn = MathUtils_1.MathUtils.NumberToLong(i)),
+        (e.WHn = s ? 1 : 0),
+        Net_1.Net.Call(24428, e, h);
     }
     f0n(t, i, s) {
-      var h = Protocol_1.Aki.Protocol.Ets.create();
-      (h.ZWn = MathUtils_1.MathUtils.NumberToLong(t)),
-        (h.qHn = i ? 1 : 0),
-        Net_1.Net.Call(25893, h, s);
+      var h = Protocol_1.Aki.Protocol.Ats.create();
+      (h.hKn = MathUtils_1.MathUtils.NumberToLong(t)),
+        (h.WHn = i ? 1 : 0),
+        Net_1.Net.Call(24298, h, s);
     }
   });
 (SceneItemFanComponent.C0n = new Array()),
   (SceneItemFanComponent = SceneItemFanComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(137)],
+      [(0, RegisterComponent_1.RegisterComponent)(138)],
       SceneItemFanComponent,
     )),
   (exports.SceneItemFanComponent = SceneItemFanComponent);

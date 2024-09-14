@@ -30,7 +30,7 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       (this.Dki = void 0),
       (this.Rki = 0),
       (this.Uki = !0),
-      (this.MZs = void 0),
+      (this.Pta = void 0),
       (this.Aki = 0),
       (this.Pki = 0),
       (this.xki = GIFT_ID),
@@ -43,7 +43,7 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       (this.bki = 0),
       (this.qki = 0),
       (this.Gki = 0),
-      (this.Nki = Protocol_1.Aki.Protocol.yNs.Proto_NoPaid),
+      (this.Nki = Protocol_1.Aki.Protocol.PNs.Proto_NoPaid),
       (this.Oki = 0),
       (this.kki = 0),
       (this.Fki = 0),
@@ -104,25 +104,25 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       Log_1.Log.Warn("Temp", 11, "战令奖励数据 没有这个等级的", ["level", t]);
   }
   set PayButtonRedDotState(t) {
-    this.MZs !== t &&
-      ((this.MZs = t),
+    this.Pta !== t &&
+      ((this.Pta = t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.BattlePassHadEnterUpdate,
       ),
       LocalStorage_1.LocalStorage.SetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.BattlePassPayButton,
-        this.MZs,
+        this.Pta,
       ));
   }
   get PayButtonRedDotState() {
     return (
-      void 0 === this.MZs &&
-        (this.MZs =
+      void 0 === this.Pta &&
+        (this.Pta =
           LocalStorage_1.LocalStorage.GetPlayer(
             LocalStorageDefine_1.ELocalStoragePlayerKey.BattlePassPayButton,
             !0,
           ) ?? !0),
-      this.MZs
+      this.Pta
     );
   }
   GetMaxLevel() {
@@ -167,7 +167,7 @@ class BattlePassModel extends ModelBase_1.ModelBase {
         for ([s, i] of l.PayReward) {
           var h = new BattlePassRewardGridItem_1.BattlePassRewardItem(s, i);
           this.BattlePassLevel >= l.Level &&
-            this.Nki !== Protocol_1.Aki.Protocol.yNs.Proto_NoPaid &&
+            this.Nki !== Protocol_1.Aki.Protocol.PNs.Proto_NoPaid &&
             (h.ItemType = 1),
             o.PayRewardItem.push(h);
         }
@@ -219,7 +219,7 @@ class BattlePassModel extends ModelBase_1.ModelBase {
   }
   UpdateBattlePassRewardDataFromResponse(t) {
     if (void 0 !== t && 0 !== t.length)
-      for (const e of t) this.TakeReward(e.Z4n, e.P6n, e.f8n);
+      for (const e of t) this.TakeReward(e.h5n, e.F6n, e.L8n);
   }
   UpdateRewardDataWithTargetLevel(e) {
     for (let t = 1; t <= e; t++) this.Wki(t);
@@ -229,7 +229,7 @@ class BattlePassModel extends ModelBase_1.ModelBase {
     if (t) {
       for (const a of t.FreeRewardItem)
         (0 !== a.ItemType && !e) || (a.ItemType = 1);
-      if (this.PayType !== Protocol_1.Aki.Protocol.yNs.Proto_NoPaid)
+      if (this.PayType !== Protocol_1.Aki.Protocol.PNs.Proto_NoPaid)
         for (const r of t.PayRewardItem)
           (0 !== r.ItemType && !e) || (r.ItemType = 1);
     }
@@ -238,7 +238,7 @@ class BattlePassModel extends ModelBase_1.ModelBase {
     e = this.GetRewardData(e);
     let r = void 0;
     (r =
-      t === Protocol_1.Aki.Protocol.ENs.Proto_Free
+      t === Protocol_1.Aki.Protocol.ANs.Proto_Free
         ? e.GetFreeRewardItem(a)
         : e.GetPayRewardItem(a)).ItemType = 2;
   }
@@ -308,11 +308,11 @@ class BattlePassModel extends ModelBase_1.ModelBase {
   }
   GetPassPayBtnKey() {
     switch (this.Nki) {
-      case Protocol_1.Aki.Protocol.yNs.Proto_NoPaid:
+      case Protocol_1.Aki.Protocol.PNs.Proto_NoPaid:
         return "Text_BattlePassBuyButton1_Text";
-      case Protocol_1.Aki.Protocol.yNs.Proto_Paid:
+      case Protocol_1.Aki.Protocol.PNs.Proto_Paid:
         return "Text_BattlePassBuyButton2_Text";
-      case Protocol_1.Aki.Protocol.yNs.Proto_Advanced:
+      case Protocol_1.Aki.Protocol.PNs.Proto_Advanced:
         return "Text_BattlePassBuyButton3_Text";
       default:
         return "";
@@ -338,7 +338,7 @@ class BattlePassModel extends ModelBase_1.ModelBase {
     for (let t = r + 1; t <= e; t++) {
       var i = this.GetRewardData(t);
       if (i)
-        for (const h of this.Nki === Protocol_1.Aki.Protocol.yNs.Proto_NoPaid
+        for (const h of this.Nki === Protocol_1.Aki.Protocol.PNs.Proto_NoPaid
           ? i.FreeRewardItem
           : i.FreeRewardItem.concat(i.PayRewardItem)) {
           var o = h.Item[0].ItemId,
@@ -424,39 +424,39 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       s = this.BattlePassTaskMap,
       i = new BattlePassTaskLoopItem_1.BattlePassTaskData(),
       o =
-        ((i.TaskId = t.J4n),
+        ((i.TaskId = t.s5n),
         ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassTask(
-          t.J4n,
+          t.s5n,
         ));
     for ([e, a] of o.TaskReward) {
       var n = [{ IncId: 0, ItemId: e }, a];
       e === r && (i.Exp += a), i.RewardItemList.push(n);
     }
-    (i.CurrentProgress = t.iMs ?? 0),
-      (i.TargetProgress = t.b6n ?? 0),
+    (i.CurrentProgress = t.lMs ?? 0),
+      (i.TargetProgress = t.j6n ?? 0),
       (i.UpdateType = o.UpdateType),
-      t.sMs
-        ? t.aMs
+      t.dMs
+        ? t.mMs
           ? (i.TaskState = 2)
           : (i.TaskState = 3)
         : (i.TaskState = 1),
-      s.set(t.J4n, i);
+      s.set(t.s5n, i);
   }
   SetDataFromBattlePassResponse(t) {
-    var e = t.XSs;
-    (this.Lki = e.$Ss ?? !1),
+    var e = t.iEs;
+    (this.Lki = e.YSs ?? !1),
       this.Lki &&
-        ((this.HadEnter = e.QSs),
-        (this.BattlePassId = e.J4n),
-        (this.PayType = e.jSs),
-        (this.BattlePassLevel = e.P6n),
-        (this.LevelExp = e.M8n),
-        (this.WeekExp = e.HSs),
-        this.Qki(e.sps),
-        this.Kki(e.nps),
+        ((this.HadEnter = e.tEs),
+        (this.BattlePassId = e.s5n),
+        (this.PayType = e.zSs),
+        (this.BattlePassLevel = e.F6n),
+        (this.LevelExp = e.U8n),
+        (this.WeekExp = e.JSs),
+        this.Qki(e.dps),
+        this.Kki(e.cps),
         this.InitBattlePassConfigData(),
-        this.UpdateBattlePassRewardDataFromResponse(t.XSs.WSs ?? void 0),
-        e.QSs || (this.PayButtonRedDotState = !0),
+        this.UpdateBattlePassRewardDataFromResponse(t.iEs.ZSs ?? void 0),
+        e.tEs || (this.PayButtonRedDotState = !0),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
         ));
@@ -487,7 +487,7 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       );
   }
   UpdateRewardDataFromBattlePassTakeAllRewardResponse(t) {
-    for (const e of t.WSs) this.TakeReward(e.Z4n, e.P6n, e.f8n);
+    for (const e of t.ZSs) this.TakeReward(e.h5n, e.F6n, e.L8n);
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
     );
@@ -545,16 +545,16 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       ? this.GetInTimeRange()
         ? t === this.PrimaryItemId
           ? ModelManager_1.ModelManager.BattlePassModel.PayType !==
-            Protocol_1.Aki.Protocol.yNs.Proto_NoPaid
+            Protocol_1.Aki.Protocol.PNs.Proto_NoPaid
             ? 151
             : ModelManager_1.ModelManager.BattlePassModel.InBattlePassInWarningTime()
               ? 152
               : 153
           : ModelManager_1.ModelManager.BattlePassModel.PayType ===
-              Protocol_1.Aki.Protocol.yNs.Proto_Advanced
+              Protocol_1.Aki.Protocol.PNs.Proto_Advanced
             ? 155
             : ModelManager_1.ModelManager.BattlePassModel.PayType ===
-                Protocol_1.Aki.Protocol.yNs.Proto_Paid
+                Protocol_1.Aki.Protocol.PNs.Proto_Paid
               ? 154
               : ModelManager_1.ModelManager.BattlePassModel.InBattlePassInWarningTime()
                 ? 159

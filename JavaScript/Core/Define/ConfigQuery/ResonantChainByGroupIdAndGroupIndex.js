@@ -18,28 +18,44 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configResonantChainByGroupIdAndGroupIndex.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configResonantChainByGroupIdAndGroupIndex.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configResonantChainByGroupIdAndGroupIndex.GetConfig(";
 exports.configResonantChainByGroupIdAndGroupIndex = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (n, o, e = !0) => {
-    if (
-      (a = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
-        var i = KEY_PREFIX + `#${n}#${o})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (r) return r;
+  GetConfig: (n, o, i = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${n}#${o})`),
+      t =
+        (e.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
+      if (i) {
+        var a = KEY_PREFIX + `#${n}#${o})`;
+        const C = ConfigCommon_1.ConfigCommon.GetConfig(a);
+        if (C)
+          return (
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
+          );
       }
       if (
-        (a =
+        (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, n, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, o, ...logPair) &&
           0 <
@@ -51,32 +67,37 @@ exports.configResonantChainByGroupIdAndGroupIndex = {
               ["GroupIndex", o],
             ))
       ) {
-        var a,
-          i = void 0;
+        a = void 0;
         if (
-          (([a, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([t, a] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["GroupId", n],
             ["GroupIndex", o],
           )),
-          a)
+          t)
         ) {
-          const r = ResonantChain_1.ResonantChain.getRootAsResonantChain(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+          const C = ResonantChain_1.ResonantChain.getRootAsResonantChain(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
           );
           return (
-            e &&
-              ((a = KEY_PREFIX + `#${n}#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(a, r)),
+            i &&
+              ((t = KEY_PREFIX + `#${n}#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(t, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            r
+            e.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    e.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=ResonantChainByGroupIdAndGroupIndex.js.map

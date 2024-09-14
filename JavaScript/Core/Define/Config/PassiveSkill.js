@@ -33,7 +33,8 @@ class PassiveSkill {
   get TriggerPreset() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.triggerpresetLength(),
-      (t) => this.triggerpreset(t),
+      this.triggerpreset,
+      this,
     );
   }
   get TriggerParams() {
@@ -45,7 +46,8 @@ class PassiveSkill {
   get SubSkillAction() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.subskillactionLength(),
-      (t) => this.subskillaction(t),
+      this.subskillaction,
+      this,
     );
   }
   get InstigatorType() {
@@ -57,7 +59,8 @@ class PassiveSkill {
   get SkillActionParams() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.skillactionparamsLength(),
-      (t) => this.skillactionparams(t),
+      this.skillactionparams,
+      this,
     );
   }
   __init(t, i) {

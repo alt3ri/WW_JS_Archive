@@ -13,8 +13,8 @@ var __decorate =
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       l = Reflect.decorate(t, o, e, i);
     else
-      for (var n = t.length - 1; 0 <= n; n--)
-        (r = t[n]) && (l = (s < 3 ? r(l) : 3 < s ? r(o, e, l) : r(o, e)) || l);
+      for (var h = t.length - 1; 0 <= h; h--)
+        (r = t[h]) && (l = (s < 3 ? r(l) : 3 < s ? r(o, e, l) : r(o, e)) || l);
     return 3 < s && l && Object.defineProperty(o, e, l), l;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -51,6 +51,10 @@ let BulletActorComponent = class BulletActorComponent extends BaseActorComponent
       (t.ActorComponent = this),
       super.OnStart()
     );
+  }
+  OnActivate() {
+    this.ActorInternal.Kuro_SetRole(2),
+      this.LastActorLocation.DeepCopy(this.ActorLocationProxy);
   }
   OnClear() {
     if (this.ActorInternal) {
@@ -131,7 +135,7 @@ let BulletActorComponent = class BulletActorComponent extends BaseActorComponent
   }
 };
 (BulletActorComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(154)],
+  [(0, RegisterComponent_1.RegisterComponent)(155)],
   BulletActorComponent,
 )),
   (exports.BulletActorComponent = BulletActorComponent);

@@ -46,11 +46,11 @@ class EffectBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
                   ]);
             },
           );
-      var r = Protocol_1.Aki.Protocol.U3n.create();
-      (r.J8n = new Protocol_1.Aki.Protocol.J8n()),
-        (r.J8n.Y8n = t),
-        (r.J8n.z8n = a),
-        CombatMessage_1.CombatNet.Call(15751, e.Entity, r, () => {});
+      var r = Protocol_1.Aki.Protocol.O3n.create();
+      (r.sVn = new Protocol_1.Aki.Protocol.sVn()),
+        (r.sVn.nVn = t),
+        (r.sVn.aVn = a),
+        CombatMessage_1.CombatNet.Call(29796, e.Entity, r, () => {});
     }
   }
   static RecycleEffect(e) {}

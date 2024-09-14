@@ -2,11 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraControllerBase = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
   CurveUtils_1 = require("../../../Core/Utils/Curve/CurveUtils"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem");
 class CameraControllerBase {
-  constructor(t) {
+  constructor(e) {
     (this.u1e = !0),
       (this.c1e = new Set()),
       (this.m1e = new Map()),
@@ -14,85 +15,85 @@ class CameraControllerBase {
       (this.d1e = new Map()),
       (this.C1e = new Map()),
       (this.g1e = new Set()),
-      (this.OnChangeRole = (t, e) => {}),
-      (this.Camera = t),
+      (this.OnChangeRole = (e, t) => {}),
+      (this.Camera = e),
       this.OnInit();
   }
-  SetConfigMap(t, e) {
-    this.$.has(t) &&
+  SetConfigMap(e, t) {
+    this.$.has(e) &&
       Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Camera", 6, "重复注册了Key", ["Key", t]),
-      this.g1e.has(e) &&
+      Log_1.Log.Error("Camera", 6, "重复注册了Key", ["Key", e]),
+      this.g1e.has(t) &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Camera", 6, "重复注册了Value", ["value", e]),
-      this.$.set(t, e),
-      this.g1e.add(e);
+        Log_1.Log.Error("Camera", 6, "重复注册了Value", ["value", t]),
+      this.$.set(e, t),
+      this.g1e.add(t);
   }
-  SetCurveConfigMap(t, e) {
-    this.C1e.has(t) &&
+  SetCurveConfigMap(e, t) {
+    this.C1e.has(e) &&
       Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Camera", 6, "重复注册了Key", ["Key", t]),
-      this.g1e.has(e) &&
+      Log_1.Log.Error("Camera", 6, "重复注册了Key", ["Key", e]),
+      this.g1e.has(t) &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Camera", 6, "重复注册了Value", ["value", e]),
-      this.C1e.set(t, e),
-      this.g1e.add(e);
+        Log_1.Log.Error("Camera", 6, "重复注册了Value", ["value", t]),
+      this.C1e.set(e, t),
+      this.g1e.add(t);
   }
-  f1e(t, e) {
-    this[t] = e;
+  f1e(e, t) {
+    this[e] = t;
   }
-  p1e(t, e) {
-    this[t] = e;
+  p1e(e, t) {
+    this[e] = t;
   }
-  SetDefaultConfigs(e, i) {
-    for (let t = 0; t < e.Num(); t++) {
-      var s = e.GetKey(t);
-      this.m1e.set(e.GetKey(t), e.Get(s));
+  SetDefaultConfigs(t, a) {
+    for (let e = 0; e < t.Num(); e++) {
+      var r = t.GetKey(e);
+      this.m1e.set(t.GetKey(e), t.Get(r));
     }
-    for (let t = 0; t < i.Num(); t++) {
-      var a = i.GetKey(t);
+    for (let e = 0; e < a.Num(); e++) {
+      var s = a.GetKey(e);
       this.d1e.set(
-        i.GetKey(t),
-        CurveUtils_1.CurveUtils.CreateCurveByStruct(i.Get(a)),
+        a.GetKey(e),
+        CurveUtils_1.CurveUtils.CreateCurveByStruct(a.Get(s)),
       );
     }
   }
-  SetConfigs(t, e) {
-    if (t) {
-      for (var [i, s] of t) {
-        i = this.$.get(i);
-        this.f1e(i, s);
+  SetConfigs(e, t) {
+    if (e) {
+      for (var [a, r] of e) {
+        a = this.$.get(a);
+        this.f1e(a, r);
       }
-      for (var [a, r] of this.$)
-        void 0 === this[r] &&
+      for (var [s, i] of this.$)
+        void 0 === this[i] &&
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
               6,
               "CameraController缺少配置",
               ["CameraType", this.constructor],
-              ["key", a],
-              ["value", r],
+              ["key", s],
+              ["value", i],
             ),
-          this.f1e(r, 1));
+          this.f1e(i, 1));
     }
-    if (e) {
-      for (var [o, h] of e) {
+    if (t) {
+      for (var [o, n] of t) {
         o = this.C1e.get(o);
-        this.p1e(o, h);
+        this.p1e(o, n);
       }
-      for (var [n, v] of this.C1e)
-        void 0 === this[v] &&
+      for (var [C, l] of this.C1e)
+        void 0 === this[l] &&
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
               6,
               "CameraController缺少曲线配置",
               ["CameraType", this.constructor.name],
-              ["key", n],
-              ["value", v],
+              ["key", C],
+              ["value", l],
             ),
-          this.p1e(v, CurveUtils_1.CurveUtils.CreateCurve(0)));
+          this.p1e(l, CurveUtils_1.CurveUtils.CreateCurve(0)));
     }
   }
   ResetDefaultConfig() {
@@ -116,31 +117,52 @@ class CameraControllerBase {
   UpdateCustomEnableCondition() {
     return !0;
   }
-  UpdateInternal(t) {}
-  UpdateDeactivateInternal(t) {}
-  Lock(t) {
-    var e = this.IsActivate;
-    this.c1e.add(t), !this.IsActivate && e && this.OnDisable();
+  UpdateInternal(e) {}
+  UpdateDeactivateInternal(e) {}
+  Lock(e) {
+    var t = this.IsActivate;
+    this.c1e.add(e), !this.IsActivate && t && this.OnDisable();
   }
-  Unlock(t) {
-    var e = this.IsActivate;
-    this.c1e.delete(t), this.IsActivate && !e && this.OnEnable();
+  Unlock(e) {
+    var t = this.IsActivate;
+    this.c1e.delete(e), this.IsActivate && !t && this.OnEnable();
   }
-  Update(t) {
-    var e = this.IsActivate;
-    (this.u1e = this.UpdateCustomEnableCondition()),
-      this.IsActivate !== e &&
-        (this.IsActivate ? this.OnEnable() : this.OnDisable()),
-      this.IsActivate
-        ? this.UpdateInternal(t)
-        : this.UpdateDeactivateInternal(t);
+  Update(e) {
+    var t = this.IsActivate;
+    CameraControllerBase.ZKa.Start(),
+      (this.u1e = this.UpdateCustomEnableCondition()),
+      CameraControllerBase.ZKa.Stop(),
+      this.IsActivate !== t &&
+        (this.IsActivate
+          ? (CameraControllerBase.e$a.Start(),
+            this.OnEnable(),
+            CameraControllerBase.e$a)
+          : (CameraControllerBase.t$a.Start(),
+            this.OnDisable(),
+            CameraControllerBase.t$a)
+        ).Stop(),
+      (this.IsActivate
+        ? (CameraControllerBase.i$a.Start(),
+          this.UpdateInternal(e),
+          CameraControllerBase.i$a)
+        : (CameraControllerBase.r$a.Start(),
+          this.UpdateDeactivateInternal(e),
+          CameraControllerBase.r$a)
+      ).Stop();
   }
   get IsActivate() {
     return this.u1e && 0 === this.c1e.size;
   }
-  GetConfigMapValue(t) {
-    return String(this.$.get(t));
+  GetConfigMapValue(e) {
+    return String(this.$.get(e));
   }
 }
-exports.CameraControllerBase = CameraControllerBase;
+((exports.CameraControllerBase = CameraControllerBase).ZKa =
+  Stats_1.Stat.Create("UpdateCustomEnableConditionStat")),
+  (CameraControllerBase.e$a = Stats_1.Stat.Create("OnEnableStat")),
+  (CameraControllerBase.t$a = Stats_1.Stat.Create("OnDisableStat")),
+  (CameraControllerBase.i$a = Stats_1.Stat.Create("UpdateInternalStat")),
+  (CameraControllerBase.r$a = Stats_1.Stat.Create(
+    "UpdateDeactivateInternalStat",
+  ));
 //# sourceMappingURL=CameraControllerBase.js.map

@@ -300,7 +300,7 @@ class CameraExploreController extends CameraControllerBase_1.CameraControllerBas
         return !1;
     }
     switch (
-      this.Camera.CharacterEntityHandle.Entity.GetComponent(160).MoveState
+      this.Camera.CharacterEntityHandle.Entity.GetComponent(161).MoveState
     ) {
       case CharacterUnifiedStateTypes_1.ECharMoveState.Walk:
       case CharacterUnifiedStateTypes_1.ECharMoveState.WalkStop:

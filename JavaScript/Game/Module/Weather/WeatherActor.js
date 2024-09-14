@@ -23,7 +23,7 @@ class WeatherActor {
       (this.kko = !1),
       (this.Rqe = TickSystem_1.TickSystem.InvalidId),
       (this.G2e = !1),
-      (this.SZs = 0),
+      (this.wta = 0),
       (this.J_ = () => {
         this.Uqe += Time_1.Time.DeltaTime;
         var t = this.Uqe / (1e3 * this.Oko),
@@ -61,10 +61,10 @@ class WeatherActor {
       (this.xko?.IsValid() && this.xko.SetActorHiddenInGame(!t),
       (this.G2e = t));
   }
-  EZs() {
-    0 !== this.SZs &&
-      (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.SZs),
-      (this.SZs = 0));
+  Bta() {
+    0 !== this.wta &&
+      (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.wta),
+      (this.wta = 0));
   }
   ChangeWeather(t, i) {
     var s;
@@ -90,14 +90,14 @@ class WeatherActor {
               (this.Bko = s.KuroPostProcess_2))
             : ((this.wko = s.KuroPostProcess_2),
               (this.Bko = s.KuroPostProcess_1)),
-          this.EZs(),
-          (this.SZs = ResourceSystem_1.ResourceSystem.LoadAsync(
+          this.Bta(),
+          (this.wta = ResourceSystem_1.ResourceSystem.LoadAsync(
             t,
             UE.KuroWeatherDataAsset,
             (t) => {
               t?.IsValid() &&
                 this.Bko?.IsValid() &&
-                ((this.SZs = 0), (this.Bko.WeatherDataAsset = t));
+                ((this.wta = 0), (this.Bko.WeatherDataAsset = t));
             },
           )),
           0 === i

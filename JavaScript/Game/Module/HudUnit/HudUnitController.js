@@ -13,10 +13,10 @@ class HudUnitController extends UiControllerBase_1.UiControllerBase {
     return !0;
   }
   static OnClear() {
-    return HudUnitManager_1.HudUnitManager.Clear(), this.Yii(), !0;
+    return HudUnitManager_1.HudUnitManager.Clear(), !0;
   }
   static OnLeaveLevel() {
-    return HudUnitManager_1.HudUnitManager.Clear(), this.Yii(), !0;
+    return HudUnitManager_1.HudUnitManager.Clear(), !0;
   }
   static OnTick(e) {
     HudUnitManager_1.HudUnitManager.Tick(e);
@@ -26,8 +26,8 @@ class HudUnitController extends UiControllerBase_1.UiControllerBase {
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
-      EventDefine_1.EEventName.OnChangeRole,
-      this.xie,
+      EventDefine_1.EEventName.InputControllerChange,
+      this.OnInputControllerChange,
     ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.AddCallback(
         17,
@@ -36,45 +36,40 @@ class HudUnitController extends UiControllerBase_1.UiControllerBase {
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.OnChangeRole,
-      this.xie,
+      EventDefine_1.EEventName.InputControllerChange,
+      this.OnInputControllerChange,
     ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.RemoveCallback(
         17,
         this.iJe,
       );
   }
-  static Jii(e) {}
-  static zii(e) {
-    this.Yii();
+  static TryCreateHud(e) {
+    e = HudUnitManager_1.HudUnitManager.HudUnitHandleClassMap.get(e);
+    e && HudUnitManager_1.HudUnitManager.TryNew(e);
   }
-  static ListenForTagSignificantChanged(e, t, n) {
-    e = e.GetComponent(188).ListenForTagAddOrRemove(t?.TagId, n);
-    this.Zii.push(e);
-  }
-  static Yii() {
-    for (const e of this.Zii) e.EndTask();
-    this.Zii.length = 0;
+  static TryDestroyHud(e) {
+    e = HudUnitManager_1.HudUnitManager.HudUnitHandleClassMap.get(e);
+    e && HudUnitManager_1.HudUnitManager.Destroy(e);
   }
 }
-((exports.HudUnitController = HudUnitController).Zii = []),
-  (HudUnitController.xie = (e, t) => {
-    t?.Valid && HudUnitController.zii(t), e?.Valid && HudUnitController.Jii(e);
-  }),
-  (HudUnitController.iJe = () => {
-    var e = UiLayer_1.UiLayer.GetBattleViewUnit(1),
-      t = UiLayer_1.UiLayer.GetBattleViewUnit(3),
-      n =
-        ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
-          17,
-        );
-    e.SetUIActive(n),
-      t.SetUIActive(n),
-      n
-        ? ModelManager_1.ModelManager.GameModeModel.WorldDone
-          ? HudUnitManager_1.HudUnitManager.ShowHud()
-          : Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Battle", 18, "WorldDone前不允许打开hud")
-        : HudUnitManager_1.HudUnitManager.HideHud();
+((exports.HudUnitController = HudUnitController).iJe = () => {
+  var e = UiLayer_1.UiLayer.GetBattleViewUnit(1),
+    t = UiLayer_1.UiLayer.GetBattleViewUnit(3),
+    n =
+      ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
+        17,
+      );
+  e.SetUIActive(n),
+    t.SetUIActive(n),
+    n
+      ? ModelManager_1.ModelManager.GameModeModel.WorldDone
+        ? HudUnitManager_1.HudUnitManager.ShowHud()
+        : Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Battle", 18, "WorldDone前不允许打开hud")
+      : HudUnitManager_1.HudUnitManager.HideHud();
+}),
+  (HudUnitController.OnInputControllerChange = (e, t) => {
+    HudUnitManager_1.HudUnitManager.RefreshHudOnInputControllerChanged(e, t);
   });
 //# sourceMappingURL=HudUnitController.js.map

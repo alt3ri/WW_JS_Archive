@@ -12,38 +12,40 @@ const puerts_1 = require("puerts"),
   LguiEventSystemManager_1 = require("../../../Ui/LguiEventSystem/LguiEventSystemManager"),
   UiLayer_1 = require("../../../Ui/UiLayer"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  UiNavigationGlobalData_1 = require("../New/UiNavigationGlobalData"),
   MOVE_SPEED_INTERVAL = 15,
   TWEEN_TIME = 0.3;
 class GamepadControlMouse {
   constructor(t, i) {
-    (this.JMa = void 0),
-      (this.zMa = void 0),
+    (this.CIa = void 0),
+      (this.gIa = void 0),
       (this.fLt = void 0),
-      (this.ZMa = void 0),
-      (this.eSa = 0),
-      (this.tSa = 0),
-      (this.iSa = 0),
-      (this.rSa = 0),
-      (this.oSa = !1),
-      (this.nSa = void 0),
+      (this.fIa = void 0),
+      (this.pIa = 0),
+      (this.vIa = 0),
+      (this.MIa = 0),
+      (this.SIa = 0),
+      (this.EIa = !1),
+      (this.u3i = !1),
+      (this.yIa = void 0),
       (this.$pt = void 0),
-      (this.sSa = Vector2D_1.Vector2D.Create()),
-      (this.yca = void 0),
+      (this.IIa = Vector2D_1.Vector2D.Create()),
+      (this.ICa = void 0),
       (this.uGo = void 0),
-      (this.aSa = Vector2D_1.Vector2D.Create()),
+      (this.TIa = Vector2D_1.Vector2D.Create()),
       (this.YFo = (t) => {
-        this.aSa.Set(t.X, t.Y);
+        this.TIa.Set(t.X, t.Y);
         t = this.fLt.ConvertPositionFromLGUICanvasToViewport(
-          this.aSa.ToUeVector2D(),
+          this.TIa.ToUeVector2D(),
         );
-        this.Q_t.Set(t.X, t.Y), this.hSa();
+        this.Q_t.Set(t.X, t.Y), this.LIa();
       }),
       (this.lqt = () => {
         var t = Info_1.Info.IsInGamepad();
         LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor?.SetIsOverrideMousePosition(
           t,
         ),
-          this.ZMa.SetAlpha(t ? 1 : 0),
+          this.fIa.SetAlpha(t ? 1 : 0),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiNavigation",
@@ -53,50 +55,50 @@ class GamepadControlMouse {
               ["当前操作类型", Info_1.Info.InputControllerType],
             );
       }),
-      (this.ZMa = t),
+      (this.fIa = t),
       (this.$pt = new LevelSequencePlayer_1.LevelSequencePlayer(t)),
-      (this.nSa = i),
-      (this.zMa =
+      (this.yIa = i),
+      (this.gIa =
         LguiEventSystemManager_1.LguiEventSystemManager.GetPointerEventData(0)),
       (this.fLt = UiLayer_1.UiLayer.UiRootItem.GetCanvasScaler()),
-      (this.eSa = UiLayer_1.UiLayer.UiRootItem.GetWidth() / 2),
-      (this.tSa = UiLayer_1.UiLayer.UiRootItem.GetHeight() / 2),
+      (this.pIa = UiLayer_1.UiLayer.UiRootItem.GetWidth() / 2),
+      (this.vIa = UiLayer_1.UiLayer.UiRootItem.GetHeight() / 2),
       (this.uGo = (0, puerts_1.toManualReleaseDelegate)(this.YFo));
   }
   get Q_t() {
     var t;
     return (
-      this.JMa ||
-        ((t = this.zMa.pointerPosition),
-        (this.JMa = Vector2D_1.Vector2D.Create(t.X, t.Y))),
-      this.JMa
+      this.CIa ||
+        ((t = this.gIa.pointerPosition),
+        (this.CIa = Vector2D_1.Vector2D.Create(t.X, t.Y))),
+      this.CIa
     );
   }
-  get lSa() {
-    return 0 !== this.iSa || 0 !== this.rSa;
+  get DIa() {
+    return 0 !== this.MIa || 0 !== this.SIa;
   }
-  _Sa() {
+  RIa() {
     var t;
     return this.fLt
       ? ((t = this.fLt.ConvertPositionFromViewportToLGUICanvas(
           this.Q_t.ToUeVector2D(),
         )),
-        Vector2D_1.Vector2D.Create(t.X - this.eSa, t.Y - this.tSa))
+        Vector2D_1.Vector2D.Create(t.X - this.pIa, t.Y - this.vIa))
       : this.Q_t;
   }
-  hSa() {
-    var t = this._Sa();
+  LIa() {
+    var t = this.RIa();
     let i = 0,
       e = 0;
-    t.X > this.eSa
-      ? ((i = t.X - this.eSa), (t.X = this.eSa), (this.Q_t.X -= this.rSa))
-      : t.X < -this.eSa &&
-        ((i = t.X + this.eSa), (t.X = -this.eSa), (this.Q_t.X -= this.rSa)),
-      t.Y > this.tSa
-        ? ((e = t.Y - this.tSa), (t.Y = this.tSa), (this.Q_t.Y += this.iSa))
-        : t.Y < -this.tSa &&
-          ((e = t.Y + this.tSa), (t.Y = -this.tSa), (this.Q_t.Y += this.iSa)),
-      this.ZMa.SetAnchorOffset(t.ToUeVector2D()),
+    t.X > this.pIa
+      ? ((i = t.X - this.pIa), (t.X = this.pIa), (this.Q_t.X -= this.SIa))
+      : t.X < -this.pIa &&
+        ((i = t.X + this.pIa), (t.X = -this.pIa), (this.Q_t.X -= this.SIa)),
+      t.Y > this.vIa
+        ? ((e = t.Y - this.vIa), (t.Y = this.vIa), (this.Q_t.Y += this.MIa))
+        : t.Y < -this.vIa &&
+          ((e = t.Y + this.vIa), (t.Y = -this.vIa), (this.Q_t.Y += this.MIa)),
+      this.fIa.SetAnchorOffset(t.ToUeVector2D()),
       LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor?.OverrideMousePosition(
         this.Q_t.ToUeVector2D(),
       ),
@@ -107,63 +109,63 @@ class GamepadControlMouse {
           e,
         );
   }
-  uSa() {
-    this.lSa &&
-      (this.Rca(),
-      (this.oSa = !1),
-      this.hSa(),
+  AIa() {
+    this.DIa &&
+      (this.UCa(),
+      (this.EIa = !1),
+      this.LIa(),
       LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor?.SwitchToNavigationInputType());
   }
-  Rca() {
-    this.yca && (this.yca.Kill(), (this.yca = void 0));
+  UCa() {
+    this.ICa && (this.ICa.Kill(), (this.ICa = void 0));
   }
-  cSa(t, i) {
+  UIa(t, i) {
     var e = i.RootUIComp.GetLGUISpaceAbsolutePositionByPivot(i.AdsorbedPivot);
     return (
-      this.sSa.Set(e.X, e.Y),
+      this.IIa.Set(e.X, e.Y),
       !(
-        Math.abs(this.sSa.X - t.X) > i.AdsorbedDistance ||
-        Math.abs(this.sSa.Y - t.Y) > i.AdsorbedDistance ||
-        Vector2D_1.Vector2D.Distance(this.sSa, t) > i.AdsorbedDistance
+        Math.abs(this.IIa.X - t.X) > i.AdsorbedDistance ||
+        Math.abs(this.IIa.Y - t.Y) > i.AdsorbedDistance ||
+        Vector2D_1.Vector2D.Distance(this.IIa, t) > i.AdsorbedDistance
       )
     );
   }
-  mSa(t) {
+  xIa(t) {
     var i = Vector2D_1.Vector2D.Create(t);
-    for (const e of this.nSa.GetPanelConfigMap().values())
+    for (const e of this.yIa.GetPanelConfigMap().values())
       for (const s of e.GetPanelHandle().GetListenerSet().values())
-        if (s.OpenAdsorbed && this.cSa(i, s)) return s;
+        if (s.OpenAdsorbed && this.UIa(i, s)) return s;
   }
-  dSa() {
+  PIa() {
     var t;
-    this.lSa ||
-      this.oSa ||
-      ((this.oSa = !0),
+    this.DIa ||
+      this.EIa ||
+      ((this.EIa = !0),
       (t = this.fLt.ConvertPositionFromViewportToLGUICanvas(
         this.Q_t.ToUeVector2D(),
       )),
-      this.mSa(t) &&
-        (this.Rca(),
-        (this.yca = UE.LTweenBPLibrary.Vector2To(
+      this.xIa(t) &&
+        (this.UCa(),
+        (this.ICa = UE.LTweenBPLibrary.Vector2To(
           GlobalData_1.GlobalData.World,
           this.uGo,
           t,
-          this.sSa.ToUeVector2D(!0),
+          this.IIa.ToUeVector2D(!0),
           TWEEN_TIME,
         ))));
   }
   MoveForwardByGamepad(t) {
-    (this.iSa = t * MOVE_SPEED_INTERVAL),
+    (this.MIa = t * MOVE_SPEED_INTERVAL),
       0 !== t &&
-        (((t = this.zMa?.pointerPosition ?? Vector2D_1.Vector2D.Create()).Y -=
-          this.iSa),
+        (((t = this.gIa?.pointerPosition ?? Vector2D_1.Vector2D.Create()).Y -=
+          this.MIa),
         (this.Q_t.Y = t.Y));
   }
   MoveRightByGamepad(t) {
-    (this.rSa = t * MOVE_SPEED_INTERVAL),
+    (this.SIa = t * MOVE_SPEED_INTERVAL),
       0 !== t &&
-        (((t = this.zMa?.pointerPosition ?? Vector2D_1.Vector2D.Create()).X +=
-          this.rSa),
+        (((t = this.gIa?.pointerPosition ?? Vector2D_1.Vector2D.Create()).X +=
+          this.SIa),
         (this.Q_t.X = t.X));
   }
   TriggerByGamepad(t) {
@@ -178,7 +180,7 @@ class GamepadControlMouse {
     LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor?.SetIsOverrideMousePosition(
       i,
     ),
-      this.ZMa.SetAlpha(i ? 1 : 0),
+      this.fIa.SetAlpha(i ? 1 : 0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiNavigation",
@@ -187,24 +189,37 @@ class GamepadControlMouse {
           ["是否开启", i],
           ["当前操作类型", Info_1.Info.InputControllerType],
         ),
-      t
-        ? EventSystem_1.EventSystem.Add(
-            EventDefine_1.EEventName.InputControllerChange,
-            this.lqt,
-          )
-        : EventSystem_1.EventSystem.Remove(
-            EventDefine_1.EEventName.InputControllerChange,
-            this.lqt,
-          );
+      this.u3i !== t &&
+        ((this.u3i = t)
+          ? EventSystem_1.EventSystem.Add(
+              EventDefine_1.EEventName.InputControllerChange,
+              this.lqt,
+            )
+          : EventSystem_1.EventSystem.Remove(
+              EventDefine_1.EEventName.InputControllerChange,
+              this.lqt,
+            ));
+  }
+  UpdateMousePositionByItem(t) {
+    (t = t.GetLGUISpaceAbsolutePosition()),
+      (t = this.fLt.ConvertPositionFromLGUICanvasToViewport(
+        new UE.Vector2D(t.X, t.Y),
+      ));
+    this.Q_t.Set(t.X, t.Y),
+      this.UCa(),
+      this.LIa(),
+      LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor?.SwitchToNavigationInputType();
   }
   Clear() {
     this.CanOverridePosition(!1),
-      this.Rca(),
+      this.UCa(),
       this.$pt.Clear(),
       (0, puerts_1.releaseManualReleaseDelegate)(this.YFo);
   }
   Tick() {
-    Info_1.Info.IsInGamepad() && (this.uSa(), this.dSa());
+    !Info_1.Info.IsInGamepad() ||
+      UiNavigationGlobalData_1.UiNavigationGlobalData.IsBlockNavigation ||
+      (this.AIa(), this.PIa());
   }
 }
 exports.GamepadControlMouse = GamepadControlMouse;

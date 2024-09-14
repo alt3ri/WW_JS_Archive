@@ -33,8 +33,8 @@ class Joystick extends BattleChildView_1.BattleChildView {
       (this.j_t = void 0),
       (this.W_t = void 0),
       (this.K_t = void 0),
-      (this.$Sa = void 0),
-      (this.XSa = void 0),
+      (this.MTa = void 0),
+      (this.STa = void 0),
       (this.Q_t = Vector2D_1.Vector2D.Create(0, 0)),
       (this.X_t = 0),
       (this.$_t = Vector_1.Vector.Create()),
@@ -43,7 +43,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
       (this.z_t = Vector_1.Vector.Create(0, 0, 0)),
       (this.Z_t = Rotator_1.Rotator.Create()),
       (this.AXe = !1),
-      (this.YSa = 0),
+      (this.ETa = 0),
       (this.JoystickTouchId = -1),
       (this.eut = !1),
       (this.R$e = void 0),
@@ -54,8 +54,8 @@ class Joystick extends BattleChildView_1.BattleChildView {
       (this.nut = Vector_1.Vector.Create()),
       (this.sut = void 0),
       (this.aut = 0),
-      (this.JSa = !1),
-      (this.zSa = !1),
+      (this.yTa = !1),
+      (this.ITa = !1),
       (this.hut = (t) => {
         this.lut(t) &&
           this.AXe &&
@@ -80,7 +80,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
           (this.tut = !0),
           (ModelManager_1.ModelManager.BattleUiModel.IsPressJoyStick = !0),
           (this.eut = !0),
-          this.JSa && (this.ZSa(), this.XSa?.SetUIActive(!0)),
+          this.yTa && (this.TTa(), this.STa?.SetUIActive(!0)),
           this.AXe &&
             ((this.J_t.X = this.Y_t.X),
             (this.J_t.Y = this.Y_t.Y),
@@ -114,8 +114,8 @@ class Joystick extends BattleChildView_1.BattleChildView {
             this.W_t.SetAnchorOffset(t),
             this.K_t.SetAnchorOffset(t));
       }),
-      (this.eEa = () => {
-        this.tEa();
+      (this.LTa = () => {
+        this.DTa();
       });
   }
   Initialize(t) {
@@ -128,8 +128,8 @@ class Joystick extends BattleChildView_1.BattleChildView {
       (this.j_t = this.GetSprite(0)),
       (this.W_t = this.GetSprite(1)),
       (this.K_t = this.GetSprite(2)),
-      (this.$Sa = this.GetItem(3)),
-      (this.XSa = this.GetItem(5)),
+      (this.MTa = this.GetItem(3)),
+      (this.STa = this.GetItem(5)),
       (this.R$e = Global_1.Global.CharacterController),
       (this.iut =
         CommonParamById_1.configCommonParamById.GetIntConfig("DodgeMinLength")),
@@ -138,7 +138,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
       )),
       (this.AXe =
         ModelManager_1.ModelManager.BattleUiModel.GetIsDynamicJoystick()),
-      (this.YSa = CommonParamById_1.configCommonParamById.GetFloatConfig(
+      (this.ETa = CommonParamById_1.configCommonParamById.GetFloatConfig(
         "MaskAreaEnableRootX",
       ));
   }
@@ -146,12 +146,12 @@ class Joystick extends BattleChildView_1.BattleChildView {
     var t, i;
     this.SetVisible(0, !0),
       this.SetActive(!0),
-      this.RootItem && this.ParentUiItem && 0 < this.YSa
+      this.RootItem && this.ParentUiItem && 0 < this.ETa
         ? ((t = this.ParentUiItem.GetWidth()),
           (i = this.RootItem.GetAnchorOffsetX()),
-          (this.JSa = 0 < t && i / t < this.YSa))
-        : (this.JSa = !1),
-      this.JSa || this.XSa?.SetUIActive(!1);
+          (this.yTa = 0 < t && i / t < this.ETa))
+        : (this.yTa = !1),
+      this.yTa || this.STa?.SetUIActive(!1);
   }
   HideBattleVisibleChildView() {
     this.SetVisible(0, !1), this.SetActive(!1);
@@ -200,7 +200,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
       ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.AddCallback(
         12,
-        this.eEa,
+        this.LTa,
       );
   }
   kre() {
@@ -216,7 +216,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
       ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.RemoveCallback(
         12,
-        this.eEa,
+        this.LTa,
       );
   }
   Tick(t) {
@@ -261,7 +261,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
         : ((t = t.GetLocalPointInPlane()),
           (this.Y_t.X = t.X),
           (this.Y_t.Y = t.Y),
-          this.ZSa(),
+          this.TTa(),
           ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
             Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -280,15 +280,15 @@ class Joystick extends BattleChildView_1.BattleChildView {
       this.fut(this.z_t),
       this.vut(this.z_t, i);
   }
-  ZSa() {
+  TTa() {
     var t;
-    this.JSa &&
+    this.yTa &&
       (this.Q_t.Set(
         Math.min(this.Y_t.X, MASK_AREA_MAX_X),
         Math.min(this.Y_t.Y, MASK_AREA_MAX_Y),
       ),
       (t = this.Q_t.ToUeVector2D()),
-      this.XSa.SetAnchorOffset(t));
+      this.STa.SetAnchorOffset(t));
   }
   SaveDodgeStartInfo(t) {
     (this.rut = TimeUtil_1.TimeUtil.GetServerTimeStamp()), (this.nut = t);
@@ -317,7 +317,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
       (this.eut = !1),
       (this.tut = !1),
       (ModelManager_1.ModelManager.BattleUiModel.IsPressJoyStick = !1),
-      this.XSa?.SetUIActive(!1);
+      this.STa?.SetUIActive(!1);
   }
   fut(s) {
     var e = s.SizeSquared();
@@ -370,7 +370,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
   }
   vut(t, i) {
     var s;
-    this.zSa && i && !t.Equality(Vector_1.Vector.ZeroVectorProxy)
+    this.ITa && i && !t.Equality(Vector_1.Vector.ZeroVectorProxy)
       ? ((s = MathUtils_1.MathUtils.RangeClamp(
           t.X,
           -JOYSTICK_RADIU,
@@ -458,12 +458,12 @@ class Joystick extends BattleChildView_1.BattleChildView {
       0 !== this.X_t && (this.j_t.SetUIActive(!1), this.W_t.SetUIActive(!1)),
       (this.X_t = 1));
   }
-  tEa() {
-    (this.zSa =
+  DTa() {
+    (this.ITa =
       ModelManager_1.ModelManager.BattleUiModel?.ChildViewData?.GetChildVisible(
         12,
       ) ?? !1),
-      this.$Sa?.SetUIActive(this.zSa);
+      this.MTa?.SetUIActive(this.ITa);
   }
   SetVisible(t, i) {
     ModelManager_1.ModelManager.BattleUiModel.ChildViewData.SetChildVisible(
@@ -471,6 +471,9 @@ class Joystick extends BattleChildView_1.BattleChildView {
       12,
       i,
     );
+  }
+  SetEnable(t) {
+    this.SetActive(t);
   }
   SetForbidMove(t) {}
 }

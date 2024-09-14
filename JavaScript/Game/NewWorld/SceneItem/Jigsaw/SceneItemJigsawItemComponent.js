@@ -5,19 +5,19 @@ var SceneItemJigsawItemComponent_1,
     function (t, e, i, s) {
       var n,
         o = arguments.length,
-        r =
+        h =
           o < 3
             ? e
             : null === s
               ? (s = Object.getOwnPropertyDescriptor(e, i))
               : s;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        r = Reflect.decorate(t, e, i, s);
+        h = Reflect.decorate(t, e, i, s);
       else
-        for (var h = t.length - 1; 0 <= h; h--)
-          (n = t[h]) &&
-            (r = (o < 3 ? n(r) : 3 < o ? n(e, i, r) : n(e, i)) || r);
-      return 3 < o && r && Object.defineProperty(e, i, r), r;
+        for (var r = t.length - 1; 0 <= r; r--)
+          (n = t[r]) &&
+            (h = (o < 3 ? n(h) : 3 < o ? n(e, i, h) : n(e, i)) || h);
+      return 3 < o && h && Object.defineProperty(e, i, h), h;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemJigsawItemComponent = void 0);
@@ -28,8 +28,6 @@ const UE = require("ue"),
   Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
   IAction_1 = require("../../../../UniverseEditor/Interface/IAction"),
   IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
-  EventDefine_1 = require("../../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../../Common/Event/EventSystem"),
   SceneItemJigsawBaseComponent_1 = require("./SceneItemJigsawBaseComponent"),
   sinValue = [0, 1, 0, -1],
   cosValue = [1, 0, -1, 0];
@@ -55,21 +53,17 @@ let SceneItemJigsawItemComponent =
             s = 741712776,
             n = 1488947861,
             o = this.Lie.HasTag(s) || this.Lie.HasTag(n),
-            r = this.Lie.HasTag(i),
-            h = o ? 2142861976 : -628734864;
-          for (const a of t)
-            if (a === i)
-              for (const c of this.Fcn)
-                this.fcn.AddTagsByIndex(c, a), this.fcn.AddTagsByIndex(c, h);
-          for (const m of e) {
-            if ((m === s || m === n) && r)
-              for (const f of this.Fcn)
-                this.fcn.RemoveTagsByIndex(f, 2142861976);
-            if (m === i)
-              for (const v of this.Fcn)
-                this.fcn.RemoveTagsByIndex(v, m),
-                  this.fcn.RemoveTagsByIndex(v, h);
-          }
+            h = this.Lie.HasTag(i),
+            r = o ? 2142861976 : -628734864;
+          if (t === i && e)
+            for (const a of this.Fcn)
+              this.fcn.AddTagsByIndex(a, t), this.fcn.AddTagsByIndex(a, r);
+          if ((t === s || t === n) && !e && h)
+            for (const c of this.Fcn) this.fcn.RemoveTagsByIndex(c, 2142861976);
+          if (t === i)
+            for (const m of this.Fcn)
+              this.fcn.RemoveTagsByIndex(m, t),
+                this.fcn.RemoveTagsByIndex(m, r);
         });
     }
     set PutDownIndex(t) {
@@ -122,25 +116,21 @@ let SceneItemJigsawItemComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(185)),
+        (this.Hte = this.Entity.GetComponent(187)),
         (this.CreatureDataComp = this.Entity.GetComponent(0)),
-        (this.fcn = this.Entity.GetComponent(145)),
-        (this.Lie = this.Entity.GetComponent(180)),
-        EventSystem_1.EventSystem.AddWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.OnLevelTagChanged,
-          this.gIe,
-        ),
+        (this.fcn = this.Entity.GetComponent(146)),
+        (this.Lie = this.Entity.GetComponent(181)),
+        this.Lie?.AddTagAddOrRemoveListener(793256493, this.gIe),
+        this.Lie?.AddTagAddOrRemoveListener(741712776, this.gIe),
+        this.Lie?.AddTagAddOrRemoveListener(1488947861, this.gIe),
         !0
       );
     }
     OnEnd() {
       return (
-        EventSystem_1.EventSystem.RemoveWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.OnLevelTagChanged,
-          this.gIe,
-        ),
+        this.Lie?.RemoveTagAddOrRemoveListener(793256493, this.gIe),
+        this.Lie?.RemoveTagAddOrRemoveListener(741712776, this.gIe),
+        this.Lie?.RemoveTagAddOrRemoveListener(1488947861, this.gIe),
         !0
       );
     }
@@ -280,7 +270,7 @@ let SceneItemJigsawItemComponent =
   });
 (SceneItemJigsawItemComponent = SceneItemJigsawItemComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(124)],
+    [(0, RegisterComponent_1.RegisterComponent)(125)],
     SceneItemJigsawItemComponent,
   )),
   (exports.SceneItemJigsawItemComponent = SceneItemJigsawItemComponent);

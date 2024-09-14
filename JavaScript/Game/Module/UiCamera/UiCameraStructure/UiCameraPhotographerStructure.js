@@ -5,7 +5,6 @@ const UE = require("ue"),
   ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
   CameraController_1 = require("../../../Camera/CameraController"),
   Global_1 = require("../../../Global"),
-  GlobalData_1 = require("../../../GlobalData"),
   PhotographDefine_1 = require("../../Photograph/PhotographDefine"),
   UiCameraStructure_1 = require("./UiCameraStructure");
 class UiCameraPhotographerStructure extends UiCameraStructure_1.UiCameraStructure {
@@ -14,18 +13,17 @@ class UiCameraPhotographerStructure extends UiCameraStructure_1.UiCameraStructur
   }
   OnSpawnStructureActor() {
     var t = new UE.Transform(
-        new UE.Quat(0),
-        new UE.Vector(0),
-        new UE.Vector(1, 1, 1),
-      ),
-      r = UE.GameplayStatics.BeginSpawningActorFromClass(
-        GlobalData_1.GlobalData.World,
+      new UE.Quat(0),
+      new UE.Vector(0),
+      new UE.Vector(1, 1, 1),
+    );
+    return (
+      (this.$Uo = ActorSystem_1.ActorSystem.Get(
         UE.TsPhotographer_C.StaticClass(),
         t,
-      );
-    return (
-      r?.SetTickableWhenPaused(!0),
-      (this.$Uo = UE.GameplayStatics.FinishSpawningActor(r, t)),
+        void 0,
+      )),
+      this.$Uo.SetTickableWhenPaused(!0),
       this.$Uo.Initialize(),
       this.$Uo.CameraArm.SetTickableWhenPaused(!0),
       this.$Uo

@@ -13,9 +13,16 @@ class PhantomFetterGroup {
   get FetterMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.fettermapLength(),
-      (t) => this.fettermap(t)?.key(),
-      (t) => this.fettermap(t)?.value(),
+      this.fettermapKey,
+      this.fettermapValue,
+      this,
     );
+  }
+  fettermapKey(t) {
+    return this.fettermap(t)?.key();
+  }
+  fettermapValue(t) {
+    return this.fettermap(t)?.value();
   }
   get FetterGroupName() {
     return this.fettergroupname();

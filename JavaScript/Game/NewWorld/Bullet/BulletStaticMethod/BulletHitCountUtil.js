@@ -7,7 +7,7 @@ class BulletHitCountUtil {
       return BulletHitCountUtil.HitCountCondition(t.ParentBulletInfo, i);
     let e = i;
     if (!e) return !1;
-    (i = e.GetComponent(48)),
+    (i = e.GetComponent(49)),
       i && (e = i.GetAttributeHolder()),
       (i = t.BulletDataMain);
     if (

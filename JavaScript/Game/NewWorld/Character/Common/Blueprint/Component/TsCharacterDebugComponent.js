@@ -232,10 +232,6 @@ class TsCharacterDebugComponent extends UE.ActorComponent {
         );
       }
   }
-  AiDebugDraw() {
-    var t = this.BaseChar.Controller;
-    t instanceof UE.TsAiController_C && t.ChangeDebugDraw();
-  }
 }
 exports.default = TsCharacterDebugComponent;
 //# sourceMappingURL=TsCharacterDebugComponent.js.map

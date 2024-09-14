@@ -43,5 +43,6 @@ class UiModel {
   (UiModel.tgr = new Set()),
   (UiModel.ResetToViewWhiteSet = new Set(["ReviveView"])),
   (UiModel.IsInMainView = !1),
-  (UiModel.InNormalQueue = !1);
+  (UiModel.InNormalQueue = !1),
+  (UiModel.SeamlessStackWhileList = new Set(["BattleView"]));
 //# sourceMappingURL=UiModel.js.map

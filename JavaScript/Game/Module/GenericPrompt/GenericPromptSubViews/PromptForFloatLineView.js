@@ -84,8 +84,8 @@ class PromptForFloatLineView extends UiPanelBase_1.UiPanelBase {
       e = t.MainTextParams ?? [];
     let s = t.MainTextObj;
     (s = t.PromptId
-      ? s ?? i.GetPromptMainTextObj(t.PromptId)
-      : s ?? i.GetPromptTypeMainTextObj(t.TypeId)),
+      ? (s ?? i.GetPromptMainTextObj(t.PromptId))
+      : (s ?? i.GetPromptTypeMainTextObj(t.TypeId))),
       e?.length || this.JYt(s),
       s || t.PromptId || !e?.length
         ? this.JYt(s, ...e)

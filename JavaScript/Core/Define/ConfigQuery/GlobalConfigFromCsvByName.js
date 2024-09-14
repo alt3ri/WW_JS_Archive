@@ -17,28 +17,42 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configGlobalConfigFromCsvByName.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configGlobalConfigFromCsvByName.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configGlobalConfigFromCsvByName.GetConfig(";
 exports.configGlobalConfigFromCsvByName = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, n = !0) => {
-    if (
-      (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      C =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (C) {
       if (n) {
-        var i = KEY_PREFIX + `#${o})`;
-        const C = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (C) return C;
+        var t = KEY_PREFIX + `#${o})`;
+        const e = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (e)
+          return (
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
+          );
       }
       if (
-        (e =
+        (C =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,32 +60,37 @@ exports.configGlobalConfigFromCsvByName = {
               o,
             ]))
       ) {
-        var e,
-          i = void 0;
+        t = void 0;
         if (
-          (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([C, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Name", o],
           )),
-          e)
+          C)
         ) {
-          const C =
+          const e =
             GlobalConfigFromCsv_1.GlobalConfigFromCsv.getRootAsGlobalConfigFromCsv(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
             );
           return (
             n &&
-              ((e = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(e, C)),
+              ((C = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(C, e)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            C
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=GlobalConfigFromCsvByName.js.map

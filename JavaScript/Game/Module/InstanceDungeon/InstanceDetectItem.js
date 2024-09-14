@@ -25,7 +25,9 @@ class InstanceDetectItem extends UiPanelBase_1.UiPanelBase {
       (this.Oai = void 0),
       (this.kai = void 0),
       (this.Fai = void 0),
-      (this.Vai = void 0);
+      (this.Vai = void 0),
+      (this.D9a = void 0),
+      (this.R9a = void 0);
   }
   async Init(i) {
     await super.CreateByActorAsync(i.GetOwner(), void 0, !0), await this.WZt();
@@ -60,34 +62,37 @@ class InstanceDetectItem extends UiPanelBase_1.UiPanelBase {
         i.InstanceGirdId,
       );
     if (i.InstanceSeriesTitle) {
-      const s = t ? this.GetItem(0) : this.GetItem(2);
-      return s.GetOwner();
+      const e = t ? this.GetItem(0) : this.GetItem(2);
+      return e.GetOwner();
     }
-    const s = t ? this.GetItem(1) : this.GetItem(3);
-    return s.GetOwner();
+    const e = t ? this.GetItem(1) : this.GetItem(3);
+    return e.GetOwner();
   }
   Update(i, t) {
     this.Data = i;
-    var s =
+    var e =
       !ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
         i.InstanceGirdId,
       );
-    let e = this.qai,
+    let s = this.qai,
       h = this.Gai;
-    this.qai.SetUiActive(!s),
-      this.Gai.SetUiActive(!s),
-      this.Nai.SetUiActive(s),
-      this.Oai.SetUiActive(s),
-      s && ((h = this.Oai), (e = this.Nai)),
+    this.qai.SetUiActive(!e),
+      this.Gai.SetUiActive(!e),
+      this.Nai.SetUiActive(e),
+      this.Oai.SetUiActive(e),
+      e && ((h = this.Oai), (s = this.Nai)),
       i.InstanceSeriesTitle
         ? (h.SetUiActive(!1),
-          e.SetUiActive(!0),
-          (e.CurrentData = i).IsOnlyOneGrid
-            ? (e.BindClickCallbackOnlyOneGrid(this.Fai),
-              e.Update(i.InstanceGirdId, i.IsSelect, !0))
-            : (e.BindClickCallback(this.kai),
-              e.Update(i.InstanceSeriesTitle, i.IsSelect)))
-        : (e.SetUiActive(!1),
+          s.SetUiActive(!0),
+          (s.CurrentData = i),
+          this.D9a && (s.SubtitleTextId = this.D9a(i.InstanceGirdId)),
+          this.R9a && (s.SubtitleTextArgs = this.R9a(i.InstanceGirdId)),
+          i.IsOnlyOneGrid
+            ? (s.BindClickCallbackOnlyOneGrid(this.Fai),
+              s.Update(i.InstanceGirdId, i.IsSelect, !0))
+            : (s.BindClickCallback(this.kai),
+              s.Update(i.InstanceSeriesTitle, i.IsSelect)))
+        : (s.SetUiActive(!1),
           h.SetUiActive(!0),
           h.BindClickCallback(this.Fai),
           h.BindCanExecuteChange(this.Vai),
@@ -112,6 +117,12 @@ class InstanceDetectItem extends UiPanelBase_1.UiPanelBase {
   }
   BindCanExecuteChange(i) {
     this.Vai = i;
+  }
+  BindSubtitleTextIdGetter(i) {
+    this.D9a = i;
+  }
+  BindSubtitleArgsGetter(i) {
+    this.R9a = i;
   }
   ClearItem() {
     this.Destroy();
@@ -140,6 +151,8 @@ class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
       (this.Qai = void 0),
       (this.Xai = !1),
       (this.CurrentData = void 0),
+      (this.SubtitleTextId = void 0),
+      (this.SubtitleTextArgs = void 0),
       (this.$ai = () => {
         var i =
           ActivityMowingController_1.ActivityMowingController.GetMowingActivityData();
@@ -193,13 +206,13 @@ class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
   GetTitleText() {
     return this.GetText(3);
   }
-  Update(i, s, t = !1) {
+  Update(i, e, t = !1) {
     if (
       ((this.jai = i),
-      (this.Wai = s),
+      (this.Wai = e),
       (this.Kai = t),
-      this.$Ve.SetToggleStateForce(s ? 1 : 0),
-      this.GetItem(5)?.SetUIActive(s),
+      this.$Ve.SetToggleStateForce(e ? 1 : 0),
+      this.GetItem(5)?.SetUIActive(e),
       this.GetSprite(2)?.SetUIActive(!1),
       this.GetItem(1)?.SetUIActive(!1),
       t)
@@ -207,72 +220,108 @@ class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
       var i = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
           this.jai,
         ),
-        s =
+        e =
           (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), i.MapName),
-          s && this.Hai && this.Hai(this.jai, this.$Ve, this.CurrentData),
+          e && this.Hai && this.Hai(this.jai, this.$Ve, this.CurrentData),
           i.DifficultyIcon),
-        s =
+        e =
           (this.GetSprite(2)?.SetUIActive(!0),
           this.GetItem(1)?.SetUIActive(!0),
-          this.SetTextureByPath(s, this.GetTexture(2)),
+          this.SetTextureByPath(e, this.GetTexture(2)),
           this.GetText(8)?.SetUIActive(!0),
           i.SubTitle);
-      if (0 < s?.size) {
+      if (0 < e?.size) {
         let i = void 0,
           t = void 0;
-        for (var [e, h] of s) (i = e), (t = h);
+        for (var [s, h] of e) (i = s), (t = h);
         1 === i
           ? LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), t)
-          : 2 === i &&
-            ((s =
-              ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
-                this.jai,
-                ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
-              )),
-            LguiUtil_1.LguiUtil.SetLocalTextNew(
-              this.GetText(8),
-              "RecommendLevel",
-              s,
-            ));
-      } else
-        TowerDefenceController_1.TowerDefenseController.CheckInUiFlow()
-          ? TowerDefenceController_1.TowerDefenseController.CheckIsInstanceUnlock(
+          : 2 === i
+            ? ((e =
+                ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
+                  this.jai,
+                  ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
+                )),
+              LguiUtil_1.LguiUtil.SetLocalTextNew(
+                this.GetText(8),
+                "RecommendLevel",
+                e,
+              ))
+            : 3 === i &&
+              this.SubtitleTextId &&
+              LguiUtil_1.LguiUtil.SetLocalTextNew(
+                this.GetText(8),
+                this.SubtitleTextId,
+                this.SubtitleTextArgs,
+              );
+      } else {
+        if (TowerDefenceController_1.TowerDefenseController.CheckInUiFlow())
+          return void (
+            TowerDefenceController_1.TowerDefenseController.CheckIsInstanceUnlock(
               this.jai,
             )
-            ? ((s =
-                TowerDefenceController_1.TowerDefenseController.GetRecordByInstanceId(
+              ? ((e =
+                  TowerDefenceController_1.TowerDefenseController.CheckInstancePassedByInstanceId(
+                    this.jai,
+                  )),
+                TowerDefenceController_1.TowerDefenseController.CheckIsChallengeInstanceByInstanceId(
                   this.jai,
-                )),
-              LguiUtil_1.LguiUtil.SetLocalTextNew(
-                this.GetText(8),
-                "TowerDefence_GPint",
-                s,
-              ))
-            : ((s =
-                TowerDefenceController_1.TowerDefenseController.GetTotalScoreLimitByInstanceId(
-                  this.jai,
-                )),
-              LguiUtil_1.LguiUtil.SetLocalTextNew(
-                this.GetText(8),
-                "TowerDefence_PintOnlyMore",
-                s,
-              ))
-          : LguiUtil_1.LguiUtil.SetLocalTextNew(
-              this.GetText(8),
-              i.SubInstanceTitle,
-            );
+                )
+                  ? ((r =
+                      TowerDefenceController_1.TowerDefenseController.GetPassTimeContentByInstanceId(
+                        this.jai,
+                      )),
+                    e
+                      ? LguiUtil_1.LguiUtil.SetLocalTextNew(
+                          this.GetText(8),
+                          "TowerDefenceBestTime",
+                          r,
+                        )
+                      : LguiUtil_1.LguiUtil.SetLocalTextNew(
+                          this.GetText(8),
+                          "Text_NotFinished_Text",
+                        ))
+                  : ((r =
+                      TowerDefenceController_1.TowerDefenseController.GetRecordByInstanceId(
+                        this.jai,
+                      )),
+                    LguiUtil_1.LguiUtil.SetLocalTextNew(
+                      this.GetText(8),
+                      "TowerDefence_GPint",
+                      r,
+                    )),
+                this.GetItem(6).SetUIActive(e),
+                this.GetItem(7))
+              : ((r =
+                  TowerDefenceController_1.TowerDefenseController.GetTotalScoreLimitByInstanceId(
+                    this.jai,
+                  )),
+                LguiUtil_1.LguiUtil.SetLocalTextNew(
+                  this.GetText(8),
+                  "TowerDefence_PintOnlyMore",
+                  r,
+                ),
+                this.GetItem(7).SetUIActive(!0),
+                this.GetItem(6))
+          ).SetUIActive(!1);
+        LguiUtil_1.LguiUtil.SetLocalTextNew(
+          this.GetText(8),
+          i.SubInstanceTitle,
+        );
+      }
     } else {
-      (s = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetTitleConfig(
-        this.jai,
-      )),
-        (i =
-          (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), s.CommonText),
+      var e =
+          ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetTitleConfig(
+            this.jai,
+          ),
+        r =
+          (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), e.CommonText),
           this.GetText(8)?.SetUIActive(!1),
-          s.IconTexture));
-      i &&
+          e.IconTexture);
+      r &&
         (this.GetSprite(2)?.SetUIActive(!0),
         this.GetItem(1)?.SetUIActive(!0),
-        this.SetTextureByPath(i, this.GetTexture(2)));
+        this.SetTextureByPath(r, this.GetTexture(2)));
     }
     (this.Xai = this.Jai(this.jai)), this.Xai && this.Qai?.(), this.zai(t);
   }
@@ -286,15 +335,15 @@ class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
         ActivityMowingController_1.ActivityMowingController.GetMowingActivityData();
       if (!t) return !1;
       this.Qai = this.$ai;
-      var s = t.GetActivityLevelUnlockState(i);
+      var e = t.GetActivityLevelUnlockState(i);
       return (
-        s &&
+        e &&
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(8),
             "ActivityMowing_Point",
             t.GetLevelMaxPoint(i),
           ),
-        !s
+        !e
       );
     }
     return !1;
@@ -352,13 +401,13 @@ class InstanceItem extends UiPanelBase_1.UiPanelBase {
   GetTitleText() {
     return this.GetText(2);
   }
-  Update(i, t, s) {
+  Update(i, t, e) {
     (this.NUe = i),
       this.ExtendToggle.SetToggleStateForce(t ? 1 : 0),
       this.ExtendToggle.CanExecuteChange.Unbind(),
       this.ExtendToggle.CanExecuteChange.Bind(this.Lke),
       t && this.Zqe && this.Zqe(this.NUe, this.ExtendToggle, void 0),
-      s && (this.zai(), this.Zai(), this.ehi());
+      e && (this.zai(), this.Zai(), this.ehi());
   }
   zai() {
     ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
@@ -372,31 +421,31 @@ class InstanceItem extends UiPanelBase_1.UiPanelBase {
       : (this.GetItem(3).SetUIActive(!0), this.GetItem(4).SetUIActive(!1));
   }
   Zai() {
-    var s = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+    var e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
         this.NUe,
       ),
-      e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
+      s = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
         this.NUe,
         ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
       ),
-      s = s.SubTitle;
-    if (0 < s?.size) {
+      e = e.SubTitle;
+    if (0 < e?.size) {
       let i = void 0,
         t = void 0;
-      for (var [h, r] of s) (i = h), (t = r);
+      for (var [h, r] of e) (i = h), (t = r);
       void (1 === i
         ? LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), t)
         : 2 === i &&
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(2),
             "RecommendLevel",
-            e,
+            s,
           ));
     } else
       LguiUtil_1.LguiUtil.SetLocalText(
         this.GetText(2),
         "InstanceDungeonRecommendLevel",
-        e,
+        s,
       );
   }
   ehi() {

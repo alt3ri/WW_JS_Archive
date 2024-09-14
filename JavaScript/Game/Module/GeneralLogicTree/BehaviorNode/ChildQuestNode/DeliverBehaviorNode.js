@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DeliverBehaviorNode = void 0);
 const Log_1 = require("../../../../../Core/Common/Log"),
+  IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
@@ -25,7 +26,7 @@ class DeliverBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
           );
           if (t) {
             let e = "";
-            t && (e = t.Entity.GetComponent(104)?.PawnName ?? ""),
+            t && (e = t.Entity.GetComponent(105)?.PawnName ?? ""),
               this.HXt
                 ? ItemDeliverController_1.ItemDeliverController.OpenItemDeliverViewByHandInItem(
                     this.HXt,
@@ -58,7 +59,7 @@ class DeliverBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
     var t;
     return (
       !!super.OnCreate(e) &&
-      "HandInItems" === (e = e.Condition).Type &&
+      (e = e.Condition).Type === IQuest_1.EChildQuest.HandInItems &&
       ("Actions" !== (t = e.AddOption).Option.Type.Type
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(

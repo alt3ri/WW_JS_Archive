@@ -33,8 +33,7 @@ class CommonRoleGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
       var o = this.GachaViewInfo.ShowIdList;
       for (let e = 0; e < o.length && e < this.ijt.length; e++)
         this.ijt[e].Update(o[e]);
-      var e = UE.Color.FromHex(this.GachaViewInfo.ThemeColor);
-      this.GetTexture(4).SetColor(e);
+      this.SetTextureByPath(this.GachaViewInfo.TextTexture, this.GetTexture(4));
     }
   }
 }

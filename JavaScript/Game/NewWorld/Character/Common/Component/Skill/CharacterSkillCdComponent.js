@@ -38,7 +38,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
       (this.bzr = void 0),
       (this.qzr = void 0),
       (this.Gzr = void 0),
-      (this.gGn = void 0),
+      (this.TGn = void 0),
       (this.EZo = void 0),
       (this.Arn = (t) => {
         this.EZo.ResetOnChangeRole();
@@ -47,14 +47,14 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
   OnInit() {
     return (
       super.OnInit(),
-      (this.Bzr = this.Entity.CheckGetComponent(158)),
+      (this.Bzr = this.Entity.CheckGetComponent(159)),
       (this.fZo =
         ModelManager_1.ModelManager.SkillCdModel.GetCurWorldSkillCdData()),
       (this.bzr =
         ModelManager_1.ModelManager.SkillCdModel.GetCurWorldPassiveSkillCdData()),
       (this.qzr = new Map()),
       (this.Gzr = new Map()),
-      (this.gGn = new Map()),
+      (this.TGn = new Map()),
       (this.EZo = this.fZo.InitMultiSkill(this.Entity.Id)),
       this.EZo.Init(this.Entity.Id),
       !0
@@ -89,7 +89,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
   }
   GetNextMultiSkillId(t) {
     if (GlobalData_1.GlobalData.IsPlayInEditor)
-      for (var [e, i] of this.gGn)
+      for (var [e, i] of this.TGn)
         if (e === t) {
           this.IsMultiSkill(i) ||
             (Log_1.Log.CheckError() &&
@@ -125,7 +125,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
         ? void 0
         : ((r = this.fZo.InitSkillCd(this.Entity, t.SkillId, t.SkillInfo)),
           this.qzr.set(i, r),
-          this.gGn.set(i, t.SkillInfo),
+          this.TGn.set(i, t.SkillInfo),
           r))
     );
   }
@@ -143,7 +143,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
         ? void 0
         : ((t = this.fZo.InitSkillCd(this.Entity, e, i)),
           this.qzr.set(e, t),
-          this.gGn.set(e, i),
+          this.TGn.set(e, i),
           t);
     } catch (t) {
       t instanceof Error
@@ -206,20 +206,32 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
       o,
       l,
       n = new Set();
-    for ([s, o] of this.gGn)
+    for ([s, o] of this.TGn)
       r.includes(o.SkillGenre) && (l = this.qzr.get(s)) && n.add(l);
     for (const h of n) h.ModifyRemainingCd(e, i);
   }
   StartCd(t, e) {
     var i = this.qzr.get(t);
-    return !!i && (i.StartCd(t, this.Bzr, this.BuffComp, this, e), !0);
+    return (
+      !!i &&
+      (i.StartCd(
+        t,
+        this.Bzr,
+        ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(
+          this.Entity,
+        ),
+        this,
+        e,
+      ),
+      !0)
+    );
   }
   CalcExtraEffectCd(t, e, i) {
     let r = 0,
       s = 1;
     if (this.HasModifyCdEffect)
       for (const l of this.BuffComp.BuffEffectManager.FilterById(49))
-        this.Aia(l, e, i) &&
+        this.Hoa(l, e, i) &&
           (0 === l.ModifyType
             ? (r += l.ModifyValue)
             : 1 === l.ModifyType && (s *= l.ModifyValue));
@@ -227,18 +239,18 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
       ControllerHolder_1.ControllerHolder.FormationDataController.GetPlayerEntity(
         ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
       );
-    if (o?.GetComponent(189)?.HasModifyCdEffect) {
-      o = o?.GetComponent(192);
+    if (o?.GetComponent(191)?.HasModifyCdEffect) {
+      o = o?.GetComponent(194);
       if (o)
         for (const n of o.BuffEffectManager.FilterById(49))
-          this.Aia(n, e, i) &&
+          this.Hoa(n, e, i) &&
             (0 === n.ModifyType
               ? (r += n.ModifyValue)
               : 1 === n.ModifyType && (s *= n.ModifyValue));
     }
     return (t + r) * s;
   }
-  Aia(t, e, i) {
+  Hoa(t, e, i) {
     return 0 === t.SkillType
       ? t.SkillIdOrGenres.has(e)
       : 1 === t.SkillType && t.SkillIdOrGenres.has(i);
@@ -262,8 +274,8 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
     var e = this.qzr.get(t);
     return e
       ? (e.ResetDelayCd() &&
-          (((e = Protocol_1.Aki.Protocol.h4n.create()).X4n = t),
-          CombatMessage_1.CombatNet.Call(29467, this.Entity, e, () => {}),
+          (((e = Protocol_1.Aki.Protocol.f4n.create()).r5n = t),
+          CombatMessage_1.CombatNet.Call(20002, this.Entity, e, () => {}),
           this.EZo?.ResetMultiSkills(t, !0)),
         !0)
       : (Log_1.Log.CheckDebug() &&
@@ -298,7 +310,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends BaseSkil
   }
 };
 (CharacterSkillCdComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(190)],
+  [(0, RegisterComponent_1.RegisterComponent)(192)],
   CharacterSkillCdComponent,
 )),
   (exports.CharacterSkillCdComponent = CharacterSkillCdComponent);

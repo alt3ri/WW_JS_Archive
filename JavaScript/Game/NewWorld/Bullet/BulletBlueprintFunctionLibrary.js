@@ -26,7 +26,7 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         ? e.toString()
         : "";
   }
-  static CreateBulletFromGA(t, e, r, l, a, o) {
+  static CreateBulletFromGA(t, e, r, l, a = !0, o = void 0) {
     l = BulletBlueprintFunctionLibrary.GetSpecialBulletToSkillId(e, l);
     if ("" === l)
       return (
@@ -37,7 +37,7 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
           ]),
         -1
       );
-    var i = t.GetEntityNoBlueprint()?.GetComponent(33);
+    var i = t.GetEntityNoBlueprint()?.GetComponent(34);
     let u = i?.GetLoadingSkill(Number(l))?.CombatMessageId;
     if (!u && i?.Entity?.Id) {
       var n = EntitySystem_1.EntitySystem.GetComponent(
@@ -47,13 +47,13 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       if (0 < n) {
         const t =
           ModelManager_1.ModelManager.CreatureModel.GetEntity(n)?.Entity;
-        n = t?.GetComponent(33);
+        n = t?.GetComponent(34);
         u = n?.GetLoadingSkill(Number(l))?.CombatMessageId;
       } else {
         n = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
           i?.Entity,
-          Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantCustom,
-        )?.Entity?.GetComponent(33);
+          Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeConcomitantCustom,
+        )?.Entity?.GetComponent(34);
         u = n?.GetLoadingSkill(Number(l))?.CombatMessageId;
       }
     }
@@ -68,7 +68,7 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static GetBulletActorById(t) {
     t = EntitySystem_1.EntitySystem.Get(t);
-    if (t?.Valid) return t.GetComponent(154).Owner;
+    if (t?.Valid) return t.GetComponent(155).Owner;
   }
   static DestroyBullet(t, e) {
     return BulletController_1.BulletController.DestroyBullet(t, e), !0;
@@ -76,8 +76,8 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static DestroyAllBullet(t = !1) {
     BulletController_1.BulletController.DestroyAllBullet(t);
   }
-  static DestroySpecifiedBullet(t, e, r = !1, l = 0) {
-    BulletController_1.BulletController.DestroySpecifiedBullet(t, e, r, l);
+  static DestroySpecifiedBullet(t, e, r = !1, l = 0, a = 0) {
+    BulletController_1.BulletController.DestroySpecifiedBullet(t, e, r, l, a);
   }
   static GetSpecifiedBulletCount(t, e) {
     return BulletController_1.BulletController.GetSpecifiedBulletCount(t, e);

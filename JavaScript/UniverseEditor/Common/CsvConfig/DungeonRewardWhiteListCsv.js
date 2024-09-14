@@ -20,7 +20,7 @@ exports.dungeonRewardWhiteListCsvFields = [
     CnName: "地图Id",
     Type: "Int",
     ExportType: "",
-    RenderType: 40,
+    RenderType: 41,
   }),
   (0, CsvLoader_1.createCsvField)({
     Name: "Desc",
@@ -33,20 +33,20 @@ exports.dungeonRewardWhiteListCsvFields = [
     Type: "Int",
     Condition: "notEmpty",
     CreateType: "scheme",
-    RenderType: 42,
+    RenderType: 43,
   }),
   (0, CsvLoader_1.createCsvField)({
     Name: "RewardList",
     CnName: "掉落列表",
     Type: "Array<Int>",
-    RenderType: 34,
+    RenderType: 35,
     ExportType: "",
   }),
   (0, CsvLoader_1.createCsvField)({
     Name: "VisionList",
     CnName: "幻象掉落列表",
     Type: "Array<Int>",
-    RenderType: 34,
+    RenderType: 35,
     ExportType: "",
   }),
 ];

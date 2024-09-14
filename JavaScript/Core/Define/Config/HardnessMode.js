@@ -12,30 +12,36 @@ class HardnessMode {
   get ReductionData() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.reductiondataLength(),
-      (t) => this.reductiondata(t),
+      this.reductiondata,
+      this,
     );
   }
   get AttackTypeData() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.attacktypedataLength(),
-      (t) => this.attacktypedata(t),
+      this.attacktypedata,
+      this,
     );
   }
   get CorrectData() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.correctdataLength(), (t) =>
-      this.correctdata(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.correctdataLength(),
+      this.correctdata,
+      this,
     );
   }
   get WeaponReduction() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.weaponreductionLength(),
-      (t) => this.weaponreduction(t),
+      this.weaponreduction,
+      this,
     );
   }
   get SkillTypeParam() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.skilltypeparamLength(),
-      (t) => this.skilltypeparam(t),
+      this.skilltypeparam,
+      this,
     );
   }
   get Percent() {

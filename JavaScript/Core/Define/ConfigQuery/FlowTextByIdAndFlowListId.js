@@ -17,65 +17,84 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configFlowTextByIdAndFlowListId.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configFlowTextByIdAndFlowListId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configFlowTextByIdAndFlowListId.GetConfig(";
 exports.configFlowTextByIdAndFlowListId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, n, e = !0) => {
-    if (
-      (t = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
-        var i = KEY_PREFIX + `#${o}#${n})`;
-        const d = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (d) return d;
+  GetConfig: (o, t, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${t})`),
+      e =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
+      if (n) {
+        var C = KEY_PREFIX + `#${o}#${t})`;
+        const f = ConfigCommon_1.ConfigCommon.GetConfig(C);
+        if (f)
+          return (
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            f
+          );
       }
       if (
-        (t =
+        (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.BindString(handleId, 2, n, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindString(handleId, 2, t, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(
               handleId,
               !0,
               ...logPair,
               ["Id", o],
-              ["FlowListId", n],
+              ["FlowListId", t],
             ))
       ) {
-        var t,
-          i = void 0;
+        C = void 0;
         if (
-          (([t, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, C] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
-            ["FlowListId", n],
+            ["FlowListId", t],
           )),
-          t)
+          e)
         ) {
-          const d = FlowText_1.FlowText.getRootAsFlowText(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+          const f = FlowText_1.FlowText.getRootAsFlowText(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(C.buffer)),
           );
           return (
-            e &&
-              ((t = KEY_PREFIX + `#${o}#${n})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(t, d)),
+            n &&
+              ((e = KEY_PREFIX + `#${o}#${t})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(e, f)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            d
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            f
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=FlowTextByIdAndFlowListId.js.map

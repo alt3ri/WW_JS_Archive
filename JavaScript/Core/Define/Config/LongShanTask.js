@@ -22,9 +22,16 @@ class LongShanTask {
   get TaskReward() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.taskrewardLength(),
-      (t) => this.taskreward(t)?.key(),
-      (t) => this.taskreward(t)?.value(),
+      this.taskrewardKey,
+      this.taskrewardValue,
+      this,
     );
+  }
+  taskrewardKey(t) {
+    return this.taskreward(t)?.key();
+  }
+  taskrewardValue(t) {
+    return this.taskreward(t)?.value();
   }
   get JumpId() {
     return this.jumpid();
@@ -58,10 +65,10 @@ class LongShanTask {
     return this.taskreward(t);
   }
   taskreward(t, s) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i
+    var r = this.J7.__offset(this.z7, 12);
+    return r
       ? (s || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
           this.J7,
         )
       : null;

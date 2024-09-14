@@ -8,8 +8,10 @@ class SCreatureGenNavAssistAreaExportDefine {
     (this.J7 = null), (this.z7 = 0);
   }
   get Points() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.pointsLength(), (t) =>
-      this.points(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.pointsLength(),
+      this.points,
+      this,
     );
   }
   __init(t, e) {

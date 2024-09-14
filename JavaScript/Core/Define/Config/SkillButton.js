@@ -29,36 +29,57 @@ class SkillButton {
   get SkillIdTagMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.skillidtagmapLength(),
-      (t) => this.skillidtagmap(t)?.key(),
-      (t) => this.skillidtagmap(t)?.value(),
+      this.skillidtagmapKey,
+      this.skillidtagmapValue,
+      this,
     );
+  }
+  skillidtagmapKey(t) {
+    return this.skillidtagmap(t)?.key();
+  }
+  skillidtagmapValue(t) {
+    return this.skillidtagmap(t)?.value();
   }
   get SkillIconTags() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.skillicontagsLength(),
-      (t) => this.skillicontags(t),
+      this.skillicontags,
+      this,
     );
   }
   get EnableTags() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.enabletagsLength(), (t) =>
-      this.enabletags(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.enabletagsLength(),
+      this.enabletags,
+      this,
     );
   }
   get DisableTags() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.disabletagsLength(), (t) =>
-      this.disabletags(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.disabletagsLength(),
+      this.disabletags,
+      this,
     );
   }
   get DisableSkillIdTags() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.disableskillidtagsLength(),
-      (t) => this.disableskillidtags(t)?.key(),
-      (t) => this.disableskillidtags(t)?.value(),
+      this.disableskillidtagsKey,
+      this.disableskillidtagsValue,
+      this,
     );
   }
+  disableskillidtagsKey(t) {
+    return this.disableskillidtags(t)?.key();
+  }
+  disableskillidtagsValue(t) {
+    return this.disableskillidtags(t)?.value();
+  }
   get HiddenTags() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.hiddentagsLength(), (t) =>
-      this.hiddentags(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.hiddentagsLength(),
+      this.hiddentags,
+      this,
     );
   }
   get IsCdVisible() {
@@ -73,9 +94,16 @@ class SkillButton {
   get AttributeIdTagMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.attributeidtagmapLength(),
-      (t) => this.attributeidtagmap(t)?.key(),
-      (t) => this.attributeidtagmap(t)?.value(),
+      this.attributeidtagmapKey,
+      this.attributeidtagmapValue,
+      this,
     );
+  }
+  attributeidtagmapKey(t) {
+    return this.attributeidtagmap(t)?.key();
+  }
+  attributeidtagmapValue(t) {
+    return this.attributeidtagmap(t)?.value();
   }
   get MaxAttributeBurstEffectId() {
     return this.maxattributebursteffectid();
@@ -92,9 +120,16 @@ class SkillButton {
   get DynamicEffectTagMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.dynamiceffecttagmapLength(),
-      (t) => this.dynamiceffecttagmap(t)?.key(),
-      (t) => this.dynamiceffecttagmap(t)?.value(),
+      this.dynamiceffecttagmapKey,
+      this.dynamiceffecttagmapValue,
+      this,
     );
+  }
+  dynamiceffecttagmapKey(t) {
+    return this.dynamiceffecttagmap(t)?.key();
+  }
+  dynamiceffecttagmapValue(t) {
+    return this.dynamiceffecttagmap(t)?.value();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;

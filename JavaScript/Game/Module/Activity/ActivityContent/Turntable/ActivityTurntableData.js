@@ -62,13 +62,13 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
         ConfigManager_1.ConfigManager.ActivityTurntableConfig.GetTurntableAwardsByActivityId(
           this.Id,
         )),
-        (t = t.Fps);
+        (t = t.Qps);
       if (t) {
         var r,
           n,
-          a = t.Zps,
-          h = t.eMs,
-          o = t.tMs,
+          a = t.sMs,
+          h = t.aMs,
+          o = t.hMs,
           u = new Map();
         for (const M of s) {
           var f,

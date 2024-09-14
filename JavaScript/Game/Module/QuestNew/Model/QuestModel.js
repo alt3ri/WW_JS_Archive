@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  QuestTrackingConfigAll_1 = require("../../../../Core/Define/ConfigQuery/QuestTrackingConfigAll"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   IGlobal_1 = require("../../../../UniverseEditor/Interface/IGlobal"),
@@ -22,6 +24,7 @@ class QuestNewModel extends ModelBase_1.ModelBase {
       (this.eno = void 0),
       (this.tno = void 0),
       (this.ino = void 0),
+      (this.S5a = void 0),
       (this.ono = void 0),
       (this.rno = void 0),
       (this.sno = void 0),
@@ -37,6 +40,24 @@ class QuestNewModel extends ModelBase_1.ModelBase {
                 t.Id,
                 t.Tree,
               );
+      }),
+      (this.SortQuestInView = (e, t) => {
+        var i = [];
+        for (const s of [e.Id, t.Id]) {
+          var r = this.GetQuestBindingActivityId(s),
+            r = ModelManager_1.ModelManager.ActivityModel.GetActivityById(r);
+          let e = 0;
+          (e =
+            void 0 !== r
+              ? r.LocalConfig?.IfShowQuestLeftTime &&
+                r.CheckIfInOpenTime() &&
+                0 !== r.EndOpenTime
+                ? 0
+                : 1
+              : 2),
+            i.push(e);
+        }
+        return i[0] !== i[1] ? i[0] - i[1] : e.Id - t.Id;
       });
   }
   OnInit() {
@@ -44,6 +65,7 @@ class QuestNewModel extends ModelBase_1.ModelBase {
       (this.eno = new Map()),
       (this.tno = new Map()),
       (this.ino = new Map()),
+      (this.S5a = new Map()),
       (this.ono = new Map()),
       (this.rno = new Map()),
       (this.ano = new Map()),
@@ -68,6 +90,8 @@ class QuestNewModel extends ModelBase_1.ModelBase {
       (this.tno = void 0),
       this.ino?.clear(),
       (this.ino = void 0),
+      this.S5a?.clear(),
+      (this.S5a = void 0),
       this.ActivityIdsByQuestId?.clear(),
       !(this.ActivityIdsByQuestId = void 0)
     );
@@ -127,6 +151,17 @@ class QuestNewModel extends ModelBase_1.ModelBase {
   RemoveCanAcceptQuest(e) {
     this.tno.delete(e);
   }
+  AddPreShowQuest(e) {
+    this.S5a.set(e, !0), this.AddQuest(e);
+  }
+  RemovePreShowQuest(e) {
+    this.S5a.delete(e),
+      this.GetQuest(e)?.Status === Protocol_1.Aki.Protocol.hTs.Proto_InActive &&
+        this.RemoveQuest(e);
+  }
+  GetPreShowQuests() {
+    return this.S5a;
+  }
   IsTrackingQuest(e) {
     return this.GetCurTrackedQuest()?.Id === e;
   }
@@ -166,14 +201,14 @@ class QuestNewModel extends ModelBase_1.ModelBase {
     }
   }
   TryGetMapMarkIdByQuestId(e) {
-    e = this.GetQuest(e);
-    if (e) {
-      var t = e.TreeId,
-        e = ModelManager_1.ModelManager.MapModel.GetAllDynamicMarks().get(12);
-      if (e)
-        for (const r of e.values()) {
-          var i = r;
-          if (i.TreeId === t) return i.MarkId;
+    var t = this.GetQuest(e);
+    if (t) {
+      var i = t.TreeId,
+        t = ModelManager_1.ModelManager.MapModel.GetAllDynamicMarks().get(12);
+      if (t)
+        for (const s of t.values()) {
+          var r = s;
+          if (r.TreeId === i || r.TreeId === e) return r.MarkId;
         }
     }
   }
@@ -215,7 +250,9 @@ class QuestNewModel extends ModelBase_1.ModelBase {
     return i;
   }
   GetFirstShowQuestByType(e) {
-    for (const t of this.GetQuestsByType(e)) if (t.CanShowInUiPanel()) return t;
+    e = this.GetQuestsByType(e);
+    e.sort(this.SortQuestInView);
+    for (const t of e) if (t.CanShowInUiPanel()) return t;
   }
   GetQuestName(e) {
     e = this.GetQuest(e);
@@ -260,21 +297,21 @@ class QuestNewModel extends ModelBase_1.ModelBase {
   GetDisplayRewardInfo(e) {
     e = this.GetQuest(e);
     if (e) {
-      const n = ConfigManager_1.ConfigManager.QuestNewConfig.GetDropConfig(
+      const o = ConfigManager_1.ConfigManager.QuestNewConfig.GetDropConfig(
         e.RewardId,
       );
-      if (n && 0 !== n.DropPreview.size) {
+      if (o && 0 !== o.DropPreview.size) {
         var t,
           i = [];
-        for ([t] of n.DropPreview) {
+        for ([t] of o.DropPreview) {
           var r =
               ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
                 t,
               ),
-            s = n.DropPreview.get(t);
+            s = o.DropPreview.get(t);
           if (r) {
-            const n = new QuestDefine_1.QuestRewardInfo(t, s);
-            i.push(n);
+            const o = new QuestDefine_1.QuestRewardInfo(t, s);
+            i.push(o);
           }
         }
         return i;
@@ -295,8 +332,8 @@ class QuestNewModel extends ModelBase_1.ModelBase {
               ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
                 i,
               ),
-            n = t.DropPreview.get(i);
-          s && r.push([{ IncId: 0, ItemId: i }, n]);
+            o = t.DropPreview.get(i);
+          s && r.push([{ IncId: 0, ItemId: i }, o]);
         }
         return r;
       }
@@ -333,8 +370,8 @@ class QuestNewModel extends ModelBase_1.ModelBase {
   }
   SetQuestRedDot(e, t) {
     t ? this.ano.set(e, !0) : this.ano.delete(e),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "Quest",
           19,
           "任务红点状态改变",
@@ -388,6 +425,42 @@ class QuestNewModel extends ModelBase_1.ModelBase {
         : e > CommonDefine_1.SECOND_PER_MINUTE
           ? [1, 0]
           : [0, 0];
+  }
+  GetSuccessiveQuestId(e) {
+    var r =
+      QuestTrackingConfigAll_1.configQuestTrackingConfigAll.GetConfigList();
+    if (void 0 !== e && r) {
+      let t = -1,
+        i = void 0;
+      for (const s of r)
+        if (s.PreQuestIds.includes(e)) {
+          let e = !0;
+          for (const o of s.PreQuestIds)
+            if (!this.CheckQuestFinished(o)) {
+              e = !1;
+              break;
+            }
+          e &&
+            (s.Priority > t || (s.Priority === t && s.TrackQuestId < i)) &&
+            ((t = s.Priority), (i = s.TrackQuestId));
+        }
+      return i;
+    }
+  }
+  GetHighestPriorityProcessingQuestId() {
+    if (this.eno) {
+      let e = -1,
+        t = void 0;
+      for (var [i] of this.eno) {
+        var r = this.GetQuestConfig(i);
+        r?.RecommendationPriority &&
+          !this.CheckQuestFinished(i) &&
+          (r?.RecommendationPriority > e ||
+            (r?.RecommendationPriority === e && i < t)) &&
+          ((e = r?.RecommendationPriority), (t = i));
+      }
+      return t;
+    }
   }
 }
 exports.QuestNewModel = QuestNewModel;

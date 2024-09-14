@@ -17,25 +17,39 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configLordGymEntranceByMarkId.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configLordGymEntranceByMarkId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configLordGymEntranceByMarkId.GetConfig(";
 exports.configLordGymEntranceByMarkId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, n = !0) => {
-    if (
-      (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      e =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
       if (n) {
-        var r = KEY_PREFIX + `#${o})`;
-        const i = ConfigCommon_1.ConfigCommon.GetConfig(r);
-        if (i) return i;
+        var i = KEY_PREFIX + `#${o})`;
+        const r = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (r)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            r
+          );
       }
       if (
         (e =
@@ -46,10 +60,9 @@ exports.configLordGymEntranceByMarkId = {
               o,
             ]))
       ) {
-        var e,
-          r = void 0;
+        i = void 0;
         if (
-          (([e, r] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -57,20 +70,26 @@ exports.configLordGymEntranceByMarkId = {
           )),
           e)
         ) {
-          const i = LordGymEntrance_1.LordGymEntrance.getRootAsLordGymEntrance(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(r.buffer)),
+          const r = LordGymEntrance_1.LordGymEntrance.getRootAsLordGymEntrance(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
           );
           return (
             n &&
               ((e = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(e, i)),
+              ConfigCommon_1.ConfigCommon.SaveConfig(e, r)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            r
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=LordGymEntranceByMarkId.js.map

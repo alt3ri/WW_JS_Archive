@@ -38,7 +38,7 @@ class BattleQuestButton extends BattleEntranceButton_1.BattleEntranceButton {
             );
         }
       }),
-      (this.sxn = (e) => {
+      (this.rxn = (e) => {
         this.$ut = e;
         var t = this.GetText(3),
           e =
@@ -82,13 +82,13 @@ class BattleQuestButton extends BattleEntranceButton_1.BattleEntranceButton {
   AddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.MissionUpdate,
-      this.sxn,
+      this.rxn,
     );
   }
   RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.MissionUpdate,
-      this.sxn,
+      this.rxn,
     );
   }
 }

@@ -5,6 +5,7 @@ const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
   MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
@@ -22,7 +23,7 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
       (this.yNi = -1),
       (this.XFt = void 0),
       (this.pNi = void 0),
-      (this.YMa = !1),
+      (this.dIa = !1),
       (this.MNi = () => {
         if (
           ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
@@ -55,7 +56,7 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
             ),
           this.CloseMe();
       }),
-      (this.eWs = () => {
+      (this.EWs = () => {
         var e;
         ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
           ? ((this.SNi = ModelManager_1.ModelManager.OnlineModel.ApplyCd),
@@ -78,6 +79,9 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
       [6, UE.UISprite],
       [7, UE.UIText],
       [8, UE.UIButtonComponent],
+      [15, UE.UIItem],
+      [16, UE.UIItem],
+      [17, UE.UIText],
     ]),
       (this.BtnBindInfo = [
         [2, this.MNi],
@@ -103,17 +107,17 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnRefreshSuggestChallengePlayerInfo,
-      this.eWs,
+      this.EWs,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnRefreshSuggestChallengePlayerInfo,
-      this.eWs,
+      this.EWs,
     );
   }
   OnTick(e) {
-    this.YMa ||
+    this.dIa ||
       ((this.SNi -= e * TimeUtil_1.TimeUtil.Millisecond),
       this.SNi <= 0
         ? (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
@@ -126,44 +130,58 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
                 !1,
               ),
           this.CloseMe(),
-          (this.YMa = !0))
+          (this.dIa = !0))
         : (this.XFt.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.SNi)),
           this.pNi.SetFillAmount(this.SNi / this.yNi)));
   }
   INi() {
     var e = this.GetItem(3),
-      i = this.GetItem(4),
-      n = this.GetText(7),
+      t = this.GetItem(4),
+      i = this.GetText(7),
       e =
         (e.SetUIActive(!0),
-        i.SetUIActive(!1),
+        t.SetUIActive(!1),
         ModelManager_1.ModelManager.SceneTeamModel.IsAllDid()
           ? ModelManager_1.ModelManager.CreatureModel.IsMyWorld()
-            ? LguiUtil_1.LguiUtil.SetLocalText(n, "SuggestChallengeAgain")
-            : LguiUtil_1.LguiUtil.SetLocalText(n, "InviteChallengeAgain")
+            ? LguiUtil_1.LguiUtil.SetLocalText(i, "SuggestChallengeAgain")
+            : LguiUtil_1.LguiUtil.SetLocalText(i, "InviteChallengeAgain")
           : ModelManager_1.ModelManager.CreatureModel.IsMyWorld()
-            ? LguiUtil_1.LguiUtil.SetLocalText(n, "SuggestContinueChallenge")
-            : LguiUtil_1.LguiUtil.SetLocalText(n, "InviteContinueChallenge"),
+            ? LguiUtil_1.LguiUtil.SetLocalText(i, "SuggestContinueChallenge")
+            : LguiUtil_1.LguiUtil.SetLocalText(i, "InviteContinueChallenge"),
         ModelManager_1.ModelManager.OnlineModel.ChallengeApplyPlayerId),
-      i = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(e);
-    i
-      ? (this.GetText(1).SetText(i.Name),
+      t = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(e);
+    t
+      ? (this.GetText(1).SetText(t.Name),
         this.XFt.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.SNi)),
         this.pNi.SetFillAmount(this.SNi / this.yNi),
-        (n = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-          i.HeadId,
-        )?.Card) && this.SetTextureByPath(n, this.GetTexture(0)))
+        (i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+          t.HeadId,
+        )?.Card) && this.SetTextureByPath(i, this.GetTexture(0)),
+        this.qxa(t.PlayerDetails.Vxa, t.PlayerDetails.$xa),
+        this.iPa(t.PlayerDetails.Vxa))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("MultiPlayerTeam", 5, "未找到发起邀请的玩家", [
           "playerId：",
           e,
         ]);
   }
+  qxa(e, t) {
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
+      ? ((t = void 0 !== t && "" !== t),
+        this.GetItem(16)?.SetUIActive(t),
+        t && ((t = e ?? ""), this.GetText(17)?.SetText(t)))
+      : this.GetItem(16)?.SetUIActive(!1);
+  }
+  iPa(e) {
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
+      ? ((e = void 0 !== e && "" !== e), this.GetItem(15)?.SetUIActive(!e))
+      : this.GetItem(15)?.SetUIActive(!1);
+  }
   TNi() {
     var e = this.GetItem(3),
-      i = this.GetItem(4),
-      e = (e.SetUIActive(!0), i.SetUIActive(!1), this.GetText(1)),
-      i =
+      t = this.GetItem(4),
+      e = (e.SetUIActive(!0), t.SetUIActive(!1), this.GetText(1)),
+      t =
         (LguiUtil_1.LguiUtil.SetLocalText(e, "TeamLeaderInviteToInstance"),
         this.GetText(7)),
       e = ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceId(),
@@ -172,18 +190,20 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
           ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
             .MapName,
         ) ?? "",
-      i = (i.SetText(e), ModelManager_1.ModelManager.OnlineModel.OwnerId),
-      e = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(i);
+      t = (t.SetText(e), ModelManager_1.ModelManager.OnlineModel.OwnerId),
+      e = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(t);
     e
       ? (this.XFt.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.SNi)),
         this.pNi.SetFillAmount(this.SNi / this.yNi),
         (e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
           e.HeadId,
-        )?.Card) && this.SetTextureByPath(e, this.GetTexture(0)))
+        )?.Card) && this.SetTextureByPath(e, this.GetTexture(0)),
+        this.qxa(void 0, void 0),
+        this.iPa(void 0))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("MultiPlayerTeam", 5, "未找到发起邀请的玩家", [
           "playerId：",
-          i,
+          t,
         ]);
   }
 }

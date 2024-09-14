@@ -51,6 +51,9 @@ class AchievementConfig extends ConfigBase_1.ConfigBase {
   GetAchievementNextLink(e) {
     return this.GetAchievementConfig(e).NextLink;
   }
+  GetThirdPartyTrophyId(e) {
+    return this.GetAchievementConfig(e).ThirdPartyTrophyId;
+  }
   GetAchievementLevel(e) {
     return this.GetAchievementConfig(e).Level;
   }

@@ -74,7 +74,7 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
             e.WaitTime && 0 < e.WaitTime
               ? e.WaitTime + 0.05
               : this.WaitSecondsRemain + 0.05),
-          t.GetComponent(72).SetDialogueText(i, e));
+          t.GetComponent(73).SetDialogueText(i, e));
       });
   }
   get RedDotLogic() {
@@ -101,7 +101,7 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
     this.MZi(t?.TalkAkEvent),
       (this.xer = !1),
       t.Montage &&
-        i.GetComponent(169)?.TryPlayMontage(t.Montage.ActionMontage.Path);
+        i.GetComponent(170)?.TryPlayMontage(t.Montage.ActionMontage.Path);
     var e = t.PlayVoice
       ? PlotAudioById_1.configPlotAudioById.GetConfig(t.TidTalk)
       : void 0;
@@ -109,7 +109,7 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
     else {
       if (t.UniversalTone) {
         var e = t.UniversalTone.UniversalToneId,
-          o = t.UniversalTone.TimberId ?? i.GetComponent(169)?.GetTimberId();
+          o = t.UniversalTone.TimberId ?? i.GetComponent(170)?.GetTimberId();
         if (o && e) {
           var r =
             InterjectionByTimberIdAndUniversalToneId_1.configInterjectionByTimberIdAndUniversalToneId.GetConfig(
@@ -132,7 +132,7 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
         (o =
           ((this.WaitSecondsRemain = this.GetWaitSeconds(t)),
           this.WaitSecondsRemain + 0.05));
-      i.GetComponent(72).SetDialogueText(
+      i.GetComponent(73).SetDialogueText(
         r,
         o,
         this.RedDotLogic.GetRedDotActive(),
@@ -146,10 +146,7 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
         ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
           i.ExternalSourceSetting,
         ),
-      i = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName([
-        i.IsCheckSex,
-        i.FileName,
-      ]),
+      i = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName(i),
       t =
         (this.YZt.Init(this.lei, e, t),
         this.YZt.Enable(),

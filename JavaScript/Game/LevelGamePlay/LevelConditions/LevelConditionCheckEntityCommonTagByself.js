@@ -53,7 +53,7 @@ class LevelConditionCheckEntityCommonTagBySelf extends LevelGeneralBase_1.LevelC
         return !1;
       (o = t), (t = EntitySystem_1.EntitySystem.Get(o.GetEntityId()));
       if (!t) return !1;
-      var i = t.GetComponent(180);
+      var i = t.GetComponent(181);
       if (!i) return !1;
       for (const s of n.TagIds) if (!i.HasTag(s)) return !1;
     }

@@ -24,16 +24,16 @@ class RewardItem extends UiPanelBase_1.UiPanelBase {
   constructor(i) {
     super(),
       (this.ItemId = i),
-      (this.bra = 0),
-      (this.Dya = 0),
+      (this.psa = 0),
+      (this.ZLa = 0),
       (this.qte = 0),
       (this.CurrentValueDelegate = void 0),
       (this.ExpTweener = void 0),
       (this.$pt = void 0),
-      (this.Gra = (i) => {
+      (this.Msa = (i) => {
         this.GetText(1)?.SetText(i.toString());
       }),
-      (this.Aya = () => {
+      (this.eDa = () => {
         this.KillExpTweener(),
           AudioSystem_1.AudioSystem.PostEvent("play_ui_figure_up_2"),
           this.$pt
@@ -43,14 +43,14 @@ class RewardItem extends UiPanelBase_1.UiPanelBase {
                 ((this.ExpTweener = UE.LTweenBPLibrary.IntTo(
                   GlobalData_1.GlobalData.World,
                   this.CurrentValueDelegate,
-                  this.Dya,
+                  this.ZLa,
                   this.qte,
                   TWEEN_TIME,
                 )),
-                this.ExpTweener.OnCompleteCallBack.Bind(this.Nra));
+                this.ExpTweener.OnCompleteCallBack.Bind(this.Esa));
             });
       }),
-      (this.Nra = () => {
+      (this.Esa = () => {
         this.KillExpTweener(),
           this.GetText(3)?.SetUIActive(!0),
           this.GetText(2)?.SetUIActive(!1),
@@ -75,54 +75,54 @@ class RewardItem extends UiPanelBase_1.UiPanelBase {
     this.GetText(1)?.SetUIActive(!0),
       this.GetText(2)?.SetUIActive(!1),
       this.GetText(3)?.SetUIActive(!1),
-      this.Vra(!1),
+      this.Tsa(!1),
       (this.CurrentValueDelegate = (0, puerts_1.toManualReleaseDelegate)(
-        this.Gra,
+        this.Msa,
       ));
   }
   OnBeforeDestroy() {
     this.KillExpTweener(),
-      (0, puerts_1.releaseManualReleaseDelegate)(this.Gra),
+      (0, puerts_1.releaseManualReleaseDelegate)(this.Msa),
       (this.CurrentValueDelegate = void 0),
       this.$pt?.Clear();
   }
   KillExpTweener() {
     this.ExpTweener && (this.ExpTweener.Kill(), (this.ExpTweener = void 0));
   }
-  kra() {
-    this.GetText(1)?.SetText(this.bra.toString()),
+  ysa() {
+    this.GetText(1)?.SetText(this.psa.toString()),
       this.GetText(3)?.SetText(this.qte.toString());
   }
   async ShowAddValue() {
     this.GetText(2)?.SetUIActive(!0),
-      this.GetText(2)?.SetText("+" + this.Dya),
-      await this.Gca();
+      this.GetText(2)?.SetText("+" + this.ZLa),
+      await this.OCa();
   }
-  async Gca() {
+  async OCa() {
     await this.$pt.PlaySequenceAsync(
       "Addition01",
       new CustomPromise_1.CustomPromise(),
     ),
       this.IsDestroyOrDestroying ||
-        (this.qte === this.Dya
+        (this.qte === this.ZLa
           ? ((this.ExpTweener = UE.LTweenBPLibrary.IntTo(
               GlobalData_1.GlobalData.World,
               this.CurrentValueDelegate,
-              this.bra,
+              this.psa,
               this.qte,
               TWEEN_TIME,
             )),
-            this.ExpTweener.OnCompleteCallBack.Bind(this.Nra))
+            this.ExpTweener.OnCompleteCallBack.Bind(this.Esa))
           : ((this.ExpTweener = UE.LTweenBPLibrary.IntTo(
               GlobalData_1.GlobalData.World,
               this.CurrentValueDelegate,
-              this.bra,
-              this.Dya,
+              this.psa,
+              this.ZLa,
               TWEEN_TIME,
             )),
-            this.ExpTweener.OnCompleteCallBack.Bind(this.Aya)));
+            this.ExpTweener.OnCompleteCallBack.Bind(this.eDa)));
   }
-  Vra(i) {
+  Tsa(i) {
     this.GetItem(4)?.SetUIActive(i),
       i &&
         ((i =
@@ -130,7 +130,7 @@ class RewardItem extends UiPanelBase_1.UiPanelBase {
         this.GetText(5)?.SetText(i.Ratio + "%"));
   }
   UpdateItem(i, e, t) {
-    (this.qte = i), (this.Dya = e), this.kra(), this.Vra(t);
+    (this.qte = i), (this.ZLa = e), this.ysa(), this.Tsa(t);
   }
 }
 class BusinessTipsFinishView extends UiViewBase_1.UiViewBase {
@@ -146,19 +146,21 @@ class BusinessTipsFinishView extends UiViewBase_1.UiViewBase {
         var i =
             ModelManager_1.ModelManager.MoonChasingBusinessModel.GetResultData(),
           e = ModelManager_1.ModelManager.MoonChasingModel.GetPopularityValue(),
-          t = i.LastPopularity < e ? "Moonfiesta_Title1" : "Moonfiesta_Title2",
-          e = new MoonChasingPopularityUpData_1.MoonChasingPopularityUpData(
-            i.TriggerEventRoleId,
+          t =
+            ModelManager_1.ModelManager.MoonChasingBusinessModel.GetPlayerRoleId(),
+          s = i.LastPopularity < e ? "Moonfiesta_Title1" : "Moonfiesta_Title2",
+          t = new MoonChasingPopularityUpData_1.MoonChasingPopularityUpData(
+            t,
             i.LastPopularity,
             e,
             i.GetRoleDialog(),
-            t,
+            s,
           );
         ControllerHolder_1.ControllerHolder.MoonChasingController.OpenTipsPopularityUpView(
-          e,
+          t,
         );
       }),
-      (this.UTa = (i, e) => {
+      (this.pwa = (i, e) => {
         "New01" === e &&
           ModelManager_1.ModelManager.MoonChasingBusinessModel.GetResultData()
             .IsBest &&
@@ -184,7 +186,7 @@ class BusinessTipsFinishView extends UiViewBase_1.UiViewBase {
       e = ConfigManager_1.ConfigManager.BusinessConfig.GetWishItemId();
     await this.CaptionItem.SetCurrencyItemList([i, e]);
   }
-  Jga() {
+  Wpa() {
     var i;
     ModelManager_1.ModelManager.MoonChasingBusinessModel.GetResultData()
       .EvaluationLevel < BusinessDefine_1.SPECIAL_LEVEL &&
@@ -192,8 +194,8 @@ class BusinessTipsFinishView extends UiViewBase_1.UiViewBase {
       this.UiViewSequence?.SetSequenceName(i));
   }
   async OnBeforeStartAsync() {
-    this.RootActor?.OnSequencePlayEvent.Bind(this.UTa),
-      this.Jga(),
+    this.RootActor?.OnSequencePlayEvent.Bind(this.pwa),
+      this.Wpa(),
       this.GetButton(6)?.RootUIComp.SetUIActive(!1),
       (this.CharacterListModule = new CharacterListModule_1.CharacterListModule(
         this.dke,

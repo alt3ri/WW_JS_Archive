@@ -25,19 +25,19 @@ class ActivitySubViewMoonChasing extends ActivitySubViewBase_1.ActivitySubViewBa
       (this.DNe = void 0),
       (this.UNe = void 0),
       (this.ANe = void 0),
-      (this.hZs = void 0),
-      (this.wCa = void 0),
+      (this.nta = void 0),
+      (this.Tfa = void 0),
       (this.s6e = void 0),
       (this.wNe = (i) => {
         i === this.ActivityBaseData.Id && this.BNe();
       }),
-      (this.lZs = () => {
+      (this.sta = () => {
         UiManager_1.UiManager.OpenView(
           "QuestView",
           this.ActivityBaseData.GetPreStageQuestId(),
         );
       }),
-      (this.Tya = () => {
+      (this.JLa = () => {
         var i;
         this.ActivityBaseData.PermanentTargetOn &&
           ((i = 0 === this.ActivityBaseData.ActivityFlowState),
@@ -45,7 +45,7 @@ class ActivitySubViewMoonChasing extends ActivitySubViewBase_1.ActivitySubViewBa
             i,
           ));
       }),
-      (this.Lya = () => {
+      (this.zLa = () => {
         ControllerHolder_1.ControllerHolder.MoonChasingController.OpenHandbookView();
       }),
       (this.OpenRewardPopUp = () => {
@@ -119,15 +119,17 @@ class ActivitySubViewMoonChasing extends ActivitySubViewBase_1.ActivitySubViewBa
         await this.UNe.CreateThenShowByActorAsync(i.GetOwner()),
         this.GetItem(3)),
       i =
-        ((this.ANe = new ActivityFunctionalArea_1.ActivityFunctionalArea()),
+        ((this.ANe = new ActivityFunctionalArea_1.ActivityFunctionalArea(
+          this.ActivityBaseData,
+        )),
         await this.ANe.CreateThenShowByActorAsync(i.GetOwner()),
         this.GetItem(7));
-    (this.hZs = new ActivityQuestTipsItem_1.ActivityQuestTipsItem()),
-      await this.hZs.CreateThenShowByActorAsync(i.GetOwner()),
-      (this.wCa = new ButtonItem_1.ButtonItem(this.GetItem(9))),
-      this.wCa.SetFunction(this.Lya),
+    (this.nta = new ActivityQuestTipsItem_1.ActivityQuestTipsItem()),
+      await this.nta.CreateThenShowByActorAsync(i.GetOwner()),
+      (this.Tfa = new ButtonItem_1.ButtonItem(this.GetItem(9))),
+      this.Tfa.SetFunction(this.zLa),
       (this.s6e = new ButtonItem_1.ButtonItem(this.GetItem(8))),
-      this.s6e.SetFunction(this.Tya);
+      this.s6e.SetFunction(this.JLa);
   }
   OnStart() {
     var i,
@@ -142,16 +144,17 @@ class ActivitySubViewMoonChasing extends ActivitySubViewBase_1.ActivitySubViewBa
       (i = e.Desc),
       this.DNe.SetContentByTextId(i),
       (t = this.ActivityBaseData.GetPreviewReward()),
+      this.UNe.SetActive(0 < t.length),
       this.UNe.SetTitleByTextId("CollectActivity_reward"),
       this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
       this.UNe.RefreshItemLayout(t),
       this.GetItem(4).SetUIActive(!1),
       this.ANe.FunctionButton.SetFunction(this.ONe),
-      this.hZs.SetActive(!1),
-      this.hZs.SetRewardButtonFunction(this.lZs));
+      this.nta.SetActive(!1),
+      this.nta.SetRewardButtonFunction(this.sta));
   }
   OnRefreshView() {
-    this.VNe(), this._Zs(), this.ZGe(), this.BNe();
+    this.VNe(), this.ata(), this.ZGe(), this.BNe();
   }
   OnTimer(i) {
     this.FNe();
@@ -176,16 +179,16 @@ class ActivitySubViewMoonChasing extends ActivitySubViewBase_1.ActivitySubViewBa
     var [i, t] = this.GetTimeVisibleAndRemainTime();
     this.LNe.SetTimeTextVisible(i), i && this.LNe.SetTimeTextByText(t);
   }
-  _Zs() {
+  ata() {
     var i = this.ActivityBaseData.IsPreStageQuestFinished(),
       t = this.ActivityBaseData.GetPreGuideQuestFinishState();
-    this.hZs.SetActive(!i && !t),
+    this.nta.SetActive(!i && !t),
       i ||
         ((t =
           ConfigManager_1.ConfigManager.ActivityMoonChasingConfig.GetActivityMoonChasingConfig(
             this.ActivityBaseData.Id,
           )),
-        this.hZs.SetContentByTextId(t.StageQuestTips));
+        this.nta.SetContentByTextId(t.StageQuestTips));
   }
   ZGe() {
     var i =
@@ -194,7 +197,7 @@ class ActivitySubViewMoonChasing extends ActivitySubViewBase_1.ActivitySubViewBa
         ModelManager_1.ModelManager.MoonChasingBuildingModel.GetAllBuildingData()
           .length,
       i =
-        (this.wCa.SetText(i.toString() + "/" + t.toString()),
+        (this.Tfa.SetText(i.toString() + "/" + t.toString()),
         ModelManager_1.ModelManager.MoonChasingRewardModel.TargetTotalCount),
       t = Math.min(
         i,
@@ -203,28 +206,29 @@ class ActivitySubViewMoonChasing extends ActivitySubViewBase_1.ActivitySubViewBa
     this.s6e.SetText(t.toString() + "/" + i.toString());
   }
   VNe() {
-    var i,
-      t = this.ActivityBaseData.IsUnLock(),
-      e = this.ActivityBaseData.GetPreGuideQuestFinishState(),
-      s = this.ActivityBaseData.ActivityFlowState;
-    this.ANe.SetPanelConditionVisible(!t),
-      t ||
-        ((i = this.GetCurrentLockConditionText()),
-        this.ANe.SetLockTextByTextId(i)),
+    var i = this.ActivityBaseData.IsUnLock(),
+      t = this.ActivityBaseData.GetPreGuideQuestFinishState(),
+      e = this.ActivityBaseData.ActivityFlowState;
+    this.ANe.SetPanelConditionVisible(!i),
+      i ||
+        this.ANe.SetPerformanceConditionLock(
+          this.ActivityBaseData.ConditionGroupId,
+          this.ActivityBaseData.Id,
+        ),
       this.ANe.SetRewardButtonVisible(!1),
       this.GetItem(6).SetUIActive(!1),
-      this.s6e.SetActive(this.ActivityBaseData.PermanentTargetOn && t && e),
-      this.wCa.SetActive(t && e && 0 === s),
-      this.ANe.FunctionButton.SetUiActive(t);
-    let r = "Moonfiesta_Skip";
-    1 === s ? (r = "Moonfiesta_Memory") : e || (r = "JumpToQuestText"),
-      this.ANe.FunctionButton.SetShowText(r);
+      this.s6e.SetActive(this.ActivityBaseData.PermanentTargetOn && i && t),
+      this.Tfa.SetActive(i && t && 0 === e),
+      this.ANe.FunctionButton.SetUiActive(i);
+    let s = "Moonfiesta_Skip";
+    1 === e ? (s = "Moonfiesta_Memory") : t || (s = "JumpToQuestText"),
+      this.ANe.FunctionButton.SetShowText(s);
   }
   BNe() {
     this.ANe.FunctionButton.SetRedDotVisible(
       this.ActivityBaseData.IsHasMoonChasingRedDot(),
     ),
-      this.wCa.BindRedDot("MoonChasingHandbook"),
+      this.Tfa.BindRedDot("MoonChasingHandbook"),
       this.s6e.BindRedDot("MoonChasingRewardAndShop");
   }
 }

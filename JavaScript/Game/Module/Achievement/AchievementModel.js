@@ -94,10 +94,10 @@ class AchievementModel extends ModelBase_1.ModelBase {
       (this.Lbe = new Array()),
       (this.Dbe = new Array()),
       this.Ibe.clear(),
-      e.tvs.forEach((e) => {
-        this.GetAchievementGroupData(e.Zfs.J4n).Phrase(e.Zfs),
-          e.evs.forEach((e) => {
-            var t = this.GetAchievementData(e.J4n);
+      e.hvs.forEach((e) => {
+        this.GetAchievementGroupData(e.svs.s5n).Phrase(e.svs),
+          e.avs.forEach((e) => {
+            var t = this.GetAchievementData(e.s5n);
             t.Phrase(e),
               1 === t.GetFinishState()
                 ? this.xbe(t)
@@ -112,7 +112,7 @@ class AchievementModel extends ModelBase_1.ModelBase {
       );
   }
   OnAchievementProgressNotify(e) {
-    var t = this.GetAchievementData(e.J4n),
+    var t = this.GetAchievementData(e.s5n),
       i = t.GetFinishState(),
       e = (t.Phrase(e), t.GetFinishState());
     e !== i &&
@@ -144,9 +144,9 @@ class AchievementModel extends ModelBase_1.ModelBase {
       );
   }
   OnAchievementGroupProgressNotify(e) {
-    var t = this.GetAchievementGroupData(e.Zfs.J4n),
+    var t = this.GetAchievementGroupData(e.svs.s5n),
       i = t.GetFinishState(),
-      e = (t.Phrase(e.Zfs), t.GetFinishState());
+      e = (t.Phrase(e.svs), t.GetFinishState());
     e !== i &&
       (EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshAchievementRedPoint,
@@ -420,6 +420,9 @@ class AchievementModel extends ModelBase_1.ModelBase {
           e,
         ));
     return !showFunctionList.includes(e);
+  }
+  GmClearData() {
+    this.CurrentFinishAchievementArray.length = 0;
   }
 }
 (exports.AchievementModel = AchievementModel).SortByTabIndex = (e, t) =>

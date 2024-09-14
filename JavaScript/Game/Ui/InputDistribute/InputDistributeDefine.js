@@ -209,6 +209,26 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
       InputMappingsDefine_1.actionMappings.QTE交互,
       exports.inputDistributeTagDefine.FightInputRoot.ActionInputTag,
     ],
+    [
+      InputMappingsDefine_1.actionMappings.QTE数字1,
+      exports.inputDistributeTagDefine.FightInputRoot.ActionInput
+        .CharacterSkillInputTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.QTE数字2,
+      exports.inputDistributeTagDefine.FightInputRoot.ActionInput
+        .CharacterSkillInputTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.QTE数字3,
+      exports.inputDistributeTagDefine.FightInputRoot.ActionInput
+        .CharacterSkillInputTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.QTE数字4,
+      exports.inputDistributeTagDefine.FightInputRoot.ActionInput
+        .CharacterSkillInputTag,
+    ],
     [InputMappingsDefine_1.actionMappings.Gm指令, void 0],
     [
       InputMappingsDefine_1.actionMappings.任务,
@@ -228,6 +248,10 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
     ],
     [
       InputMappingsDefine_1.actionMappings.幻象探索选择界面,
+      exports.inputDistributeTagDefine.UiInputRoot.ShortcutKeyTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.轮盘2,
       exports.inputDistributeTagDefine.UiInputRoot.ShortcutKeyTag,
     ],
     [InputMappingsDefine_1.actionMappings.显示鼠标, void 0],
@@ -317,6 +341,14 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
     ],
     [
       InputMappingsDefine_1.actionMappings.放弃改键,
+      exports.inputDistributeTagDefine.UiInputRoot.ShortcutKeyTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.重新挑战,
+      exports.inputDistributeTagDefine.UiInputRoot.ShortcutKeyTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.UI鼠标中键手柄特右,
       exports.inputDistributeTagDefine.UiInputRoot.ShortcutKeyTag,
     ],
     [

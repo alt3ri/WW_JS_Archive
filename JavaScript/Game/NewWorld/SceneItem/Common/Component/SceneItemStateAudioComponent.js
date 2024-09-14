@@ -140,7 +140,7 @@ let SceneItemStateAudioComponent =
         });
     }
     static get Dependencies() {
-      return [185, 0];
+      return [187, 0];
     }
     OnInitData(t) {
       var t = t.GetParam(SceneItemStateAudioComponent_1)[0];
@@ -158,7 +158,7 @@ let SceneItemStateAudioComponent =
     }
     OnStart() {
       var t;
-      if (((this.cen = this.Entity.GetComponent(119)), !this.cen))
+      if (((this.cen = this.Entity.GetComponent(120)), !this.cen))
         return (
           (t = this.EIe.GetPbDataId()),
           Log_1.Log.CheckError() &&
@@ -175,7 +175,7 @@ let SceneItemStateAudioComponent =
         this.G1n)
       ) {
         case IComponent_1.EAudioRangeType.RangeComp:
-          if (((this.jnn = this.Entity.GetComponent(76)), !this.jnn))
+          if (((this.jnn = this.Entity.GetComponent(77)), !this.jnn))
             return (
               Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
@@ -192,7 +192,7 @@ let SceneItemStateAudioComponent =
           this.Z1n(!0);
           break;
         case IComponent_1.EAudioRangeType.SceneActorRefComp:
-          if (((this.Men = this.Entity.GetComponent(149)), !this.Men))
+          if (((this.Men = this.Entity.GetComponent(150)), !this.Men))
             return (
               Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
@@ -262,7 +262,7 @@ let SceneItemStateAudioComponent =
     e_n() {
       var t;
       this.V1n?.IsValid() ||
-        ((t = this.Entity?.GetComponent(185)?.Owner)?.IsValid()
+        ((t = this.Entity?.GetComponent(187)?.Owner)?.IsValid()
           ? (this.V1n = t.AddComponentByClass(
               UE.AkComponent.StaticClass(),
               !1,
@@ -292,7 +292,7 @@ let SceneItemStateAudioComponent =
     o_n(t, i) {
       var e;
       this.N1n.Type === IComponent_1.EAkEventType.Default && t
-        ? (e = this.Entity?.GetComponent(185)?.Owner)?.IsValid()
+        ? (e = this.Entity?.GetComponent(187)?.Owner)?.IsValid()
           ? ((t = (0, AudioSystem_1.parseAudioEventPath)(t)),
             (this.K1n = AudioSystem_1.AudioSystem.PostEvent(t, e)))
           : Log_1.Log.CheckError() &&
@@ -312,7 +312,7 @@ let SceneItemStateAudioComponent =
       var i = this.N1n;
       this.N1n.Type !== IComponent_1.EAkEventType.Point ||
         i.PointIds?.length ||
-        ((i = this.Entity?.GetComponent(185)?.Owner)?.IsValid() &&
+        ((i = this.Entity?.GetComponent(187)?.Owner)?.IsValid() &&
           ((t = (0, AudioSystem_1.parseAudioEventPath)(t)),
           (this.K1n = AudioSystem_1.AudioSystem.PostEvent(t, i, {
             StopWhenOwnerDestroyed: !0,
@@ -478,7 +478,7 @@ let SceneItemStateAudioComponent =
   });
 (SceneItemStateAudioComponent = SceneItemStateAudioComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(118)],
+    [(0, RegisterComponent_1.RegisterComponent)(119)],
     SceneItemStateAudioComponent,
   )),
   (exports.SceneItemStateAudioComponent = SceneItemStateAudioComponent);

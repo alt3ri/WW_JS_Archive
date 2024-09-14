@@ -9,7 +9,6 @@ const Stats_1 = require("../../Core/Common/Stats");
   (exports.BATTLESTAT_GROUP = "STATGROUP_KuroBattle"),
   (exports.battleStat = (function () {
     var t = {
-        BattleTotal: ["JS Total (ms)", 3],
         BulletTick: ["Bullet Tick"],
         BulletAfterTick: ["Bullet AfterTick"],
         MonsterTick: ["Monster Tick"],
@@ -20,12 +19,7 @@ const Stats_1 = require("../../Core/Common/Stats");
       e = {};
     for (const o in t) {
       var r = t[o];
-      e[o] = Stats_1.Stat.CreateStatOfType(
-        r[1] ?? 1,
-        r[0],
-        "",
-        exports.BATTLESTAT_GROUP,
-      );
+      e[o] = Stats_1.Stat.Create(r[0], "", exports.BATTLESTAT_GROUP);
     }
     return e;
   })());

@@ -81,7 +81,7 @@ class WorldDebugController extends ControllerBase_1.ControllerBase {
             EntityType: g ?? "",
             PbDataId: u.GetPbDataId(),
             Name: u.GetPbEntityInitData()
-              ? u.GetPbEntityInitData().Name ?? ""
+              ? (u.GetPbEntityInitData().Name ?? "")
               : i ||
                 (MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
                   u.GetRoleConfig().Name,
@@ -106,13 +106,13 @@ ${_}
   }
   static $pr(e) {
     switch (e) {
-      case Protocol_1.Aki.Protocol.wks.Proto_Player:
+      case Protocol_1.Aki.Protocol.kks.Proto_Player:
         return "角色";
-      case Protocol_1.Aki.Protocol.wks.Proto_Monster:
+      case Protocol_1.Aki.Protocol.kks.Proto_Monster:
         return "怪物";
-      case Protocol_1.Aki.Protocol.wks.Proto_Npc:
+      case Protocol_1.Aki.Protocol.kks.Proto_Npc:
         return "NPC";
-      case Protocol_1.Aki.Protocol.wks.Proto_Vision:
+      case Protocol_1.Aki.Protocol.kks.Proto_Vision:
         return "幻像";
       default:
         return;

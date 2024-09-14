@@ -12,20 +12,20 @@ class TsAnimNotifySkillBehavior extends UE.KuroAnimNotify {
     i = i.GetOwner();
     if (!(i instanceof TsBaseCharacter_1.default)) return !1;
     var i = i.CharacterActorComponent.Entity,
-      r = i.GetComponent(33),
-      o = i.GetComponent(33)?.CurrentSkill;
+      r = i.GetComponent(34),
+      o = i.GetComponent(34)?.CurrentSkill;
     if (!r || !o) return !1;
-    r.SetCurSkillAnIndex(this.exportIndex);
+    r.SetCurAnInfo(this.exportIndex, e.GetName());
     var t = { Entity: i, SkillComponent: r, Skill: o };
     for (let i = 0; i < this.技能行为.Num(); i++) {
       var l = this.技能行为.Get(i);
       if (
-        SkillBehaviorCondition_1.SkillBehaviorCondition.Satisfy(
+        SkillBehaviorCondition_1.SkillBehaviorCondition.SatisfyGroup(
           l.SkillBehaviorConditionGroup,
           l.SkillBehaviorConditionFormula,
           t,
         ) &&
-        (SkillBehaviorAction_1.SkillBehaviorAction.Begin(
+        (SkillBehaviorAction_1.SkillBehaviorAction.BeginGroup(
           l.SkillBehaviorActionGroup,
           t,
         ),

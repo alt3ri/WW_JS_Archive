@@ -171,7 +171,7 @@ class ControllerHolder {}
   (ControllerHolder.CdKeyInputController = void 0),
   (ControllerHolder.ItemDeliverController = void 0),
   (ControllerHolder.DynamicFlowController = void 0),
-  (ControllerHolder.PerformGroupStateController = void 0),
+  (ControllerHolder.NpcPerformController = void 0),
   (ControllerHolder.GamepadController = void 0),
   (ControllerHolder.FastJsObjectController = void 0),
   (ControllerHolder.SoundAreaPlayTipsController = void 0),
@@ -181,11 +181,14 @@ class ControllerHolder {}
   (ControllerHolder.PayGiftController = void 0),
   (ControllerHolder.MultiInteractionActorController = void 0),
   (ControllerHolder.KuroPerformanceController = void 0),
+  (ControllerHolder.KuroAutoCoolController = void 0),
   (ControllerHolder.MoonChasingController = void 0),
   (ControllerHolder.SceneItemMoveController = void 0),
   (ControllerHolder.CrashCollectionController = void 0),
   (ControllerHolder.PerfSightController = void 0),
   (ControllerHolder.LogController = void 0),
   (ControllerHolder.BpActorController = void 0),
-  (ControllerHolder.PlayerVelocityController = void 0);
+  (ControllerHolder.PlayerVelocityController = void 0),
+  (ControllerHolder.PortalController = void 0),
+  (ControllerHolder.GameSettingsController = void 0);
 //# sourceMappingURL=ControllerHolder.js.map

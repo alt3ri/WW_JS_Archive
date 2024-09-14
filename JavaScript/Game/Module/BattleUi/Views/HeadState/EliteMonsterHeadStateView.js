@@ -14,7 +14,7 @@ const UE = require("ue"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   BuffItemContainer_1 = require("../BuffItemContainer");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 const SCALE_TOLERATION = 0.003,
   FALL_DOWN_DISAPPEAR_PERCENT = 0.8,
   FALL_DOWN_DISAPPEAR_TAIL_COUNT_FACTOR = 5,
@@ -28,7 +28,7 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
       (this.rnt = void 0),
       (this.nnt = 0),
       (this.hnt = !1),
-      (this.okn = new BuffItemContainer_1.BuffItemContainer()),
+      (this.mkn = new BuffItemContainer_1.BuffItemContainer()),
       (this.t1t = new RageBufferStateMachine_1.RageBufferStateMachine()),
       (this.i1t = 1),
       (this.pnt = 0),
@@ -50,8 +50,8 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
       (this.OnAddOrRemoveBuff = (t, i, s, e) => {
         this.HeadStateData.GetEntityId() === t &&
           (s
-            ? this.okn.AddBuffByCue(i, e, !0)
-            : this.okn.RemoveBuffByCue(i, e, !0));
+            ? this.mkn.AddBuffByCue(i, e, !0)
+            : this.mkn.RemoveBuffByCue(i, e, !0));
       }),
       (this.OnShieldChanged = (t) => {
         this.RefreshHpAndShield(!0);
@@ -178,7 +178,7 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
       (this.vnt = this.GetSprite(14).GetParentAsUIItem().GetWidth()),
       (this.rnt = new VisibleAnimMachine_1.VisibleAnimMachine()),
       this.rnt.InitCallback(this.wnt, this.Bnt, this.qnt),
-      this.okn.Init(this.GetItem(9));
+      this.mkn.Init(this.GetItem(9));
   }
   OnBeforeDestroy() {
     this.SPe.Clear(),
@@ -190,7 +190,7 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
       (this.rnt = void 0);
   }
   ResetBattleHeadState() {
-    this.okn.ClearAll(), super.ResetBattleHeadState();
+    this.mkn.ClearAll(), super.ResetBattleHeadState();
   }
   GetResourceId() {
     return "UiItem_EliteMonsterState_Prefab";
@@ -210,8 +210,8 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
       ? ((t = ModelManager_1.ModelManager.CharacterModel?.GetHandle(
           this.HeadStateData.GetEntityId(),
         )),
-        this.okn.RefreshBuff(t))
-      : this.okn.ClearAll();
+        this.mkn.RefreshBuff(t))
+      : this.mkn.ClearAll();
   }
   klt() {
     var t = this.IsDetailVisible();
@@ -226,7 +226,7 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
     this.GetItem(9).SetUIActive(t);
   }
   jlt(t) {
-    this.IsBuffVisible() && this.okn.Tick(t);
+    this.IsBuffVisible() && this.mkn.Tick(t);
   }
   OnEliteStateChange() {
     this.Jnt(), this.znt();

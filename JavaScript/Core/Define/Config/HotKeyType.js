@@ -13,8 +13,10 @@ class HotKeyType {
     return this.type();
   }
   get HotKeyList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.hotkeylistLength(), (t) =>
-      this.hotkeylist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.hotkeylistLength(),
+      this.hotkeylist,
+      this,
     );
   }
   __init(t, s) {

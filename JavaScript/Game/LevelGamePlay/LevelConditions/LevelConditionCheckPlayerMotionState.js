@@ -19,7 +19,7 @@ class LevelConditionCheckPlayerMotionState extends LevelGeneralBase_1.LevelCondi
           ),
         !1
       );
-    var r = t.Entity.GetComponent(160);
+    var r = t.Entity.GetComponent(161);
     if (!r)
       return (
         Log_1.Log.CheckWarn() &&
@@ -88,7 +88,7 @@ class LevelConditionCheckPlayerMotionState extends LevelGeneralBase_1.LevelCondi
         n = !0;
     }
     if (n) {
-      var o = t.Entity.GetComponent(188);
+      var o = t.Entity.GetComponent(190);
       if (!o)
         return (
           Log_1.Log.CheckWarn() &&

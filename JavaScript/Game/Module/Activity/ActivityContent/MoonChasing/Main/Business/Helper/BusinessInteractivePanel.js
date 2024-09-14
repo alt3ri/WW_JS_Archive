@@ -19,7 +19,7 @@ class InteractiveItem extends GridProxyAbstract_1.GridProxyAbstract {
     super(...arguments),
       (this.Gke = void 0),
       (this.Pe = void 0),
-      (this.Raa = void 0),
+      (this.U1a = void 0),
       (this.xke = () => {
         this.Gke?.(this.Pe);
       });
@@ -35,16 +35,16 @@ class InteractiveItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.BtnBindInfo = [[0, this.xke]]);
   }
   async OnBeforeStartAsync() {
-    (this.Raa = new CommonCostItem_1.CommonCostItem()),
-      await this.Raa.CreateThenShowByActorAsync(this.GetItem(4).GetOwner());
+    (this.U1a = new CommonCostItem_1.CommonCostItem()),
+      await this.U1a.CreateThenShowByActorAsync(this.GetItem(4).GetOwner());
   }
   Refresh(e, t, i) {
     (this.Pe = e),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), e.TrainContent);
     var r = ConfigManager_1.ConfigManager.BusinessConfig.GetWishItemId(),
       r =
-        (this.Raa.UpdateItem(r, e.WishConsume),
-        this.Raa.RefreshCountEnableState(),
+        (this.U1a.UpdateItem(r, e.WishConsume),
+        this.U1a.RefreshCountEnableState(),
         this.GetButton(0)?.SetSelfInteractive(!0),
         ConfigManager_1.ConfigManager.BusinessConfig.GetRoleDevelopTypeById(
           e.TrainType,
@@ -65,7 +65,7 @@ class BusinessInteractivePanel extends UiPanelBase_1.UiPanelBase {
       (this.RoleId = 0),
       (this.CharacterListModule = void 0),
       (this.InteractiveLayout = void 0),
-      (this.zGn = void 0),
+      (this.aOn = void 0),
       (this.Nke = (e) => {
         var t;
         ModelManager_1.ModelManager.MoonChasingModel.GetWishValue() <
@@ -112,14 +112,14 @@ class BusinessInteractivePanel extends UiPanelBase_1.UiPanelBase {
       ]);
   }
   async OnBeforeShowAsyncImplement() {
-    (this.RoleId = this.zGn.SelectedRoleId), await this.Refresh();
+    (this.RoleId = this.aOn.SelectedRoleId), await this.Refresh();
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     var t = this.GetGuideUiItem("1");
     if (t) return [t, t];
   }
   RegisterViewController(e) {
-    this.zGn = e;
+    this.aOn = e;
   }
   async Refresh() {
     var e = ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustRoleById(

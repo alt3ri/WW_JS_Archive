@@ -28,20 +28,20 @@ class AutoRunModel extends ModelBase_1.ModelBase {
     super(...arguments),
       (this.$Ke = "Stopped"),
       (this.YKe = "Disabled"),
-      (this.JKe = Protocol_1.Aki.Protocol.tps.Proto_BtTypeInvalid),
+      (this.JKe = Protocol_1.Aki.Protocol.hps.Proto_BtTypeInvalid),
       (this.zKe = 0),
       (this.ZKe = 0),
       (this.ShouldTpAfterSkip = !1),
       (this.ShouldFastSkip = !1),
       (this.eQe = new Map()),
       (this.tQe = new Map()),
-      (this.MWs = new Map()),
+      (this.dKs = new Map()),
       (this.MapEntityDataCache = new Map());
   }
   OnInit() {
     return (
       (this.YKe = "Disabled"),
-      (this.JKe = Protocol_1.Aki.Protocol.tps.Proto_BtTypeInvalid),
+      (this.JKe = Protocol_1.Aki.Protocol.hps.Proto_BtTypeInvalid),
       (this.zKe = 0),
       !(this.ZKe = 0)
     );
@@ -93,7 +93,7 @@ class AutoRunModel extends ModelBase_1.ModelBase {
   }
   SetAutoRunMode(
     e,
-    t = Protocol_1.Aki.Protocol.tps.Proto_BtTypeInvalid,
+    t = Protocol_1.Aki.Protocol.hps.Proto_BtTypeInvalid,
     r = 0,
     o = 0,
   ) {
@@ -162,7 +162,7 @@ class AutoRunModel extends ModelBase_1.ModelBase {
   }
   GetCachedDataLayerInfo(e) {
     e = e ?? ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
-    return this.MWs.get(e);
+    return this.dKs.get(e);
   }
   UpdateCachedDataLayerInfo(t, r, o) {
     if (t.length || r.length) {
@@ -190,15 +190,15 @@ class AutoRunModel extends ModelBase_1.ModelBase {
           ["加载", i],
           ["卸载", a],
         );
-      let e = this.MWs.get(o);
+      let e = this.dKs.get(o);
       e ||
-        ((e = new GmDataLayerInfo(new Set(), new Set())), this.MWs.set(o, e));
+        ((e = new GmDataLayerInfo(new Set(), new Set())), this.dKs.set(o, e));
       for (const d of i) e.LoadDataLayers.add(d), e.UnloadDataLayers.delete(d);
       for (const l of a) e.UnloadDataLayers.add(l), e.LoadDataLayers.delete(l);
     }
   }
   ClearCachedDataLayerInfo() {
-    this.MWs.clear();
+    this.dKs.clear();
   }
 }
 exports.AutoRunModel = AutoRunModel;

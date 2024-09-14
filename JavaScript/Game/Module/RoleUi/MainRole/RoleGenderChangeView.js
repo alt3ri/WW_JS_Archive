@@ -31,7 +31,7 @@ class RoleGenderChangeView extends UiViewBase_1.UiViewBase {
       (this.OnClickConfirm = () => {
         var e;
         Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.GetComponent(
-          188,
+          190,
         )?.HasTag(1996802261)
           ? (ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
               ConfigManager_1.ConfigManager.TextConfig.GetTextById(

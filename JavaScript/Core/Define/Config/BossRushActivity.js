@@ -25,19 +25,24 @@ class BossRushActivity {
     return this.buffcount();
   }
   get DefaultBuff() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.defaultbuffLength(), (t) =>
-      this.defaultbuff(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.defaultbuffLength(),
+      this.defaultbuff,
+      this,
     );
   }
   get OptionalBuff() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.optionalbuffLength(),
-      (t) => this.optionalbuff(t),
+      this.optionalbuff,
+      this,
     );
   }
   get UnlockBuff() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.unlockbuffLength(), (t) =>
-      this.unlockbuff(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.unlockbuffLength(),
+      this.unlockbuff,
+      this,
     );
   }
   get OpenDay() {

@@ -6,6 +6,7 @@ const UE = require("ue"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
@@ -24,72 +25,84 @@ const UE = require("ue"),
 class ActivityRecallMainView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.G1a = void 0),
-      (this.O1a = new Map()),
-      (this.k1a = void 0),
-      (this.N1a = void 0),
-      (this.F1a = void 0),
+      (this.GOe = void 0),
+      (this.Kca = void 0),
+      (this.Xca = new Map()),
+      (this.Yca = void 0),
+      (this.Jca = void 0),
+      (this.zca = void 0),
       (this.TDe = void 0),
+      (this.Kwa = !1),
+      (this.kOe = () => {
+        this.Kca.CheckIfInShowTime() || this.CloseMe();
+      }),
       (this.itt = () => {
-        (this.G1a =
+        (this.Kca =
           ActivityRecallHelper_1.ActivityRecallHelper.ActivityRecallData),
           this.Og();
       }),
-      (this.cIa = () => {
-        this.Og();
+      (this.SDa = (i) => {
+        var e;
+        this.Kca &&
+          (e = this.Xca.get(this.Yca)) &&
+          4 === this.Yca &&
+          20 === i &&
+          e.RefreshByData(this.Kca);
       }),
-      (this.jdi = (e, i) => {
+      (this.jdi = (i, e) => {
         return new ActivityRecallTabItemPanel_1.ActivityRecallTabItemPanel();
       }),
-      (this.zno = (e) => {
-        this.V1a(e);
+      (this.zno = (i) => {
+        this.Kwa ? (this.Kwa = !1) : this.Zca(i);
       }),
-      (this.yqe = (e) => {
-        var e = this.F1a[e],
-          i = e.Title,
-          e = this.FSa(e.EntryType),
-          e =
-            void 0 !== e
+      (this.yqe = (i) => {
+        var i = this.zca[i],
+          e = i.Title,
+          i = this.mTa(i.EntryType),
+          i =
+            void 0 !== i
               ? ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-                  e,
+                  i,
                 )
               : "";
         return new CommonTabData_1.CommonTabData(
-          e,
-          new CommonTabTitleData_1.CommonTabTitleData(i),
+          i,
+          new CommonTabTitleData_1.CommonTabTitleData(e),
         );
       }),
-      (this.jca = (i, t) => {
-        var a = this.W1a(this.k1a);
+      (this.WCa = (e, t) => {
+        var a = this.ida(this.Yca);
         if (t === a) {
-          let e = "";
+          let i = "";
           switch (t) {
             case 0:
             case 1:
-              e = this.Wca(i);
+              i = this.QCa(e);
               break;
             case 2:
-              var n = i.GachaId,
-                n =
-                  ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(n);
-              e = n
-                ? n.UnderBgTexturePath
+              var s = e.GachaId,
+                s =
+                  ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(s);
+              i = s
+                ? s.UnderBgTexturePath
                 : ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
                     "T_CircumfluenceSignInBg",
                   );
               break;
             default:
-              e =
+              i =
                 ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
                   "T_CircumfluenceSignInBg",
                 );
           }
-          StringUtils_1.StringUtils.IsEmpty(e) ||
-            ((a = this.GetTexture(1)), this.SetTextureByPath(e, a));
+          StringUtils_1.StringUtils.IsEmpty(i) ||
+            ((a = this.GetTexture(1)), this.SetTextureByPath(i, a)),
+            this.UiViewSequence.StopSequenceByKey("Switch"),
+            this.PlaySequenceAsync("Switch", !0);
         }
       }),
-      (this.bCa = () => {
-        this.BCa();
+      (this.Dfa = () => {
+        this.Afa(), this.Jca.SelectToggleByIndex(0);
       });
   }
   OnRegisterComponent() {
@@ -100,24 +113,52 @@ class ActivityRecallMainView extends UiViewBase_1.UiViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    this.G1a = ActivityRecallHelper_1.ActivityRecallHelper.ActivityRecallData;
-    var e = this.OpenParam,
-      i = ActivityRecallHelper_1.ActivityRecallHelper.IsRecallEntryType(e);
+    this.Kca = ActivityRecallHelper_1.ActivityRecallHelper.ActivityRecallData;
+    var i = this.OpenParam,
+      e = ActivityRecallHelper_1.ActivityRecallHelper.IsRecallEntryType(i);
     await this.sso(),
-      i
-        ? 3 === e
-          ? (this.N1a.SelectToggleByIndex(2, void 0, !1), await this.V1a(e, 1))
-          : this.N1a.SelectToggleByIndex(e, !0)
-        : await this.V1a(e),
-      this.N1a.SetPnlListUiActive(i);
+      e
+        ? 3 === i
+          ? ((this.Kwa = !0),
+            this.Jca.SelectToggleByIndex(2, void 0, !0),
+            await this.Zca(i, 1))
+          : this.Jca.SelectToggleByIndex(i, !0)
+        : await this.Zca(i),
+      this.Jca.SetPnlListUiActive(e);
+  }
+  OnBeforeShow() {
+    var i,
+      e = this.ida(this.Yca),
+      e = this.Xca.get(e);
+    e &&
+      ((i = e.IsShowOrShowing),
+      e.SetActive(!0),
+      i ||
+        (this.UiViewSequence.StopSequenceByKey("Switch"),
+        this.PlaySequenceAsync("Switch", !0),
+        e.OnParentShow())),
+      (this.GOe = TimerSystem_1.TimerSystem.Forever(
+        this.kOe,
+        TimeUtil_1.TimeUtil.InverseMillisecond,
+      ));
+  }
+  jm() {
+    TimerSystem_1.TimerSystem.Has(this.GOe) &&
+      (TimerSystem_1.TimerSystem.Remove(this.GOe), (this.GOe = void 0));
+  }
+  OnAfterHide() {
+    this.jm();
+    var i = this.ida(this.Yca),
+      i = this.Xca.get(i);
+    i && i.SetActive(!1);
   }
   OnBeforeDestroy() {
-    if ((this.H1a(), this.N1a)) {
-      var e;
-      for ([, e] of this.N1a?.GetTabItemMap()) e.Clear();
-      this.N1a.Destroy(), (this.N1a = void 0);
+    if ((this.eda(), this.Jca)) {
+      var i;
+      for ([, i] of this.Jca?.GetTabItemMap()) i.Clear();
+      this.Jca.Destroy(), (this.Jca = void 0);
     }
-    this.qCa();
+    this.Ufa();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -126,7 +167,7 @@ class ActivityRecallMainView extends UiViewBase_1.UiViewBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnCommonItemCountAnyChange,
-        this.cIa,
+        this.SDa,
       );
   }
   OnRemoveEventListener() {
@@ -136,58 +177,58 @@ class ActivityRecallMainView extends UiViewBase_1.UiViewBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnCommonItemCountAnyChange,
-        this.cIa,
+        this.SDa,
       );
   }
-  async j1a(e, i) {
-    const t = this.W1a(e);
-    this.O1a.has(t) ||
-      (await this.Q1a(e).then((e) => {
-        e && this.O1a.set(t, e);
+  async tda(i, e) {
+    const t = this.ida(i);
+    this.Xca.has(t) ||
+      (await this.rda(i).then((i) => {
+        i && this.Xca.set(t, i);
       }));
-    e = this.O1a.get(t);
-    await e.ShowAsync(), e.RefreshByData(this.G1a, i);
+    i = this.Xca.get(t);
+    await i.ShowAsync(), i.RefreshByData(this.Kca, e);
   }
-  async K1a(e) {
-    e = this.W1a(e);
-    this.O1a.has(e) && (await this.O1a.get(e).HideAsync());
+  async oda(i) {
+    i = this.ida(i);
+    this.Xca.has(i) && (await this.Xca.get(i).HideAsync());
   }
-  W1a(e) {
-    return 2 === e || 3 === e ? 2 : e;
+  ida(i) {
+    return 2 === i || 3 === i ? 2 : i;
   }
-  H1a() {
-    this.O1a.forEach((e) => {
-      e.UnBindPassRecallBaseCallBack(), e.CloseMeAsync();
+  eda() {
+    this.Xca.forEach((i) => {
+      i.UnBindPassRecallBaseCallBack(), i.CloseMeAsync();
     }),
-      this.O1a.clear();
+      this.Xca.clear();
   }
-  async Q1a(e) {
-    let i = void 0;
+  async rda(i) {
+    let e = void 0;
     var t = this.GetItem(2);
-    switch (e) {
+    switch (i) {
       case 5:
-        await (i =
+        await (e =
           new ActivityRecallSignInSubView_1.ActivityRecallSignInSubView()).CreateThenShowByResourceIdAsync(
           "UiItem_CircumfluenceSignin",
           t,
         );
         break;
       case 1:
-        await (i =
+        await (e =
           new ActivityRecallAreaSubView_1.ActivityRecallAreaSubView()).CreateThenShowByResourceIdAsync(
           "UiItem_CircumfluenceArea",
           t,
         );
         break;
       case 0:
-        await (i =
+        await (e =
           new ActivityRecallMainLineSubView_1.ActivityRecallMainLineSubView()).CreateThenShowByResourceIdAsync(
           "UiItem_CircumfluenceArea",
           t,
         );
         break;
       case 4:
-        await (i =
+        await (e =
           new ActivityRecallTaskSubView_1.ActivityRecallTaskSubView()).CreateThenShowByResourceIdAsync(
           "UiItem_CircumfluenceMission",
           t,
@@ -195,41 +236,37 @@ class ActivityRecallMainView extends UiViewBase_1.UiViewBase {
         break;
       case 2:
       case 3:
-        ((i =
+        ((e =
           new ActivityRecallRoleSubView_1.ActivityRecallRoleSubView()).OpenParam =
           3),
-          await i.CreateThenShowByResourceIdAsync(
+          await e.CreateThenShowByResourceIdAsync(
             "UiItem_CircumfluenceArea",
             t,
           );
     }
-    return i.BindPassRecallBaseCallBack(this.jca), i;
+    return e.BindPassRecallBaseCallBack(this.WCa), e;
   }
-  async V1a(e, i = 0) {
-    e !== this.k1a &&
-      (void 0 !== this.k1a && (await this.K1a(this.k1a)),
-      await this.j1a(e, i),
-      (this.k1a = e),
-      this.qEi(),
-      5 !== this.k1a) &&
-      4 !== this.k1a &&
-      this.IsShowOrShowing &&
-      (await this.PlaySequenceAsync("Switch", !0));
+  async Zca(i, e = 0) {
+    i !== this.Yca &&
+      (void 0 !== this.Yca && (await this.oda(this.Yca)),
+      await this.tda(i, e),
+      (this.Yca = i),
+      this.qEi());
   }
   qEi() {
-    let e = void 0;
-    5 === this.k1a && (e = "RecallActivity_Sign_Title"),
-      4 === this.k1a && (e = "RecallActivity_Task_Title");
-    var i = this.VSa(),
-      i =
-        void 0 !== i
-          ? ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i)
+    let i = void 0;
+    5 === this.Yca && (i = "RecallActivity_Sign_Title"),
+      4 === this.Yca && (i = "RecallActivity_Task_Title");
+    var e = this.dTa(),
+      e =
+        void 0 !== e
+          ? ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e)
           : "";
-    e &&
-      this.N1a.UpdateTitle(i, new CommonTabTitleData_1.CommonTabTitleData(e));
+    i &&
+      this.Jca.UpdateTitle(e, new CommonTabTitleData_1.CommonTabTitleData(i));
   }
-  FSa(e) {
-    switch (e) {
+  mTa(i) {
+    switch (i) {
       case 1:
         return "SP_CircumfluenceIconyeqianA";
       case 2:
@@ -239,8 +276,8 @@ class ActivityRecallMainView extends UiViewBase_1.UiViewBase {
         return "SP_FuncIconRoleC";
     }
   }
-  VSa() {
-    switch (this.k1a) {
+  dTa() {
+    switch (this.Yca) {
       case 0:
         return "SP_CircumfluenceIconyeqianA";
       case 1:
@@ -251,51 +288,55 @@ class ActivityRecallMainView extends UiViewBase_1.UiViewBase {
     }
   }
   Og() {
-    var e;
-    this.G1a && (e = this.O1a.get(this.k1a)) && e.RefreshByData(this.G1a);
+    var i;
+    this.Kca && (i = this.Xca.get(this.Yca)) && i.RefreshByData(this.Kca);
   }
   async sso() {
-    var e = new CommonTabComponentData_1.CommonTabComponentData(
+    var i = new CommonTabComponentData_1.CommonTabComponentData(
       this.jdi,
       this.zno,
       this.yqe,
     );
-    (this.F1a =
+    (this.zca =
       ActivityRecallHelper_1.ActivityRecallHelper.GetRecallOpenEntryViewConfigList()),
-      (this.N1a =
+      (this.Jca =
         new ActivityRecallMainCaptionListPanel_1.ActivityRecallMainCaptionListPanel());
-    var i = this.GetItem(0).GetOwner();
-    this.N1a.Init(e),
-      await this.N1a.CreateThenShowByActorAsync(i),
-      await this.BCa();
+    var e = this.GetItem(0).GetOwner();
+    this.Jca.Init(i),
+      await this.Jca.CreateThenShowByActorAsync(e),
+      await this.Afa();
   }
-  async BCa() {
-    this.F1a =
+  async Afa() {
+    this.zca =
       ActivityRecallHelper_1.ActivityRecallHelper.GetRecallOpenEntryViewConfigList();
-    var i = new Array();
-    let t = 0;
-    for (let e = 0; e < this.F1a.length; e++) {
+    var e = new Array();
+    let t = void 0;
+    for (let i = 0; i < this.zca.length; i++) {
       var a = new CommonTabItemBase_1.CommonTabItemData(),
-        n =
-          ((a.Index = e),
-          (a.Data = this.N1a.GetTabComponentData(e)),
-          this.F1a[e]),
-        [, n] = ActivityRecallHelper_1.ActivityRecallHelper.CheckIfEntryOpen(n);
-      void 0 !== n && 0 < n && (t = Math.min(n, t)), i.push(a);
+        s =
+          ((a.Index = i),
+          (a.Data = this.Jca.GetTabComponentData(i)),
+          this.zca[i]),
+        [s, n] =
+          ActivityRecallHelper_1.ActivityRecallHelper.CheckIfEntryOpen(s);
+      s &&
+        (void 0 !== n && 0 < n && (t = void 0 === t ? n : Math.min(n, t)),
+        e.push(a));
     }
-    await this.N1a.RefreshTabItemByDataAsync(i),
-      0 < t &&
-        (this.qCa(),
+    await this.Jca.RefreshTabItemByDataAsync(e),
+      void 0 !== t &&
+        0 < t &&
+        (this.Ufa(),
         (this.TDe = TimerSystem_1.RealTimeTimerSystem.Delay(
-          this.bCa,
-          1e3 * t,
+          this.Dfa,
+          t * TimeUtil_1.TimeUtil.InverseMillisecond,
         )));
   }
-  Wca(e) {
-    var i = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
-    return 1 === i ? e.BgPath : 0 === i ? e.BgPathF : "";
+  QCa(i) {
+    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
+    return 1 === e ? i.BgPath : 0 === e ? i.BgPathF : "";
   }
-  qCa() {
+  Ufa() {
     this.TDe &&
       (TimerSystem_1.RealTimeTimerSystem.Remove(this.TDe), (this.TDe = void 0));
   }

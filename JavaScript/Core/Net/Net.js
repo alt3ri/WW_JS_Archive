@@ -60,7 +60,7 @@ class CallbackQueueItem {
   }
 }
 class SendMessageCache {
-  constructor(e, t, N, i, a) {
+  constructor(e, t, N, a, i) {
     (this.RpcId = 0),
       (this.SeqNo = 0),
       (this.MessageId = void 0),
@@ -71,8 +71,8 @@ class SendMessageCache {
       (this.RpcId = e),
       (this.SeqNo = t),
       (this.MessageId = N),
-      (this.EncodeMessage = i),
-      (this.Handle = a),
+      (this.EncodeMessage = a),
+      (this.Handle = i),
       (this.SendTimeMs = Date.now()),
       (this.TimeoutHandle = void 0);
   }
@@ -95,50 +95,50 @@ class Net {
     return Net.QK;
   }
   static StartReconnecting() {
-    Net.Dna = !0;
+    Net.nha = !0;
   }
-  static Ana() {
-    Net.Dna = !1;
+  static sha() {
+    Net.nha = !1;
   }
   static IsServerConnected() {
-    return Net.Dna || 4 === Net.Rna;
+    return Net.nha || 4 === Net.aha;
   }
   static IsFinishLogin() {
-    return 4 === Net.Rna;
+    return 4 === Net.aha;
   }
   static ChangeState1() {
-    Net.Rna = 1;
+    Net.aha = 1;
   }
-  static Una() {
-    1 !== Net.Rna && Net.xna(2), (Net.Rna = 2);
+  static hha() {
+    1 !== Net.aha && Net.lha(2), (Net.aha = 2);
   }
   static DX() {
-    return 2 <= Net.Rna && Net.Rna <= 4;
+    return 2 <= Net.aha && Net.aha <= 4;
   }
   static ChangeStateEnterGame() {
-    2 !== Net.Rna && 3 !== Net.Rna && Net.xna(3), (Net.Rna = 3);
+    2 !== Net.aha && 3 !== Net.aha && Net.lha(3), (Net.aha = 3);
   }
-  static ChangeStateFinishLogin() {
-    3 !== Net.Rna && Net.xna(4), (Net.Rna = 4), Net.Ana();
+  static WWa() {
+    3 !== Net.aha && Net.lha(4), (Net.aha = 4), Net.sha();
   }
   static IsCallbackPaused() {
-    return Net.sga;
+    return Net.epa;
   }
   static PauseAllCallback() {
-    (Net.sga = !0),
+    (Net.epa = !0),
       Log_1.Log.CheckInfo() && Log_1.Log.Info("Net", 31, "暂停消息处理");
   }
   static ResumeAllCallback() {
-    (Net.sga = !1),
+    (Net.epa = !1),
       Log_1.Log.CheckInfo() && Log_1.Log.Info("Net", 31, "恢复消息处理");
   }
-  static xna(e) {
+  static lha(e) {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Net",
         31,
         "状态切换错误",
-        ["Current", Net.Rna],
+        ["Current", Net.aha],
         ["Dest", e],
       );
   }
@@ -160,7 +160,7 @@ class Net {
       e =
         (1 === Info_1.Info.PlatformType && (e.UseNewResolveIp = !1),
         (e.IsTickDrivenOutside = !0),
-        e.OnConnectSuccess.Add(Net.lia),
+        e.OnConnectSuccess.Add(Net.voa),
         e.OnRecResp.Bind(Net.iX),
         e.OnRecException.Bind(Net.oX),
         e.OnRecPush.Bind(Net.rX),
@@ -171,7 +171,7 @@ class Net {
         (Net.aX = 0),
         (Net.hX = 0),
         (Net.lX = 0),
-        UE.KuroStaticLibrary.IsBuildShipping() ||
+        Info_1.Info.IsBuildShipping ||
           ((Net.uX = ENABLE_NET_LOG),
           (Net.cX = ENABLE_NET_STAT),
           (Net.mX = ENABLE_HEARTBEAT_LOG),
@@ -203,29 +203,29 @@ class Net {
     Net.MX.clear();
     for (const t of e) Net.MX.add(t);
   }
-  static InitNotPauseMessage(e) {
-    Net.zX.includes(e) || Net.zX.push(e);
+  static AddNotPauseMessage(e) {
+    Net.S$a.add(e);
   }
-  static hga() {
-    return !!Net.lga && (Net.lga.DoCallback() && (Net.lga = void 0), !0);
+  static ipa() {
+    return !!Net.rpa && (Net.rpa.DoCallback() && (Net.rpa = void 0), !0);
   }
-  static _ga(e) {
-    return 0 !== e.Size && ((Net.lga = e.Pop()), Net.hga());
+  static opa(e) {
+    return 0 !== e.Size && ((Net.rpa = e.Pop()), Net.ipa());
   }
-  static Connect(e, t, N, i, a) {
+  static Connect(e, t, N, a, i) {
     Net.EX()
-      ? ((Net._ia = N),
-        (Net.uia = a),
-        (Net.cia = 0),
-        (Net.mia = e),
-        (Net.dia = t),
-        (Net.Cia = i),
-        Net.gia())
+      ? ((Net.Moa = N),
+        (Net.Soa = i),
+        (Net.Eoa = 0),
+        (Net.yoa = e),
+        (Net.Ioa = t),
+        (Net.Toa = a),
+        Net.Loa())
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Net", 9, "已经连接或者正在连接中."),
         N(3));
   }
-  static async ConnectAsync(e, N, i, a) {
+  static async ConnectAsync(e, N, a, i) {
     return new Promise((t) => {
       Net.Connect(
         e,
@@ -233,8 +233,8 @@ class Net {
         (e) => {
           t(e);
         },
-        i,
         a,
+        i,
       );
     });
   }
@@ -242,13 +242,13 @@ class Net {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Net", 31, "断开连接", ["Reason", e]),
       Net._X(0),
-      Net._ia && Net.fia(2),
-      (Net.Rna = 0 === e ? 5 : 0),
-      1 !== e && (Net.LX(), (Net.aX = 0), (Net.hX = 0), Net.Ana());
+      Net.Moa && Net.Doa(2),
+      (Net.aha = 0 === e ? 5 : 0),
+      1 !== e && (Net.LX(), (Net.aX = 0), (Net.hX = 0), Net.sha());
   }
   static SetDynamicProtoKey(e, t) {
     e = s2cEncryptType[e];
-    Net.Una();
+    Net.hha();
     Net.gX.SetK(e, t) ||
       (Log_1.Log.CheckWarn() && Log_1.Log.Warn("Net", 22, "网络 key 设置失败"));
   }
@@ -265,12 +265,12 @@ class Net {
       }
       t = t.Next;
     }
-    var i, a, s;
+    var a, i, s;
     return N
-      ? (([i, a, , s] = Net.gX
+      ? (([a, i, , s] = Net.gX
           .GetDebugString(N.EncodeMessage, ";", N.MessageId, N.SeqNo)
           .split(";")),
-        [N.MessageId, Number(i), a, s])
+        [N.MessageId, Number(a), i, s])
       : [0, 0, "", ""];
   }
   static GetUnVerifiedMessageCount() {
@@ -279,14 +279,14 @@ class Net {
   static ReconnectSuccessAndReSend(N) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Net", 31, "重连流程,", ["lastReceived", N]);
-    var i = Net.RX.Count;
-    if (0 < i) {
+    var a = Net.RX.Count;
+    if (0 < a) {
       let e = Net.RX.GetHeadNextNode(),
         t = !1;
       for (; e; ) {
-        var a = e.Element.SeqNo;
-        if (N <= a) {
-          t = a === N;
+        var i = e.Element.SeqNo;
+        if (N <= i) {
+          t = i === N;
           break;
         }
         e = e.Next;
@@ -297,7 +297,7 @@ class Net {
           "Net",
           31,
           "重连流程, 清理掉已经被服务器收到的缓存消息",
-          ["beforeCount", i],
+          ["beforeCount", a],
           ["afterCount", Net.RX.Count],
           ["find SeqNo", e.Element.SeqNo],
         );
@@ -306,11 +306,11 @@ class Net {
       let e = 0,
         t = 0,
         N = 0,
-        i = Net.RX.GetHeadNextNode();
-      for (; i; ) {
+        a = Net.RX.GetHeadNextNode();
+      for (; a; ) {
         var s,
           r,
-          o = i.Element,
+          o = a.Element,
           n = o.MessageId;
         0 == (3 & NetDefine_1.protoConfig[n]) ||
           (4 != (r = void 0 !== (s = o.RpcId) ? 1 : 4) && !o.Handle) ||
@@ -318,7 +318,7 @@ class Net {
           (t = o.SeqNo),
           (N = n),
           Net.UX(r, o.SeqNo, s, n, o.EncodeMessage)),
-          (i = i.Next);
+          (a = a.Next);
       }
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -330,7 +330,7 @@ class Net {
           ["lastMsgId", N],
         );
     }
-    Net.ChangeStateFinishLogin();
+    Net.WWa();
   }
   static Register(e, N) {
     return Net.sX.has(e)
@@ -353,17 +353,20 @@ class Net {
   static Send(e, t) {
     Net.AX(e) && Net.PX(4, e, t, void 0, void 0);
   }
-  static Call(e, t, N, i = 0) {
-    var a;
+  static Call(e, t, N, a = 0) {
+    var i;
     !Net.xX(e) && Net.AX(e)
-      ? ((a = Net.BX()),
-        (t = Net.PX(1, e, t, a, N)),
+      ? (Net.wX.Start(),
+        (i = Net.BX()),
+        (t = Net.PX(1, e, t, i, N)),
         Net.bX(e, t),
-        0 < i && Net.qX(i, t.Element),
-        4 == (4 & NetDefine_1.protoConfig[e]) && Net.JK?.(a))
+        0 < a && Net.qX(a, t.Element),
+        4 == (4 & NetDefine_1.protoConfig[e]) &&
+          (Net.npa.Start(), Net.JK?.(i), Net.npa.Stop()),
+        Net.wX.Stop())
       : N(void 0, void 0);
   }
-  static async CallAsync(e, t, i = 0) {
+  static async CallAsync(e, t, a = 0) {
     return new Promise((N) => {
       Net.Call(
         e,
@@ -371,15 +374,17 @@ class Net {
         (e, t) => {
           N(e);
         },
-        i,
+        a,
       );
     });
   }
-  static PX(e, t, N, i, a) {
+  static PX(e, t, N, a, i) {
+    Net.NX.Start();
     var s = Net.OX(),
-      r = NetDefine_1.messageDefine[t].encode(N).finish(),
-      a =
-        (30720 < r.length &&
+      r = (Net.kX.Start(), NetDefine_1.messageDefine[t].encode(N).finish()),
+      i =
+        (Net.kX.Stop(),
+        30720 < r.length &&
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Net",
@@ -388,51 +393,63 @@ class Net {
             ["message", t],
             ["length", r.length],
           ),
-        new SendMessageCache(i, s, t, r, a)),
-      a = Net.FX(a);
-    return Net.VX(t) || Net.UX(e, s, i, t, r, N), a;
+        new SendMessageCache(a, s, t, r, i)),
+      i = Net.FX(i);
+    return Net.VX(t) || Net.UX(e, s, a, t, r, N), Net.NX.Stop(), i;
   }
-  static qX(t, N) {
-    const i = N.MessageId;
-    var e;
-    Net.MX.has(i)
-      ? ((e = TimerSystem_1.TimerSystem.Delay(() => {
+  static qX(e, N) {
+    const a = N.MessageId;
+    var t;
+    Net.MX.has(a)
+      ? ((t = TimerSystem_1.TimerSystem.Delay(() => {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Net",
               31,
               "协议超时",
-              ["message", i],
-              ["timeout", t],
+              ["message", a],
+              ["timeout", e],
             );
-          var e = N.Handle;
-          if ((N.ClearHandle(), (N.TimeoutHandle = void 0), e))
+          var t = N.Handle;
+          if ((N.ClearHandle(), (N.TimeoutHandle = void 0), t)) {
+            let e = void 0;
             try {
-              Net.cX && Net.HX.get(i), e(void 0, void 0);
+              Net.cX && (e = Net.HX.get(a))?.Start(), t(void 0, void 0);
             } catch (e) {
               e instanceof Error
                 ? Log_1.Log.CheckError() &&
-                  Log_1.Log.ErrorWithStack("Net", 31, "callback执行异常", e, [
-                    "requestId",
-                    i,
-                  ])
+                  Log_1.Log.ErrorWithStack(
+                    "Net",
+                    31,
+                    "callback执行异常",
+                    e,
+                    ["requestId", a],
+                    ["error", e.message],
+                  )
                 : Log_1.Log.CheckError() &&
-                  Log_1.Log.Error("Net", 31, "callback执行异常", [
-                    "requestId",
-                    i,
-                  ]);
+                  Log_1.Log.Error(
+                    "Net",
+                    31,
+                    "callback执行异常",
+                    ["requestId", a],
+                    ["error", e],
+                  );
+            } finally {
+              e?.Stop();
             }
-        }, t)),
-        (N.TimeoutHandle = e))
+          }
+        }, e)),
+        (N.TimeoutHandle = t))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Net", 31, "该协议未配置可超时", ["message", i]);
+        Log_1.Log.Error("Net", 31, "该协议未配置可超时", ["message", a]);
   }
   static CX(e, t, N) {
     if (Net.uX || Net.cX)
       for (const s of e) {
-        var i = s,
-          a = t + `.(${i})`;
-        Net.uX && Net.jX.set(i, a), N && Net.cX && Net.HX.set(i, void 0);
+        var a = s,
+          i = t + `.(${a})`;
+        Net.uX && Net.jX.set(a, i),
+          N && Net.cX && ((i = Stats_1.Stat.Create(i)), Net.HX.set(a, i));
       }
   }
   static xX(e) {
@@ -460,22 +477,22 @@ class Net {
   static EX() {
     return 0 === Net.KX;
   }
-  static gia() {
+  static Loa() {
     (Net.IX = TimerSystem_1.TimerSystem.Delay((e) => {
-      Net.fia(1);
-    }, Net.Cia)),
+      Net.Doa(1);
+    }, Net.Toa)),
       Net._X(1),
-      Net.gX.Connect(Net.mia, Net.dia);
+      Net.gX.Connect(Net.yoa, Net.Ioa);
   }
-  static Pna(e) {
+  static _ha(e) {
     return 111 === e || 107 === e;
   }
   static VX(e) {
-    return !!Net.Dna && !Net.Pna(e);
+    return !!Net.nha && !Net._ha(e);
   }
   static AX(e) {
-    if (5 === Net.Rna) return !1;
-    if (Net.Dna)
+    if (5 === Net.aha) return !1;
+    if (Net.nha)
       return !(
         107 === e &&
         !Net.DX() &&
@@ -495,14 +512,14 @@ class Net {
           ]),
         !1
       );
-    if (4 !== Net.Rna && !(0 == (3 & NetDefine_1.protoConfig[e])))
+    if (4 !== Net.aha && !(0 == (3 & NetDefine_1.protoConfig[e])))
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Net",
             9,
             "尚未完成登录流程, 登录流程以外的协议会被丢弃",
-            ["state", Net.Rna],
+            ["state", Net.aha],
             ["messageId", e],
           ),
         !1
@@ -549,12 +566,13 @@ class Net {
     Net.XX.set(t.Element.RpcId, t),
       8 == (8 & NetDefine_1.protoConfig[e]) && Net.WX.add(e);
   }
-  static cga(e) {
+  static spa(e) {
     var t = e.Element,
       N = t.MessageId;
     Net.XX.delete(t.RpcId),
       8 == (8 & NetDefine_1.protoConfig[N]) && Net.WX.delete(N),
-      Net.Pna(N) ||
+      105 === N && Net.WWa(),
+      Net._ha(N) ||
         (Net.RX.RemoveNodesBeforeThis(e, !0),
         Net.uX &&
           ENABLE_MESSAGE_LOG &&
@@ -571,26 +589,26 @@ class Net {
   static YX(e) {
     return 111 === e;
   }
-  static JX(e, t, N, i, a = void 0) {
+  static JX(e, t, N, a, i = void 0) {
     var s,
       r,
-      i = new Uint8Array(i),
-      i = new Uint8Array(i);
+      a = new Uint8Array(a),
+      a = new Uint8Array(a);
     Net.QX(t);
     let o = void 0,
       n = void 0,
       _ = void 0;
     const c = N;
     let g = void 0,
-      d = !0;
-    const u = Date.now();
+      d = !1;
+    const l = Date.now();
     if (
-      ((Net.QK = u),
-      a
-        ? (o = Net.XX.get(a))
-          ? (Net.cga(o),
+      ((Net.QK = l),
+      i
+        ? (o = Net.XX.get(i))
+          ? (Net.spa(o),
             (s = o.Element),
-            (r = u - s.SendTimeMs),
+            (r = l - s.SendTimeMs),
             (g = s.MessageId),
             NetInfo_1.NetInfo.SetRttMs(r),
             300 < r &&
@@ -600,14 +618,13 @@ class Net {
                 31,
                 "RTT过高",
                 ["requestId", g],
-                ["rpcId", a],
+                ["rpcId", i],
                 ["seqNo", s.SeqNo],
                 ["serverSeqNo", t],
                 ["rtt", r],
                 ["deltaTime", Time_1.Time.DeltaTime],
               ),
             (_ = s.Handle),
-            (d = !this.zX.includes(g)),
             s.TimeoutHandle &&
               TimerSystem_1.TimerSystem.Remove(s.TimeoutHandle))
           : Log_1.Log.CheckError() &&
@@ -615,7 +632,7 @@ class Net {
               "Net",
               1,
               "网络 rpc 响应不存在",
-              ["rpcId", a],
+              ["rpcId", i],
               ["messageId", N],
             )
         : ((_ = Net.sX.get(c)) ||
@@ -628,99 +645,110 @@ class Net {
                 ["Id", c],
                 ["Name", Net.jX.get(c)],
               )),
-          (d = !this.zX.includes(c))),
+          (d = !this.S$a.has(c))),
       3 === e)
     ) {
-      const L = `[异常信息:${StringUtils_1.StringUtils.Uint8ArrayToString(i)}]`,
+      const v = `[异常信息:${StringUtils_1.StringUtils.Uint8ArrayToString(a)}]`,
         S = _;
       _ = () => {
         Net.YK?.(
-          a,
+          i,
           N,
           g,
           o
             ? NetDefine_1.messageDefine[g].decode(o.Element.EncodeMessage)
             : void 0,
-          L,
+          v,
         ),
           S?.(void 0, void 0);
       };
     } else
-      (n = NetDefine_1.messageDefine[c].decode(i)) ||
+      (n = NetDefine_1.messageDefine[c].decode(a)) ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Net", 1, "协议解析异常", ["messageId", c]));
-    n && Net.uX && Net.ZX(c, t, a, n);
-    var l = (e) => {
-      var t;
-      Net.cX && Net.HX.get(c),
+    n && Net.uX && Net.ZX(c, t, i, n);
+    var u = (e) => {
+      let t = void 0;
+      var N;
+      Net.cX && (t = Net.HX.get(c))?.Start(),
         Net.uX &&
           0 === e.CallbackCount &&
-          67 < (t = Date.now() - u) &&
+          67 < (N = Date.now() - l) &&
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Net",
             31,
             "callback exceeds limit",
-            ["delay", t],
+            ["delay", N],
             ["msg", Net.jX.get(c)],
           );
       try {
         0 === e.CallbackCount &&
           g &&
           4 == (4 & NetDefine_1.protoConfig[g]) &&
-          Net.zK?.(a),
+          (Net.apa.Start(), Net.zK?.(i), Net.apa.Stop()),
           _?.(n, e);
       } catch (e) {
         e instanceof Error
           ? Log_1.Log.CheckError() &&
-            Log_1.Log.ErrorWithStack("Net", 31, "callback执行异常", e, [
-              "messageId",
-              c,
-            ])
+            Log_1.Log.ErrorWithStack(
+              "Net",
+              31,
+              "callback执行异常",
+              e,
+              ["messageId", c],
+              ["error", e.message],
+            )
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Net", 31, "callback执行异常", ["messageId", c]);
+            Log_1.Log.Error(
+              "Net",
+              31,
+              "callback执行异常",
+              ["messageId", c],
+              ["error", e],
+            );
       } finally {
-        e.IncrementCount();
+        e.IncrementCount(), t?.Stop();
       }
     };
     if (Net.UseBudget)
-      (!d && this.sga ? this.dga : this.Cga).Push(new CallbackQueueItem(l, c));
-    else for (var v = new CallbackStatus(c); l(v), !v.IsJobFinished; );
+      (!d && this.epa ? this.hpa : this.lpa).Push(new CallbackQueueItem(u, c));
+    else for (var L = new CallbackStatus(c); u(L), !L.IsJobFinished; );
     return !0;
   }
-  static UX(e, t, N, i, a, s = void 0) {
+  static UX(e, t, N, a, i, s = void 0) {
     return (
       Net.uX &&
-        ((s = s || NetDefine_1.messageDefine[i].decode(a)), Net.ZX(i, t, N, s)),
-      Net.gX.SendM(e, t, N, i, a, 0 == (32 & NetDefine_1.protoConfig[i]))
+        ((s = s || NetDefine_1.messageDefine[a].decode(i)), Net.ZX(a, t, N, s)),
+      Net.gX.SendM(e, t, N, a, i, 0 == (32 & NetDefine_1.protoConfig[a]))
     );
   }
   static LX() {
     Net.WX.clear(), Net.XX.clear(), Net.RX.RemoveAllNodeWithoutHead();
   }
-  static ZX(e, t, N, i) {
-    var a;
-    (Net.mX || (24749 !== e && 20673 !== e && 13894 !== e)) &&
-      28674 !== e &&
-      4850 !== e &&
-      15095 !== e &&
-      24476 !== e &&
-      2619 !== e &&
-      26446 !== e &&
-      26266 !== e &&
-      8144 !== e &&
-      9592 !== e &&
+  static ZX(e, t, N, a) {
+    var i;
+    (Net.mX || (1650 !== e && 1651 !== e && 21495 !== e)) &&
+      28450 !== e &&
+      19482 !== e &&
+      17865 !== e &&
+      26301 !== e &&
+      26563 !== e &&
+      22636 !== e &&
+      22047 !== e &&
+      18582 !== e &&
+      24114 !== e &&
       (Net.dX ||
-        (23406 !== e &&
-          23193 !== e &&
-          19679 !== e &&
-          18400 !== e &&
-          20191 !== e &&
-          5751 !== e &&
-          25867 !== e &&
-          11926 !== e &&
-          1532 !== e)) &&
-      ((a = 0 < Object.keys(i).length), Net.uX) &&
+        (26617 !== e &&
+          16764 !== e &&
+          23407 !== e &&
+          23144 !== e &&
+          16540 !== e &&
+          29891 !== e &&
+          15879 !== e &&
+          15830 !== e &&
+          16028 !== e)) &&
+      ((i = 0 < Object.keys(a).length), Net.uX) &&
       Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Net",
@@ -730,7 +758,7 @@ class Net {
         ["RpcId", N],
         ["UpStreamSeqNo", Net.hX],
         ["DownStream", Net.lX],
-        ["msg", a ? this.tY(i) : ""],
+        ["msg", i ? this.tY(a) : ""],
       );
   }
   static tY(e) {
@@ -743,28 +771,28 @@ class Net {
   ((_a = Net).QK = 0),
   (Net.UseBudget = !0),
   (Net.gX = void 0),
-  (Net._ia = void 0),
-  (Net.mia = ""),
-  (Net.dia = 0),
-  (Net.Cia = 0),
+  (Net.Moa = void 0),
+  (Net.yoa = ""),
+  (Net.Ioa = 0),
+  (Net.Toa = 0),
   (Net.IX = void 0),
-  (Net.cia = 0),
-  (Net.uia = 0),
+  (Net.Eoa = 0),
+  (Net.Soa = 0),
   (Net.sX = new Map()),
   (Net.WX = new Set()),
   (Net.RX = new List_1.default(SendMessageCache.NullMessageCache)),
   (Net.XX = new Map()),
   (Net.jX = new Map()),
   (Net.HX = new Map()),
-  (Net.wX = void 0),
-  (Net.NX = void 0),
+  (Net.wX = Stats_1.Stat.Create("Net.Call")),
+  (Net.NX = Stats_1.Stat.Create("Net.SendInternal")),
   (Net.MX = new Set()),
   (Net.aX = 0),
   (Net.hX = 0),
   (Net.lX = 0),
   (Net.KX = 0),
-  (Net.Rna = 0),
-  (Net.Dna = !1),
+  (Net.aha = 0),
+  (Net.nha = !1),
   (Net.uX = !1),
   (Net.cX = !1),
   (Net.mX = !1),
@@ -773,33 +801,33 @@ class Net {
   (Net.JK = void 0),
   (Net.zK = void 0),
   (Net.$K = void 0),
-  (Net.lga = void 0),
-  (Net.Cga = new Queue_1.Queue(256)),
-  (Net.dga = new Queue_1.Queue(32)),
-  (Net.sga = !1),
-  (Net.zX = new Array()),
+  (Net.rpa = void 0),
+  (Net.lpa = new Queue_1.Queue(256)),
+  (Net.hpa = new Queue_1.Queue(32)),
+  (Net.epa = !1),
+  (Net.S$a = new Set()),
   (Net.fX = () =>
-    void 0 === Net.lga && 0 === _a.dga.Size && (_a.sga || 0 === _a.Cga.Size)),
+    void 0 === Net.rpa && 0 === _a.hpa.Size && (_a.epa || 0 === _a.lpa.Size)),
   (Net.pX = () => {
-    Net.hga() || Net._ga(Net.dga) || Net.sga || Net._ga(Net.Cga);
+    Net.ipa() || Net.opa(Net.hpa) || Net.epa || Net.opa(Net.lpa);
   }),
-  (Net.uga = void 0),
-  (Net.mga = void 0),
-  (Net.kX = void 0),
-  (Net.lia = () => {
-    Net.gX?.SetKcpStream(!0), _a.fia(0);
+  (Net.npa = Stats_1.Stat.Create("Net.AddRequestMask")),
+  (Net.apa = Stats_1.Stat.Create("Net.RemoveRequestMask")),
+  (Net.kX = Stats_1.Stat.Create("Net.Encode")),
+  (Net.voa = () => {
+    Net.gX?.SetKcpStream(!0), _a.Doa(0);
   }),
-  (Net.fia = (e) => {
+  (Net.Doa = (e) => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Net", 31, "Kcp连接结果:", ["result", e]),
       TimerSystem_1.TimerSystem.Remove(Net.IX),
       (Net.IX = void 0),
-      1 === e && Net.cia < Net.uia
-        ? (Net.cia++, Net._X(0), Net.gia())
-        : (Net._ia && (Net._ia(e), (Net._ia = void 0)),
+      1 === e && Net.Eoa < Net.Soa
+        ? (Net.Eoa++, Net._X(0), Net.Loa())
+        : (Net.Moa && (Net.Moa(e), (Net.Moa = void 0)),
           Net._X(0 === e ? 2 : 0));
   }),
-  (Net.nX = (e, t, N, i, a) => {
+  (Net.nX = (e, t, N, a, i) => {
     switch (e) {
       case 1:
         Log_1.Log.CheckInfo() &&
@@ -809,7 +837,7 @@ class Net {
             "SocketError",
             ["errorCode", t],
             ["Size", N],
-            ["Read", i],
+            ["Read", a],
           ),
           0 !== t && Net.$K?.(t);
         break;
@@ -821,16 +849,16 @@ class Net {
             "DecryptError",
             ["Result", t],
             ["Type", N],
-            ["RpcId", i],
-            ["MessageId", a],
+            ["RpcId", a],
+            ["MessageId", i],
           );
     }
   }),
-  (Net.iX = (e, t, N, i) => {
-    Net.JX(2, e, N, i, t);
+  (Net.iX = (e, t, N, a) => {
+    Net.JX(2, e, N, a, t);
   }),
-  (Net.oX = (e, t, N, i) => {
-    Net.JX(3, e, N, i, t);
+  (Net.oX = (e, t, N, a) => {
+    Net.JX(3, e, N, a, t);
   }),
   (Net.rX = (e, t, N) => {
     Net.JX(4, e, t, N);

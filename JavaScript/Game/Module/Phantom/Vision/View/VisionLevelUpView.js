@@ -77,6 +77,9 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
             );
         this.Cji.SetMaxState(e === t), (this.gji = 0), this.Rft(), this.Tji();
       }),
+      (this.SNa = (e) => {
+        e === this.qHi && this.Oqe();
+      }),
       (this.Lji = () => {
         if (0 === this.fji?.length)
           ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -109,28 +112,28 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
               (i = !0);
           }
           let o = void 0;
-          var n,
-            s = [];
+          var s,
+            n = [];
           switch (
             (e &&
-              ((n =
+              ((s =
                 ConfigManager_1.ConfigManager.TextConfig.GetTextById(
                   "VisionHighQuality",
                 )),
-              s.push(n)),
+              n.push(s)),
             t &&
-              ((n =
+              ((s =
                 ConfigManager_1.ConfigManager.TextConfig.GetTextById(
                   "VisionHighLevel",
                 )),
-              s.push(n)),
+              n.push(s)),
             i &&
-              ((n =
+              ((s =
                 ConfigManager_1.ConfigManager.TextConfig.GetTextById(
                   "VisionHighRare",
                 )),
-              s.push(n)),
-            s.length)
+              n.push(s)),
+            n.length)
           ) {
             case 1:
               o = 127;
@@ -142,14 +145,14 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
               o = 125;
           }
           o
-            ? ((n = new ConfirmBoxDefine_1.ConfirmBoxDataNew(o)).SetTextArgs(
-                ...s,
+            ? ((s = new ConfirmBoxDefine_1.ConfirmBoxDataNew(o)).SetTextArgs(
+                ...n,
               ),
-              n.FunctionMap.set(2, () => {
+              s.FunctionMap.set(2, () => {
                 this.Dji();
               }),
               ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                n,
+                s,
               ))
             : this.Dji();
         } else
@@ -161,11 +164,11 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
         const i = new Array(),
           o = new Map();
         this.fji.forEach((e) => {
-          var t = new Protocol_1.Aki.Protocol.$6s(),
+          var t = new Protocol_1.Aki.Protocol.Y5s(),
             t =
-              ((t.o9n = e.SelectedCount),
-              (t.T5n = e.IncId),
-              (t.f8n = e.ItemId),
+              ((t.m9n = e.SelectedCount),
+              (t.w5n = e.IncId),
+              (t.L8n = e.ItemId),
               i.push(t),
               ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
                 e.IncId,
@@ -254,22 +257,22 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
             ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
               this.qHi,
             ),
-          n = new CommonIntensifyPropExpData_1.CommonIntensifyPropExpData(),
+          s = new CommonIntensifyPropExpData_1.CommonIntensifyPropExpData(),
           r =
-            ((n.CurrentExp = r.GetExp()),
-            (n.CurrentLevel = r.GetPhantomLevel()),
-            (n.CurrentMaxLevel =
+            ((s.CurrentExp = r.GetExp()),
+            (s.CurrentLevel = r.GetPhantomLevel()),
+            (s.CurrentMaxLevel =
               ControllerHolder_1.ControllerHolder.PhantomBattleController.GetMaxLevel(
                 this.qHi,
               )),
-            (n.MaxExpFunction = this.qji),
-            (n.GetItemExpFunction = this.xji),
+            (s.MaxExpFunction = this.qji),
+            (s.GetItemExpFunction = this.xji),
             this.fji),
           o =
             ((i.ItemDataBaseList = o),
             (i.SelectedDataList = r),
             (i.UseWayId = 26),
-            (i.ExpData = n),
+            (i.ExpData = s),
             new SelectableComponent_1.SelectableComponentData());
         (o.IsSingleSelected = !1),
           ((i.SelectableComponentData = o).OnChangeSelectedFunction = this.AMt),
@@ -302,16 +305,42 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
           : ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomExpItemById(
               e.ItemId,
             ).Exp;
+      }),
+      (this.OnClickLockToggle = () => {
+        var e = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(
+          this.qHi,
+        );
+        void 0 !== e &&
+          ControllerHolder_1.ControllerHolder.InventoryController.ItemLockRequest(
+            this.qHi,
+            !e.GetIsLock(),
+          );
+      }),
+      (this.OnClickDeprecateToggle = () => {
+        var e = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(
+          this.qHi,
+        );
+        void 0 !== e &&
+          ControllerHolder_1.ControllerHolder.InventoryController.ItemDeprecateRequest(
+            this.qHi,
+            !e.GetIsDeprecated(),
+          );
       });
   }
   OnRegisterComponent() {
-    this.ComponentRegisterInfos = [
+    (this.ComponentRegisterInfos = [
       [0, UE.UIItem],
       [1, UE.UIItem],
       [2, UE.UIItem],
       [3, UE.UIItem],
       [4, UE.UIText],
-    ];
+      [5, UE.UIExtendToggle],
+      [6, UE.UIExtendToggle],
+    ]),
+      (this.BtnBindInfo = [
+        [5, this.OnClickLockToggle],
+        [6, this.OnClickDeprecateToggle],
+      ]);
   }
   async OnBeforeStartAsync() {
     (this.BHi = new VisionIdentifyComponent_1.LevelUpIdentifyComponent(
@@ -405,12 +434,17 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
       EventDefine_1.EEventName.PhantomLevelUp,
       this.yji,
     ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnItemFuncValueChange,
+        this.SNa,
+      ),
       (this.NHi = !0),
       (this.qHi = this.ExtraParams),
       (this.gji = 0),
       this.Gji(this.qHi),
       this.Rft(),
-      this.P5e();
+      this.P5e(),
+      this.Oqe();
   }
   P5e() {
     var e =
@@ -433,12 +467,27 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
         ));
     this.BHi.Update(t, !1), this.BHi.GetRootItem().SetUIActive(0 < t.length);
   }
+  Oqe() {
+    var e,
+      t = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(
+        this.qHi,
+      );
+    void 0 !== t &&
+      ((e = t.GetIsLock() ? 0 : 1),
+      this.GetExtendToggle(5).SetToggleState(e, !1),
+      (e = t.GetIsDeprecated() ? 1 : 0),
+      this.GetExtendToggle(6).SetToggleState(e, !1));
+  }
   dSe() {
     this.NHi &&
       ((this.NHi = !1),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PhantomLevelUp,
         this.yji,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnItemFuncValueChange,
+        this.SNa,
       ));
   }
   OnBeforeHide() {

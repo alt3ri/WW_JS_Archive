@@ -9,7 +9,7 @@ const UE = require("ue"),
   UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
   PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem"),
   UiManager_1 = require("../../Ui/UiManager"),
-  GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew"),
+  GenericLayout_1 = require("../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../Util/LguiUtil"),
   GeographyHandBookItem_1 = require("./GeographyHandBookItem"),
   HandBookController_1 = require("./HandBookController");
@@ -24,9 +24,9 @@ class GeographyHandBookView extends UiViewBase_1.UiViewBase {
       (this.Refresh = () => {
         this.InitVerticalLayout(), this.RefreshCollectText();
       }),
-      (this.Mei = (e, t, i) => {
-        t = new GeographyHandBookItem_1.GeographyHandBookItem(t);
-        return t.Refresh(e, !1, i), this.vei.push(t), { Key: i, Value: t };
+      (this.Mei = () => {
+        var e = new GeographyHandBookItem_1.GeographyHandBookItem();
+        return this.vei.push(e), e;
       }),
       (this.aei = (e, t) => e.Id - t.Id),
       (this.Eei = (e, t) => e.Id - t.Id),
@@ -147,12 +147,15 @@ class GeographyHandBookView extends UiViewBase_1.UiViewBase {
       (this.pei = e),
       (this.vei = []),
       this.GenericLayout ||
-        (this.GenericLayout = new GenericLayoutNew_1.GenericLayoutNew(
+        (this.GenericLayout = new GenericLayout_1.GenericLayout(
           this.GetVerticalLayout(1),
           this.Mei,
         )),
       this.GenericLayout.ClearChildren(),
-      this.GenericLayout.RebuildLayoutByDataNew(this.pei);
+      this.GenericLayout.RefreshByData(this.pei, () => {
+        var e = this.GetItem(0);
+        this.GetScrollViewWithScrollbar(3).ScrollTo(e);
+      });
   }
   RefreshCollectText() {
     var e = HandBookController_1.HandBookController.GetCollectProgress(2);

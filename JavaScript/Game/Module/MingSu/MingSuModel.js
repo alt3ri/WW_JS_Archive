@@ -9,6 +9,8 @@ const Log_1 = require("../../../Core/Common/Log"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  DarkCoastDeliveryData_1 = require("./DarkCoastDeliveryData"),
+  MingSuDefine_1 = require("./MingSuDefine"),
   MingSuInstance_1 = require("./MingSuInstance");
 class MingSuModel extends ModelBase_1.ModelBase {
   constructor() {
@@ -40,36 +42,44 @@ class MingSuModel extends ModelBase_1.ModelBase {
   GetCollectItemConfigId() {
     return this.qAr;
   }
-  RefreshDragonPoolActiveStatus(e, t) {
+  RefreshDragonPoolActiveStatus(e, r) {
     e = this.wbi.get(e);
-    e && e.SetDragonPoolState(t);
+    e && e.SetDragonPoolState(r);
   }
-  RefreshDragonPoolDropItems(e, t) {
-    e = this.wbi.get(e);
-    e && e.SetDropItemList(t);
+  RefreshDragonPoolDropItems(e) {
+    var r = this.wbi.get(e.k7n);
+    void 0 !== r && r.SetDropItemList(e.XSs);
   }
-  RefreshDragonPoolLevel(e, t) {
+  RefreshDarkCoastGuardInfo(e, r, t) {
     e = this.wbi.get(e);
-    e && e.SetDragonPoolLevel(t);
+    void 0 !== e && e.RefreshLevelDataState(r, t);
   }
-  RefreshDragonPoolHadCoreCount(e, t) {
+  RefreshDragonPoolLevel(e, r) {
     e = this.wbi.get(e);
-    e && e.SetHadCoreCount(t);
+    e && e.SetDragonPoolLevel(r);
+  }
+  RefreshDragonPoolHadCoreCount(e, r) {
+    e = this.wbi.get(e);
+    e && e.SetHadCoreCount(r);
+  }
+  RefreshDragonPoolLevelGains(e, r) {
+    e = this.wbi.get(e);
+    e && e.SetLevelGainList(r);
   }
   UpdateDragonPoolInfoMap(e) {
-    for (const t of e) this.DoUpdateDragonPoolInfoMap(t);
+    for (const r of e) this.DoUpdateDragonPoolInfoMap(r);
   }
   DoUpdateDragonPoolInfoMap(e) {
-    this.RefreshDragonPoolActiveStatus(e.x7n, e.kSs),
-      this.RefreshDragonPoolLevel(e.x7n, e.P6n),
-      this.RefreshDragonPoolHadCoreCount(e.x7n, e.NSs);
+    this.RefreshDragonPoolActiveStatus(e.k7n, e.WSs),
+      this.RefreshDragonPoolLevel(e.k7n, e.F6n),
+      this.RefreshDragonPoolHadCoreCount(e.k7n, e.KSs);
   }
   InitMingSuMap() {
     var e = DragonPoolAll_1.configDragonPoolAll.GetConfigList();
     if (e)
-      for (const r of e) {
-        var t = new MingSuInstance_1.MingSuInstance(r.Id);
-        this.wbi.set(r.Id, t);
+      for (const t of e) {
+        var r = this.vHa(t.Id);
+        this.wbi.set(t.Id, r);
       }
     else
       Log_1.Log.CheckDebug() &&
@@ -77,6 +87,13 @@ class MingSuModel extends ModelBase_1.ModelBase {
           "dragonPoolConfigList",
           e,
         ]);
+  }
+  vHa(e) {
+    return new (
+      e === MingSuDefine_1.DARK_COAST_POOL_CONFIG_ID
+        ? DarkCoastDeliveryData_1.DarkCoastDeliveryData
+        : MingSuInstance_1.MingSuInstance
+    )(e);
   }
   GetDragonPoolInstanceById(e) {
     return this.wbi.get(e);
@@ -93,36 +110,36 @@ class MingSuModel extends ModelBase_1.ModelBase {
     e = this.GetDragonPoolInstanceById(e);
     return e ? e.GetHadCoreCount() : 0;
   }
-  GetTargetDragonPoolLevelNeedCoreById(e, t) {
+  GetTargetDragonPoolLevelNeedCoreById(e, r) {
     e = this.GetDragonPoolInstanceById(e);
-    return e ? e.GetNeedCoreCount(t) : 0;
+    return e ? e.GetNeedCoreCount(r) : 0;
   }
-  GetTargetDragonPoolLevelRewardById(e, t) {
+  GetTargetDragonPoolLevelRewardById(e, r) {
     e = this.GetDragonPoolInstanceById(e);
     if (e) {
       e = e.GetDropItemList();
-      if (e && e.length > t) {
-        e = e[t].RMs;
+      if (e && e.length > r) {
+        e = e[r].bMs;
         if (!e) return;
-        var r = new Array();
+        var t = new Array();
         for (const n of e) {
-          var o = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(n.f8n);
-          r.push({ ItemInfo: o, Count: n.YVn });
+          var o = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(n.L8n);
+          t.push({ ItemInfo: o, Count: n.n9n });
         }
-        return r;
+        return t;
       }
     }
   }
-  GetTargetDragonPoolLevelRewardByIdEx(e, t) {
+  GetTargetDragonPoolLevelRewardByIdEx(e, r) {
     e = this.GetDragonPoolInstanceById(e);
     if (e) {
       e = e.GetDropItemList();
-      if (e && e.length > t) {
-        e = e[t].RMs;
+      if (e && e.length > r) {
+        e = e[r].bMs;
         if (!e) return;
-        var r = new Array();
-        for (const o of e) r.push([{ ItemId: o.f8n, IncId: 0 }, o.YVn]);
-        return r;
+        var t = new Array();
+        for (const o of e) t.push([{ ItemId: o.L8n, IncId: 0 }, o.n9n]);
+        return t;
       }
     }
   }
@@ -140,14 +157,21 @@ class MingSuModel extends ModelBase_1.ModelBase {
   GetItemInfoById(e) {
     return ItemInfoById_1.configItemInfoById.GetConfig(e);
   }
+  GetDarkCoastDeliveryDataByLevelPlayId(r) {
+    return this.GetDragonPoolInstanceById(
+      MingSuDefine_1.DARK_COAST_POOL_CONFIG_ID,
+    )
+      .GetLevelDataList()
+      .find((e) => e.Config.LevelPlayId === r);
+  }
   CheckUp(e) {
-    let t = this.GetTargetDragonPoolLevelById(e);
-    var r = this.GetDragonPoolInstanceById(e).GetGoalList(),
+    let r = this.GetTargetDragonPoolLevelById(e);
+    var t = this.GetDragonPoolInstanceById(e).GetGoalList(),
       o = this.GetTargetDragonPoolMaxLevelById(e),
       n = this.GetTargetDragonPoolCoreCountById(e);
     let i = 0;
-    for (; t < o; t++) {
-      var a = r[t];
+    for (; r < o; r++) {
+      var a = t[r];
       i += a;
     }
     i -= n;
@@ -162,32 +186,32 @@ class MingSuModel extends ModelBase_1.ModelBase {
     );
   }
   CanLevelUp(e) {
-    var t = this.GetTargetDragonPoolLevelById(e),
+    var r = this.GetTargetDragonPoolLevelById(e),
       e = this.GetDragonPoolInstanceById(e);
     return (
       !!e &&
-      e.GetNeedCoreCount(t) <=
+      e.GetNeedCoreCount(r) <=
         e.GetHadCoreCount() + this.GetItemCount(e.GetCoreId())
     );
   }
   GetCanUpPoolId() {
     let e = 0;
-    for (var [t, r] of this.wbi) {
-      var o = r.GetDragonPoolLevel(),
-        o = r.GetNeedCoreCount(o) - r.GetHadCoreCount(),
-        r = this.GetTargetDragonPoolCoreById(t);
-      if (o <= this.GetItemCount(r)) {
-        e = t;
+    for (var [r, t] of this.wbi) {
+      var o = t.GetDragonPoolLevel(),
+        o = t.GetNeedCoreCount(o) - t.GetHadCoreCount(),
+        t = this.GetTargetDragonPoolCoreById(r);
+      if (o <= this.GetItemCount(t)) {
+        e = r;
         break;
       }
     }
     return e;
   }
   Gbi(e) {
-    var t = [];
-    t.push(e.CoreName, e.UseCoreCount.toString()),
+    var r = [];
+    r.push(e.CoreName, e.UseCoreCount.toString()),
       (this.Bbi = new ConfirmBoxDefine_1.ConfirmBoxDataNew(9)),
-      this.Bbi.SetTextArgs(...t);
+      this.Bbi.SetTextArgs(...r);
   }
   GetUpData() {
     return this.Bbi;

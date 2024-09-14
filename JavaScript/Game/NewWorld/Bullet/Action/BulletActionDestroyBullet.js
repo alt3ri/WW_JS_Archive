@@ -33,8 +33,13 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
       1 === t.DestroyReason && this.U5o(),
       this.BulletInfo.AttackerHandle?.Valid &&
         this.BulletInfo.AttackerActorComp?.Actor &&
-        (this.P5o(), this.x5o()),
+        (BulletActionDestroyBullet.A5o.Start(),
+        this.P5o(),
+        BulletActionDestroyBullet.A5o.Stop(),
+        this.x5o()),
+      BulletActionDestroyBullet.w5o.Start(),
       this.B5o(),
+      BulletActionDestroyBullet.w5o.Stop(),
       this.b5o(),
       this.BulletInfo.NeedNotifyChildrenWhenDestroy &&
         this.BulletInfo.ChildEntityIds)
@@ -46,7 +51,7 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
       t = this.BulletInfo.CollisionInfo;
     for ([e, l] of t.HitTimeScaleEntityMap.entries()) {
       var i = ModelManager_1.ModelManager.CharacterModel?.GetHandle(e);
-      i?.Valid && i.Entity.GetComponent(109)?.RemoveTimeScale(l);
+      i?.Valid && i.Entity.GetComponent(110)?.RemoveTimeScale(l);
     }
     t.HitTimeScaleEntityMap.clear();
     for (const r of t.LastArrayHitActorData)
@@ -133,26 +138,35 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
   }
   B5o() {
     this.BulletInfo.IsDestroyByCharSkillEnd &&
+      (BulletActionDestroyBullet.q5o.Start(),
       BulletStaticFunction_1.BulletStaticFunction.SpawnHitEffect(
         this.BulletInfo,
         1,
         "[BulletActionDestroyBullet.BulletEffectOnDestroy] 1",
       ),
+      BulletActionDestroyBullet.q5o.Stop()),
       this.BulletInfo.IsTimeNotEnough &&
+        (BulletActionDestroyBullet.G5o.Start(),
         BulletStaticFunction_1.BulletStaticFunction.SpawnHitEffect(
           this.BulletInfo,
           0,
           "[BulletActionDestroyBullet.BulletEffectOnDestroy] 2",
         ),
+        BulletActionDestroyBullet.G5o.Stop()),
+      BulletActionDestroyBullet.N5o.Start(),
       this.BulletInfo.ActionLogicComponent.ActionDestroy(),
+      BulletActionDestroyBullet.N5o.Stop(),
       BulletStaticFunction_1.BulletStaticFunction.DestroyEffect(
         this.BulletInfo.EffectInfo,
       );
   }
 }
-((exports.BulletActionDestroyBullet = BulletActionDestroyBullet).A5o = void 0),
-  (BulletActionDestroyBullet.w5o = void 0),
-  (BulletActionDestroyBullet.G5o = void 0),
-  (BulletActionDestroyBullet.N5o = void 0),
-  (BulletActionDestroyBullet.q5o = void 0);
+((exports.BulletActionDestroyBullet = BulletActionDestroyBullet).A5o =
+  Stats_1.Stat.Create("BulletDataComp.ChildOnDestroy")),
+  (BulletActionDestroyBullet.w5o = Stats_1.Stat.Create(
+    "BulletDataComp.EffectOnDestroy",
+  )),
+  (BulletActionDestroyBullet.G5o = Stats_1.Stat.Create("SpawnHitEffect")),
+  (BulletActionDestroyBullet.N5o = Stats_1.Stat.Create("ActionDestroy")),
+  (BulletActionDestroyBullet.q5o = Stats_1.Stat.Create("ActionBreakEffect"));
 //# sourceMappingURL=BulletActionDestroyBullet.js.map

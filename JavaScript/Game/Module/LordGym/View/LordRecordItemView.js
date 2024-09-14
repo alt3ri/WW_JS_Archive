@@ -73,7 +73,7 @@ class LoadRecordItemView extends UiPanelBase_1.UiPanelBase {
         this.tFe.SetActive(n),
         a &&
           n &&
-          (this.GetText(2)?.SetText(TimeUtil_1.TimeUtil.GetTimeString(o.Fxs)),
+          (this.GetText(2)?.SetText(TimeUtil_1.TimeUtil.GetTimeString(o.Qxs)),
           this.tFe.RefreshByData(this.cyi(o))))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("SceneGameplay", 50, "领主挑战缺少对应怪物配置", [
@@ -84,7 +84,7 @@ class LoadRecordItemView extends UiPanelBase_1.UiPanelBase {
   cyi(t) {
     var i = Array(EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM);
     for (let e = 0; e < EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM; e++)
-      i[e] = t.s5n[e] ?? { RoleId: -1, Level: 1 };
+      i[e] = t.C5n[e] ?? { RoleId: -1, Level: 1 };
     return i;
   }
   GetKey(e, t) {
@@ -105,7 +105,7 @@ class RoleItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
   }
   OnRefresh(e, t, i) {
     var r,
-      o = e.O6n;
+      o = e.Q6n;
     !o || o < 0
       ? (this.Apply({ Type: 1 }), this.myi?.SetUIActive(!0))
       : (this.myi?.SetUIActive(!1),
@@ -113,7 +113,7 @@ class RoleItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
         (r = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
           "Text_InstanceDungeonRecommendLevel_Text",
         )),
-        (r = StringUtils_1.StringUtils.Format(r, e.P6n.toString())),
+        (r = StringUtils_1.StringUtils.Format(r, e.F6n.toString())),
         (e = {
           Data: e,
           ElementId: o.ElementId,

@@ -40,18 +40,18 @@ class ShopModel extends ModelBase_1.ModelBase {
     for (const t of e) this.UpdateShopData(t);
   }
   UpdateShopData(e) {
-    let t = this.GetShopInfo(e.KHn);
+    let t = this.GetShopInfo(e.tjn);
     t
-      ? (t.UpdateRefreshTime(e.pxs), t.UpdateShopItemList(e.Kqs))
-      : ((t = new ShopDefine_1.Shop(e)), this.cMo.set(e.KHn, t)),
+      ? (t.UpdateRefreshTime(e.Lxs), t.UpdateShopItemList(e.eGs))
+      : ((t = new ShopDefine_1.Shop(e)), this.cMo.set(e.tjn, t)),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.ShopUpdate,
-        e.KHn,
+        e.tjn,
       );
   }
   UpdateItemData(e) {
-    var t = this.GetShopItem(e.KHn, e.J4n);
-    t && (t.N7n = e.N7n);
+    var t = this.GetShopItem(e.tjn, e.s5n);
+    t && (t.X7n = e.X7n);
   }
   IsOpen(e) {
     e = this.GetShopConfig(e);
@@ -64,8 +64,7 @@ class ShopModel extends ModelBase_1.ModelBase {
     if (t) {
       for (var [, r] of t.GetItemList()) {
         var n = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          r.f8n,
-          !0,
+          r.L8n,
         );
         n &&
           ((n = new ShopItemFullInfo_1.ShopItemFullInfo(n, r, e)), o.push(n));

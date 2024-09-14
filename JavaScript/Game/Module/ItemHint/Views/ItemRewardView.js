@@ -64,7 +64,7 @@ class ItemRewardView extends UiTickViewBase_1.UiTickViewBase {
             this.tGe.ItemReward,
           )),
         (e = ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(
-          this.tGe.ItemReward.y6n,
+          this.tGe.ItemReward.P6n,
         ).Title),
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(2),

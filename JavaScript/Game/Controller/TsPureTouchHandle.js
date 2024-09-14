@@ -6,23 +6,23 @@ const cpp_1 = require("cpp"),
 class TsPureTouchHandle {
   constructor() {
     (this.R$e = void 0),
-      (this.Hya = void 0),
+      (this.CDa = void 0),
       (this.OnTouchBegin = (t, s) => {
-        this.Hya.TouchBegin(t, s),
+        this.CDa.TouchBegin(t, s),
           LogReportModel_1.LogReportModel.RecordOperateTime();
       }),
       (this.OnTouchEnd = (t, s) => {
-        this.Hya.TouchEnd(t, s);
+        this.CDa.TouchEnd(t, s);
       }),
       (this.OnTouchMove = (t, s) => {
-        this.Hya.TouchMove(t, s);
+        this.CDa.TouchMove(t, s);
       });
   }
   Initialize(t, s) {
-    (this.R$e = t), (this.Hya = s);
+    (this.R$e = t), (this.CDa = s);
   }
   Reset() {
-    (this.R$e = void 0), (this.Hya = void 0);
+    (this.R$e = void 0), (this.CDa = void 0);
   }
   BindTouch() {
     cpp_1.FKuroInputInterface.RegisterTouchBinding(

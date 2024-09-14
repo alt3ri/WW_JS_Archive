@@ -5,6 +5,8 @@ const UE = require("ue"),
   MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
   StringBuilder_1 = require("../../../../../Core/Utils/StringBuilder"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
   BigElementItem_1 = require("../../../Common/BigElementItem"),
@@ -18,9 +20,9 @@ class RoleIntroductionView extends UiViewBase_1.UiViewBase {
       (this.CFe = void 0),
       (this.$be = void 0),
       (this.gFe = void 0),
-      (this.fFe = (i, e, t) => {
-        e = new RoleSkillInputItem_1.RoleSkillInputItem(e);
-        return e.Update(i), e.SetBgActive(t % 2 == 0), { Key: t, Value: e };
+      (this.fFe = (e, i, t) => {
+        i = new RoleSkillInputItem_1.RoleSkillInputItem(i);
+        return i.Update(e), i.SetBgActive(t % 2 == 0), { Key: t, Value: i };
       }),
       (this.pFe = () => {
         this.CloseMe();
@@ -43,8 +45,8 @@ class RoleIntroductionView extends UiViewBase_1.UiViewBase {
   }
   async OnBeforeStartAsync() {
     this.gFe = new BigElementItem_1.BigElementItem();
-    var i = this.GetItem(4);
-    await this.gFe.CreateByActorAsync(i.GetOwner());
+    var e = this.GetItem(4);
+    await this.gFe.CreateByActorAsync(e.GetOwner());
   }
   OnStart() {
     (this.CFe = new GenericScrollView_1.GenericScrollView(
@@ -58,45 +60,50 @@ class RoleIntroductionView extends UiViewBase_1.UiViewBase {
       this.Refresh();
   }
   Refresh() {
-    var i =
+    var e =
         ConfigManager_1.ConfigManager.RoleSkillConfig.GetRoleSkillInputConfigById(
           this.dFe,
         ),
-      e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.dFe);
-    if (i && e) {
+      i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.dFe);
+    if (e && i) {
       const r = this.GetTexture(1),
-        s =
+        n =
           (r.SetUIActive(!1),
-          this.SetRoleIcon(e.FormationRoleCard, r, this.dFe, void 0, () => {
+          this.SetRoleIcon(i.FormationRoleCard, r, this.dFe, void 0, () => {
             r.SetUIActive(!0);
           }),
-          this.GetText(3).ShowTextNew(e.Name),
-          this.gFe.Refresh(e.ElementId),
+          this.GetText(3).ShowTextNew(i.Name),
+          this.gFe.Refresh(i.ElementId),
           this.gFe.SetUiActive(!0),
-          this.$be.RebuildLayout(e.QualityId),
+          this.$be.RebuildLayout(i.QualityId),
           this.GetTexture(5));
-      s.SetUIActive(!1),
-        this.SetTextureByPath(i.Icon, s, void 0, () => {
-          s.SetUIActive(!0);
+      n.SetUIActive(!1),
+        this.SetTextureByPath(e.Icon, n, void 0, () => {
+          n.SetUIActive(!0);
         });
-      var e = i.DescList,
+      var i = e.DescList,
         t = new StringBuilder_1.StringBuilder();
-      for (const n of e)
-        t.Append(MultiTextLang_1.configMultiTextLang.GetLocalTextNew(n)),
+      for (const s of i)
+        t.Append(MultiTextLang_1.configMultiTextLang.GetLocalTextNew(s)),
           t.Append("\n");
       t.RemoveLast(1), this.GetText(6).SetText(t.ToString());
-      (e = i.SkillInputIdList),
-        (i =
-          (this.CFe.RefreshByData(e),
+      (i = e.SkillInputIdList),
+        (e =
+          (this.CFe.RefreshByData(i),
           ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialInfoConfigByRoleId(
             this.dFe,
           )));
-      i &&
-        (StringUtils_1.StringUtils.IsEmpty(i?.InstanceText)
+      e &&
+        (StringUtils_1.StringUtils.IsEmpty(e?.InstanceText)
           ? this.GetItem(9).SetUIActive(!1)
-          : (this.GetText(8).ShowTextNew(i.InstanceText),
+          : (this.GetText(8).ShowTextNew(e.InstanceText),
             this.GetItem(9).SetUIActive(!0)));
     }
+  }
+  OnBeforeHide() {
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.RoleIntroductionViewHide,
+    );
   }
   OnBeforeDestroy() {
     this.CFe.ClearChildren();

@@ -13,8 +13,8 @@ class CommonSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResu
       (this.jao = void 0),
       (this.Wao = void 0),
       (this.Kao = void 0),
-      (this.pia = void 0),
-      (this.via = void 0),
+      (this.woa = void 0),
+      (this.Boa = void 0),
       (this.Qao = void 0),
       (this.Xao = void 0),
       (this.OnDescModelChange = () => {
@@ -24,7 +24,7 @@ class CommonSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResu
   OnCloseBtnClick() {
     !this.Kao.GetRootItem().IsUIActiveInHierarchy() ||
     (this.Kao.GetRootItem().SetUIActive(!1),
-    this.via.GetRootItem().SetUIActive(!1),
+    this.Boa.GetRootItem().SetUIActive(!1),
     this.jao.GetNewUnlockAffixEntry().size <= 0)
       ? this.CloseMe(this.jao?.CallBack)
       : (this.Xao.GetRootItem().SetUIActive(!0),
@@ -44,8 +44,8 @@ class CommonSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResu
           RoguelikeDefine_1.COMMON_SELECT_ITEM,
           e,
         ),
-        (this.via = new CommonSelectItem_1.CommonSelectItem()),
-        await this.via.CreateThenShowByResourceIdAsync(
+        (this.Boa = new CommonSelectItem_1.CommonSelectItem()),
+        await this.Boa.CreateThenShowByResourceIdAsync(
           RoguelikeDefine_1.COMMON_SELECT_ITEM,
           e,
         ),
@@ -54,7 +54,7 @@ class CommonSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResu
         0 < this.jao.GetNewUnlockAffixEntry().size && !this.jao.IsShowCommon);
     e && this.$ao(),
       this.Kao.SetActive(this.jao.IsShowCommon),
-      this.via.SetActive(
+      this.Boa.SetActive(
         void 0 !== this.jao.ExtraRogueGainEntry && this.jao.IsShowCommon,
       ),
       this.Xao.SetActive(e),
@@ -66,8 +66,8 @@ class CommonSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResu
       (this.Kao.Update(this.jao.SelectRogueGainEntry),
       this.Kao.SetToggleUnDetermined()),
       this.jao.ExtraRogueGainEntry &&
-        (this.via.Update(this.jao.ExtraRogueGainEntry),
-        this.via.SetToggleUnDetermined());
+        (this.Boa.Update(this.jao.ExtraRogueGainEntry),
+        this.Boa.SetToggleUnDetermined());
   }
   $ao() {
     this.Xao.Update(this.jao.NewRogueGainEntry),
@@ -80,10 +80,10 @@ class CommonSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResu
           this.Wao,
           RoguelikeDefine_1.COMMON_SELECT_ITEM,
         ),
-      this.via?.Destroy(),
-      this.pia &&
+      this.Boa?.Destroy(),
+      this.woa &&
         UiActorPool_1.UiActorPool.RecycleAsync(
-          this.pia,
+          this.woa,
           RoguelikeDefine_1.COMMON_SELECT_ITEM,
         ),
       this.Xao?.Destroy(),
@@ -95,7 +95,7 @@ class CommonSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResu
   }
   Refresh() {
     this.Kao.RefreshPanel(),
-      this.via.RefreshPanel(),
+      this.Boa.RefreshPanel(),
       this.Xao.RefreshPanel(),
       this.RefreshTitleText();
   }

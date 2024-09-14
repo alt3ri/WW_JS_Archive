@@ -10,8 +10,10 @@ class PhantomFormation {
     return this.id();
   }
   get Roles() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.rolesLength(), (t) =>
-      this.roles(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.rolesLength(),
+      this.roles,
+      this,
     );
   }
   __init(t, s) {

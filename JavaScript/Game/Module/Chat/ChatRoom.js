@@ -84,7 +84,7 @@ class ChatRoom {
     var t = this.ChatContentList.length - 1;
     return t < 0 ? 0 : this.ChatContentList[t].TimeStamp;
   }
-  AddChatContent(t, e, i, s, r, h, o, n, a, C) {
+  AddChatContent(t, e, i, s, r, h, o, n, a, C, u, _) {
     t = new ChatContentData_1.ChatContentData(
       t,
       e,
@@ -97,6 +97,8 @@ class ChatRoom {
       this.ChatRoomType,
       a,
       C,
+      u,
+      _,
     );
     return this.ChatContentList.push(t), t;
   }
@@ -140,7 +142,7 @@ class ChatRoom {
         r,
         h,
         o,
-        Protocol_1.Aki.Protocol.PFs.Proto_None,
+        Protocol_1.Aki.Protocol.GFs.Proto_None,
         n,
         t,
         e,

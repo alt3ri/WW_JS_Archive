@@ -10,8 +10,10 @@ class GuideGroup {
     return this.id();
   }
   get Step() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.stepLength(), (t) =>
-      this.step(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.stepLength(),
+      this.step,
+      this,
     );
   }
   get OpenLimitCondition() {
@@ -21,13 +23,17 @@ class GuideGroup {
     return this.autoopencondition();
   }
   get LimitRepeat() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.limitrepeatLength(), (t) =>
-      this.limitrepeat(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.limitrepeatLength(),
+      this.limitrepeat,
+      this,
     );
   }
   get DungeonId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.dungeonidLength(), (t) =>
-      this.dungeonid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.dungeonidLength(),
+      this.dungeonid,
+      this,
     );
   }
   get ResetInDungeon() {

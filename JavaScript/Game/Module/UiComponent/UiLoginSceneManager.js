@@ -32,16 +32,16 @@ class UiLoginSceneManager {
     );
   }
   static exo() {
+    for (const n of this.vwa)
+      UiModelResourcesManager_1.UiModelResourcesManager.ReleaseMeshesComponentsBundleStreaming(
+        n,
+      );
     for (var [, e] of UiLoginSceneManager.ZPo) {
       e = e.GetRoleActorIndex();
       UiSceneRoleActorManager_1.UiSceneRoleActorManager.DestroyUiSceneRoleActor(
         e,
       );
     }
-    for (const n of this.xTa)
-      UiModelResourcesManager_1.UiModelResourcesManager.ReleaseMeshesComponentsBundleStreaming(
-        n,
-      );
     (UiLoginSceneManager.txo = []), UiLoginSceneManager.ZPo.clear();
   }
   static InitCinematicTick() {
@@ -116,7 +116,7 @@ class UiLoginSceneManager {
             void 0,
             o,
           );
-      this.xTa.push(e);
+      this.vwa.push(e);
     });
   }
   static PlayRoleMontage(e, n) {
@@ -266,6 +266,6 @@ class UiLoginSceneManager {
   (UiLoginSceneManager.rxo = void 0),
   (UiLoginSceneManager.lxo = 0),
   (UiLoginSceneManager.txo = []),
-  (UiLoginSceneManager.xTa = []),
+  (UiLoginSceneManager.vwa = []),
   (UiLoginSceneManager._xo = void 0);
 //# sourceMappingURL=UiLoginSceneManager.js.map

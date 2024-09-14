@@ -14,6 +14,9 @@ class TypeInfo {
   get Lock() {
     return this.lock();
   }
+  get Deprecate() {
+    return this.deprecate();
+  }
   get SortIndex() {
     return this.sortindex();
   }
@@ -41,12 +44,16 @@ class TypeInfo {
     var t = this.J7.__offset(this.z7, 8);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
-  sortindex() {
+  deprecate() {
     var t = this.J7.__offset(this.z7, 10);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
+  sortindex() {
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   iteminfodisplaytype() {
-    var t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

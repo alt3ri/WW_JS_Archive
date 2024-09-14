@@ -18,66 +18,87 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configBulletPreloadByActorBlueprintAndBulletId.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configBulletPreloadByActorBlueprintAndBulletId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX =
     "configBulletPreloadByActorBlueprintAndBulletId.GetConfig(";
 exports.configBulletPreloadByActorBlueprintAndBulletId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, e, l = !0) => {
-    if (
-      (t = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (l) {
-        var n = KEY_PREFIX + `#${o}#${e})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (r) return r;
+  GetConfig: (o, t, e = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${t})`),
+      l =
+        (n.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (l) {
+      if (e) {
+        var i = KEY_PREFIX + `#${o}#${t})`;
+        const r = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (r)
+          return (
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            r
+          );
       }
       if (
-        (t =
+        (l =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.BindBigInt(handleId, 2, e, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindBigInt(handleId, 2, t, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(
               handleId,
               !0,
               ...logPair,
               ["ActorBlueprint", o],
-              ["BulletId", e],
+              ["BulletId", t],
             ))
       ) {
-        var t,
-          n = void 0;
+        i = void 0;
         if (
-          (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([l, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["ActorBlueprint", o],
-            ["BulletId", e],
+            ["BulletId", t],
           )),
-          t)
+          l)
         ) {
           const r = BulletPreload_1.BulletPreload.getRootAsBulletPreload(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
           );
           return (
-            l &&
-              ((t = KEY_PREFIX + `#${o}#${e})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(t, r)),
+            e &&
+              ((l = KEY_PREFIX + `#${o}#${t})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(l, r)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             r
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    n.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=BulletPreloadByActorBlueprintAndBulletId.js.map

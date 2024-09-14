@@ -22,7 +22,7 @@ class TsTaskChangeMovementMode extends TsTaskAbortImmediatelyBase_1.default {
     t
       ? ((t = t.CharActorComp) &&
           (t = ActorUtils_1.ActorUtils.GetEntityByActor(t.Actor)) &&
-          (t = t.Entity.GetComponent(37)) &&
+          (t = t.Entity.GetComponent(38)) &&
           t.CharacterMovement.SetMovementMode(this.TsMovementMode),
         this.FinishExecute(!0))
       : (Log_1.Log.CheckError() &&

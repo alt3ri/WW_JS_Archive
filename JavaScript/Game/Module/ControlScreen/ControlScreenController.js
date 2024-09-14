@@ -33,10 +33,6 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
         EventDefine_1.EEventName.OnRoleGoDown,
         this.OnRoleGoDown,
       ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.RemoveEntity,
-        this.OnRemoveEntity,
-      ),
       InputDistributeController_1.InputDistributeController.BindTouches(
         [
           InputMappingsDefine_1.touchIdMappings.Touch1,
@@ -66,10 +62,7 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
         EventDefine_1.EEventName.OnRoleGoDown,
         this.OnRoleGoDown,
       ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.RemoveEntity,
-        this.OnRemoveEntity,
-      ),
+      EventSystem_1.EventSystem.RemoveAllTargetUseKey(this),
       InputDistributeController_1.InputDistributeController.UnBindTouches(
         [
           InputMappingsDefine_1.touchIdMappings.Touch1,
@@ -230,16 +223,28 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
     var n = e.Id;
     this.Tqt !== n &&
       ((this.Tqt = n), e) &&
-      !EventSystem_1.EventSystem.HasWithTarget(
+      (EventSystem_1.EventSystem.HasWithTarget(
         e,
         EventDefine_1.EEventName.CharOnDirectionStateChanged,
         ControlScreenController.OnCharCameraStateChanged,
-      ) &&
-      EventSystem_1.EventSystem.AddWithTarget(
+      ) ||
+        EventSystem_1.EventSystem.AddWithTarget(
+          e,
+          EventDefine_1.EEventName.CharOnDirectionStateChanged,
+          ControlScreenController.OnCharCameraStateChanged,
+        ),
+      (e = ModelManager_1.ModelManager.CreatureModel.GetEntityById(n)),
+      EventSystem_1.EventSystem.HasWithTarget(
         e,
-        EventDefine_1.EEventName.CharOnDirectionStateChanged,
-        ControlScreenController.OnCharCameraStateChanged,
-      );
+        EventDefine_1.EEventName.RemoveEntity,
+        this.OnRemoveEntity,
+      ) ||
+        EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+          this,
+          e,
+          EventDefine_1.EEventName.RemoveEntity,
+          this.OnRemoveEntity,
+        ));
   }
   static Lqt(e) {
     EventSystem_1.EventSystem.HasWithTarget(
@@ -251,7 +256,18 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
         e.Entity,
         EventDefine_1.EEventName.CharOnDirectionStateChanged,
         ControlScreenController.OnCharCameraStateChanged,
-      );
+      ),
+      EventSystem_1.EventSystem.HasWithTarget(
+        e,
+        EventDefine_1.EEventName.RemoveEntity,
+        ControlScreenController.OnRemoveEntity,
+      ) &&
+        EventSystem_1.EventSystem.RemoveWithTargetUseKey(
+          this,
+          e,
+          EventDefine_1.EEventName.RemoveEntity,
+          this.OnRemoveEntity,
+        );
   }
   static Sqt() {
     return InputDistributeController_1.InputDistributeController.IsAllowFightCameraRotationInput();
@@ -293,7 +309,7 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
   (ControlScreenController.OnRemoveEntity = (e, n) => {
     var t = n.Entity.GetComponent(0);
     t?.Valid &&
-      t.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player &&
+      t.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player &&
       ModelManager_1.ModelManager.PlayerInfoModel.GetId() === t.GetPlayerId() &&
       ControlScreenController.Lqt(n);
   }),

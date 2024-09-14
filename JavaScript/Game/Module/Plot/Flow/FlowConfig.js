@@ -176,9 +176,11 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
         if (i.GetName().endsWith("|PlotAudio")) {
           var l = i.RowCount();
           for (let t = 6; t < l; t++) {
-            var r = i.ReadStr(t, 4);
-            StringUtils_1.StringUtils.IsEmpty(r) ||
-              FlowListData.AudioCache.add(r);
+            var r = i.ReadStr(t, 0)?.startsWith("#"),
+              a = i.ReadStr(t, 4);
+            StringUtils_1.StringUtils.IsEmpty(a) ||
+              r ||
+              FlowListData.AudioCache.add(a);
           }
         }
       }

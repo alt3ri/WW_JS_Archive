@@ -80,6 +80,7 @@ class HandBookEntranceView extends UiViewBase_1.UiViewBase {
       e.push(5),
       e.push(6),
       e.push(7),
+      e.push(11),
       HandBookController_1.HandBookController.SendIllustratedInfoRequest(e);
   }
   OnAfterShow() {

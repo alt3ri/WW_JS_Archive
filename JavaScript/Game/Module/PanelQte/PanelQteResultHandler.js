@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PanelQteResultHandler = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
   Global_1 = require("../../Global"),
+  InputController_1 = require("../../Input/InputController"),
+  InputEnums_1 = require("../../Input/InputEnums"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   SceneTeamController_1 = require("../SceneTeam/SceneTeamController");
 class PanelQteResultHandler {
@@ -15,76 +17,114 @@ class PanelQteResultHandler {
         ["qteId", r.QteId],
         ["success", r.Success],
       );
-    var a = r.Success ? r.Config.SuccessActions : r.Config.FailActions,
-      t = a.Num();
-    for (let e = 0; e < t; e++) {
-      var o = a.Get(e);
-      this.kUe(o, r);
+    var t = r.Success ? r.Config.SuccessActions : r.Config.FailActions,
+      n = t.Num();
+    for (let e = 0; e < n; e++) {
+      var a = t.Get(e);
+      this.kUe(a, r);
     }
   }
-  kUe(e, t) {
-    let o = void 0;
-    if ((o = 0 === e.Target ? t.GetSourceEntity() : this.TOi())) {
+  kUe(e, n) {
+    let a = void 0;
+    if ((a = 0 === e.Target ? n.GetSourceEntity() : this.TOi())) {
       let r = void 0,
-        a = void 0;
-      var l = e.AddTags,
-        n = l.Num();
-      for (let e = 0; e < n; e++) {
-        var i = l.Get(e);
-        (r = r ?? o.GetComponent(188)).AddTag(i.TagId);
+        t = void 0;
+      var o = e.AddTags,
+        l = o.Num();
+      for (let e = 0; e < l; e++) {
+        var s = o.Get(e);
+        (r = r ?? a.GetComponent(190)).AddTag(s.TagId);
       }
-      var s = e.RemoveTags,
-        v = s.Num();
-      for (let e = 0; e < v; e++) {
-        var _ = s.Get(e);
-        (r = r ?? o.GetComponent(188)).RemoveTag(_.TagId);
+      var u = e.RemoveTags,
+        _ = u.Num();
+      for (let e = 0; e < _; e++) {
+        var i = u.Get(e);
+        (r = r ?? a.GetComponent(190)).RemoveTag(i.TagId);
       }
-      var d = e.AddBuffs,
-        c = d.Num();
-      if (0 < c) {
-        var f = t.GetSourceEntity()?.GetComponent(0).GetCreatureDataId(),
-          u = t.PreMessageId;
-        if (f)
-          for (let e = 0; e < c; e++) {
-            var g = d.Get(e);
-            (a = a ?? o.GetComponent(159)).AddBuff(g, {
-              InstigatorId: f,
+      var v = e.AddBuffs,
+        p = v.Num();
+      if (0 < p) {
+        var I = n.GetSourceEntity()?.GetComponent(0).GetCreatureDataId(),
+          d = n.PreMessageId;
+        if (I)
+          if (0 <= n.BuffIndex) {
+            var c = v.Get(n.BuffIndex);
+            (t = t ?? a.GetComponent(160)).AddBuff(c, {
+              InstigatorId: I,
               Reason: "界面QTE结算时添加",
-              PreMessageId: u,
+              PreMessageId: d,
             });
-          }
+          } else
+            for (let e = 0; e < p; e++) {
+              var f = v.Get(e);
+              (t = t ?? a.GetComponent(160)).AddBuff(f, {
+                InstigatorId: I,
+                Reason: "界面QTE结算时添加",
+                PreMessageId: d,
+              });
+            }
       }
-      var M = e.CustomActions,
-        T = M.Num();
-      for (let e = 0; e < T; e++) {
-        var m = M.Get(e);
-        this.LOi(m, t, o);
+      var m = e.CustomActions,
+        C = m.Num();
+      for (let e = 0; e < C; e++) {
+        var g = m.Get(e);
+        this.LOi(g, n, a);
       }
     }
   }
-  LOi(e, r, a) {
+  LOi(e, r, t) {
     switch (e) {
       case 0:
-        var t = a.GetComponent(159);
-        t && t.RemoveBuffByEffectType(36, "界面QTE解除冰冻buff");
+        var n = t.GetComponent(160);
+        n && n.RemoveBuffByEffectType(36, "界面QTE解除冰冻buff");
         break;
       case 1:
         this.DOi();
+        break;
+      case 2:
+        InputController_1.InputController.InputAction(
+          InputEnums_1.EInputAction.闪避,
+          1,
+        ),
+          InputController_1.InputController.InputAction(
+            InputEnums_1.EInputAction.闪避,
+            2,
+          );
+        break;
+      case 3:
+        InputController_1.InputController.InputAction(
+          InputEnums_1.EInputAction.幻象1,
+          1,
+        ),
+          InputController_1.InputController.InputAction(
+            InputEnums_1.EInputAction.幻象1,
+            2,
+          );
+        break;
+      case 4:
+        InputController_1.InputController.InputAction(
+          InputEnums_1.EInputAction.跳跃,
+          1,
+        ),
+          InputController_1.InputController.InputAction(
+            InputEnums_1.EInputAction.跳跃,
+            2,
+          );
     }
   }
   DOi() {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem;
     if (0 === e?.CanGoDown(!0)) {
-      var a = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(),
-        t = a.length,
-        o = a.indexOf(e);
-      for (let r = 1; r < t; r++) {
-        let e = o + r;
-        e >= t && (e -= t);
-        var l = a[e];
-        if (0 === l?.CanGoBattle())
+      var t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(),
+        n = t.length,
+        a = t.indexOf(e);
+      for (let r = 1; r < n; r++) {
+        let e = a + r;
+        e >= n && (e -= n);
+        var o = t[e];
+        if (0 === o?.CanGoBattle())
           return void SceneTeamController_1.SceneTeamController.TryChangeRoleOrQte(
-            l.GetCreatureDataId(),
+            o.GetCreatureDataId(),
           );
       }
     }

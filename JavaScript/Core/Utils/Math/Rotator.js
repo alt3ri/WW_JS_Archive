@@ -197,15 +197,5 @@ class Rotator {
   }
 }
 ((exports.Rotator = Rotator).ZeroRotatorProxy = Rotator.Create(0, 0, 0)),
-  (Rotator.ZeroRotator = Rotator.ZeroRotatorProxy.ToUeRotator()),
-  Macro_1.NOT_SHIPPING_ENVIRONMENT &&
-    (Object.defineProperty(Rotator.ZeroRotatorProxy.Tuple, "0", {
-      writable: !1,
-    }),
-    Object.defineProperty(Rotator.ZeroRotatorProxy.Tuple, "1", {
-      writable: !1,
-    }),
-    Object.defineProperty(Rotator.ZeroRotatorProxy.Tuple, "2", {
-      writable: !1,
-    }));
+  (Rotator.ZeroRotator = Rotator.ZeroRotatorProxy.ToUeRotator());
 //# sourceMappingURL=Rotator.js.map

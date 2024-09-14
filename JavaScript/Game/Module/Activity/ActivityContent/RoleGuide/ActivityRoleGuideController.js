@@ -15,7 +15,7 @@ class ActivityRoleGuideController extends ActivityControllerBase_1.ActivityContr
   }
   OnCreateActivityData(e) {
     return (
-      (ActivityRoleGuideController.CurrentActivityId = e.J4n),
+      (ActivityRoleGuideController.CurrentActivityId = e.s5n),
       new ActivityRoleGuideData_1.ActivityRoleGuideData()
     );
   }

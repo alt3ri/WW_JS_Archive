@@ -16,6 +16,7 @@ class AnimLogicParamsSetter {
       (this.BeHitDirect = Vector_1.Vector.Create()),
       (this.BeHitLocation = Vector_1.Vector.Create()),
       (this.BeHitSocketName = FNameUtil_1.FNameUtil.EMPTY),
+      (this.BeHitBone = FNameUtil_1.FNameUtil.EMPTY),
       (this.CharMoveState = CharacterUnifiedStateTypes_1.ECharMoveState.Other),
       (this.CharPositionState =
         CharacterUnifiedStateTypes_1.ECharPositionState.Ground),
@@ -46,6 +47,7 @@ class AnimLogicParamsSetter {
       (this.SlideStandMode = !1),
       (this.JumpUpRate = -0),
       (this.SkillTarget = -0),
+      (this.HateTarget = -0),
       (this.LastActiveSkillTime = 0),
       (this.SitDownDirect = -1),
       (this.StandUpDirect = -1),
@@ -55,7 +57,8 @@ class AnimLogicParamsSetter {
       (this.IsInSplineMove = !1),
       (this.IsInUiCamera = !1),
       (this.LookAt = Vector2D_1.Vector2D.Create()),
-      (this.EnableBlendSpaceLookAt = !1);
+      (this.EnableBlendSpaceLookAt = !1),
+      (this.CameraMode = 0);
   }
 }
 exports.AnimLogicParamsSetter = AnimLogicParamsSetter;

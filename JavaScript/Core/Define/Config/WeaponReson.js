@@ -19,8 +19,10 @@ class WeaponReson {
     return this.name();
   }
   get Effect() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.effectLength(), (t) =>
-      this.effect(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.effectLength(),
+      this.effect,
+      this,
     );
   }
   get Consume() {
@@ -32,7 +34,8 @@ class WeaponReson {
   get AlternativeConsume() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.alternativeconsumeLength(),
-      (t) => this.alternativeconsume(t),
+      this.alternativeconsume,
+      this,
     );
   }
   __init(t, s) {

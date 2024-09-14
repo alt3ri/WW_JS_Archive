@@ -26,9 +26,7 @@ class PayShopRechargeItem extends GridProxyAbstract_1.GridProxyAbstract {
             "Id",
             this.Pe.PayItemId,
           ]),
-          PayItemController_1.PayItemController.SendBuyPayItemRequest(
-            this.Pe.PayItemId,
-          );
+          PayItemController_1.PayItemController.SdkPay(this.Pe.PayItemId);
       }),
       (this.zki = () => {
         this.Refresh(this.Pe, !1, 0);

@@ -6,7 +6,7 @@ const ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ItemTipsDefine_1 = require("./ItemTipsDefine");
 class ItemTipsComponentUtilTool {
   static GetItemItemType(e) {
-    var t = ItemTipsComponentUtilTool.MQs.get(e);
+    var t = ItemTipsComponentUtilTool.OXs.get(e);
     if (t) return t;
     t =
       ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
@@ -35,7 +35,7 @@ class ItemTipsComponentUtilTool {
     [2, 1],
     [1, 3],
   ])),
-  (ItemTipsComponentUtilTool.MQs = new Map([
+  (ItemTipsComponentUtilTool.OXs = new Map([
     [ItemDefines_1.EItemId.OverPower, 4],
   ]));
 //# sourceMappingURL=ItemTipsUtilTool.js.map

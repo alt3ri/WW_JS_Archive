@@ -64,14 +64,17 @@ class PlotBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static ShowLogo(e) {
     SequenceController_1.SequenceController.ShowLogo(e);
   }
-  static OpenUiView(e, r) {
+  static OpenUiView(e, r, t, o) {
     switch (ModelManager_1.ModelManager.WorldLevelModel.Sex) {
       case 0:
-        SequenceController_1.SequenceController.OpenUiView(r);
+        SequenceController_1.SequenceController.OpenUiView(r, o);
         break;
       case 1:
-        SequenceController_1.SequenceController.OpenUiView(e);
+        SequenceController_1.SequenceController.OpenUiView(e, t);
     }
+  }
+  static PlayUiLevelSequence(e) {
+    SequenceController_1.SequenceController.PlayUiLevelSequence(e);
   }
   static CloseUiView() {
     SequenceController_1.SequenceController.CloseUiView();

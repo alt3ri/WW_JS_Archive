@@ -13,7 +13,7 @@ const puerts_1 = require("puerts"),
   ExecutionQueue_1 = require("./ExecutionQueue"),
   INVALID_PLAYING_ID = 0;
 function instanceOf(e, t) {
-  return e.IsValid() && e.IsA(t.StaticClass());
+  return e.IsValid() && e.IsA(t.StaticClass()) && e.GetWorld()?.IsValid();
 }
 function parseAudioEventPathInConfig(e) {
   var t = /^\/Game\/Aki\/WwiseAudio\/Events\/(?<name>\w+)/.exec(e);

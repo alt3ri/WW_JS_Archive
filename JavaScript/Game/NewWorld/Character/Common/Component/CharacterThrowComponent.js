@@ -48,7 +48,7 @@ let CharacterThrowComponent = class CharacterThrowComponent extends EntityCompon
   }
 };
 (CharacterThrowComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(69)],
+  [(0, RegisterComponent_1.RegisterComponent)(70)],
   CharacterThrowComponent,
 )),
   (exports.CharacterThrowComponent = CharacterThrowComponent);

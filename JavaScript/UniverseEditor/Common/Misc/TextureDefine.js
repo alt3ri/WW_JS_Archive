@@ -27,7 +27,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e.CopyLink = "CopyLink"),
       (e.Copy = "Copy"),
       (e.MagnifierTab = "MagnifierTab"),
-      (e.MagnifierButton = "MagnifierButton");
+      (e.MagnifierButton = "MagnifierButton"),
+      (e.Clean = "Clean");
   })((ETexture = exports.ETexture || (exports.ETexture = {})));
 const texturePathMap = {
   [ETexture.FileTree]:
@@ -73,6 +74,7 @@ const texturePathMap = {
     "/Game/Aki/UniverseEditor/Res/Icons/T_Magnifier1.T_Magnifier1",
   [ETexture.MagnifierButton]:
     "/Game/Aki/UniverseEditor/Res/Icons/T_Magnifier2.T_Magnifier2",
+  [ETexture.Clean]: "/Game/Aki/UniverseEditor/Res/Icons/icon_clean.icon_clean",
 };
 function getTexturePath(e) {
   return texturePathMap[e];

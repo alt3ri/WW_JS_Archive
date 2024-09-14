@@ -17,10 +17,10 @@ class TurntableControlView extends UiViewBase_1.UiViewBase {
       (this.Vxe = void 0),
       (this.Hxe = void 0),
       (this.jxe = void 0),
-      (this.cqn = !1),
+      (this.Sqn = !1),
       (this.jwe = (t) => {
         "OnOpenTurntableControlViewBlackScreen" === t &&
-          ((this.cqn = !0),
+          ((this.Sqn = !0),
           TurntableControlController_1.TurntableControlController.SelectRingByIndex(
             0,
             !0,
@@ -115,7 +115,7 @@ class TurntableControlView extends UiViewBase_1.UiViewBase {
       (this.Fxe.SetSelfInteractive(!1),
       this.Vxe.SetSelfInteractive(!1),
       this.Hxe.SetSelfInteractive(!1)),
-      this.cqn ||
+      this.Sqn ||
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneItem",

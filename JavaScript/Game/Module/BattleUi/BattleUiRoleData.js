@@ -7,7 +7,8 @@ const UE = require("ue"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
+const ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class BattleUiRoleData {
   constructor() {
     (this.IsCurEntity = !1),
@@ -28,9 +29,9 @@ class BattleUiRoleData {
       (this.RoleConfig = void 0),
       (this.RoleBattleViewInfo = void 0),
       (this.QteCdTagId = 0),
-      (this.Mia = void 0),
+      (this.boa = void 0),
       (this.i$e = []),
-      (this.o$e = (t, i, s) => {
+      (this.o$e = (t, i, e) => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.BattleUiElementEnergyChanged,
           this.EntityHandle.Id,
@@ -84,6 +85,10 @@ class BattleUiRoleData {
           i,
         );
       }),
+      (this.B2a = (t, i) => {
+        i &&
+          ControllerHolder_1.ControllerHolder.HudUnitController.TryCreateHud(0);
+      }),
       (this._$e = (t, i) => {
         this.IsCurEntity &&
           t !== i &&
@@ -97,16 +102,16 @@ class BattleUiRoleData {
           this.EntityHandle.Id,
         );
       }),
-      (this.Sia = () => {
-        this.Eia();
+      (this.qoa = () => {
+        this.Goa();
       }),
-      (this.hXe = (t, i, s) => {
+      (this.hXe = (t, i, e) => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.BattleUiHealthChanged,
           this.EntityHandle.Id,
         );
       }),
-      (this.m2 = (t, i, s) => {
+      (this.m2 = (t, i, e) => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.BattleUiLevelChanged,
           this.EntityHandle.Id,
@@ -116,12 +121,12 @@ class BattleUiRoleData {
   Init(t, i) {
     (this.EntityHandle = t),
       (this.IsCurEntity = i),
-      (this.AttributeComponent = t.Entity.GetComponent(158)),
-      (this.GameplayTagComponent = t.Entity.GetComponent(188)),
-      (this.RoleElementComponent = t.Entity.GetComponent(81)),
-      (this.BuffComponent = t.Entity.GetComponent(159)),
-      (this.ShieldComponent = t.Entity.GetComponent(66)),
-      (this.RoleQteComponent = t.Entity.GetComponent(88)),
+      (this.AttributeComponent = t.Entity.GetComponent(159)),
+      (this.GameplayTagComponent = t.Entity.GetComponent(190)),
+      (this.RoleElementComponent = t.Entity.GetComponent(82)),
+      (this.BuffComponent = t.Entity.GetComponent(160)),
+      (this.ShieldComponent = t.Entity.GetComponent(67)),
+      (this.RoleQteComponent = t.Entity.GetComponent(89)),
       (this.CreatureDataComponent = t.Entity.GetComponent(0)),
       (this.ElementType = this.RoleElementComponent.RoleElementType),
       (this.ElementConfig =
@@ -171,6 +176,7 @@ class BattleUiRoleData {
       this.d$e(166024319, this.s$e),
       this.d$e(1674960297, this.h$e),
       this.d$e(-426018619, this.l$e),
+      this.d$e(-640833006, this.B2a, !0),
       EventSystem_1.EventSystem.AddWithTarget(
         this.EntityHandle.Entity,
         EventDefine_1.EEventName.CharOnDirectionStateChanged,
@@ -181,15 +187,15 @@ class BattleUiRoleData {
         EventDefine_1.EEventName.CharShieldChange,
         this.u$e,
       ),
-      this.Eia(),
+      this.Goa(),
       EventSystem_1.EventSystem.AddWithTarget(
         this.EntityHandle.Entity,
         EventDefine_1.EEventName.CharQteTagRowNameChanged,
-        this.Sia,
+        this.qoa,
       );
     var t = this.AttributeComponent;
     t.AddListener(EAttributeId.Proto_Life, this.hXe),
-      t.AddListener(EAttributeId.e5n, this.hXe),
+      t.AddListener(EAttributeId.l5n, this.hXe),
       t.AddListener(EAttributeId.Proto_Lv, this.m2),
       t.AddListener(EAttributeId.Proto_ElementEnergy, this.o$e),
       t.AddListener(EAttributeId.Proto_ElementEnergyMax, this.o$e);
@@ -197,7 +203,7 @@ class BattleUiRoleData {
   m$e() {
     for (const i of this.i$e) i?.EndTask();
     (this.i$e.length = 0),
-      this.Mia && (this.Mia.EndTask(), (this.Mia = void 0)),
+      this.boa && (this.boa.EndTask(), (this.boa = void 0)),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.EntityHandle.Entity,
         EventDefine_1.EEventName.CharOnDirectionStateChanged,
@@ -211,26 +217,27 @@ class BattleUiRoleData {
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.EntityHandle.Entity,
         EventDefine_1.EEventName.CharQteTagRowNameChanged,
-        this.Sia,
+        this.qoa,
       );
     var t = this.AttributeComponent;
     t.RemoveListener(EAttributeId.Proto_Life, this.hXe),
-      t.RemoveListener(EAttributeId.e5n, this.hXe),
+      t.RemoveListener(EAttributeId.l5n, this.hXe),
       t.RemoveListener(EAttributeId.Proto_Lv, this.m2),
       t.RemoveListener(EAttributeId.Proto_ElementEnergy, this.o$e),
       t.RemoveListener(EAttributeId.Proto_ElementEnergyMax, this.o$e);
   }
-  d$e(t, i) {
-    t = this.GameplayTagComponent.ListenForTagAddOrRemove(t, i);
-    t && this.i$e.push(t);
+  d$e(t, i, e = !1) {
+    e && this.GameplayTagComponent?.HasTag(t) && i(t, !0);
+    e = this.GameplayTagComponent.ListenForTagAddOrRemove(t, i);
+    e && this.i$e.push(e);
   }
-  Eia() {
+  Goa() {
     var t = this.RoleQteComponent?.GetQteTagData()?.NoTag.TagId ?? 0;
     t !== this.QteCdTagId &&
-      (this.Mia && (this.Mia.EndTask(), (this.Mia = void 0)),
+      (this.boa && (this.boa.EndTask(), (this.boa = void 0)),
       (this.QteCdTagId = t),
       this.QteCdTagId) &&
-      (this.Mia = this.GameplayTagComponent.ListenForTagAddOrRemove(
+      (this.boa = this.GameplayTagComponent.ListenForTagAddOrRemove(
         t,
         this.a$e,
       ));

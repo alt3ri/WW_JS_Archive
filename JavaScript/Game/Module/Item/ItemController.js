@@ -12,18 +12,13 @@ const AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
   UiManager_1 = require("../../Ui/UiManager"),
-  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
   ItemDefine_1 = require("./ItemDefine");
 class ItemController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
-      EventDefine_1.EEventName.OnItemLock,
-      ItemController.Vdi,
+      EventDefine_1.EEventName.OnLoadingNetDataDone,
+      this.Q5e,
     ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnLoadingNetDataDone,
-        this.Q5e,
-      ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAddCommonItem,
         ItemController.KCi,
@@ -35,13 +30,9 @@ class ItemController extends UiControllerBase_1.UiControllerBase {
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.OnItemLock,
-      ItemController.Vdi,
+      EventDefine_1.EEventName.OnLoadingNetDataDone,
+      this.Q5e,
     ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnLoadingNetDataDone,
-        this.Q5e,
-      ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAddCommonItem,
         ItemController.KCi,
@@ -52,14 +43,14 @@ class ItemController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static OpenItemTipsByItemId(e, t = void 0) {
-    var n = new ItemDefine_1.ItemTipsData();
-    (n.ItemId = e), UiManager_1.UiManager.OpenView("ItemTipsView", n, t);
+    var i = new ItemDefine_1.ItemTipsData();
+    (i.ItemId = e), UiManager_1.UiManager.OpenView("ItemTipsView", i, t);
   }
-  static OpenItemTipsByItemUid(e, t, n = void 0) {
-    var o = new ItemDefine_1.ItemTipsData();
-    (o.ItemUid = e),
-      (o.ItemId = t),
-      UiManager_1.UiManager.OpenView("ItemTipsView", o, n);
+  static OpenItemTipsByItemUid(e, t, i = void 0) {
+    var n = new ItemDefine_1.ItemTipsData();
+    (n.ItemUid = e),
+      (n.ItemId = t),
+      UiManager_1.UiManager.OpenView("ItemTipsView", n, i);
   }
   static AddNewItemTip(e) {
     ModelManager_1.ModelManager.ItemModel.PushWaitItemList(e);
@@ -122,26 +113,17 @@ class ItemController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.ItemModel.LoadGetItemConfigIdList();
   }),
   (ItemController.KCi = (e, t) => {
-    var n = ModelManager_1.ModelManager.ItemModel,
-      e = e.J4n;
-    n.IsGotItem(e) ||
+    var i = ModelManager_1.ModelManager.ItemModel,
+      e = e.s5n;
+    i.IsGotItem(e) ||
       (0 !==
         ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e)?.ObtainedShow &&
-        (t && ItemController.AddNewItemTip(e), n.AddGetItemConfigIdList(e)));
+        (t && ItemController.AddNewItemTip(e), i.AddGetItemConfigIdList(e)));
   }),
-  (ItemController.QCi = (e, t, n) => {
-    var e = e.J4n,
-      o = ModelManager_1.ModelManager.ItemModel;
-    o.IsGotItem(e) ||
-      (n && ItemController.AddNewItemTip(e), o.AddGetItemConfigIdList(e));
-  }),
-  (ItemController.Vdi = (e, t) => {
-    t
-      ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-          "ItemLockSuccess",
-        )
-      : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-          "ItemUnlockSuccess",
-        );
+  (ItemController.QCi = (e, t, i) => {
+    var e = e.s5n,
+      n = ModelManager_1.ModelManager.ItemModel;
+    n.IsGotItem(e) ||
+      (i && ItemController.AddNewItemTip(e), n.AddGetItemConfigIdList(e));
   });
 //# sourceMappingURL=ItemController.js.map

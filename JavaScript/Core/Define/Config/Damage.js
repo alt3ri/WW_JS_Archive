@@ -25,8 +25,10 @@ class Damage {
     return this.type();
   }
   get SubType() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.subtypeLength(), (t) =>
-      this.subtype(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.subtypeLength(),
+      this.subtype,
+      this,
     );
   }
   get SmashType() {
@@ -35,54 +37,67 @@ class Damage {
   get CureBaseValue() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.curebasevalueLength(),
-      (t) => this.curebasevalue(t),
+      this.curebasevalue,
+      this,
     );
   }
   get RelatedProperty() {
     return this.relatedproperty();
   }
   get RateLv() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.ratelvLength(), (t) =>
-      this.ratelv(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.ratelvLength(),
+      this.ratelv,
+      this,
     );
   }
   get HardnessLv() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.hardnesslvLength(), (t) =>
-      this.hardnesslv(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.hardnesslvLength(),
+      this.hardnesslv,
+      this,
     );
   }
   get ToughLv() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.toughlvLength(), (t) =>
-      this.toughlv(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.toughlvLength(),
+      this.toughlv,
+      this,
     );
   }
   get Energy() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.energyLength(), (t) =>
-      this.energy(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.energyLength(),
+      this.energy,
+      this,
     );
   }
   get SpecialEnergy1() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.specialenergy1Length(),
-      (t) => this.specialenergy1(t),
+      this.specialenergy1,
+      this,
     );
   }
   get SpecialEnergy2() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.specialenergy2Length(),
-      (t) => this.specialenergy2(t),
+      this.specialenergy2,
+      this,
     );
   }
   get SpecialEnergy3() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.specialenergy3Length(),
-      (t) => this.specialenergy3(t),
+      this.specialenergy3,
+      this,
     );
   }
   get SpecialEnergy4() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.specialenergy4Length(),
-      (t) => this.specialenergy4(t),
+      this.specialenergy4,
+      this,
     );
   }
   get ElementPowerType() {
@@ -91,7 +106,8 @@ class Damage {
   get ElementPower() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.elementpowerLength(),
-      (t) => this.elementpower(t),
+      this.elementpower,
+      this,
     );
   }
   get FormulaType() {
@@ -100,86 +116,102 @@ class Damage {
   get FormulaParam1() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.formulaparam1Length(),
-      (t) => this.formulaparam1(t),
+      this.formulaparam1,
+      this,
     );
   }
   get FormulaParam2() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.formulaparam2Length(),
-      (t) => this.formulaparam2(t),
+      this.formulaparam2,
+      this,
     );
   }
   get FormulaParam3() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.formulaparam3Length(),
-      (t) => this.formulaparam3(t),
+      this.formulaparam3,
+      this,
     );
   }
   get FormulaParam4() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.formulaparam4Length(),
-      (t) => this.formulaparam4(t),
+      this.formulaparam4,
+      this,
     );
   }
   get FormulaParam5() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.formulaparam5Length(),
-      (t) => this.formulaparam5(t),
+      this.formulaparam5,
+      this,
     );
   }
   get FormulaParam6() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.formulaparam6Length(),
-      (t) => this.formulaparam6(t),
+      this.formulaparam6,
+      this,
     );
   }
   get FormulaParam7() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.formulaparam7Length(),
-      (t) => this.formulaparam7(t),
+      this.formulaparam7,
+      this,
     );
   }
   get FormulaParam8() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.formulaparam8Length(),
-      (t) => this.formulaparam8(t),
+      this.formulaparam8,
+      this,
     );
   }
   get FormulaParam9() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.formulaparam9Length(),
-      (t) => this.formulaparam9(t),
+      this.formulaparam9,
+      this,
     );
   }
   get FormulaParam10() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.formulaparam10Length(),
-      (t) => this.formulaparam10(t),
+      this.formulaparam10,
+      this,
     );
   }
   get ImmuneType() {
     return this.immunetype();
   }
   get Percent0() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.percent0Length(), (t) =>
-      this.percent0(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.percent0Length(),
+      this.percent0,
+      this,
     );
   }
   get Percent1() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.percent1Length(), (t) =>
-      this.percent1(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.percent1Length(),
+      this.percent1,
+      this,
     );
   }
   get FluctuationLower() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.fluctuationlowerLength(),
-      (t) => this.fluctuationlower(t),
+      this.fluctuationlower,
+      this,
     );
   }
   get FluctuationUpper() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.fluctuationupperLength(),
-      (t) => this.fluctuationupper(t),
+      this.fluctuationupper,
+      this,
     );
   }
   __init(t, r) {

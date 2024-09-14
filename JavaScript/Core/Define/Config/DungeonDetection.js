@@ -22,7 +22,8 @@ class DungeonDetection {
   get LevelPlayList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.levelplaylistLength(),
-      (t) => this.levelplaylist(t),
+      this.levelplaylist,
+      this,
     );
   }
   get InstanceSubTypeDescription() {
@@ -67,9 +68,16 @@ class DungeonDetection {
   get ShowRewardMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.showrewardmapLength(),
-      (t) => this.showrewardmap(t)?.key(),
-      (t) => this.showrewardmap(t)?.value(),
+      this.showrewardmapKey,
+      this.showrewardmapValue,
+      this,
     );
+  }
+  showrewardmapKey(t) {
+    return this.showrewardmap(t)?.key();
+  }
+  showrewardmapValue(t) {
+    return this.showrewardmap(t)?.value();
   }
   get BeginTimeStamp() {
     return this.begintimestamp();
@@ -78,8 +86,10 @@ class DungeonDetection {
     return this.lockcon();
   }
   get PhantomId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.phantomidLength(), (t) =>
-      this.phantomid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.phantomidLength(),
+      this.phantomid,
+      this,
     );
   }
   get SubDungeonId() {

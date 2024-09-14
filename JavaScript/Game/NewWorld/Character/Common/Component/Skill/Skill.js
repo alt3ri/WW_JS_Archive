@@ -7,23 +7,22 @@ const UE = require("ue"),
   ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem"),
   FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil"),
   GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
   ObjectUtils_1 = require("../../../../../../Core/Utils/ObjectUtils"),
   EffectSystem_1 = require("../../../../../Effect/EffectSystem"),
-  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
-  CharacterBuffIds_1 = require("../Abilities/CharacterBuffIds");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
-const CombatLog_1 = require("../../../../../Utils/CombatLog"),
-  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  CombatLog_1 = require("../../../../../Utils/CombatLog"),
+  CharacterBuffIds_1 = require("../Abilities/CharacterBuffIds"),
   MONTAGE_BLEND_TIME = 0.2;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 class Skill {
   constructor() {
-    (this.Dzo = void 0),
-      (this.Rzo = void 0),
-      (this.Uzo = void 0),
-      (this.Azo = void 0),
-      (this.Pzo = void 0),
-      (this.xzo = void 0),
+    (this.Dzo = Stats_1.Stat.Create("Add Spec Tag")),
+      (this.Rzo = Stats_1.Stat.Create("Add InSkill Tag")),
+      (this.Uzo = Stats_1.Stat.Create("Add Spec Buff")),
+      (this.Azo = Stats_1.Stat.Create("Remove Spec Buff&Tag")),
+      (this.Pzo = Stats_1.Stat.Create("Remove InSkill Tag")),
+      (this.xzo = Stats_1.Stat.Create("Add Spec EndBuff")),
       (this.ActiveAbility = void 0),
       (this.wzo = void 0),
       (this.Bzo = void 0),
@@ -82,9 +81,9 @@ class Skill {
   }
   Initialize(t, i, s) {
     (this.cBe = s),
-      (this.$zo = s.Entity.GetComponent(159)),
-      (this.Lie = s.Entity.GetComponent(188)),
-      (this.oRe = s.Entity.GetComponent(162)),
+      (this.$zo = s.Entity.GetComponent(160)),
+      (this.Lie = s.Entity.GetComponent(190)),
+      (this.oRe = s.Entity.GetComponent(163)),
       (this.bzo = t),
       (this.Nzo = i),
       (this.qzo = !1),
@@ -126,7 +125,7 @@ class Skill {
         this.Vzo
           ? (this.Vzo.IsChildOf(UE.Ga_Passive_C.StaticClass())
               ? (this.cBe.SetGaPassiveClassToSkillMap(this.Vzo, this.SkillId),
-                (this.CombatMessageId = this.pya()))
+                (this.CombatMessageId = this.jLa()))
               : (t = UE.KuroStaticLibrary.GetDefaultObject(this.Vzo))
                   .AbilityTriggers &&
                 0 < t.AbilityTriggers.Num() &&
@@ -139,8 +138,7 @@ class Skill {
                   ["GA", this.SkillInfo.SkillGA],
                   ["GA Path", i],
                 ),
-            (t = this.cBe.Entity.GetComponent(17)),
-            (this.Hzo = t.GetAbility(this.Vzo)))
+            this.GiveAbility())
           : CombatLog_1.CombatLog.Error(
               "Skill",
               this.cBe.Entity,
@@ -160,34 +158,40 @@ class Skill {
           ["GA Path", i],
         );
   }
+  GiveAbility() {
+    var t;
+    this.Vzo &&
+      ((t = this.cBe.Entity.GetComponent(17)),
+      (this.Hzo = t.GetAbility(this.Vzo)));
+  }
   Jzo() {
     if (0 < this.SkillInfo.Animations.Num()) {
       this.jzo = new Array(this.SkillInfo.Animations.Num());
       for (let t = 0; t < this.SkillInfo.Animations.Num(); ++t) {
-        const o = this.SkillInfo.Animations.Get(t);
-        if (ObjectUtils_1.ObjectUtils.SoftObjectPathIsValid(o)) {
-          var i = UE.KismetSystemLibrary.Conv_SoftObjPathToSoftObjRef(o);
-          const a = t;
+        const a = this.SkillInfo.Animations.Get(t);
+        if (ObjectUtils_1.ObjectUtils.SoftObjectPathIsValid(a)) {
+          var i = UE.KismetSystemLibrary.Conv_SoftObjPathToSoftObjRef(a);
+          const o = t;
           var s = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
             i.ToAssetPathName(),
             UE.AnimMontage,
           );
           s?.IsValid()
-            ? (this.jzo[a] = s)
+            ? (this.jzo[o] = s)
             : ResourceSystem_1.ResourceSystem.LoadAsync(
                 i.ToAssetPathName(),
                 UE.AnimMontage,
                 (t) => {
                   t?.IsValid()
-                    ? (this.jzo[a] = t)
+                    ? (this.jzo[o] = t)
                     : CombatLog_1.CombatLog.Warn(
                         "Skill",
                         this.cBe.Entity,
                         "蒙太奇加载失败，请检查Animations蒙太奇软路径对象",
                         ["技能Id", this.SkillId],
                         ["技能名", this.SkillName],
-                        ["索引", a],
-                        ["AssetNamePath", o.AssetPathName],
+                        ["索引", o],
+                        ["AssetNamePath", a.AssetPathName],
                       );
                 },
               );
@@ -201,64 +205,30 @@ class Skill {
             ["索引", t],
           );
       }
-    } else if (0 < this.SkillInfo.MontagePaths.Num()) {
-      let i = !1;
-      for (let t = 0; t < this.SkillInfo.MontagePaths.Num(); ++t) {
-        var e = this.SkillInfo.MontagePaths.Get(t);
-        (e && 0 !== e.length) ||
-          ((i = !0),
-          CombatLog_1.CombatLog.Warn(
-            "Skill",
-            this.cBe.Entity,
-            "蒙太奇路径为空，请设置MontagePaths蒙太奇路径",
-            ["技能Id", this.SkillId],
-            ["技能名", this.SkillName],
-            ["索引", t],
-          ));
-      }
-      if (!i) {
+    } else {
+      var e = this.SkillInfo.MontagePaths;
+      if (0 < e.Num()) {
+        var h = this.cBe.Entity.GetComponent(22);
+        let i = !1;
         this.jzo = new Array(this.SkillInfo.MontagePaths.Num());
-        var t = this.cBe.Entity.GetComponent(3).Actor,
-          t = UE.KismetSystemLibrary.Conv_ClassToSoftClassReference(
-            t.GetClass(),
-          ),
-          h = UE.KismetSystemLibrary.Conv_SoftClassReferenceToString(t);
-        for (let t = 0; t < this.SkillInfo.MontagePaths.Num(); ++t) {
-          var r = this.SkillInfo.MontagePaths.Get(t);
-          const l = ConfigManager_1.ConfigManager.WorldConfig.GetSkillMontage(
-            h,
-            r,
-          );
+        for (let t = 0; t < e.Num(); ++t) {
+          var r = e.Get(t);
           if (
-            l &&
-            0 !== l.ToAssetPathName().length &&
-            "None" !== l.ToAssetPathName()
-          ) {
-            const f = t;
-            r = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
-              l.ToAssetPathName(),
-              UE.AnimMontage,
-            );
-            r?.IsValid()
-              ? (this.jzo[f] = r)
-              : ResourceSystem_1.ResourceSystem.LoadAsync(
-                  l.ToAssetPathName(),
-                  UE.AnimMontage,
-                  (t) => {
-                    t?.IsValid()
-                      ? (this.jzo[f] = t)
-                      : CombatLog_1.CombatLog.Warn(
-                          "Skill",
-                          this.cBe.Entity,
-                          "蒙太奇加载失败，请检查MontagePaths蒙太奇路径",
-                          ["技能Id", this.SkillId],
-                          ["技能名", this.SkillName],
-                          ["索引", f],
-                          ["AssetNamePath", l.ToAssetPathName()],
-                        );
-                  },
-                );
-          }
+            ((r && 0 !== r.length) ||
+              ((i = !0),
+              CombatLog_1.CombatLog.Warn(
+                "Skill",
+                this.cBe.Entity,
+                "蒙太奇路径为空，请设置MontagePaths蒙太奇路径",
+                ["技能Id", this.SkillId],
+                ["技能名", this.SkillName],
+                ["索引", t],
+              )),
+            i)
+          )
+            return;
+          r = h?.GetMontageByName(e.Get(t));
+          r && (this.jzo[t] = r);
         }
       }
     }
@@ -340,26 +310,30 @@ class Skill {
     );
   }
   BeginSkillBuffAndTag(i) {
-    this.Xzo = i;
+    (this.Xzo = i), this.Dzo.Start();
     var t = this.$zo.AddTagWithReturnHandle(this.SkillTagIds);
     if (
       (this.Wzo.push(t),
+      this.Dzo.Stop(),
       1 === this.SkillInfo.GroupId &&
-        (this.SkillInfo.IsFullBodySkill
+        (this.Rzo.Start(),
+        this.SkillInfo.IsFullBodySkill
           ? this.Lie.AddTag(1996624497)
-          : this.Lie.AddTag(704115290)),
+          : this.Lie.AddTag(704115290),
+        this.Rzo.Stop()),
       !this.IsSimulated)
     ) {
-      0 < Math.abs(this.SkillInfo.StrengthCost) &&
-        ((t = this.$zo.AddBuffLocal(
-          CharacterBuffIds_1.buffId.SkillStrengthForbidden,
-          {
-            InstigatorId: this.$zo.CreatureDataId,
-            Reason: `技能${this.SkillId}存在体力消耗`,
-            PreMessageId: this.CombatMessageId,
-          },
-        )),
-        this.Wzo.push(t));
+      this.Uzo.Start(),
+        0 < Math.abs(this.SkillInfo.StrengthCost) &&
+          ((t = this.$zo.AddBuffLocal(
+            CharacterBuffIds_1.buffId.SkillStrengthForbidden,
+            {
+              InstigatorId: this.$zo.CreatureDataId,
+              Reason: `技能${this.SkillId}存在体力消耗`,
+              PreMessageId: this.CombatMessageId,
+            },
+          )),
+          this.Wzo.push(t));
       var t = this.$zo.AddAttributeRateModifierLocal(
         EAttributeId.Proto_SkillToughRatio,
         this.SkillInfo.ToughRatio - 1,
@@ -390,6 +364,7 @@ class Skill {
           Reason: `技能${this.SkillId}开始时添加`,
           PreMessageId: this.CombatMessageId,
         });
+      this.Uzo.Stop();
     }
   }
   EndSkill() {
@@ -399,21 +374,23 @@ class Skill {
       (this.qzo = !1),
       (this.ActiveAbility = void 0),
       this.cBe.FightStateComp?.ExitState(this.FightStateHandle),
-      ModelManager_1.ModelManager.CombatMessageModel.RemoveCombatContext(
-        this.MontageContextId,
-      ),
       this.eZo(),
       this.Zzo(),
+      this.Azo.Start(),
       this.Wzo.forEach((t) => {
         this.$zo.RemoveBuffByHandle(t, -1, "技能结束移除");
       }),
       (this.Wzo.length = 0),
+      this.Azo.Stop(),
       1 === this.SkillInfo.GroupId &&
-        (this.SkillInfo.IsFullBodySkill
+        (this.Pzo.Start(),
+        this.SkillInfo.IsFullBodySkill
           ? this.Lie.RemoveTag(1996624497)
-          : this.Lie.RemoveTag(704115290)),
+          : this.Lie.RemoveTag(704115290),
+        this.Pzo.Stop()),
       !this.IsSimulated)
-    )
+    ) {
+      this.xzo.Start();
       for (let t = 0; t < this.SkillInfo.SkillEndBuff.Num(); ++t)
         this.$zo.AddBuff(this.SkillInfo.SkillEndBuff.Get(t), {
           InstigatorId: this.$zo.CreatureDataId,
@@ -421,6 +398,8 @@ class Skill {
           Reason: `技能${this.SkillId}结束时添加`,
           PreMessageId: this.CombatMessageId,
         });
+      this.xzo.Stop();
+    }
     return !0;
   }
   SimulatedBeginSkill(t) {
@@ -428,8 +407,7 @@ class Skill {
       !this.Active &&
       ((this.qzo = !0),
       (this.Gzo = !0),
-      (this.CombatMessageId =
-        ModelManager_1.ModelManager.CombatMessageModel.GenMessageId()),
+      (this.CombatMessageId = t),
       this.BeginSkillBuffAndTag(0),
       !0)
     );
@@ -444,8 +422,8 @@ class Skill {
   SetSkillPriority(t) {
     this.SkillInfo && (this.SkillInfo.InterruptLevel = t);
   }
-  PlayMontage(t, i, s, e, h) {
-    var r;
+  PlayMontage(t, i, s, e, h, r) {
+    var a;
     return !this.jzo || t >= this.jzo.length
       ? (CombatLog_1.CombatLog.Error(
           "Skill",
@@ -453,32 +431,30 @@ class Skill {
           "播放的蒙太奇索引不存在",
           ["技能id:", this.SkillId],
           ["技能名:", this.SkillName],
-          ["index:", t],
+          ["index", t],
         ),
         !1)
-      : !!(r = this.jzo[t])?.IsValid() &&
+      : !!(a = this.jzo[t])?.IsValid() &&
           ((s = s
             ? FNameUtil_1.FNameUtil.GetDynamicFName(s)
             : FNameUtil_1.FNameUtil.EMPTY),
           (this.wzo = UE.AsyncTaskPlayMontageAndWait.ListenForPlayMontage(
             this.oRe.MainAnimInstance,
-            r,
+            a,
             i,
             e,
             s,
           )),
-          this.wzo.EndCallback.Add((t) => {
-            h?.(t);
-          }),
           (this.Bzo = h),
-          ModelManager_1.ModelManager.CombatMessageModel.RemoveCombatContext(
-            this.MontageContextId,
+          this.wzo.EndCallback.Add((t) => {
+            this.RequestStopMontage(t);
+          }),
+          this.cBe.MontageComp?.PushMontageInfo(
+            { MontageName: [], SkillId: this.SkillId, MontageIndex: t },
+            a,
           ),
           (this.MontageContextId =
-            ModelManager_1.ModelManager.CombatMessageModel.CreateMontageContext(
-              this.SkillId,
-              t,
-            )),
+            r ?? ModelManager_1.ModelManager.CombatMessageModel.GenMessageId()),
           !0);
   }
   eZo() {
@@ -487,25 +463,29 @@ class Skill {
       ((t = this.wzo.MontageToPlay),
       this.wzo.EndTask(),
       (this.wzo = void 0),
-      this.oRe.MainAnimInstance.Montage_Stop(MONTAGE_BLEND_TIME, t));
+      this.oRe.MainAnimInstance.Montage_Stop(MONTAGE_BLEND_TIME, t),
+      this.RequestStopMontage(!0));
   }
-  RequestStopMontage() {
-    this.Bzo?.(!0), (this.Bzo = void 0);
+  RequestStopMontage(t) {
+    var i;
+    this.Bzo && ((i = this.Bzo), (this.Bzo = void 0), i?.(t));
   }
   SetEffectHidden(t) {
     for (const i of this.Kzo.values())
       for (const s of i)
         EffectSystem_1.EffectSystem.IsValid(s.EffectHandle) &&
-          EffectSystem_1.EffectSystem.GetEffectActor(
+          EffectSystem_1.EffectSystem.SetEffectHidden(
             s.EffectHandle,
-          ).SetActorHiddenInGame(t);
+            t,
+            "Skill",
+          );
   }
-  pya() {
-    var t = this.cBe.Entity.GetComponent(0).ComponentDataMap.get("Bys")?.Bys;
-    if (t && t.BLa)
-      for (const i of t.BLa)
-        if (this.SkillId === i.X4n)
-          return MathUtils_1.MathUtils.LongToBigInt(i.tVn);
+  jLa() {
+    var t = this.cBe.Entity.GetComponent(0).ComponentDataMap.get("Vys")?.Vys;
+    if (t && t.Vih)
+      for (const i of t.Vih)
+        if (this.SkillId === i.r5n)
+          return MathUtils_1.MathUtils.LongToBigInt(i._Vn);
     CombatLog_1.CombatLog.Error(
       "Skill",
       this.cBe.Entity,

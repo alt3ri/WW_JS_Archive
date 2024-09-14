@@ -14,7 +14,7 @@ const CsvLoader_1 = require("./CsvLoader"),
     (0, CsvLoader_1.createCsvField)({
       Name: "SkeletalMesh",
       CnName: "Mesh",
-      RenderType: 51,
+      RenderType: 52,
       Type: "String",
       ExportType: "",
     }),
@@ -35,12 +35,12 @@ const CsvLoader_1 = require("./CsvLoader"),
     (0, CsvLoader_1.createCsvField)({
       Name: "FaceExpression",
       CnName: "表情",
-      RenderType: 50,
+      RenderType: 51,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "MaleVariant",
       CnName: "男主变体",
-      RenderType: 50,
+      RenderType: 51,
     }),
   ];
 class FaceExpressionCsvLoader extends CsvLoader_1.CsvLoader {

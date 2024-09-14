@@ -15,7 +15,7 @@ class RoguelikeSpecialDetailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.nPn = void 0),
-      (this.Qra = void 0),
+      (this.Usa = void 0),
       (this.$be = void 0),
       (this.zbe = () =>
         new RoguelikeSelectSpecialStarItem_1.RoguelikeSelectSpecialStarItem()),
@@ -23,7 +23,7 @@ class RoguelikeSpecialDetailView extends UiViewBase_1.UiViewBase {
         this.Hqe(this.nPn);
       }),
       (this.Jvt = () => {
-        this.CloseMe(this.Qra);
+        this.CloseMe(this.Usa);
       });
   }
   OnRegisterComponent() {
@@ -47,7 +47,7 @@ class RoguelikeSpecialDetailView extends UiViewBase_1.UiViewBase {
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Roguelike", 59, "RoguelikeSpecialDetailView无效输入")
       : ((this.nPn = e[0]),
-        (this.Qra = e[1]),
+        (this.Usa = e[1]),
         (this.$be = new GenericLayout_1.GenericLayout(
           this.GetHorizontalLayout(3),
           this.zbe,

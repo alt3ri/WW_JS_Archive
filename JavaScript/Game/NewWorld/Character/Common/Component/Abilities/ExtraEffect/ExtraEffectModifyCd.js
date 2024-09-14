@@ -11,20 +11,20 @@ class ModifyCd extends ExtraEffectBase_1.BuffEffect {
       (this.SkillType = 0),
       (this.ModifyType = 0),
       (this.ModifyValue = 0),
-      (this.Dia = void 0);
+      (this.Voa = void 0);
   }
   InitParameters(t) {
     var e = t.ExtraEffectParameters;
     for (const s of e[0].split("#")) this.SkillIdOrGenres.add(Number(s));
     (this.SkillType = Number(e[1])),
       (this.ModifyType = Number(e[2])),
-      (this.Dia = t.ExtraEffectGrowParameters1);
+      (this.Voa = t.ExtraEffectGrowParameters1);
   }
   OnCreated() {
-    var t = this.ExactOwnerEntity?.GetComponent(189);
+    var t = this.ExactOwnerEntity?.GetComponent(191);
     t &&
       ((this.ModifyValue = AbilityUtils_1.AbilityUtils.GetLevelValue(
-        this.Dia,
+        this.Voa,
         this.Level,
         0,
       )),
@@ -34,7 +34,7 @@ class ModifyCd extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {}
   OnRemoved(t) {
-    var e = this.ExactOwnerEntity?.GetComponent(189);
+    var e = this.ExactOwnerEntity?.GetComponent(191);
     e && e.UpdateModifyCdEffect(!1, this);
   }
 }

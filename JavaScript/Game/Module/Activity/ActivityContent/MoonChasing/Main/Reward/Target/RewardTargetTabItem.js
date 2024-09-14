@@ -6,10 +6,10 @@ const UE = require("ue"),
 class RewardTargetTabItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.fla = void 0),
-      (this.pla = -1),
-      (this.vla = () => {
-        this.fla?.ClickedCallback?.(this.pla);
+      (this.pua = void 0),
+      (this.vua = -1),
+      (this.Mua = () => {
+        this.pua?.ClickedCallback?.(this.vua);
       });
   }
   OnRegisterComponent() {
@@ -18,22 +18,22 @@ class RewardTargetTabItem extends GridProxyAbstract_1.GridProxyAbstract {
       [1, UE.UIExtendToggle],
       [2, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[1, this.vla]]);
+      (this.BtnBindInfo = [[1, this.Mua]]);
   }
   SetToggleState(t, e) {
     t = t ? 1 : 0;
     this.GetExtendToggle(1).SetToggleState(t, e);
   }
-  Mla(t) {
+  Sua(t) {
     this.GetItem(2).SetUIActive(t);
   }
   RefreshRedDot() {
-    var t = this.fla?.RefreshRedDot?.(this.pla + 1) ?? !1;
-    this.Mla(t);
+    var t = this.pua?.RefreshRedDot?.(this.vua + 1) ?? !1;
+    this.Sua(t);
   }
   Refresh(t, e, s) {
-    (this.fla = t),
-      (this.pla = t.Index),
+    (this.pua = t),
+      (this.vua = t.Index),
       t.NameTextId && this.GetText(0)?.ShowTextNew(t.NameTextId),
       this.RefreshRedDot();
   }

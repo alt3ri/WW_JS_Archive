@@ -41,11 +41,12 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
         0 < this.t5e && HelpController_1.HelpController.OpenHelpById(this.t5e);
       }),
       (this.eyi = () => {
-        LordGymController_1.LordGymController.LordGymBeginRequest(
-          this.KSi,
-        ).then((e) => {
-          e && this.CloseMe();
-        });
+        LordGymController_1.LordGymController.IsInEntranceEntity() &&
+          LordGymController_1.LordGymController.LordGymBeginRequest(
+            this.KSi,
+          ).then((e) => {
+            e && this.CloseMe();
+          });
       }),
       (this.tyi = () => {
         UiManager_1.UiManager.OpenView("LordGymChallengeRecordView");
@@ -97,7 +98,7 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
               ? LguiUtil_1.LguiUtil.SetLocalTextNew(
                   this.GetText(24),
                   "BestPassTime",
-                  TimeUtil_1.TimeUtil.GetTimeString(r.Fxs),
+                  TimeUtil_1.TimeUtil.GetTimeString(r.Qxs),
                 )
               : LguiUtil_1.LguiUtil.SetLocalTextNew(
                   this.GetText(24),
@@ -113,9 +114,9 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
           o = ModelManager_1.ModelManager.LordGymModel.GetLastGymFinish(
             this.KSi,
           ),
-          a = i.MonsterLevel > this.oyi();
+          h = i.MonsterLevel > this.oyi();
         this.GetItem(20).SetUIActive(r || !o),
-          this.GetItem(25).SetUIActive(a && !r && o),
+          this.GetItem(25).SetUIActive(h && !r && o),
           this.GetButton(19).RootUIComp.SetUIActive(!(r || !o)),
           r
             ? LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -123,7 +124,7 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
                 i.LockDescription,
               )
             : o
-              ? a &&
+              ? h &&
                 LguiUtil_1.LguiUtil.SetLocalTextNew(
                   this.GetText(21),
                   "LordGymLowLevel",
@@ -211,6 +212,10 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
   async OnBeforeStartAsync() {
     await this.ryi();
   }
+  OnAfterShow() {
+    LordGymController_1.LordGymController.IsInEntranceEntity() ||
+      this.CloseMe();
+  }
   OnStart() {
     var e = ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymConfig(
         this.WSi[0],
@@ -247,7 +252,7 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
     let e = 0,
       i = 0;
     for (const r of ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities()) {
-      var t = r.Entity?.GetComponent(158);
+      var t = r.Entity?.GetComponent(159);
       t &&
         ((e += t.GetCurrentValue(
           CharacterAttributeTypes_1.EAttributeId.Proto_Lv,

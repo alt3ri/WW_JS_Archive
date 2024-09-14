@@ -3,7 +3,7 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ErrorCodeController = void 0);
 const Cpp = require("cpp"),
-  UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
@@ -52,15 +52,15 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(10230, this.$5t), Net_1.Net.Register(24425, this.Y5t);
+    Net_1.Net.Register(25625, this.$5t), Net_1.Net.Register(21793, this.Y5t);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(10230), Net_1.Net.UnRegister(24425);
+    Net_1.Net.UnRegister(25625), Net_1.Net.UnRegister(21793);
   }
   static OpenErrorCodeScrollingTipsView(r, o) {
     var e = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(r),
       r =
-        (r === Protocol_1.Aki.Protocol.O4n.Proto_PropRewardTips &&
+        (r === Protocol_1.Aki.Protocol.Q4n.Proto_PropRewardTips &&
           ((r = o[0]),
           (o[0] =
             ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexLocalName(
@@ -164,13 +164,13 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
         r,
       ]);
     var o = new MessageDecodeData();
-    (o.s_channel_id = r.BVn),
-      (o.i_kcp_conv = r.Sbs),
-      (o.i_error_code = r.hvs),
-      (o.i_seq_no = r.Ebs),
+    (o.s_channel_id = r.VVn),
+      (o.i_kcp_conv = r.Dbs),
+      (o.i_error_code = r.Cvs),
+      (o.i_seq_no = r.Abs),
       (o.s_client_ip = PublicUtil_1.PublicUtil.GetLocalHost()),
       ([o.i_message_id, o.i_crc, o.s_before_hexdump, o.s_after_hexdump] =
-        Net_1.Net.GetCachedMessageData(r.Ebs)),
+        Net_1.Net.GetCachedMessageData(r.Abs)),
       LogReportController_1.LogReportController.LogReport(o);
   }),
   (ErrorCodeController.Y5t = (r) => {
@@ -179,12 +179,12 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
         "notify",
         r,
       ]);
-    var o = r.ivs,
-      r = r.O4n;
+    var o = r.lvs,
+      r = r.Q4n;
     ErrorCodeController.OpenErrorCodeScrollingTipsView(r, o);
   }),
   (ErrorCodeController.X5t = (r, o, e, t, i) => {
-    o === Protocol_1.Aki.Protocol.O4n.Proto_MsgFunctionClose
+    o === Protocol_1.Aki.Protocol.Q4n.Proto_MsgFunctionClose
       ? (ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew("FunctionClose"),
         ),
@@ -199,8 +199,7 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
             ["message", t],
             ["errorMessage", i],
           ))
-      : (UE.KuroStaticLibrary.IsBuildShipping() ||
-          _a.OpenErrorCodeTipView(o, e),
+      : (Info_1.Info.IsBuildShipping || _a.OpenErrorCodeTipView(o, e),
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "ErrorCode",

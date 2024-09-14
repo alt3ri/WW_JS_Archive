@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.ActivityRecallLogData =
+  (exports.SuccessSdkPayEvent =
+    exports.StartSdkPayEvent =
+    exports.ActivityRecallLogData =
+    exports.ActivityLockConditionClickLogData =
     exports.ActivityViewJumpClickLogData =
     exports.ActivityTabViewOpenLogData =
     exports.ActivityViewOpenLogData =
@@ -11,6 +14,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ExploreToolItemUseLogData =
     exports.ExploreToolEquipLogData =
     exports.ExploreToolSwitchLogData =
+    exports.ExploreToolUseLogData =
+    exports.ExploreToolAssemblyLogData =
     exports.SettingMenuLogData =
     exports.PlayFlowLogData =
     exports.SettingMenuLogEvent =
@@ -42,12 +47,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.TeamCharacterLogData =
     exports.BattleStartLogData =
     exports.HangUpTimeLogData =
+    exports.AssemblyLogData =
     exports.PlayerCommonLogData =
     exports.CommonLogData =
-      void 0);
+      void 0),
+  (exports.SdkPayGetServerBillEvent = exports.FailSdkPayEvent = void 0);
 const UE = require("ue"),
   Json_1 = require("../../../Core/Common/Json"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
   PROJECT_ID = "Aki";
 class CommonLogData extends Json_1.JsonObjBase {
   constructor() {
@@ -74,8 +83,14 @@ class PlayerCommonLogData extends (exports.CommonLogData = CommonLogData) {
       (this.world_own_id = "");
   }
 }
-class HangUpTimeLogData extends (exports.PlayerCommonLogData =
-  PlayerCommonLogData) {
+exports.PlayerCommonLogData = PlayerCommonLogData;
+class AssemblyLogData {
+  constructor() {
+    (this.SendTimePeriod = 0), (this.SendTimeAccumulate = 0);
+  }
+}
+exports.AssemblyLogData = AssemblyLogData;
+class HangUpTimeLogData extends PlayerCommonLogData {
   constructor() {
     super(), (this.f_hang_up_time = ""), (this.event_id = "7");
   }
@@ -211,7 +226,7 @@ class MonsterStateRecord extends PlayerCommonLogData {
       (this.l_acc_heal_other = 0),
       (this.l_acc_heal_self = 0),
       (this.i_monster_result =
-        Protocol_1.Aki.Protocol.L4s.Proto_MonsterResultRun),
+        Protocol_1.Aki.Protocol.x4s.Proto_MonsterResultRun),
       (this.f_pos_x = 0),
       (this.f_pos_y = 0),
       (this.f_pos_z = 0),
@@ -428,13 +443,13 @@ class InstRoleStateRecord extends RoleStateRecord {
 }
 exports.InstRoleStateRecord = InstRoleStateRecord;
 class InstMonsterStateRecord extends MonsterStateRecord {
-  constructor(t, s, i, h) {
+  constructor(t, s, i, o) {
     super(t, s),
       (this.event_id = "102805"),
       (this.i_inst_id = 0),
       (this.s_fight_id = ""),
       (this.i_inst_id = i),
-      (this.s_fight_id = h);
+      (this.s_fight_id = o);
   }
 }
 exports.InstMonsterStateRecord = InstMonsterStateRecord;
@@ -461,13 +476,13 @@ class InstReactionLogRecord extends ReactionLogRecord {
 }
 exports.InstReactionLogRecord = InstReactionLogRecord;
 class InstMonsterSkillReportLog extends MonsterSkillReportLog {
-  constructor(t, s, i, h) {
+  constructor(t, s, i, o) {
     super(t, s),
       (this.event_id = "102808"),
       (this.i_inst_id = 0),
       (this.s_fight_id = ""),
       (this.i_inst_id = i),
-      (this.s_fight_id = h);
+      (this.s_fight_id = o);
   }
 }
 exports.InstMonsterSkillReportLog = InstMonsterSkillReportLog;
@@ -526,7 +541,9 @@ class LoginProcessLink extends CommonLogData {
       (this.s_client_version = ""),
       (this.i_error_code = 0),
       (this.s_cpu_info = ""),
-      (this.s_device_info = "");
+      (this.s_device_info = ""),
+      (this.s_driver_date = ""),
+      (this.s_device_id = "");
   }
 }
 exports.LoginProcessLink = LoginProcessLink;
@@ -629,7 +646,8 @@ class SettingMenuLogEvent extends PlayerCommonLogData {
       (this.i_joystick_shake_strength = 0),
       (this.i_joystick_shake_type = 0),
       (this.f_walk_or_run_rate = 0),
-      (this.i_advice_setting = 0);
+      (this.i_advice_setting = 0),
+      (this.i_enemy_id = 0);
   }
 }
 exports.SettingMenuLogEvent = SettingMenuLogEvent;
@@ -652,6 +670,38 @@ class PlayFlowLogData extends PlayerCommonLogData {
 exports.PlayFlowLogData = PlayFlowLogData;
 class SettingMenuLogData extends PlayerCommonLogData {}
 exports.SettingMenuLogData = SettingMenuLogData;
+class ExploreToolAssemblyLogData extends AssemblyLogData {
+  constructor(t) {
+    super(),
+      (this.AssemblyId = ""),
+      (this.AssemblyLogData = new ExploreToolUseLogData()),
+      (this.SetLogDataToAssembly = (t) => {
+        this.AssemblyLogData.o_report.push(t);
+      });
+    var s = CommonParamById_1.configCommonParamById.GetIntConfig(
+      "LogReportPeriod_ExploreTool",
+    );
+    (this.SendTimePeriod = s * TimeUtil_1.TimeUtil.InverseMillisecond),
+      (this.AssemblyLogData.i_tool_id = t),
+      (this.AssemblyId = "1026_" + t);
+  }
+  CheckIsSend() {
+    return 0 !== this.AssemblyLogData.o_report.length;
+  }
+  AfterSend() {
+    this.AssemblyLogData.o_report.length = 0;
+  }
+}
+exports.ExploreToolAssemblyLogData = ExploreToolAssemblyLogData;
+class ExploreToolUseLogData extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments),
+      (this.event_id = "1026"),
+      (this.i_tool_id = ""),
+      (this.o_report = []);
+  }
+}
+exports.ExploreToolUseLogData = ExploreToolUseLogData;
 class ExploreToolSwitchLogData extends PlayerCommonLogData {
   constructor() {
     super(...arguments),
@@ -685,10 +735,9 @@ class ExploreToolItemUseLogData extends PlayerCommonLogData {
   }
 }
 exports.ExploreToolItemUseLogData = ExploreToolItemUseLogData;
-class HookSkillUseLogData extends PlayerCommonLogData {
+class HookSkillUseLogData {
   constructor() {
-    super(...arguments),
-      (this.event_id = "1012"),
+    (this.event_id = "1012"),
       (this.i_father_area_id = 0),
       (this.i_area_id = 0),
       (this.f_pos_x = 0),
@@ -698,10 +747,9 @@ class HookSkillUseLogData extends PlayerCommonLogData {
   }
 }
 exports.HookSkillUseLogData = HookSkillUseLogData;
-class ManipulateSkillUseLogData extends PlayerCommonLogData {
+class ManipulateSkillUseLogData {
   constructor() {
-    super(...arguments),
-      (this.event_id = "1013"),
+    (this.event_id = "1013"),
       (this.i_father_area_id = 0),
       (this.i_area_id = 0),
       (this.f_pos_x = 0),
@@ -711,10 +759,9 @@ class ManipulateSkillUseLogData extends PlayerCommonLogData {
   }
 }
 exports.ManipulateSkillUseLogData = ManipulateSkillUseLogData;
-class ScanSkillUseLogData extends PlayerCommonLogData {
+class ScanSkillUseLogData {
   constructor() {
-    super(...arguments),
-      (this.event_id = "1014"),
+    (this.event_id = "1014"),
       (this.i_father_area_id = 0),
       (this.i_area_id = 0),
       (this.f_pos_x = 0),
@@ -724,10 +771,9 @@ class ScanSkillUseLogData extends PlayerCommonLogData {
   }
 }
 exports.ScanSkillUseLogData = ScanSkillUseLogData;
-class FollowShooterUseLogData extends PlayerCommonLogData {
+class FollowShooterUseLogData {
   constructor() {
-    super(...arguments),
-      (this.event_id = "1025"),
+    (this.event_id = "1025"),
       (this.i_father_area_id = 0),
       (this.i_area_id = 0),
       (this.f_pos_x = 0),
@@ -760,11 +806,19 @@ class ActivityViewJumpClickLogData extends PlayerCommonLogData {
       (this.event_id = "1021"),
       (this.i_activity_id = 0),
       (this.i_activity_type = 0),
-      (this.i_time_left = 0),
-      (this.i_button_type = 0);
+      (this.i_unlock = 0);
   }
 }
 exports.ActivityViewJumpClickLogData = ActivityViewJumpClickLogData;
+class ActivityLockConditionClickLogData extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments),
+      (this.event_id = "1029"),
+      (this.i_activity_id = 0),
+      (this.i_activity_type = 0);
+  }
+}
+exports.ActivityLockConditionClickLogData = ActivityLockConditionClickLogData;
 class ActivityRecallLogData extends PlayerCommonLogData {
   constructor() {
     super(...arguments),
@@ -776,4 +830,31 @@ class ActivityRecallLogData extends PlayerCommonLogData {
   }
 }
 exports.ActivityRecallLogData = ActivityRecallLogData;
+class StartSdkPayEvent extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments), (this.event_id = "1040"), (this.s_sdk_pay_order = "");
+  }
+}
+exports.StartSdkPayEvent = StartSdkPayEvent;
+class SuccessSdkPayEvent extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments), (this.event_id = "1041"), (this.s_sdk_pay_order = "");
+  }
+}
+exports.SuccessSdkPayEvent = SuccessSdkPayEvent;
+class FailSdkPayEvent extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments),
+      (this.event_id = "1042"),
+      (this.s_sdk_pay_order = ""),
+      (this.s_reason = "");
+  }
+}
+exports.FailSdkPayEvent = FailSdkPayEvent;
+class SdkPayGetServerBillEvent extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments), (this.event_id = "1043"), (this.s_sdk_pay_order = "");
+  }
+}
+exports.SdkPayGetServerBillEvent = SdkPayGetServerBillEvent;
 //# sourceMappingURL=LogReportDefine.js.map

@@ -33,7 +33,8 @@ class Activity {
   get PreShowGuideQuest() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.preshowguidequestLength(),
-      (t) => this.preshowguidequest(t),
+      this.preshowguidequest,
+      this,
     );
   }
   get IfShowQuestLeftTime() {
@@ -48,9 +49,11 @@ class Activity {
   get TabResource2() {
     return this.tabresource2();
   }
-  get TabSprite() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.tabspriteLength(), (t) =>
-      this.tabsprite(t),
+  get TabTexture() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.tabtextureLength(),
+      this.tabtexture,
+      this,
     );
   }
   get Name() {
@@ -152,16 +155,16 @@ class Activity {
     var i = this.J7.__offset(this.z7, 28);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  GetTabspriteAt(t) {
-    return this.tabsprite(t);
+  GetTabtextureAt(t) {
+    return this.tabtexture(t);
   }
-  tabsprite(t, i) {
+  tabtexture(t, i) {
     var s = this.J7.__offset(this.z7, 30);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
-  tabspriteLength() {
+  tabtextureLength() {
     var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }

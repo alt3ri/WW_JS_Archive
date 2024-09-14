@@ -91,12 +91,12 @@ let SceneItemExploreInteractComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(185)),
+        (this.Hte = this.Entity.GetComponent(187)),
         (this.EIe = this.Entity.GetComponent(0)),
-        (this.Oln = this.Entity.GetComponent(117)),
-        (this.vtn = this.Entity.GetComponent(76)),
+        (this.Oln = this.Entity.GetComponent(118)),
+        (this.vtn = this.Entity.GetComponent(77)),
         this.vtn.AddOnPlayerOverlapCallback(this.eln),
-        (this.Lie = this.Entity.GetComponent(180)),
+        (this.Lie = this.Entity.GetComponent(181)),
         EventSystem_1.EventSystem.OnceWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
@@ -136,7 +136,7 @@ let SceneItemExploreInteractComponent =
   });
 (SceneItemExploreInteractComponent = SceneItemExploreInteractComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(136)],
+    [(0, RegisterComponent_1.RegisterComponent)(137)],
     SceneItemExploreInteractComponent,
   )),
   (exports.SceneItemExploreInteractComponent =

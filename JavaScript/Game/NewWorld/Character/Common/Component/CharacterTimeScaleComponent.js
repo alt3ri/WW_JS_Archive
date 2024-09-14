@@ -3,19 +3,19 @@ var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, o) {
     var r,
-      n = arguments.length,
-      s =
-        n < 3
+      s = arguments.length,
+      n =
+        s < 3
           ? t
           : null === o
             ? (o = Object.getOwnPropertyDescriptor(t, i))
             : o;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      s = Reflect.decorate(e, t, i, o);
+      n = Reflect.decorate(e, t, i, o);
     else
       for (var a = e.length - 1; 0 <= a; a--)
-        (r = e[a]) && (s = (n < 3 ? r(s) : 3 < n ? r(t, i, s) : r(t, i)) || s);
-    return 3 < n && s && Object.defineProperty(t, i, s), s;
+        (r = e[a]) && (n = (s < 3 ? r(n) : 3 < s ? r(t, i, n) : r(t, i)) || n);
+    return 3 < s && n && Object.defineProperty(t, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterTimeScaleComponent = void 0);
@@ -58,41 +58,52 @@ let CharacterTimeScaleComponent = class CharacterTimeScaleComponent extends Pawn
       o = 0,
       r = 1;
     for (; !this.TimeScaleList.Empty; ) {
-      var n = this.TimeScaleList.Top;
-      if (!n) break;
-      if (this.IsTimescaleValid(n, t)) {
-        (i = n.CalculateTimeScale()),
-          (o = n.SourceType),
+      var s = this.TimeScaleList.Top;
+      if (!s) break;
+      if (this.IsTimescaleValid(s, t)) {
+        (i = s.CalculateTimeScale()),
+          (o = s.SourceType),
           (r =
-            n.EndTime - n.StartTime >=
+            s.EndTime - s.StartTime >=
             AudioDefine_1.ENTITY_TIMESCALE_ENABLE_THRESHOLD
               ? i
               : this.CKr);
         break;
       }
-      this.TimeScaleMap.delete(n.Id), this.TimeScaleList.Pop();
+      this.TimeScaleMap.delete(s.Id), this.TimeScaleList.Pop();
     }
-    var s,
+    var n,
       a = this.Entity.GetComponent(15),
       a =
         (!this.ActorComp ||
           this.ActorComp.IsMoveAutonomousProxy ||
           (a && a.IsDead()) ||
           ((i = this.gKr), (r = this.gKr)),
+        0 < this.RemoveLockTimestamp &&
+          this.Entity.GetComponent(0)?.IsMonster() &&
+          (2 < (a = Time_1.Time.NowSeconds - this.RemoveLockTimestamp)
+            ? Log_1.Log.CheckError() &&
+              Log_1.Log.Error("Character", 20, "大招时停恢复时间过长", [
+                "gap time",
+                a,
+              ])
+            : Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug("Character", 20, "大招时停恢复", ["gap time", a]),
+          (this.RemoveLockTimestamp = -1)),
         r * this.Entity.TimeDilation);
     a !== this.dKr &&
-      ((s = this.ActorComp?.Actor)
+      ((n = this.ActorComp?.Actor)
         ? (AudioSystem_1.AudioSystem.SetRtpcValue(
             "entity_time_scale_combat",
             a,
-            { Actor: s },
+            { Actor: n },
           ),
           a < AudioDefine_1.ENTITY_TIMESCALE_PAUSE_THRESHOLD &&
             this.dKr >= AudioDefine_1.ENTITY_TIMESCALE_PAUSE_THRESHOLD &&
-            AudioSystem_1.AudioSystem.PostEvent("time_scale_pause", s))
+            AudioSystem_1.AudioSystem.PostEvent("time_scale_pause", n))
         : a >= AudioDefine_1.ENTITY_TIMESCALE_PAUSE_THRESHOLD &&
           this.dKr < AudioDefine_1.ENTITY_TIMESCALE_PAUSE_THRESHOLD &&
-          AudioSystem_1.AudioSystem.PostEvent("time_scale_resume", s)),
+          AudioSystem_1.AudioSystem.PostEvent("time_scale_resume", n)),
       (this.dKr = a),
       (this.CKr = r),
       i !== this.TimeScaleInternal &&
@@ -120,7 +131,7 @@ let CharacterTimeScaleComponent = class CharacterTimeScaleComponent extends Pawn
   }
 };
 (CharacterTimeScaleComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(164)],
+  [(0, RegisterComponent_1.RegisterComponent)(165)],
   CharacterTimeScaleComponent,
 )),
   (exports.CharacterTimeScaleComponent = CharacterTimeScaleComponent);

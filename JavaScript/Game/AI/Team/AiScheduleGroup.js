@@ -341,7 +341,7 @@ class AiScheduleGroup {
     AiScheduleGroup.Pse.splice(0, AiScheduleGroup.Pse.length);
     for (const l of this.dse) {
       var t = this.mse.get(l);
-      if (l.CharActorComp.Entity.CheckGetComponent(188).HasTag(-1503953470))
+      if (l.CharActorComp.Entity.CheckGetComponent(190).HasTag(-1503953470))
         if (t.NextScheduleTimeBeAttack) {
           if (t.NextScheduleTimeBeAttack < Time_1.Time.WorldTime) {
             AiScheduleGroup.Pse.push(l);
@@ -357,11 +357,11 @@ class AiScheduleGroup {
       else t.NextScheduleTimeBeAttack = void 0;
       t.HasAttack
         ? t.NextScheduleTimeAttack < Time_1.Time.WorldTime &&
-          !l.CharActorComp.Entity.CheckGetComponent(188).HasTag(-1371021686) &&
+          !l.CharActorComp.Entity.CheckGetComponent(190).HasTag(-1371021686) &&
           AiScheduleGroup.Pse.push(l)
         : t.NextScheduleTimeNoAttack < Time_1.Time.WorldTime
           ? AiScheduleGroup.Pse.push(l)
-          : l.CharActorComp.Entity.CheckGetComponent(188).HasTag(-1371021686) &&
+          : l.CharActorComp.Entity.CheckGetComponent(190).HasTag(-1371021686) &&
             ((t.HasAttack = !0),
             BlackboardController_1.BlackboardController.RemoveValueByEntity(
               l.CharAiDesignComp.Entity.Id,
@@ -495,7 +495,7 @@ class AiScheduleGroup {
   }
   Ese() {
     var e = this.Target.Entity.CheckGetComponent(3),
-      t = this.Target.Entity.CheckGetComponent(53),
+      t = this.Target.Entity.CheckGetComponent(54),
       t =
         t?.Valid && t.CharacterController
           ? t.CharacterController.K2_GetActorRotation().Yaw

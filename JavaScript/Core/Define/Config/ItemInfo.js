@@ -17,8 +17,10 @@ class ItemInfo {
     return this.name();
   }
   get ShowTypes() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.showtypesLength(), (t) =>
-      this.showtypes(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.showtypesLength(),
+      this.showtypes,
+      this,
     );
   }
   get AttributesDescription() {
@@ -63,9 +65,16 @@ class ItemInfo {
   get DecomposeInfo() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.decomposeinfoLength(),
-      (t) => this.decomposeinfo(t)?.key(),
-      (t) => this.decomposeinfo(t)?.value(),
+      this.decomposeinfoKey,
+      this.decomposeinfoValue,
+      this,
     );
+  }
+  decomposeinfoKey(t) {
+    return this.decomposeinfo(t)?.key();
+  }
+  decomposeinfoValue(t) {
+    return this.decomposeinfo(t)?.value();
   }
   get UseLevel() {
     return this.uselevel();
@@ -77,16 +86,25 @@ class ItemInfo {
     return this.durationstamp();
   }
   get ItemAccess() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.itemaccessLength(), (t) =>
-      this.itemaccess(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.itemaccessLength(),
+      this.itemaccess,
+      this,
     );
   }
   get Parameters() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.parametersLength(),
-      (t) => this.parameters(t)?.key(),
-      (t) => this.parameters(t)?.value(),
+      this.parametersKey,
+      this.parametersValue,
+      this,
     );
+  }
+  parametersKey(t) {
+    return this.parameters(t)?.key();
+  }
+  parametersValue(t) {
+    return this.parameters(t)?.value();
   }
   get ShowUseButton() {
     return this.showusebutton();
@@ -100,7 +118,8 @@ class ItemInfo {
   get CompositeItem() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.compositeitemLength(),
-      (t) => this.compositeitem(t),
+      this.compositeitem,
+      this,
     );
   }
   get EntityConfig() {

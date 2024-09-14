@@ -84,13 +84,14 @@ class LevelAiPlanner {
     (this.dTe = !0), (this.mTe = void 0), (this.gTe = !1);
   }
   DoPlanning() {
-    this.dTe ||
-      ((this.uTe = this.fTe()),
-      void 0 === this.uTe
-        ? this.pTe()
-        : this.uTe.IsComplete()
-          ? ((this.mTe = this.uTe), this.pTe())
-          : this.vTe());
+    if (!this.dTe)
+      for (;;) {
+        if (((this.uTe = this.fTe()), void 0 === this.uTe))
+          return void this.pTe();
+        if (this.uTe.IsComplete())
+          return (this.mTe = this.uTe), void this.pTe();
+        this.vTe();
+      }
   }
   pTe() {
     this.MTe(),

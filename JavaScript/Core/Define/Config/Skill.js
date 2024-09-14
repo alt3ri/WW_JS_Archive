@@ -30,17 +30,22 @@ class Skill {
   get SkillInfoList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.skillinfolistLength(),
-      (t) => this.skillinfolist(t),
+      this.skillinfolist,
+      this,
     );
   }
   get BuffList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.bufflistLength(), (t) =>
-      this.bufflist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.bufflistLength(),
+      this.bufflist,
+      this,
     );
   }
   get DamageList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.damagelistLength(), (t) =>
-      this.damagelist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.damagelistLength(),
+      this.damagelist,
+      this,
     );
   }
   get Icon() {
@@ -61,13 +66,15 @@ class Skill {
   get SkillTagList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.skilltaglistLength(),
-      (t) => this.skilltaglist(t),
+      this.skilltaglist,
+      this,
     );
   }
   get SkillDetailNum() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.skilldetailnumLength(),
-      (t) => this.skilldetailnum(t),
+      this.skilldetailnum,
+      this,
     );
   }
   get MultiSkillDescribe() {
@@ -76,7 +83,8 @@ class Skill {
   get MultiSkillDetailNum() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.multiskilldetailnumLength(),
-      (t) => this.multiskilldetailnum(t),
+      this.multiskilldetailnum,
+      this,
     );
   }
   __init(t, i) {

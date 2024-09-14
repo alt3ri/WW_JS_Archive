@@ -162,13 +162,13 @@ class RoguelikeSelectSpecialView extends RogueSelectBaseView_1.RogueSelectBaseVi
       ((i = s[0]),
       (e = (s =
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          i.J4n,
-        ) >= i.o9n)
+          i.s5n,
+        ) >= i.m9n)
         ? "RogueSpecialRefreshCost"
         : "RogueSpecialRefreshCost_Not"),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(6), e, i.o9n),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(6), e, i.m9n),
       (e = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCurrencyConfig(
-        i.J4n,
+        i.s5n,
       )),
       this.SetTextureByPath(e.IconSmall, this.GetTexture(5)),
       this.GetButton(3).SetSelfInteractive(0 < t && s));

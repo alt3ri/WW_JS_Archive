@@ -16,7 +16,7 @@ class WeaponPreviewView extends UiViewBase_1.UiViewBase {
       (this.q2i = void 0),
       (this.G2i = void 0),
       (this.lqe = void 0),
-      (this.Sjs = !0),
+      (this.Vjs = !0),
       (this.AMo = () => {
         UiManager_1.UiManager.CloseView("WeaponPreviewView");
       }),
@@ -34,12 +34,12 @@ class WeaponPreviewView extends UiViewBase_1.UiViewBase {
             e,
             this.N2i,
             this.O2i,
-            this.Sjs,
+            this.Vjs,
           );
       }),
       (this.N2i = void 0),
       (this.O2i = void 0),
-      (this.gzs = (e) => {
+      (this.cea = (e) => {
         let i = this.G2i.GetCurSelectedData();
         var t = i.GetFullLevelWeaponData();
         1 === e && t && (i = t),
@@ -48,7 +48,7 @@ class WeaponPreviewView extends UiViewBase_1.UiViewBase {
             i,
             this.N2i,
             this.O2i,
-            this.Sjs,
+            this.Vjs,
           );
       });
   }
@@ -67,7 +67,7 @@ class WeaponPreviewView extends UiViewBase_1.UiViewBase {
       this.G2i.Init(this.GetScrollViewWithScrollbar(2)),
       this.G2i.SetWeaponChangeCallBack(this.k2i),
       (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(1))),
-      await this.lqe.CreateToggleTab(this.gzs),
+      await this.lqe.CreateToggleTab(this.cea),
       this.lqe.SetToggleName("PrefabTextItem_3652268202_Text"),
       this.lqe.SetCloseCallBack(this.AMo);
     var e = this.OpenParam.WeaponDataList;
@@ -87,7 +87,7 @@ class WeaponPreviewView extends UiViewBase_1.UiViewBase {
     e
       ? ((this.N2i = e.WeaponObserver), (this.O2i = e.WeaponScabbardObserver))
       : ((this.N2i = UiSceneManager_1.UiSceneManager.InitWeaponObserver(
-          this.Sjs,
+          this.Vjs,
         )),
         (this.O2i =
           UiSceneManager_1.UiSceneManager.InitWeaponScabbardObserver()));

@@ -170,7 +170,7 @@ class LevelEventOpenSystem extends LevelGeneralBase_1.LevelEventBase {
         this.QDe,
       );
   }
-  async n2n(t, n) {
+  async d2n(t, n) {
     var s = this.KDe.get(t.SystemType);
     if (s)
       if (ModelManager_1.ModelManager.GameModeModel.WorldDoneAndLoadingClosed) {
@@ -180,7 +180,7 @@ class LevelEventOpenSystem extends LevelGeneralBase_1.LevelEventBase {
         if (
           (o?.EntityId &&
             i &&
-            (EntitySystem_1.EntitySystem.GetComponent(o.EntityId, 181)
+            (EntitySystem_1.EntitySystem.GetComponent(o.EntityId, 182)
               ?.CanInteraction ||
               (TsInteractionUtils_1.TsInteractionUtils.RegisterWaitOpenViewName(
                 i,
@@ -276,7 +276,7 @@ class LevelEventOpenSystem extends LevelGeneralBase_1.LevelEventBase {
   }
   ExecuteNew(e, t) {
     e
-      ? this.n2n(e, t)
+      ? this.d2n(e, t)
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("LevelEvent", 37, "[LevelEventOpenSystem]参数类型出错");
   }
@@ -288,7 +288,7 @@ class LevelEventOpenSystem extends LevelGeneralBase_1.LevelEventBase {
       else {
         let e = void 0;
         s = s?.EntityId;
-        (e = s ? EntitySystem_1.EntitySystem.Get(s)?.GetComponent(171) : e) &&
+        (e = s ? EntitySystem_1.EntitySystem.Get(s)?.GetComponent(172) : e) &&
           (TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(n),
           e.SetUiOpenPerformance(n, t.BoardId));
       }

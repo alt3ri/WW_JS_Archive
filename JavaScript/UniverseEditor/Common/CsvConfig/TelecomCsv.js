@@ -21,7 +21,7 @@ const CsvLoader_1 = require("./CsvLoader"),
       Name: "Talker",
       CnName: "对话人",
       Type: "Int",
-      RenderType: 38,
+      RenderType: 39,
     }),
   ];
 class TeleComCsvLoader extends CsvLoader_1.CsvLoader {

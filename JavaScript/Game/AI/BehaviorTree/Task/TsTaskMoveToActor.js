@@ -55,7 +55,7 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
       var s = e.CharActorComp,
         r =
           (this.TsWalkOff ||
-            s.Entity.GetComponent(37)?.SetWalkOffLedgeRecord(!1),
+            s.Entity.GetComponent(38)?.SetWalkOffLedgeRecord(!1),
           BlackboardController_1.BlackboardController.GetEntityIdByEntity(
             e.CharAiDesignComp.Entity.Id,
             this.TsBlackboardKeyActor,
@@ -64,7 +64,7 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
       if (r && h?.Valid) {
         this.SelectedTargetLocation =
           AiContollerLibrary_1.AiControllerLibrary.GetLocationFromEntity(h);
-        var a = e.CharAiDesignComp?.Entity.GetComponent(160);
+        var a = e.CharAiDesignComp?.Entity.GetComponent(161);
         if (a?.Valid)
           switch (this.TsMoveState) {
             case 1:
@@ -80,7 +80,7 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
           }
         (this.NextCheckTime = Time_1.Time.WorldTime + this.TsFixPeriod),
           this.CacheVector.DeepCopy(s.ActorLocation),
-          s.Entity.GetComponent(91)?.PositionState ===
+          s.Entity.GetComponent(92)?.PositionState ===
             CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
             (this.CacheVector.Z -= s.HalfHeight),
           this.FindNewPath(t, this.CacheVector.ToUeVector());
@@ -120,7 +120,7 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
             NAVIGATION_COMPLETE_DISTANCE &&
             ((this.SelectedTargetLocation = a),
             this.CacheVector.DeepCopy(h),
-            r.Entity.GetComponent(91)?.PositionState ===
+            r.Entity.GetComponent(92)?.PositionState ===
               CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
               (this.CacheVector.Z -= r.HalfHeight),
             this.FindNewPath(t, this.CacheVector.ToUeVector()));
@@ -148,7 +148,7 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
             ),
             a.DivisionEqual(t),
             r.SetInputDirect(a, !0);
-          var l = s.CharAiDesignComp?.Entity.GetComponent(160);
+          var l = s.CharAiDesignComp?.Entity.GetComponent(161);
           if (l?.Valid)
             switch (this.TsMoveState) {
               case 1:
@@ -186,7 +186,7 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
       (AiContollerLibrary_1.AiControllerLibrary.ClearInput(this.AIOwner),
       this.TsWalkOff ||
         this.AIOwner.AiController.CharActorComp.Entity.GetComponent(
-          37,
+          38,
         )?.SetWalkOffLedgeRecord(!0));
   }
 }

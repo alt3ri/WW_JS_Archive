@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiSequencePlayer = void 0);
-const LevelSequencePlayer_1 = require("../../Module/Common/LevelSequencePlayer");
+const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  LevelSequencePlayer_1 = require("../../Module/Common/LevelSequencePlayer");
 class UiSequencePlayer {
   constructor(e) {
     (this.rur = new Map()),
@@ -20,6 +21,7 @@ class UiSequencePlayer {
             e(t);
           });
       }),
+      (this.Hja = void 0),
       (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(e)),
       this.SPe.BindSequenceCloseEvent(this.K3t),
       this.SPe.BindSequenceStartEvent(this.nur);
@@ -106,6 +108,31 @@ class UiSequencePlayer {
   }
   Clear() {
     this.SPe.Clear(), (this.SPe = void 0);
+  }
+  async LitePlayAsync(e, t = !1, i = !1) {
+    var s;
+    return (
+      !this.Hja &&
+      ((s = new CustomPromise_1.CustomPromise()), !!this.SPe) &&
+      ((this.Hja = e),
+      this.SPe.PlaySequencePurely(e, t, i, s),
+      (e = await s.Promise),
+      (this.Hja = void 0),
+      e)
+    );
+  }
+  LiteStop() {
+    this.SPe && this.Hja && this.SPe.StopSequenceByKey(this.Hja, !1, !1),
+      (this.Hja = void 0);
+  }
+  LiteExit() {
+    this.LiteStop(), this.Clear();
+  }
+  LiteJumpToEnd(e) {
+    this.SPe &&
+      (this.LitePlayAsync(e, !0, !1),
+      this.SPe.EndSequenceLastFrame(e),
+      this.LiteStop());
   }
 }
 exports.UiSequencePlayer = UiSequencePlayer;

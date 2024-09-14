@@ -29,7 +29,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
   constructor() {
     super(...arguments),
       (this.nx = void 0),
-      (this.QTn = 0),
+      (this.QTn = new Map()),
       (this.TXi = []),
       (this.LXi = []),
       (this.DXi = void 0),
@@ -62,10 +62,12 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
           (this.RXi = void 0),
           i && this.GXi();
       }),
-      (this.NXi = (t) => {
-        t || 0 !== this.QTn
-          ? (t || FlowNetworks_1.FlowNetworks.RequestFlowRestart(this.QTn),
-            (this.QTn = 0))
+      (this.NXi = (t, i) => {
+        i || this.QTn.has(t)
+          ? (i ||
+              (this.x5a(this.QTn.get(t)),
+              FlowNetworks_1.FlowNetworks.RequestFlowRestart(t)),
+            this.QTn.delete(t))
           : this.LogError("ContextCache undefined");
       }),
       (this.OXi = (t, i) => {
@@ -73,7 +75,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
           (this.UXi = void 0),
           this.nx && (this.nx.CurSubActionId = 0),
           (this.AXi = void 0),
-          i ? this.kXi() : this.tua(!1);
+          i ? this.kXi() : this.Tca(!1);
       }),
       (this.FXi = () => {
         this.wXi?.Remove(),
@@ -106,7 +108,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
           ? EntitySystem_1.EntitySystem.Get(this.nx.Context.EntityId)
           : t)
     ) {
-      var i = t.GetComponent(181);
+      var i = t.GetComponent(182);
       if (i) return i.GetInteractController()?.GetInteractPoint();
     }
   }
@@ -164,7 +166,9 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
         )) ||
         !this.nx ||
         (i && this.nx.FlowIncId !== i) ||
-        ((this.nx.IsBreakdown = !0), this.BackgroundActions(t, !1, e));
+        ((this.nx.IsBreakdown = !0),
+        this.BackgroundActions(t, !1, e),
+        this.x5a(this.nx.RollbackRecord));
   }
   ForceFinishActionsByGm() {
     this.nx &&
@@ -212,7 +216,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
       this.nx.IsServerEnd ||
         !this.nx.IsServerNotify ||
         this.nx.IsAsync ||
-        ((this.QTn = this.nx.FlowIncId),
+        (this.QTn.set(this.nx.FlowIncId, [...this.nx.RollbackRecord]),
         FlowNetworks_1.FlowNetworks.RequestFlowEnd(
           this.nx.FlowIncId,
           this.nx.IsBackground,
@@ -236,7 +240,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
   kXi() {
     var t, i, e;
     this.LXi.length <= 0
-      ? this.tua()
+      ? this.Tca()
       : ((t = this.LXi.pop()),
         (i = ControllerHolder_1.ControllerHolder.FlowController.GetFlowAction(
           t.Name,
@@ -254,9 +258,25 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
               ]),
             this.kXi()));
   }
-  tua(t = !0) {
+  Tca(t = !0) {
     var i;
     this.xXi && ((i = this.xXi), (this.xXi = void 0), i(t));
+  }
+  x5a(t) {
+    if (this.nx?.RollbackRecord.length)
+      for (const e of t) {
+        var i =
+          ControllerHolder_1.ControllerHolder.FlowController.GetFlowAction(
+            e.ActionInfo.Name,
+          );
+        i
+          ? i.GetAction().Rollback(e, this.nx)
+          : Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("Plot", 27, "无客户端实现的剧情行为 ", [
+              "Name",
+              e.ActionInfo.Name,
+            ]);
+      }
   }
   FinishShowCenterTextAction(t) {
     let i = !0;
@@ -280,41 +300,42 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
         : t();
   }
   BackgroundActions(t, i = !0, e = !1) {
-    !this.nx ||
+    this.nx &&
+      ((this.nx.IsServerEnd = e),
       this.nx.IsBackground ||
-      (!this.nx.CanSkip && ModelManager_1.ModelManager.SequenceModel.IsPlaying
-        ? Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Plot", 27, "当前状态不可跳过")
-        : (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Plot",
-              27,
-              "跳过剧情",
-              ["原因", t],
-              ["Id", this.nx.FormatId],
-              ["ServerNotify", this.nx.IsServerNotify],
-              ["ServerEnd", this.nx.IsServerEnd],
-            ),
-          this.wXi?.Remove(),
-          (this.wXi = void 0),
-          (this.nx.IsBackground = !0),
-          (this.nx.IsServerEnd = e),
-          (this.nx.IsFadeSkip = i),
-          PlotController_1.PlotController.ClearUi(),
-          PlotController_1.PlotController.HideUi(!0),
-          i
-            ? (LevelLoadingController_1.LevelLoadingController.OpenLoading(
-                0,
-                3,
-                void 0,
-                exports.SKIP_FADE_TIME,
+        (!this.nx.CanSkip && ModelManager_1.ModelManager.SequenceModel.IsPlaying
+          ? Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Plot", 27, "当前状态不可跳过")
+          : (Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info(
+                "Plot",
+                27,
+                "跳过剧情",
+                ["原因", t],
+                ["Id", this.nx.FormatId],
+                ["ServerNotify", this.nx.IsServerNotify],
+                ["ServerEnd", this.nx.IsServerEnd],
               ),
-              (this.wXi = TimerSystem_1.TimerSystem.Delay(
-                this.FXi,
-                exports.SKIP_FADE_TIME *
-                  CommonDefine_1.MILLIONSECOND_PER_SECOND,
-              )))
-            : this.FXi()));
+            this.wXi?.Remove(),
+            (this.wXi = void 0),
+            (this.nx.IsBackground = !0),
+            (this.nx.IsServerEnd = e),
+            (this.nx.IsFadeSkip = i),
+            PlotController_1.PlotController.ClearUi(),
+            PlotController_1.PlotController.HideUi(!0),
+            i
+              ? (LevelLoadingController_1.LevelLoadingController.OpenLoading(
+                  0,
+                  3,
+                  void 0,
+                  exports.SKIP_FADE_TIME,
+                ),
+                (this.wXi = TimerSystem_1.TimerSystem.Delay(
+                  this.FXi,
+                  exports.SKIP_FADE_TIME *
+                    CommonDefine_1.MILLIONSECOND_PER_SECOND,
+                )))
+              : this.FXi())));
   }
   VXi() {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("Plot", 27, "跳过剧情: 演出对话"),

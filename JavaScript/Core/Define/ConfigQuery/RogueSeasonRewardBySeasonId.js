@@ -17,31 +17,44 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0,
+const initStat = Stats_1.Stat.Create("configRogueSeasonRewardBySeasonId.Init"),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configRogueSeasonRewardBySeasonId.GetConfigList",
+  ),
   CONFIG_LIST_STAT_PREFIX = "configRogueSeasonRewardBySeasonId.GetConfigList(";
 exports.configRogueSeasonRewardBySeasonId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfigList: (o, e = !0) => {
-    var n;
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
-        var i = KEY_PREFIX + `#${o})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (r) return r;
+  GetConfigList: (o, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start();
+    var e = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${o})`),
+      i =
+        (e.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
+      if (n) {
+        var t = KEY_PREFIX + `#${o})`;
+        const g = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (g)
+          return (
+            e.Stop(),
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
+          );
       }
       if (
-        (n = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair))
+        (i = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair))
       ) {
-        const r = new Array();
+        const g = new Array();
         for (;;) {
           if (
             1 !==
@@ -53,30 +66,41 @@ exports.configRogueSeasonRewardBySeasonId = {
             break;
           var a = void 0;
           if (
-            (([n, a] = ConfigCommon_1.ConfigCommon.GetValue(
+            (([i, a] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
               0,
               ...logPair,
               ["SeasonId", o],
             )),
-            !n)
+            !i)
           )
-            return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
+            return (
+              ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+              e.Stop(),
+              getConfigListStat.Stop(),
+              void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+            );
           a = RogueSeasonReward_1.RogueSeasonReward.getRootAsRogueSeasonReward(
             new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
           );
-          r.push(a);
+          g.push(a);
         }
         return (
-          e &&
-            ((i = KEY_PREFIX + `#${o})`),
-            ConfigCommon_1.ConfigCommon.SaveConfig(i, r, r.length)),
+          n &&
+            ((t = KEY_PREFIX + `#${o})`),
+            ConfigCommon_1.ConfigCommon.SaveConfig(t, g, g.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          r
+          e.Stop(),
+          getConfigListStat.Stop(),
+          ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+          g
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    e.Stop(),
+      getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=RogueSeasonRewardBySeasonId.js.map

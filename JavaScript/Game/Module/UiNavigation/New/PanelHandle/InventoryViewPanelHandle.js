@@ -22,8 +22,8 @@ class InventoryViewPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHand
     this.oBo = r;
     var n = this.rBo();
     if (n)
-      for (let e = 0, t = n.ListenerList.Num(); e < t; ++e)
-        n.ListenerList.Get(e).GetBehaviorComponent().bToggleOnSelect = !r;
+      for (let e = 0, t = n.ListenerList.length; e < t; ++e)
+        n.ListenerList[e].GetBehaviorComponent().bToggleOnSelect = !r;
   }
 }
 exports.InventoryViewPanelHandle = InventoryViewPanelHandle;

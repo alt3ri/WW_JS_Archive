@@ -137,13 +137,13 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
               Log_1.Log.Debug("Guide", 34, "当前无追踪任务");
       }),
       (this.nro = (e, t, i) => {
-        t === Protocol_1.Aki.Protocol.tTs.Proto_Finish &&
+        t === Protocol_1.Aki.Protocol.hTs.Proto_Finish &&
           this.zoo.has(e) &&
           (this.$oo === e && (this.iro(), (this.$oo = void 0)),
           this.zoo.delete(e));
       }),
       (this.$Ct = (e) => {
-        e === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
+        e === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
           (this.iro(),
           (e = ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()),
           (this.$oo = e ? e.Id : void 0));

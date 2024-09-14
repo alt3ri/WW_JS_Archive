@@ -1,141 +1,111 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineTaskMoveToTarget = void 0);
-const Log_1 = require("../../../../Core/Common/Log"),
-  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+const Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
   AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
-  TsAiController_1 = require("../../Controller/TsAiController"),
   AiStateMachineTask_1 = require("./AiStateMachineTask"),
-  GravityUtils_1 = require("../../../Utils/GravityUtils"),
-  NAVIGATION_COMPLETE_DISTANCE = 10;
+  TRIGGER_PERIOD = 500;
 class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachineTask {
   constructor() {
     super(...arguments),
+      (this.TargetType = 0),
       (this.MoveState = 0),
-      (this.NavigationOn = !1),
       (this.EndDistance = 0),
       (this.TurnSpeed = 0),
-      (this.FixPeriod = 0),
       (this.WalkOff = !1),
-      (this.sse = Vector_1.Vector.Create()),
-      (this.ase = !1),
-      (this.hse = void 0),
-      (this.lse = 0),
+      (this.Due = Vector_1.Vector.Create()),
       (this.Xne = !1),
-      (this._se = 0);
+      (this._se = 0),
+      (this.dRa = 0);
   }
   OnInit(t) {
     return (
+      (this.TargetType = t.TaskMoveToTarget.TargetType),
       (this.MoveState = t.TaskMoveToTarget.MoveState),
-      (this.NavigationOn = t.TaskMoveToTarget.NavigationOn),
       (this.EndDistance = t.TaskMoveToTarget.EndDistance),
       (this.TurnSpeed = t.TaskMoveToTarget.TurnSpeed),
-      (this.FixPeriod = t.TaskMoveToTarget.FixPeriod),
       (this.WalkOff = t.TaskMoveToTarget.WalkOff),
       !0
     );
   }
   OnEnter(t) {
-    var i = this.Node.AiComponent.TsAiController,
-      e = i.AiController;
-    if (e) {
-      var r = e.CharActorComp;
-      if (
-        (this.WalkOff || r.Entity.GetComponent(37)?.SetWalkOffLedgeRecord(!1),
-        (this._se = this.Node.Owner.GetBlackboard(2) ?? 0),
-        this._se)
-      ) {
-        var s = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
-          this._se,
-        );
-        if (s) {
-          (this.sse.X = s.Transform.Pos.X),
-            (this.sse.Y = s.Transform.Pos.Y),
-            (this.sse.Z = s.Transform.Pos.Z);
-          var h = e.CharAiDesignComp?.Entity.GetComponent(160);
-          if (h?.Valid)
-            switch (this.MoveState) {
-              case 1:
-                h.SetMoveState(
-                  CharacterUnifiedStateTypes_1.ECharMoveState.Walk,
-                );
-                break;
-              case 2:
-                h.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Run);
-                break;
-              case 3:
-                h.SetMoveState(
-                  CharacterUnifiedStateTypes_1.ECharMoveState.Sprint,
-                );
-            }
-          this.use(i, r.ActorLocation);
-        } else
-          Log_1.Log.CheckError() &&
-            Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
-              "Type",
-              i.GetClass().GetName(),
-            ]);
-      }
-    } else
-      Log_1.Log.CheckError() &&
-        Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
-          "Type",
-          i.GetClass().GetName(),
-        ]),
-        this.$ne();
+    switch (
+      ((this.Xne = !0),
+      this.WalkOff || this.Node.MoveComponent?.SetWalkOffLedgeRecord(!1),
+      this.TargetType)
+    ) {
+      case 0:
+        this.CRa();
+        break;
+      case 1:
+        this.gRa();
+    }
+    this.fRa();
   }
   OnTick() {
-    var t,
-      i,
-      e,
-      r = this.Node.AiComponent.TsAiController;
-    !(
-      r instanceof TsAiController_1.default &&
-      ((e = (r = r.AiController.CharActorComp).ActorLocationProxy), this.ase) &&
-      ((t = this.NavigationOn
-        ? Vector_1.Vector.Create(this.hse[this.lse])
-        : this.sse),
-      (i = Vector_1.Vector.Create(t)).Subtraction(e, i),
-      GravityUtils_1.GravityUtils.ConvertToPlanarVector(r, i),
-      (e = i.Size()),
-      (this.NavigationOn && this.lse !== this.hse.length - 1) ||
-        !(e < this.EndDistance))
-    )
-      ? this.$ne()
-      : (e < NAVIGATION_COMPLETE_DISTANCE && this.lse++,
-        AiContollerLibrary_1.AiControllerLibrary.TurnToTarget(
-          r,
-          t,
-          this.TurnSpeed,
-        ),
-        i.DivisionEqual(e),
-        r.SetInputDirect(i, !0));
+    this.Xne &&
+      1 === this.TargetType &&
+      this.Node.ElapseTime >= this.dRa + TRIGGER_PERIOD &&
+      (this.gRa(), this.fRa());
   }
-  use(t, i) {
-    this.NavigationOn
-      ? (this.hse || (this.hse = new Array()),
-        (this.ase = AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
-          t,
-          i,
-          this.sse.ToUeVector(),
-          this.hse,
-        )),
-        (this.lse = 1))
-      : (this.ase = !0);
+  CRa() {
+    var t;
+    (this._se = this.Node.Owner.GetBlackboard(2) ?? 0),
+      this._se &&
+        (t = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
+          this._se,
+        )) &&
+        ((this.Due.X = t.Transform.Pos.X),
+        (this.Due.Y = t.Transform.Pos.Y),
+        (this.Due.Z = t.Transform.Pos.Z));
   }
-  $ne() {
+  gRa() {
+    var t = this.Node.AiController.AiHateList.GetCurrentTarget(),
+      t = (t?.Valid || this.$ne(!1), t.Entity.GetComponent(1));
+    (this.Due.X = t.ActorLocation.X),
+      (this.Due.Y = t.ActorLocation.Y),
+      (this.Due.Z = t.ActorLocation.Z);
+  }
+  fRa() {
+    if (
+      this.Node.MoveComponent.MoveController.NavigateMoveToLocation(
+        {
+          Position: this.Due,
+          TurnSpeed: this.TurnSpeed,
+          Distance: this.EndDistance,
+          ResetCondition: () => !1,
+          CallbackList: [
+            (t) => {
+              this.$ne(1 === t);
+            },
+          ],
+        },
+        !1,
+        !1,
+      )
+    ) {
+      var t = this.Node.Entity.GetComponent(161);
+      if (t.Valid)
+        switch (this.MoveState) {
+          case 1:
+            t.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Walk);
+            break;
+          case 2:
+            t.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Run);
+        }
+      this.dRa = this.Node.ElapseTime;
+    } else this.$ne(!1);
+  }
+  $ne(t = 0) {
     this.Xne && ((this.Node.TaskFinish = !0), (this.Xne = !1));
   }
   OnExit() {
     var t = this.Node.AiComponent.TsAiController;
     t &&
       (AiContollerLibrary_1.AiControllerLibrary.ClearInput(t),
-      this.WalkOff ||
-        t.AiController.CharActorComp.Entity.GetComponent(
-          37,
-        )?.SetWalkOffLedgeRecord(!0));
+      this.WalkOff || this.Node.MoveComponent?.SetWalkOffLedgeRecord(!0));
   }
 }
 exports.AiStateMachineTaskMoveToTarget = AiStateMachineTaskMoveToTarget;

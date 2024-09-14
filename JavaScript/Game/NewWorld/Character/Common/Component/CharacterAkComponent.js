@@ -45,28 +45,28 @@ const UE = require("ue"),
   ENVIRONMENT_AUDIO_UPDATE_DIST_SQUARED = 4,
   AUDIO_ENTITY_TYPE_VOLUME_CONTROL = new Map([
     [
-      Protocol_1.Aki.Protocol.wks.Proto_Animal,
+      Protocol_1.Aki.Protocol.kks.Proto_Animal,
       "entity_type_volume_control_animal",
     ],
     [
-      Protocol_1.Aki.Protocol.wks.Proto_Custom,
+      Protocol_1.Aki.Protocol.kks.Proto_Custom,
       "entity_type_volume_control_custom_other",
     ],
     [
-      Protocol_1.Aki.Protocol.wks.Proto_Monster,
+      Protocol_1.Aki.Protocol.kks.Proto_Monster,
       "entity_type_volume_control_monster",
     ],
-    [Protocol_1.Aki.Protocol.wks.Proto_Npc, "entity_type_volume_control_npc"],
+    [Protocol_1.Aki.Protocol.kks.Proto_Npc, "entity_type_volume_control_npc"],
     [
-      Protocol_1.Aki.Protocol.wks.Proto_Player,
+      Protocol_1.Aki.Protocol.kks.Proto_Player,
       "entity_type_volume_control_player_role",
     ],
     [
-      Protocol_1.Aki.Protocol.wks.Proto_SceneItem,
+      Protocol_1.Aki.Protocol.kks.Proto_SceneItem,
       "entity_type_volume_control_scene_item",
     ],
     [
-      Protocol_1.Aki.Protocol.wks.Proto_Vision,
+      Protocol_1.Aki.Protocol.kks.Proto_Vision,
       "entity_type_volume_control_vision",
     ],
   ]);
@@ -124,7 +124,7 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
       !(
         !this.Ovr ||
         ((this.Hte = this.Entity.GetComponent(3)), !this.Hte?.Actor) ||
-        ((this.Gce = this.Entity.GetComponent(37)), !this.Gce) ||
+        ((this.Gce = this.Entity.GetComponent(38)), !this.Gce) ||
         ((this.jFr = !1),
         (this.VFr = !0),
         AkComponentStatic.Load(),
@@ -143,16 +143,16 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
   OnActivate() {
     var t;
     (this.IsRole =
-      this.Ovr?.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player),
+      this.Ovr?.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player),
       (this.IsP1 = !1),
       ((this.IsRole && this.Hte?.IsAutonomousProxy) ||
         (this.Ovr?.IsConcomitantEntity &&
           ((t = this.Ovr.GetSummonerId()),
           (t = ModelManager_1.ModelManager.CreatureModel?.GetEntityId(t))) &&
-          EntitySystem_1.EntitySystem.GetComponent(t, 41)?.IsP1)) &&
+          EntitySystem_1.EntitySystem.GetComponent(t, 42)?.IsP1)) &&
         (this.IsP1 = !0),
       this.IsRole &&
-        ((this.Lie = this.Entity.GetComponent(188)), this.IsP1) &&
+        ((this.Lie = this.Entity.GetComponent(190)), this.IsP1) &&
         ((this.WFr = new FoleySynthController_1.FoleySynthController(
           this.Hte,
           this,
@@ -387,8 +387,8 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
       )).K2_AttachToComponent(this.Hte.Actor.Mesh, o, 2, 2, 1, !0);
     t = this.Ovr?.GetEntityType();
     return (
-      (t !== Protocol_1.Aki.Protocol.wks.Proto_Npc &&
-        t !== Protocol_1.Aki.Protocol.wks.Proto_Monster) ||
+      (t !== Protocol_1.Aki.Protocol.kks.Proto_Npc &&
+        t !== Protocol_1.Aki.Protocol.kks.Proto_Monster) ||
         (e.bEnableOcclusion = !0),
       this.YFr(),
       this.DynamicConditionProxy.Init(this.Hte, this.AkComponentConfig),
@@ -413,13 +413,13 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
     Global_1.Global.BaseCharacter &&
       (e =
         Global_1.Global.BaseCharacter.CharacterActorComponent.Entity.GetComponent(
-          41,
+          42,
         )) &&
       (0 < o?.length ? e.SetFoleySynthFileDebug(t, o) : e.SetDebug(t));
   }
 };
 (CharacterAkComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(41)],
+  [(0, RegisterComponent_1.RegisterComponent)(42)],
   CharacterAkComponent,
 )),
   (exports.CharacterAkComponent = CharacterAkComponent);

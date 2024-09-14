@@ -7,11 +7,14 @@ const cpp_1 = require("cpp"),
   Application_1 = require("../../../Core/Application/Application"),
   AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   Info_1 = require("../../../Core/Common/Info"),
+  LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
   Log_1 = require("../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   AppLinks_1 = require("../../../Launcher/AppLinks"),
   BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
@@ -43,24 +46,26 @@ const cpp_1 = require("cpp"),
   TWO_THOUSAND = 2e3,
   RECONNECT_TIME_OUT = 2e4;
 class ReconnectResult {
-  constructor(e, o, n = void 0) {
+  constructor(e, n, o = void 0, t = !1) {
     (this.Result = 0),
       (this.Step = ReconnectDefine_1.EReconnectProcessStep.Max),
       (this.ErrorCode = void 0),
+      (this.IsPermittedSilentLogin = !1),
       (this.Result = e),
-      (this.Step = o),
-      (this.ErrorCode = n);
+      (this.Step = n),
+      (this.ErrorCode = o),
+      (this.IsPermittedSilentLogin = t);
   }
 }
-function reportReconnectProcess(e, o = Protocol_1.Aki.Protocol.O4n.NRs) {
-  var n = ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig(),
+function reportReconnectProcess(e, n = Protocol_1.Aki.Protocol.Q4n.KRs) {
+  var o = ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig(),
     t = new LogReportDefine_1.ReconvProcessLink();
   (t.s_trace_id = ModelManager_1.ModelManager.ReConnectModel.ReconvTraceId),
     (t.s_player_id =
       ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString() ?? "0"),
-    (t.s_user_id = n?.Uid ?? ""),
+    (t.s_user_id = o?.Uid ?? ""),
     (t.s_user_name =
-      n?.UserName ?? ModelManager_1.ModelManager.LoginModel.GetAccount()),
+      o?.UserName ?? ModelManager_1.ModelManager.LoginModel.GetAccount()),
     (t.s_reconv_step = ReconnectDefine_1.EReconnectProcessStep[e]),
     (t.s_app_version = UE.KuroLauncherLibrary.GetAppVersion()),
     (t.s_launcher_version = LocalStorage_1.LocalStorage.GetGlobal(
@@ -73,13 +78,13 @@ function reportReconnectProcess(e, o = Protocol_1.Aki.Protocol.O4n.NRs) {
     )),
     (t.s_client_version =
       BaseConfigController_1.BaseConfigController.GetVersionString()),
-    (t.i_error_code = o),
+    (t.i_error_code = n),
     LogReportController_1.LogReportController.LogReport(t);
 }
 class ReConnectController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
-      Heartbeat_1.Heartbeat.SetMaxTimeOutHandler(ReConnectController.dKs),
+      Heartbeat_1.Heartbeat.SetMaxTimeOutHandler(ReConnectController.JQs),
       Net_1.Net.SetAddRequestMaskHandle(ReConnectController.lso),
       Net_1.Net.SetRemoveRequestMaskHandle(ReConnectController._so),
       Net_1.Net.SetNetworkErrorHandle(ReConnectController.uso),
@@ -115,8 +120,8 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
         ReConnectController.cso,
       );
   }
-  static GmBackToLoginView(e, o) {
-    ReConnectController.mso(e, o);
+  static GmBackToLoginView(e, n) {
+    ReConnectController.mso(e, n);
   }
   static dso(e) {
     return 0 !== ModelManager_1.ModelManager.ReConnectModel.GetReConnectStatus()
@@ -154,35 +159,58 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
           e,
         ]);
     else {
-      var o = UE.UMGManager.CreateWidget(
+      var n = UE.UMGManager.CreateWidget(
         GlobalData_1.GlobalData.GameInstance.GetWorld(),
         UE.WBP_UILoading_C.StaticClass(),
       );
-      if (o?.IsValid()) {
-        var n = new BackToGameDefine_1.BackToGameData(),
+      if (n?.IsValid()) {
+        var o = new BackToGameDefine_1.BackToGameData(),
           e =
-            ((n.BackToGameType = e),
-            (n.LoadingTexturePath =
+            ((o.BackToGameType = e),
+            (o.LoadingTexturePath =
               ModelManager_1.ModelManager.LoadingModel.GetLoadingTexturePath()),
-            (n.Progress = 0.01),
-            (n.LoadingTitle =
-              ModelManager_1.ModelManager.LoadingModel.GetLoadingTitle()),
-            (n.LoadingTips =
-              ModelManager_1.ModelManager.LoadingModel.GetLoadingTips()),
-            o.Title.SetText(n.LoadingTitle),
-            o.Tips.SetText(n.LoadingTips),
-            o.SetProgress(n.Progress, o.FirstProgressRatio, !0),
-            ResourceSystem_1.ResourceSystem.Load(
-              n.LoadingTexturePath,
-              UE.Texture2D,
-            ));
+            (o.Progress = 0.01),
+            (o.LoadingTitle =
+              MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+                ModelManager_1.ModelManager.LoadingModel.GetLoadingTitle(),
+              )),
+            (o.LoadingTips =
+              MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+                ModelManager_1.ModelManager.LoadingModel.GetLoadingTips(),
+              )),
+            n.Title.Font),
+          t = LanguageSystem_1.LanguageSystem.GetLanguageDefineByCode(
+            LanguageSystem_1.LanguageSystem.PackageLanguage,
+          );
+        e.TypefaceFontName = FNameUtil_1.FNameUtil.GetDynamicFName(t.AudioCode);
+        (n.Tips.Font.TypefaceFontName = FNameUtil_1.FNameUtil.GetDynamicFName(
+          t.AudioCode,
+        )),
+          n.Title.SetText(o.LoadingTitle),
+          n.Tips.SetText(o.LoadingTips),
+          n.SetProgress(o.Progress, n.FirstProgressRatio, !0);
+        (e = ResourceSystem_1.ResourceSystem.Load(
+          o.LoadingTexturePath,
+          UE.Texture2D,
+        )),
+          (t =
+            (n.Image_Background?.SetBrushFromTexture(e),
+            (o.LoadingWidget = n),
+            new BackToGameDefine_1.BackToGameLoginData()));
         if (
-          (o.Image_Background?.SetBrushFromTexture(e),
-          (n.LoadingWidget = o),
-          ModelManager_1.ModelManager.LoginModel.SaveBackToGameData(n))
+          ((t.Uid = ModelManager_1.ModelManager.LoginModel.GetLoginUid()),
+          (t.UserName =
+            ModelManager_1.ModelManager.LoginModel.GetLoginUserName()),
+          (t.Token = ModelManager_1.ModelManager.LoginModel.GetLoginToken()),
+          (t.SelectServerId =
+            ModelManager_1.ModelManager.LoginServerModel.GetCurrentLoginServerId()),
+          (t.SelectServerIp =
+            ModelManager_1.ModelManager.LoginServerModel.GetCurrentSelectServerIp()),
+          (o.BackToGameLoginData = t),
+          ModelManager_1.ModelManager.LoginModel.SaveBackToGameData(o))
         )
-          return n;
-        UE.KuroStaticLibrary.DestroyObject(o);
+          return o;
+        UE.KuroStaticLibrary.DestroyObject(n);
       } else
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Reconnect", 3, "创建黑幕的WBP_UILoading失败");
@@ -276,62 +304,62 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
   }
   static async fso() {
     var e = ModelManager_1.ModelManager.LoginModel.GetReconnectHost(),
-      o = ModelManager_1.ModelManager.LoginModel.GetReconnectPort(),
+      n = ModelManager_1.ModelManager.LoginModel.GetReconnectPort(),
       e =
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Reconnect", 9, "重连流程, 尝试连接网关"),
         reportReconnectProcess(
           ReconnectDefine_1.EReconnectProcessStep.ConvGate,
         ),
-        await Net_1.Net.ConnectAsync(e, o, 3e3, 1)),
-      o = ReconnectDefine_1.EReconnectProcessStep.ConvRet;
+        await Net_1.Net.ConnectAsync(e, n, 3e3, 1)),
+      n = ReconnectDefine_1.EReconnectProcessStep.ConvRet;
     return ModelManager_1.ModelManager.ReConnectModel.IsReConnectIdSame()
       ? 0 !== e
         ? (reportReconnectProcess(
-            o,
-            Protocol_1.Aki.Protocol.O4n.Proto_ConvGateTimeout,
+            n,
+            Protocol_1.Aki.Protocol.Q4n.Proto_ConvGateTimeout,
           ),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Reconnect", 9, "重连流程, 连接网关失败"),
-          new ReconnectResult(1, o))
-        : (reportReconnectProcess(o),
+          new ReconnectResult(1, n))
+        : (reportReconnectProcess(n),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Reconnect", 9, "重连流程, 连接网关成功"),
-          new ReconnectResult(0, o))
-      : new ReconnectResult(2, o);
+          new ReconnectResult(0, n))
+      : new ReconnectResult(2, n);
   }
   static async xMi() {
     reportReconnectProcess(ReconnectDefine_1.EReconnectProcessStep.ProtoKeyReq);
-    var e = new Protocol_1.Aki.Protocol.vss(),
+    var e = new Protocol_1.Aki.Protocol.Tss(),
       e =
-        ((e.TVn = !1),
-        (e.a7n = ModelManager_1.ModelManager.ReConnectModel.ReconvTraceId),
+        ((e.wVn = !1),
+        (e.g7n = ModelManager_1.ModelManager.ReConnectModel.ReconvTraceId),
         Net_1.Net.ChangeState1(),
         await Net_1.Net.CallAsync(111, e, 3e3)),
-      o = ReconnectDefine_1.EReconnectProcessStep.ProtoKeyRet;
+      n = ReconnectDefine_1.EReconnectProcessStep.ProtoKeyRet;
     return ModelManager_1.ModelManager.ReConnectModel.IsReConnectIdSame()
       ? e
-        ? (reportReconnectProcess(o),
-          Net_1.Net.SetDynamicProtoKey(e.Z4n, e.j4n),
-          new ReconnectResult(0, o))
+        ? (reportReconnectProcess(n),
+          Net_1.Net.SetDynamicProtoKey(e.h5n, e.Z4n),
+          new ReconnectResult(0, n))
         : (reportReconnectProcess(
-            o,
-            Protocol_1.Aki.Protocol.O4n.Proto_ProtoKeyTimeout,
+            n,
+            Protocol_1.Aki.Protocol.Q4n.Proto_ProtoKeyTimeout,
           ),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Reconnect", 22, "重连流程, 获取ProtoKey失败!"),
-          new ReconnectResult(1, o))
-      : new ReconnectResult(2, o);
+          new ReconnectResult(1, n))
+      : new ReconnectResult(2, n);
   }
   static async pso() {
     var e = Net_1.Net.GetDownStreamSeqNo(),
-      o = ModelManager_1.ModelManager.LoginModel.GetReconnectToken(),
-      n = new Protocol_1.Aki.Protocol.mss(),
+      n = ModelManager_1.ModelManager.LoginModel.GetReconnectToken(),
+      o = new Protocol_1.Aki.Protocol.Sss(),
       e =
-        ((n.q5n = ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
-        (n.lHn = e),
-        (n.l7n = o),
-        (n._Hn = ModelManager_1.ModelManager.ReConnectModel.ReconvTraceId),
+        ((o.W5n = ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
+        (o.pHn = e),
+        (o.p7n = n),
+        (o.vHn = ModelManager_1.ModelManager.ReConnectModel.ReconvTraceId),
         cpp_1.FuncOpenLibrary.SetFirstTimestamp(0),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -339,44 +367,44 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
             9,
             "重连流程, 发起登录",
             ["下行包", e],
-            ["token", o],
+            ["token", n],
           ),
         Net_1.Net.ChangeStateEnterGame(),
         reportReconnectProcess(
           ReconnectDefine_1.EReconnectProcessStep.ReconvReq,
         ),
-        await Net_1.Net.CallAsync(107, n, RECONNECT_TIME_OUT)),
-      o = ReconnectDefine_1.EReconnectProcessStep.ReconvRet;
+        await Net_1.Net.CallAsync(107, o, RECONNECT_TIME_OUT)),
+      n = ReconnectDefine_1.EReconnectProcessStep.ReconvRet;
     if (!ModelManager_1.ModelManager.ReConnectModel.IsReConnectIdSame())
-      return new ReconnectResult(2, o);
+      return new ReconnectResult(2, n);
     if (!e)
       return (
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Reconnect", 9, "重连流程, Reconnect超时!"),
         reportReconnectProcess(
-          o,
-          Protocol_1.Aki.Protocol.O4n.Proto_ReReconvReqTimeout,
+          n,
+          Protocol_1.Aki.Protocol.Q4n.Proto_ReReconvReqTimeout,
         ),
-        new ReconnectResult(1, o)
+        new ReconnectResult(1, n)
       );
-    if (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs)
+    if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs)
       return (
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          e.O4n,
+          e.Q4n,
           108,
           void 0,
           !1,
         ),
-        reportReconnectProcess(o, e.O4n),
-        new ReconnectResult(1, o, e.O4n)
+        reportReconnectProcess(n, e.Q4n),
+        new ReconnectResult(1, n, e.Q4n, e.Fxs)
       );
     reportReconnectProcess(ReconnectDefine_1.EReconnectProcessStep.ReconvRet),
-      Net_1.Net.ReconnectSuccessAndReSend(e.xxs),
-      TimeUtil_1.TimeUtil.SetServerTimeStamp(e.Mws);
-    n = Number(MathUtils_1.MathUtils.LongToBigInt(e.Mws));
+      Net_1.Net.ReconnectSuccessAndReSend(e.Nxs),
+      TimeUtil_1.TimeUtil.SetServerTimeStamp(e.Rws);
+    o = Number(MathUtils_1.MathUtils.LongToBigInt(e.Rws));
     return (
-      cpp_1.FuncOpenLibrary.SetFirstTimestamp(n / 1e3),
-      new ReconnectResult(0, o)
+      cpp_1.FuncOpenLibrary.SetFirstTimestamp(o / 1e3),
+      new ReconnectResult(0, n)
     );
   }
 }
@@ -399,9 +427,9 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
       );
   }),
   (ReConnectController.Logout = (e) => {
-    var o =
+    var n =
       0 !== ModelManager_1.ModelManager.ReConnectModel.GetReConnectStatus();
-    o &&
+    n &&
       reportReconnectProcess(
         ReconnectDefine_1.EReconnectProcessStep.ReconvCancel,
       ),
@@ -411,36 +439,36 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
           9,
           "调用登出",
           ["原因", ReconnectDefine_1.ELogoutReason[e]],
-          ["是否正在重连", o],
+          ["是否正在重连", n],
         ),
       ReConnectModel_1.ReConnectModel.AddReConnectIncId(),
       ReConnectController.mso(ReconnectDefine_1.EBackLoginViewReason.Logout);
   }),
-  (ReConnectController.dKs = () => {
+  (ReConnectController.JQs = () => {
     Net_1.Net.IsServerConnected()
       ? ReConnectController.TryReConnect(!1, "Heartbeat max time out")
       : Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Reconnect", 31, "未完成连接，但是触发心跳超时最大次数");
   }),
-  (ReConnectController.TryReConnect = (e, o) => {
-    ReConnectController.dso(o) &&
+  (ReConnectController.TryReConnect = (e, n) => {
+    ReConnectController.dso(n) &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Reconnect",
           9,
           "尝试重连",
-          ["调用函数", o],
+          ["调用函数", n],
           ["是否静默重连", e],
         ),
-      (o = ModelManager_1.ModelManager.ReConnectModel).SetReconnectDoing(),
+      (n = ModelManager_1.ModelManager.ReConnectModel).SetReconnectDoing(),
       Heartbeat_1.Heartbeat.StopHeartBeat(
         HeartbeatDefine_1.EStopHeartbeat.ReconnectStart,
       ),
       e
-        ? o.StartShowMaskTimer(ReConnectController.vso)
+        ? n.StartShowMaskTimer(ReConnectController.vso)
         : ReConnectController.vso(),
       Net_1.Net.Disconnect(1),
-      (o.ReconvTraceId = UE.KismetGuidLibrary.NewGuid().ToString()),
+      (n.ReconvTraceId = UE.KismetGuidLibrary.NewGuid().ToString()),
       ReConnectController.gso(0).then(
         ReConnectController.Mso,
         ReConnectController.Eso,
@@ -450,19 +478,19 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
     ReConnectController.TryReConnect(!1, "Net.OnNetworkError");
   }),
   (ReConnectController.cso = (e) => {
-    var o = ModelManager_1.ModelManager.ReConnectModel;
+    var n = ModelManager_1.ModelManager.ReConnectModel;
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Reconnect", 31, "OnNetworkTypeChange called", [
         "new type",
         e,
       ]),
-      e !== o.LastNetworkType &&
+      e !== n.LastNetworkType &&
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Reconnect", 31, "OnNetworkTypeChange fire", [
             "old type",
-            o.LastNetworkType,
+            n.LastNetworkType,
           ]),
-        ((o.LastNetworkType = e) !== NetworkDefine_1.ENetworkType.WiFi &&
+        ((n.LastNetworkType = e) !== NetworkDefine_1.ENetworkType.WiFi &&
           e !== NetworkDefine_1.ENetworkType.Cell) ||
           ReConnectController.TryReConnect(!0, "OnNetworkTypeChange"));
   }),
@@ -484,14 +512,14 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
           )
         : Heartbeat_1.Heartbeat.SendHeartbeatImmediately();
   }),
-  (ReConnectController.mso = (e, o = !1) => {
+  (ReConnectController.mso = (e, n = !1) => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Reconnect",
         9,
         "返回登录界面",
         ["原因", e],
-        ["是否重连失败触发", o],
+        ["是否重连失败触发", n],
       ),
       ModelManager_1.ModelManager.ReConnectModel.CancelShowMaskTimer(),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.BackLoginView),
@@ -499,7 +527,7 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
       Heartbeat_1.Heartbeat.StopHeartBeat(
         HeartbeatDefine_1.EStopHeartbeat.BackLoginView,
       );
-    e = o ? ReConnectController.Sso : ReConnectController.Cso;
+    e = n ? ReConnectController.Sso : ReConnectController.Cso;
     UiManager_1.UiManager.IsViewShow("NetWorkMaskView")
       ? UiManager_1.UiManager.CloseView("NetWorkMaskView", e)
       : e();
@@ -561,7 +589,7 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
         ReConnectController.yso();
         break;
       case 1:
-        ReConnectController.Iso(e.Step, e.ErrorCode);
+        ReConnectController.Iso(e.Step, e.ErrorCode, e.IsPermittedSilentLogin);
         break;
       case 2:
         Log_1.Log.CheckInfo() &&
@@ -591,21 +619,21 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
         HeartbeatDefine_1.EBeginHeartbeat.ReConnectSuccess,
       );
   }),
-  (ReConnectController.Iso = (e, o = void 0) => {
+  (ReConnectController.Iso = (e, n = void 0, o = !1) => {
     if (
       (Net_1.Net.Disconnect(1),
       ModelManager_1.ModelManager.ReConnectModel.ResetReconnectStatus(),
-      e === ReconnectDefine_1.EReconnectProcessStep.ReconvRet && void 0 !== o)
+      e === ReconnectDefine_1.EReconnectProcessStep.ReconvRet && void 0 !== n)
     )
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Reconnect", 9, "重连流程, 服务器拒绝，尝试重新进游戏", [
           "ErrorCode",
-          o,
+          n,
         ]),
         reportReconnectProcess(
           ReconnectDefine_1.EReconnectProcessStep.ReconvFail,
         ),
-        ReConnectController.CreateBackToGameData(1),
+        o && ReConnectController.CreateBackToGameData(1),
         ReConnectController.mso(
           ReconnectDefine_1.EBackLoginViewReason.ReconnectError,
           !0,
@@ -636,16 +664,16 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
             ));
     else {
       e = ModelManager_1.ModelManager.ReConnectModel.AddReConnectCount();
-      const n =
+      const t =
         Math.pow(2, e) * ONE_THOUSAND +
         (Math.random() * TWO_THOUSAND - ONE_THOUSAND);
       TimerSystem_1.TimerSystem.Delay(() => {
         ModelManager_1.ModelManager.ReConnectModel.IsReConnectIdSame() &&
-          ReConnectController.gso(n).then(
+          ReConnectController.gso(t).then(
             ReConnectController.Mso,
             ReConnectController.Eso,
           );
-      }, n),
+      }, t),
         void Net_1.Net.StartReconnecting();
     }
   });

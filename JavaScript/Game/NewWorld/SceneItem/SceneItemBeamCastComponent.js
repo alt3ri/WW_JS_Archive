@@ -4,20 +4,20 @@ var SceneItemBeamCastComponent_1,
     (this && this.__decorate) ||
     function (t, e, i, s) {
       var h,
-        o = arguments.length,
-        a =
-          o < 3
+        r = arguments.length,
+        o =
+          r < 3
             ? e
             : null === s
               ? (s = Object.getOwnPropertyDescriptor(e, i))
               : s;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        a = Reflect.decorate(t, e, i, s);
+        o = Reflect.decorate(t, e, i, s);
       else
-        for (var n = t.length - 1; 0 <= n; n--)
-          (h = t[n]) &&
-            (a = (o < 3 ? h(a) : 3 < o ? h(e, i, a) : h(e, i)) || a);
-      return 3 < o && a && Object.defineProperty(e, i, a), a;
+        for (var a = t.length - 1; 0 <= a; a--)
+          (h = t[a]) &&
+            (o = (r < 3 ? h(o) : 3 < r ? h(e, i, o) : h(e, i)) || o);
+      return 3 < r && o && Object.defineProperty(e, i, o), o;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemBeamCastComponent = void 0);
@@ -29,6 +29,7 @@ const puerts_1 = require("puerts"),
   QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine"),
   EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
@@ -75,6 +76,7 @@ let SceneItemBeamCastComponent =
         (this.qmn = void 0),
         (this.jUn = void 0),
         (this.Uai = !1),
+        (this.DFa = void 0),
         (this.Rnn = () => {
           (this.Uai = !0),
             this.mBe.IsInState(0) || this.g_n(),
@@ -90,7 +92,7 @@ let SceneItemBeamCastComponent =
         (this.Nmn = (t, e) => {
           var i = this.ftn(e);
           (i && i.Id === this.Entity.Id) ||
-            (t ? this.Tmn.add(e) : this.Tmn.delete(e), this.Gmn());
+            (t ? this.Tmn.add(e) : this.Tmn.delete(e), this.Gmn(), this.RFa());
         });
     }
     OnInitData(t) {
@@ -129,13 +131,17 @@ let SceneItemBeamCastComponent =
     }
     OnStart() {
       return (
-        (this.vtn = this.Entity.GetComponent(76)),
-        (this.mBe = this.Entity.GetComponent(119)),
-        (this.Hte = this.Entity.GetComponent(185)),
-        (this.Lie = this.Entity.GetComponent(180)),
+        (this.vtn = this.Entity.GetComponent(77)),
+        (this.mBe = this.Entity.GetComponent(120)),
+        (this.Hte = this.Entity.GetComponent(187)),
+        (this.Lie = this.Entity.GetComponent(181)),
         this.vtn && this.mBe && this.Hte && this.Lie
           ? ((this.Tmn = new Set()),
-            this.vtn.AddOnActorOverlapCallback(this.Nmn),
+            EventSystem_1.EventSystem.AddWithTarget(
+              this.Entity,
+              EventDefine_1.EEventName.OnActorInOutRangeLocal,
+              this.Nmn,
+            ),
             !0)
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -163,7 +169,12 @@ let SceneItemBeamCastComponent =
     }
     OnEnd() {
       return (
-        this.vtn?.RemoveOnActorOverlapCallback(this.Nmn),
+        this.UFa(),
+        EventSystem_1.EventSystem.RemoveWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.OnActorInOutRangeLocal,
+          this.Nmn,
+        ),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
@@ -213,6 +224,17 @@ let SceneItemBeamCastComponent =
         (Time_1.Time.WorldTime - this.ymn > UPDATE_INTERVAL_MS &&
           ((this.ymn = Time_1.Time.WorldTime), this.Fmn()));
     }
+    OnChangeTimeDilation(t) {
+      this.DFa &&
+        TimerSystem_1.TimerSystem.Has(this.DFa) &&
+        (0 === t
+          ? TimerSystem_1.TimerSystem.IsPause(this.DFa) ||
+            TimerSystem_1.TimerSystem.Pause(this.DFa)
+          : 0 < t &&
+            (TimerSystem_1.TimerSystem.IsPause(this.DFa) &&
+              TimerSystem_1.TimerSystem.Resume(this.DFa),
+            TimerSystem_1.TimerSystem.ChangeDilation(this.DFa, t)));
+    }
     Gmn() {
       this.kmn()
         ? (this.Vmn(),
@@ -237,9 +259,31 @@ let SceneItemBeamCastComponent =
     Omn(t) {
       this.Wmn() && (this.Smn = this.Disable(t));
     }
+    RFa() {
+      this.DFa &&
+        TimerSystem_1.TimerSystem.Has(this.DFa) &&
+        (TimerSystem_1.TimerSystem.Remove(this.DFa), (this.DFa = void 0)),
+        (this.DFa = TimerSystem_1.TimerSystem.Delay(() => {
+          this.kmn() && (this.Fmn(), (this.DFa = void 0));
+        }, UPDATE_INTERVAL_MS)),
+        this.DFa &&
+          (0 === this.TimeDilation
+            ? TimerSystem_1.TimerSystem.Pause(this.DFa)
+            : 0 < this.TimeDilation &&
+              TimerSystem_1.TimerSystem.ChangeDilation(
+                this.DFa,
+                this.TimeDilation,
+              ));
+    }
+    UFa() {
+      this.DFa &&
+        TimerSystem_1.TimerSystem.Has(this.DFa) &&
+        TimerSystem_1.TimerSystem.Remove(this.DFa),
+        (this.DFa = void 0);
+    }
     WYr() {
       if (!this.mWi) {
-        (this.mWi = UE.NewObject(UE.TraceBoxElement.StaticClass())),
+        (this.mWi = UE.NewObject(UE.TraceSphereElement.StaticClass())),
           (this.mWi.bIsSingle = !0),
           this.mWi.ActorsToIgnore.Empty();
         var e =
@@ -247,12 +291,7 @@ let SceneItemBeamCastComponent =
             this.Hte.GetSceneInteractionLevelHandleId(),
           );
         for (let t = 0; t < e.Num(); t++) this.mWi.ActorsToIgnore.Add(e.Get(t));
-        (this.mWi.bIgnoreSelf = !0),
-          this.mWi.SetBoxHalfSize(
-            this.Lo.Range.Radius,
-            this.Lo.Range.Radius,
-            this.Lo.Range.Radius,
-          );
+        (this.mWi.bIgnoreSelf = !0), (this.mWi.Radius = this.Lo.Range.Radius);
         var t = UE.NewArray(UE.BuiltinByte),
           t =
             (t.Add(QueryTypeDefine_1.KuroObjectTypeQuery.WorldStatic),
@@ -261,11 +300,7 @@ let SceneItemBeamCastComponent =
             (0, puerts_1.$ref)(t));
         this.mWi.SetObjectTypesQuery(t);
       }
-      (this.mWi.WorldContextObject = this.Hte.Owner),
-        TraceElementCommon_1.TraceElementCommon.SetBoxOrientation(
-          this.mWi,
-          this.Hte.ActorRotationProxy,
-        );
+      this.mWi.WorldContextObject = this.Hte.Owner;
       (t = MathUtils_1.MathUtils.CommonTempVector),
         MathUtils_1.MathUtils.TransformPosition(
           this.Hte.ActorLocationProxy,
@@ -289,7 +324,7 @@ let SceneItemBeamCastComponent =
       this.WYr();
       let e = this.Rmn,
         i = void 0;
-      var t = TraceElementCommon_1.TraceElementCommon.BoxTrace(
+      var t = TraceElementCommon_1.TraceElementCommon.SphereTrace(
           this.mWi,
           "[BeamCastComp.TraceAndUpdate]",
         ),
@@ -297,24 +332,24 @@ let SceneItemBeamCastComponent =
       if (t && s?.bBlockingHit)
         for (let t = 0; t < s.GetHitCount(); ++t) {
           var h = s.ImpactPointX_Array.Get(t),
-            o = s.ImpactPointY_Array.Get(t),
-            a = s.ImpactPointZ_Array.Get(t),
-            h = Vector_1.Vector.Create(h, o, a),
-            o = MathUtils_1.MathUtils.CommonTempVector,
-            a =
+            r = s.ImpactPointY_Array.Get(t),
+            o = s.ImpactPointZ_Array.Get(t),
+            h = Vector_1.Vector.Create(h, r, o),
+            r = MathUtils_1.MathUtils.CommonTempVector,
+            o =
               (MathUtils_1.MathUtils.InverseTransformPosition(
                 this.Hte.ActorLocationProxy,
                 this.Hte.ActorRotationProxy,
                 this.Hte.ActorScaleProxy,
                 h,
-                o,
+                r,
               ),
-              o.Z - this.Umn.Z);
-          a < 0 ||
-            a > e ||
+              r.Z - this.Umn.Z);
+          o < 0 ||
+            o > e ||
             !(h = s.Actors.Get(t))?.IsValid() ||
-            ((o = this.ftn(h)) && o.Id === this.Entity.Id) ||
-            ((e = a), (i = h));
+            ((r = this.ftn(h)) && r.Id === this.Entity.Id) ||
+            ((e = o), (i = h));
         }
       this.Kmn(i, e), this.mWi.ClearCacheData();
     }
@@ -523,7 +558,7 @@ let SceneItemBeamCastComponent =
   });
 (SceneItemBeamCastComponent = SceneItemBeamCastComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(197)],
+    [(0, RegisterComponent_1.RegisterComponent)(199)],
     SceneItemBeamCastComponent,
   )),
   (exports.SceneItemBeamCastComponent = SceneItemBeamCastComponent);

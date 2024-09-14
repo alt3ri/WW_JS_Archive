@@ -65,7 +65,7 @@ let CharacterManipulateInteractComponent =
         (this.Z7r = !0),
         (this.tat = void 0),
         (this.iHr = void 0),
-        (this.Tbn = void 0),
+        (this.Bbn = void 0),
         (this.oHr = !1),
         (this.rHr = void 0),
         (this.nHr = void 0),
@@ -94,29 +94,29 @@ let CharacterManipulateInteractComponent =
     OnStart() {
       return (
         (this.Hte = this.Entity.GetComponent(3)),
-        (this.Lie = this.Entity.GetComponent(188)),
-        (this.$zo = this.Entity.GetComponent(159)),
+        (this.Lie = this.Entity.GetComponent(190)),
+        (this.$zo = this.Entity.GetComponent(160)),
         (this.EIe = this.Entity.GetComponent(0)),
         (this.gri =
           CameraController_1.CameraController.FightCamera.GetComponent(5)),
         (this.tat = CommonParamById_1.configCommonParamById.GetStringConfig(
           "ManipulateInteractEffectPath",
         )),
-        (this.Tbn = ModelManager_1.ModelManager.ManipulateInteractModel),
+        (this.Bbn = ModelManager_1.ModelManager.ManipulateInteractModel),
         this.InitTraceInfo(),
         this.dde(),
         !0
       );
     }
     OnTick(t) {
-      this._Hr(-581520176, 0 < this.Tbn.InRangePoints.size),
+      this._Hr(-581520176, 0 < this.Bbn.InRangePoints.size),
         this.uHr()
           ? this.cHr()
           : (this.mHr(),
             this.Lie.HasTag(-581520176) && this._Hr(-1734324611, !0));
     }
     cHr() {
-      if (this.Tbn.InRangePoints.size <= 0)
+      if (this.Bbn.InRangePoints.size <= 0)
         (this.hHr = void 0), this._Hr(-1734324611, !1);
       else {
         this.$7r.clear(),
@@ -124,7 +124,7 @@ let CharacterManipulateInteractComponent =
             this.bsr,
             this.Hte.ActorLocation,
           );
-        for (const r of this.Tbn.InRangePoints)
+        for (const r of this.Bbn.InRangePoints)
           r.IsLocked ||
             (r.CheckCondition()
               ? this.$7r.add(r)
@@ -286,14 +286,14 @@ let CharacterManipulateInteractComponent =
       var t,
         e = this.J7r?.CreatureDataId;
       void 0 !== e &&
-        (((t = Protocol_1.Aki.Protocol.dts.create()).P4n =
+        (((t = Protocol_1.Aki.Protocol.Mts.create()).F4n =
           MathUtils_1.MathUtils.NumberToLong(e)),
-        Net_1.Net.Call(13295, t, (t) => {
+        Net_1.Net.Call(28521, t, (t) => {
           (this.J7r = void 0),
-            t.hvs !== Protocol_1.Aki.Protocol.O4n.NRs &&
+            t.Cvs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
               ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                t.hvs,
-                16251,
+                t.Cvs,
+                20626,
               );
         }));
     }
@@ -313,7 +313,7 @@ let CharacterManipulateInteractComponent =
   (CharacterManipulateInteractComponent =
     CharacterManipulateInteractComponent_1 =
       __decorate(
-        [(0, RegisterComponent_1.RegisterComponent)(57)],
+        [(0, RegisterComponent_1.RegisterComponent)(58)],
         CharacterManipulateInteractComponent,
       )),
   (exports.CharacterManipulateInteractComponent =

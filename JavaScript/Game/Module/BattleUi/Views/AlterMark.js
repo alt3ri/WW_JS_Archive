@@ -192,7 +192,7 @@ class AlterMark extends UiPanelBase_1.UiPanelBase {
   N$e() {
     var t = ActorUtils_1.ActorUtils.GetEntityByActor(
       this.E$e,
-    ).Entity.GetComponent(39).AiController.AiAlert.AlertValue;
+    ).Entity.GetComponent(40).AiController.AiAlert.AlertValue;
     this.D$e.SetFillAmount(START_FILL_AMOUNT + t / MAX_ALERT / 2),
       this.L$e.SetFillAmount(START_FILL_AMOUNT + t / MAX_ALERT / 2),
       t < 50

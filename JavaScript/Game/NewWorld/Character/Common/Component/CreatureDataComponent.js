@@ -2,22 +2,22 @@
 var CreatureDataComponent_1,
   __decorate =
     (this && this.__decorate) ||
-    function (t, e, i, s) {
-      var r,
-        o = arguments.length,
+    function (t, e, i, r) {
+      var o,
+        s = arguments.length,
         n =
-          o < 3
+          s < 3
             ? e
-            : null === s
-              ? (s = Object.getOwnPropertyDescriptor(e, i))
-              : s;
+            : null === r
+              ? (r = Object.getOwnPropertyDescriptor(e, i))
+              : r;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        n = Reflect.decorate(t, e, i, s);
+        n = Reflect.decorate(t, e, i, r);
       else
         for (var h = t.length - 1; 0 <= h; h--)
-          (r = t[h]) &&
-            (n = (o < 3 ? r(n) : 3 < o ? r(e, i, n) : r(e, i)) || n);
-      return 3 < o && n && Object.defineProperty(e, i, n), n;
+          (o = t[h]) &&
+            (n = (s < 3 ? o(n) : 3 < s ? o(e, i, n) : o(e, i)) || n);
+      return 3 < s && n && Object.defineProperty(e, i, n), n;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CreatureDataComponent = void 0);
@@ -39,6 +39,7 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   AdviceData_1 = require("../../../../Module/Advice/AdviceData"),
+  CreatureController_1 = require("../../../../World/Controller/CreatureController"),
   BlackboardMap_1 = require("../../../../World/Define/BlackboardMap"),
   CreateEntityData_1 = require("../../CreateEntityData");
 let CreatureDataComponent =
@@ -51,9 +52,9 @@ let CreatureDataComponent =
         (this.j8 = 0),
         (this.fye = void 0),
         (this.dFe = 0),
-        (this.fie = Protocol_1.Aki.Protocol.wks.Proto_Monster),
+        (this.fie = Protocol_1.Aki.Protocol.kks.Proto_Monster),
         (this.QQr = 0),
-        (this.XQr = Protocol_1.Aki.Protocol.YTs.Proto_OldEntity),
+        (this.XQr = Protocol_1.Aki.Protocol.rLs.Proto_OldEntity),
         (this.E0 = 0),
         (this.$Qr = void 0),
         (this.YQr = 0),
@@ -91,13 +92,13 @@ let CreatureDataComponent =
         (this._Xr = void 0),
         (this.ou = !1),
         (this.uXr = void 0),
-        (this.cXr = void 0),
         (this.PbInRangeEntityCreatureDataIds = void 0),
         (this.PbInRangePlayerIds = void 0),
         (this.wDe = 0),
         (this.vH = 0),
         (this.mXr = !1),
         (this.dXr = void 0),
+        (this.w8a = void 0),
         (this.CXr = !1),
         (this.gXr = ""),
         (this.ger = void 0),
@@ -114,7 +115,7 @@ let CreatureDataComponent =
         (this.IXr = void 0),
         (this.IsConcealed = !1),
         (this.SummonType =
-          Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeDefault),
+          Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeDefault),
         (this.TXr = void 0),
         (this.LXr = 0),
         (this.DXr = 0),
@@ -136,30 +137,32 @@ let CreatureDataComponent =
     OnInitData(t) {
       var e,
         i = t,
-        s = i.ComponentsKey;
+        r = i.ComponentsKey;
       return i instanceof CreateEntityData_1.CreateEntityData
         ? ((i = i.EntityData),
           (this.E0 = this.Entity.Id),
-          (this.ComponentsKey = s),
-          (s = ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(
+          (this.ComponentsKey = r),
+          (r = ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(
             this.Entity,
           )),
           (e = t.CreatureDataId),
           this.SetCreatureDataId(e),
-          (s.CreatureDataId = e),
-          this.SetPbDataId(i._9n),
-          (s.PbDataId = i._9n),
-          this.SetPrefabId(i.pEs),
-          this.SetEntityConfigType(i.jHn),
-          (s.ConfigType = i.jHn),
+          (r.CreatureDataId = e),
+          this.SetPbDataId(i.v9n),
+          (r.PbDataId = i.v9n),
+          this.SetPrefabId(i.LEs),
+          this.SetEntityConfigType(i.ZHn),
+          (r.ConfigType = i.ZHn),
           this.SetComponentKey(t.ComponentsKey),
+          (r.EntityType = i.zHn),
           (this.dXr = t.PbEntityInitData),
+          (this.w8a = t.TemplateData),
           (this.gXr = t.PbModelConfigId ?? ""),
           (this.IsConcealed = t.IsConcealed),
           this.SetPbDataByProtocol(i),
           (this.Yre = new BlackboardMap_1.BlackboardMap()),
           (this.IsConcealed = t.IsConcealed),
-          this.Uia(),
+          this.rTa(),
           !0)
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -195,8 +198,8 @@ let CreatureDataComponent =
     }
     get IsConcomitantEntity() {
       return [
-        Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantVision,
-        Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantCustom,
+        Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeConcomitantVision,
+        Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeConcomitantCustom,
       ].includes(this.SummonType);
     }
     get VisionControlCreatureDataId() {
@@ -227,14 +230,14 @@ let CreatureDataComponent =
       return this.xRn.get(t);
     }
     SetMovementByProtocol(t) {
-      void 0 === this.eXr && (this.eXr = Protocol_1.Aki.Protocol.s8n.create()),
-        (this.eXr.h8n = t.h8n),
-        (this.eXr.GWn = t.GWn),
-        (this.eXr.y5n = t.y5n),
-        (this.eXr.a8n = t.a8n),
-        (this.eXr.OWn = t.OWn),
-        (this.eXr.NWn = t.NWn),
-        (this.eXr.GVn = t.GVn);
+      void 0 === this.eXr && (this.eXr = Protocol_1.Aki.Protocol.C8n.create()),
+        (this.eXr.f8n = t.f8n),
+        (this.eXr.KWn = t.KWn),
+        (this.eXr.P5n = t.P5n),
+        (this.eXr.g8n = t.g8n),
+        (this.eXr.QWn = t.QWn),
+        (this.eXr.XWn = t.XWn),
+        (this.eXr.KVn = t.KVn);
     }
     SetCreatureDataId(t) {
       this.Wpo = t;
@@ -295,25 +298,28 @@ let CreatureDataComponent =
       return this.fie;
     }
     IsRole() {
-      return this.fie === Protocol_1.Aki.Protocol.wks.Proto_Player;
+      return this.fie === Protocol_1.Aki.Protocol.kks.Proto_Player;
+    }
+    IsPlayer() {
+      return this.fie === Protocol_1.Aki.Protocol.kks.Proto_PlayerEntity;
     }
     IsMonster() {
-      return this.fie === Protocol_1.Aki.Protocol.wks.Proto_Monster;
+      return this.fie === Protocol_1.Aki.Protocol.kks.Proto_Monster;
     }
     IsNpc() {
-      return this.fie === Protocol_1.Aki.Protocol.wks.Proto_Npc;
+      return this.fie === Protocol_1.Aki.Protocol.kks.Proto_Npc;
     }
     IsVision() {
-      return this.fie === Protocol_1.Aki.Protocol.wks.Proto_Vision;
+      return this.fie === Protocol_1.Aki.Protocol.kks.Proto_Vision;
     }
     IsSceneItem() {
-      return this.fie === Protocol_1.Aki.Protocol.wks.Proto_SceneItem;
+      return this.fie === Protocol_1.Aki.Protocol.kks.Proto_SceneItem;
     }
     IsAnimal() {
-      return this.fie === Protocol_1.Aki.Protocol.wks.Proto_Animal;
+      return this.fie === Protocol_1.Aki.Protocol.kks.Proto_Animal;
     }
     IsCustom() {
-      return this.fie === Protocol_1.Aki.Protocol.wks.Proto_Custom;
+      return this.fie === Protocol_1.Aki.Protocol.kks.Proto_Custom;
     }
     IsCharacter() {
       return (
@@ -400,37 +406,37 @@ let CreatureDataComponent =
     }
     GetLocation() {
       var t, e, i;
-      return this.eXr?.y5n
-        ? ((t = (i = this.eXr.y5n).X || 0),
+      return this.eXr?.P5n
+        ? ((t = (i = this.eXr.P5n).X || 0),
           (e = i.Y || 0),
           (i = i.Z || 0),
           new UE.Vector(t, e, i))
         : Vector_1.Vector.ZeroVector;
     }
     SetLocation(t) {
-      this.eXr || (this.eXr = Protocol_1.Aki.Protocol.s8n.create()),
-        this.eXr.y5n || (this.eXr.y5n = Protocol_1.Aki.Protocol.Pks.create()),
-        (this.eXr.y5n.X = t.X ?? 0),
-        (this.eXr.y5n.Y = t.Y ?? 0),
-        (this.eXr.y5n.Z = t.Z ?? 0);
-      t = this.eXr.y5n;
+      this.eXr || (this.eXr = Protocol_1.Aki.Protocol.C8n.create()),
+        this.eXr.P5n || (this.eXr.P5n = Protocol_1.Aki.Protocol.Gks.create()),
+        (this.eXr.P5n.X = t.X ?? 0),
+        (this.eXr.P5n.Y = t.Y ?? 0),
+        (this.eXr.P5n.Z = t.Z ?? 0);
+      t = this.eXr.P5n;
       this.TXr = Vector_1.Vector.Create(t.X, t.Y, t.Z);
     }
     GetRotation() {
       var t, e, i;
-      return this.eXr?.a8n
-        ? ((t = (i = this.eXr.a8n).Pitch || 0),
+      return this.eXr?.g8n
+        ? ((t = (i = this.eXr.g8n).Pitch || 0),
           (e = i.Yaw || 0),
           (i = i.Roll || 0),
           new UE.Rotator(t, e, i))
         : new UE.Rotator(0, 0, 0);
     }
     SetRotation(t) {
-      this.eXr || (this.eXr = Protocol_1.Aki.Protocol.s8n.create()),
-        this.eXr.a8n || (this.eXr.a8n = Protocol_1.Aki.Protocol.S2s.create()),
-        (this.eXr.a8n.Pitch = t.Pitch),
-        (this.eXr.a8n.Roll = t.Roll),
-        (this.eXr.a8n.Yaw = t.Yaw);
+      this.eXr || (this.eXr = Protocol_1.Aki.Protocol.C8n.create()),
+        this.eXr.g8n || (this.eXr.g8n = Protocol_1.Aki.Protocol.D2s.create()),
+        (this.eXr.g8n.Pitch = t.Pitch),
+        (this.eXr.g8n.Roll = t.Roll),
+        (this.eXr.g8n.Yaw = t.Yaw);
     }
     GetTransform() {
       var t = this.GetLocation(),
@@ -515,9 +521,9 @@ let CreatureDataComponent =
     UpdateEntityCommonTags(t) {
       if (0 !== t.length)
         for (const e of t)
-          this.EntityCommonTags.has(e.o5n)
-            ? e.eWn || this.EntityCommonTags.delete(e.o5n)
-            : e.eWn && this.EntityCommonTags.add(e.o5n);
+          this.EntityCommonTags.has(e.m5n)
+            ? e.lWn || this.EntityCommonTags.delete(e.m5n)
+            : e.lWn && this.EntityCommonTags.add(e.m5n);
     }
     SetModelConfig(t) {
       var e;
@@ -538,7 +544,7 @@ let CreatureDataComponent =
       let t = 0;
       var e;
       return (
-        this.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player
+        this.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player
           ? ((e = this.GetRoleConfig()), (t = e ? e.MeshId : 0))
           : (e = this.GetPbModelConfig())
             ? (t = e.ModelId)
@@ -602,7 +608,7 @@ let CreatureDataComponent =
     GetEntityPropertyConfig() {
       if (this.t4r) return this.t4r;
       let t = "";
-      this.fie === Protocol_1.Aki.Protocol.wks.Proto_Player
+      this.fie === Protocol_1.Aki.Protocol.kks.Proto_Player
         ? ((e = this.GetRoleConfig()), (t = e.EntityProperty.toString()))
         : (e = this.GetBaseInfo())?.EntityPropertyId
           ? (t = e.EntityPropertyId.toString())
@@ -650,8 +656,7 @@ let CreatureDataComponent =
         this.SetPlayerId(0),
         this.SetVisible(!1),
         this.Yre.Clear(),
-        (this.cXr = void 0),
-        (this.fie = Protocol_1.Aki.Protocol.wks.Proto_Player),
+        (this.fie = Protocol_1.Aki.Protocol.kks.Proto_Player),
         (this.nXr = void 0);
     }
     SetPbDataId(t) {
@@ -680,15 +685,24 @@ let CreatureDataComponent =
       }
     }
     SetPbDataByProtocol(t) {
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "Entity",
+          20,
+          "设置信息",
+          ["playerId", t.W5n],
+          ["CreatureDataId", this.GetCreatureDataId()],
+          ["entityId", this.Entity ? this.Entity.Id : "unknown"],
+        );
       var e = t;
       if (
-        ((this.wDe = e._9n),
-        (this.vH = e.pEs),
-        (this.mXr = e.XEs),
-        this.XQr === Protocol_1.Aki.Protocol.YTs.Proto_Character)
+        ((this.wDe = e.v9n),
+        (this.vH = e.LEs),
+        (this.mXr = e.iys),
+        this.XQr === Protocol_1.Aki.Protocol.rLs.Proto_Character)
       )
-        this.SetRoleId(t._9n);
-      else {
+        this.SetRoleId(t.v9n);
+      else if (this.XQr !== Protocol_1.Aki.Protocol.rLs.Proto_OldEntity) {
         if (!this.dXr)
           return (
             Log_1.Log.CheckError() &&
@@ -696,6 +710,7 @@ let CreatureDataComponent =
                 "Entity",
                 3,
                 "[CreatureDataComponent.SetPbDataByProtocol] PbEntityInitData数据为空。",
+                ["EntityConfigType", this.XQr],
                 ["PbDataId", this.wDe],
               ),
             !1
@@ -707,6 +722,7 @@ let CreatureDataComponent =
                 "Entity",
                 3,
                 "[CreatureDataComponent.SetPbDataByProtocol] ComponentsData",
+                ["EntityConfigType", this.XQr],
                 ["PbDataId", this.wDe],
               ),
             !1
@@ -719,6 +735,7 @@ let CreatureDataComponent =
                 "Entity",
                 3,
                 "[CreatureData.SetPbDataByProtocol] 实体的BaseInfoComponent空。",
+                ["EntityConfigType", this.XQr],
                 ["PbDataId", this.wDe],
               ),
             !1
@@ -726,95 +743,104 @@ let CreatureDataComponent =
         i.Category?.EntityPlotBindingType &&
           this.AddPublicTags(i.Category.EntityPlotBindingType);
       }
-      this.SetEntityType(e.HHn),
-        this.SetSubEntityType(e.JEs),
-        this.SetPlayerId(e.q5n),
-        this.SetVisible(e.X8n),
-        (this.LivingStatus = e.HEs);
-      i = e.e8n;
+      this.SetEntityType(e.zHn),
+        this.SetSubEntityType(e.oys),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Entity",
+            20,
+            "设置playerId",
+            ["playerId", e.W5n],
+            ["CreatureDataId", this.GetCreatureDataId()],
+            ["entityId", this.Entity ? this.Entity.Id : "unknown"],
+          ),
+        this.SetPlayerId(e.W5n),
+        this.SetVisible(e.rVn),
+        (this.LivingStatus = e.JEs);
+      i = e.l8n;
       return (
         this.SetLocation(i),
-        this.SetRotation(e.t8n),
-        this.SetDurabilityValue(e.WEs),
-        (this.qne = t.$Es),
-        (this.hXr = t.QEs),
-        (this.lXr = t.KEs),
-        "number" == typeof t.zEs && (this._Xr = t.zEs),
-        this.wXr(e.jEs),
+        this.SetRotation(e._8n),
+        this.SetDurabilityValue(e.ZEs),
+        (this.qne = t.YEs),
+        (this.hXr = t.tys),
+        (this.lXr = t.eys),
+        "number" == typeof t.nys && (this._Xr = t.nys),
+        this.wXr(e.zEs),
         !0
       );
     }
     wXr(t) {
       this.ComponentDataMap.clear();
-      for (const s of t) {
-        var e = s.h3s;
-        switch ((this.ComponentDataMap.set(e, s), e)) {
-          case "ZEs":
-            this.SetHardnessModeId(s.ZEs.kWn);
-            break;
-          case "eys":
-            this.SetEntityCommonTags(s.eys.iIs);
-            break;
+      for (const r of t) {
+        var e = r.C3s;
+        switch ((this.ComponentDataMap.set(e, r), e)) {
           case "sys":
-            this.SetBlackboardsByProtocol(s.sys.cIs);
+            this.SetHardnessModeId(r.sys.$Wn);
             break;
-          case "cys":
-            this.CXr = s.cys.gIs;
+          case "ays":
+            this.SetEntityCommonTags(r.ays.lIs);
             break;
-          case "iys":
-            this.SetSummonerId(MathUtils_1.MathUtils.LongToNumber(s.iys.FWn)),
-              this.SetSummonerPlayerId(s.iys.q5n),
-              (this.SummonType = s.iys.Z4n);
+          case "dys":
+            this.SetBlackboardsByProtocol(r.dys.pIs);
             break;
-          case "gys":
-            this.PXr(s.gys);
+          case "pys":
+            this.CXr = r.pys.yIs;
             break;
-          case "fys":
-            this.fXr = s.fys.y5n ?? 1;
+          case "lys":
+            this.SetSummonerId(MathUtils_1.MathUtils.LongToNumber(r.lys.YWn)),
+              this.SetSummonerPlayerId(r.lys.W5n),
+              (this.SummonType = r.lys.h5n);
             break;
-          case "Mys":
-            (this.RelationId = s.Mys.RIs),
-              (this.PbRelationMatchCfgIndex = s.Mys.DIs - 1),
+          case "yys":
+            this.PXr(r.yys);
+            break;
+          case "Iys":
+            this.fXr = r.Iys.P5n ?? 1;
+            break;
+          case "Rys":
+            (this.RelationId = r.Rys.bIs),
+              (this.PbRelationMatchCfgIndex = r.Rys.BIs - 1),
               (this.ControllerId = MathUtils_1.MathUtils.LongToNumber(
-                s.Mys.LIs,
+                r.Rys.xIs,
               )),
-              (this.IsShowingHandFx = s.Mys.D5n);
+              (this.IsShowingHandFx = r.Rys.q5n);
             break;
-          case "$ys":
-            this.AutonomousId = MathUtils_1.MathUtils.LongToNumber(s.$ys.TIs);
+          case "Yys":
+            this.AutonomousId = MathUtils_1.MathUtils.LongToNumber(r.Yys.wIs);
             break;
-          case "Sys":
+          case "Dys":
             (this.VisionSkillServerEntityId =
-              MathUtils_1.MathUtils.LongToNumber(s.Sys.j5n)),
+              MathUtils_1.MathUtils.LongToNumber(r.Dys.Z5n)),
               (this.RXr.length = 0);
-            for (const r of s.Sys.UIs)
-              this.RXr.push(MathUtils_1.MathUtils.LongToNumber(r));
+            for (const o of r.Dys.OIs)
+              this.RXr.push(MathUtils_1.MathUtils.LongToNumber(o));
             this.VisionControlCreatureDataId =
-              MathUtils_1.MathUtils.LongToNumber(s.Sys.wIs);
+              MathUtils_1.MathUtils.LongToNumber(r.Dys.kIs);
             break;
-          case "Tys":
-            for (const o of s.Tys.bIs) this.OccupiedGridInfo.set(o.XTs, o);
-            for (const n of s.Tys.BIs) this.DynamicGridInfo.push(n);
+          case "wys":
+            for (const s of r.wys.FIs) this.OccupiedGridInfo.set(s.iLs, s);
+            for (const n of r.wys.VIs) this.DynamicGridInfo.push(n);
             break;
-          case "xys":
-            (this.PbInRangeEntityCreatureDataIds = s.xys.Yys.flatMap((t) =>
+          case "Nys":
+            (this.PbInRangeEntityCreatureDataIds = r.Nys.rIs.flatMap((t) =>
               MathUtils_1.MathUtils.LongToNumber(t),
             )),
-              (this.PbInRangePlayerIds = s.xys.Xys);
+              (this.PbInRangePlayerIds = r.Nys.iIs);
             break;
-          case "qys":
-            var i = s.qys;
-            (this.PbDynAttachEntityConfigId = i.AIs),
-              (this.PbDynAttachEntityActorKey = i.PIs),
-              (this.PbDynAttachRefActorKey = i.t6n),
+          case "$ys":
+            var i = r.$ys;
+            (this.PbDynAttachEntityConfigId = i.qIs),
+              (this.PbDynAttachEntityActorKey = i.GIs),
+              (this.PbDynAttachRefActorKey = i._6n),
               this.PbDynAttachRelPos.Set(
-                i.$5n?.X ?? 0,
-                i.$5n?.Y ?? 0,
-                i.$5n?.Z ?? 0,
+                i.o6n?.X ?? 0,
+                i.o6n?.Y ?? 0,
+                i.o6n?.Z ?? 0,
               );
             break;
-          case "Gys":
-            i = s.Gys?.tEs;
+          case "Hys":
+            i = r.Hys?.hEs;
             i && this.sQt(i);
         }
       }
@@ -928,13 +954,13 @@ let CreatureDataComponent =
     }
     RequestPosAbnormal() {
       this.mXr = !0;
-      var t = Protocol_1.Aki.Protocol.wes.create();
-      (t.P4n = MathUtils_1.MathUtils.NumberToLong(this.Wpo)),
-        (t.VWn = !0),
-        Net_1.Net.Call(20248, t, () => {});
+      var t = Protocol_1.Aki.Protocol.kes.create();
+      (t.F4n = MathUtils_1.MathUtils.NumberToLong(this.Wpo)),
+        (t.JWn = !0),
+        Net_1.Net.Call(19580, t, () => {});
     }
     IsRealMonster() {
-      var t = this.fie === Protocol_1.Aki.Protocol.wks.Proto_Monster,
+      var t = this.fie === Protocol_1.Aki.Protocol.kks.Proto_Monster,
         e = void 0 === this.GetMonsterComponent(),
         i = 0 === this.GetMonsterComponent()?.FightConfigId;
       return t && !e && !i;
@@ -964,35 +990,6 @@ let CreatureDataComponent =
     BXr(t) {
       return "e" === t.split("_")[0];
     }
-    AddDependenceEntity(t, e) {
-      if ((this.cXr || (this.cXr = new Array()), 0 === e)) {
-        if (t === this.Wpo)
-          return void (
-            Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "Entity",
-              3,
-              "不能把自己添加到依赖实体",
-              ["IdType", e],
-              ["CreatureDataId", t],
-            )
-          );
-      } else if (2 === e && t === this.Entity.Id)
-        return void (
-          Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "Entity",
-            3,
-            "不能把自己添加到依赖实体",
-            ["IdType", e],
-            ["EntityId", t],
-          )
-        );
-      this.cXr.push([t, e]);
-    }
-    GetDependenceEntities() {
-      return this.cXr;
-    }
     sQt(t) {
       for (const i of Object.keys(t)) {
         var e = t[i];
@@ -1000,16 +997,36 @@ let CreatureDataComponent =
       }
     }
     UpdateVar(t, e) {
-      this.xRn.set(t, e);
+      this.xRn.set(t, e),
+        EventSystem_1.EventSystem.EmitWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.EntityVarUpdate,
+          t,
+          e,
+        );
     }
-    Uia() {
+    rTa() {
       this.CustomServerEntityIds.forEach((t) => {
-        this.AddDependenceEntity(t, 0);
+        CreatureController_1.CreatureController.AddBindEntity(t, this.Wpo);
       }),
         this.VisionSkillServerEntityId &&
-          this.AddDependenceEntity(this.VisionSkillServerEntityId, 0),
+          CreatureController_1.CreatureController.AddBindEntity(
+            this.VisionSkillServerEntityId,
+            this.Wpo,
+          ),
         this.VisionControlCreatureDataId &&
-          this.AddDependenceEntity(this.VisionControlCreatureDataId, 0);
+          CreatureController_1.CreatureController.AddBindEntity(
+            this.VisionControlCreatureDataId,
+            this.Wpo,
+          ),
+        this.JQr &&
+          CreatureController_1.CreatureController.AddBindEntity(
+            this.JQr,
+            this.Wpo,
+          );
+    }
+    GetTemplateId() {
+      return this.w8a?.Id ?? 0;
     }
   });
 (CreatureDataComponent.qXr = new Map()),

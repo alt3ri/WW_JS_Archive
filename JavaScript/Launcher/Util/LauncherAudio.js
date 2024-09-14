@@ -4,17 +4,24 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LauncherAudio = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
-  LauncherResourceLib_1 = require("./LauncherResourceLib"),
-  LauncherLog_1 = require("./LauncherLog"),
   BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
+  Platform_1 = require("../Platform/Platform"),
+  LauncherLog_1 = require("./LauncherLog"),
+  LauncherResourceLib_1 = require("./LauncherResourceLib"),
   PAUSE_AUDIO_EVENT =
     "/Game/Aki/WwiseAudio/Events/pause_all_wwise_audio.pause_all_wwise_audio",
   RESUME_AUDIO_EVENT =
     "/Game/Aki/WwiseAudio/Events/resume_all_wwise_audio.resume_all_wwise_audio";
 class LauncherAudio {
-  static Initialize() {
+  static Init() {
+    UE.AkGameplayStatics.ClearSoundBanksAndMedia(),
+      UE.AkGameplayStatics.UnloadInitBank(),
+      UE.AkGameplayStatics.LoadInitBank(),
+      UE.AkGameplayStatics.ReloadAudioAssetData();
+  }
+  static InitIosAuditPackage() {
     this.gU ||
-      ("IOS" === UE.GameplayStatics.GetPlatformName() &&
+      (Platform_1.Platform.IsIOSPlatform() &&
         (BaseConfigController_1.BaseConfigController.GetIosAuditFirstDownloadTip()
           ? (UE.KuroAudioStatics.SetIosAuditPackage(!0),
             UE.KuroAudioStatics.ChangeIosAudioSessionProperties(),

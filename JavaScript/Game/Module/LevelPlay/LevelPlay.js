@@ -66,14 +66,12 @@ class LevelPlayInfo extends LogicTreeContainer_1.LogicTreeContainer {
       this.Api &&
       this.BehaviorTree
     ) {
-      if (this.BehaviorTree.IsChallengeUi()) return !0;
+      if (this.BehaviorTree.IsCustomUi()) return !0;
       var t = this.BehaviorTree.GetActiveChildQuestNodesId();
       if (t)
         for (const r of t) {
           var e = this.BehaviorTree.GetNode(r),
-            i = e
-              ? PublicUtil_1.PublicUtil.GetConfigTextByKey(e.TrackTextConfig)
-              : void 0;
+            i = e?.MultiTrackText;
           if (i && !StringUtils_1.StringUtils.IsBlank(i) && !e.ContainTag(2))
             return !0;
         }
@@ -195,6 +193,7 @@ class LevelPlayInfo extends LogicTreeContainer_1.LogicTreeContainer {
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnLevelPlayStateChange,
         this.u1i,
+        this.ac,
       );
   }
   UpdateRefreshTime(t) {

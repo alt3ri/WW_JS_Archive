@@ -77,7 +77,7 @@ class ExploreProgressModel extends ModelBase_1.ModelBase {
     this.YVt.clear(), this.QVt.clear(), (this.JVt.length = 0);
   }
   RefreshExploreAreaData(e) {
-    this.QVt.get(e.l6n)?.Refresh(e);
+    this.QVt.get(e.p6n)?.Refresh(e);
   }
   GetExploreCountryData(e) {
     return this.YVt.get(e);

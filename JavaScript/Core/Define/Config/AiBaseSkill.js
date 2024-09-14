@@ -13,7 +13,8 @@ class AiBaseSkill {
   get RandomSkills() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.randomskillsLength(),
-      (t) => this.randomskills(t),
+      this.randomskills,
+      this,
     );
   }
   __init(t, s) {

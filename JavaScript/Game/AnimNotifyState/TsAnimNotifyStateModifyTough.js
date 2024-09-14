@@ -47,11 +47,11 @@ class TsAnimNotifyStateModifyTough extends UE.KuroAnimNotifyState {
           a.AddToughModifier("ToughRateOnCounter", i.RatioSpecial),
           a.ActorComponent.IsAutonomousProxy) &&
           CombatMessage_1.CombatNet.Call(
-            1828,
+            21500,
             e,
-            Protocol_1.Aki.Protocol.H3n.create({
-              J4n: MathUtils_1.MathUtils.BigIntToLong(t),
-              Y4n: r,
+            Protocol_1.Aki.Protocol.z3n.create({
+              s5n: MathUtils_1.MathUtils.BigIntToLong(t),
+              n5n: r,
             }),
           );
     }

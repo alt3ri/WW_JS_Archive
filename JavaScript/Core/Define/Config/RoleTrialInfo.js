@@ -13,11 +13,23 @@ class RoleTrialInfo {
   get RoleStand() {
     return this.rolestand();
   }
+  get RoleStand2() {
+    return this.rolestand2();
+  }
+  get RoleIcon() {
+    return this.roleicon();
+  }
+  get UiConfigId() {
+    return this.uiconfigid();
+  }
   get TrialRoleId() {
     return this.trialroleid();
   }
   get InstanceText() {
     return this.instancetext();
+  }
+  get Introduction() {
+    return this.introduction();
   }
   get InstanceId() {
     return this.instanceid();
@@ -25,9 +37,16 @@ class RoleTrialInfo {
   get RewardItem() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.rewarditemLength(),
-      (t) => this.rewarditem(t)?.key(),
-      (t) => this.rewarditem(t)?.value(),
+      this.rewarditemKey,
+      this.rewarditemValue,
+      this,
     );
+  }
+  rewarditemKey(t) {
+    return this.rewarditem(t)?.key();
+  }
+  rewarditemValue(t) {
+    return this.rewarditem(t)?.value();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
@@ -46,32 +65,48 @@ class RoleTrialInfo {
     var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  trialroleid() {
-    var t = this.J7.__offset(this.z7, 8);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  rolestand2(t) {
+    var i = this.J7.__offset(this.z7, 8);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  instancetext(t) {
+  roleicon(t) {
     var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  instanceid() {
+  uiconfigid() {
     var t = this.J7.__offset(this.z7, 12);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  trialroleid() {
+    var t = this.J7.__offset(this.z7, 14);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  instancetext(t) {
+    var i = this.J7.__offset(this.z7, 16);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
+  introduction(t) {
+    var i = this.J7.__offset(this.z7, 18);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
+  instanceid() {
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetRewarditemAt(t, i) {
     return this.rewarditem(t);
   }
   rewarditem(t, i) {
-    var e = this.J7.__offset(this.z7, 14);
-    return e
+    var r = this.J7.__offset(this.z7, 22);
+    return r
       ? (i || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + e) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
           this.J7,
         )
       : null;
   }
   rewarditemLength() {
-    var t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }

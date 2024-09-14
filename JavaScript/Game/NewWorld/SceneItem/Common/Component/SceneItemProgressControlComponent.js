@@ -4,20 +4,20 @@ var SceneItemProgressControlComponent_1,
     (this && this.__decorate) ||
     function (t, e, i, s) {
       var r,
-        o = arguments.length,
-        n =
-          o < 3
+        n = arguments.length,
+        h =
+          n < 3
             ? e
             : null === s
               ? (s = Object.getOwnPropertyDescriptor(e, i))
               : s;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        n = Reflect.decorate(t, e, i, s);
+        h = Reflect.decorate(t, e, i, s);
       else
-        for (var h = t.length - 1; 0 <= h; h--)
-          (r = t[h]) &&
-            (n = (o < 3 ? r(n) : 3 < o ? r(e, i, n) : r(e, i)) || n);
-      return 3 < o && n && Object.defineProperty(e, i, n), n;
+        for (var o = t.length - 1; 0 <= o; o--)
+          (r = t[o]) &&
+            (h = (n < 3 ? r(h) : 3 < n ? r(e, i, h) : r(e, i)) || h);
+      return 3 < n && h && Object.defineProperty(e, i, h), h;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemProgressControlComponent = void 0);
@@ -27,10 +27,13 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   Net_1 = require("../../../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   IUtil_1 = require("../../../../../UniverseEditor/Interface/IUtil"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../../../Common/Event/EventSystem");
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CHARGING_DEVICE_DISABLE_OFFSET = 2e3;
 let SceneItemProgressControlComponent =
   (SceneItemProgressControlComponent_1 = class SceneItemProgressControlComponent extends (
     EntityComponent_1.EntityComponent
@@ -58,9 +61,17 @@ let SceneItemProgressControlComponent =
               this.f1n();
               break;
             case 1298716444:
-              this.d1n(
-                "[SceneItemProgressControlComponent.HandleUpdateState] 状态变为完成, 停止进度控制",
-              );
+              var i = this.Lo.Control,
+                s = this.EIe.GetBaseInfo().HeadStateViewConfig;
+              "ChargingDevice" === i.Type && 10 === s?.HeadStateViewType
+                ? TimerSystem_1.TimerSystem.Delay(() => {
+                    this.d1n(
+                      "[SceneItemProgressControlComponent.HandleUpdateState] 状态变为完成, 停止进度控制",
+                    );
+                  }, CHARGING_DEVICE_DISABLE_OFFSET)
+                : this.d1n(
+                    "[SceneItemProgressControlComponent.HandleUpdateState] 状态变为完成, 停止进度控制",
+                  );
           }
         }),
         (this.vtn = void 0),
@@ -90,6 +101,20 @@ let SceneItemProgressControlComponent =
         }),
         (this.zpe = (t, e) => {
           this.v1n.has(e) && this.y1n(!1, e);
+        }),
+        (this.$br = void 0),
+        (this.hQs = void 0),
+        (this.Zln = (t) => {
+          this.D1n() &&
+            this.hQs &&
+            this.lcn(t) &&
+            t.ReBulletData.Base.DamageId !== BigInt(0) &&
+            (t = MathUtils_1.MathUtils.Clamp(
+              this.u1n.CurrentValue + this.hQs.HitExtraValue,
+              0,
+              this.hQs.MaxValue,
+            )) !== this.u1n.CurrentValue &&
+            ((this.u1n.CurrentValue = t), this.H1t(), this.g1n());
         });
     }
     OnInitData(t) {
@@ -100,35 +125,54 @@ let SceneItemProgressControlComponent =
         (this.Rne = void 0),
         this.C1n(),
         (t = this.Lo.Control);
-      return "CaptureStrategicPoint" !== t.Type
-        ? (Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "LevelPlay",
-              40,
-              "[SceneItemProgressControlComponent.OnCreate] 不支持的进度控制类型",
-              ["PbDataId", this.EIe.GetPbDataId()],
-              ["ProgressCtrlType", t.Type],
-            ),
-          !1)
-        : ((this.p1n = !1), (this.v1n = new Set()), !0);
+      switch (t.Type) {
+        case "CaptureStrategicPoint":
+          (this.p1n = !1), (this.v1n = new Set());
+          break;
+        case "ChargingDevice":
+          break;
+        default:
+          return (
+            Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "LevelPlay",
+                40,
+                "[SceneItemProgressControlComponent.OnCreate] 不支持的进度控制类型",
+                ["PbDataId", this.EIe.GetPbDataId()],
+              ),
+            !1
+          );
+      }
+      return !0;
     }
     OnStart() {
       if (
-        ((this.mBe = this.Entity.CheckGetComponent(119)),
-        (this.Lie = this.Entity.CheckGetComponent(180)),
+        ((this.mBe = this.Entity.CheckGetComponent(120)),
+        (this.Lie = this.Entity.CheckGetComponent(181)),
         !this.mBe || !this.Lie)
       )
         return !1;
-      var t = this.Lo.Control;
-      if ("CaptureStrategicPoint" === t.Type) {
-        if (((this.vtn = this.Entity.CheckGetComponent(76)), !this.vtn))
-          return !1;
-        this.vtn.AddOnPlayerOverlapCallback(this.E1n),
-          this.vtn.AddOnEntityOverlapCallback(this.y1n),
-          EventSystem_1.EventSystem.Add(
-            EventDefine_1.EEventName.RemoveEntity,
-            this.zpe,
-          );
+      switch (this.Lo.Control.Type) {
+        case "CaptureStrategicPoint":
+          if (((this.vtn = this.Entity.CheckGetComponent(77)), !this.vtn))
+            return !1;
+          this.vtn.AddOnPlayerOverlapCallback(this.E1n),
+            this.vtn.AddOnEntityOverlapCallback(this.y1n),
+            EventSystem_1.EventSystem.Add(
+              EventDefine_1.EEventName.RemoveEntity,
+              this.zpe,
+            );
+          break;
+        case "ChargingDevice":
+          if (((this.$br = this.Entity.CheckGetComponent(141)), !this.$br))
+            return !1;
+          this.$br.RegisterComponent(this, this.Lo),
+            EventSystem_1.EventSystem.AddWithTarget(
+              this,
+              EventDefine_1.EEventName.OnSceneItemHitByHitData,
+              this.Zln,
+            ),
+            (this.hQs = this.Lo?.Control);
       }
       return !0;
     }
@@ -154,16 +198,30 @@ let SceneItemProgressControlComponent =
         this.g1n();
     }
     OnEnd() {
-      return (
-        "CaptureStrategicPoint" === this.Lo.Control.Type &&
-          (this.vtn &&
+      switch (this.Lo.Control.Type) {
+        case "CaptureStrategicPoint":
+          this.vtn &&
             (this.vtn.RemoveOnPlayerOverlapCallback(this.E1n),
             this.vtn.RemoveOnEntityOverlapCallback(this.y1n),
             (this.vtn = void 0)),
-          EventSystem_1.EventSystem.Remove(
-            EventDefine_1.EEventName.RemoveEntity,
-            this.zpe,
-          )),
+            EventSystem_1.EventSystem.Remove(
+              EventDefine_1.EEventName.RemoveEntity,
+              this.zpe,
+            );
+          break;
+        case "ChargingDevice":
+          EventSystem_1.EventSystem.HasWithTarget(
+            this,
+            EventDefine_1.EEventName.OnSceneItemHitByHitData,
+            this.Zln,
+          ) &&
+            EventSystem_1.EventSystem.RemoveWithTarget(
+              this,
+              EventDefine_1.EEventName.OnSceneItemHitByHitData,
+              this.Zln,
+            );
+      }
+      return (
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
@@ -178,7 +236,13 @@ let SceneItemProgressControlComponent =
       );
     }
     OnTick(t) {
-      "CaptureStrategicPoint" === this.Lo.Control.Type && this.T1n(t);
+      switch (this.Lo.Control.Type) {
+        case "CaptureStrategicPoint":
+          this.T1n(t);
+          break;
+        case "ChargingDevice":
+          this.lQs(t);
+      }
     }
     I1n() {
       this.mBe?.IsInState(2)
@@ -188,18 +252,21 @@ let SceneItemProgressControlComponent =
           );
     }
     L1n() {
-      var t = Protocol_1.Aki.Protocol.jls.create();
-      (t.P4n = MathUtils_1.MathUtils.NumberToLong(
+      var t = Protocol_1.Aki.Protocol.zls.create();
+      (t.F4n = MathUtils_1.MathUtils.NumberToLong(
         this.EIe.GetCreatureDataId(),
       )),
-        Net_1.Net.Call(16385, t, (t) => {});
+        Net_1.Net.Call(22446, t, (t) => {});
     }
     g1n() {
       var t = this.Lo.Control;
-      "CaptureStrategicPoint" !== t.Type ||
-        this.u1n?.CurrentValue !== t.MaxValue ||
-        this.mBe?.IsInState(4) ||
-        this.L1n();
+      switch (t.Type) {
+        case "CaptureStrategicPoint":
+        case "ChargingDevice":
+          this.u1n?.CurrentValue !== t.MaxValue ||
+            this.mBe?.IsInState(4) ||
+            this.L1n();
+      }
     }
     D1n() {
       return void 0 === this.Rne;
@@ -240,12 +307,15 @@ let SceneItemProgressControlComponent =
     }
     C1n() {
       var t = this.Lo.Control;
-      "CaptureStrategicPoint" === t.Type &&
-        (this.u1n = {
-          ProgressCtrlType: t.Type,
-          CurrentValue: t.InitValue,
-          MaxValue: t.MaxValue,
-        });
+      switch (t.Type) {
+        case "CaptureStrategicPoint":
+        case "ChargingDevice":
+          this.u1n = {
+            ProgressCtrlType: t.Type,
+            CurrentValue: t.InitValue,
+            MaxValue: t.MaxValue,
+          };
+      }
     }
     U1n(t) {
       switch (t) {
@@ -303,10 +373,27 @@ let SceneItemProgressControlComponent =
           ((this.u1n.CurrentValue = e), this.H1t(), this.g1n());
       }
     }
+    lcn(t) {
+      return (
+        !ModelManager_1.ModelManager.GameModeModel.IsMulti ||
+        (!!t.Attacker?.Valid && t.Attacker.GetComponent(1).IsAutonomousProxy)
+      );
+    }
+    lQs(t) {
+      this.hQs &&
+        (t = MathUtils_1.MathUtils.Clamp(
+          this.u1n.CurrentValue +
+            (t / CommonDefine_1.MILLIONSECOND_PER_SECOND) *
+              this.hQs.IncreaseSpeed,
+          0,
+          this.hQs.MaxValue,
+        )) !== this.u1n.CurrentValue &&
+        ((this.u1n.CurrentValue = t), this.H1t(), this.g1n());
+    }
   });
 (SceneItemProgressControlComponent = SceneItemProgressControlComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(116)],
+    [(0, RegisterComponent_1.RegisterComponent)(117)],
     SceneItemProgressControlComponent,
   )),
   (exports.SceneItemProgressControlComponent =

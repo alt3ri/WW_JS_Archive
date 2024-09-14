@@ -5,56 +5,55 @@ const UE = require("ue"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GameSettingsManager_1 = require("../../../GameSettings/GameSettingsManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   GenericPromptController_1 = require("../../GenericPrompt/GenericPromptController"),
   MenuController_1 = require("../MenuController"),
+  MenuDefine_1 = require("../MenuDefine"),
   MenuScrollSettingButtonItem_1 = require("./MenuScrollSettingButtonItem"),
   MenuScrollSettingDropDown_1 = require("./MenuScrollSettingDropDown"),
-  MenuScrollSettingKeyMapItem_1 = require("./MenuScrollSettingKeyMapItem"),
   MenuScrollSettingSliderItem_1 = require("./MenuScrollSettingSliderItem"),
   MenuScrollSettingSwitchItem_1 = require("./MenuScrollSettingSwitchItem"),
   MenuScrollSettingTitleItem_1 = require("./MenuScrollSettingTitleItem");
 class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.E9 = void 0),
+      (this.Type = void 0),
       (this.Pe = void 0),
+      (this.MenuScrollItemData = void 0),
       (this.IGe = void 0),
       (this.YBi = void 0),
       (this.SPe = void 0),
-      (this.ufa = () => {
-        if (this.Pe) {
-          var e = this.Pe.ClickedTips;
-          if (e && !StringUtils_1.StringUtils.IsBlank(e)) {
-            var t,
-              i,
-              r = ModelManager_1.ModelManager.MenuModel;
-            for ([t, i] of this.Pe.ClickedTipsMap)
-              if (r.GetTargetConfig(t) === i)
-                return void GenericPromptController_1.GenericPromptController.ShowPromptByCode(
-                  e,
-                );
-          }
-        }
+      (this.vVa = void 0),
+      (this.Yai = (e) => {
+        this.Pe && (1 === e && this.MVa(), this.vVa) && this.vVa(this, e);
       }),
       (this.JBi = (e) => {
-        void 0 !== this.Pe && this.Pe.MenuDataFunctionId === e && this.bNe();
+        void 0 !== this.Pe && this.Pe.FunctionId === e && this.bNe();
       }),
-      (this.cfa = (e, t) => {
-        this.Pe &&
-          e === this.Pe.MenuDataFunctionId &&
-          this.ZBi(this.Pe.IsEnable);
+      (this.zGa = (e) => {
+        void 0 !== this.Pe && this.Pe.FunctionId === e && this.bNe();
+      }),
+      (this.BMa = (e, t) => {
+        this.Pe && e === this.Pe.FunctionId && this.ZBi(this.Pe.GetEnable());
       }),
       (this.tbi = (e) => {
         this.SPe.PlayLevelSequenceByName(e);
       }),
       (this.ibi = (e) => {
-        MenuController_1.MenuController.ApplyTargetConfig(
-          this.Pe.MenuDataFunctionId,
-          e,
-        ),
+        MenuController_1.MenuController.SetApplySave(this.Pe, e);
+        var t,
+          e = this.Pe.FunctionId;
+        MenuDefine_1.imageConfigSet.has(e) &&
+          (10 !== e &&
+            ((t = GameSettingsManager_1.GameSettingsManager.Get(10))?.Set(4),
+            t?.Save()),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.ConfigLoadChange,
+            e,
+          )),
           (ModelManager_1.ModelManager.MenuModel.IsEdited = !0);
       });
   }
@@ -83,10 +82,14 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
       this.JBi,
     ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnMenuDataEnableChanged,
-        this.cfa,
+        EventDefine_1.EEventName.OnGameplaySettingsSet,
+        this.zGa,
       ),
-      this.GetExtendToggle(0).OnPointUpCallBack.Bind(this.ufa);
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnMenuDataEnableChanged,
+        this.BMa,
+      ),
+      this.GetExtendToggle(0).OnStateChange.Add(this.Yai);
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
@@ -94,10 +97,35 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
       this.JBi,
     ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnMenuDataEnableChanged,
-        this.cfa,
+        EventDefine_1.EEventName.OnGameplaySettingsSet,
+        this.zGa,
       ),
-      this.GetExtendToggle(0).OnPointUpCallBack.Unbind();
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnMenuDataEnableChanged,
+        this.BMa,
+      ),
+      this.GetExtendToggle(0).OnStateChange.Clear();
+  }
+  BindOnToggleStateChangedCallback(e) {
+    this.vVa = e;
+  }
+  MVa() {
+    if (this.Pe) {
+      var e = this.Pe.ClickedTips;
+      if (e && !StringUtils_1.StringUtils.IsBlank(e)) {
+        var t,
+          i,
+          s = ModelManager_1.ModelManager.MenuModel;
+        for ([t, i] of this.Pe.ClickedTipsMap)
+          if (
+            s.IsInMenuDataByFunctionId(t) &&
+            s.GetGameSettingsHandleEditValue(t) === i
+          )
+            return void GenericPromptController_1.GenericPromptController.ShowPromptByCode(
+              e,
+            );
+      }
+    }
   }
   OnBeforeDestroy() {
     this.RemoveEventListener(),
@@ -105,6 +133,7 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
       (this.SPe = void 0),
       this.YBi?.ClearItem(),
       (this.YBi = void 0),
+      (this.vVa = void 0),
       this.gPe();
   }
   ClearItem() {
@@ -112,12 +141,15 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
   }
   gPe() {
     this.IGe && (this.IGe = void 0),
-      this.E9 && (this.E9 = void 0),
-      this.Pe && (this.Pe = void 0);
+      this.Type && (this.Type = void 0),
+      this.Pe && (this.Pe = void 0),
+      (this.MenuScrollItemData = void 0);
   }
   GetUsingItem(e) {
     let t = void 0;
-    switch ((0 === e.Type && (t = this.GetItem(1)), e.Data.MenuDataSetType)) {
+    if (0 === e.Type)
+      return void 0 !== (t = this.GetItem(1)) ? t.GetOwner() : void 0;
+    switch (e.Data.SetType) {
       case 1:
         t = this.GetItem(4);
         break;
@@ -134,7 +166,11 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
     return void 0 !== t ? t.GetOwner() : void 0;
   }
   Update(e, t) {
-    (this.E9 = e.Type), (this.Pe = e.Data), this.obi(), this.rbi(e);
+    (this.Type = e.Type),
+      (this.Pe = e.Data),
+      (this.MenuScrollItemData = e),
+      this.obi(),
+      this.rbi(e);
   }
   async rbi(e) {
     this.YBi && (this.YBi.Clear(), await this.YBi.ClearAsync()),
@@ -146,8 +182,8 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
     e &&
       ((i = t.Data),
       e.SetActive(!0),
-      e.Update(i),
-      0 !== t.Type ? this.ZBi(i.IsEnable) : this.ZBi(!1));
+      e.ExecuteUpdate(i, !1),
+      0 !== t.Type ? this.ZBi(i.GetEnable()) : this.ZBi(!1));
   }
   nbi(e) {
     if (0 === e.Type)
@@ -155,7 +191,7 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
         1,
         MenuScrollSettingTitleItem_1.MenuScrollSettingTitleItem,
       );
-    switch (e.Data.MenuDataSetType) {
+    switch (e.Data.SetType) {
       case 1:
         return this.abi(
           4,
@@ -165,11 +201,6 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
         return this.abi(
           3,
           MenuScrollSettingSwitchItem_1.MenuScrollSettingSwitchItem,
-        );
-      case 3:
-        return this.abi(
-          2,
-          MenuScrollSettingKeyMapItem_1.MenuScrollSettingKeyMapItem,
         );
       case 4:
         return this.abi(
@@ -188,7 +219,7 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
     return t.Initialize(this.GetItem(e), this.ibi, this.tbi), t;
   }
   bNe() {
-    this.YBi && this.YBi.Update(this.Pe);
+    this.YBi && this.YBi.ExecuteUpdate(this.Pe, !0);
   }
   obi() {
     this.GetItem(1).SetUIActive(!1),
@@ -201,7 +232,18 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
     var t = this.GetExtendToggle(0);
     t.SetToggleState(e ? 0 : 2, !1),
       t.SetSelfInteractive(e),
-      0 !== this.E9 && this.YBi && this.YBi.SetInteractionActive(e);
+      0 !== this.Type && this.YBi && this.YBi.SetInteractionActive(e);
+  }
+  SetDetailVisible(e) {
+    this.YBi && this.YBi.SetDetailVisible(e);
+  }
+  GetMenuData() {
+    return this.Pe;
+  }
+  SetSelected(e) {
+    e
+      ? this.GetExtendToggle(0)?.SetToggleState(1, !1)
+      : this.GetExtendToggle(0)?.SetToggleState(0, !1);
   }
 }
 exports.MenuScrollSettingContainerItem = MenuScrollSettingContainerItem;

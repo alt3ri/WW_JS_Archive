@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Log_1 = require("../../../../../Core/Common/Log"),
   Stats_1 = require("../../../../../Core/Common/Stats"),
+  Time_1 = require("../../../../../Core/Common/Time"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   RenderConfig_1 = require("../../../Config/RenderConfig"),
@@ -54,18 +55,20 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
           ["Actor", this.Zhr],
         )
       : ((this.MaterialContainer = t),
-        this.Zhr,
-        (this.Alr = void 0),
+        (t = "Render_CharMaterialControllerTick_" + this.Zhr),
+        (this.Alr = Stats_1.Stat.Create(t)),
         this.OnInitSuccess());
   }
   GetRuntimeMaterialControllerInfo(t) {
     return this.AllMaterialControlRuntimeDataMap.get(t);
   }
   Update() {
-    var t = this.GetDeltaTime();
+    this.Alr.Start();
     for (const r of this.AllMaterialControlRuntimeDataMap.values()) {
-      var e = this.GetRenderingComponent().GetTimeDilation();
-      r.UpdateState(t, e),
+      var t = this.GetRenderingComponent().GetTimeDilation(),
+        e = Time_1.Time.NowSeconds - r.LastUpdateTime;
+      (r.LastUpdateTime = Time_1.Time.NowSeconds),
+        r.UpdateState(e, t),
         r.UpdateEffect(this.MaterialContainer),
         r.IsDead && this.xhr.push(r.Id);
     }
@@ -94,8 +97,10 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
           ["Actor", this.Zhr],
           ["handle array", this.xhr.join()],
         ),
-        (this.xhr.length = 0);
+        (this.xhr.length = 0),
+        this.Bka();
     }
+    this.Alr.Stop();
   }
   SetEffectProgress(t, e) {
     e = this.AllMaterialControlRuntimeDataMap.get(e);
@@ -147,6 +152,7 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
       r.UpdateEffect(this.MaterialContainer),
       r.Destroy(),
       this.AllMaterialControlRuntimeDataMap.delete(t),
+      this.Bka(),
       !0)
     );
   }
@@ -197,9 +203,18 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
       o.Init(r, t, e),
       o.SetSpecifiedMaterialIndex(this.MaterialContainer),
       this.AllMaterialControlRuntimeDataMap.set(r, o),
+      this.Bka(),
       this.RenderComponent.MarkForceUpdateOnce(),
       r
     );
+  }
+  Bka() {
+    let t = !1;
+    for (const e of Array.from(
+      this.AllMaterialControlRuntimeDataMap.values(),
+    ).reverse())
+      t ? e.RequestEffectStateRevert() : e.RequestEffectStateEnter(),
+        e.DataCache.MaskOriginEffect && (t = !0);
   }
   AddMaterialControllerDataDestroyCallback(t, e) {
     var r,

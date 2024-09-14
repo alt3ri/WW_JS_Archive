@@ -21,10 +21,10 @@ const Log_1 = require("../../../Core/Common/Log"),
   };
 class ItemHintController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(6736, this.HandleItemRewardNotify);
+    Net_1.Net.Register(16447, this.HandleItemRewardNotify);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(6736);
+    Net_1.Net.UnRegister(16447);
   }
   static qgi(e) {
     e.length <= 0 ||
@@ -54,27 +54,27 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
       o,
       i = new Array(),
       r = new Map();
-    if (e.U9n) {
-      for (const a of e.U9n)
-        a.o9n &&
+    if (e.O9n) {
+      for (const a of e.O9n)
+        a.m9n &&
           ((n = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(
-            a.q9n,
+            a.W9n,
           ))
             ? 0 !== n.ShowBg &&
-              (r.has(a.f8n)
-                ? (r.get(a.f8n).ItemCount += a.o9n)
+              (r.has(a.L8n)
+                ? (r.get(a.L8n).ItemCount += a.m9n)
                 : ((n =
                     ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-                      a.f8n,
+                      a.L8n,
                     )),
-                  ((o = new ItemHintDefines_1.ItemRewardInfo()).ItemId = a.f8n),
-                  (o.ItemCount = a.o9n),
+                  ((o = new ItemHintDefines_1.ItemRewardInfo()).ItemId = a.L8n),
+                  (o.ItemCount = a.m9n),
                   (o.Quality = n.QualityId),
                   r.set(o.ItemId, o)))
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error("ItemHint", 18, "缺少ShowPlan配置", [
                 "showPlanId",
-                a.q9n,
+                a.W9n,
               ]));
       for (const _ of r.values()) i.push(_);
       t &&
@@ -97,9 +97,9 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
     return t;
   }
   static GetFirstShowBgDropGroup(e) {
-    if (e.U9n)
-      for (const n of e.U9n) {
-        var t = n.q9n,
+    if (e.O9n)
+      for (const n of e.O9n) {
+        var t = n.W9n,
           t = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(t);
         if (t) {
           if (0 !== t.ShowBg) return t;
@@ -107,7 +107,7 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error("ItemHint", 18, "缺少ShowPlan配置", [
               "showPlanId",
-              n.q9n,
+              n.W9n,
             ]);
       }
   }
@@ -199,17 +199,17 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
     var t = [],
       n = ModelManager_1.ModelManager.InventoryModel;
     for (const r of e) {
-      var o = r.J4n;
+      var o = r.s5n;
       if (o !== ItemHintDefine_1.EXP_ITEM_ID) {
         o = n.GetCommonItemData(o);
         if (o) {
           var o = o.GetLastCount(),
-            i = r.o9n,
+            i = r.m9n,
             o = o ? i - o : i;
           if (!(o < 0)) {
             let e = 0;
-            r instanceof Protocol_1.Aki.Protocol.Z5s && (e = r.L9n);
-            i = { J4n: r.J4n, o9n: o, L9n: e };
+            r instanceof Protocol_1.Aki.Protocol.s5s && (e = r.b9n);
+            i = { s5n: r.s5n, m9n: o, b9n: e };
             t.push(i);
           }
         }
@@ -218,7 +218,7 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
     ItemHintController.qgi(t);
   }
   static AddRoguelikeItemList(e, t) {
-    e = { J4n: e, o9n: t, L9n: 0 };
+    e = { s5n: e, m9n: t, b9n: 0 };
     ModelManager_1.ModelManager.ItemHintModel.MainInterfaceInsertItemRewardInfo(
       [e],
     );
@@ -262,13 +262,13 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
     else {
       var t =
         ModelManager_1.ModelManager.ItemHintModel.PeekItemRewardListFirst();
-      if (t.ItemReward?.U9n) {
+      if (t.ItemReward?.O9n) {
         let e = void 0;
-        for (const i of t.ItemReward.U9n) {
-          var n = i.q9n,
+        for (const i of t.ItemReward.O9n) {
+          var n = i.W9n,
             o = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(n);
           if (o) {
-            if (0 !== o.ShowBg && i.o9n && void 0 === e) {
+            if (0 !== o.ShowBg && i.m9n && void 0 === e) {
               e = o.ShowBg;
               break;
             }
@@ -346,17 +346,17 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
   !0),
   (ItemHintController.IsPrintNoRewardReason = !1),
   (ItemHintController.HandleItemRewardNotify = (t) => {
-    if (t.U9n) {
+    if (t.O9n) {
       let e = void 0;
       if (
-        ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(t.y6n).ShowBg
+        ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(t.P6n).ShowBg
       )
-        for (const i of t.U9n) {
-          var n = i.q9n,
+        for (const i of t.O9n) {
+          var n = i.W9n,
             o = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(n);
           o
             ? 0 !== o.ShowBg &&
-              i.o9n &&
+              i.m9n &&
               (void 0 === e
                 ? (e = o.ShowBg)
                 : e !== o.ShowBg &&
@@ -365,7 +365,7 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
                     "ItemHint",
                     18,
                     "一次掉落有多个不同背景的掉落组，请检查配置",
-                    ["dropId", t.y6n],
+                    ["dropId", t.P6n],
                   ))
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error("ItemHint", 18, "缺少showPlan配置", [
@@ -391,19 +391,19 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
   }),
   (ItemHintController.x2e = (e, t, n, o, i, r, a) => {
     var _ = [],
-      i = { J4n: ItemHintDefine_1.EXP_ITEM_ID, o9n: i, L9n: 0 };
+      i = { s5n: ItemHintDefine_1.EXP_ITEM_ID, m9n: i, b9n: 0 };
     _.push(i), ItemHintController.qgi(_);
   }),
   (ItemHintController.Ngi = (e, t, n) => {
     var o = [],
-      e = { J4n: ItemHintDefine_1.EXP_ITEM_ID, o9n: e - t, L9n: 0 };
+      e = { s5n: ItemHintDefine_1.EXP_ITEM_ID, m9n: e - t, b9n: 0 };
     o.push(e), ItemHintController.qgi(o);
   }),
   (ItemHintController.wdi = (e, t, n) => {
     if (!t && n) {
       var o = [];
       for (const r of e) {
-        var i = { J4n: r.J4n, o9n: 1, L9n: 0 };
+        var i = { s5n: r.s5n, m9n: 1, b9n: 0 };
         o.push(i);
       }
       ItemHintController.qgi(o);
@@ -412,13 +412,13 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
   (ItemHintController.bdi = (e) => {
     var t = [];
     for (const o of e) {
-      var n = { J4n: o.J4n, o9n: 1, L9n: 0 };
+      var n = { s5n: o.s5n, m9n: 1, b9n: 0 };
       t.push(n);
     }
     ItemHintController.qgi(t);
   }),
   (ItemHintController.kgi = (e) => {
-    e = { J4n: e[0].ItemId, o9n: e[1], L9n: 0 };
+    e = { s5n: e[0].ItemId, m9n: e[1], b9n: 0 };
     ItemHintController.qgi([e]);
   }),
   (ItemHintController.Ogi = () => {

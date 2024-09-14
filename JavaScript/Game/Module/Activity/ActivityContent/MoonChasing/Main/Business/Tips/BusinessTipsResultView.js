@@ -10,6 +10,7 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../../../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../../../../../Ui/Base/UiViewBase"),
   LguiUtil_1 = require("../../../../../../Util/LguiUtil"),
+  BusinessTipsCurrencyItem_1 = require("./BusinessTipsCurrencyItem"),
   BusinessTipsInvestModule_1 = require("./BusinessTipsInvestModule"),
   BusinessTipsSettlementModule_1 = require("./BusinessTipsSettlementModule"),
   ANIM_TIME = 2e3;
@@ -19,8 +20,9 @@ class BusinessTipsResultView extends UiViewBase_1.UiViewBase {
       (this.InvestModule = void 0),
       (this.SettlementModule = void 0),
       (this.TimerHandle = void 0),
+      (this.CurrencyItem = void 0),
       (this.t2e = () => {
-        this.TimerHandle && (this.GAn(), this.jta());
+        this.TimerHandle && (this.GAn(), this.loa());
       }),
       (this.zke = () => {
         this.InvestModule?.SetActive(!1),
@@ -28,6 +30,7 @@ class BusinessTipsResultView extends UiViewBase_1.UiViewBase {
           this.GetItem(6)?.SetUIActive(!0),
           this.VAn("working", 0.1),
           AudioSystem_1.AudioSystem.PostEvent("play_ui_zuiyuejie_loading"),
+          this.kwa(),
           this.PlaySequenceAsync("Run").finally(() => {
             this.GetButton(5)?.RootUIComp.SetUIActive(!0), this.HAn();
           });
@@ -42,12 +45,13 @@ class BusinessTipsResultView extends UiViewBase_1.UiViewBase {
       [4, UE.UIItem],
       [5, UE.UIButtonComponent],
       [6, UE.UIItem],
+      [7, UE.UIItem],
     ]),
       (this.BtnBindInfo = [[5, this.t2e]]);
   }
   async OnBeforeStartAsync() {
-    await Promise.all([this.Zke(), this.UAr(), this.AAr()]),
-      this.PZs(),
+    await Promise.all([this.Zke(), this.UAr(), this.AAr(), this.Nwa()]),
+      this.jta(),
       this.GetButton(5)?.RootUIComp.SetUIActive(!1),
       this.GetItem(6)?.SetUIActive(!1);
   }
@@ -79,7 +83,16 @@ class BusinessTipsResultView extends UiViewBase_1.UiViewBase {
     ),
       this.GetSpine(0).SetAnimation(0, "idle", !0);
   }
-  PZs() {
+  async Nwa() {
+    (this.CurrencyItem =
+      new BusinessTipsCurrencyItem_1.BusinessTipsCurrencyItem()),
+      await this.CurrencyItem.CreateThenShowByActorAsync(
+        this.GetItem(7).GetOwner(),
+      );
+    var e = ConfigManager_1.ConfigManager.BusinessConfig.GetCoinItemId();
+    this.CurrencyItem.RefreshTemp(e);
+  }
+  jta() {
     var e =
         ModelManager_1.ModelManager.MoonChasingBusinessModel.GetResultData(),
       e = ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustRoleById(
@@ -103,7 +116,7 @@ class BusinessTipsResultView extends UiViewBase_1.UiViewBase {
   }
   HAn() {
     this.TimerHandle = TimerSystem_1.TimerSystem.Delay(() => {
-      (this.TimerHandle = void 0), this.jta();
+      (this.TimerHandle = void 0), this.loa();
     }, ANIM_TIME);
   }
   GAn() {
@@ -111,7 +124,7 @@ class BusinessTipsResultView extends UiViewBase_1.UiViewBase {
       (TimerSystem_1.TimerSystem.Remove(this.TimerHandle),
       (this.TimerHandle = void 0));
   }
-  jta() {
+  loa() {
     AudioSystem_1.AudioSystem.ExecuteAction("play_ui_zuiyuejie_loading", 0);
     var e =
         ModelManager_1.ModelManager.MoonChasingBusinessModel.GetResultData(),
@@ -134,6 +147,12 @@ class BusinessTipsResultView extends UiViewBase_1.UiViewBase {
   }
   VAn(e, i) {
     this.GetSpine(0).SetAnimation(0, e, !0)?.SetMixDuration(i);
+  }
+  kwa() {
+    var e =
+        ModelManager_1.ModelManager.MoonChasingBusinessModel.GetResultData(),
+      i = e.OriginGold - e.CostGold;
+    this.CurrencyItem.PlayReduceTweener(e.OriginGold, i);
   }
 }
 exports.BusinessTipsResultView = BusinessTipsResultView;

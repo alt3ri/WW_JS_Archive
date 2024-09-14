@@ -22,9 +22,16 @@ class AiBase {
   get SubBehaviorConfigs() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.subbehaviorconfigsLength(),
-      (t) => this.subbehaviorconfigs(t)?.key(),
-      (t) => this.subbehaviorconfigs(t)?.value(),
+      this.subbehaviorconfigsKey,
+      this.subbehaviorconfigsValue,
+      this,
     );
+  }
+  subbehaviorconfigsKey(t) {
+    return this.subbehaviorconfigs(t)?.key();
+  }
+  subbehaviorconfigsValue(t) {
+    return this.subbehaviorconfigs(t)?.value();
   }
   get Team() {
     return this.team();

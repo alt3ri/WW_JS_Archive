@@ -8,7 +8,7 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 const MediumItemGrid_1 = require("../../Common/MediumItemGrid/MediumItemGrid"),
   ANIMATION_LENGTH = 200,
   LOW_HP_PERCENT = 0.2;
@@ -35,8 +35,8 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
         var s;
         i !== e &&
           this.z0t &&
-          ((s = this.z0t.Entity.GetComponent(158).GetCurrentValue(
-            EAttributeId.e5n,
+          ((s = this.z0t.Entity.GetComponent(159).GetCurrentValue(
+            EAttributeId.l5n,
           )),
           this.z0t.SetCurrentAttribute(i),
           this.cft(e, i, s));
@@ -112,7 +112,7 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
   }
   c$e() {
     this.z0t &&
-      this.z0t.Entity.GetComponent(158).AddListener(
+      this.z0t.Entity.GetComponent(159).AddListener(
         EAttributeId.Proto_Life,
         this.uft,
         "Life.BuffTargetRoleItem",
@@ -120,7 +120,7 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
   }
   m$e() {
     this.z0t &&
-      this.z0t.Entity.GetComponent(158).RemoveListener(
+      this.z0t.Entity.GetComponent(159).RemoveListener(
         EAttributeId.Proto_Life,
         this.uft,
       );

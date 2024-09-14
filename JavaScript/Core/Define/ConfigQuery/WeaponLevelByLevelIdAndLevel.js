@@ -17,28 +17,42 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configWeaponLevelByLevelIdAndLevel.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configWeaponLevelByLevelIdAndLevel.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configWeaponLevelByLevelIdAndLevel.GetConfig(";
 exports.configWeaponLevelByLevelIdAndLevel = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (e, o, n = !0) => {
-    if (
-      (l = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${e}#${o})`),
+      t =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
       if (n) {
-        var i = KEY_PREFIX + `#${e}#${o})`;
-        const a = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (a) return a;
+        var a = KEY_PREFIX + `#${e}#${o})`;
+        const C = ConfigCommon_1.ConfigCommon.GetConfig(a);
+        if (C)
+          return (
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
+          );
       }
       if (
-        (l =
+        (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, o, ...logPair) &&
           0 <
@@ -50,32 +64,37 @@ exports.configWeaponLevelByLevelIdAndLevel = {
               ["Level", o],
             ))
       ) {
-        var l,
-          i = void 0;
+        a = void 0;
         if (
-          (([l, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([t, a] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["LevelId", e],
             ["Level", o],
           )),
-          l)
+          t)
         ) {
-          const a = WeaponLevel_1.WeaponLevel.getRootAsWeaponLevel(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+          const C = WeaponLevel_1.WeaponLevel.getRootAsWeaponLevel(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
           );
           return (
             n &&
-              ((l = KEY_PREFIX + `#${e}#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(l, a)),
+              ((t = KEY_PREFIX + `#${e}#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(t, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            a
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            C
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=WeaponLevelByLevelIdAndLevel.js.map

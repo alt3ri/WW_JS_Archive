@@ -41,11 +41,11 @@ class ActivityRunController extends ActivityControllerBase_1.ActivityControllerB
     );
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(21207, ActivityRunController.PFe),
-      Net_1.Net.Register(11775, ActivityRunController.xFe);
+    Net_1.Net.Register(27971, ActivityRunController.PFe),
+      Net_1.Net.Register(18944, ActivityRunController.xFe);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(21207), Net_1.Net.UnRegister(11775);
+    Net_1.Net.UnRegister(27971), Net_1.Net.UnRegister(18944);
   }
   static SelectDefaultChallengeId(e) {
     e =
@@ -55,20 +55,20 @@ class ActivityRunController extends ActivityControllerBase_1.ActivityControllerB
     ModelManager_1.ModelManager.ActivityRunModel.SetStartViewSelectIndex(e);
   }
   static wFe() {
-    var e = new Protocol_1.Aki.Protocol.Lhs();
-    Net_1.Net.Call(26753, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.xhs();
+    Net_1.Net.Call(29559, e, (e) => {
       ModelManager_1.ModelManager.ActivityRunModel.OnReceiveMessageData(e);
     });
   }
   static RequestTakeChallengeReward(t, i) {
-    var e = new Protocol_1.Aki.Protocol.Ahs();
-    (e.W6n = t),
-      (e.K6n = i),
-      Net_1.Net.Call(26013, e, (e) => {
-        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+    var e = new Protocol_1.Aki.Protocol.qhs();
+    (e.e8n = t),
+      (e.t8n = i),
+      Net_1.Net.Call(24176, e, (e) => {
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              10715,
+              e.Q4n,
+              18368,
             )
           : ModelManager_1.ModelManager.ActivityRunModel.OnGetChallengeReward(
               t,
@@ -77,13 +77,13 @@ class ActivityRunController extends ActivityControllerBase_1.ActivityControllerB
       });
   }
   static RequestTransToParkourChallenge(e) {
-    var t = new Protocol_1.Aki.Protocol.whs();
-    (t.W6n = e),
-      Net_1.Net.Call(20529, t, (e) => {
-        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+    var t = new Protocol_1.Aki.Protocol.khs();
+    (t.e8n = e),
+      Net_1.Net.Call(18700, t, (e) => {
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              6297,
+              e.Q4n,
+              17806,
             )
           : (UiManager_1.UiManager.CloseView("ActivityRunSuccessView"),
             UiManager_1.UiManager.CloseView("ActivityRunFailView"));
@@ -94,9 +94,9 @@ class ActivityRunController extends ActivityControllerBase_1.ActivityControllerB
   ModelManager_1.ModelManager.ActivityRunModel.OnReceiveChallengeOpenNotify(e);
 }),
   (ActivityRunController.xFe = (t) => {
-    if (t.eUs) {
+    if (t.aUs) {
       var i = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
-        t.W6n,
+        t.e8n,
       );
       if (i) {
         var n = i.GetMiniTime(),
@@ -116,7 +116,7 @@ class ActivityRunController extends ActivityControllerBase_1.ActivityControllerB
     }
   }),
   (ActivityRunController.AFe = (e, t) => {
-    e === Protocol_1.Aki.Protocol.oks.Proto_Parkour &&
+    e === Protocol_1.Aki.Protocol.uks.Proto_Parkour &&
       ActivityRunController.wFe();
   });
 //# sourceMappingURL=ActivityRunController.js.map

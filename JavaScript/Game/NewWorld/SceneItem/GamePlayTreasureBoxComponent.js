@@ -42,7 +42,7 @@ let SceneItemTreasureBoxComponent =
         (this.ucn = void 0),
         (this.m1n = () => {
           this.ccn(),
-            this.Entity.CheckGetComponent(119).IsInState(2) && this.mcn();
+            this.Entity.CheckGetComponent(120).IsInState(2) && this.mcn();
         }),
         (this.dcn = (e) => {
           this.ccn();
@@ -101,7 +101,7 @@ let SceneItemTreasureBoxComponent =
             this.dcn,
           )),
         (this.ucn = void 0),
-        this.Entity.CheckGetComponent(119).IsInState(0) || this.m1n(),
+        this.Entity.CheckGetComponent(120).IsInState(0) || this.m1n(),
         !0
       );
     }
@@ -127,13 +127,13 @@ let SceneItemTreasureBoxComponent =
       );
     }
     ccn() {
-      var e = this.Entity.CheckGetComponent(119),
-        t = this.Entity.CheckGetComponent(180);
+      var e = this.Entity.CheckGetComponent(120),
+        t = this.Entity.CheckGetComponent(181);
       let n = void 0,
         r = void 0;
       switch (e.State) {
         case 1:
-          n = this.Entity.CheckGetComponent(117).IsLocked
+          n = this.Entity.CheckGetComponent(118).IsLocked
             ? ((r = -1107341031), -1491083225)
             : ((r = -1491083225), -1107341031);
           break;
@@ -159,7 +159,7 @@ let SceneItemTreasureBoxComponent =
         );
     }
     CloseAllCollisions() {
-      var e = this.Entity.GetComponent(185),
+      var e = this.Entity.GetComponent(187),
         n =
           (SceneItemTreasureBoxComponent_1.gcn(e.Owner),
           SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllActorsInLevel(
@@ -195,7 +195,7 @@ let SceneItemTreasureBoxComponent =
   });
 (SceneItemTreasureBoxComponent = SceneItemTreasureBoxComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(127)],
+    [(0, RegisterComponent_1.RegisterComponent)(128)],
     SceneItemTreasureBoxComponent,
   )),
   (exports.SceneItemTreasureBoxComponent = SceneItemTreasureBoxComponent);

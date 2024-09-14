@@ -26,10 +26,10 @@ class RewardController extends UiControllerBase_1.UiControllerBase {
     return Log_1.Log.CheckInfo() && Log_1.Log.Info("Reward", 9, "初始化"), !0;
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(19684, this.fao);
+    Net_1.Net.Register(28251, this.fao);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(19684);
+    Net_1.Net.UnRegister(28251);
   }
   static PickUpFightDrop(o, t, n) {
     var e;
@@ -40,19 +40,19 @@ class RewardController extends UiControllerBase_1.UiControllerBase {
             o,
           ]),
         !1)
-      : (((e = Protocol_1.Aki.Protocol.GZn.create()).pHn =
+      : (((e = Protocol_1.Aki.Protocol.HZn.create()).DHn =
           MathUtils_1.MathUtils.NumberToLong(o)),
         RewardController.pao.add(o),
-        Net_1.Net.Call(19732, Protocol_1.Aki.Protocol.GZn.create(e), (e) => {
+        Net_1.Net.Call(19528, Protocol_1.Aki.Protocol.HZn.create(e), (e) => {
           if ((RewardController.pao.delete(o), e))
-            if (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs)
+            if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs)
               n && n(!1),
                 ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.O4n,
-                  7427,
+                  e.Q4n,
+                  18264,
                 ),
-                e.O4n ===
-                  Protocol_1.Aki.Protocol.O4n.Proto_ErrPkgCapacityNotEnough &&
+                e.Q4n ===
+                  Protocol_1.Aki.Protocol.Q4n.Proto_ErrPkgCapacityNotEnough &&
                   AudioSystem_1.AudioSystem.PostEvent(
                     "ui_pickup_capacity_full",
                   );
@@ -107,7 +107,7 @@ class RewardController extends UiControllerBase_1.UiControllerBase {
   RewardModel_1.RewardModel),
   (RewardController.pao = new Set()),
   (RewardController.fao = (e) => {
-    RewardController.HandleDropInBagInfo(e.yPs, e.y6n);
+    RewardController.HandleDropInBagInfo(e.PPs, e.P6n);
   }),
   (RewardController.HandleDropInBagInfo = (e, r) => {});
 //# sourceMappingURL=RewardController.js.map

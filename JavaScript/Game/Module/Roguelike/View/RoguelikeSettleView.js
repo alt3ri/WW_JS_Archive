@@ -20,11 +20,14 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
       (this.SkillPointRewardItem = void 0),
       (this.OutSideRewardItem = void 0),
       (this.plo = () => {
-        InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon().finally(
-          () => {
-            UiManager_1.UiManager.IsViewShow(this.Info.Name) && this.CloseMe();
-          },
-        );
+        ModelManager_1.ModelManager.RoguelikeModel?.CheckInRoguelike()
+          ? InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon().finally(
+              () => {
+                UiManager_1.UiManager.IsViewShow(this.Info.Name) &&
+                  this.CloseMe();
+              },
+            )
+          : this.CloseMe();
       });
   }
   OnRegisterComponent() {
@@ -76,15 +79,15 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
   pie() {
     var e = this.OpenParam,
       t =
-        (this.GetItem(6).SetUIActive(e.$xs),
+        (this.GetItem(6).SetUIActive(e.Yxs),
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
-          e.G2s._9n,
+          e.H2s.v9n,
         )),
       i = ConfigManager_1.ConfigManager.RoleConfig?.GetRoleConfig(t.RoleId),
       s = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePhantomConfig(
-        e.O2s._9n,
+        e.j2s.v9n,
       ),
-      o = TimeUtil_1.TimeUtil.GetTimeString(e.oqs),
+      o = TimeUtil_1.TimeUtil.GetTimeString(e.uqs),
       o =
         (this.GetText(21).SetText(o),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), i.Name),
@@ -99,7 +102,7 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
             this.SetTextureByPath(s.PokemonSettleIcon, this.GetTexture(3)))
           : (this.GetText(4).SetUIActive(!1),
             this.GetTexture(3).SetUIActive(!1)),
-        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e.X5n)),
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e.r6n)),
       t =
         (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), i.MapName),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -111,8 +114,8 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
           "RoguelikeSettlePlayerName",
           ModelManager_1.ModelManager.FunctionModel.GetPlayerName(),
         ),
-        TimeUtil_1.TimeUtil.DateFormatString(e.eqs)),
-      o = (this.GetText(9).SetText(t), Math.floor((e.X2s / e.Y2s) * 100)),
+        TimeUtil_1.TimeUtil.DateFormatString(e.aqs)),
+      o = (this.GetText(9).SetText(t), Math.floor((e.iqs / e.rqs) * 100)),
       s =
         (this.GetSprite(14).SetFillAmount(o / 100),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -124,7 +127,7 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
       i = this.GetItem(0),
       t = this.GetSprite(5),
       r = this.GetSprite(14),
-      n = this.GetTexture(19),
+      a = this.GetTexture(19),
       i =
         (o >= s.RoguelikeSettleS
           ? (i.SetUIActive(!0),
@@ -142,7 +145,7 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
               r,
               !1,
             ),
-            this.SetTextureByPath(s.RoguelikeSettleBgS, n))
+            this.SetTextureByPath(s.RoguelikeSettleBgS, a))
           : (o >= s.RoguelikeSettleA
               ? (i.SetUIActive(!1),
                 this.SetSpriteByPath(
@@ -190,7 +193,7 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
                     r,
                     !1,
                   )),
-            this.SetTextureByPath(s.RoguelikeSettleBgNormal, n)),
+            this.SetTextureByPath(s.RoguelikeSettleBgNormal, a)),
         o >= s.RoguelikeSettleS
           ? AudioSystem_1.AudioSystem.SetState("ui_rogue_settle", "settle_s")
           : o >= s.RoguelikeSettleA
@@ -206,29 +209,29 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
                 ),
         LguiUtil_1.LguiUtil.CopyItem(this.GetItem(12), this.GetItem(11))),
       t = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(12), this.GetItem(11)),
-      r = Object.keys(e.zbs);
-    let a = 0,
+      r = Object.keys(e.nBs);
+    let n = 0,
       l = 0,
       g = 0;
     var _ =
       ModelManager_1.ModelManager.RoguelikeModel.GetParamConfigBySeasonId();
     for (const u of r)
       Number(u) === _.SkillPoint
-        ? (a = e.zbs[u])
+        ? (n = e.nBs[u])
         : Number(u) === _.TokenItem
-          ? (l = e.zbs[u])
-          : Number(u) === _.InsideCurrency && (g = e.zbs[u]);
-    (n = new RoguelikeSettleRecordItem(0, e.tqs)),
-      n.CreateThenShowByActorAsync(this.GetItem(12).GetOwner()),
-      (o = new RoguelikeSettleRecordItem(1, e.iqs)),
+          ? (l = e.nBs[u])
+          : Number(u) === _.InsideCurrency && (g = e.nBs[u]);
+    (a = new RoguelikeSettleRecordItem(0, e.hqs)),
+      a.CreateThenShowByActorAsync(this.GetItem(12).GetOwner()),
+      (o = new RoguelikeSettleRecordItem(1, e.lqs)),
       o.CreateThenShowByActorAsync(i.GetOwner()),
       (s = new RoguelikeSettleRecordItem(2, g));
     s.CreateThenShowByActorAsync(t.GetOwner());
-    let h = !(this.RecordItemList = [n, o, s]);
+    let h = !(this.RecordItemList = [a, o, s]);
     for (const U of ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguelikePopularEntries())
-      U.Insts.includes(e.X5n) && (h = !0);
-    this.SkillPointRewardItem.Refresh(_.SkillPoint, a, e.nqs, h),
-      this.OutSideRewardItem.Refresh(_.TokenItem, l, e.nqs, h);
+      U.Insts.includes(e.r6n) && (h = !0);
+    this.SkillPointRewardItem.Refresh(_.SkillPoint, n, e.cqs, h),
+      this.OutSideRewardItem.Refresh(_.TokenItem, l, e.cqs, h);
   }
 }
 exports.RoguelikeSettleView = RoguelikeSettleView;

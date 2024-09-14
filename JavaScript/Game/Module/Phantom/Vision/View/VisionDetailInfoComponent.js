@@ -109,12 +109,27 @@ class VisionDetailTop extends UiPanelBase_1.UiPanelBase {
       (this.OnClickLockToggle = () => {
         ControllerHolder_1.ControllerHolder.InventoryController.ItemLockRequest(
           this.$8i.GetUniqueId(),
-          !this.$8i.GetIfLock(),
+          !this.$8i.GetIsLock(),
         );
       }),
-      (this.Rxt = (i, t) => {
+      (this.OnClickDeprecateToggle = () => {
+        ControllerHolder_1.ControllerHolder.InventoryController.ItemDeprecateRequest(
+          this.$8i.GetUniqueId(),
+          !this.$8i.GetIsDeprecated(),
+        );
+      }),
+      (this.TNa = (i) => {
+        var t;
         this.$8i?.GetUniqueId() === i &&
-          ((i = t ? 0 : 1), this.GetExtendToggle(1).SetToggleState(i, !1));
+          void 0 !==
+            (i =
+              ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(
+                i,
+              )) &&
+          ((t = i.GetIsLock() ? 0 : 1),
+          this.GetExtendToggle(1).SetToggleState(t, !1),
+          (t = i.GetIsDeprecated() ? 1 : 0),
+          this.GetExtendToggle(6).SetToggleState(t, !1));
       }),
       (this.wqe = i);
   }
@@ -129,8 +144,12 @@ class VisionDetailTop extends UiPanelBase_1.UiPanelBase {
       [3, UE.UIItem],
       [4, UE.UIText],
       [5, UE.UIItem],
+      [6, UE.UIExtendToggle],
     ]),
-      (this.BtnBindInfo = [[1, this.OnClickLockToggle]]);
+      (this.BtnBindInfo = [
+        [1, this.OnClickLockToggle],
+        [6, this.OnClickDeprecateToggle],
+      ]);
   }
   async OnBeforeStartAsync() {
     (this.bxt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
@@ -142,8 +161,8 @@ class VisionDetailTop extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     (this.p9i = new VisionNameText_1.VisionNameText(this.GetText(0))),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnItemLock,
-        this.Rxt,
+        EventDefine_1.EEventName.OnItemFuncValueChange,
+        this.TNa,
       );
   }
   Update(i) {
@@ -160,13 +179,13 @@ class VisionDetailTop extends UiPanelBase_1.UiPanelBase {
     var t = ModelManager_1.ModelManager.InventoryModel.GetPhantomItemData(
         i.GetUniqueId(),
       ),
-      t = (this.Rxt(t.GetUniqueId(), t.GetIsLock()), i.GetFetterGroupConfig());
+      t = (this.TNa(t.GetUniqueId()), i.GetFetterGroupConfig());
     this.bxt.Update(t);
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.OnItemLock,
-      this.Rxt,
+      EventDefine_1.EEventName.OnItemFuncValueChange,
+      this.TNa,
     );
   }
 }

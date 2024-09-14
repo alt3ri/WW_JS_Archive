@@ -16,10 +16,13 @@ const UE = require("ue"),
   ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
   LevelPlay_1 = require("../../../LevelPlay/LevelPlay"),
   MapController_1 = require("../../../Map/Controller/MapController"),
+  MarkUiUtils_1 = require("../../../Map/Mark/Misc/MarkUiUtils"),
+  TeleportController_1 = require("../../../Teleport/TeleportController"),
   GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
   WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
   WorldMapDefine_1 = require("../../WorldMapDefine"),
+  MapTipsActivateTipPanel_1 = require("../Common/MapTipsActivateTipPanel"),
   SceneGameplayTipGrid_1 = require("../SceneGameplayPanel/SceneGameplayTipGrid");
 class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
@@ -34,6 +37,9 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       (this.H2o = void 0),
       (this.ZAt = void 0),
       (this.j2o = !1),
+      (this.k4a = void 0),
+      (this.N4a = void 0),
+      (this.oza = void 0),
       (this.OnCreateDifficultyItem = () => new DifficultyItem()),
       (this.m2o = () => {
         var e = this.u2o.IsTracked;
@@ -54,6 +60,33 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
               e.QuestId,
             )),
           UiManager_1.UiManager.OpenView("QuestView", e.TreeConfigId));
+      }),
+      (this.F4a = () => {
+        var e = MarkUiUtils_1.MarkUiUtils.FindNearbyValidGotoMark(
+          this.Map,
+          this.u2o,
+        );
+        e &&
+          MarkUiUtils_1.MarkUiUtils.QuickGotoTeleport(this.u2o, e, () => {
+            this.Close();
+          });
+      }),
+      (this.P8e = () => {
+        var e = this.u2o;
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Map",
+            64,
+            "[地图系统]SceneGameplayPanel->追踪标记",
+            ["markId", e.MarkId],
+            ["IsTracked", e.IsTracked],
+          ),
+          MapController_1.MapController.RequestTrackMapMark(
+            e.MarkType,
+            e.MarkId,
+            !e.IsTracked,
+          ),
+          this.Close();
       });
   }
   GetResourceId() {
@@ -64,20 +97,35 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       WorldMapDefine_1.secondaryUiPanelComponentsRegisterInfoA),
       (this.BtnBindInfo = [[15, this.UOe]]);
   }
+  async OnBeforeStartAsync() {
+    return (
+      (this.oza = new MapTipsActivateTipPanel_1.MapTipsActivateTipPanel()),
+      await this.oza.CreateByActorAsync(this.GetItem(31).GetOwner()),
+      super.OnBeforeStartAsync()
+    );
+  }
   OnStart() {
     this.RootItem.SetRaycastTarget(!1),
-      this.GetItem(14).SetUIActive(!0),
       (this.H2o = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(16),
         this.OnCreateDifficultyItem,
       )),
       this.H2o.SetActive(!0),
       (this.ZAt = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
-      this.ZAt.SetFunction(this.m2o);
+      this.ZAt.SetActive(!0),
+      this.GetItem(32).SetUIActive(!1),
+      this.ZAt.SetFunction(this.m2o),
+      (this.k4a = new ButtonItem_1.ButtonItem(this.GetButton(28).RootUIComp)),
+      this.k4a.SetFunction(this.P8e),
+      (this.N4a = new ButtonItem_1.ButtonItem(this.GetButton(29).RootUIComp)),
+      this.N4a.SetFunction(this.F4a);
   }
   OnBeforeDestroy() {
     this.H2o.ClearChildren(),
       this.AddChild(this.ZAt),
+      this.k4a.Destroy(),
+      this.N4a.Destroy(),
+      this.oza.Destroy(),
       this.O2o && (this.AddChild(this.O2o), (this.O2o = void 0)),
       this.k2o && (this.AddChild(this.k2o), (this.k2o = void 0)),
       (this.F2o = void 0),
@@ -146,6 +194,27 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         this.GetItem(9).SetUIActive(!1),
         this.GetItem(12).SetUIActive(!1),
         this.GetItem(8).SetUIActive(!1),
+        this.GetItem(14).SetUIActive(!0),
+        this.GetItem(26).SetUIActive(!1),
+        this.GetVerticalLayout(5).RootUIComp.SetUIActive(!1),
+        this.GetVerticalLayout(16).RootUIComp.SetUIActive(!0),
+        this.GetItem(25).SetUIActive(!1),
+        (i =
+          !(r = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
+            this.Ymt.Id,
+          )).IsOccupied && MarkUiUtils_1.MarkUiUtils.IsShowGoto(this.u2o)),
+        r.IsOccupied ? this.ZAt.SetActive(!1) : this.ZAt.SetActive(!i),
+        this.GetItem(32).SetUIActive(i),
+        this.oza.SetUiActive(!1),
+        i &&
+          ((e = this.GetButton(29)),
+          (r = TeleportController_1.TeleportController.CheckCanTeleport()),
+          (i = MarkUiUtils_1.MarkUiUtils.FindNearbyValidGotoMark(
+            this.Map,
+            this.u2o,
+          )),
+          this.oza.SetUiActive(!r || void 0 === i),
+          e.SetSelfInteractive(r && void 0 !== i)),
         this.InitRewards(),
         this.W2o())
       : Log_1.Log.CheckError() &&
@@ -155,8 +224,7 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
     var e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
       this.Ymt.Id,
     );
-    this.ZAt.SetActive(!e.IsOccupied),
-      this.GetItem(12).SetUIActive(e.IsOccupied),
+    this.GetItem(12).SetUIActive(e.IsOccupied),
       e.IsOccupied &&
         ((e = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
           e.QuestId,
@@ -187,32 +255,32 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       : this.K2o(this.k2o, this.V2o, i, "FirstPassReward"),
       this.K2o(this.O2o, this.F2o, i, "FirstPassReward", this.j2o);
   }
-  K2o(e, r, a, i, s = !1) {
+  K2o(e, r, s, i, a = !1) {
     if (r) {
-      var n = r.PreviewReward;
+      var h = r.PreviewReward;
       let t = void 0;
-      if (n.has(a)) t = n.get(a).MapIntInt;
+      if (h.has(s)) t = h.get(s).MapIntInt;
       else
-        for (let e = a - 1; 0 <= e; e--)
-          if (n.has(e)) {
-            t = n.get(e).MapIntInt;
+        for (let e = s - 1; 0 <= e; e--)
+          if (h.has(e)) {
+            t = h.get(e).MapIntInt;
             break;
           }
       if (!t) {
-        var o,
-          h = r.RewardId;
+        var n,
+          o = r.RewardId;
         let i = 0;
-        if (h.has(a)) i = h.get(a);
+        if (o.has(s)) i = o.get(s);
         else
-          for (let e = a - 1; 0 <= e; e--)
-            if (h.has(e)) {
-              i = h.get(e);
+          for (let e = s - 1; 0 <= e; e--)
+            if (o.has(e)) {
+              i = o.get(e);
               break;
             }
         i &&
           0 < i &&
-          ((o = DropPackageById_1.configDropPackageById.GetConfig(i))
-            ? (t = o.DropPreview)
+          ((n = DropPackageById_1.configDropPackageById.GetConfig(i))
+            ? (t = n.DropPreview)
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "SceneGameplay",
@@ -222,14 +290,14 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
               ));
       }
       t
-        ? (e.Refresh(t, i, !0, s), e.SetActive(!0))
+        ? (e.Refresh(t, i, !0, a), e.SetActive(!0))
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "SceneGameplay",
               18,
               "读取不到奖励配置",
               ["兑换奖励ID", r.Id],
-              ["WorldLevel", a],
+              ["WorldLevel", s],
             ),
           e.SetActive(!1));
     } else e.SetActive(!1);
@@ -239,7 +307,8 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
     (e = this.u2o.IsTracked
       ? "InstanceDungeonEntranceCancelTrack"
       : "InstanceDungeonEntranceTrack"),
-      this.ZAt.SetLocalText(e);
+      this.ZAt.SetLocalText(e),
+      this.k4a.SetLocalText(e);
   }
 }
 exports.LordGymPanel = LordGymPanel;
@@ -267,10 +336,10 @@ class DifficultyItem extends UiPanelBase_1.UiPanelBase {
           r.Difficulty,
         ),
         ModelManager_1.ModelManager.LordGymModel.GetLordGymIsUnLock(e)),
-      a = ModelManager_1.ModelManager.LordGymModel.GetLordGymIsFinish(e),
+      s = ModelManager_1.ModelManager.LordGymModel.GetLordGymIsFinish(e),
       e = ModelManager_1.ModelManager.LordGymModel.GetLastGymFinish(e);
-    this.GetSprite(3)?.SetUIActive(a),
-      this.GetSprite(2)?.SetUIActive(e && r && !a),
+    this.GetSprite(3)?.SetUIActive(s),
+      this.GetSprite(2)?.SetUIActive(e && r && !s),
       this.GetSprite(1)?.SetUIActive(!e || !r);
   }
   Clear() {}

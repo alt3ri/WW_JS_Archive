@@ -54,50 +54,50 @@ class RelativeMove {
 }
 class ReplaySample {
   constructor(t, e, i) {
-    (this.y5n = Vector_1.Vector.Create()),
-      (this.a8n = Rotator_1.Rotator.Create()),
-      (this.h8n = Vector_1.Vector.Create()),
-      (this.yWn = Vector_1.Vector.Create()),
+    (this.P5n = Vector_1.Vector.Create()),
+      (this.g8n = Rotator_1.Rotator.Create()),
+      (this.f8n = Vector_1.Vector.Create()),
+      (this.PWn = Vector_1.Vector.Create()),
       (this.ControllerPitch = 0),
-      (this.GVn = 0),
-      (this.IWn = 0),
-      (this.V8n = 0),
-      (this.TWn = void 0),
-      (this.LWn = 0),
-      (this.DWn = 1),
-      (this.AWn = 0),
-      (this.UWn = 0);
-    const s = t.y5n,
-      o = t.a8n;
-    var h = t.h8n,
-      r = t.yWn,
+      (this.KVn = 0),
+      (this.BWn = 0),
+      (this.J8n = 0),
+      (this.wWn = void 0),
+      (this.bWn = 0),
+      (this.qWn = 1),
+      (this.GWn = 0),
+      (this.OWn = 0);
+    const s = t.P5n,
+      o = t.g8n;
+    var h = t.f8n,
+      r = t.PWn,
       h =
-        (this.y5n.Set(s.X, s.Y, s.Z),
-        this.a8n.Set(o.Pitch, o.Yaw, o.Roll),
-        h && this.h8n.Set(h.X, h.Y, h.Z),
-        r && this.yWn.Set(r.X, r.Y, r.Z),
+        (this.P5n.Set(s.X, s.Y, s.Z),
+        this.g8n.Set(o.Pitch, o.Yaw, o.Roll),
+        h && this.f8n.Set(h.X, h.Y, h.Z),
+        r && this.PWn.Set(r.X, r.Y, r.Z),
         (this.ControllerPitch = t.ControllerPitch),
-        (this.GVn = t.GVn),
-        (this.IWn = t.YMs),
-        (this.DWn = t.DWn),
-        (this.V8n = i),
-        (this.LWn = e),
-        (this.AWn = MathUtils_1.MathUtils.LongToNumber(t.AWn)),
-        (this.UWn = t.RWn),
-        t.xWn);
+        (this.KVn = t.KVn),
+        (this.BWn = t.rSs),
+        (this.qWn = t.qWn),
+        (this.J8n = i),
+        (this.bWn = e),
+        (this.GWn = MathUtils_1.MathUtils.LongToNumber(t.GWn)),
+        (this.OWn = t.NWn),
+        t.kWn);
     if (h) {
-      (this.TWn = new RelativeMove()),
-        (this.TWn.BaseMovementEntityId = MathUtils_1.MathUtils.LongToNumber(
-          h.PWn,
+      (this.wWn = new RelativeMove()),
+        (this.wWn.BaseMovementEntityId = MathUtils_1.MathUtils.LongToNumber(
+          h.FWn,
         ));
-      const o = h.BWn,
-        s = h.wWn;
-      (this.TWn.RelativeRotation = Rotator_1.Rotator.Create(
+      const o = h.VWn,
+        s = h.HWn;
+      (this.wWn.RelativeRotation = Rotator_1.Rotator.Create(
         o.Pitch,
         o.Yaw,
         o.Roll,
       )),
-        (this.TWn.RelativeLocation = Vector_1.Vector.Create(s.X, s.Y, s.Z));
+        (this.wWn.RelativeLocation = Vector_1.Vector.Create(s.X, s.Y, s.Z));
     }
   }
 }
@@ -141,11 +141,11 @@ let BaseMovementSyncComponent =
         (this.NowLogicTickTime = 0),
         (this.LastLogicTickTime = 0),
         (this.LastApplyLogicTickTime = 0),
-        (this.ipa = !1),
+        (this.SSa = !1),
         (this.KHr = (t) => {
           var e;
           this.ActorComp.IsMoveAutonomousProxy ||
-            this.Entity.GetComponent(188).HasTag(-648310348) ||
+            this.Entity.GetComponent(190).HasTag(-648310348) ||
             ((this.IsPending = !1),
             (this.PendingMoveInfos.length = 0),
             this.TickReplaySamples(),
@@ -203,7 +203,7 @@ let BaseMovementSyncComponent =
     }
     set EnableMovementSync(t) {
       this.EnableMovementSyncInternal !== t &&
-        ((this.EnableMovementSyncInternal = t), this.ipa) &&
+        ((this.EnableMovementSyncInternal = t), this.SSa) &&
         (t
           ? (CombatMessageController_1.CombatMessageController.RegisterPreTick(
               this,
@@ -226,8 +226,8 @@ let BaseMovementSyncComponent =
     OnStart() {
       return (
         (this.ActorComp = this.Entity.GetComponent(1)),
-        (this.TimeScaleComp = this.Entity.GetComponent(164)),
-        (this.MoveComp = this.Entity.GetComponent(37)),
+        (this.TimeScaleComp = this.Entity.GetComponent(165)),
+        (this.MoveComp = this.Entity.GetComponent(38)),
         (this.CreatureDataComp = this.Entity.GetComponent(0)),
         ModelManager_1.ModelManager.CombatMessageModel.AddMoveSync(this) ||
           CombatLog_1.CombatLog.Warn("Move", this.Entity, "重复添加移动同步"),
@@ -245,15 +245,15 @@ let BaseMovementSyncComponent =
     OnActivate() {
       return (
         this.LastReceiveMoveSample &&
-        Time_1.Time.NowSeconds >= this.LastReceiveMoveSample.V8n
+        Time_1.Time.NowSeconds >= this.LastReceiveMoveSample.J8n
           ? (this.ActorComp.SetActorLocationAndRotation(
-              this.LastReceiveMoveSample.y5n.ToUeVector(),
-              this.LastReceiveMoveSample.a8n.ToUeRotator(),
+              this.LastReceiveMoveSample.P5n.ToUeVector(),
+              this.LastReceiveMoveSample.g8n.ToUeRotator(),
               "角色移动同步.处理出生位置刷新",
               !1,
             ),
-            this.LastLocation.DeepCopy(this.LastReceiveMoveSample.y5n),
-            this.LastRotation.DeepCopy(this.LastReceiveMoveSample.a8n))
+            this.LastLocation.DeepCopy(this.LastReceiveMoveSample.P5n),
+            this.LastRotation.DeepCopy(this.LastReceiveMoveSample.g8n))
           : (this.LastLocation.DeepCopy(
               this.ActorComp.Owner.K2_GetActorLocation(),
             ),
@@ -271,30 +271,30 @@ let BaseMovementSyncComponent =
             this,
             this.ForceAfterTickInternal,
           )),
-        (this.ipa = !0)
+        (this.SSa = !0)
       );
     }
     GetCurrentMoveSample() {
-      var t = Protocol_1.Aki.Protocol.kks.create();
+      var t = Protocol_1.Aki.Protocol.Wks.create();
       return (
-        (t.y5n = {
+        (t.P5n = {
           X: this.ActorComp.ActorLocationProxy.X,
           Y: this.ActorComp.ActorLocationProxy.Y,
           Z: this.ActorComp.ActorLocationProxy.Z,
         }),
-        (t.a8n = {
+        (t.g8n = {
           Pitch: this.ActorComp.ActorRotationProxy.Pitch,
           Roll: this.ActorComp.ActorRotationProxy.Roll,
           Yaw: this.ActorComp.ActorRotationProxy.Yaw,
         }),
-        (t.AWn = Time_1.Time.CombatServerTime),
-        (t.V8n = Time_1.Time.NowSeconds),
+        (t.GWn = Time_1.Time.CombatServerTime),
+        (t.J8n = Time_1.Time.NowSeconds),
         1 < this.Entity.GetTickInterval() &&
           0 < this.LastLogicTickTime &&
           0 < this.NowLogicTickTime &&
-          (t.bWn = 1e3 * (this.NowLogicTickTime - this.LastLogicTickTime)),
-        (t.RWn = Net_1.Net.RttMs),
-        (t.DWn =
+          (t.jWn = 1e3 * (this.NowLogicTickTime - this.LastLogicTickTime)),
+        (t.NWn = Net_1.Net.RttMs),
+        (t.qWn =
           this.Entity.TimeDilation *
           (this.TimeScaleComp?.CurrentTimeScale ?? 1)),
         (this.LastMoveSample = t),
@@ -304,17 +304,17 @@ let BaseMovementSyncComponent =
     }
     CompressData(t) {
       ModelManager_1.ModelManager.GameModeModel.IsMulti
-        ? Info_1.Info.IsBuildDevelopmentOrDebug && ((t.AWn = 0), (t.RWn = 0))
-        : ((t.h8n = void 0),
-          (t.GVn = 0),
-          (t.YMs = 0),
-          (t.xWn = void 0),
+        ? Info_1.Info.IsBuildDevelopmentOrDebug && ((t.GWn = 0), (t.NWn = 0))
+        : ((t.f8n = void 0),
+          (t.KVn = 0),
+          (t.rSs = 0),
+          (t.kWn = void 0),
           (t.ControllerPitch = 0),
-          (t.DWn = 0),
-          (t.AWn = 0),
-          (t.RWn = 0),
-          (t.yWn = void 0),
-          (t.bWn = 0));
+          (t.qWn = 0),
+          (t.GWn = 0),
+          (t.NWn = 0),
+          (t.PWn = void 0),
+          (t.jWn = 0));
     }
     RecordLastData(t = !1) {
       this.LastLocation.DeepCopy(this.ActorComp.ActorLocationProxy),
@@ -392,7 +392,7 @@ let BaseMovementSyncComponent =
       if (
         (CombatDebugDrawController_1.CombatDebugDrawController
           .DebugMonsterMovePath &&
-          s.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Monster &&
+          s.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Monster &&
           UE.KismetSystemLibrary.DrawDebugLine(
             GlobalData_1.GlobalData.World,
             this.LastLocation.ToUeVector(),
@@ -415,7 +415,7 @@ let BaseMovementSyncComponent =
           s,
           ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
           Time_1.Time.NowSeconds,
-        ).V8n = Time_1.Time.NowSeconds),
+        ).J8n = Time_1.Time.NowSeconds),
           this.PendingMoveInfos.push(s),
           (Time_1.Time.NowSeconds >=
             this.PendingTime +
@@ -428,19 +428,21 @@ let BaseMovementSyncComponent =
       var e = this.GetCurrentMoveSample();
       this.PendingMoveInfos.push(e),
         t
-          ? ((e = Protocol_1.Aki.Protocol.$us.create()).kRs.push(
-              this.CollectPendingMoveInfos(),
-            ),
-            Net_1.Net.Send(28674, e),
+          ? (((e = Protocol_1.Aki.Protocol.Yus.create()).qZa = ModelManager_1
+              .ModelManager.GameModeModel.IsMulti
+              ? ModelManager_1.ModelManager.OnlineModel.OwnerId
+              : ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
+            e.WRs.push(this.CollectPendingMoveInfos()),
+            Net_1.Net.Send(28450, e),
             Info_1.Info.IsBuildDevelopmentOrDebug &&
               ((t = {
                 scene_id:
                   ModelManager_1.ModelManager.CreatureModel.GetSceneId(),
                 instance_id:
                   ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-                msg_id: 28674,
+                msg_id: 28450,
                 immediately: !0,
-                sub_count: e.kRs.length,
+                sub_count: e.WRs.length,
                 is_multi: ModelManager_1.ModelManager.GameModeModel.IsMulti,
                 ed: IS_WITH_EDITOR,
                 br: LogAnalyzer_1.LogAnalyzer.GetBranch(),
@@ -467,15 +469,18 @@ let BaseMovementSyncComponent =
       } else {
         const e = this.GetCurrentMoveSample();
         this.PendingMoveInfos.push(e);
-        var t = Protocol_1.Aki.Protocol.jus.create();
-        t.kRs.push(this.CollectPendingMoveInfos()),
-          Net_1.Net.Send(15095, t),
+        var t = Protocol_1.Aki.Protocol.zus.create();
+        (t.qZa = ModelManager_1.ModelManager.GameModeModel.IsMulti
+          ? ModelManager_1.ModelManager.OnlineModel.OwnerId
+          : ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
+          t.WRs.push(this.CollectPendingMoveInfos()),
+          Net_1.Net.Send(17865, t),
           Info_1.Info.IsBuildDevelopmentOrDebug &&
             ((t = {
               scene_id: ModelManager_1.ModelManager.CreatureModel.GetSceneId(),
               instance_id:
                 ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-              msg_id: 15095,
+              msg_id: 17865,
               immediately: !0,
               is_multi: ModelManager_1.ModelManager.GameModeModel.IsMulti,
               ed: IS_WITH_EDITOR,
@@ -494,7 +499,7 @@ let BaseMovementSyncComponent =
       for (const r of this.PendingMoveInfos) {
         if (
           Time_1.Time.NowSeconds <
-          r.V8n + BaseMovementSyncComponent_1.MaxPendingMoveCacheTime
+          r.J8n + BaseMovementSyncComponent_1.MaxPendingMoveCacheTime
         )
           break;
         t++;
@@ -507,9 +512,9 @@ let BaseMovementSyncComponent =
             "MultiplayerCombat",
             15,
             "移动包过多",
-            ["diff", Time_1.Time.NowSeconds - this.PendingMoveInfos[0].V8n],
+            ["diff", Time_1.Time.NowSeconds - this.PendingMoveInfos[0].J8n],
             ["NowSeconds", Time_1.Time.NowSeconds],
-            ["TimeStamp", this.PendingMoveInfos[0].V8n],
+            ["TimeStamp", this.PendingMoveInfos[0].J8n],
             ["length", this.PendingMoveInfos.length],
           ),
         0 < t &&
@@ -518,32 +523,32 @@ let BaseMovementSyncComponent =
               "MultiplayerCombat",
               15,
               "移动包过期",
-              ["diff", Time_1.Time.NowSeconds - this.PendingMoveInfos[0].V8n],
+              ["diff", Time_1.Time.NowSeconds - this.PendingMoveInfos[0].J8n],
               ["NowSeconds", Time_1.Time.NowSeconds],
-              ["TimeStamp", this.PendingMoveInfos[0].V8n],
+              ["TimeStamp", this.PendingMoveInfos[0].J8n],
             ),
           this.PendingMoveInfos.splice(0, t)),
         0 !== this.PendingMoveInfos.length)
       )
         return (
-          ((e = Protocol_1.Aki.Protocol.YFs.create()).P4n =
+          ((e = Protocol_1.Aki.Protocol.r4s.create()).F4n =
             MathUtils_1.MathUtils.NumberToLong(
               this.ActorComp.CreatureData.GetCreatureDataId(),
             )),
-          (e.F8n = ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
-          (e.Q8n = this.PendingMoveInfos),
+          (e.Y8n = ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
+          (e.iVn = this.PendingMoveInfos),
           (i = this.PendingMoveInfos[this.PendingMoveInfos.length - 1]),
-          (this.LastSendLocation.X = i.y5n.X),
-          (this.LastSendLocation.Y = i.y5n.Y),
-          (this.LastSendLocation.Z = i.y5n.Z),
-          (this.LastSendRotation.Roll = i.a8n.Roll),
-          (this.LastSendRotation.Pitch = i.a8n.Pitch),
-          (this.LastSendRotation.Yaw = i.a8n.Yaw),
+          (this.LastSendLocation.X = i.P5n.X),
+          (this.LastSendLocation.Y = i.P5n.Y),
+          (this.LastSendLocation.Z = i.P5n.Z),
+          (this.LastSendRotation.Roll = i.g8n.Roll),
+          (this.LastSendRotation.Pitch = i.g8n.Pitch),
+          (this.LastSendRotation.Yaw = i.g8n.Yaw),
           (this.IsPending = !1),
           (this.LastSendTime = Time_1.Time.NowSeconds),
           (this.PendingMoveInfos = []),
           Info_1.Info.IsBuildDevelopmentOrDebug &&
-            ((i = Protocol_1.Aki.Protocol.YFs.encode(e).finish()),
+            ((i = Protocol_1.Aki.Protocol.r4s.encode(e).finish()),
             (h = this.CreatureDataComp?.GetPbDataId()),
             (s = this.CreatureDataComp?.GetEntityType()),
             (o = this.CreatureDataComp?.GetCreatureDataId()),
@@ -606,22 +611,22 @@ let BaseMovementSyncComponent =
               ["TimeStamp", i],
             );
           for (const a of t) {
-            (!a.V8n || a.V8n <= 0) &&
+            (!a.J8n || a.J8n <= 0) &&
               Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "MultiplayerCombat",
                 15,
                 "[BaseMovementSyncComponent.ReceiveMoveInfos] TimeStamp不能小于等于0",
-                ["TimeStamp", a.V8n ?? void 0],
+                ["TimeStamp", a.J8n ?? void 0],
               );
-            let t = 0 < a.bWn ? 0.001 * a.bWn : 0;
+            let t = 0 < a.jWn ? 0.001 * a.jWn : 0;
             0 < t &&
               ((t = MathUtils_1.MathUtils.Clamp(t, 0, this.THr)),
               CombatLog_1.CombatLog.Info("Move", this.Entity, "额外移动缓冲", [
                 "extraOffset",
                 t,
               ]));
-            var r = new ReplaySample(a, h, a.V8n + s.TimelineOffset + t);
+            var r = new ReplaySample(a, h, a.J8n + s.TimelineOffset + t);
             this.AddReplaySample(r);
           }
           this.LastReceiveControllerPlayerId = h;
@@ -647,7 +652,7 @@ let BaseMovementSyncComponent =
         (this.EnableMovementSync = t);
     }
     AddReplaySample(t) {
-      for (; !this.ZHr.Empty && this.ZHr.Rear.V8n > t.V8n; )
+      for (; !this.ZHr.Empty && this.ZHr.Rear.J8n > t.J8n; )
         this.ZHr.RemoveRear();
       this.ZHr.AddRear(t), (this.LastReceiveMoveSample = t);
     }
@@ -664,10 +669,10 @@ let BaseMovementSyncComponent =
       var t = Time_1.Time.NowSeconds;
       for (
         this.LastApplyMoveSample &&
-        1 < t - this.LastApplyMoveSample.V8n &&
+        1 < t - this.LastApplyMoveSample.J8n &&
         (CombatLog_1.CombatLog.Info("Move", this.Entity, "不连贯的样条点丢弃", [
           "diff",
-          t - this.LastApplyMoveSample.V8n,
+          t - this.LastApplyMoveSample.J8n,
         ]),
         (this.LastApplyMoveSample = void 0));
         !this.ZHr.Empty;
@@ -675,9 +680,9 @@ let BaseMovementSyncComponent =
       ) {
         var e = this.LastApplyMoveSample,
           i = this.ZHr.Front;
-        if (!(t >= i.V8n)) {
+        if (!(t >= i.J8n)) {
           if (!e) break;
-          var s = MathUtils_1.MathUtils.RangeClamp(t, e.V8n, i.V8n, 0, 1),
+          var s = MathUtils_1.MathUtils.RangeClamp(t, e.J8n, i.J8n, 0, 1),
             o = (0, puerts_1.$ref)(void 0),
             o =
               (this.CalcRelativeMove(
@@ -689,28 +694,28 @@ let BaseMovementSyncComponent =
                 o,
               )
                 ? (this.LastRelativeMove, (this.LastRelativeMove = !0))
-                : (Vector_1.Vector.Lerp(e.y5n, i.y5n, s, this.CacheLocation),
-                  Rotator_1.Rotator.Lerp(e.a8n, i.a8n, s, this.CacheRotator),
+                : (Vector_1.Vector.Lerp(e.P5n, i.P5n, s, this.CacheLocation),
+                  Rotator_1.Rotator.Lerp(e.g8n, i.g8n, s, this.CacheRotator),
                   this.LastRelativeMove,
                   (this.LastRelativeMove = !1)),
-              Vector_1.Vector.Lerp(e.h8n, i.h8n, s, this.CacheVelocity),
+              Vector_1.Vector.Lerp(e.f8n, i.f8n, s, this.CacheVelocity),
               MathUtils_1.MathUtils.Lerp(
                 MathCommon_1.MathCommon.WrapAngle(e.ControllerPitch),
                 MathCommon_1.MathCommon.WrapAngle(i.ControllerPitch),
                 s,
               ));
           this.ApplyMoveSample(
-            e.GVn,
+            e.KVn,
             this.CacheLocation,
             this.CacheRotator,
-            e.h8n,
-            e.yWn,
-            i.LWn,
-            e.IWn,
+            e.f8n,
+            e.PWn,
+            i.bWn,
+            e.BWn,
             o,
-            e.DWn,
-            e.AWn,
-            e.UWn,
+            e.qWn,
+            e.GWn,
+            e.OWn,
           ),
             (this.LastApplyMoveSampleUsed = !0);
           break;
@@ -723,17 +728,17 @@ let BaseMovementSyncComponent =
         !this.LastApplyMoveSampleUsed &&
         this.LastApplyMoveSample &&
         (this.ApplyMoveSample(
-          this.LastApplyMoveSample.GVn,
-          this.LastApplyMoveSample.y5n,
-          this.LastApplyMoveSample.a8n,
-          this.LastApplyMoveSample.h8n,
-          this.LastApplyMoveSample.yWn,
-          this.LastApplyMoveSample.LWn,
-          this.LastApplyMoveSample.IWn,
+          this.LastApplyMoveSample.KVn,
+          this.LastApplyMoveSample.P5n,
+          this.LastApplyMoveSample.g8n,
+          this.LastApplyMoveSample.f8n,
+          this.LastApplyMoveSample.PWn,
+          this.LastApplyMoveSample.bWn,
+          this.LastApplyMoveSample.BWn,
           this.LastApplyMoveSample.ControllerPitch,
-          this.LastApplyMoveSample.DWn,
-          this.LastApplyMoveSample.AWn,
-          this.LastApplyMoveSample.UWn,
+          this.LastApplyMoveSample.qWn,
+          this.LastApplyMoveSample.GWn,
+          this.LastApplyMoveSample.OWn,
         ),
         (this.LastApplyMoveSampleUsed = !0));
     }
@@ -751,7 +756,7 @@ let BaseMovementSyncComponent =
       var m = this.Entity.GetComponent(0);
       CombatDebugDrawController_1.CombatDebugDrawController
         .DebugMonsterMovePath &&
-        m.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Monster &&
+        m.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Monster &&
         UE.KismetSystemLibrary.DrawDebugLine(
           GlobalData_1.GlobalData.World,
           this.LastLocation.ToUeVector(),
@@ -768,7 +773,7 @@ let BaseMovementSyncComponent =
         );
       let M = 0;
       this.LastReceiveMoveSample &&
-        (M = 1e3 * (this.LastReceiveMoveSample.V8n - Time_1.Time.NowSeconds)),
+        (M = 1e3 * (this.LastReceiveMoveSample.J8n - Time_1.Time.NowSeconds)),
         this.ReportMoveDataApplyInfo(Time_1.Time.CombatServerTime - _, M, l);
     }
     VectorToString(t) {
@@ -778,14 +783,14 @@ let BaseMovementSyncComponent =
       var e = t[0],
         i = t[t.length - 1];
       return (
-        `length:${t.length}, t:${e.V8n.toFixed(3)}-${i.V8n.toFixed(3)}, position:${this.VectorToString(e.y5n)}-${this.VectorToString(i.y5n)}, r:${e.a8n?.Yaw.toFixed()}-${i.a8n?.Yaw.toFixed()}, timeScale:` +
-        i.DWn
+        `length:${t.length}, t:${e.J8n.toFixed(3)}-${i.J8n.toFixed(3)}, position:${this.VectorToString(e.P5n)}-${this.VectorToString(i.P5n)}, r:${e.g8n?.Yaw.toFixed()}-${i.g8n?.Yaw.toFixed()}, timeScale:` +
+        i.qWn
       );
     }
     MoveInfoToString(t) {
       return (
-        `t:${t.V8n.toFixed(3)}, position:${this.VectorToString(t.y5n)}, timeScale:` +
-        t.DWn
+        `t:${t.J8n.toFixed(3)}, position:${this.VectorToString(t.P5n)}, timeScale:` +
+        t.qWn
       );
     }
     ReportMoveDataApplyInfo(t, e, i) {
@@ -860,7 +865,7 @@ let BaseMovementSyncComponent =
   (BaseMovementSyncComponent.SingleModeSendLocationToleranceMax = 600),
   (BaseMovementSyncComponent = BaseMovementSyncComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(58)],
+      [(0, RegisterComponent_1.RegisterComponent)(59)],
       BaseMovementSyncComponent,
     )),
   (exports.BaseMovementSyncComponent = BaseMovementSyncComponent);

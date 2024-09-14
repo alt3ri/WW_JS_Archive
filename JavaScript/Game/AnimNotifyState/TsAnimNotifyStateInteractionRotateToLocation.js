@@ -30,7 +30,7 @@ class TsAnimNotifyStateInteractionRotateToLocation extends UE.KuroAnimNotifyStat
     var t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
-      !!(t = t.CharacterActorComponent?.Entity?.GetComponent(163)) &&
+      !!(t = t.CharacterActorComponent?.Entity?.GetComponent(164)) &&
       (t.SmoothCharacterRotationByValue(
         0,
         this.Rotator,

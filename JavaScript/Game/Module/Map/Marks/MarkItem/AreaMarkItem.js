@@ -10,6 +10,9 @@ class AreaMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
   OnCreateView() {
     this.InnerView = new AreaMarkItemView_1.AreaMarkItemView(this);
   }
+  GetInteractiveFlag() {
+    return !1;
+  }
 }
 exports.AreaMarkItem = AreaMarkItem;
 //# sourceMappingURL=AreaMarkItem.js.map

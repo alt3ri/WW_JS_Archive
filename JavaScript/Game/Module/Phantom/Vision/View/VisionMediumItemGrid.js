@@ -74,7 +74,7 @@ class VisionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumIt
         ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterSkinListHasNew(
           e.GetConfigId(),
         ),
-      d = {
+      a = {
         Type: 3,
         Data: e,
         ItemConfigId: e.GetConfigId(!0),
@@ -82,6 +82,7 @@ class VisionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumIt
         StarLevel: h,
         QualityId: h,
         IsLockVisible: i.GetIsLock(),
+        IsDeprecate: i.GetIsDeprecated(),
         IsRedDotVisible: l,
         IsNewVisible: o,
         Level: e.GetCost(),
@@ -89,18 +90,18 @@ class VisionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumIt
         FetterGroupId: e.GetFetterGroupId(),
       };
     if (0 < r.length) {
-      var a = r[0]?.SlotState ?? 1,
+      var d = r[0]?.SlotState ?? 1,
         n = r[1]?.SlotState ?? 1,
         M = r[2]?.SlotState ?? 1;
       switch (h) {
         case 3:
-          d.VisionSlotStateList = [a];
+          a.VisionSlotStateList = [d];
           break;
         case 4:
-          d.VisionSlotStateList = [a, n];
+          a.VisionSlotStateList = [d, n];
           break;
         case 5:
-          d.VisionSlotStateList = [a, n, M];
+          a.VisionSlotStateList = [d, n, M];
       }
     }
     ControllerHolder_1.ControllerHolder.PhantomBattleController.CheckIsEquip(
@@ -112,9 +113,9 @@ class VisionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumIt
         )),
       (l =
         ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsMain(s)),
-      (d.VisionRoleHeadInfo = { RoleConfigId: i, VisionUniqueId: s }),
-      (d.IsMainVisionVisible = l)),
-      this.Apply(d),
+      (a.VisionRoleHeadInfo = { RoleConfigId: i, VisionUniqueId: s }),
+      (a.IsMainVisionVisible = l)),
+      this.Apply(a),
       0 !== this.GetItemGridExtendToggle().ToggleState &&
         this.SetSelected(!1, !0),
       this.Oji?.(this);

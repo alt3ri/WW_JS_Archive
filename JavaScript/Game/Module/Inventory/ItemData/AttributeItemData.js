@@ -23,6 +23,9 @@ class AttributeItemData extends ItemDataBase_1.ItemDataBase {
   GetIsLock() {
     return this.IsFunctionValue(0);
   }
+  GetIsDeprecated() {
+    return this.IsFunctionValue(1);
+  }
   GetDefaultDownText() {
     return "";
   }

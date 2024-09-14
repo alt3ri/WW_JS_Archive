@@ -20,7 +20,7 @@ class TsAnimNotifyStateAbsoluteTimeStop extends UE.KuroAnimNotifyState {
     if (!(r instanceof TsBaseCharacter_1.default)) return !1;
     if (ModelManager_1.ModelManager.GameModeModel?.IsMulti) return !1;
     var e = r.CharacterActorComponent?.Entity,
-      s = e?.GetComponent(164);
+      s = e?.GetComponent(165);
     if (!e || !s) return !1;
     s.AddDelayLock("ANS AbsoluteTimeStop Role");
     var i,
@@ -34,21 +34,21 @@ class TsAnimNotifyStateAbsoluteTimeStop extends UE.KuroAnimNotifyState {
         i) &&
         i !== r &&
         a !== l?.GetCreatureDataId() &&
-        (u.Entity.GetComponent(109)?.AddPauseLock(
+        (u.Entity.GetComponent(110)?.AddPauseLock(
           "ANS AbsoluteTimeStop monster",
         ),
         this.是否冻结移动效果 &&
-          u.Entity.GetComponent(37)?.AddPauseLock(
+          u.Entity.GetComponent(38)?.AddPauseLock(
             "ANS AbsoluteTimeStop monster",
           ),
         BulletUtil_1.BulletUtil.FrozenCharacterBullet(u.Id),
         s.TimeStopEntitySet.add(u));
-    e = Protocol_1.Aki.Protocol.I4n.create();
+    e = Protocol_1.Aki.Protocol.B4n.create();
     return (
-      (e.$4n = !0),
-      (e.Y4n = o * TimeUtil_1.TimeUtil.InverseMillisecond),
+      (e.o5n = !0),
+      (e.n5n = o * TimeUtil_1.TimeUtil.InverseMillisecond),
       CombatMessage_1.CombatNet.Call(
-        28342,
+        17033,
         r.CharacterActorComponent.Entity,
         e,
       ),
@@ -59,26 +59,26 @@ class TsAnimNotifyStateAbsoluteTimeStop extends UE.KuroAnimNotifyState {
     e = e?.GetOwner();
     if (!(e instanceof TsBaseCharacter_1.default)) return !1;
     if (e.CharacterActorComponent?.Entity?.Valid) {
-      var o = e.CharacterActorComponent.Entity.GetComponent(164);
+      var o = e.CharacterActorComponent.Entity.GetComponent(165);
       o.RemoveDelayLock("ANS AbsoluteTimeStop Role");
       for (const r of o.TimeStopEntitySet)
         r.Valid &&
-          (r.Entity.GetComponent(109)?.RemovePauseLock(
+          (r.Entity.GetComponent(110)?.RemovePauseLock(
             "ANS AbsoluteTimeStop monster",
           ),
           this.是否冻结移动效果 &&
-            r.Entity.GetComponent(37)?.RemovePauseLock(
+            r.Entity.GetComponent(38)?.RemovePauseLock(
               "ANS AbsoluteTimeStop monster",
             ),
           BulletUtil_1.BulletUtil.UnFrozenCharacterBullet(r.Id));
       o.TimeStopEntitySet.clear();
     }
-    o = Protocol_1.Aki.Protocol.I4n.create();
+    o = Protocol_1.Aki.Protocol.B4n.create();
     return (
-      (o.$4n = !1),
-      (o.Y4n = 0),
+      (o.o5n = !1),
+      (o.n5n = 0),
       CombatMessage_1.CombatNet.Call(
-        28342,
+        17033,
         e.CharacterActorComponent.Entity,
         o,
       ),

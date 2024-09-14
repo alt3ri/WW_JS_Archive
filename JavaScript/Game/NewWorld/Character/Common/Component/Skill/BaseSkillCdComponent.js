@@ -28,7 +28,7 @@ let BaseSkillCdComponent = class BaseSkillCdComponent extends EntityComponent_1.
       (this.HasModifyCdEffect = !1);
   }
   OnInit() {
-    return (this.BuffComp = this.Entity.CheckGetComponent(192)), !0;
+    return (this.BuffComp = this.Entity.CheckGetComponent(194)), !0;
   }
   UpdateModifyCdEffect(t, e) {
     if (this.BuffComp)
@@ -43,7 +43,7 @@ let BaseSkillCdComponent = class BaseSkillCdComponent extends EntityComponent_1.
   }
 };
 (BaseSkillCdComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(189)],
+  [(0, RegisterComponent_1.RegisterComponent)(191)],
   BaseSkillCdComponent,
 )),
   (exports.BaseSkillCdComponent = BaseSkillCdComponent);

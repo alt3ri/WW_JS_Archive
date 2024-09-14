@@ -5,6 +5,7 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
   DailyActivityController_1 = require("../DailyActivityController"),
   DailyActivityDefine_1 = require("../DailyActivityDefine");
@@ -13,6 +14,7 @@ class DailyActivityRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
     super(...arguments),
       (this.Jkt = 0),
       (this.DailyActiveState = void 0),
+      (this.SPe = void 0),
       (this.zkt = () => {
         switch (this.DailyActiveState) {
           case 2:
@@ -41,7 +43,9 @@ class DailyActivityRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.BtnBindInfo = [[1, this.zkt]]);
   }
   OnStart() {
-    this.GetUiNiagara(6).SetAlpha(0), this.GetUiNiagara(7).SetUIActive(!1);
+    this.GetUiNiagara(6).SetAlpha(0),
+      this.GetUiNiagara(7).SetUIActive(!1),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   OnBeforeDestroy() {}
   Refresh(e, t, i) {
@@ -67,15 +71,16 @@ class DailyActivityRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetItem(8).SetUIActive(1 === t);
     this.GetUiNiagara(6).SetAlpha(1 === t ? 1 : 0);
     var r = this.GetUiNiagara(7),
-      e =
+      r =
         (3 !== t || e
           ? (r.SetUIActive(!1), r.Deactivate())
           : (r.SetUIActive(!0), r.ActivateSystem(!0)),
+        1 !== t || e || this.SPe.PlayLevelSequenceByName("Activate"),
         2 === t
           ? DailyActivityDefine_1.REWARD_BACKGROUND_COLOR_UNFINISHED
           : DailyActivityDefine_1.REWARD_BACKGROUND_COLOR_FINISHED),
-      r = UE.Color.FromHex(e);
-    this.GetSprite(5).SetColor(r),
+      e = UE.Color.FromHex(r);
+    this.GetSprite(5).SetColor(e),
       (this.GetText(0).useChangeColor = 2 !== t),
       (this.DailyActiveState = t);
   }

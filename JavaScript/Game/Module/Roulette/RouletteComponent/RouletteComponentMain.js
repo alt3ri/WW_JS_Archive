@@ -13,7 +13,7 @@ const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
   RouletteComponent_1 = require("./RouletteComponent");
 class RouletteComponentMain extends RouletteComponent_1.RouletteComponentBase {
   constructor() {
-    super(...arguments), (this.jMa = !0);
+    super(...arguments), (this.sIa = !0);
   }
   OnStart() {
     var e;
@@ -21,7 +21,7 @@ class RouletteComponentMain extends RouletteComponent_1.RouletteComponentBase {
       Info_1.Info.IsInGamepad() &&
         ((e =
           ModelManager_1.ModelManager.RouletteModel.GetRouletteSelectConfig()),
-        (this.jMa = 1 === e));
+        (this.sIa = 1 === e));
   }
   GamepadReturnEmptyGrid() {
     var e, t, o;
@@ -37,13 +37,12 @@ class RouletteComponentMain extends RouletteComponent_1.RouletteComponentBase {
           (e?.SetGridEquipped(!1),
           t?.SetGridEquipped(!0),
           (this.CurrentEquipGridIndex = this.CurrentGridIndex),
-          this.CloseRouletteMain(),
-          this.jMa) ||
-          this.GetCurrentGrid()?.SelectOnGrid(!0)),
+          this.GetCurrentGrid()?.SelectOnGrid(!0),
+          this.CloseRouletteMain())),
       (this.IsEmptyChoose = !0);
   }
   OnEmitCurrentGridSelectOn() {
-    this.jMa && this.GetCurrentGrid()?.SelectOnGrid(!0);
+    this.sIa && this.GetCurrentGrid()?.SelectOnGrid(!0);
   }
   IsCurrentEquippedId(e) {
     switch (e.GridType) {

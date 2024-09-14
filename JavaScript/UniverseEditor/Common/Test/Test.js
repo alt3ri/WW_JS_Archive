@@ -230,7 +230,7 @@ function describe(t, e) {
   };
   getRunningContext().PushSuite(t), e(), getRunningContext().PopSuite();
 }
-function it(t, e, r) {
+function it(t, e, r, o) {
   t = {
     Type: "case",
     Name: t,
@@ -238,6 +238,7 @@ function it(t, e, r) {
     Run: e,
     FileLocation: (0, SouceMap_1.getCallerLocation)(1),
     TimeOut: r,
+    TestCaseInterval: o,
   };
   getRunningContext().CurrentSuite.Cases.push(t);
 }

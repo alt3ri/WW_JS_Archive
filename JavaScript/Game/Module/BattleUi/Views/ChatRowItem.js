@@ -51,7 +51,7 @@ class ChatRowItem extends BattleChildView_1.BattleChildView {
         r?.SetUIActive(!0);
     }
     if (
-      (t.ContentType === Protocol_1.Aki.Protocol.l8n.SIs &&
+      (t.ContentType === Protocol_1.Aki.Protocol.p8n.DIs &&
         (1 === t.ContentChatRoomType
           ? l === _
             ? LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -74,7 +74,7 @@ class ChatRowItem extends BattleChildView_1.BattleChildView {
             ),
         i.SetUIActive(!0),
         (i.bBestFit = !1)),
-      t.ContentType === Protocol_1.Aki.Protocol.l8n.Proto_Emoji)
+      t.ContentType === Protocol_1.Aki.Protocol.p8n.Proto_Emoji)
     ) {
       (o = Number(t.Content)),
         (T = ConfigManager_1.ConfigManager.ChatConfig.GetExpressionConfig(o));

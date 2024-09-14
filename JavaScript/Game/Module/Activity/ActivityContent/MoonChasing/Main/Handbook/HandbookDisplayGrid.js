@@ -13,10 +13,10 @@ class HandbookDisplayGrid extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.MCt = 0),
-      (this.MSa = void 0),
+      (this.OIa = void 0),
       (this.Lxt = () => {
         var i;
-        this.MSa.IsUnlock
+        this.OIa.IsUnlock
           ? this.MCt <= 0
             ? Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -28,7 +28,7 @@ class HandbookDisplayGrid extends GridProxyAbstract_1.GridProxyAbstract {
               WorldMapController_1.WorldMapController.OpenView(2, !1, i))
           : UiManager_1.UiManager.IsViewOpen("MoonChasingMainView")
             ? MoonChasingController_1.MoonChasingController.OpenBuildingTipsInfoView(
-                this.MSa.Id,
+                this.OIa.Id,
               )
             : ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
                 "Moonfiesta_BuildingUnlock",
@@ -48,11 +48,11 @@ class HandbookDisplayGrid extends GridProxyAbstract_1.GridProxyAbstract {
       (this.BtnBindInfo = [[3, this.Lxt]]);
   }
   Refresh(i, r, o) {
-    this.MSa = i;
+    this.OIa = i;
     var e = ConfigManager_1.ConfigManager.BuildingConfig.GetBuildingById(i.Id);
     this.Aqe(e.BuildingTexture, i.IsUnlock),
-      this.q9s(!0),
-      i.IsUnlock ? this.G9s(e.Name) : this.GetText(2).SetText("???"),
+      this.h7s(!0),
+      i.IsUnlock ? this.l7s(e.Name) : this.GetText(2).SetText("???"),
       this.GetItem(4).SetUIActive(i.IsUnlock),
       this.GetItem(5).SetUIActive(!i.IsUnlock),
       this.GetButton(3).RootUIComp.SetUIActive(i.IsUnlock),
@@ -71,10 +71,10 @@ class HandbookDisplayGrid extends GridProxyAbstract_1.GridProxyAbstract {
           e.SetUIActive(!r);
         }));
   }
-  q9s(i) {
+  h7s(i) {
     this.GetItem(1).SetUIActive(i);
   }
-  G9s(i) {
+  l7s(i) {
     this.GetText(2).ShowTextNew(i);
   }
 }

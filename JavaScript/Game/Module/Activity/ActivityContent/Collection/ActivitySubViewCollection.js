@@ -135,7 +135,9 @@ class ActivitySubViewCollection extends ActivitySubViewBase_1.ActivitySubViewBas
         ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
         await this.UNe.CreateThenShowByActorAsync(t.GetOwner()),
         this.GetItem(4));
-    (this.ANe = new ActivityFunctionalArea_1.ActivityFunctionalArea()),
+    (this.ANe = new ActivityFunctionalArea_1.ActivityFunctionalArea(
+      this.ActivityBaseData,
+    )),
       await this.ANe.CreateThenShowByActorAsync(t.GetOwner()),
       (this.LevelSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.GetItem(5),
@@ -257,16 +259,17 @@ class ActivitySubViewCollection extends ActivitySubViewBase_1.ActivitySubViewBas
       this.UNe.RefreshItemLayout(t);
   }
   VNe() {
-    var t,
-      e = this.ActivityBaseData.IsUnLock();
-    this.ANe.SetPanelConditionVisible(!e),
-      e ||
-        ((t = this.GetCurrentLockConditionText()),
-        this.ANe.SetLockTextByTextId(t)),
-      this.ANe.SetRewardButtonVisible(e),
-      e && this.ANe.SetRewardButtonFunction(this.NNe),
-      this.ANe.FunctionButton.SetUiActive(e),
-      e &&
+    var t = this.ActivityBaseData.IsUnLock();
+    this.ANe.SetPanelConditionVisible(!t),
+      t ||
+        this.ANe.SetPerformanceConditionLock(
+          this.ActivityBaseData.ConditionGroupId,
+          this.ActivityBaseData.Id,
+        ),
+      this.ANe.SetRewardButtonVisible(t),
+      t && this.ANe.SetRewardButtonFunction(this.NNe),
+      this.ANe.FunctionButton.SetUiActive(t),
+      t &&
         ((t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
           "CollectActivity_Button_ahead",
         )),

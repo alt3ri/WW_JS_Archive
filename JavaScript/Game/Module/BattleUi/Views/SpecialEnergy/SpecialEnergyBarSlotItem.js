@@ -17,9 +17,9 @@ class SpecialEnergyBarSlotItem extends UiPanelBase_1.UiPanelBase {
       (this.Xdt = 0),
       (this.$dt = 0),
       (this.Ydt = 0),
-      (this.yNn = void 0),
-      (this._ua = -1),
-      (this.uua = !1);
+      (this.PNn = void 0),
+      (this.Mma = -1),
+      (this.Sma = !1);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -166,18 +166,18 @@ class SpecialEnergyBarSlotItem extends UiPanelBase_1.UiPanelBase {
   }
   ReplaceFullEffect(t) {
     var i = this.GetUiNiagara(3);
-    this.yNn || (this.yNn = i.NiagaraSystemReference), i.SetNiagaraSystem(t);
+    this.PNn || (this.PNn = i.NiagaraSystemReference), i.SetNiagaraSystem(t);
   }
   SetFullEffectOffsetX(t) {
     var i = this.GetUiNiagara(3);
-    this.uua || ((this.uua = !0), (this._ua = i.GetAnchorOffsetX())),
+    this.Sma || ((this.Sma = !0), (this.Mma = i.GetAnchorOffsetX())),
       i.SetAnchorOffsetX(t);
   }
   OnBeforeDestroy() {
-    this.yNn &&
-      (this.GetUiNiagara(3).SetNiagaraSystem(this.yNn), (this.yNn = void 0)),
-      this.uua &&
-        (this.GetUiNiagara(3).SetAnchorOffsetX(this._ua), (this.uua = !1));
+    this.PNn &&
+      (this.GetUiNiagara(3).SetNiagaraSystem(this.PNn), (this.PNn = void 0)),
+      this.Sma &&
+        (this.GetUiNiagara(3).SetAnchorOffsetX(this.Mma), (this.Sma = !1));
   }
 }
 exports.SpecialEnergyBarSlotItem = SpecialEnergyBarSlotItem;

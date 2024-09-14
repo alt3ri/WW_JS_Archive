@@ -24,9 +24,9 @@ class ChipHandBookView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.VZt = void 0),
-      (this.ZQn = void 0),
-      (this.eXn = -1),
-      (this.tXn = -1),
+      (this.hXn = void 0),
+      (this.lXn = -1),
+      (this._Xn = -1),
       (this.HandBookCommonItemDataList = []),
       (this.QZt = void 0),
       (this.XZt = new AudioController_1.PlayResult()),
@@ -62,73 +62,76 @@ class ChipHandBookView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.nei = (i) => {
-        this.eXn = i;
-        i = this.iXn();
+        this.lXn = i;
+        i = this.uXn();
         this.VZt?.RefreshByData(i, !0),
           this.VZt?.BindLateUpdate(() => {
-            this.VZt?.ScrollToItemIndex(this.tXn), this.VZt?.UnBindLateUpdate();
+            this.VZt?.ScrollToItemIndex(this._Xn), this.VZt?.UnBindLateUpdate();
           });
       }),
       (this.sei = (i, t) => {
         (this.QZt = i), this.zji?.SetToggleStateForce(0, !1), (this.zji = t);
-        var t = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
+        var e,
+          s,
+          h,
+          t = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
             6,
             this.QZt.Id,
           ),
-          e = void 0 === t,
-          s =
-            (e && this.RefreshLockState(e),
-            ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
-              this.QZt.Id,
-            )),
-          s =
-            (this.GetText(4).SetText(s),
-            ConfigManager_1.ConfigManager.HandBookConfig.GetChipTypeConfig(
+          o = void 0 === t;
+        o
+          ? this.RefreshLockState(o)
+          : ((s =
+              ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
+                this.QZt.Id,
+              )),
+            this.GetText(4).SetText(s),
+            (s = ConfigManager_1.ConfigManager.HandBookConfig.GetChipTypeConfig(
               i.Type,
             )),
-          s =
-            (this.GetText(5).ShowTextNew(s.TypeDescription),
-            ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayPictures(
-              this.QZt.Id,
-            )),
-          h = 0 < s.length,
-          o = this.GetItem(17),
-          h =
-            (h
-              ? (o.SetUIActive(!0),
+            this.GetText(5).ShowTextNew(s.TypeDescription),
+            (h =
+              0 <
+              (s =
+                ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayPictures(
+                  this.QZt.Id,
+                )).length),
+            (e = this.GetItem(17)),
+            h
+              ? (e.SetUIActive(!0),
                 this.SetTextureByPath(s[0], this.GetTexture(7)))
-              : o.SetUIActive(!1),
-            s.length),
-          o =
-            (LguiUtil_1.LguiUtil.SetLocalText(this.GetText(8), "RoleExp", 1, h),
-            ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(
-              this.QZt.Id,
-            )),
-          s = 0 < o.length,
-          h =
-            (this.GetItem(16).SetUIActive(s),
+              : e.SetUIActive(!1),
+            (h = s.length),
+            LguiUtil_1.LguiUtil.SetLocalText(this.GetText(8), "RoleExp", 1, h),
+            (e =
+              0 <
+              ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(
+                this.QZt.Id,
+              ).length),
+            this.GetItem(16).SetUIActive(e),
             this.GetText(11).ShowTextNew(i.VoiceDescrtption),
             this.GetButton(12).RootUIComp.SetUIActive(!1),
             this.GetButton(13).RootUIComp.SetUIActive(!0),
-            ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayDesc(
-              this.QZt.Id,
-            )),
-          o = 0 < h?.length,
-          s =
-            (this.GetItem(20).SetUIActive(o),
-            this.GetText(21).SetText(h),
+            (h =
+              0 <
+              (s =
+                ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayDesc(
+                  this.QZt.Id,
+                ))?.length),
+            this.GetItem(20).SetUIActive(h),
+            this.GetText(21).SetText(s),
             this.GetItem(18).SetUIActive(!1),
-            void 0 !== t && !t.IsRead);
-        s &&
-          HandBookController_1.HandBookController.SendIllustratedReadRequest(
-            6,
-            this.QZt.Id,
-          ),
-          LguiUtil_1.LguiUtil.SetLocalText(
-            this.GetText(6),
-            "DateOfAcquisition",
-            e ? "" : t.CreateTime,
-          );
+            void 0 === t ||
+              t.IsRead ||
+              HandBookController_1.HandBookController.SendIllustratedReadRequest(
+                6,
+                this.QZt.Id,
+              ),
+            LguiUtil_1.LguiUtil.SetLocalText(
+              this.GetText(6),
+              "DateOfAcquisition",
+              o ? "" : t.CreateTime,
+            ));
       }),
       (this.aei = (i, t) => i.Id - t.Id),
       (this.lyt = () => {
@@ -297,11 +300,11 @@ class ChipHandBookView extends UiViewBase_1.UiViewBase {
       );
   }
   async OnBeforeStartAsync() {
-    (this.ZQn = new HandBootChipDynamicItem_1.HandBootChipDynamicItem()),
+    (this.hXn = new HandBootChipDynamicItem_1.HandBootChipDynamicItem()),
       (this.VZt = new DynScrollView_1.DynamicScrollView(
         this.GetUIDynScrollViewComponent(2),
         this.GetItem(3),
-        this.ZQn,
+        this.hXn,
         this.rei,
       )),
       await this.VZt.Init();
@@ -327,7 +330,7 @@ class ChipHandBookView extends UiViewBase_1.UiViewBase {
         (h.IsNew = o),
         this.HandBookCommonItemDataList.push(h);
     }
-    var i = this.iXn();
+    var i = this.uXn();
     this.VZt?.RefreshByData(i);
   }
   RefreshLockText() {
@@ -379,17 +382,17 @@ class ChipHandBookView extends UiViewBase_1.UiViewBase {
       (this.HandBookCommonItemDataList = []),
       (this.QZt = void 0);
   }
-  iXn() {
-    -1 === this.eXn &&
-      (this.eXn = this.HandBookCommonItemDataList[0].Config.Id);
+  uXn() {
+    -1 === this.lXn &&
+      (this.lXn = this.HandBookCommonItemDataList[0].Config.Id);
     var t = [];
     for (const h of this.HandBookCommonItemDataList) {
-      var i = this.eXn === h.Config.Id,
+      var i = this.lXn === h.Config.Id,
         e = new HandBookDefine_1.HandBookChipDynamicData();
       if (
         ((e.HandBookCommonItemData = h), (e.IsShowContent = i), t.push(e), i)
       ) {
-        this.tXn = this.HandBookCommonItemDataList.indexOf(h);
+        this._Xn = this.HandBookCommonItemDataList.indexOf(h);
         let i = !0;
         for (const o of ConfigManager_1.ConfigManager.HandBookConfig.GetChipHandBookConfigList(
           h.Config.Id,

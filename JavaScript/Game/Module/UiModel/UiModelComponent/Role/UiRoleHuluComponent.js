@@ -40,8 +40,9 @@ let UiRoleHuluComponent = class UiRoleHuluComponent extends UiModelComponentBase
       (this.dBr = void 0),
       (this.g1t = CharacterNameDefines_1.CharacterNameDefines.HULU_SOCKET_NAME),
       (this._ii = 0),
+      (this.mFa = void 0),
       (this.Twr = (e) => {
-        e || 2 !== this._ii || this.SetActive(!1);
+        e || 2 !== this._ii || this.SetActive(!1), (this.mFa = e);
       }),
       (this.CBr = () => {
         this.Refresh();
@@ -53,10 +54,13 @@ let UiRoleHuluComponent = class UiRoleHuluComponent extends UiModelComponentBase
         this.gBr();
       }),
       (this.OnAnsBegin = (e) => {
-        this.SetActive(!0),
-          e.IsRotate && this.StartHuluRotate(),
-          (e = e.Socket);
-        e && this.AttachHuluToRole(e);
+        var t = this.mFa ?? !0,
+          t =
+            (this.SetActive(t),
+            (this.mFa = void 0),
+            e.IsRotate && this.StartHuluRotate(),
+            e.Socket);
+        t && this.AttachHuluToRole(t);
       }),
       (this.OnAnsEnd = (e) => {
         this.dBr?.Model?.CheckGetComponent(9)?.StopRotate(), this.SetActive(!1);

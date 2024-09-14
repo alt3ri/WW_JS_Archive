@@ -31,10 +31,10 @@ class TsSceneInteractBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrar
     EntitySystem_1.EntitySystem.GetComponent(t, 26)?.EndBounce();
   }
   static IsAiDriver(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 39)?.IsAiDriver ?? !1;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 40)?.IsAiDriver ?? !1;
   }
   static IsDropItem(t) {
-    return void 0 !== EntitySystem_1.EntitySystem.GetComponent(t, 135);
+    return void 0 !== EntitySystem_1.EntitySystem.GetComponent(t, 136);
   }
   static PickUpDropItem(t, e) {
     e = EntitySystem_1.EntitySystem.Get(e).GetComponent(0);
@@ -44,7 +44,7 @@ class TsSceneInteractBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrar
     );
   }
   static InteractSceneItem(t, e) {
-    EntitySystem_1.EntitySystem.GetComponent(e, 181)?.ExecuteInteractFromVision(
+    EntitySystem_1.EntitySystem.GetComponent(e, 182)?.ExecuteInteractFromVision(
       t,
     );
   }

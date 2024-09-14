@@ -39,9 +39,9 @@ let RoleGrowComponent = class RoleGrowComponent extends EntityComponent_1.Entity
       });
   }
   OnStart() {
-    (this.$te = this.Entity.CheckGetComponent(158)),
-      (this.Xte = this.Entity.CheckGetComponent(188)),
-      (this.m1t = this.Entity.CheckGetComponent(159)),
+    (this.$te = this.Entity.CheckGetComponent(159)),
+      (this.Xte = this.Entity.CheckGetComponent(190)),
+      (this.m1t = this.Entity.CheckGetComponent(160)),
       this.ron();
     var e = this.Entity.CheckGetComponent(0),
       t = e.GetPlayerId(),
@@ -117,7 +117,7 @@ let RoleGrowComponent = class RoleGrowComponent extends EntityComponent_1.Entity
   }
 };
 (RoleGrowComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(85)],
+  [(0, RegisterComponent_1.RegisterComponent)(86)],
   RoleGrowComponent,
 )),
   (exports.RoleGrowComponent = RoleGrowComponent);

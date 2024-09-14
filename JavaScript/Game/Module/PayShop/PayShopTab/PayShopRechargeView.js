@@ -1,19 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopRechargeView = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
-  ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
-  PayItemController_1 = require("../../PayItem/PayItemController"),
   DiscountShopView_1 = require("./DiscountShopView"),
-  PayShopRechargeItem_1 = require("./TabItem/PayShopRechargeItem");
+  PayShopRechargeItem_1 = require("./TabItem/PayShopRechargeItem"),
+  CHECKSDKGAP = 500;
 class PayShopRechargeView extends DiscountShopView_1.DiscountShopView {
   constructor() {
     super(...arguments),
       (this.r3i = !1),
+      (this.PNa = void 0),
       (this.InitItem = () => {
         return new PayShopRechargeItem_1.PayShopRechargeItem();
       }),
@@ -40,10 +43,6 @@ class PayShopRechargeView extends DiscountShopView_1.DiscountShopView {
   AddEventListener() {
     super.AddEventListener(),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.RefreshPayItemList,
-        this.l3i,
-      ),
-      EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPayItemSuccess,
         this.USe,
       );
@@ -51,23 +50,18 @@ class PayShopRechargeView extends DiscountShopView_1.DiscountShopView {
   RemoveEventListener() {
     super.RemoveEventListener(),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.RefreshPayItemList,
-        this.l3i,
-      ),
-      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPayItemSuccess,
         this.USe,
       );
   }
   RefreshLoopScroll(e) {
-    var t = ModelManager_1.ModelManager.PayItemModel.GetDataList().sort(
-        (e, t) => e.ItemCount - t.ItemCount,
+    var r = ModelManager_1.ModelManager.PayItemModel.GetDataList().sort(
+        (e, r) => e.ItemCount - r.ItemCount,
       ),
-      r = new Array();
-    for (const n of t)
-      ConfigManager_1.ConfigManager.PayItemConfig.GetPayItem(n.PayItemId)
-        .IsDisplay && r.push(n);
-    (this.PayShopGoodsList = r),
+      t = new Array();
+    for (const i of r) i.GetIfCanShow() && t.push(i);
+    (this.PayShopGoodsList = t),
+      this.BNa(t),
       this.LoopScrollView.ReloadProxyData(
         this.GetProxyData,
         this.PayShopGoodsList.length,
@@ -75,15 +69,66 @@ class PayShopRechargeView extends DiscountShopView_1.DiscountShopView {
       ),
       this.GetLoopScrollViewComponent(1).RootUIComp.SetUIActive(!0);
   }
+  BNa(e) {
+    return (
+      !PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedConfirmSdkProductInfo() ||
+      0 < e.length ||
+      ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(213)).FunctionMap.set(
+        1,
+        () => {
+          UiManager_1.UiManager.CloseView("PayShopRootView");
+        },
+      ),
+      (e.IsEscViewTriggerCallBack = !1),
+      ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+        e,
+      ),
+      this.bNa(),
+      !1)
+    );
+  }
+  async bNa() {
+    (await PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().OpenMessageBox(
+      ModelManager_1.ModelManager.PlayerInfoModel.GetThirdPartyUserId(),
+      3,
+      0,
+    )) &&
+      (this.qNa(),
+      (this.PNa = TimerSystem_1.TimerSystem.Forever(() => {
+        PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetMessageBoxCurrentState(
+          (e) => {
+            3 === e &&
+              (this.qNa(),
+              PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().TerminateMessageBox());
+          },
+        );
+      }, CHECKSDKGAP)));
+  }
+  qNa() {
+    this.PNa &&
+      (TimerSystem_1.TimerSystem.Remove(this.PNa), (this.PNa = void 0));
+  }
+  async OnBeforeShowAsyncImplement() {
+    (this.r3i =
+      await ControllerHolder_1.ControllerHolder.PayItemController.SendPayItemInfoRequestAsync()),
+      this.l3i();
+  }
   OnBeforeShow() {
-    this.GetItem(4).SetUIActive(!1),
-      this.TabGroup.SetActive(!1),
-      (this.r3i = !0),
-      this.GetLoopScrollViewComponent(1).RootUIComp.SetUIActive(!1),
-      PayItemController_1.PayItemController.SendPayItemInfoRequest();
+    this.GetItem(4).SetUIActive(!1), this.TabGroup.SetActive(!1);
+  }
+  OnShowUiTabViewFromToggle() {
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.ShowPlayStationStoreIcon(
+      0,
+    );
+  }
+  OnHideUiTabViewBase(e) {
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.HidePlayStationStoreIcon();
   }
   OnDiscountShopAfterShow() {
     this.GetText(5).SetUIActive(!0);
+  }
+  OnBeforeDestroy() {
+    this.qNa();
   }
 }
 exports.PayShopRechargeView = PayShopRechargeView;

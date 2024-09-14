@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   LauncherConfigLib_1 = require("../Define/LauncherConfigLib"),
+  LaunchUtil_1 = require("../Ui/LaunchUtil"),
   LauncherLog_1 = require("./LauncherLog"),
   LauncherStorageLib_1 = require("./LauncherStorageLib"),
   MASTERVOLUMEFUNCTION = 1,
@@ -12,13 +13,14 @@ const puerts_1 = require("puerts"),
   SFXVOLUMEFUNCTION = 4,
   RESOLUTION = 6,
   AMBVOLUMEFUNCTION = 69,
-  UIVOLUMEFUNCTION = 70;
+  UIVOLUMEFUNCTION = 70,
+  DEFAULT_VALUE_VALUE = 100;
 class LauncherGameSettingLib {
   static Initialize() {
-    this.Ypa();
+    this.YSa();
   }
-  static Ypa() {
-    var e = this.Qpa();
+  static YSa() {
+    var e = this.QSa();
     e &&
       (this.rNi(e, MASTERVOLUMEFUNCTION),
       this.rNi(e, VOICEVOLUMEFUNCTION),
@@ -28,108 +30,140 @@ class LauncherGameSettingLib {
       this.rNi(e, UIVOLUMEFUNCTION),
       this.rNi(e, RESOLUTION));
   }
-  static Qpa() {
-    let e = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
+  static VJa() {
+    var e = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
       LauncherStorageLib_1.ELauncherStorageGlobalKey.MenuData,
       void 0,
     );
+    if (void 0 === e) {
+      var t = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
+        LauncherStorageLib_1.ELauncherStorageGlobalKey.PlayMenuInfo,
+        "",
+      );
+      if (t && "" !== t) return LaunchUtil_1.LaunchUtil.ObjToMap(JSON.parse(t));
+    }
+    return e;
+  }
+  static QSa() {
+    let e = LauncherGameSettingLib.VJa();
     return (
       e ||
-        ((e = new Map()),
-        this.Kpa(e, MASTERVOLUMEFUNCTION),
-        this.Kpa(e, VOICEVOLUMEFUNCTION),
-        this.Kpa(e, MUSICVOLUMEFUNCTION),
-        this.Kpa(e, SFXVOLUMEFUNCTION),
-        this.Kpa(e, AMBVOLUMEFUNCTION),
-        this.Kpa(e, UIVOLUMEFUNCTION),
-        this.Kpa(e, RESOLUTION)),
+        (LauncherLog_1.LauncherLog.Info(
+          "[LauncherGameSettingLib][GameSettings]找不到玩家保存数据，从默认配置表中读取",
+        ),
+        (e = new Map()),
+        this.KSa(e, MASTERVOLUMEFUNCTION, DEFAULT_VALUE_VALUE),
+        this.KSa(e, VOICEVOLUMEFUNCTION, DEFAULT_VALUE_VALUE),
+        this.KSa(e, MUSICVOLUMEFUNCTION, DEFAULT_VALUE_VALUE),
+        this.KSa(e, SFXVOLUMEFUNCTION, DEFAULT_VALUE_VALUE),
+        this.KSa(e, AMBVOLUMEFUNCTION, DEFAULT_VALUE_VALUE),
+        this.KSa(e, UIVOLUMEFUNCTION, DEFAULT_VALUE_VALUE),
+        this.KSa(e, RESOLUTION)),
       e
     );
   }
-  static Kpa(e, i) {
-    var t = LauncherConfigLib_1.LauncherConfigLib.GetMenuConfigByFunctionId(i);
-    e.set(i, t ? t.OptionsDefault : 0);
+  static KSa(e, t, i = 0) {
+    var a,
+      L =
+        LauncherConfigLib_1.LauncherConfigLib.GetGameSettingsMenuConfigByFunctionId(
+          t,
+        );
+    L
+      ? ((a = L.GetDefaultValue()),
+        LauncherLog_1.LauncherLog.Info(
+          "[LauncherGameSettingLib][GameSettings]设置游戏数据Map",
+          ["functionId", t],
+          ["defaultValue", a],
+          ["NotFoundValue", i],
+        ),
+        e.set(t, L ? a : i))
+      : (LauncherLog_1.LauncherLog.Info(
+          "[LauncherGameSettingLib][GameSettings]找不到设置系统表配置",
+          ["functionId", t],
+          ["NotFoundValue", i],
+        ),
+        e.set(t, i));
   }
-  static rNi(e, i) {
-    var t = e.get(i);
-    if (void 0 === t)
+  static rNi(e, t) {
+    var i = e.get(t);
+    if (void 0 === i)
       LauncherLog_1.LauncherLog.Info(
-        "[LauncherGameSettingLib]找不到对应热更游戏设置数据",
-        ["functionId", i],
-        ["value", t],
+        "[LauncherGameSettingLib][GameSettings]找不到对应热更游戏设置数据",
+        ["functionId", t],
+        ["value", i],
       );
     else
       switch (
         (LauncherLog_1.LauncherLog.Info(
-          "[LauncherGameSettingLib]应用热更游戏设置数据",
-          ["functionId", i],
-          ["value", t],
+          "[LauncherGameSettingLib][GameSettings]应用热更游戏设置数据",
+          ["functionId", t],
+          ["value", i],
         ),
-        i)
+        t)
       ) {
         case MASTERVOLUMEFUNCTION:
-          this.$pa("Master_Audio_Bus_Volume", t);
+          this.$Sa("Master_Audio_Bus_Volume", i);
           break;
         case VOICEVOLUMEFUNCTION:
-          this.$pa("Vocal_Audio_Bus_Volume", t);
+          this.$Sa("Vocal_Audio_Bus_Volume", i);
           break;
         case MUSICVOLUMEFUNCTION:
-          this.$pa("Music_Audio_Bus_Volume", t);
+          this.$Sa("Music_Audio_Bus_Volume", i);
           break;
         case SFXVOLUMEFUNCTION:
-          this.$pa("SFX_Audio_Bus_Volume", t);
+          this.$Sa("SFX_Audio_Bus_Volume", i);
           break;
         case AMBVOLUMEFUNCTION:
-          this.$pa("AMB_Audio_Bus_Volume", t);
+          this.$Sa("AMB_Audio_Bus_Volume", i);
           break;
         case UIVOLUMEFUNCTION:
-          this.$pa("UI_Audio_Bus_Volume", t);
+          this.$Sa("UI_Audio_Bus_Volume", i);
           break;
         case RESOLUTION:
-          this.Xpa(t);
+          this.XSa(i);
       }
   }
-  static $pa(e, i) {
-    UE.AkGameplayStatics.SetRTPCValue(void 0, i, 0, void 0, new UE.FName(e));
+  static $Sa(e, t) {
+    UE.AkGameplayStatics.SetRTPCValue(void 0, t, 0, void 0, new UE.FName(e));
   }
-  static Xpa(e) {
-    var i = this.GetResolutionList(),
-      i =
+  static XSa(e) {
+    var t = this.GetResolutionList(),
+      t =
         (LauncherLog_1.LauncherLog.Info(
-          "[LauncherGameSettingLib]当前分辨率列表",
-          ["resolutionList", i],
+          "[LauncherGameSettingLib][GameSettings]当前分辨率列表",
+          ["resolutionList", t],
           ["value", e],
         ),
-        i[e]);
-    i &&
+        t[e]);
+    t &&
       (LauncherLog_1.LauncherLog.Info(
-        "[LauncherGameSettingLib]热更时应用分辨率",
+        "[LauncherGameSettingLib][GameSettings]热更时应用分辨率",
         ["value", e],
-        ["resolution", i],
+        ["resolution", t],
       ),
-      (e = UE.GameUserSettings.GetGameUserSettings()).SetScreenResolution(i),
+      (e = UE.GameUserSettings.GetGameUserSettings()).SetScreenResolution(t),
       e.ApplySettings(!0));
   }
   static GetResolutionList() {
-    var i = [],
+    var t = [],
       e = (0, puerts_1.$ref)(void 0);
     if (UE.KismetSystemLibrary.GetSupportedFullscreenResolutions(e)) {
-      var t = (0, puerts_1.$unref)(e);
-      for (let e = t.Num() - 1; 0 <= e; --e) {
-        var a = t.Get(e);
-        a && i.push(a);
+      var i = (0, puerts_1.$unref)(e);
+      for (let e = i.Num() - 1; 0 <= e; --e) {
+        var a = i.Get(e);
+        a && t.push(a);
       }
     }
     return (
-      i.length
-        ? i.sort((e, i) => (e.X === i.X ? i.Y - e.Y : i.X - e.X))
+      t.length
+        ? t.sort((e, t) => (e.X === t.X ? t.Y - e.Y : t.X - e.X))
         : (LauncherLog_1.LauncherLog.Info(
-            "[LauncherGameSettingLib]获取当前分辨率列表失败",
+            "[LauncherGameSettingLib][GameSettings]获取当前分辨率列表失败",
           ),
-          i.push(
+          t.push(
             UE.GameUserSettings.GetGameUserSettings().GetDesktopResolution(),
           )),
-      i
+      t
     );
   }
 }

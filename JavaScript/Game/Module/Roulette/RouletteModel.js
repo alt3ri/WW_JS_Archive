@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RouletteModel = void 0);
-const Log_1 = require("../../../Core/Common/Log"),
+const Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
@@ -11,7 +12,6 @@ const Log_1 = require("../../../Core/Common/Log"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   Global_1 = require("../../Global"),
   InputKeyDisplayData_1 = require("../../InputSettings/InputKeyDisplayData"),
-  InputSettings_1 = require("../../InputSettings/InputSettings"),
   InputSettingsManager_1 = require("../../InputSettings/InputSettingsManager"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
@@ -40,7 +40,11 @@ class RouletteModel extends ModelBase_1.ModelBase {
         void 0 !== e && (t ? this.$0o(e) : this.dqt(e));
       }),
       (this.CurrentEquipItemId = 0),
-      (this.XPn = new InputKeyDisplayData_1.InputKeyDisplayData());
+      (this.XPn = new InputKeyDisplayData_1.InputKeyDisplayData()),
+      (this.GetRouletteActionName = {
+        [1]: InputMappingsDefine_1.actionMappings.幻象探索选择界面,
+        2: InputMappingsDefine_1.actionMappings.轮盘2,
+      });
   }
   IsExploreRouletteOpen() {
     return ModelManager_1.ModelManager.FunctionModel.IsOpen(10026);
@@ -448,20 +452,20 @@ class RouletteModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Phantom", 38, "当前不存在保存的轮盘数据");
     else {
-      let e = i[0]?.GHn,
+      let e = i[0]?.KHn,
         t =
           ((e = e || new Array(RouletteDefine_1.ROULETTE_NUM).fill(0)),
           this.z0o(e),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Phantom", 38, "探索技能列表", ["Id", e]),
-          i[0]?.OHn),
+          i[0]?.QHn),
         r =
           (void 0 === t && (t = 0),
           this.SetCurrentEquipItemId(t),
           this.afo(),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Phantom", 38, "装配道具", ["Id", t]),
-          i[1]?.GHn);
+          i[1]?.KHn);
       (r = r || new Array(RouletteDefine_1.ROULETTE_NUM).fill(0)),
         this.SetFunctionIdList(r),
         Log_1.Log.CheckInfo() &&
@@ -522,16 +526,23 @@ class RouletteModel extends ModelBase_1.ModelBase {
       e ?? [0],
     );
   }
-  GetRouletteKeyRichText() {
-    var e;
+  GetRouletteKeyRichText(e) {
+    this.XPn.Reset();
+    var e = InputSettingsManager_1.InputSettingsManager.GetActionKeyDisplayData(
+      this.XPn,
+      e,
+    );
+    return (e = e && this.XPn.GetDisplayKeyIconPathList(0)) && 0 !== e.length
+      ? `<texture=${e[0]}>`
+      : "";
+  }
+  GetRouletteMainAction(e) {
     return InputSettingsManager_1.InputSettingsManager.GetActionKeyDisplayData(
       this.XPn,
-      InputMappingsDefine_1.actionMappings.幻象探索选择界面,
-    ) &&
-      (e = this.XPn.GetDisplayKeyNameList()) &&
-      0 !== e.length
-      ? `<texture=${InputSettings_1.InputSettings.GetKeyIconPath(e[0])}>`
-      : "";
+      e,
+    ) && this.XPn.IsCombination
+      ? InputMappingsDefine_1.actionMappings.组合主键
+      : e;
   }
   GetRouletteSelectConfig() {
     return (
@@ -545,6 +556,26 @@ class RouletteModel extends ModelBase_1.ModelBase {
       LocalStorageDefine_1.ELocalStorageGlobalKey.GamepadRouletteSelectConfig,
       e,
     );
+  }
+  GetRouletteActionOpenConfig(e) {
+    var t = 1 === e ? 0 : 1;
+    return Info_1.Info.IsInGamepad()
+      ? ((e =
+          1 === e
+            ? LocalStorageDefine_1.ELocalStoragePlayerKey
+                .RouletteAction01OpenConfig
+            : LocalStorageDefine_1.ELocalStoragePlayerKey
+                .RouletteAction02OpenConfig),
+        LocalStorage_1.LocalStorage.GetPlayer(e) ?? t)
+      : t;
+  }
+  SaveRouletteActionOpenConfig(e, t) {
+    e =
+      1 === e
+        ? LocalStorageDefine_1.ELocalStoragePlayerKey.RouletteAction01OpenConfig
+        : LocalStorageDefine_1.ELocalStoragePlayerKey
+            .RouletteAction02OpenConfig;
+    LocalStorage_1.LocalStorage.SetPlayer(e, t);
   }
   J0o(e) {
     var t = new LogReportDefine_1.ExploreToolSwitchLogData(),

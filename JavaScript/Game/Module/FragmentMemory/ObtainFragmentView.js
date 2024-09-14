@@ -2,9 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ObtainFragmentView = void 0);
 const UE = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
   UiManager_1 = require("../../Ui/UiManager"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
   LguiUtil_1 = require("../Util/LguiUtil"),
   FragmentMemoryData_1 = require("./FragmentMemoryData");
 class ObtainFragmentView extends UiViewBase_1.UiViewBase {
@@ -12,14 +14,27 @@ class ObtainFragmentView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.Jwn = void 0),
       (this.tWt = () => {
-        this.CloseMe(() => {
-          var e = new FragmentMemoryData_1.FragmentMemoryMainViewOpenData();
-          (e.FragmentMemoryTopicData = this.Jwn.GetTopicData()),
-            (e.CurrentSelectId = this.Jwn.GetId()),
-            (ModelManager_1.ModelManager.FragmentMemoryModel.MemoryFragmentMainViewTryPlayAnimation =
-              "Start02"),
-            UiManager_1.UiManager.OpenView("MemoryFragmentMainView", e);
-        });
+        var e =
+          ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetFragmentMemoryPreNeedItemId();
+        let i = 1;
+        0 <
+        (i =
+          0 < e
+            ? ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+                e,
+              )
+            : i)
+          ? this.CloseMe(() => {
+              var e = new FragmentMemoryData_1.FragmentMemoryMainViewOpenData();
+              (e.FragmentMemoryTopicData = this.Jwn.GetTopicData()),
+                (e.CurrentSelectId = this.Jwn.GetId()),
+                (ModelManager_1.ModelManager.FragmentMemoryModel.MemoryFragmentMainViewTryPlayAnimation =
+                  "Start02"),
+                UiManager_1.UiManager.OpenView("MemoryFragmentMainView", e);
+            })
+          : ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
+              "Condition_13000069_Description",
+            );
       });
   }
   OnRegisterComponent() {

@@ -33,16 +33,20 @@ class AiStateMachineTaskPatrol extends AiStateMachineTask_1.AiStateMachineTask {
     (this.$ie = this.JLn.GetConfig()),
     this.$ie)
       ? ((this.Jh = this.Bte.CharAiDesignComp.Entity),
-        (this.Gce = this.Jh.GetComponent(37)),
-        (this.mBe = this.Jh.GetComponent(91)),
-        (this.zLn = this.Jh.GetComponent(40)),
+        (this.Gce = this.Jh.GetComponent(38)),
+        (this.mBe = this.Jh.GetComponent(92)),
+        (this.zLn = this.Jh.GetComponent(41)),
         (this.Hte = this.Bte.CharActorComp),
         this.ZLn())
       : this.$ne();
   }
   OnExit(t) {
     this.Node.TaskFinish ||
-      (this.zLn.PausePatrol("AiStateMachineTaskPatrol"), this.eDn()),
+      (this.zLn.PausePatrol(
+        this.$ie.SplineEntityId,
+        "AiStateMachineTaskPatrol",
+      ),
+      this.eDn()),
       this.Gce && (this.Gce.StopMove(!0), (this.Gce.IsSpecialMove = !1));
   }
   $ne() {
@@ -70,7 +74,10 @@ class AiStateMachineTaskPatrol extends AiStateMachineTask_1.AiStateMachineTask {
     var t;
     i &&
       (this.zLn.HasPatrolRecord()
-        ? this.zLn.ResumePatrol("AiStateMachineTaskPatrol")
+        ? this.zLn.ResumePatrol(
+            this.$ie.SplineEntityId,
+            "AiStateMachineTaskPatrol",
+          )
         : ((t = {
             DebugMode: this.OpenDebugMode,
             UseNearestPoint: !0,

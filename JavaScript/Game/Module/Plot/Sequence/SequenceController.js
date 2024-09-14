@@ -41,14 +41,6 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
             Log_1.Log.Warn("Plot", 39, "SwitchPose 失败!"),
         Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug("Plot", 39, "SwitchPose 结束"),
-      0 < this.jio.BeginBlendFrame &&
-        (this.jio.BeginBlendFrame--, 0 === this.jio.BeginBlendFrame) &&
-        (this.Qio
-          ? this.Qio.EndSwitchPose()
-          : Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Plot", 39, "BlendPose 失败!"),
-        Log_1.Log.CheckDebug()) &&
-        Log_1.Log.Debug("Plot", 39, "BlendPose 结束"),
       this.FlushDialogueState(),
       this.Xio && this.CheckSeqStreamingData();
   }
@@ -82,7 +74,7 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
   static get zio() {
     return this.Assistants.get(6);
   }
-  static Play(t, s, i, e = !0, r = !0, h = !1, a = 1) {
+  static Play(t, s, i, e = !0, r = !0, a = !1, h = 1) {
     this.jio.IsPlaying
       ? (ControllerHolder_1.ControllerHolder.FlowController.LogError(
           "重复播放剧情Sequence，当前一次只能播放一段",
@@ -95,8 +87,8 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
           (this.jio.Config = t),
           (this.jio.IsViewTargetControl = e),
           (this.jio.IsSubtitleUiUse = r),
-          (this.jio.IsWaitRenderData = h),
-          (this.jio.PlayRate = a),
+          (this.jio.IsWaitRenderData = a),
+          (this.jio.PlayRate = h),
           (this.jio.FinishCallback = i),
           this.un((t) => {
             this.jio.IsEnding ||
@@ -320,8 +312,11 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
   static ShowLogo(t) {
     this.$io.ShowLogo(t);
   }
-  static OpenUiView(t) {
-    this.$io.OpenBackgroundImage(t);
+  static OpenUiView(t, s) {
+    this.$io.OpenBackgroundImage(t, s);
+  }
+  static PlayUiLevelSequence(t) {
+    this.$io.PlayUiLevelSequence(t);
   }
   static CloseUiView() {
     this.$io.CloseBackgroundImage();

@@ -44,7 +44,10 @@ class ReviveView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.o3t = () => {
         this.CloseMe(),
-          InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon();
+          ModelManager_1.ModelManager.DeadReviveModel
+            .HandleOnClickGiveUpExternal
+            ? ModelManager_1.ModelManager.DeadReviveModel.HandleOnClickGiveUpExternal()
+            : InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon();
       }),
       (this.r3t = () => {
         var i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(98);
@@ -222,7 +225,8 @@ class ReviveView extends UiTickViewBase_1.UiTickViewBase {
       (this.KFt = 0),
       (this.ZFt = !1),
       (this.t3t = !1),
-      (this.QFt = !1);
+      (this.QFt = !1),
+      ModelManager_1.ModelManager.DeadReviveModel.ClearExternalHandles();
   }
 }
 exports.ReviveView = ReviveView;

@@ -12,7 +12,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   HeartbeatDefine_1 = require("./HeartbeatDefine");
 class Heartbeat {
   static SetMaxTimeOutHandler(t) {
-    this.uKs = t;
+    this.$Qs = t;
   }
   static GetHeartbeatInterval() {
     return this.sMi;
@@ -101,7 +101,7 @@ class Heartbeat {
         this.uMi < this.TimeOutMaxCount
           ? this.SendHeartbeatImmediately()
           : TimerSystem_1.TimerSystem.Next(() => {
-              this.uKs?.();
+              this.$Qs?.();
             }));
   }
   static RegisterTick() {
@@ -114,10 +114,10 @@ class Heartbeat {
   static gMi() {
     (this.aMi = 0),
       Log_1.Log.CheckDebug() && Log_1.Log.Debug("Net", 9, "发送心跳");
-    var t = new Protocol_1.Aki.Protocol.aos();
+    var t = new Protocol_1.Aki.Protocol.Cos();
     Net_1.Net.Call(
-      24749,
-      Protocol_1.Aki.Protocol.aos.create(t),
+      1650,
+      Protocol_1.Aki.Protocol.Cos.create(t),
       this.fMi,
       this.cMi,
     ),
@@ -135,7 +135,7 @@ class Heartbeat {
   (Heartbeat.aMi = 0),
   (Heartbeat._Mi = 0),
   (Heartbeat.CMi = void 0),
-  (Heartbeat.uKs = void 0),
+  (Heartbeat.$Qs = void 0),
   (Heartbeat.mMi = void 0),
   (Heartbeat.Tick = (t) => {
     var e;

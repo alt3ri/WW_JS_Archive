@@ -5,7 +5,6 @@ const ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   MenuController_1 = require("../MenuController"),
-  MenuFunction_1 = require("../MenuFunction"),
   DropDownLogicBase_1 = require("./DropDownLogicBase"),
   SkillLockEnemyDropDownData_1 = require("./SkillLockEnemyDropDownData");
 class SkillLockEnemyLogic extends DropDownLogicBase_1.DropDownLogicBase {
@@ -16,11 +15,11 @@ class SkillLockEnemyLogic extends DropDownLogicBase_1.DropDownLogicBase {
           133,
         );
     if (e) {
-      var n = e.OptionsName;
-      for (let e = 0; e < n.length; e++) {
-        var o = n[e],
-          o = new SkillLockEnemyDropDownData_1.SkillLockEnemyDropDownData(e, o);
-        r.push(o);
+      var o = e.OptionsName;
+      for (let e = 0; e < o.length; e++) {
+        var n = o[e],
+          n = new SkillLockEnemyDropDownData_1.SkillLockEnemyDropDownData(e, n);
+        r.push(n);
       }
     }
     return r;
@@ -29,19 +28,15 @@ class SkillLockEnemyLogic extends DropDownLogicBase_1.DropDownLogicBase {
     return new LguiUtil_1.TableTextArgNew(e.TextId);
   }
   TriggerSelectChange(e, r) {
-    var n = MenuController_1.MenuController.GetTargetConfig(
-        r.MenuDataFunctionId,
-      ),
+    var o = MenuController_1.MenuController.GetTargetConfig(r.FunctionId),
       e = e.Index;
-    n !== e &&
-      (MenuFunction_1.MenuFunction.SetSkillLockEnemyMode(e),
-      MenuController_1.MenuController.NoticeChange(r.MenuDataFunctionId),
+    o !== e &&
+      (MenuController_1.MenuController.SetApplySave(r, e),
+      MenuController_1.MenuController.NoticeChange(r.FunctionId),
       (ModelManager_1.ModelManager.MenuModel.IsEdited = !0));
   }
   GetDefaultIndex(e) {
-    return MenuController_1.MenuController.GetTargetConfig(
-      e.MenuDataFunctionId,
-    );
+    return MenuController_1.MenuController.GetTargetConfig(e.FunctionId);
   }
 }
 exports.SkillLockEnemyLogic = SkillLockEnemyLogic;

@@ -16,9 +16,9 @@ class MoonChasingBusinessModel extends ModelBase_1.ModelBase {
       (this.Qke = new Map()),
       (this.Xke = new Map()),
       (this.$ke = void 0),
-      (this.Tna = []),
-      (this.Lna = !1),
-      (this.NSa = (e, t) => {
+      (this.rha = []),
+      (this.oha = !1),
+      (this.cTa = (e, t) => {
         var a, r;
         return e.IsOwn !== t.IsOwn
           ? e.IsOwn
@@ -43,7 +43,7 @@ class MoonChasingBusinessModel extends ModelBase_1.ModelBase {
       });
   }
   get IsInDelegate() {
-    return this.Lna;
+    return this.oha;
   }
   OnInit() {
     var e = ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustRoleAll();
@@ -62,14 +62,21 @@ class MoonChasingBusinessModel extends ModelBase_1.ModelBase {
     for (const t of e) this.SetDelegationData(t);
   }
   SetDelegationData(e) {
-    var t = new DelegationData_1.DelegationData(e.N6n, e.bGs, e.xGs);
-    this.Qke.set(e.N6n, t);
+    var t = new DelegationData_1.DelegationData(e.X6n, e.FGs, e.NGs);
+    this.Qke.set(e.X6n, t);
   }
   ReplaceDelegationData(e, t) {
-    e !== t.N6n &&
-      (this.Qke.delete(e),
-      this.SetDelegationData(t),
-      EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.RefreshDelegate));
+    e === t.X6n
+      ? EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.RefreshDelegate,
+          !1,
+        )
+      : (this.Qke.delete(e),
+        this.SetDelegationData(t),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.RefreshDelegate,
+          !0,
+        ));
   }
   ConditionUnlockDelegationData(e) {
     this.SetDelegationData(e);
@@ -113,8 +120,8 @@ class MoonChasingBusinessModel extends ModelBase_1.ModelBase {
     for (const t of e) this.SetEditTeamData(t);
   }
   SetEditTeamData(e) {
-    var t = this.Xke.get(e.DGs.O6n);
-    t && ((t.IsOwn = !0), t.SetCharacterDataList(e.DGs));
+    var t = this.Xke.get(e.BGs.Q6n);
+    t && ((t.IsOwn = !0), t.SetCharacterDataList(e.BGs));
   }
   DeepCopyEditTeamData(e) {
     var t = new EditTeamData_1.EditTeamData(e.Id, e.Type, e.UnLockCondition);
@@ -122,38 +129,38 @@ class MoonChasingBusinessModel extends ModelBase_1.ModelBase {
   }
   ConditionUnlockEditTeamData(e) {
     this.SetEditTeamData(e),
-      this.Tna.push(e.DGs.O6n),
+      this.rha.push(e.BGs.Q6n),
       ModelManager_1.ModelManager.MoonChasingModel.SaveRoleIdUnlockFlag(
-        e.DGs.O6n,
+        e.BGs.Q6n,
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.ConditionUnlockRole,
       );
   }
   PopUnlockRoleId() {
-    return this.Tna.shift();
+    return this.rha.shift();
   }
   IsUnlockRoleIdEmpty() {
-    return 0 === this.Tna.length;
+    return 0 === this.rha.length;
   }
   GetHelpEditTeamDataList(e = !1) {
     var t = [];
     for (const a of this.Xke.values())
-      !this.Uaa(a.Type) || (0 !== a.Type && !e) || t.push(a);
-    return t.sort(this.NSa), t;
+      !this.x1a(a.Type) || (0 !== a.Type && !e) || t.push(a);
+    return t.sort(this.cTa), t;
   }
   GetUnlockHelpEditTeamDataList(e = !1) {
     var t = [];
     for (const a of this.Xke.values())
-      this.Uaa(a.Type) && (0 === a.Type || e) && a.IsOwn && t.push(a);
-    return t.sort(this.NSa), t;
+      this.x1a(a.Type) && (0 === a.Type || e) && a.IsOwn && t.push(a);
+    return t.sort(this.cTa), t;
   }
   GetPlayerRoleId() {
     for (const e of this.Xke.values())
-      if (this.Uaa(e.Type) && 0 !== e.Type) return e.Id;
+      if (this.x1a(e.Type) && 0 !== e.Type) return e.Id;
     return 0;
   }
-  Uaa(e) {
+  x1a(e) {
     var t = ModelManager_1.ModelManager.PlayerInfoModel;
     return !(
       (1 === e && 1 !== t.GetPlayerGender()) ||
@@ -162,7 +169,7 @@ class MoonChasingBusinessModel extends ModelBase_1.ModelBase {
   }
   GetOwnEditTeamDataList() {
     var e = [];
-    for (const t of this.Xke.values()) this.Uaa(t.Type) && t.IsOwn && e.push(t);
+    for (const t of this.Xke.values()) this.x1a(t.Type) && t.IsOwn && e.push(t);
     return (
       e.sort((e, t) => {
         var a, r;
@@ -249,7 +256,7 @@ class MoonChasingBusinessModel extends ModelBase_1.ModelBase {
     return t[t.length - 1];
   }
   SetIsInDelegate(e) {
-    (this.Lna = e) ||
+    (this.oha = e) ||
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.ConditionUnlockRole,
       );

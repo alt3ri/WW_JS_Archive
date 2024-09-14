@@ -14,6 +14,7 @@ const UE = require("ue"),
   PRELOAD_SINGLE_TEMPORARY_STRENGTH_ITEM_COUNT = 1,
   MAX_DELTA_TIME = 200,
   MIN_DELTA_OFFSET = 0.5,
+  MAX_POS_OFFSET = 500,
   TEMPORARY_STRENGTH_LERP_TIME = 300,
   CLOSE_ANIM_TIME = 250,
   FULL_ANIM_TIME = 300,
@@ -21,7 +22,7 @@ const UE = require("ue"),
 class StrengthUnit extends HudUnitBase_1.HudUnitBase {
   constructor() {
     super(...arguments),
-      (this.Uua = new Vector2D_1.Vector2D()),
+      (this.Nma = new Vector2D_1.Vector2D()),
       (this.mii = !0),
       (this.BuffType = 0),
       (this.dii = []),
@@ -287,21 +288,26 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
       ((i = this.ActorComponent.ActorLocation),
       HudUnitUtils_1.HudUnitUtils.PositionUtil.ProjectWorldToScreen(
         i,
-        this.Uua,
+        this.Nma,
       )) &&
-      ((i = this.Uua.X),
-      (s = this.Uua.Y),
-      (this.Aii = this.jii(t, i, this.Rii, this.Aii)),
-      (this.Pii = this.jii(t, s, this.Uii, this.Pii)),
-      (i = this.Aii * t),
-      (s = this.Pii * t),
-      (i < MIN_DELTA_OFFSET &&
-        i > -MIN_DELTA_OFFSET &&
-        s < MIN_DELTA_OFFSET &&
-        s > -MIN_DELTA_OFFSET) ||
-        ((this.Rii += i),
-        (this.Uii += s),
-        this.SetAnchorOffset(this.Rii, this.Uii)));
+      ((i = this.Nma.X),
+      (s = this.Nma.Y),
+      Math.abs(i - this.Rii) > MAX_POS_OFFSET ||
+      Math.abs(s - this.Uii) > MAX_POS_OFFSET
+        ? ((this.Rii = i),
+          (this.Uii = s),
+          this.SetAnchorOffset(this.Rii, this.Uii))
+        : ((this.Aii = this.jii(t, i, this.Rii, this.Aii)),
+          (this.Pii = this.jii(t, s, this.Uii, this.Pii)),
+          (i = this.Aii * t),
+          (s = this.Pii * t),
+          (i < MIN_DELTA_OFFSET &&
+            i > -MIN_DELTA_OFFSET &&
+            s < MIN_DELTA_OFFSET &&
+            s > -MIN_DELTA_OFFSET) ||
+            ((this.Rii += i),
+            (this.Uii += s),
+            this.SetAnchorOffset(this.Rii, this.Uii))));
   }
   jii(t, i, s, h) {
     let e = i - s,
@@ -402,7 +408,8 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
     this.PlayTweenAnim(18);
   }
 }
-((exports.StrengthUnit = StrengthUnit).Xii = void 0),
-  (StrengthUnit.Wii = void 0),
-  (StrengthUnit.$ii = void 0);
+((exports.StrengthUnit = StrengthUnit).Xii =
+  Stats_1.Stat.Create("StrengthCloseAnim")),
+  (StrengthUnit.Wii = Stats_1.Stat.Create("StrengthFullAnim")),
+  (StrengthUnit.$ii = Stats_1.Stat.Create("StrengthTempCloseAnim"));
 //# sourceMappingURL=StrengthUnit.js.map

@@ -76,7 +76,7 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.tSo = () => {
         GeneralLogicTreeController_1.GeneralLogicTreeController.RequestFinishUiGameplay(
-          Protocol_1.Aki.Protocol.t3s.Proto_SignalBreak,
+          Protocol_1.Aki.Protocol.h3s.Proto_SignalBreak,
           this.qEo,
         ),
           UiManager_1.UiManager.CloseView("SignalDecodeView");

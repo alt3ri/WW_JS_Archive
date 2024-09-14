@@ -88,7 +88,7 @@ class CharDitherEffect extends CharRenderBase_1.CharRenderBase {
     return RenderConfig_1.RenderConfig.IdDitherEffect;
   }
   GetDitherRate() {
-    return this.mhr;
+    return this.phr;
   }
   Shr(t) {
     (this.mhr = MathUtils_1.MathUtils.RangeClamp(t, 0, 1, this.dhr, this.Chr)),

@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const MultiTextLang_1 = require("../../../../../../Core/Define/ConfigQuery/MultiTextLang"),
   StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
   ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  CalabashDefine_1 = require("../../../../Calabash/CalabashDefine"),
   FilterData_1 = require("../Model/FilterData");
 class FilterTypeFunctionLibrary {
   static XLt(r, a) {
@@ -238,6 +239,23 @@ class FilterTypeFunctionLibrary {
       var n = ConfigManager_1.ConfigManager.RoleConfig.GetRoleTagConfig(t),
         e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(n.TagName);
       a.push(new FilterData_1.FilterItemData(t, e, n.TagIcon));
+    }
+    return a;
+  }),
+  (FilterTypeFunctionLibrary.GetItemDeprecateFilterList = (r) => {
+    var a = new Array();
+    for (const t of r) {
+      var n =
+          t === CalabashDefine_1.VISION_RECOVERT_FILTER_DEPERCATE
+            ? "EchoAbandoned"
+            : "NotAbandoned",
+        n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(n),
+        e =
+          t === CalabashDefine_1.VISION_RECOVERT_FILTER_DEPERCATE
+            ? ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionRecoveryDesperateIcon()
+            : ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionRecoveryUnDesperateIcon(),
+        n = new FilterData_1.FilterItemData(t, n, e);
+      a.push(n);
     }
     return a;
   });

@@ -10,15 +10,17 @@ class MapMarkPhantomGroup {
     return this.markid();
   }
   get ShowRange() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.showrangeLength(), (t) =>
-      this.showrange(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.showrangeLength(),
+      this.showrange,
+      this,
     );
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  __init(t, s) {
+    return (this.z7 = t), (this.J7 = s), this;
   }
-  static getRootAsMapMarkPhantomGroup(t, r) {
-    return (r || new MapMarkPhantomGroup()).__init(
+  static getRootAsMapMarkPhantomGroup(t, s) {
+    return (s || new MapMarkPhantomGroup()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -31,8 +33,8 @@ class MapMarkPhantomGroup {
     return this.showrange(t);
   }
   showrange(t) {
-    var r = this.J7.__offset(this.z7, 6);
-    return r ? this.J7.readInt32(this.J7.__vector(this.z7 + r) + 4 * t) : 0;
+    var s = this.J7.__offset(this.z7, 6);
+    return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   showrangeLength() {
     var t = this.J7.__offset(this.z7, 6);

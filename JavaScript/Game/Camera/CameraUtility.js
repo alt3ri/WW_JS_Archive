@@ -5,18 +5,22 @@ const UE = require("ue"),
   Log_1 = require("../../Core/Common/Log"),
   CommonParamById_1 = require("../../Core/Define/ConfigCommon/CommonParamById"),
   Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../Core/Define/QueryTypeDefine"),
   GameplayTagUtils_1 = require("../../Core/Utils/GameplayTagUtils"),
   MathCommon_1 = require("../../Core/Utils/Math/MathCommon"),
   Rotator_1 = require("../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../Core/Utils/TraceElementCommon"),
   TsAiController_1 = require("../AI/Controller/TsAiController"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
   Global_1 = require("../Global"),
+  GlobalData_1 = require("../GlobalData"),
   ModelManager_1 = require("../Manager/ModelManager"),
   CharacterNameDefines_1 = require("../NewWorld/Character/Common/CharacterNameDefines"),
   ActorUtils_1 = require("../Utils/ActorUtils"),
-  CameraController_1 = require("./CameraController");
+  CameraController_1 = require("./CameraController"),
+  PROFILE_KEY = "CameraUtility_CheckCollision_Camera";
 class CameraUtility {
   static GetSocketLocation(e, t, a, r = void 0) {
     let i = void 0,
@@ -30,17 +34,17 @@ class CameraUtility {
     if (this.khe(o))
       return (e = i).Mesh && t?.toString()
         ? void a.FromUeVector(e.Mesh.GetSocketLocation(t))
-        : void o.Entity.GetComponent(162).GetCameraPosition(a);
+        : void o.Entity.GetComponent(163).GetCameraPosition(a);
     o.Valid && a.DeepCopy(o.Entity.GetComponent(1).ActorLocationProxy);
   }
   static khe(e) {
     return (
       !!e?.Valid &&
       ((e = e.Entity.GetComponent(0).GetEntityType()) ===
-        Protocol_1.Aki.Protocol.wks.Proto_Monster ||
-        e === Protocol_1.Aki.Protocol.wks.Proto_Npc ||
-        e === Protocol_1.Aki.Protocol.wks.Proto_Player ||
-        e === Protocol_1.Aki.Protocol.wks.Proto_Vision)
+        Protocol_1.Aki.Protocol.kks.Proto_Monster ||
+        e === Protocol_1.Aki.Protocol.kks.Proto_Npc ||
+        e === Protocol_1.Aki.Protocol.kks.Proto_Player ||
+        e === Protocol_1.Aki.Protocol.kks.Proto_Vision)
     );
   }
   static GetRootTransform(e) {
@@ -50,7 +54,7 @@ class CameraUtility {
     return !(
       !e.Valid ||
       !e.Active ||
-      ((e = e.Entity.GetComponent(188)) &&
+      ((e = e.Entity.GetComponent(190)) &&
         (e.HasTag(1008164187) || e.HasTag(-1243968098)))
     );
   }
@@ -60,6 +64,14 @@ class CameraUtility {
       e = e.TargetEntity;
       if (e?.Valid) return e;
     }
+  }
+  static GetCameraCharacterRotation(e) {
+    e.Reset();
+    var t =
+      ModelManager_1.ModelManager.CameraModel?.FightCamera?.LogicComponent;
+    t?.Valid &&
+      t?.Character?.CharacterActorComponent &&
+      e.DeepCopy(t.Character.CharacterActorComponent.ActorRotationProxy);
   }
   static GetPlayerTargetAndCameraYawOffset() {
     var e =
@@ -100,7 +112,7 @@ class CameraUtility {
     return this.GetCameraDefaultFocusRotator().ToUeRotator();
   }
   static CheckCameraShakeCondition(e) {
-    return !!e?.Valid && this.Fhe(e, !0, !0);
+    return !!e?.Valid && this.CheckFormationControlState(e, !0, !0);
   }
   static CheckCameraSequenceCondition(e, t = 0) {
     if (!e) return !1;
@@ -138,7 +150,7 @@ class CameraUtility {
             !1);
       case 4:
         return e.GetEntityNoBlueprint()?.GetComponent(0)?.IsMonster()
-          ? !!(a = e.GetEntityNoBlueprint()?.GetComponent(33))?.Valid &&
+          ? !!(a = e.GetEntityNoBlueprint()?.GetComponent(34))?.Valid &&
               a.SkillTarget ===
                 ModelManager_1.ModelManager.CharacterModel.GetHandle(
                   Global_1.Global.BaseCharacter?.EntityId ?? 0,
@@ -173,11 +185,11 @@ class CameraUtility {
   static CheckApplyCameraModifyCondition(e, t, a = 0, r = void 0) {
     return (
       !!e?.Valid &&
-      !!this.Fhe(e, !1, !t.IsSwitchModifier) &&
+      !!this.CheckFormationControlState(e, !1, !t.IsSwitchModifier) &&
       !(!this.Vhe(e, a) || (r && !this.Hhe(a, r)))
     );
   }
-  static Fhe(e, t = !1, a = !1) {
+  static CheckFormationControlState(e, t = !1, a = !1) {
     if (!e?.Valid) return !1;
     var r = e.Entity.GetComponent(0);
     if (r?.Valid) {
@@ -224,7 +236,7 @@ class CameraUtility {
           : !1;
       case 4:
         return r.IsMonster()
-          ? !!(a = e.Entity.GetComponent(33))?.Valid &&
+          ? !!(a = e.Entity.GetComponent(34))?.Valid &&
               a.SkillTarget ===
                 ModelManager_1.ModelManager.CharacterModel.GetHandle(
                   Global_1.Global.BaseCharacter?.EntityId ?? 0,
@@ -280,6 +292,9 @@ class CameraUtility {
         case 7:
           if (this.zhe(r)) break;
           return !1;
+        case 8:
+          if (this.y3a(r)) break;
+          return !1;
         default:
           return (
             Log_1.Log.CheckWarn() &&
@@ -297,7 +312,7 @@ class CameraUtility {
   }
   static Whe(e) {
     var t =
-        Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(188),
+        Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(190),
       t = e.AnyTag
         ? t.HasAnyTag(
             GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
@@ -316,7 +331,7 @@ class CameraUtility {
     var a = this.GetCameraTargetEntityHandle();
     return (
       a &&
-        ((a = a.Entity.GetComponent(188)),
+        ((a = a.Entity.GetComponent(190)),
         (t = e.AnyTag
           ? a.HasAnyTag(
               GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
@@ -417,6 +432,47 @@ class CameraUtility {
       e.Reverse ? !t : t
     );
   }
+  static y3a(e) {
+    let t = !1;
+    var a, r;
+    return (
+      0 < e.CameraTraceRadius &&
+        ((a =
+          Global_1.Global.BaseCharacter.CharacterActorComponent
+            .ActorRotationProxy),
+        (r =
+          Global_1.Global.BaseCharacter.CharacterActorComponent
+            .SkeletalMesh).DoesSocketExist(e.CameraTraceSocket)
+          ? this.cz.DeepCopy(r.GetSocketLocation(e.CameraTraceSocket))
+          : this.cz.DeepCopy(r.GetSocketLocation(this.CameraPosition)),
+        this.gme.DeepCopy(e.CameraTraceOffset),
+        a.Quaternion().RotateVector(this.gme, this.gme),
+        this.gme.AdditionEqual(this.cz),
+        this.Fse ||
+          ((this.Fse = UE.NewObject(UE.TraceSphereElement.StaticClass())),
+          (this.Fse.bIsSingle = !0),
+          (this.Fse.bTraceComplex = !1),
+          (this.Fse.bIgnoreSelf = !0),
+          this.Fse.SetTraceTypeQuery(
+            QueryTypeDefine_1.KuroTraceTypeQuery.Camera,
+          ),
+          (this.Fse.WorldContextObject = GlobalData_1.GlobalData.World)),
+        (this.Fse.Radius = e.CameraTraceRadius),
+        TraceElementCommon_1.TraceElementCommon.SetStartLocation(
+          this.Fse,
+          this.gme,
+        ),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(
+          this.Fse,
+          this.gme,
+        ),
+        (t = !TraceElementCommon_1.TraceElementCommon.SphereTrace(
+          this.Fse,
+          PROFILE_KEY,
+        ))),
+      e.Reverse ? !t : t
+    );
+  }
   static CharacterMovementBaseIsMoving() {
     var e =
       CameraController_1.CameraController.FightCamera?.LogicComponent?.Character
@@ -430,7 +486,7 @@ class CameraUtility {
         (!(e =
           ModelManager_1.ModelManager.SceneInteractionModel.GetEntityByBaseItem(
             e.GetOwner(),
-          )?.Entity.GetComponent(125)) ||
+          )?.Entity.GetComponent(126)) ||
           !e.IsMove()))
     );
   }
@@ -457,6 +513,8 @@ class CameraUtility {
   (CameraUtility.HitCase = new UE.FName("HitCase")),
   (CameraUtility.Root = new UE.FName("Root")),
   (CameraUtility.cz = Vector_1.Vector.Create()),
+  (CameraUtility.gme = Vector_1.Vector.Create()),
   (CameraUtility.cie = Rotator_1.Rotator.Create()),
-  (CameraUtility.CapsuleHeightRatio = 0.67);
+  (CameraUtility.CapsuleHeightRatio = 0.67),
+  (CameraUtility.Fse = void 0);
 //# sourceMappingURL=CameraUtility.js.map

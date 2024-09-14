@@ -15,28 +15,32 @@ class PayItemConfig extends ConfigBase_1.ConfigBase {
   GetPayItemList() {
     return PayItemAll_1.configPayItemAll.GetConfigList();
   }
-  GetPayConfigById(e) {
-    return PayById_1.configPayById.GetConfig(e);
+  GetProductIdByPayId(e) {
+    return PayById_1.configPayById.GetConfig(e).ProductId;
+  }
+  GetProductIdByPayItemId(e) {
+    e = PayItemById_1.configPayItemById.GetConfig(e)?.PayId;
+    if (e) return PayById_1.configPayById.GetConfig(e)?.ProductId;
   }
   GetPayConf(e) {
     var r =
-      ModelManager_1.ModelManager.LoginServerModel.GetCurrentSelectServerName();
+      ModelManager_1.ModelManager.LoginServerModel.GetCurrentSelectPayServerName();
     if (ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()) {
-      const n = PayByPayIdAndRegion_1.configPayByPayIdAndRegion.GetConfigList(
+      const a = PayByPayIdAndRegion_1.configPayByPayIdAndRegion.GetConfigList(
         e,
         r,
       );
-      if (void 0 !== n && 0 < n.length) return n[0];
+      if (void 0 !== a && 0 < a.length) return a[0];
     }
-    const n = PayByPayIdAndRegion_1.configPayByPayIdAndRegion.GetConfigList(
+    const a = PayByPayIdAndRegion_1.configPayByPayIdAndRegion.GetConfigList(
       e,
       r,
     );
-    if (void 0 !== n && 0 < n.length) return n[0];
+    if (void 0 !== a && 0 < a.length) return a[0];
   }
   GetCurrentRegionPayConfigList() {
     var e =
-      ModelManager_1.ModelManager.LoginServerModel.GetCurrentSelectServerName();
+      ModelManager_1.ModelManager.LoginServerModel.GetCurrentSelectPayServerName();
     return PayByRegion_1.configPayByRegion.GetConfigList(e);
   }
   GetPayShowCurrency() {
@@ -46,18 +50,21 @@ class PayItemConfig extends ConfigBase_1.ConfigBase {
   }
   GetPayShow(e) {
     var r,
-      n = ModelManager_1.ModelManager.KuroSdkModel?.GetQueryProductShowPrice(
+      a = ModelManager_1.ModelManager.KuroSdkModel?.GetQueryProductShowPrice(
         e.toString(),
       );
     return (
-      n ||
-      ((n = new StringBuilder_1.StringBuilder()),
+      a ||
+      ((a = new StringBuilder_1.StringBuilder()),
       (r = this.GetPayShowCurrency()),
-      n.Append(r),
+      a.Append(r),
       (r = ModelManager_1.ModelManager.RechargeModel.GetPayIdAmount(e)),
-      n.Append(r),
-      n.ToString())
+      a.Append(r),
+      a.ToString())
     );
+  }
+  GetPayIdByPayItemId(e) {
+    return PayItemById_1.configPayItemById.GetConfig(e)?.PayId;
   }
   GetPayItem(e) {
     return PayItemById_1.configPayItemById.GetConfig(e);

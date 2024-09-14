@@ -16,8 +16,10 @@ class Revive {
     return this.useitemid();
   }
   get ReviveDelay() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.revivedelayLength(), (t) =>
-      this.revivedelay(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.revivedelayLength(),
+      this.revivedelay,
+      this,
     );
   }
   get DeathBp() {

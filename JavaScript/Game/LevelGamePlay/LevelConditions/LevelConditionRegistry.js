@@ -1,22 +1,4 @@
 "use strict";
-var __decorate =
-  (this && this.__decorate) ||
-  function (e, t, i, n) {
-    var o,
-      s = arguments.length,
-      r =
-        s < 3
-          ? t
-          : null === n
-            ? (n = Object.getOwnPropertyDescriptor(t, i))
-            : n;
-    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      r = Reflect.decorate(e, t, i, n);
-    else
-      for (var a = e.length - 1; 0 <= a; a--)
-        (o = e[a]) && (r = (s < 3 ? o(r) : 3 < s ? o(t, i, r) : o(t, i)) || r);
-    return 3 < s && r && Object.defineProperty(t, i, r), r;
-  };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionRegistry = exports.ConditionPassCallback = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
@@ -40,7 +22,11 @@ class LevelConditionRegData {
     (this.ConditionReached = !1),
       (this.nLe = void 0),
       (this.sLe = (...e) => {
-        this.nLe || (this.nLe = void 0);
+        this.nLe ||
+          (this.nLe = Stats_1.Stat.Create(
+            "OnEventInvokeCheckStat_" + this.ConditionConfig.Type,
+          )),
+          this.nLe.Start();
         var t = this.ConditionReached,
           e =
             ControllerHolder_1.ControllerHolder.LevelGeneralController.HandleCondition(
@@ -49,7 +35,8 @@ class LevelConditionRegData {
               this.Owner.ConditionGroupId.toString(),
               ...e,
             );
-        t !== e && (this.ConditionReached = e) && this.Owner.CheckReached();
+        t !== e && (this.ConditionReached = e) && this.Owner.CheckReached(),
+          this.nLe.Stop();
       }),
       (this.Owner = e),
       (this.ConditionConfig = t),
@@ -149,18 +136,6 @@ class LevelConditionGroupRegData {
     return !0;
   }
 }
-__decorate(
-  [(0, Stats_1.statDecorator)("LevelConditionGroupRegData.InvokeCallbacks")],
-  LevelConditionGroupRegData.prototype,
-  "InvokeCallbacks",
-  null,
-),
-  __decorate(
-    [(0, Stats_1.statDecorator)("LevelConditionGroupRegData.CheckReached")],
-    LevelConditionGroupRegData.prototype,
-    "CheckReached",
-    null,
-  );
 class LevelConditionRegistry {
   static RegisterConditionGroup(e, t) {
     let i = this._Le.get(e);
@@ -191,10 +166,10 @@ class LevelConditionRegistry {
     i &&
       ((t = i.GetPbDataId()),
       this.cLe.has(t)
-        ? e?.GetComponent(106)?.SetGuideRange(this.cLe.get(t))
+        ? e?.GetComponent(107)?.SetGuideRange(this.cLe.get(t))
         : (t = i.GetPbEntityInitData()?.BlueprintType) &&
           this.uLe.has(t) &&
-          e?.GetComponent(106)?.SetGuideRange(this.uLe.get(t)));
+          e?.GetComponent(107)?.SetGuideRange(this.uLe.get(t)));
   }
 }
 ((exports.LevelConditionRegistry = LevelConditionRegistry)._Le = new Map()),

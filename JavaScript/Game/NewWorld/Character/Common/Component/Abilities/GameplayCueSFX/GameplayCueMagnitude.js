@@ -27,10 +27,10 @@ class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
       });
   }
   OnInit() {
-    var t = this.Entity;
+    var t = this.EntityHandle.Entity;
     (this.$te = t.CheckGetComponent(158)),
-      (this.m1t = t.CheckGetComponent(159)),
-      (this.Xte = t.CheckGetComponent(188)),
+      (this.m1t = t.CheckGetComponent(194)),
+      (this.Xte = t.CheckGetComponent(190)),
       (this.one = this.CueConfig.Min),
       (this.rne = this.CueConfig.Max);
   }
@@ -118,10 +118,9 @@ class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
           "Battle",
           29,
           "Buff特效幅度",
-          ["HandleID", this.ActiveHandleId],
           ["BuffId", this.BuffId],
-          ["CueId:", this.CueConfig.Id],
-          ["EntityId", this.Entity.Id],
+          ["CueId", this.CueConfig.Id],
+          ["EntityId", this.EntityHandle.Id],
           ["Value", t],
         ),
       this.OnSetMagnitude(t),
@@ -141,7 +140,7 @@ class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
     return (
       !!t ||
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Battle", 29, i, ["CueId:", this.CueConfig.Id]),
+        Log_1.Log.Error("Battle", 29, i, ["CueId", this.CueConfig.Id]),
       !1)
     );
   }

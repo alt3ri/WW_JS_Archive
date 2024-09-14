@@ -18,7 +18,7 @@ class TickIntervalSchedulerBase {
       (this.MaxTickCountDelta = 0),
       (this.CurrentCountDelta = 0),
       (this.DeltaRatio = 1),
-      (this.MJ = void 0);
+      (this.MJ = Stats_1.Stat.Create(this.constructor.name));
   }
   SetBaseConfigs(t, s, e) {
     (this.MaxNoIntervalCount = Math.max(0, t)),
@@ -33,7 +33,10 @@ class TickIntervalSchedulerBase {
     );
   }
   Schedule() {
-    this.GetScores(), this.ScheduleTickInterval();
+    this.MJ.Start(),
+      this.GetScores(),
+      this.ScheduleTickInterval(),
+      this.MJ.Stop();
   }
   ChangeTickFramePeriodByFrameRate(t) {}
   GetScores() {}

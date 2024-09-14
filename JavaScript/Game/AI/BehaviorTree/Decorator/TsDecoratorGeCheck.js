@@ -57,7 +57,7 @@ class TsDecoratorGeCheck extends UE.BTDecorator_BlueprintBase {
       if (!e) return !1;
       o = e;
     }
-    var i = o.Entity.CheckGetComponent(159);
+    var i = o.Entity.CheckGetComponent(160);
     if (!i) return !1;
     if (1 === this.TsLogic) {
       for (var [s, a] of this.TsChecks)

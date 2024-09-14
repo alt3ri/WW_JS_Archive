@@ -8,9 +8,9 @@ const UE = require("ue"),
   FilterEntrance_1 = require("./Filter/View/FilterEntrance"),
   SortEntrance_1 = require("./Sort/View/SortEntrance");
 class FilterSortEntrance extends UiPanelBase_1.UiPanelBase {
-  constructor(e, r) {
+  constructor(e, t) {
     super(),
-      (this.UpdateList = r),
+      (this.UpdateList = t),
       (this.vpt = void 0),
       (this.Mpt = void 0),
       this.CreateThenShowByActor(e.GetOwner());
@@ -31,15 +31,18 @@ class FilterSortEntrance extends UiPanelBase_1.UiPanelBase {
         this.UpdateList,
       ));
   }
-  UpdateData(e, r) {
-    this.vpt.UpdateData(e, r), this.Mpt.UpdateData(e, r);
+  UpdateData(e, t) {
+    this.vpt.UpdateData(e, t), this.Mpt.UpdateData(e, t);
+  }
+  UpdateDataWithConfig(e, t, r) {
+    this.vpt.UpdateData(e, r), this.Mpt.UpdateDataWithConfig(e, t, r);
   }
   ClearData(e) {
-    var r = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(e),
-      r =
-        (r && ModelManager_1.ModelManager.FilterModel.ClearData(r),
+    var t = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(e),
+      t =
+        (t && ModelManager_1.ModelManager.FilterModel.ClearData(t),
         ConfigManager_1.ConfigManager.SortConfig.GetSortId(e));
-    r && ModelManager_1.ModelManager.SortModel.DeleteSortResultData(r);
+    t && ModelManager_1.ModelManager.SortModel.DeleteSortResultData(t);
   }
 }
 exports.FilterSortEntrance = FilterSortEntrance;

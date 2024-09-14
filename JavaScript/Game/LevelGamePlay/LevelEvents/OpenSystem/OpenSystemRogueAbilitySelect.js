@@ -29,9 +29,9 @@ class OpenSystemRogueEventSelect extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, o) {
     return (
       (ModelManager_1.ModelManager.RoguelikeModel.CurIndex =
-        Protocol_1.Aki.Protocol.Z6s.Proto_EventBindId),
+        Protocol_1.Aki.Protocol.s8s.Proto_EventBindId),
       RoguelikeController_1.RoguelikeController.OpenBuffSelectViewById(
-        Protocol_1.Aki.Protocol.Z6s.Proto_EventBindId,
+        Protocol_1.Aki.Protocol.s8s.Proto_EventBindId,
       )
     );
   }

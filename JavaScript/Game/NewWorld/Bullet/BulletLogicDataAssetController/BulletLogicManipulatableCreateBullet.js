@@ -17,7 +17,7 @@ class BulletLogicManipulatableCreateBullet extends BulletLogicController_1.Bulle
       t.Entity.GetComponent(0).IsSceneItem()
     ) {
       var e = t.Entity;
-      if (e?.GetComponent(142) && this.CheckCondition(e)) {
+      if (e?.GetComponent(143) && this.CheckCondition(e)) {
         var l = this.Bullet.GetBulletInfo(),
           r = l.AttackerActorComp.Actor,
           i =
@@ -46,7 +46,7 @@ class BulletLogicManipulatableCreateBullet extends BulletLogicController_1.Bulle
   }
   CheckCondition(t) {
     var e = this.h7o,
-      l = t?.GetComponent(180);
+      l = t?.GetComponent(181);
     if (!l) return !1;
     var r = e.ExistTagsCondition.GameplayTags,
       i = r.Num();

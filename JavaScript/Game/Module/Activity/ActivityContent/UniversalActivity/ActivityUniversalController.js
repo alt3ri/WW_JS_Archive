@@ -38,7 +38,7 @@ class ActivityUniversalController extends ActivityControllerBase_1.ActivityContr
   }
   OnCreateActivityData(e) {
     return (
-      ActivityUniversalController.UniversalActivityIdSet.add(e.J4n),
+      ActivityUniversalController.UniversalActivityIdSet.add(e.s5n),
       new ActivityUniversalData_1.ActivityUniversalData()
     );
   }
@@ -58,38 +58,32 @@ class ActivityUniversalController extends ActivityControllerBase_1.ActivityContr
     );
   }
   static ActivityFunctionExecute(e) {
-    var r =
+    e =
       ConfigManager_1.ConfigManager.ActivityUniversalConfig?.GetActivityUniversalConfig(
         e,
       );
-    if (r) {
-      var i,
-        t,
-        n = r.FunctionParams;
-      switch (r.FunctionType) {
+    if (e) {
+      var r,
+        i,
+        t = e.FunctionParams;
+      switch (e.FunctionType) {
         case 0:
           break;
         case 1: {
           let e = void 0;
-          n && 1 <= n.length && (e = Number(n[0])), this.EFe(e);
+          t && 1 <= t.length && (e = Number(t[0])), this.EFe(e);
           break;
         }
         case 2:
-          n.length < 1 || ((i = n[0]), (t = n.slice(1)), this.SFe(i, t));
+          t.length < 1 || ((r = t[0]), (i = t.slice(1)), this.SFe(r, i));
       }
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Activity",
           38,
           "通用活动功能触发",
-          ["Type", r.FunctionType],
-          ["Params", n],
-        );
-      e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(e);
-      e &&
-        ModelManager_1.ModelManager.ActivityModel.SendActivityViewJumpClickLogData(
-          e,
-          r.FunctionType,
+          ["Type", e.FunctionType],
+          ["Params", t],
         );
     }
   }

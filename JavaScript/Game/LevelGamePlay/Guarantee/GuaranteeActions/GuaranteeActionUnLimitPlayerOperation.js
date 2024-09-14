@@ -19,7 +19,7 @@ class GuaranteeActionUnLimitPlayerOperation extends GuaranteeActionBase_1.Guaran
     var t,
       r = Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity;
     r?.Valid &&
-      ((r = r.GetComponent(188))?.HasTag((t = 477750727)) &&
+      ((r = r.GetComponent(190))?.HasTag((t = 477750727)) &&
         (r.RemoveTag(t), Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug(
           "Test",

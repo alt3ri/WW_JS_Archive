@@ -9,20 +9,20 @@ class EntityContainer {
       (this.EntityIdMap = new Map()),
       (this.PbDataIdMap = new Map());
   }
-  AddEntity(t, i) {
+  AddEntity(t, e) {
     return (
       !this.EntityMap.Contains(t) &&
-      (this.EntityMap.Set(t, i), this.EntityIdMap.set(i.Id, t), !0)
+      (this.EntityMap.Set(t, e), this.EntityIdMap.set(e.Id, t), !0)
     );
   }
   RemoveEntity(t) {
-    var i = this.EntityMap.Get(t);
+    var e = this.EntityMap.Get(t);
     return (
-      !!i &&
+      !!e &&
       (this.EntityMap.Remove(t),
-      this.EntityIdMap.delete(i.Id),
-      i.ConfigType === Protocol_1.Aki.Protocol.YTs.P6n &&
-        this.PbDataIdMap.delete(i.PbDataId),
+      this.EntityIdMap.delete(e.Id),
+      e.ConfigType === Protocol_1.Aki.Protocol.rLs.F6n &&
+        this.PbDataIdMap.delete(e.PbDataId),
       !0)
     );
   }
@@ -42,7 +42,7 @@ class EntityContainer {
   }
   CheckSetPrefabEntity(t) {
     t = t.Entity.GetComponent(0);
-    t.GetEntityConfigType() === Protocol_1.Aki.Protocol.YTs.P6n &&
+    t.GetEntityConfigType() === Protocol_1.Aki.Protocol.rLs.F6n &&
       this.PbDataIdMap.set(t.GetPbDataId(), t.GetCreatureDataId());
   }
   GetCreatureDataIdByPbDataId(t) {
@@ -51,6 +51,9 @@ class EntityContainer {
   PopEntity() {
     var t = this.EntityMap.GetByIndex(0);
     if (t) return this.RemoveEntity(t.CreatureDataId), t;
+  }
+  PeekEntity() {
+    return this.EntityMap.GetByIndex(0);
   }
   GetAllEntities() {
     return this.EntityMap.GetItems();

@@ -31,11 +31,15 @@ class ThinkingAnalyticsReporter {
   }
   static Report(e, r) {
     ThinkDataLaunchReporter_1.ENABLE_THINKING_ANALYTICS &&
-      cpp_1.FThinkingAnalyticsForPuerts.Track(e, r);
+      (ThinkingAnalyticsReporter.h9.Start(),
+      cpp_1.FThinkingAnalyticsForPuerts.Track(e, r),
+      ThinkingAnalyticsReporter.h9.Stop());
   }
 }
 (exports.ThinkingAnalyticsReporter = ThinkingAnalyticsReporter),
-  ((_a = ThinkingAnalyticsReporter).h9 = void 0),
+  ((_a = ThinkingAnalyticsReporter).h9 = Stats_1.Stat.Create(
+    "ThinkingAnalyticsReporter.Track",
+  )),
   (ThinkingAnalyticsReporter.Wvi = () => {
     var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
     UE.ThinkingAnalytics.Login(e.toString());

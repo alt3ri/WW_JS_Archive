@@ -19,9 +19,16 @@ class BattlePassUnlockPop {
   get UnlockReward() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.unlockrewardLength(),
-      (t) => this.unlockreward(t)?.key(),
-      (t) => this.unlockreward(t)?.value(),
+      this.unlockrewardKey,
+      this.unlockrewardValue,
+      this,
     );
+  }
+  unlockrewardKey(t) {
+    return this.unlockreward(t)?.key();
+  }
+  unlockrewardValue(t) {
+    return this.unlockreward(t)?.value();
   }
   __init(t, s) {
     return (this.z7 = t), (this.J7 = s), this;

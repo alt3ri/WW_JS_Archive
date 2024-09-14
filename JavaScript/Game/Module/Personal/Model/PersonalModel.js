@@ -37,7 +37,7 @@ class PersonalModel extends ModelBase_1.ModelBase {
     for (let e = 0; e < r; e++) {
       var i = t[e];
       this.p5i.RoleShowList.push(
-        new PersonalDefine_1.RoleShowEntry(i.O6n, i.P6n),
+        new PersonalDefine_1.RoleShowEntry(i.Q6n, i.F6n),
       );
     }
   }
@@ -131,22 +131,25 @@ class PersonalModel extends ModelBase_1.ModelBase {
       this.p5i.HeadPhotoId
     );
   }
+  GetPsnUserId() {
+    return this.p5i.PsnUserId;
+  }
   SetCardUnlockList(t) {
-    this.zna();
+    this.wha();
     var r = t.length;
     for (let e = 0; e < r; e++) {
       var i = t[e],
-        n = this.Zna(i.V7n);
+        n = this.Bha(i.J7n);
       void 0 === n
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("Personal", 59, "初始化卡牌,无效CardId", [
             "cardId",
-            i.V7n,
+            i.J7n,
           ])
-        : n.RefreshData(i.ASs ?? !1, !0);
+        : n.RefreshData(i.qSs ?? !1, !0);
     }
   }
-  zna() {
+  wha() {
     (this.p5i.CardDataList = []),
       BackgroundCardAll_1.configBackgroundCardAll
         .GetConfigList()
@@ -156,7 +159,7 @@ class PersonalModel extends ModelBase_1.ModelBase {
           );
         });
   }
-  Zna(e) {
+  Bha(e) {
     for (const t of this.p5i.CardDataList) if (t.CardId === e) return t;
   }
   UpdateCardUnlockList(t, r) {
@@ -177,7 +180,7 @@ class PersonalModel extends ModelBase_1.ModelBase {
     }
   }
   AddCardUnlockList(e, t) {
-    var r = this.Zna(e);
+    var r = this.Bha(e);
     void 0 === r
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Personal", 59, "新解锁卡牌,无效CardId", ["cardId", e])

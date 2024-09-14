@@ -94,89 +94,90 @@ class CharacterModel extends ModelBase_1.ModelBase {
     );
   }
   AddEntityToAwakeQueue(t, e) {
+    ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+      Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info(
+        "Entity",
+        3,
+        "[实体生命周期:创建实体] 进入唤醒队列",
+        ["EntityId", t.Id],
+        ["CreatureDataId", t.CreatureDataId],
+        ["PbDataId", t.PbDataId],
+        ["Priority", t.Priority],
+      );
     let r = !1;
-    const i = t.Entity.GetComponent(0),
-      n = i.GetCreatureDataId();
-    var o = [
+    var i = [
       t,
-      () =>
-        this.vKo(t, n)
-          ? (ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
-              Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info(
-                "Entity",
-                3,
-                "[实体生命周期:创建实体] 实体执行Init成功",
-                ["CreatureDataId", n],
-                ["EntityId", t.Id],
-                ["PbDataId", i.GetPbDataId()],
-              ),
-            (r = !0))
-          : (e(!1), !1),
-      () =>
-        !!r &&
-        (this.MKo(t, n)
-          ? (ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
-              Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info(
-                "Entity",
-                3,
-                "[实体生命周期:创建实体] 实体执行Start成功",
-                ["CreatureDataId", n],
-                ["EntityId", t.Id],
-                ["PbDataId", i.GetPbDataId()],
-              ),
-            e(!0),
-            !0)
-          : (e(!1), !1)),
+      () => (this.InitEntity(t) ? (r = !0) : (e(!1), !1)),
+      () => !!r && (this.StartEntity(t) ? (e(!0), !0) : (e(!1), !1)),
     ];
-    this.AwakeQueue.Push(o), this.fKo.set(t, o);
+    this.AwakeQueue.Push(i), this.fKo.set(t, i);
   }
-  vKo(t, e) {
-    var r, i, n;
-    return (
-      !!t.Valid &&
-      (n = (i = (r = t.Entity).GetComponent(0)).GetCreatureDataId()) === e &&
-      !i.GetRemoveState() &&
-      ((e = EntitySystem_1.EntitySystem.Init(r)) ||
-        (Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "Entity",
-            3,
-            "[实体生命周期:创建实体] 实体执行Init失败，创建实体失败。",
-            ["CreatureDataId", n],
-            ["EntityId", t.Id],
-            ["PbDataId", i.GetPbDataId()],
-          ),
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.CreateEntityFail,
-          n,
-        )),
-      e)
-    );
-  }
-  MKo(t, e) {
-    var r, i;
+  InitEntity(t) {
+    var e, r;
     return !(
       !t.Valid ||
-      (i = (r = t.Entity.GetComponent(0)).GetCreatureDataId()) !== e ||
-      r.GetRemoveState() ||
-      ((e = t.Entity),
-      !EntitySystem_1.EntitySystem.Start(e) &&
-        (Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "Entity",
-            3,
-            "[实体生命周期:创建实体] 实体执行Start失败，创建实体失败。",
-            ["CreatureDataId", i],
-            ["EntityId", t.Id],
-            ["PbDataId", r.GetPbDataId()],
+      (r = (e = t.Entity).GetComponent(0)).GetRemoveState() ||
+      (EntitySystem_1.EntitySystem.Init(e)
+        ? (ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+            Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "Entity",
+              3,
+              "[实体生命周期:创建实体] 实体执行Init成功",
+              ["CreatureDataId", t.CreatureDataId],
+              ["EntityId", t.Id],
+              ["PbDataId", r.GetPbDataId()],
+            ),
+          0)
+        : (Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Entity",
+              3,
+              "[实体生命周期:创建实体] 实体执行Init失败，创建实体失败。",
+              ["CreatureDataId", t.CreatureDataId],
+              ["EntityId", t.Id],
+              ["PbDataId", r.GetPbDataId()],
+            ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.CreateEntityFail,
+            t.CreatureDataId,
           ),
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.CreateEntityFail,
-          i,
-        ),
-        1))
+          1))
+    );
+  }
+  StartEntity(t) {
+    var e, r;
+    return !(
+      !t.Valid ||
+      (e = t.Entity.GetComponent(0)).GetRemoveState() ||
+      ((r = t.Entity),
+      EntitySystem_1.EntitySystem.Start(r)
+        ? (ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+            Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "Entity",
+              3,
+              "[实体生命周期:创建实体] 实体执行Start成功",
+              ["CreatureDataId", t.CreatureDataId],
+              ["EntityId", t.Id],
+              ["PbDataId", e.GetPbDataId()],
+            ),
+          0)
+        : (Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Entity",
+              3,
+              "[实体生命周期:创建实体] 实体执行Start失败，创建实体失败。",
+              ["CreatureDataId", t.CreatureDataId],
+              ["EntityId", t.Id],
+              ["PbDataId", e.GetPbDataId()],
+            ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.CreateEntityFail,
+            t.CreatureDataId,
+          ),
+          1))
     );
   }
   ActivateEntity(t) {

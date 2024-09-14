@@ -92,7 +92,7 @@ class ActivitySubViewSevenDayVersionSign extends ActivitySubViewBase_1.ActivityS
   F3e(i) {
     return (
       this.ActivitySignData.GetRewardStateByDay(i) ===
-      Protocol_1.Aki.Protocol.jps.hMs
+      Protocol_1.Aki.Protocol.zps.CMs
     );
   }
 }

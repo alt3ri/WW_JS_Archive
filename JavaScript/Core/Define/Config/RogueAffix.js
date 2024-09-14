@@ -10,8 +10,10 @@ class RogueAffix {
     return this.id();
   }
   get BuffId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buffidLength(), (t) =>
-      this.buffid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buffidLength(),
+      this.buffid,
+      this,
     );
   }
   get AffixDesc() {
@@ -20,7 +22,8 @@ class RogueAffix {
   get AffixDescParam() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.affixdescparamLength(),
-      (t) => this.affixdescparam(t),
+      this.affixdescparam,
+      this,
     );
   }
   get AffixDescSimple() {

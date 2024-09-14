@@ -20,49 +20,49 @@ const CsvLoader_1 = require("./CsvLoader"),
       (0, CsvLoader_1.createCsvField)({
         Name: "Bp",
         CnName: "Bp",
-        RenderType: 29,
+        RenderType: 30,
         Type: "String",
       }),
       (0, CsvLoader_1.createCsvField)({ Name: "Tag", CnName: "Tag" }),
       (0, CsvLoader_1.createCsvField)({
         Name: "Montage1",
         CnName: "蒙太奇1",
-        RenderType: 27,
+        RenderType: 28,
       }),
       (0, CsvLoader_1.createCsvField)({
         Name: "Montage2",
         CnName: "蒙太奇2",
-        RenderType: 27,
+        RenderType: 28,
       }),
       (0, CsvLoader_1.createCsvField)({
         Name: "Montage3",
         CnName: "蒙太奇3",
-        RenderType: 27,
+        RenderType: 28,
       }),
       (0, CsvLoader_1.createCsvField)({
         Name: "Montage4",
         CnName: "蒙太奇4",
-        RenderType: 27,
+        RenderType: 28,
       }),
       (0, CsvLoader_1.createCsvField)({
         Name: "Montage5",
         CnName: "蒙太奇5",
-        RenderType: 27,
+        RenderType: 28,
       }),
       (0, CsvLoader_1.createCsvField)({
         Name: "Montage6",
         CnName: "蒙太奇6",
-        RenderType: 27,
+        RenderType: 28,
       }),
       (0, CsvLoader_1.createCsvField)({
         Name: "Montage7",
         CnName: "蒙太奇7",
-        RenderType: 27,
+        RenderType: 28,
       }),
       (0, CsvLoader_1.createCsvField)({
         Name: "Montage8",
         CnName: "蒙太奇8",
-        RenderType: 27,
+        RenderType: 28,
       }),
     ]);
 class StandbyTagCsvLoader extends CsvLoader_1.CsvLoader {

@@ -54,6 +54,7 @@ class ComboTeachingInputHandler {
   }
   HandleInputAxis(e, n) {}
   ClearInputAxis(e) {}
+  ClearSingleAxisInput(e, n) {}
   PreProcessInput(e, n) {}
   PostProcessInput(e, n) {}
 }

@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonsterCreatorBehaviorNode = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+const IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class MonsterCreatorBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
@@ -19,7 +20,11 @@ class MonsterCreatorBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase
   OnCreate(e) {
     if (!super.OnCreate(e)) return !1;
     e = e.Condition;
-    if ("MonsterCreator" !== e.Type || !e.MonsterCreatorEntityIds) return !1;
+    if (
+      e.Type !== IQuest_1.EChildQuest.MonsterCreator ||
+      !e.MonsterCreatorEntityIds
+    )
+      return !1;
     (this.TrackTextRuleInner = 1), (this.PXt = []);
     for (const t of e.MonsterCreatorEntityIds) this.PXt.push(t);
     return (
@@ -29,14 +34,14 @@ class MonsterCreatorBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase
     );
   }
   OnUpdateProgress(e) {
-    if (!e.lEs) return !1;
-    (this.YXt = 0), (this.JXt = e.lEs.fEs);
-    for (const t of e.lEs.SEs)
-      (this.YXt += t.yEs.length),
+    if (!e.gEs) return !1;
+    (this.YXt = 0), (this.JXt = e.gEs.IEs);
+    for (const t of e.gEs.DEs)
+      (this.YXt += t.PEs.length),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.GeneralLogicTreeEntityKilled,
           this.NodeId,
-          t.yEs,
+          t.PEs,
         );
     return !0;
   }

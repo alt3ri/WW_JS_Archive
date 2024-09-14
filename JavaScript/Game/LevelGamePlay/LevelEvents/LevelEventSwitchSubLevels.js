@@ -27,14 +27,15 @@ class LevelEventSwitchLevels extends LevelGeneralBase_1.LevelEventBase {
       }
     }
   }
+  ExecuteInGm(e, r) {
+    this.FinishExecute(!0);
+  }
   QRe(e) {
-    ModelManager_1.ModelManager.AutoRunModel.IsInLogicTreeGmMode()
-      ? this.FinishExecute(!0)
-      : ControllerHolder_1.ControllerHolder.GameModeController.PreloadSubLevel(
-          e.PreloadLevels,
-        ).then(() => {
-          this.FinishExecute(!0);
-        });
+    ControllerHolder_1.ControllerHolder.GameModeController.PreloadSubLevel(
+      e.PreloadLevels,
+    ).then(() => {
+      this.FinishExecute(!0);
+    });
   }
   KRe(e) {
     let r = void 0,
@@ -53,16 +54,11 @@ class LevelEventSwitchLevels extends LevelGeneralBase_1.LevelEventBase {
             ["TeleportEntityId", e.TeleportEntityId],
           )
         );
-      var i = o.Transform.Pos,
-        i =
-          (i && (r = Vector_1.Vector.Create(i.X ?? 0, i.Y ?? 0, i.Z ?? 0)),
+      var l = o.Transform.Pos,
+        l =
+          (l && (r = Vector_1.Vector.Create(l.X ?? 0, l.Y ?? 0, l.Z ?? 0)),
           o.Transform.Rot);
-      i && (t = Rotator_1.Rotator.Create(i.Y ?? 0, i.Z ?? 0, i.X ?? 0));
-    }
-    if (ModelManager_1.ModelManager.AutoRunModel.IsInLogicTreeGmMode()) {
-      if (ModelManager_1.ModelManager.AutoRunModel.ShouldFastSkip)
-        return void this.WRe(!0);
-      (r = void 0), (t = void 0);
+      l && (t = Rotator_1.Rotator.Create(l.Y ?? 0, l.Z ?? 0, l.X ?? 0));
     }
     ControllerHolder_1.ControllerHolder.GameModeController.ChangeSubLevel(
       e.UnloadLevels,

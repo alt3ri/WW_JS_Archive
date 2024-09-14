@@ -21,12 +21,12 @@ class TowerRecommendItem extends GridProxyAbstract_1.GridProxyAbstract {
         var i = new MediumItemGrid_1.MediumItemGrid(),
           t =
             (i.Initialize(t.GetOwner()),
-            ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e.O6n)),
+            ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e.Q6n)),
           t = {
             Type: 2,
-            ItemConfigId: e.O6n,
+            ItemConfigId: e.Q6n,
             BottomTextId: "Text_LevelShow_Text",
-            BottomTextParameter: [e.P6n],
+            BottomTextParameter: [e.F6n],
             ElementId: t.ElementId,
             IsDisable: !this.iRo(e),
           };
@@ -57,31 +57,31 @@ class TowerRecommendItem extends GridProxyAbstract_1.GridProxyAbstract {
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(3),
         "Text_ExplorationDegree_Text",
-        MathUtils_1.MathUtils.GetFloatPointFloorString(e.yGs * PERCENT, 2),
+        MathUtils_1.MathUtils.GetFloatPointFloorString(e.PGs * PERCENT, 2),
       ),
       (this.tFe = new GenericLayoutNew_1.GenericLayoutNew(
         this.GetHorizontalLayout(4),
         this.nFe,
       ));
     var i = [];
-    for (const a of e.zHn) i.push(a);
+    for (const a of e.ajn) i.push(a);
     i.sort((e, t) => {
       var r, i;
-      return e.P6n === t.P6n
+      return e.F6n === t.F6n
         ? (r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-            e.O6n,
+            e.Q6n,
           ).QualityId) ===
           (i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-            t.O6n,
+            t.Q6n,
           ).QualityId)
-          ? t.O6n - e.O6n
+          ? t.Q6n - e.Q6n
           : i - r
-        : t.P6n - e.P6n;
+        : t.F6n - e.F6n;
     }),
       this.tFe.RebuildLayoutByDataNew(i);
   }
   iRo(e) {
-    e = e.O6n;
+    e = e.Q6n;
     if (ModelManager_1.ModelManager.RoleModel.IsMainRole(e)) {
       var t = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerRoleId();
       if (

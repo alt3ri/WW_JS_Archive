@@ -252,7 +252,7 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
     t.AiController && this.ActorComp?.Valid
       ? Time_1.Time.WorldTime > this.EscapeEndTime
         ? this.Finish(!0)
-        : ((t = this.ActorComp.Entity.GetComponent(91)),
+        : ((t = this.ActorComp.Entity.GetComponent(92)),
           (e = Vector_1.Vector.Create(
             this.MovePath[this.CurrentMoveIndex],
           )).SubtractionEqual(this.ActorComp.ActorLocationProxy),

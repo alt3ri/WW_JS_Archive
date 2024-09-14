@@ -50,13 +50,17 @@ class AudioVisualizationManager {
   Unregister(i) {
     this.InstanceActors.delete(i.Identifier), i.End();
   }
-  NotifyCallBackToAll(o, s, t) {
+  NotifyCallBackToAll(o, a, s) {
     this.InstanceActors.forEach((i) => {
-      i.CallBack(o, s, t);
+      i.CallBack(o, a, s);
     });
   }
-  Tick(i) {}
+  Tick(i) {
+    AudioVisualizationManager.xW.Start(), AudioVisualizationManager.xW.Stop();
+  }
 }
 ((exports.AudioVisualizationManager = AudioVisualizationManager).Yar = void 0),
-  (AudioVisualizationManager.xW = void 0);
+  (AudioVisualizationManager.xW = Stats_1.Stat.Create(
+    "AudioVisualizationManager.Tick",
+  ));
 //# sourceMappingURL=AudioVisualizationManager.js.map

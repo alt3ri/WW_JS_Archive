@@ -58,7 +58,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.KZe = void 0),
       (this.QZe = void 0),
       (this.SequencePlayer = void 0),
-      (this.axn = 0),
+      (this.oxn = 0),
       (this.rct = void 0),
       (this.$5e = !1),
       (this.XZe = (e, t) => {
@@ -78,7 +78,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.nye = () => {
         this.$5e = !0;
       }),
-      (this.hxn = (e) => {
+      (this.nxn = (e) => {
         this.QZe && e === this.QZe.ProcessId && this._et(e);
       }),
       (this.eet = (e) => {
@@ -97,7 +97,13 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                 ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
               )
                 break;
-              return this.HZe.get(h).StartShow(e.ProcessId, t);
+              var n = this.GetItem(2);
+              return (
+                n?.SetUIActive(!0),
+                n?.SetAlpha(1),
+                n?.SetAnchorOffsetX(0),
+                this.HZe.get(h).StartShow(e.ProcessId, t)
+              );
             case 1:
               return this.iet(e.ProcessId, r, i, s.TreeConfigId, t);
           }
@@ -120,7 +126,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         switch (e) {
           case MISSION_IN:
             var t = this.QZe;
-            1 === this.axn
+            1 === this.oxn
               ? (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Log",
@@ -130,7 +136,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                 this.jZe.OnBeforePlayShowSequence(t.Info),
                 this.GetItem(1)?.SetUIActive(!0),
                 this.GetItem(2)?.SetUIActive(!1))
-              : 3 === this.axn &&
+              : 3 === this.oxn &&
                 (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Log",
@@ -143,7 +149,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                 this.GetItem(2)?.SetUIActive(!0));
             break;
           case MISSION_OUT:
-            1 === this.axn
+            1 === this.oxn
               ? (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Log",
@@ -152,7 +158,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                   ),
                 this.GetItem(1)?.SetUIActive(!1),
                 this.GetItem(2)?.SetUIActive(!0))
-              : 3 === this.axn &&
+              : 3 === this.oxn &&
                 (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Log",
@@ -168,8 +174,8 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         switch (e) {
           case MISSION_IN:
             var t = this.QZe;
-            if (1 === this.axn) {
-              (this.axn = 2),
+            if (1 === this.oxn) {
+              (this.oxn = 2),
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Log",
@@ -190,24 +196,24 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                       "MissionPanel:QuestUpdateStay - Stay",
                     ),
                   (this.rct = TimerSystem_1.TimerSystem.Delay(
-                    this.lxn,
+                    this.sxn,
                     1e3 * e,
                   ));
-              } else this.lxn();
+              } else this.sxn();
             } else
-              3 === this.axn &&
+              3 === this.oxn &&
                 (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Log",
                     19,
                     "MissionPanel:QuestUpdateEnd - MISSION_IN End",
                   ),
-                this._xn(t));
+                this.axn(t));
             break;
           case MISSION_OUT:
-            1 === this.axn
+            1 === this.oxn
               ? this.SequencePlayer.PlayLevelSequenceByName(MISSION_IN)
-              : 3 === this.axn &&
+              : 3 === this.oxn &&
                 (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Log",
@@ -215,15 +221,15 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                     "MissionPanel:QuestUpdateEnd - MISSION_OUT End",
                   ),
                 this.SequencePlayer.PlayLevelSequenceByName(MISSION_IN),
-                this.uxn()) &&
+                this.hxn()) &&
                 this.SequencePlayer.StopCurrentSequence(!0, !0);
         }
       }),
-      (this.hqn = () => {
+      (this.fqn = () => {
         switch (
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Log", 19, "MissionPanel:Press Track"),
-          this.axn)
+          this.oxn)
         ) {
           case 1:
             this.SequencePlayer.StopCurrentSequence(!1, !0);
@@ -232,16 +238,16 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
             TimerSystem_1.TimerSystem.Has(this.rct) &&
               TimerSystem_1.TimerSystem.Remove(this.rct);
         }
-        this.lxn();
+        this.sxn();
       }),
-      (this.lxn = () => {
+      (this.sxn = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Log",
             19,
             "MissionPanel:切换到QuestUpdateEnd - MISSION_OUT 开始播放",
           ),
-          (this.axn = 3),
+          (this.oxn = 3),
           this.SequencePlayer.PlayLevelSequenceByName(MISSION_OUT);
       });
   }
@@ -335,11 +341,11 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.MissionPanelProcessEnd,
-        this.hxn,
+        this.nxn,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.QuestUpdateTipsClickTrack,
-        this.hqn,
+        this.fqn,
       );
   }
   RemoveEvents() {
@@ -365,11 +371,11 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.MissionPanelProcessEnd,
-        this.hxn,
+        this.nxn,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.QuestUpdateTipsClickTrack,
-        this.hqn,
+        this.fqn,
       );
   }
   $Ze(i) {
@@ -395,13 +401,17 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   YZe(e) {
     this.KZe.push(e);
   }
-  NOn(e) {
+  KOn(e) {
     this.KZe.unshift(e);
   }
   OnTickBattleChildViewPanel(e) {
-    this.$5e && (this.kOn(), this.FOn(e));
+    this.$5e &&
+      (MissionPanel.vJe.Start(),
+      this.QOn(),
+      this.XOn(e),
+      MissionPanel.vJe.Stop());
   }
-  kOn() {
+  QOn() {
     if (0 !== this.KZe.length && !this.QZe) {
       switch (((this.QZe = this.KZe[0]), this.QZe.ProcessType)) {
         case 0:
@@ -419,7 +429,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       this.QZe?.Finished && this._et(this.QZe.ProcessId);
     }
   }
-  FOn(e) {
+  XOn(e) {
     if (this.HZe)
       for (var [, t] of this.HZe) t.OnRefresh(e, this.QZe?.ProcessId ?? 0);
   }
@@ -431,11 +441,11 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   tet(e, t) {
     let i = 1;
     switch (e) {
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest:
         i = 1 === t ? 1 : 0;
         break;
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeInst:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeInst:
         i = 1;
     }
     return i;
@@ -513,16 +523,16 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         s.IsGmFinished
           ? (t !== i &&
               QuestController_1.QuestNewController.RequestTrackQuest(i, !0, 0),
-            this._xn(e),
+            this.axn(e),
             0)
           : t === i
-            ? (this._xn(e), 0)
-            : (this.uxn()
-                ? ((this.axn = 1),
+            ? (this.axn(e), 0)
+            : (this.hxn()
+                ? ((this.oxn = 1),
                   Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info("Log", 19, "MissionPanel: In 开始"),
                   this.SequencePlayer.PlayLevelSequenceByName(MISSION_IN))
-                : ((this.axn = 1),
+                : ((this.oxn = 1),
                   Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info("Log", 19, "MissionPanel: Out 开始"),
                   this.SequencePlayer.PlayLevelSequenceByName(MISSION_OUT)),
@@ -530,19 +540,21 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       )
     );
   }
-  _xn(e) {
+  axn(e) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Log", 19, "MissionPanel:QuestUpdateTipsEnd -  AllOver"),
       this.jZe.OnAfterPlayHideSequence(),
-      this.hxn(e.ProcessId),
-      this.NOn(new TreeViewUpdateShowProcess(e.Info.ShowBridge)),
-      (this.axn = 0);
+      this.nxn(e.ProcessId),
+      this.KOn(new TreeViewUpdateShowProcess(e.Info.ShowBridge)),
+      (this.oxn = 0);
   }
-  uxn() {
+  hxn() {
     for (var [, e] of this.HZe)
       if (e.IsShowingBehaviorTreeView && e.CheckVisible()) return !1;
     return !0;
   }
 }
-(exports.MissionPanel = MissionPanel).vJe = void 0;
+(exports.MissionPanel = MissionPanel).vJe = Stats_1.Stat.Create(
+  "[BattleView]MissionPanelTick",
+);
 //# sourceMappingURL=MissionPanel.js.map

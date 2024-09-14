@@ -20,7 +20,8 @@ class InputModel extends ModelBase_1.ModelBase {
       (this.KMe = new Map()),
       (this.QMe = new Map()),
       (this.OnlyMoveForward = new Switcher_1.Switcher(!1)),
-      (this.IsOpenInputAxisLog = !1);
+      (this.IsOpenInputAxisLog = !1),
+      (this.JHa = !1);
   }
   GetHandlers() {
     return this.WMe;
@@ -31,13 +32,25 @@ class InputModel extends ModelBase_1.ModelBase {
   GetAxisValues() {
     return this.QMe;
   }
+  get LastClearAxisValue() {
+    return this.JHa;
+  }
+  ResetLastTemporaryClearAxisValues() {
+    this.JHa = !1;
+  }
+  TemporaryClearAxisValues() {
+    (this.JHa = !0), this.QMe.clear();
+  }
+  NextFrameRefreshAxisValues() {
+    this.JHa = !0;
+  }
   QueryCommandPriority(e) {
     return this.jMe.get(e);
   }
   AddInputHandler(e) {
     this.WMe.includes(e) ||
       (this.WMe.push(e),
-      this.WMe.sort((e, t) => t.GetPriority() - e.GetPriority()));
+      this.WMe.sort((e, s) => s.GetPriority() - e.GetPriority()));
   }
   RemoveInputHandler(e) {
     e = this.WMe.indexOf(e);

@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Info = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
+  Macro_1 = require("../Preprocessor/Macro"),
   InfoDefine_1 = require("./InfoDefine"),
   Log_1 = require("./Log");
 class Info {
@@ -15,8 +17,8 @@ class Info {
     (this.f8 = t),
       (this.Environment = 1),
       (this.p8 = UE.KuroStaticLibrary.IsEditor(t)),
-      (this.v8 = UE.KuroStaticLibrary.IsBuildShipping()),
-      (this.M8 = UE.KuroStaticLibrary.IsBuildTest()),
+      (this.v8 = cpp_1.FKuroUtilityForPuerts.IsBuildShipping()),
+      (this.M8 = cpp_1.FKuroUtilityForPuerts.IsBuildTest()),
       (this.E8 = !this.v8 && !this.M8),
       (this.S8 =
         this.p8 &&
@@ -24,6 +26,10 @@ class Info {
           UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCVarFloat(
             "r.Kuro.Movie.EnableCGMovieRendering",
           )),
+      Macro_1.NOT_SHIPPING_ENVIRONMENT && this.p8
+        ? (this.B3a =
+            UE.KuroRenderingEditorBPPluginBPLibrary.IsSimulateInEditorInProgress())
+        : (this.B3a = !1),
       this.y8(),
       this.uXi();
   }
@@ -45,20 +51,23 @@ class Info {
   static IsInCg() {
     return this.S8;
   }
+  static IsInEditorTick() {
+    return this.B3a || this.S8;
+  }
   static get PlatformType() {
     return this.sXi;
   }
   static get InputControllerType() {
-    return this.ega;
+    return this.tEa;
   }
   static get InputControllerMainType() {
-    return this.tga;
+    return this.iEa;
   }
   static get OperationType() {
     return this.aXi;
   }
   static y8() {
-    switch (UE.GameplayStatics.GetPlatformName()) {
+    switch (cpp_1.KuroApplication.IniPlatformName()) {
       case "IOS":
         this.sXi = 1;
         break;
@@ -110,40 +119,40 @@ class Info {
   }
   static cXi(t, i) {
     var s;
-    this.ega !== t &&
+    this.tEa !== t &&
       (1 === t &&
-        5 === this.ega &&
+        5 === this.tEa &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Platform",
           8,
           "[PlatformDebug]从Touch输入方式切换成了键鼠的输入方式",
-          ["lastInputController", this.ega],
+          ["lastInputController", this.tEa],
           ["inputController", t],
         ),
-      (s = this.ega),
-      (this.ega = t),
-      this.oga(),
-      Info.CMa?.(s, this.ega),
+      (s = this.tEa),
+      (this.tEa = t),
+      this.nEa(),
+      Info.Sya?.(s, this.tEa),
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
         "Platform",
         17,
         "设置输入方式",
         ["lastInputController", s],
-        ["InputController", this.ega],
+        ["InputController", this.tEa],
         ["Reason", i],
       );
   }
-  static nga(t) {
+  static sEa(t) {
     var i,
       t = InfoDefine_1.showTypeAndInputControllerMap[t];
-    t !== this.aXi && ((i = this.aXi), (this.aXi = t), Info.gMa?.(i, t));
+    t !== this.aXi && ((i = this.aXi), (this.aXi = t), Info.Eya?.(i, t));
   }
-  static oga() {
+  static nEa() {
     var t,
-      i = InfoDefine_1.inputControllerMainTypeMap[this.ega];
-    i !== this.tga && ((t = this.tga), (this.tga = i), Info.fMa?.(t, i));
+      i = InfoDefine_1.inputControllerMainTypeMap[this.tEa];
+    i !== this.iEa && ((t = this.iEa), (this.iEa = i), Info.yya?.(t, i));
   }
   static IsPcOrGamepadPlatform() {
     return this.IsPcPlatform() || this.IsGamepadPlatform();
@@ -161,13 +170,13 @@ class Info {
     return 8 === this.sXi;
   }
   static IsInKeyBoard() {
-    return 0 === this.InputControllerMainType;
+    return 1 === this.InputControllerMainType;
   }
   static IsInTouch() {
-    return 2 === this.InputControllerMainType;
+    return 3 === this.InputControllerMainType;
   }
   static IsInGamepad() {
-    return 1 === this.InputControllerMainType;
+    return 2 === this.InputControllerMainType;
   }
   static IsXboxGamepad() {
     return this.IsInGamepad() && 2 === this.InputControllerType;
@@ -179,25 +188,33 @@ class Info {
     );
   }
   static SwitchInputControllerType(t, i) {
-    this.IsGmLockGamepad || (this.cXi(t, i), this.nga(t));
+    0 === t
+      ? Log_1.Log.CheckError() &&
+        Log_1.Log.Error("Platform", 11, "传入了EInputControllerType.None类型", [
+          "Reason",
+          i,
+        ])
+      : this.IsGmLockGamepad ||
+        (this.IsMobilePlatform() && 1 === t) ||
+        (this.cXi(t, i), this.sEa(t));
   }
   static SetInputTypeChangeFunc(t) {
-    Info.CMa = t;
+    Info.Sya = t;
   }
   static ClearInputTypeChangeFunc() {
-    Info.CMa = void 0;
+    Info.Sya = void 0;
   }
   static SetShowTypeChangeFunc(t) {
-    Info.gMa = t;
+    Info.Eya = t;
   }
   static ClearShowTypeChangeFunc() {
-    Info.gMa = void 0;
+    Info.Eya = void 0;
   }
   static SetInputMainTypeChangeFunc(t) {
-    Info.fMa = t;
+    Info.yya = t;
   }
   static ClearInputMainTypeChangeFunc() {
-    Info.fMa = void 0;
+    Info.yya = void 0;
   }
 }
 ((exports.Info = Info).Version = "1.0.0"),
@@ -209,14 +226,15 @@ class Info {
   (Info.E8 = !1),
   (Info.S8 = !1),
   (Info.UseFastInputCallback = !0),
-  (Info.AxisInputOptimize = !1),
+  (Info.AxisInputOptimize = !0),
+  (Info.B3a = !1),
   (Info.sXi = 0),
-  (Info.ega = void 0),
-  (Info.tga = void 0),
+  (Info.tEa = 0),
+  (Info.iEa = 0),
   (Info.aXi = 0),
   (Info.IsGmLockGamepad = !1),
   (Info.lXi = !1),
-  (Info.CMa = void 0),
-  (Info.gMa = void 0),
-  (Info.fMa = void 0);
+  (Info.Sya = void 0),
+  (Info.Eya = void 0),
+  (Info.yya = void 0);
 //# sourceMappingURL=Info.js.map

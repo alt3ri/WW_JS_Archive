@@ -10,8 +10,10 @@ class GamePlayScanComposite {
     return this.uid();
   }
   get ScanInfos() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.scaninfosLength(), (t) =>
-      this.scaninfos(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.scaninfosLength(),
+      this.scaninfos,
+      this,
     );
   }
   get ItemMaterialDataPath() {

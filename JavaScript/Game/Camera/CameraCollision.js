@@ -47,13 +47,14 @@ class CameraCollision {
       (this.IsLeftCollision = !1),
       (this.IsRightCollision = !1),
       (this.IsOpenBlend = !0),
+      (this.Jza = 0),
       (this.CurrentBlendState = 0),
       (this.Fae = 0),
       (this.Vae = 0),
       (this.Hae = 0),
       (this.jae = 0),
       (this.Wae = 0),
-      (this.gga = 0),
+      (this._pa = 0),
       (this.IsNpcDitherEnable = !0),
       (this.IsPlayerXRayEnable = !0),
       (this.Kae = new Set()),
@@ -131,10 +132,10 @@ class CameraCollision {
       this.Hse.ActorsToIgnore.Add(t),
       this.Dae.ActorsToIgnore.Add(t),
       this.Rae.ActorsToIgnore.Add(t),
-      (this.Lae = t?.CharacterActorComponent?.Entity?.GetComponent(68));
+      (this.Lae = t?.CharacterActorComponent?.Entity?.GetComponent(69));
   }
   SetCameraConfig(t, i) {
-    (this.Wae = t * t * PROBE_RATIO), (this.gga = i);
+    (this.Wae = t * t * PROBE_RATIO), (this._pa = i);
   }
   Clear() {
     this.Fse && (this.Fse.Dispose(), (this.Fse = void 0)),
@@ -178,7 +179,7 @@ class CameraCollision {
         )),
       (this._ae.Z = Math.max(
         this._ae.Z,
-        this.Hh.Character.CharacterActorComponent.FloorLocation.Z + this.gga,
+        this.Hh.Character.CharacterActorComponent.FloorLocation.Z + this._pa,
       )),
       TraceElementCommon_1.TraceElementCommon.SetStartLocation(
         this.Fse,
@@ -507,14 +508,18 @@ class CameraCollision {
   ohe() {
     return 0 !== this.Hh.CameraDialogueController.State
       ? ((this.CurrentBlendState = this.Oae ? 2 : 0), !0)
-      : !!ModelManager_1.ModelManager.GameModeModel.IsSilentLogin &&
-          !(this.CurrentBlendState = 0);
+      : ModelManager_1.ModelManager.GameModeModel.IsSilentLogin
+        ? !(this.CurrentBlendState = 0)
+        : 2 === this.Jza
+          ? ((this.CurrentBlendState = this.Oae ? 2 : 0), !0)
+          : 1 === this.Jza &&
+            ((this.Jza = 0), (this.CurrentBlendState = this.Oae ? 2 : 0), !0);
   }
   rhe(t, i, s) {
     return t.Subtraction(i, this.Lz).SizeSquared() < s * s;
   }
   hhe(t) {
-    return !!t.GetEntityNoBlueprint()?.GetComponent(188)?.HasTag(-1151151013);
+    return !!t.GetEntityNoBlueprint()?.GetComponent(190)?.HasTag(-1151151013);
   }
   nhe() {
     var t, i;
@@ -629,6 +634,9 @@ class CameraCollision {
         ),
         !0)
     );
+  }
+  SetCameraBlendPauseType(t) {
+    this.Jza = t;
   }
 }
 exports.CameraCollision = CameraCollision;

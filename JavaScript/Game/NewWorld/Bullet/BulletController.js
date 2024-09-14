@@ -1,21 +1,21 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (e, t, r, l) {
+  function (t, e, r, l) {
     var o,
       i = arguments.length,
       n =
         i < 3
-          ? t
+          ? e
           : null === l
-            ? (l = Object.getOwnPropertyDescriptor(t, r))
+            ? (l = Object.getOwnPropertyDescriptor(e, r))
             : l;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      n = Reflect.decorate(e, t, r, l);
+      n = Reflect.decorate(t, e, r, l);
     else
-      for (var a = e.length - 1; 0 <= a; a--)
-        (o = e[a]) && (n = (i < 3 ? o(n) : 3 < i ? o(t, r, n) : o(t, r)) || n);
-    return 3 < i && n && Object.defineProperty(t, r, n), n;
+      for (var a = t.length - 1; 0 <= a; a--)
+        (o = t[a]) && (n = (i < 3 ? o(n) : 3 < i ? o(e, r, n) : o(e, r)) || n);
+    return 3 < i && n && Object.defineProperty(e, r, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletController = void 0);
@@ -38,10 +38,12 @@ const UE = require("ue"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   StatDefine_1 = require("../../Common/StatDefine"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
   Global_1 = require("../../Global"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage"),
+  CombatLog_1 = require("../../Utils/CombatLog"),
   CharacterBuffIds_1 = require("../Character/Common/Component/Abilities/CharacterBuffIds"),
   BulletActionRunner_1 = require("./Action/BulletActionRunner"),
   BulletConfig_1 = require("./BulletConfig"),
@@ -67,21 +69,21 @@ class BulletController extends ControllerBase_1.ControllerBase {
       !0
     );
   }
-  static OnTick(e) {
+  static OnTick(t) {
     if (this.Q9o) {
       this.Q9o.Pause();
-      for (const t of this.X9o) t.OnTick(e);
+      for (const e of this.X9o) e.OnTick(t);
       this.Q9o.Resume(),
-        this.Q9o.Run(e),
+        this.Q9o.Run(t),
         ConfigManager_1.ConfigManager.BulletConfig.TickPreload();
     }
   }
-  static OnAfterTick(e) {
+  static OnAfterTick(t) {
     if (this.X9o && this.Q9o) {
       this.Q9o.Pause();
-      for (const t of this.X9o) t.OnAfterTick(e);
+      for (const e of this.X9o) e.OnAfterTick(t);
       this.Q9o.Resume(),
-        this.Q9o.Run(e, !0),
+        this.Q9o.Run(t, !0),
         BulletPool_1.BulletPool.CheckAtFrameEnd();
     }
   }
@@ -134,17 +136,17 @@ class BulletController extends ControllerBase_1.ControllerBase {
         this.nye,
       );
   }
-  static HasAuthority(e) {
+  static HasAuthority(t) {
     return (
-      (e instanceof Entity_1.Entity
-        ? e.GetComponent(3)?.Actor
-        : e
+      (t instanceof Entity_1.Entity
+        ? t.GetComponent(3)?.Actor
+        : t
       )?.IsAutonomousProxy() ?? !1
     );
   }
   static CreateBulletCustomTarget(
-    e,
     t,
+    e,
     r,
     {
       SkillId: l = 0,
@@ -154,65 +156,71 @@ class BulletController extends ControllerBase_1.ControllerBase {
       ParentId: a = 0,
       Size: s,
       InitTargetLocation: u,
-      Source: _ = Protocol_1.Aki.Protocol.C4s.Proto_NormalSource,
+      Source: _ = Protocol_1.Aki.Protocol.E4s.Proto_NormalSource,
       LocationOffset: f,
       BeginRotatorOffset: c,
-      DtType: d = -1,
+      DtType: B = -1,
+      CreateOnAuthority: d = !0,
     } = {},
-    B = void 0,
+    C = void 0,
   ) {
     if (ModelManager_1.ModelManager.GameModeModel.WorldDone) {
-      StatDefine_1.BATTLESTAT_ENABLED,
-        e ||
+      StatDefine_1.BATTLESTAT_ENABLED &&
+        (this.GetBulletCreateStat(e).Start(),
+        StatDefine_1.battleStat.BulletCreate.Start()),
+        t ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error("Bullet", 21, "创建子弹时Owner为空", [
               "rowName",
-              t,
+              e,
             ])),
-        B ||
-          (0, CharacterBuffIds_1.checkBulletInSpecialList)(t) ||
-          (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Bullet", 36, "创建子弹时contextId为空", [
-              "rowName",
-              t,
-            ]));
-      var M = e instanceof Entity_1.Entity ? e : e.GetEntityNoBlueprint(),
-        g = ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(
-          M,
-          t,
-          !0,
-          d,
-        );
+        C ||
+          (0, CharacterBuffIds_1.checkBulletInSpecialList)(e) ||
+          CombatLog_1.CombatLog.Error("Bullet", 36, "创建子弹时contextId为空", [
+            "rowName",
+            e,
+          ]);
+      var M = t instanceof Entity_1.Entity ? t : t.GetEntityNoBlueprint(),
+        g =
+          (BulletController.$9o.Start(),
+          ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(
+            M,
+            e,
+            !0,
+            B,
+          ));
       if (g) {
-        var C,
-          o = BulletController.J2n(o, g);
-        if (1 !== o || BulletController.HasAuthority(e))
+        BulletController.$9o.Stop();
+        o = BulletController.sNn(o, g);
+        if (!d || 1 !== o || BulletController.HasAuthority(t))
           return (
-            (e = this.Y9o(M, g, t, i, n)),
-            (C = this.J9o(M, g, t, i, n)),
-            (i = this.z2n(M, g, t, i, n)),
+            (d = this.Y9o(M, g, e, i, n)),
+            (t = this.J9o(M, g, e, i, n)),
+            (i = this.aNn(M, g, e, i, n)),
             (n = this.CreateBullet(
               M,
-              t,
+              e,
               r,
               {
                 SkillId: l,
                 SyncType: o,
                 ParentId: a,
                 BulletData: g,
-                TargetId: e,
+                TargetId: d,
                 BaseTransformId: i,
-                BaseVelocityId: C,
+                BaseVelocityId: t,
                 Size: s,
                 InitTargetLocation: u,
                 Source: _,
                 LocationOffset: f,
                 BeginRotatorOffset: c,
-                DtType: d,
+                DtType: B,
               },
-              B,
+              C,
             )),
-            StatDefine_1.BATTLESTAT_ENABLED,
+            StatDefine_1.BATTLESTAT_ENABLED &&
+              (StatDefine_1.battleStat.BulletCreate.Stop(),
+              this.GetBulletCreateStat(e).Stop()),
             n
           );
         Log_1.Log.CheckDebug() &&
@@ -220,65 +228,67 @@ class BulletController extends ControllerBase_1.ControllerBase {
             "Bullet",
             18,
             "等待远端创建同步子弹",
-            ["bulletRowName", t],
+            ["bulletRowName", e],
             ["skillId", l],
           ),
-          StatDefine_1.BATTLESTAT_ENABLED;
+          StatDefine_1.BATTLESTAT_ENABLED &&
+            (StatDefine_1.battleStat.BulletCreate.Stop(),
+            this.GetBulletCreateStat(e).Stop());
       }
     }
   }
-  static z2n(e, t, r, l, o) {
-    var i = t.Base.BornPositionStandard;
-    if (1 === i) return this.z9o(e, r);
+  static aNn(t, e, r, l, o) {
+    var i = e.Base.BornPositionStandard;
+    if (1 === i) return this.z9o(t, r);
     if (5 === i)
       return ModelManager_1.ModelManager.BulletModel.GetEntityIdByCustomKey(
-        e.Id,
-        t.Base.BlackboardKey,
+        t.Id,
+        e.Base.BlackboardKey,
         r,
       );
     if (7 === i) return l;
     if (8 === i) return o;
     if (10 === i)
-      return (l = parseInt(t.Base.BlackboardKey)), this.Z9o(e, l, r);
+      return (l = parseInt(e.Base.BlackboardKey)), this.Z9o(t, l, r);
     if (4 === i) {
-      o = e.GetComponent(29)?.GetCurrentTarget();
+      o = t.GetComponent(29)?.GetCurrentTarget();
       if (o?.Valid) return o.Id;
-    } else if (9 === i) return this.Z2n();
+    } else if (9 === i) return this.hNn();
     return 0;
   }
-  static J2n(e, t) {
-    if (ModelManager_1.ModelManager.GameModeModel.IsMulti && 0 === e) {
-      if (1 === t.Base.SyncType) return 1;
-      var r = t.Base.BornPositionStandard;
+  static sNn(t, e) {
+    if (ModelManager_1.ModelManager.GameModeModel.IsMulti && 0 === t) {
+      if (1 === e.Base.SyncType) return 1;
+      var r = e.Base.BornPositionStandard;
       if (4 === r || 9 === r || 10 === r) return 1;
-      r = t.Move.InitVelocityDirStandard;
+      r = e.Move.InitVelocityDirStandard;
       if (10 === r || 5 === r) return 1;
-      r = t.Move.TrackTarget;
+      r = e.Move.TrackTarget;
       if (4 === r || 3 === r) return 1;
     }
-    return e;
+    return t;
   }
-  static CreateBulletForDebug(e, t) {
-    var e = e.GetEntityNoBlueprint()?.Id ?? 0,
-      e = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e),
-      r = new Protocol_1.Aki.Protocol.Pzn();
+  static CreateBulletForDebug(t, e) {
+    var t = t.GetEntityNoBlueprint()?.Id ?? 0,
+      t = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(t),
+      r = new Protocol_1.Aki.Protocol.Gzn();
     return (
-      (r.BVn = 0),
-      (r.y8n = `@gmcreatebullet ${e} ` + t),
-      Net_1.Net.Call(29711, Protocol_1.Aki.Protocol.Pzn.create(r), () => {}),
+      (r.VVn = 0),
+      (r.P8n = `@gmcreatebullet ${t} ` + e),
+      Net_1.Net.Call(29319, Protocol_1.Aki.Protocol.Gzn.create(r), () => {}),
       0
     );
   }
-  static Y9o(e, t, r, l, o) {
-    var i = t.Move.TrackTarget;
+  static Y9o(t, e, r, l, o) {
+    var i = e.Move.TrackTarget;
     if (4 === i || 3 === i) {
-      var n = e.GetComponent(29)?.GetCurrentTarget();
+      var n = t.GetComponent(29)?.GetCurrentTarget();
       if (n?.Valid) return n.Id;
     } else {
       if (5 === i)
         return ModelManager_1.ModelManager.BulletModel.GetEntityIdByCustomKey(
-          e.Id,
-          t.Move.TrackTargetBlackboardKey,
+          t.Id,
+          e.Move.TrackTargetBlackboardKey,
           r,
         );
       if (7 === i) {
@@ -293,69 +303,69 @@ class BulletController extends ControllerBase_1.ControllerBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Bullet", 21, "父子弹目标为空", ["rowName", r]);
       } else {
-        if (6 === i) return e.Id;
-        if (2 === i) return BulletController.z9o(e, r);
+        if (6 === i) return t.Id;
+        if (2 === i) return BulletController.z9o(t, r);
         if (1 === i) {
           if (!ModelManager_1.ModelManager.GameModeModel.IsMulti)
             return Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
-          (n = e.GetComponent(0)),
-            (t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
+          (n = t.GetComponent(0)),
+            (e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
               n.GetPlayerId(),
               { ParamType: 2, IsControl: !0 },
             ).EntityHandle);
-          if (t?.Valid) return t.Id;
-        } else if (9 === i) return this.Z2n();
+          if (e?.Valid) return e.Id;
+        } else if (9 === i) return this.hNn();
       }
     }
     return 0;
   }
-  static z9o(e, t) {
+  static z9o(t, e) {
     var r,
-      e = e.GetComponent(33)?.SkillTarget;
+      t = t.GetComponent(34)?.SkillTarget;
     return (
       BulletConstant_1.BulletConstant.OpenCreateLog &&
-        ((r = e?.Entity?.GetComponent(1)?.Owner?.GetName()),
+        ((r = t?.Entity?.GetComponent(1)?.Owner?.GetName()),
         Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug(
           "Bullet",
           21,
           "获取技能目标",
-          ["BulletId", t],
+          ["BulletId", e],
           ["Target", r ?? StringUtils_1.NONE_STRING],
         ),
-      e?.Valid ? e.Id : 0
+      t?.Valid ? t.Id : 0
     );
   }
-  static Z2n() {
-    var e =
+  static hNn() {
+    var t =
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
         29,
       )?.GetCurrentTarget();
-    return e?.Valid ? e.Id : 0;
+    return t?.Valid ? t.Id : 0;
   }
-  static J9o(e, t, r, l, o) {
-    var i = t.Move.InitVelocityDirStandard;
+  static J9o(t, e, r, l, o) {
+    var i = e.Move.InitVelocityDirStandard;
     if (5 === i) {
-      var n = e.GetComponent(29)?.GetCurrentTarget();
+      var n = t.GetComponent(29)?.GetCurrentTarget();
       if (n?.Valid) return n.Id;
     } else {
       if (6 === i)
         return ModelManager_1.ModelManager.BulletModel.GetEntityIdByCustomKey(
-          e.Id,
-          t.Move.TrackTargetBlackboardKey,
+          t.Id,
+          e.Move.TrackTargetBlackboardKey,
           r,
         );
       if (11 === i)
-        return (n = parseInt(t.Move.InitVelocityDirParam)), this.Z9o(e, n, r);
-      if (10 === i) return this.Z2n();
+        return (n = parseInt(e.Move.InitVelocityDirParam)), this.Z9o(t, n, r);
+      if (10 === i) return this.hNn();
       if (8 === i) return l;
       if (9 === i) return o;
     }
     return 0;
   }
   static CreateBullet(
-    e,
     t,
+    e,
     r,
     {
       SkillId: l = 0,
@@ -367,19 +377,19 @@ class BulletController extends ControllerBase_1.ControllerBase {
       BaseVelocityId: u,
       Size: _,
       InitTargetLocation: f,
-      Source: c = Protocol_1.Aki.Protocol.C4s.Proto_NormalSource,
-      LocationOffset: d,
-      BeginRotatorOffset: B,
-      DtType: M = -1,
-      RandomPosOffset: g = void 0,
-      RandomInitSpeedOffset: C = void 0,
+      Source: c = Protocol_1.Aki.Protocol.E4s.Proto_NormalSource,
+      LocationOffset: B,
+      BeginRotatorOffset: d,
+      DtType: C = -1,
+      RandomPosOffset: M = void 0,
+      RandomInitSpeedOffset: g = void 0,
     } = {},
     h = void 0,
   ) {
     var m = 2 === o,
-      e = ModelManager_1.ModelManager.BulletModel.CreateBullet(
-        e,
+      t = ModelManager_1.ModelManager.BulletModel.CreateBullet(
         t,
+        e,
         r,
         f,
         l,
@@ -393,109 +403,141 @@ class BulletController extends ControllerBase_1.ControllerBase {
         o,
         h,
         c,
-        d,
         B,
+        d,
+        C,
         M,
         g,
-        C,
       );
-    if (e?.Valid) return e;
+    if (t?.Valid) return t;
   }
-  static DestroyBullet(e, t, r = 0) {
-    StatDefine_1.BATTLESTAT_ENABLED,
-      ModelManager_1.ModelManager.BulletModel.DestroyBullet(e, t, r),
-      StatDefine_1.BATTLESTAT_ENABLED;
+  static DestroyBullet(t, e, r = 0) {
+    StatDefine_1.BATTLESTAT_ENABLED &&
+      StatDefine_1.battleStat.BulletDestroy.Start(),
+      ModelManager_1.ModelManager.BulletModel.DestroyBullet(t, e, r),
+      StatDefine_1.BATTLESTAT_ENABLED &&
+        StatDefine_1.battleStat.BulletDestroy.Stop();
   }
-  static DestroyAllBullet(e = !1) {
-    ModelManager_1.ModelManager.BulletModel.DestroyAllBullet(e);
+  static DestroyAllBullet(t = !1) {
+    ModelManager_1.ModelManager.BulletModel.DestroyAllBullet(t);
   }
-  static DestroySpecifiedBullet(t, r, l = !1, o = 0) {
+  static DestroySpecifiedBullet(e, r, l = !1, o = 0, i = 0) {
     if (1 === o) {
-      let e = !1;
+      let t = !1;
       o = ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities(!0);
-      for (const i of o)
-        if (i.Id === t) {
-          e = !0;
+      for (const n of o)
+        if (n.Id === e) {
+          t = !0;
           break;
         }
-      if (e) for (const n of o) this.DestroyBulletByOwnerIdAndName(n.Id, r, l);
-    } else this.DestroyBulletByOwnerIdAndName(t, r, l);
+      if (t)
+        for (const a of o) this.DestroyBulletByOwnerIdAndName(a.Id, r, l, i);
+    } else this.DestroyBulletByOwnerIdAndName(e, r, l, i);
   }
-  static DestroyBulletByOwnerIdAndName(e, t, r = !1) {
+  static DestroyBulletByOwnerIdAndName(e, r, l = !1, o = 0) {
     e = ModelManager_1.ModelManager.BulletModel.GetBulletSetByAttacker(e);
     if (e)
-      for (const l of e)
-        l.GetBulletInfo().BulletDataMain?.BulletFName.op_Equality(t) &&
-          BulletController.DestroyBullet(l.Id, r);
+      if (o <= 0)
+        for (const t of e)
+          t.GetBulletInfo().BulletDataMain?.BulletFName.op_Equality(r) &&
+            BulletController.DestroyBullet(t.Id, l);
+      else {
+        let t = 0;
+        for (const i of e)
+          i.GetBulletInfo().BulletDataMain?.BulletFName.op_Equality(r) &&
+            (BulletController.DelayDestroyBullet(i.GetBulletInfo(), l, t * o),
+            t++);
+      }
   }
-  static GetSpecifiedBulletCount(e, t) {
+  static DelayDestroyBullet(t, e, r) {
+    var l;
+    r <= 0
+      ? BulletController.DestroyBullet(t.BulletEntityId, e)
+      : (((l =
+          BulletController.GetActionCenter().CreateBulletActionInfo(
+            17,
+          )).DelayTime = r * TimeUtil_1.TimeUtil.InverseMillisecond),
+        (l.SummonChild = e),
+        (l.IgnoreBulletActorTimeScale = !0),
+        BulletController.GetActionRunner().AddAction(t, l),
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Bullet",
+            18,
+            "延迟销毁子弹",
+            ["BulletId", t.BulletRowName],
+            ["EntityId", t.BulletEntityId],
+            ["delayTime", l.DelayTime],
+          ));
+  }
+  static GetSpecifiedBulletCount(t, e) {
     let r = 0;
-    e = ModelManager_1.ModelManager.BulletModel.GetBulletSetByAttacker(e);
-    if (e)
-      for (const l of e)
-        l.GetBulletInfo().BulletDataMain?.BulletFName.op_Equality(t) && r++;
+    t = ModelManager_1.ModelManager.BulletModel.GetBulletSetByAttacker(t);
+    if (t)
+      for (const l of t)
+        l.GetBulletInfo().BulletDataMain?.BulletFName.op_Equality(e) && r++;
     return r;
   }
-  static AddSimpleAction(e, t) {
-    t = this.GetActionCenter().CreateBulletActionInfo(t);
-    this.Q9o.AddAction(e, t);
+  static AddSimpleAction(t, e) {
+    e = this.GetActionCenter().CreateBulletActionInfo(e);
+    this.Q9o.AddAction(t, e);
   }
-  static SetTimeDilation(e) {
-    for (const t of ModelManager_1.ModelManager.BulletModel.GetAttackerBulletIterator())
-      for (const r of t) r.SetTimeDilation(e);
+  static SetTimeDilation(t) {
+    for (const e of ModelManager_1.ModelManager.BulletModel.GetAttackerBulletIterator())
+      for (const r of e) r.SetTimeDilation(t);
   }
-  static CreateBulletNotify(t, r) {
-    if (ModelManager_1.ModelManager.GameModeModel.WorldDone && t) {
-      var l = r.X4n,
-        o = String(MathUtils_1.MathUtils.LongToBigInt(r.ujn)),
-        i = r?.YDs,
+  static CreateBulletNotify(e, r) {
+    if (ModelManager_1.ModelManager.GameModeModel.WorldDone && e) {
+      var l = r.r5n,
+        o = String(MathUtils_1.MathUtils.LongToBigInt(r.Mjn)),
+        i = r?.rAs,
         i =
           (i
             ? (i = ModelManager_1.ModelManager.CreatureModel.GetEntity(
                 MathUtils_1.MathUtils.LongToNumber(i),
               )?.Entity?.GetComponent(3)) &&
               this.Mme.FromUeTransform(i.ActorTransform)
-            : void 0 !== r?.y5n || void 0 !== r?.a8n
+            : void 0 !== r?.P5n || void 0 !== r?.g8n
               ? (this.Mme.Reset(),
-                (i = r.y5n),
-                (n = r.a8n) &&
+                (i = r.P5n),
+                (n = r.g8n) &&
                   (this.cie.DeepCopy(n),
                   this.cie.Quaternion(this.e7o),
                   this.Mme.SetRotation(this.e7o)),
                 i && this.Mme.SetLocation(i),
                 this.Mme.SetScale3D(Vector_1.Vector.OneVectorProxy))
-              : (n = t?.CheckGetComponent(3)) &&
+              : (n = e?.CheckGetComponent(3)) &&
                 (this.Mme.SetLocation(n.ActorLocationProxy),
                 this.cie.DeepCopy(n.ActorRotationProxy),
                 this.Mme.SetRotation(n.ActorQuatProxy)),
           ModelManager_1.ModelManager.CreatureModel.GetEntityId(
-            MathUtils_1.MathUtils.LongToNumber(r.mjn),
+            MathUtils_1.MathUtils.LongToNumber(r.Ejn),
           )),
         n = ModelManager_1.ModelManager.CreatureModel.GetEntityId(
-          MathUtils_1.MathUtils.LongToNumber(r.djn),
+          MathUtils_1.MathUtils.LongToNumber(r.yjn),
         ),
         a = ModelManager_1.ModelManager.CreatureModel.GetEntityId(
-          MathUtils_1.MathUtils.LongToNumber(r.sVn),
+          MathUtils_1.MathUtils.LongToNumber(r.CVn),
         );
-      let e = void 0;
-      r.XDs && (e = new UE.Vector(r.XDs.X, r.XDs.Y, r.XDs.Z));
-      t = BulletController.t7o(
-        t,
+      let t = void 0;
+      r.iAs && (t = new UE.Vector(r.iAs.X, r.iAs.Y, r.iAs.Z));
+      e = BulletController.t7o(
+        e,
         o,
         this.Mme.ToUeTransform(),
         l,
         i,
         n,
         a,
-        MathUtils_1.MathUtils.LongToBigInt(r.G8n.k8n),
-        e,
-        r.gjn,
-        r.fjn,
-        r.pjn,
-        r.u8n,
+        MathUtils_1.MathUtils.LongToBigInt(r.K8n.$8n),
+        t,
+        r.Tjn,
+        r.Ljn,
+        r.Djn,
+        r.M8n,
       );
-      t &&
-        (ModelManager_1.ModelManager.BulletModel.RegisterBullet(r.iVn, t.Id),
+      e &&
+        (ModelManager_1.ModelManager.BulletModel.RegisterBullet(r.uVn, e.Id),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Bullet",
@@ -503,22 +545,22 @@ class BulletController extends ControllerBase_1.ControllerBase {
             "创建子弹Notify",
             ["bulletRowName", o],
             ["skillId", l],
-            ["handleId", r.iVn?.rVn],
-            ["playerId", r.iVn?.q5n],
+            ["handleId", r.uVn?.cVn],
+            ["playerId", r.uVn?.W5n],
             ["Location", this.Mme.GetLocation()],
             ["Rotation", this.cie],
-            ["TargetId", r.sVn],
+            ["TargetId", r.CVn],
             ["CurrentTargetId", a],
           ),
-        t.Data.Render.HandOverParentEffect) &&
+        e.Data.Render.HandOverParentEffect) &&
         ((i = ModelManager_1.ModelManager.BulletModel.GetIdByBulletHandle(
-          r.cjn,
+          r.Sjn,
         )),
         (n =
           ModelManager_1.ModelManager.BulletModel.GetBulletEntityById(
             i,
           )?.GetBulletInfo()),
-        (o = t.GetBulletInfo()),
+        (o = e.GetBulletInfo()),
         n &&
           o &&
           BulletStaticFunction_1.BulletStaticFunction.HandOverEffects(n, o),
@@ -526,39 +568,39 @@ class BulletController extends ControllerBase_1.ControllerBase {
         Log_1.Log.Debug("Bullet", 18, "接手父子弹特效", ["parentBulletId", i]);
     }
   }
-  static DestroyBulletNotify(e, t) {
+  static DestroyBulletNotify(t, e) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Bullet",
         18,
         "删除子弹Notify",
-        ["handleId", t?.iVn?.rVn],
-        ["playerId", t?.iVn?.q5n],
+        ["handleId", e?.uVn?.cVn],
+        ["playerId", e?.uVn?.W5n],
       ),
-      ModelManager_1.ModelManager.BulletModel.DestroyBulletRemote(t.iVn, t.JDs);
+      ModelManager_1.ModelManager.BulletModel.DestroyBulletRemote(e.uVn, e.oAs);
   }
-  static ModifyBulletParamsNotify(e, t) {
+  static ModifyBulletParamsNotify(t, e) {
     var r = ModelManager_1.ModelManager.BulletModel.GetIdByBulletHandle(
-        t?.vjn?.iVn,
+        e?.Ajn?.uVn,
       ),
       r = EntitySystem_1.EntitySystem.Get(r),
-      t = MathUtils_1.MathUtils.LongToNumber(t.vjn.sVn),
-      l = ModelManager_1.ModelManager.CreatureModel.GetEntity(t),
-      t =
+      e = MathUtils_1.MathUtils.LongToNumber(e.Ajn.CVn),
+      l = ModelManager_1.ModelManager.CreatureModel.GetEntity(e),
+      e =
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Bullet",
             21,
             "收到修改子弹目标通知",
             ["新的目标id", l.Id],
-            ["CreatureId", t],
+            ["CreatureId", e],
           ),
         r.GetBulletInfo());
-    t && t.SetTargetById(l.Id);
+    e && e.SetTargetById(l.Id);
   }
   static t7o(
-    e,
     t,
+    e,
     r,
     l,
     o,
@@ -571,10 +613,12 @@ class BulletController extends ControllerBase_1.ControllerBase {
     f = void 0,
     c = void 0,
   ) {
-    StatDefine_1.BATTLESTAT_ENABLED;
-    e = this.CreateBullet(
-      e,
+    StatDefine_1.BATTLESTAT_ENABLED &&
+      (this.GetBulletCreateStat(e).Start(),
+      StatDefine_1.battleStat.BulletCreate.Start());
+    t = this.CreateBullet(
       t,
+      e,
       r,
       {
         SkillId: l,
@@ -590,26 +634,31 @@ class BulletController extends ControllerBase_1.ControllerBase {
       },
       a,
     );
-    return StatDefine_1.BATTLESTAT_ENABLED, e;
+    return (
+      StatDefine_1.BATTLESTAT_ENABLED &&
+        (StatDefine_1.battleStat.BulletCreate.Stop(),
+        this.GetBulletCreateStat(e).Stop()),
+      t
+    );
   }
-  static Z9o(e, t, r) {
-    if (isNaN(t))
+  static Z9o(t, e, r) {
+    if (isNaN(e))
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Bullet", 21, "pos NAN！", ["bulletRowName", r]);
     else {
-      e = e.GetComponent(0).CustomServerEntityIds;
-      if (t > e.length || 0 === t)
+      t = t.GetComponent(0).CustomServerEntityIds;
+      if (e > t.length || 0 === e)
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Bullet",
             21,
             "pos不合法！",
             ["bulletRowName", r],
-            ["pos", t],
-            ["serverEntityIds", e],
+            ["pos", e],
+            ["serverEntityIds", t],
           );
       else {
-        var l = ModelManager_1.ModelManager.CreatureModel.GetEntity(e[t - 1]);
+        var l = ModelManager_1.ModelManager.CreatureModel.GetEntity(t[e - 1]);
         if (l) return l.Id;
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -617,32 +666,52 @@ class BulletController extends ControllerBase_1.ControllerBase {
             21,
             "无法找到伴生物实体",
             ["bulletRowName", r],
-            ["pos", t],
-            ["serverEntityIds", e],
+            ["pos", e],
+            ["serverEntityIds", t],
           );
       }
     }
     return 0;
   }
-  static GetBulletCreateStat(e) {
-    let t = this.i7o.get(e);
-    return t || ((t = void 0), this.i7o.set(e, t)), t;
+  static GetBulletCreateStat(t) {
+    let e = this.i7o.get(t);
+    return (
+      e || ((e = Stats_1.Stat.Create("BulletCreate" + t)), this.i7o.set(t, e)),
+      e
+    );
   }
-  static GetBulletDestroyStat(e) {
-    let t = this.o7o.get(e);
-    return t || ((t = void 0), this.o7o.set(e, t)), t;
+  static GetBulletDestroyStat(t) {
+    let e = this.o7o.get(t);
+    return (
+      e || ((e = Stats_1.Stat.Create("BulletDestroy" + t)), this.o7o.set(t, e)),
+      e
+    );
   }
-  static GetBulletMoveTickStat(e) {
-    let t = this.r7o.get(e);
-    return t || ((t = void 0), this.r7o.set(e, t)), t;
+  static GetBulletMoveTickStat(t) {
+    let e = this.r7o.get(t);
+    return (
+      e ||
+        ((e = Stats_1.Stat.Create("BulletMoveTick" + t)), this.r7o.set(t, e)),
+      e
+    );
   }
-  static GetBulletCollisionTickStat(e) {
-    let t = this.n7o.get(e);
-    return t || ((t = void 0), this.n7o.set(e, t)), t;
+  static GetBulletCollisionTickStat(t) {
+    let e = this.n7o.get(t);
+    return (
+      e ||
+        ((e = Stats_1.Stat.Create("BulletCollisionTick" + t)),
+        this.n7o.set(t, e)),
+      e
+    );
   }
-  static GetBulletCollisionAfterTickStat(e) {
-    let t = this.s7o.get(e);
-    return t || ((t = void 0), this.s7o.set(e, t)), t;
+  static GetBulletCollisionAfterTickStat(t) {
+    let e = this.s7o.get(t);
+    return (
+      e ||
+        ((e = Stats_1.Stat.Create("BulletCollisionAfterTick" + t)),
+        this.s7o.set(t, e)),
+      e
+    );
   }
   static GetSceneBulletOwner() {
     return ModelManager_1.ModelManager.CreatureModel.GetEntity(
@@ -657,14 +726,14 @@ class BulletController extends ControllerBase_1.ControllerBase {
   (BulletController.r7o = new Map()),
   (BulletController.n7o = new Map()),
   (BulletController.s7o = new Map()),
-  (BulletController.bJe = (e, t) => {
-    if (t) {
-      e = ModelManager_1.ModelManager.BulletModel.GetBulletSetByAttacker(e);
-      if (e)
-        for (const o of e) {
+  (BulletController.bJe = (t, e) => {
+    if (e) {
+      t = ModelManager_1.ModelManager.BulletModel.GetBulletSetByAttacker(t);
+      if (t)
+        for (const o of t) {
           var r,
             l = o.GetBulletInfo();
-          t === l.BulletInitParams.SkillId &&
+          e === l.BulletInitParams.SkillId &&
             ((r = l.BulletDataMain).Move.IsDetachOnSkillEnd &&
               l.Actor.K2_DetachFromActor(1, 1, 1),
             r.Base.DestroyOnSkillEnd) &&
@@ -673,36 +742,30 @@ class BulletController extends ControllerBase_1.ControllerBase {
         }
     }
   }),
-  (BulletController.zpe = (e, t) => {
-    t && BulletConfig_1.BulletConfig.RemoveCacheBulletDataByEntityId(t.Id);
+  (BulletController.zpe = (t, e) => {
+    e && BulletConfig_1.BulletConfig.RemoveCacheBulletDataByEntityId(e.Id);
   }),
   (BulletController.nye = () => {
     ModelManager_1.ModelManager.BulletModel.WaitSceneBulletOwnerInit();
   }),
-  (BulletController.$9o = void 0),
+  (BulletController.$9o = Stats_1.Stat.Create("BulletConfigGetData")),
   (BulletController.Mme = Transform_1.Transform.Create()),
   (BulletController.cie = Rotator_1.Rotator.Create()),
   (BulletController.e7o = Quat_1.Quat.Create()),
   __decorate(
-    [(0, PerformanceDecorators_1.TickPerformanceEx)("Bullet", !1, 0)],
-    BulletController,
-    "CreateBullet",
-    null,
-  ),
-  __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("uFn")],
+    [CombatMessage_1.CombatNet.SyncHandle("MFn")],
     BulletController,
     "CreateBulletNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("cFn")],
+    [CombatMessage_1.CombatNet.SyncHandle("SFn")],
     BulletController,
     "DestroyBulletNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("PFn")],
+    [CombatMessage_1.CombatNet.SyncHandle("FFn")],
     BulletController,
     "ModifyBulletParamsNotify",
     null,

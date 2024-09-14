@@ -28,13 +28,13 @@ class LoopScrollView {
       (this.fNo = !1),
       (this.pjt = !1),
       (this.gWt = new Queue_1.Queue()),
-      (this.pIa = !1),
+      (this.fAa = !1),
       (this.pNo = (t, i) => {
         this.uGo.CreateGridProxy(t, i);
       }),
       (this.vNo = (t, i) => {
         const s = this.uGo.CreateGridProxyAsync(t, i);
-        this.pIa
+        this.fAa
           ? this.mNo.push(s)
           : (this.mNo.push(s),
             s.then(() => {
@@ -303,13 +303,13 @@ class LoopScrollView {
         ? ((this.Iei = -1),
           (this.NCi = -1),
           (this.dNo = t),
-          (this.pIa = !0),
+          (this.fAa = !0),
           (this.mNo.length = 0),
           this.cNo.RefreshByData(s, t, i),
           await Promise.all(this.mNo),
           0 < this.mNo.length &&
             ((this.mNo.length = 0), this.cNo.RefreshByData(s, t, i)),
-          (this.pIa = !1),
+          (this.fAa = !1),
           (this.fNo = !0))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(

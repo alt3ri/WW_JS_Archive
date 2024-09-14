@@ -23,7 +23,7 @@ class GachaShareResultItem extends GridProxyAbstract_1.GridProxyAbstract {
   Refresh(e) {
     this.xKt?.Update(e), this.xKt?.RefreshShare();
     (e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-      e.WVn.f8n,
+      e.e9n.L8n,
     ).QualityId),
       this.GetItem(1).SetUIActive(e < 4),
       this.GetTexture(2).SetUIActive(4 <= e),

@@ -168,7 +168,7 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
           e.BindOnExtendToggleClicked((e) => {
             e = e.Data;
             ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-              e.f8n,
+              e.L8n,
             );
           }),
           e
@@ -267,7 +267,7 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       !1)
     );
   }
-  j2n(e) {
+  Z2n(e) {
     var i = CommonManager_1.CommonManager.GetCurrentRoleId();
     i && this.gGt.SetRoleTexture(i, e);
   }
@@ -288,8 +288,8 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       t = 0;
     e = e.filter(
       (e) =>
-        e.f8n !== ComposeController_1.ComposeController.ComposeCoinId ||
-        ((i = !0), (t = e.MVn), !1),
+        e.L8n !== ComposeController_1.ComposeController.ComposeCoinId ||
+        ((i = !0), (t = e.UVn), !1),
     );
     return [i, t, e];
   }
@@ -368,10 +368,10 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     this.fGt && this.AGt(this.fGt);
   }
   RefreshProficiencyAndHelpRole(e) {
-    this.MTi(e), this.j2n(e.ItemId);
+    this.MTi(e), this.Z2n(e.ItemId);
   }
   RefreshHelpRole() {
-    this.j2n(this.fGt.ItemId);
+    this.Z2n(this.fGt.ItemId);
   }
   AGt(e) {
     e.ExistEndTime <= 0
@@ -423,14 +423,14 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
           : this.GetText(11).SetText(i.toString()),
         this.SetTextureByPath(t.IconSmall, this.GetTexture(13)));
   }
-  W2n(e, i = !1) {
+  eNn(e, i = !1) {
     i ? this.gGt.SetExpVisible(e) : this.gGt.SetActive(e);
   }
   RefreshReagentProduction(e) {
     this.AGt(e),
       this.PGt(e),
       this.tkt(e),
-      this.W2n(!0, !0),
+      this.eNn(!0, !0),
       this.UGt("Material"),
       this.MTi(e),
       this.STi(e);
@@ -440,7 +440,7 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       this.PGt(e),
       this.tkt(e),
       this.UGt("Prop"),
-      this.W2n(!1, !0),
+      this.eNn(!1, !0),
       this.STi(e);
   }
   RefreshPurification(e) {
@@ -448,7 +448,7 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       this.PGt(e),
       this.tkt(e),
       this.UGt("Material"),
-      this.W2n(!1, !0),
+      this.eNn(!1, !0),
       this.STi(e),
       e.IsUnlock <= 0 && this.WGe.Refresh(0);
   }

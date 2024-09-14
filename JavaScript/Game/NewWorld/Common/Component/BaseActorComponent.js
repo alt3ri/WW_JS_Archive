@@ -3,19 +3,19 @@ var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, s) {
     var o,
-      r = arguments.length,
-      h =
-        r < 3
+      h = arguments.length,
+      r =
+        h < 3
           ? i
           : null === s
             ? (s = Object.getOwnPropertyDescriptor(i, e))
             : s;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      h = Reflect.decorate(t, i, e, s);
+      r = Reflect.decorate(t, i, e, s);
     else
       for (var n = t.length - 1; 0 <= n; n--)
-        (o = t[n]) && (h = (r < 3 ? o(h) : 3 < r ? o(i, e, h) : o(i, e)) || h);
-    return 3 < r && h && Object.defineProperty(i, e, h), h;
+        (o = t[n]) && (r = (h < 3 ? o(r) : 3 < h ? o(i, e, r) : o(i, e)) || r);
+    return 3 < h && r && Object.defineProperty(i, e, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseActorComponent = exports.DisableEntityHandle = void 0);
@@ -24,7 +24,6 @@ const Log_1 = require("../../../../Core/Common/Log"),
   Entity_1 = require("../../../../Core/Entity/Entity"),
   EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
-  CycleCounter_1 = require("../../../../Core/Performance/CycleCounter"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   Quat_1 = require("../../../../Core/Utils/Math/Quat"),
   Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
@@ -123,7 +122,8 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       (this.Vrn = void 0),
       (this.Hrn = void 0),
       (this.jrn = void 0),
-      (this.LastActorLocation = Vector_1.Vector.Create());
+      (this.LastActorLocation = Vector_1.Vector.Create()),
+      (this.vJ = void 0);
   }
   get IsAutonomousProxy() {
     return this.Nrn;
@@ -156,7 +156,13 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
     );
   }
   OnStart() {
-    return (this.MoveComp = this.Entity.GetComponent(37)), !0;
+    return (
+      (this.MoveComp = this.Entity.GetComponent(38)),
+      (this.vJ = ModelManager_1.ModelManager.CreatureModel?.GetEntityById(
+        this.Entity.Id,
+      )),
+      !0
+    );
   }
   OnActivate() {
     this.ActorInternal.Kuro_SetRole(this.Orn ? 2 : 1),
@@ -327,10 +333,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
     this.LastActorLocation.DeepCopy(this.ActorLocationProxy);
   }
   SetActorLocation(t, i = "unknown", e = !0) {
-    if (
-      (CycleCounter_1.CycleCounter.Start("TS_SetActorLocation"),
-      !MathUtils_1.MathUtils.IsValidVector(t))
-    )
+    if (!MathUtils_1.MathUtils.IsValidVector(t))
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -353,7 +356,6 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
         this.DebugMovementComp.MarkDebugRecord(i + ".SetActorLocation", 1),
       this.ResetLocationCachedTime(),
       this.OnTeleport(),
-      CycleCounter_1.CycleCounter.Stop("TS_SetActorLocation"),
       this.ActorInternal?.IsValid() &&
         ModelManager_1.ModelManager.SundryModel.SceneCheckOn &&
         Log_1.Log.CheckError() &&
@@ -369,9 +371,8 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   }
   TeleportTo(t, i, e = "unknown") {
     if (
-      (CycleCounter_1.CycleCounter.Start("TS_TeleportTo"),
       !MathUtils_1.MathUtils.IsValidVector(t) ||
-        !MathUtils_1.MathUtils.IsValidRotator(i))
+      !MathUtils_1.MathUtils.IsValidRotator(i)
     )
       return (
         Log_1.Log.CheckError() &&
@@ -395,7 +396,6 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
         this.DebugMovementComp.MarkDebugRecord(e + ".TeleportTo", 1, !0),
       this.ResetLocationCachedTime(),
       this.OnTeleport(),
-      CycleCounter_1.CycleCounter.Stop("TS_TeleportTo"),
       this.ActorInternal?.IsValid() &&
         ModelManager_1.ModelManager.SundryModel.SceneCheckOn &&
         Log_1.Log.CheckError() &&
@@ -413,7 +413,6 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
     (this.CachedTransformTime = -1), (this.CachedLocationTime = -1);
   }
   SetActorRotation(t, i = "unknown", e = !0) {
-    CycleCounter_1.CycleCounter.Start("TS_SetActorRotation");
     let s = !1;
     return (
       this.ActorInternal?.IsValid() &&
@@ -421,7 +420,6 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
         this.DebugMovementComp) &&
         this.DebugMovementComp.MarkDebugRecord(i + ".SetActorRotation", 1),
       this.Qrn(),
-      CycleCounter_1.CycleCounter.Stop("TS_SetActorRotation"),
       s
     );
   }
@@ -434,49 +432,45 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   }
   SetActorLocationAndRotation(t, i, e = "unknown", s = !1) {
     var o;
-    return (
-      CycleCounter_1.CycleCounter.Start("TS_SetActorLocationAndRotation"),
-      MathUtils_1.MathUtils.IsValidVector(t)
-        ? ((o = !1),
-          this.CachedDesiredActorLocation.FromUeVector(t),
-          (this.IsChangingLocation = !0),
-          (o = this.ActorInternal.K2_SetActorLocationAndRotation(
-            t,
-            i,
-            s,
-            void 0,
-            !0,
-          )),
-          (this.IsChangingLocation = !1),
-          this.ResetTransformCachedTime(),
-          this.OnTeleport(),
-          this.DebugMovementComp &&
-            this.DebugMovementComp.MarkDebugRecord(
-              e + ".SetActorLocationAndRotation",
-              1,
-            ),
-          CycleCounter_1.CycleCounter.Stop("TS_SetActorLocationAndRotation"),
-          ModelManager_1.ModelManager.SundryModel.SceneCheckOn &&
-            Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "Test",
-              58,
-              "[SetActorLocationAndRotation]",
-              ["location:", t],
-              ["rotation:", i],
-              ["owner", this?.Owner],
-            ),
-          o)
-        : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "Entity",
-              3,
-              "SetActorLocationAndRotation的location无效",
-              ["location", t],
-              ["CreatureDataId", this.CreatureData?.GetCreatureDataId()],
-            ),
-          !1)
-    );
+    return MathUtils_1.MathUtils.IsValidVector(t)
+      ? ((o = !1),
+        this.CachedDesiredActorLocation.FromUeVector(t),
+        (this.IsChangingLocation = !0),
+        (o = this.ActorInternal.K2_SetActorLocationAndRotation(
+          t,
+          i,
+          s,
+          void 0,
+          !0,
+        )),
+        (this.IsChangingLocation = !1),
+        this.ResetTransformCachedTime(),
+        this.OnTeleport(),
+        this.DebugMovementComp &&
+          this.DebugMovementComp.MarkDebugRecord(
+            e + ".SetActorLocationAndRotation",
+            1,
+          ),
+        ModelManager_1.ModelManager.SundryModel.SceneCheckOn &&
+          Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Test",
+            58,
+            "[SetActorLocationAndRotation]",
+            ["location:", t],
+            ["rotation:", i],
+            ["owner", this?.Owner],
+          ),
+        o)
+      : (Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Entity",
+            3,
+            "SetActorLocationAndRotation的location无效",
+            ["location", t],
+            ["CreatureDataId", this.CreatureData?.GetCreatureDataId()],
+          ),
+        !1);
   }
   SetActorTransform(t, i = "unknown", e = !0) {
     let s = !1;
@@ -580,7 +574,14 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
           EventDefine_1.EEventName.OnSetActorHidden,
           this.Entity.Id,
           !1,
-        )),
+        ),
+        this.vJ) &&
+        EventSystem_1.EventSystem.EmitWithTarget(
+          this.vJ,
+          EventDefine_1.EEventName.OnSetActorHidden,
+          this.Entity.Id,
+          !1,
+        ),
       i
     );
   }
@@ -628,9 +629,17 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
             EventDefine_1.EEventName.OnSetActorHidden,
             this.Entity.Id,
             t,
+          ),
+          EventSystem_1.EventSystem.EmitWithTarget(
+            ModelManager_1.ModelManager.CreatureModel.GetEntityById(
+              this.Entity.Id,
+            ),
+            EventDefine_1.EEventName.OnSetActorHidden,
+            this.Entity.Id,
+            t,
           );
       };
-      this.Entity.GetComponent(101)
+      this.Entity.GetComponent(102)
         ? TimerSystem_1.TimerSystem.Next(() => {
             this.ActorInternal?.IsValid() && i();
           })
@@ -668,7 +677,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
     return this.DisableCollisionHandle.DumpDisableInfo();
   }
   DumpDisableTickInfo() {
-    var t = this.Entity.GetComponent(98);
+    var t = this.Entity.GetComponent(99);
     return t ? t.DumpDisableTickInfo() : "";
   }
   SetActorVisible(t, i) {
@@ -684,10 +693,10 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   SetTickEnable(t, i) {
     t
       ? this.Vrn &&
-        (this.Entity.GetComponent(98)?.EnableTickWithLog(this.Vrn, i),
+        (this.Entity.GetComponent(99)?.EnableTickWithLog(this.Vrn, i),
         (this.Vrn = void 0))
       : this.Vrn ||
-        (this.Vrn = this.Entity.GetComponent(98)?.DisableTickWithLog(i));
+        (this.Vrn = this.Entity.GetComponent(99)?.DisableTickWithLog(i));
   }
   OnClear() {
     return (

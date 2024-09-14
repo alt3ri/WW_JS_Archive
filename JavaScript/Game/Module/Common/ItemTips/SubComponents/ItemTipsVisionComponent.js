@@ -90,7 +90,9 @@ class TipsVisionComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
       this.GetText(0).SetText(i.Cost.toString()),
         this.GetText(1).SetUIActive(void 0 !== i.UpgradeLevel),
         this.GetText(1).SetText(i.UpgradeLevel),
-        i.IncId && this.wxt.Refresh(i.IncId, i.CanClickLockButton),
+        i.IncId &&
+          (this.wxt.Refresh(i.IncId, i.CanClickLockButton),
+          this.wxt.SetDeprecateToggleVisible(i.CanDeprecate())),
         this.wxt?.SetUiActive(0 < i.IncId),
         this.Bxt.RebuildLayoutByDataNew(i.AttributeData),
         i.VisionDetailInfoComponentData.DataBase &&

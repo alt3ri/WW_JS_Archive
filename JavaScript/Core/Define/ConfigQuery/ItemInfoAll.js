@@ -17,27 +17,36 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0;
+const initStat = Stats_1.Stat.Create("configItemInfoAll.Init"),
+  getConfigListStat = Stats_1.Stat.Create("configItemInfoAll.GetConfigList");
 exports.configItemInfoAll = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfigList: (o = !0) => {
     var n;
     if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
+      (ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start(),
+      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair)))
     ) {
       if (o) {
-        var e = KEY_PREFIX + ")";
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (t) return t;
+        var t = KEY_PREFIX + ")";
+        const e = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (e)
+          return (
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
+          );
       }
-      const t = new Array();
+      const e = new Array();
       for (;;) {
         if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
@@ -50,20 +59,28 @@ exports.configItemInfoAll = {
           )),
           !n)
         )
-          return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
+          return (
+            ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            getConfigListStat.Stop(),
+            void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+          );
         i = ItemInfo_1.ItemInfo.getRootAsItemInfo(
           new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
         );
-        t.push(i);
+        e.push(i);
       }
       return (
         o &&
-          ((e = KEY_PREFIX + ")"),
-          ConfigCommon_1.ConfigCommon.SaveConfig(e, t, t.length)),
+          ((t = KEY_PREFIX + ")"),
+          ConfigCommon_1.ConfigCommon.SaveConfig(t, e, e.length)),
         ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-        t
+        getConfigListStat.Stop(),
+        ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+        e
       );
     }
+    getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=ItemInfoAll.js.map

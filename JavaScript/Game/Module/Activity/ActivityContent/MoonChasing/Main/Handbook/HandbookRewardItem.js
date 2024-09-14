@@ -13,10 +13,10 @@ const UE = require("ue"),
 class HandbookRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.O9s = void 0),
+      (this._7s = void 0),
       (this.Pe = void 0),
       (this.zkt = () => {
-        switch (this.O9s) {
+        switch (this._7s) {
           case 0:
             this.Zkt(!1);
             break;
@@ -61,7 +61,7 @@ class HandbookRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
         ModelManager_1.ModelManager.MoonChasingModel.GetHandbookUnlockCount()),
       (s = e.GetState(s)),
       this.SetRewardGoalValue(s, e.Goal),
-      this.RefreshRewardState(s, void 0 === this.O9s));
+      this.RefreshRewardState(s, void 0 === this._7s));
   }
   SetRewardGoalValue(t, r) {
     var s = [this.GetText(0), this.GetText(10), this.GetText(9)];
@@ -72,7 +72,7 @@ class HandbookRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   RefreshRewardState(t, e) {
     var r = this.GetUiNiagara(7);
-    if ((r.SetUIActive(!1), r.Deactivate(), e || this.O9s !== t)) {
+    if ((r.SetUIActive(!1), r.Deactivate(), e || this._7s !== t)) {
       var s = [this.GetSprite(2), this.GetSprite(4), this.GetSprite(3)];
       for (let e = 0; e < s.length; e++) s[e].SetUIActive(e === t);
       this.GetItem(8).SetUIActive(1 === t);
@@ -84,7 +84,7 @@ class HandbookRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetSprite(5).SetColor(i),
         this.GetUiNiagara(6).SetAlpha(1 === t ? 1 : 0),
         2 !== t || e || (r.SetUIActive(!0), r.ActivateSystem(!0)),
-        (this.O9s = t);
+        (this._7s = t);
     }
   }
   e2t() {

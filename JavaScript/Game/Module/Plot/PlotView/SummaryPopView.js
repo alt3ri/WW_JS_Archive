@@ -6,10 +6,10 @@ const UE = require("ue"),
 class SummaryPopView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this._ca = !1),
+      (this.cCa = !1),
       (this.OnConfirm = () => {
-        if (!this._ca) {
-          this._ca = !0;
+        if (!this.cCa) {
+          this.cCa = !0;
           const s = this.OpenParam.ConfirmFunc;
           this.CloseMe(() => {
             s?.();
@@ -17,8 +17,8 @@ class SummaryPopView extends UiViewBase_1.UiViewBase {
         }
       }),
       (this.OnCancel = () => {
-        if (!this._ca) {
-          this._ca = !0;
+        if (!this.cCa) {
+          this.cCa = !0;
           const s = this.OpenParam.CancelFunc;
           this.CloseMe(() => {
             s?.();
@@ -40,7 +40,7 @@ class SummaryPopView extends UiViewBase_1.UiViewBase {
       ]);
   }
   OnStart() {
-    this._ca = !1;
+    this.cCa = !1;
     var s = this.OpenParam;
     this.GetText(3).SetText(s.Text);
   }

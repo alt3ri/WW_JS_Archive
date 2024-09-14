@@ -13,8 +13,10 @@ class SpecialFormation {
     return this.type();
   }
   get CharacterId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.characteridLength(), (t) =>
-      this.characterid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.characteridLength(),
+      this.characterid,
+      this,
     );
   }
   __init(t, i) {

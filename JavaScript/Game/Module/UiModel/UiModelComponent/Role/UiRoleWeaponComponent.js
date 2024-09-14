@@ -184,7 +184,10 @@ let UiRoleWeaponComponent = class UiRoleWeaponComponent extends UiModelComponent
   RefreshWeaponDa() {
     var e = this.yBr.GetBreachLevel();
     for (const t of this.IBr)
-      t.Model?.CheckGetComponent(19)?.RefreshWeaponBreachDa(e);
+      t.Model?.CheckGetComponent(19)?.RefreshWeaponBreachDa(
+        e,
+        this.yBr.GetRoleId(),
+      );
   }
   RBr() {
     if (2 === this.ywr.GetModelLoadState()) {

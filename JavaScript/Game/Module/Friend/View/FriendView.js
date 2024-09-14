@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
@@ -99,7 +100,7 @@ class FriendView extends UiViewBase_1.UiViewBase {
         }
         FriendController_1.FriendController.RequestFriendApplyHandle(
           this.C8t,
-          Protocol_1.Aki.Protocol.E5s.Proto_Approve,
+          Protocol_1.Aki.Protocol.A6s.Proto_Approve,
         );
       }),
       (this.D9t = () => {
@@ -119,7 +120,7 @@ class FriendView extends UiViewBase_1.UiViewBase {
               )?.Debug || this.C8t.push(e.Id);
             FriendController_1.FriendController.RequestFriendApplyHandle(
               this.C8t,
-              Protocol_1.Aki.Protocol.E5s.Proto_Reject,
+              Protocol_1.Aki.Protocol.A6s.Proto_Reject,
             );
           }),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
@@ -157,6 +158,14 @@ class FriendView extends UiViewBase_1.UiViewBase {
         )),
           this.bqe(this.C9t),
           this.x9t();
+      }),
+      (this.DDo = () => {
+        var e =
+          !PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.GetSdkFriendOnlyState();
+        PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.SaveSdkFriendOnlyState(
+          e,
+        ),
+          this.u8t();
       });
   }
   OnRegisterComponent() {
@@ -171,8 +180,13 @@ class FriendView extends UiViewBase_1.UiViewBase {
       [7, UE.UIItem],
       [9, UE.UIButtonComponent],
       [5, UE.UIText],
+      [10, UE.UIExtendToggle],
+      [11, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[9, this.U9t]]);
+      (this.BtnBindInfo = [
+        [9, this.U9t],
+        [10, this.DDo],
+      ]);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -228,6 +242,7 @@ class FriendView extends UiViewBase_1.UiViewBase {
       e.GetOwner(),
       this.I9t,
     )),
+      this.Jxa(),
       await this.UDt();
   }
   OnBeforeShow() {
@@ -341,23 +356,38 @@ class FriendView extends UiViewBase_1.UiViewBase {
       ),
       t = this.GetText(1),
       i = this.C9t.length;
-    let n = "FriendCount";
+    let r = "FriendCount";
     switch (ModelManager_1.ModelManager.FriendModel.FilterState) {
       case 1:
         break;
       case 2:
-        n = "FriendApplicationCount";
+        r = "FriendApplicationCount";
         break;
       case 3:
-        n = "FriendMultiplayerCount";
+        r = "FriendMultiplayerCount";
     }
-    LguiUtil_1.LguiUtil.SetLocalText(t, n, i, e),
+    LguiUtil_1.LguiUtil.SetLocalText(t, r, i, e),
       this.GetItem(4).SetUIActive(i <= 0);
   }
   bqe(e) {
     this.g9t && 0 < e.length
       ? (this.y9t?.SetUIActive(!0), this.g9t.ReloadData(e))
       : this.y9t?.SetUIActive(!1);
+  }
+  Jxa() {
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.SupportSwitchFriendShowType()
+      ? (this.GetExtendToggle(10).RootUIComp.SetUIActive(!0),
+        this.GetText(11).SetUIActive(!0),
+        this.Zxa())
+      : (this.GetExtendToggle(10).RootUIComp.SetUIActive(!1),
+        this.GetText(11).SetUIActive(!1));
+  }
+  Zxa() {
+    var e =
+      PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.GetSdkFriendOnlyState()
+        ? 1
+        : 0;
+    this.GetExtendToggle(10).SetToggleState(e);
   }
 }
 exports.FriendView = FriendView;

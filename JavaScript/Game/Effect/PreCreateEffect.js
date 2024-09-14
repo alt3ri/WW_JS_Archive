@@ -37,19 +37,25 @@ class PreCreateEffect {
       (this.jpe = new Map()),
       (this.Wpe = new Queue_1.Queue()),
       (this.Kpe = new Map()),
-      (this.Qpe = void 0),
+      (this.Qpe = Stats_1.Stat.Create("PreCreateEffect")),
       (this.yW = void 0),
       (this.Xpe = NORMAL_EFFECT_LRU_SIZE),
       (this.$pe = new Set()),
       (this.Ype = !0),
       (this.Jpe = (e, t) => {
-        e.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player &&
+        e.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player &&
           (EventSystem_1.EventSystem.AddWithTarget(
             t.Entity,
             EventDefine_1.EEventName.AiHateAddOrRemove,
             this.AiHateAddOrRemove,
           ),
-          this.$pe.add(t.Id));
+          this.$pe.add(t.Id),
+          EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+            this,
+            t,
+            EventDefine_1.EEventName.RemoveEntity,
+            this.zpe,
+          ));
       }),
       (this.zpe = (e, t) => {
         this.$pe.has(t.Id) &&
@@ -57,6 +63,12 @@ class PreCreateEffect {
             t.Entity,
             EventDefine_1.EEventName.AiHateAddOrRemove,
             this.AiHateAddOrRemove,
+          ),
+          EventSystem_1.EventSystem.RemoveWithTargetUseKey(
+            this,
+            t,
+            EventDefine_1.EEventName.RemoveEntity,
+            this.zpe,
           ),
           this.$pe.delete(t.Id),
           this.jpe.has(t.Id)) &&
@@ -90,10 +102,6 @@ class PreCreateEffect {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CreateEntity,
         this.Jpe,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.RemoveEntity,
-        this.zpe,
       );
   }
   Clear() {
@@ -105,10 +113,7 @@ class PreCreateEffect {
         EventDefine_1.EEventName.CreateEntity,
         this.Jpe,
       ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.RemoveEntity,
-        this.zpe,
-      );
+      EventSystem_1.EventSystem.RemoveAllTargetUseKey(this);
   }
   static IsNeedPreCreateEffect() {
     return (
@@ -119,7 +124,9 @@ class PreCreateEffect {
   }
   Tick(e) {
     PreCreateEffect.IsOpenPool &&
-      (!this.Wpe.Empty && PreCreateEffect.IsNeedPreCreateEffect() && this.tve(),
+      (!this.Wpe.Empty &&
+        PreCreateEffect.IsNeedPreCreateEffect() &&
+        (this.Qpe.Start(), this.tve(), this.Qpe.Stop()),
       this.ive());
   }
   ive() {
@@ -145,7 +152,7 @@ class PreCreateEffect {
   ove(e) {
     EntitySystem_1.EntitySystem.Get(e.EntityId)
       ?.GetComponent(0)
-      ?.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player
+      ?.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player
       ? this.Wpe.Push(e)
       : (this.jpe.has(e.EntityId) ||
           this.jpe.set(e.EntityId, new Queue_1.Queue()),

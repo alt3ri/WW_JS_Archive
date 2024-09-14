@@ -17,16 +17,30 @@ class GiftPackage {
   get Content() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.contentLength(),
-      (t) => this.content(t)?.key(),
-      (t) => this.content(t)?.value(),
+      this.contentKey,
+      this.contentValue,
+      this,
     );
+  }
+  contentKey(t) {
+    return this.content(t)?.key();
+  }
+  contentValue(t) {
+    return this.content(t)?.value();
   }
   get Weight() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.weightLength(),
-      (t) => this.weight(t)?.key(),
-      (t) => this.weight(t)?.value(),
+      this.weightKey,
+      this.weightValue,
+      this,
     );
+  }
+  weightKey(t) {
+    return this.weight(t)?.key();
+  }
+  weightValue(t) {
+    return this.weight(t)?.value();
   }
   get AvailableNum() {
     return this.availablenum();

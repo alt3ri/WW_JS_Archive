@@ -1,86 +1,77 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.statDecorator = exports.Stat = void 0);
-const UE = require("ue"),
+  (exports.Stat = void 0);
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   CycleCounter_1 = require("../Performance/CycleCounter"),
   Macro_1 = require("../Preprocessor/Macro"),
-  Log_1 = require("./Log");
+  Log_1 = require("./Log"),
+  MAX_CALL_DEPTH = 10;
 class Stat {
-  constructor(t, r) {
-    (this.Name = t),
-      (this.Desc = r),
-      (this.E9 = 1),
-      (this.ac = 0),
-      (this.S9 = -1);
+  constructor(t, e = -1, a = !1) {
+    (this.ac = 0),
+      (this.Y7a = ""),
+      (this.S9 = -1),
+      (this.eza = !1),
+      (this.Y7a = t),
+      (this.S9 = e),
+      (this.eza = a);
   }
   static get Enable() {
     return CycleCounter_1.CycleCounter.IsEnabled;
   }
-  static CreateStatOfType(t, r, e, a) {
-    if (!Stat.Enable) return Stat.y9;
-    if (!r || 0 === r.length)
+  static Create(t, e = "", a = "") {
+    return Stat.tza(t, !0, e, a);
+  }
+  static tza(t, e, a = "", r = "") {
+    if (!t || 0 === t.length)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Stat", 1, "统计创建失败，名字为空"),
-        Stat.y9
+        Stat.iza
       );
-    let o = r;
-    o.length > Stat.I9 &&
+    Stat.m6?.Start();
+    let S = t;
+    S.length > CycleCounter_1.STAT_MAX_NAME_LENGTH &&
       (Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Stat", 31, "名字过长", ["name", r]),
-      (o = r.substring(0, Stat.I9)));
-    var s = new Stat(o, e);
-    switch (((s.E9 = t), (s.ac = 2), t)) {
-      case 1:
-        s.S9 = UE.KuroJsStatsLibrary.CreateCycleCounter(o, e, a);
-        break;
-      case 2:
-        UE.KuroJsStatsLibrary.CreateSimpleSeconds(o, e, a, !0);
-        break;
-      case 3:
-        UE.KuroJsStatsLibrary.CreateSimpleSeconds(o, e, a, !1);
-    }
-    return s;
+        Log_1.Log.Warn("Stat", 31, "Stat名字过长", ["name", t]),
+      (S = t.substring(0, CycleCounter_1.STAT_MAX_NAME_LENGTH)));
+    (t = Stat.Enable ? UE.KuroJsStatsLibrary.CreateCycleCounter(S, a, r) : -1),
+      (a = new Stat(S, t, e));
+    return Stat.Enable && (a.ac = 2), Stat.m6?.Stop(), a;
+  }
+  Start() {
+    Stat.lJa &&
+      this.eza &&
+      Stat.J7a < MAX_CALL_DEPTH &&
+      cpp_1.FKuroPerfSightHelper.SafePushCall(this.Y7a),
+      Stat.J7a++,
+      0 !== this.ac &&
+        ((this.ac = 1),
+        UE.KuroJsStatsLibrary.StartCycleCounterByIndex(this.S9),
+        CycleCounter_1.CycleCounter.CheckStart(this.Y7a));
+  }
+  Stop() {
+    Stat.J7a--,
+      Stat.lJa &&
+        this.eza &&
+        Stat.J7a < MAX_CALL_DEPTH &&
+        cpp_1.FKuroPerfSightHelper.SafePopCall(this.Y7a),
+      0 !== this.ac &&
+        ((this.ac = 2),
+        CycleCounter_1.CycleCounter.IsPassedStackCheck(this.Y7a)) &&
+        UE.KuroJsStatsLibrary.StopCycleCounter();
   }
 }
-function statDecorator(o) {
-  return (t, r, e) => {
-    const a = e.value;
-    e.value = function (...t) {
-      if (!Stat.Enable) return a.call(this, ...t);
-      try {
-        return a.call(this, ...t);
-      } catch (t) {
-        t instanceof Error
-          ? Log_1.Log.CheckError() &&
-            Log_1.Log.ErrorWithStack(
-              "Stat",
-              1,
-              "方法执行异常",
-              t,
-              ["name", o],
-              ["error", t.message],
-            )
-          : Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "Stat",
-              1,
-              "事件处理方法执行异常",
-              ["name", o],
-              ["error", t],
-            );
-      }
-    };
-  };
-}
-((exports.Stat = Stat).T9 = 5),
-  (Stat.I9 = 800),
-  (Stat.y9 = new Stat("", "")),
+((exports.Stat = Stat).EnableCreateWithStack = !0),
+  (Stat.T9 = 5),
+  (Stat.J7a = 0),
+  (Stat.iza = new Stat("")),
   (Stat.m6 = void 0),
-  (Stat.L9 = void 0),
-  (Stat.P8 = void 0),
-  (Stat.F8 = (t, r) => r),
+  (Stat.L9 = Stat.Create("Stat.CreateWithStack")),
+  (Stat.P8 = Stat.Create("Stat.GetStack")),
+  (Stat.lJa = !0),
+  (Stat.F8 = (t, e) => e),
   (Stat.V8 = { stack: void 0 }),
-  Log_1.Log.InitStat(Stat),
-  (exports.statDecorator = statDecorator);
+  Log_1.Log.InitStat(Stat);
 //# sourceMappingURL=Stats.js.map

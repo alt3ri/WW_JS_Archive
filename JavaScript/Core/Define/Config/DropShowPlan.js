@@ -10,19 +10,24 @@ class DropShowPlan {
     return this.id();
   }
   get Force() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.forceLength(), (t) =>
-      this.force(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.forceLength(),
+      this.force,
+      this,
     );
   }
   get Angle() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.angleLength(), (t) =>
-      this.angle(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.angleLength(),
+      this.angle,
+      this,
     );
   }
   get VerticalAngle() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.verticalangleLength(),
-      (t) => this.verticalangle(t),
+      this.verticalangle,
+      this,
     );
   }
   get ShowBg() {

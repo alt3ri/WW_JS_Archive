@@ -28,7 +28,7 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
       (this.Delegate = void 0),
       (this.ValueDelegate = void 0),
       (this.TimeHandle = void 0),
-      (this.Oaa = !1),
+      (this.k1a = !1),
       (this.OAn = (i) => {
         for (const t of this.CharacterListModule.GetItemList())
           t.RefreshProgressAdd(i),
@@ -41,10 +41,10 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
         this.RemoveTimerHandle() && this.r2e();
       }),
       (this.i2e = () => new CharacterItemWithAdd_1.CharacterItemWithAdd()),
-      (this.baa = () => {
-        this.S0a(), this.E0a();
+      (this.q1a = () => {
+        this.Ypa(), this.Jpa();
       }),
-      (this.Zga = (i) => {
+      (this.Kpa = (i) => {
         for (const t of this.CharacterListModule.GetItemList())
           t.RefreshCurrentValue(i);
       });
@@ -86,10 +86,10 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
         ));
     i.LastData.SetCharacterDataByEditTeamData(t);
   }
-  get Naa() {
+  get N1a() {
     return this.OpenParam.IsMoreSuccessful;
   }
-  async Vaa() {
+  async H1a() {
     var i = this.OpenParam;
     (this.HelperRoleItem = new BusinessShopRoleItem_1.BusinessShopRoleItem()),
       this.HelperRoleItem.Refresh(i.RoleId),
@@ -99,7 +99,7 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
       await this.HelperRoleItem.RefreshAsync(),
       this.HelperRoleItem.SwitchRoleSpineAnim("working", 0.1);
   }
-  async kaa() {
+  async F1a() {
     this.PlayerRoleItem = new BusinessShopRoleItem_1.BusinessShopRoleItem();
     var i =
       ModelManager_1.ModelManager.MoonChasingBusinessModel.GetPlayerRoleId();
@@ -110,22 +110,22 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
       await this.PlayerRoleItem.RefreshAsync(),
       this.PlayerRoleItem.SwitchRoleSpineAnim("working", 0.1);
   }
-  Haa() {
+  j1a() {
     var i = this.OpenParam,
       t = i.RoleId,
       t =
         ModelManager_1.ModelManager.MoonChasingBusinessModel.GetEditTeamDataById(
           t,
         );
-    (this.Oaa = t.Level > i.LastData.Level),
-      (this.Oaa
+    (this.k1a = t.Level > i.LastData.Level),
+      (this.k1a
         ? (this.GetText(5)?.SetText(i.LastData.Level.toString()),
           this.GetText(6))
         : this.GetText(3)
       )?.SetText(t.Level.toString());
   }
-  async MXs() {
-    await Promise.all([this.Vaa(), this.kaa()]);
+  async mJs() {
+    await Promise.all([this.H1a(), this.F1a()]);
   }
   async OnBeforeStartAsync() {
     this.GetItem(2)?.SetUIActive(!1),
@@ -134,9 +134,9 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
       this.GetItem(8)?.SetUIActive(!1),
       this.GetItem(9)?.SetUIActive(!1),
       (this.Delegate = (0, puerts_1.toManualReleaseDelegate)(this.OAn)),
-      (this.ValueDelegate = (0, puerts_1.toManualReleaseDelegate)(this.Zga)),
-      this.Haa(),
-      await Promise.all([this.PAr(), this.MXs()]),
+      (this.ValueDelegate = (0, puerts_1.toManualReleaseDelegate)(this.Kpa)),
+      this.j1a(),
+      await Promise.all([this.PAr(), this.mJs()]),
       AudioSystem_1.AudioSystem.PostEvent("play_ui_zuiyuejie_loading");
   }
   OnBeforeShow() {
@@ -154,16 +154,16 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
       ((0, puerts_1.releaseManualReleaseDelegate)(this.OAn),
       (this.Delegate = void 0)),
       this.ValueDelegate &&
-        ((0, puerts_1.releaseManualReleaseDelegate)(this.Zga),
+        ((0, puerts_1.releaseManualReleaseDelegate)(this.Kpa),
         (this.ValueDelegate = void 0)),
       this.gzi();
   }
   r2e() {
-    (this.Oaa
+    (this.k1a
       ? (this.UiViewSequence?.PlaySequencePurely("Success"), this.GetItem(4))
       : (this.UiViewSequence?.PlaySequencePurely("Fail"), this.GetItem(2))
     )?.SetUIActive(!0),
-      this.Naa
+      this.N1a
         ? LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(0),
             "Moonfiesta_TravelGreatSuccess",
@@ -181,12 +181,11 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
           i.RoleId,
           i.TrainType,
         ));
-    this.HelperRoleItem?.ChangeRotation(),
-      this.HelperRoleItem?.ShowDialog(i.Dialog),
+    this.HelperRoleItem?.ShowDialog(i.Dialog),
       this.HelperRoleItem?.SwitchRoleSpineAnim("happy", 0),
       this.PlayerRoleItem?.SwitchRoleSpineAnim("happy", 0),
       AudioSystem_1.AudioSystem.ExecuteAction("play_ui_zuiyuejie_loading", 0),
-      this.M0a();
+      this.Xpa();
   }
   RemoveTimerHandle() {
     return !(
@@ -201,7 +200,7 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
   gzi() {
     this.ExpTweener && (this.ExpTweener.Kill(), (this.ExpTweener = void 0));
   }
-  M0a() {
+  Xpa() {
     for (const i of this.CharacterListModule.GetItemList())
       i.SetLightProgressWidth(), i.PlayAddAction(), i.RefreshAddText();
     (this.ExpTweener = UE.LTweenBPLibrary.FloatTo(
@@ -211,13 +210,13 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
       1,
       SHOP_TWEEN_TIME,
     )),
-      this.ExpTweener?.OnCompleteCallBack.Bind(this.baa),
+      this.ExpTweener?.OnCompleteCallBack.Bind(this.q1a),
       AudioSystem_1.AudioSystem.PostEvent("play_ui_zhuiyuejie_favorability");
   }
-  S0a() {
+  Ypa() {
     for (const i of this.CharacterListModule.GetItemList()) i.PlayEndAction();
   }
-  E0a() {
+  Jpa() {
     this.ExpTweener = UE.LTweenBPLibrary.FloatTo(
       GlobalData_1.GlobalData.World,
       this.ValueDelegate,

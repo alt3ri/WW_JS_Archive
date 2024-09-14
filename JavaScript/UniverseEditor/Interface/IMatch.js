@@ -50,6 +50,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     "关卡.Common.被控物.中继器": !1,
     "关卡.Common.被控物.污染核心": !1,
     "关卡.Common.被控物.油画": !0,
+    "关卡.Common.被控物.钥石": !0,
+    "关卡.Common.被控物.彩窗": !0,
   }),
   (function (e) {
     (e.Player = "Player"), (e.Phantom = "Phantom");

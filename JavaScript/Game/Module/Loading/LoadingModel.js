@@ -22,9 +22,9 @@ class LoadingModel extends ModelBase_1.ModelBase {
       (this.NextProgress = 0),
       (this.Dvi = !1),
       (this.Rvi = !1),
-      (this.Ssa = void 0),
-      (this.Esa = void 0),
-      (this.ysa = void 0);
+      (this.dla = void 0),
+      (this.Cla = void 0),
+      (this.gla = void 0);
   }
   get TipTime() {
     return (
@@ -76,22 +76,22 @@ class LoadingModel extends ModelBase_1.ModelBase {
     return (this.Rvi = !1), e;
   }
   SetLoadingTexturePath(e) {
-    this.Ssa = e;
+    this.dla = e;
   }
   GetLoadingTexturePath() {
-    return this.Ssa;
+    return this.dla;
   }
   SetLoadingTitle(e) {
-    this.Esa = e;
+    this.Cla = e;
   }
   GetLoadingTitle() {
-    return this.Esa;
+    return this.Cla;
   }
   SetLoadingTips(e) {
-    this.ysa = e;
+    this.gla = e;
   }
   GetLoadingTips() {
-    return this.ysa;
+    return this.gla;
   }
   OnClear() {
     return (this.ypi = !1), (this.Dvi = !1), this.ReachHandleQueue.Clear(), !0;

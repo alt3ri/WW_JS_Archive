@@ -32,6 +32,9 @@ class PerformanceController {
   static get IsEntityPerformanceTest() {
     return PerformanceController.fY || PerformanceController.pY;
   }
+  static get IsPlayerPerformanceTest() {
+    return PerformanceController._za;
+  }
   static get IsOpen() {
     return PerformanceController.IsOpenInternal;
   }
@@ -101,8 +104,38 @@ class PerformanceController {
         (this.SY = void 0),
         (this.yY = void 0));
   }
+  static SetPlayerTickPerformanceTest(t) {
+    (PerformanceController._za = t)
+      ? ((this.EY = new Map()),
+        (this.SY = new Map()),
+        (this.yY = new Map()),
+        (this.IY = UE.KismetSystemLibrary.GetFrameCount()))
+      : (this.EY.clear(),
+        this.SY.clear(),
+        this.yY.clear(),
+        (this.EY = void 0),
+        (this.SY = void 0),
+        (this.yY = void 0));
+  }
   static SetEntityGpuPerformanceTest(t) {
     this.pY = t;
+  }
+  static CollectPlayerSkeletalTickPerformanceInfo(t, e, r, o) {
+    var i;
+    (o && o < this.IY) ||
+      (this.TY &&
+        -1 !== this.LY &&
+        this.LY === e &&
+        (this.DY || (this.DY = new Map()),
+        (o = UE.KismetSystemLibrary.GetFrameCount()),
+        (e = this.DY.get(t))
+          ? o === e[0]
+            ? (e[1] += r)
+            : ((i = this.UY.get(1)),
+              this.RY(t + "." + i, 1, e[1], e[0]),
+              (e[0] = o),
+              (e[1] = r))
+          : this.DY.set(t, [o, r, 1, !1])));
   }
   static CollectTickPerformanceInfo(t, e, r, o = 1, i) {
     if (!(i && i < this.IY)) {
@@ -119,7 +152,7 @@ class PerformanceController {
           if (-1 !== this.LY && this.LY !== e) return;
         }
         this.DY || (this.DY = new Map());
-        var n,
+        var s,
           i = t.replace(/\d/g, ""),
           e = UE.KismetSystemLibrary.GetFrameCount();
         0 === o
@@ -127,10 +160,16 @@ class PerformanceController {
           : (t = this.DY.get(i))
             ? e === t[0]
               ? (t[1] += r)
-              : ((n = this.UY.get(o)),
-                this.RY(i + "." + n, o, t[1], t[0]),
+              : ((s = this.UY.get(o)),
+                this.RY(i + "." + s, o, t[1], t[0]),
                 (t[0] = e),
-                (t[1] = r))
+                (t[1] = r),
+                this.RY(
+                  "GameThread.Tick",
+                  o,
+                  UE.KuroStaticLibrary.GetRawGameThreadTime(),
+                  t[0],
+                ))
             : this.DY.set(i, [e, r, o, !1]);
       }
     }
@@ -158,21 +197,21 @@ class PerformanceController {
   static CollectComponentTickPerformanceInfo(t, e, r, o) {
     this.yY || (this.yY = new Map());
     var i,
-      n = this.yY.get(t);
-    n
-      ? (i = n.get(e))
+      s = this.yY.get(t);
+    s
+      ? (i = s.get(e))
         ? ((i[0] = i[0] + (r ? 1 : 0)), (i[1] = i[1] + o))
-        : n.set(e, [1, o])
+        : s.set(e, [1, o])
       : ((r = new Map()).set(e, [1, o]), this.yY.set(t, r)),
       !this.TY ||
         (-1 !== this.LY && this.LY !== t) ||
         (this.DY || (this.DY = new Map()),
-        (n = this.DY.get((i = "Entity.Tick." + e))),
+        (s = this.DY.get((i = "Entity.Tick." + e))),
         (r = UE.KismetSystemLibrary.GetFrameCount()),
-        n
-          ? r === n[0]
-            ? (n[1] += o)
-            : (this.RY(i, 1, n[1], n[0]), (n[0] = r), (n[1] = o))
+        s
+          ? r === s[0]
+            ? (s[1] += o)
+            : (this.RY(i, 1, s[1], s[0]), (s[0] = r), (s[1] = o))
           : this.DY.set(i, [r, o, 1, !0]));
   }
   static ConsumeComponentTickTime(t) {
@@ -203,31 +242,31 @@ class PerformanceController {
       );
     }
   }
-  static CollectEffectTickPerformanceInfo(t, e, r, o, i, n, s, c) {
-    var a, l;
-    n < this.IY ||
+  static CollectEffectTickPerformanceInfo(t, e, r, o, i, s, n, a) {
+    var c, h;
+    s < this.IY ||
       !this.UY ||
       (this.SY || (this.SY = new Map()),
-      (n = t.slice(0, t.indexOf("."))),
-      (t = this.SY.get(n)),
-      (a = o - r),
-      ((l = new EffectPerformanceStatistics()).Frame =
+      (s = t.slice(0, t.indexOf("."))),
+      (t = this.SY.get(s)),
+      (c = o - r),
+      ((h = new EffectPerformanceStatistics()).Frame =
         UE.KismetSystemLibrary.GetFrameCount()),
-      (l.StartTime = r),
-      (l.EndTime = o),
-      (l.ParticleCount = s ?? 0),
-      (l.EmitterCount = c ?? 0),
-      (l.Type = this.UY.get(i)),
+      (h.StartTime = r),
+      (h.EndTime = o),
+      (h.ParticleCount = n ?? 0),
+      (h.EmitterCount = a ?? 0),
+      (h.Type = this.UY.get(i)),
       t
         ? ((t.TickCount = t.TickCount + (e ? 1 : 0)),
-          (t.Duration = t.Duration + a),
-          t.Records.push(l))
+          (t.Duration = t.Duration + c),
+          t.Records.push(h))
         : (((r = new EffectPerformanceRecords()).TickCount = 1),
-          (r.Duration = a),
-          r.Records.push(l),
-          this.SY.set(n, r)),
+          (r.Duration = c),
+          r.Records.push(h),
+          this.SY.set(s, r)),
       this.TY &&
-        ((o = this.UY.get(i)), this.RY(`EffectHandle.${o}.` + n, i, a)));
+        ((o = this.UY.get(i)), this.RY(`EffectHandle.${o}.` + s, i, c)));
   }
   static ConsumeEffectTickTime() {
     if (this.SY) {
@@ -240,13 +279,13 @@ class PerformanceController {
           o.push(["TickCount", e.TickCount.toString()]),
           o.push(["Duration", e.Duration.toFixed(3)]);
         let t = 0;
-        for (const n of e.Records)
-          o.push(["Frame_" + t, n.Frame.toString()]),
-            o.push(["StartTime_" + t, n.StartTime.toFixed(3)]),
-            o.push(["EndTime_" + t, n.EndTime.toFixed(3)]),
-            o.push(["ParticleCount_" + t, n.ParticleCount.toString()]),
-            o.push(["EmitterCount_" + t, n.EmitterCount.toString()]),
-            o.push(["Type_" + t, n.Type]),
+        for (const s of e.Records)
+          o.push(["Frame_" + t, s.Frame.toString()]),
+            o.push(["StartTime_" + t, s.StartTime.toFixed(3)]),
+            o.push(["EndTime_" + t, s.EndTime.toFixed(3)]),
+            o.push(["ParticleCount_" + t, s.ParticleCount.toString()]),
+            o.push(["EmitterCount_" + t, s.EmitterCount.toString()]),
+            o.push(["Type_" + t, s.Type]),
             ++t;
         this.PY.set(i, o);
       }
@@ -266,10 +305,10 @@ class PerformanceController {
         ]));
     else {
       if (this.DY) {
-        for (const n of this.DY.keys()) {
-          var o = this.DY.get(n),
+        for (const s of this.DY.keys()) {
+          var o = this.DY.get(s),
             i = this.UY.get(o[2]);
-          this.RY(o[3] ? "" + n : n + "." + i, o[2], o[1], o[0]);
+          this.RY(o[3] ? "" + s : s + "." + i, o[2], o[1], o[0]);
         }
         this.DY.clear(), (this.DY = void 0);
       }
@@ -305,6 +344,7 @@ class PerformanceController {
   (PerformanceController.IsInAnyEntitySkillTickTest = !1),
   (PerformanceController.IsOpenCatchWorldEntity = !1),
   (PerformanceController.fY = !1),
+  (PerformanceController._za = !1),
   (PerformanceController.pY = !1),
   (PerformanceController.EY = void 0),
   (PerformanceController.yY = void 0),

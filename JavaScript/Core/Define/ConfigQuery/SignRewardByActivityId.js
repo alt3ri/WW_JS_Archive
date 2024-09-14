@@ -17,31 +17,44 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0,
+const initStat = Stats_1.Stat.Create("configSignRewardByActivityId.Init"),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configSignRewardByActivityId.GetConfigList",
+  ),
   CONFIG_LIST_STAT_PREFIX = "configSignRewardByActivityId.GetConfigList(";
 exports.configSignRewardByActivityId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfigList: (i, o = !0) => {
-    var n;
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${i})`),
+      n =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (n) {
       if (o) {
         var e = KEY_PREFIX + `#${i})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (r) return r;
+        const a = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (a)
+          return (
+            t.Stop(),
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
         (n = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, i, ...logPair))
       ) {
-        const r = new Array();
+        const a = new Array();
         for (;;) {
           if (
             1 !==
@@ -51,9 +64,9 @@ exports.configSignRewardByActivityId = {
             ])
           )
             break;
-          var t = void 0;
+          var g = void 0;
           if (
-            (([n, t] = ConfigCommon_1.ConfigCommon.GetValue(
+            (([n, g] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
               0,
               ...logPair,
@@ -61,22 +74,33 @@ exports.configSignRewardByActivityId = {
             )),
             !n)
           )
-            return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
-          t = SignReward_1.SignReward.getRootAsSignReward(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
+            return (
+              ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+              t.Stop(),
+              getConfigListStat.Stop(),
+              void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+            );
+          g = SignReward_1.SignReward.getRootAsSignReward(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(g.buffer)),
           );
-          r.push(t);
+          a.push(g);
         }
         return (
           o &&
             ((e = KEY_PREFIX + `#${i})`),
-            ConfigCommon_1.ConfigCommon.SaveConfig(e, r, r.length)),
+            ConfigCommon_1.ConfigCommon.SaveConfig(e, a, a.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          r
+          t.Stop(),
+          getConfigListStat.Stop(),
+          ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+          a
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=SignRewardByActivityId.js.map

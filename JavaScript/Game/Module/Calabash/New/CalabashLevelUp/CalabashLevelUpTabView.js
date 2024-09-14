@@ -326,7 +326,7 @@ class CalabashLevelUpTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.hvt = void 0),
       (this.lvt = 0),
       (this._vt = -1),
-      (this.Ita = !0),
+      (this.Hra = !0),
       (this.dpt = () => {
         var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(160);
         ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
@@ -491,7 +491,7 @@ class CalabashLevelUpTabView extends UiTabViewBase_1.UiTabViewBase {
       ));
   }
   OnBeforeShow() {
-    this.vvt(this.Ita), (this.Ita = !1), this.Evt();
+    this.vvt(this.Hra), (this.Hra = !1), this.Evt();
   }
   Cvt() {
     this.Mvt();

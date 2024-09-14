@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
-  ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiManager_1 = require("../../../../Ui/UiManager"),
   ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
   ActivityDescriptionTypeA_1 = require("../UniversalComponents/Content/ActivityDescriptionTypeA"),
@@ -27,11 +26,7 @@ class ActivitySubViewUniversal extends ActivitySubViewBase_1.ActivitySubViewBase
               this.ActivityBaseData.Id,
             )
           : ((i = this.ActivityBaseData.GetUnFinishPreGuideQuestId()),
-            UiManager_1.UiManager.OpenView("QuestView", i),
-            ModelManager_1.ModelManager.ActivityModel.SendActivityViewJumpClickLogData(
-              this.ActivityBaseData,
-              1,
-            ));
+            UiManager_1.UiManager.OpenView("QuestView", i));
       });
   }
   OnRegisterComponent() {
@@ -57,7 +52,9 @@ class ActivitySubViewUniversal extends ActivitySubViewBase_1.ActivitySubViewBase
         ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
         await this.UNe.CreateThenShowByActorAsync(i.GetOwner()),
         this.GetItem(3));
-    (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
+    (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(
+      this.ActivityBaseData,
+    )),
       await this.ANe.CreateThenShowByActorAsync(i.GetOwner());
   }
   OnStart() {
@@ -77,7 +74,7 @@ class ActivitySubViewUniversal extends ActivitySubViewBase_1.ActivitySubViewBase
       this.UNe.SetTitleByTextId("CollectActivity_reward"),
       this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
       this.UNe.RefreshItemLayout(e),
-      this.ANe.FunctionButton?.BindCallback(this.DFe),
+      this.ANe.FunctionButton.SetFunction(this.DFe),
       (t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         "CollectActivity_Button_ahead",
       )),
@@ -104,8 +101,10 @@ class ActivitySubViewUniversal extends ActivitySubViewBase_1.ActivitySubViewBase
         ? this.ANe.FunctionButton?.SetUiActive(!e || !t)
         : this.ANe.FunctionButton?.SetUiActive(!1),
       i ||
-        ((e = this.GetCurrentLockConditionText()),
-        this.ANe.SetLockTextByTextId(e)));
+        this.ANe.SetPerformanceConditionLock(
+          this.ActivityBaseData.ConditionGroupId,
+          this.ActivityBaseData.Id,
+        ));
   }
 }
 exports.ActivitySubViewUniversal = ActivitySubViewUniversal;

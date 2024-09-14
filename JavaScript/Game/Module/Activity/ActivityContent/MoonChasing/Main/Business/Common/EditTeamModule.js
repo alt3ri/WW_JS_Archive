@@ -18,7 +18,7 @@ class EditTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.Data = void 0),
       (this.RedDotState = !1),
       (this.Cke = (t) => {
-        this.ECa(), this.OnClickEvent(this.Data.Id, 1 === t, this.GridIndex);
+        this.afa(), this.OnClickEvent(this.Data.Id, 1 === t, this.GridIndex);
       }),
       (this.gke = () => {
         var t = this.GetExtendToggle(0).GetToggleState();
@@ -87,7 +87,7 @@ class EditTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.RedDotState !== t &&
       ((this.RedDotState = t), this.GetItem(11).SetUIActive(this.RedDotState));
   }
-  ECa() {
+  afa() {
     this.RedDotState &&
       this.Data.IsOwn &&
       (ModelManager_1.ModelManager.MoonChasingModel.ReadRoleIdUnlockFlag(
@@ -146,10 +146,10 @@ class EditTeamModule extends UiPanelBase_1.UiPanelBase {
       this.fke,
       !0,
     )),
-      await this.LoopScroll?.RefreshByDataAsync(this.DataList);
+      await this.LoopScroll?.RefreshByDataAsync(this.DataList, !1, !0);
   }
   async RefreshEditTeamModule() {
-    await this.LoopScroll?.RefreshByDataAsync(this.DataList);
+    await this.LoopScroll?.RefreshByDataAsync(this.DataList, !1, !0);
   }
   SetClickEvent(t) {
     this.OnClickEvent = t;

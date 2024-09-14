@@ -23,7 +23,7 @@ class RoguelikeInstanceBtnPanel extends UiPanelBase_1.UiPanelBase {
         void 0 !== o &&
           ((o =
             ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-              o.MHn,
+              o.UHn,
             )),
           ((e = new PayShopViewData_1.PayShopViewData()).ShowShopIdList = [
             o.ShopId,
@@ -43,7 +43,7 @@ class RoguelikeInstanceBtnPanel extends UiPanelBase_1.UiPanelBase {
         var e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData;
         void 0 !== e &&
           RoguelikeController_1.RoguelikeController.OpenRoguelikeSkillView(
-            e.MHn,
+            e.UHn,
           );
       });
   }
@@ -69,7 +69,7 @@ class RoguelikeInstanceBtnPanel extends UiPanelBase_1.UiPanelBase {
         (e =
           await RoguelikeController_1.RoguelikeController.RoguelikeSeasonDataRequest()) &&
       (await RoguelikeController_1.RoguelikeController.RoguelikeTalentInfoRequest(
-        e.MHn,
+        e.UHn,
       ));
   }
   OnStart() {
@@ -96,12 +96,12 @@ class RoguelikeInstanceBtnPanel extends UiPanelBase_1.UiPanelBase {
           ((r =
             ModelManager_1.ModelManager.RoguelikeModel.GetParamConfigBySeasonId()
               ?.WeekTokenMaxCount ?? 1),
-          (o = e.gqs / r),
+          (o = e.yqs / r),
           this.GetSprite(4)?.SetFillAmount(o),
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(3),
             "Roguelike_ActivityMain_Score",
-            e.gqs,
+            e.yqs,
             r,
           )),
         MathUtils_1.MathUtils.LongToBigInt(

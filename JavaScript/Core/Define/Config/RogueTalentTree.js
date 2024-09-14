@@ -22,16 +22,20 @@ class RogueTalentTree {
     return this.row();
   }
   get PostId() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.postidLength(), (t) =>
-      this.postid(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.postidLength(),
+      this.postid,
+      this,
     );
   }
   get Condition() {
     return this.condition();
   }
   get Consule() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.consuleLength(), (t) =>
-      this.consule(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.consuleLength(),
+      this.consule,
+      this,
     );
   }
   get Describe() {

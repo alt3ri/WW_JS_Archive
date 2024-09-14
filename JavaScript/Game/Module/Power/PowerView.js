@@ -82,15 +82,18 @@ class PowerView extends UiTickViewBase_1.UiTickViewBase {
               `补充时打印体力${ModelManager_1.ModelManager.PowerModel.PowerCount}/` +
                 this.Doo,
             ),
-          (this.roo = this.LQs()),
+          (this.roo = this.jXs()),
           this.Soo.RefreshByData(this.roo);
       }),
-      (this.Boo = () => {
-        this.yoo?.SetBottomText(
-          ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerMoney(
-            ItemDefines_1.EItemId.BlackCard,
-          ).toString(),
-        );
+      (this.Boo = (e) => {
+        e === ItemDefines_1.EItemId.BlackCard &&
+          ((this.roo = this.jXs()), this.Soo.RefreshByData(this.roo)),
+          this.Too && this.woo(this.Too),
+          this.yoo?.SetBottomText(
+            ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerMoney(
+              ItemDefines_1.EItemId.BlackCard,
+            ).toString(),
+          );
       }),
       (this.xdi = (e, t) => {
         e &&
@@ -101,11 +104,13 @@ class PowerView extends UiTickViewBase_1.UiTickViewBase {
               "PowerBuySucceed",
               this.Too.RenewValue,
             ),
-          (this.roo = this.LQs()),
-          this.Soo.RefreshByData(this.roo));
+          (this.roo = this.jXs()),
+          this.Soo.RefreshByData(this.roo),
+          this.Too) &&
+          this.woo(this.Too);
       }),
       (this.qoo = () => {
-        (this.roo = this.LQs()), this.Soo.RefreshByData(this.roo);
+        (this.roo = this.jXs()), this.Soo.RefreshByData(this.roo);
       }),
       (this.Esi = (e, t, i) => {
         var s = new MediumItemGrid_1.MediumItemGrid(),
@@ -229,7 +234,7 @@ class PowerView extends UiTickViewBase_1.UiTickViewBase {
         this.GetScrollViewWithScrollbar(7),
         this.Esi,
       )),
-      (this.roo = this.LQs()),
+      (this.roo = this.jXs()),
       this.Soo.RefreshByData(this.roo),
       (this.Aoo = 0) ===
       ModelManager_1.ModelManager.PowerModel.GetPowerDataById(
@@ -253,7 +258,7 @@ class PowerView extends UiTickViewBase_1.UiTickViewBase {
       this.OFt.SetSelected(!0),
       this.woo(this.Too);
   }
-  LQs() {
+  jXs() {
     var e = [];
     for (const t of ModelManager_1.ModelManager.PowerModel.PowerItemInfoList)
       (t.StackValue <= 0 && t.IsHideWhenZero) || e.push(t);
@@ -264,7 +269,7 @@ class PowerView extends UiTickViewBase_1.UiTickViewBase {
       ModelManager_1.ModelManager.PowerModel.ClearConfirmBoxData();
   }
   OnTick(e) {
-    this.DQs(), this.AQs(this.Too?.ItemId);
+    this.WXs(), this.QXs(this.Too?.ItemId);
   }
   PYt(e, t) {
     this.GetText(5).SetText(e), this.GetText(4).SetText(t);
@@ -301,7 +306,7 @@ class PowerView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   woo(e) {
-    this.Wbe(e), this.RQs(e.ItemId);
+    this.Wbe(e), this.$Xs(e.ItemId);
   }
   Wbe(e) {
     var t, i, s;
@@ -322,20 +327,21 @@ class PowerView extends UiTickViewBase_1.UiTickViewBase {
         ))
       : LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), "GetOverPower");
   }
-  RQs(e) {
-    this.AQs(e);
+  $Xs(e) {
+    this.QXs(e);
   }
-  AQs(e) {
+  QXs(e) {
     e &&
-      (this.PQs(),
+      (this.YXs(),
       (e = ModelManager_1.ModelManager.PowerModel.GetPowerDataById(
         ItemDefines_1.EItemId.Power,
       )),
       this.GetItem(11).SetUIActive(0 === e.GetPowerRecoveryMode()));
   }
-  DQs() {
+  WXs() {
     var e = this.Too?.ItemId;
-    (e !== ItemDefines_1.EItemId.Power &&
+    (e !== ItemDefines_1.EItemId.BlackCard &&
+      e !== ItemDefines_1.EItemId.Power &&
       e !== ItemDefines_1.EItemId.OverPower &&
       10800 !== e) ||
       ((e = ModelManager_1.ModelManager.PowerModel.GetPowerDataById(
@@ -343,7 +349,7 @@ class PowerView extends UiTickViewBase_1.UiTickViewBase {
       )),
       this.PYt(e.GetFullRecoverText(), e.GetNextTimerRecoverText()));
   }
-  PQs() {
+  YXs() {
     var e = ModelManager_1.ModelManager.PowerModel.GetPowerDataById(
       ItemDefines_1.EItemId.Power,
     );

@@ -31,7 +31,7 @@ class MenuScrollSettingContainerDynItem extends UiPanelBase_1.UiPanelBase {
   }
   $Bi(e) {
     if (0 === e.Type) return this.GetItem(1);
-    switch (e.Data.MenuDataSetType) {
+    switch (e.Data.SetType) {
       case 1:
         return this.GetItem(4);
       case 2:

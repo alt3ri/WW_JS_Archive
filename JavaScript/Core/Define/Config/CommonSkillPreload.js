@@ -16,44 +16,59 @@ class CommonSkillPreload {
     return this.hasmontagepath();
   }
   get ActorClass() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.actorclassLength(), (t) =>
-      this.actorclass(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.actorclassLength(),
+      this.actorclass,
+      this,
     );
   }
   get Animations() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.animationsLength(), (t) =>
-      this.animations(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.animationsLength(),
+      this.animations,
+      this,
     );
   }
   get Effects() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.effectsLength(), (t) =>
-      this.effects(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.effectsLength(),
+      this.effects,
+      this,
     );
   }
   get Audios() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.audiosLength(), (t) =>
-      this.audios(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.audiosLength(),
+      this.audios,
+      this,
     );
   }
   get Meshes() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.meshesLength(), (t) =>
-      this.meshes(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.meshesLength(),
+      this.meshes,
+      this,
     );
   }
   get Materials() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.materialsLength(), (t) =>
-      this.materials(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.materialsLength(),
+      this.materials,
+      this,
     );
   }
   get AnimationBlueprints() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.animationblueprintsLength(),
-      (t) => this.animationblueprints(t),
+      this.animationblueprints,
+      this,
     );
   }
   get Others() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.othersLength(), (t) =>
-      this.others(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.othersLength(),
+      this.others,
+      this,
     );
   }
   __init(t, s) {

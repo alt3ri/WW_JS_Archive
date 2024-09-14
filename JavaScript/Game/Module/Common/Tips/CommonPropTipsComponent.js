@@ -39,7 +39,7 @@ class CommonPropTipsComponent extends UiPanelBase_1.UiPanelBase {
             (t.SetData(s),
             t.SetEnableClick(2 === e.Type),
             t.SetFunction((t) => {
-              SkipTaskManager_1.SkipTaskManager.RunByConfigId(s);
+              SkipTaskManager_1.SkipTaskManager.RunByConfigId(s, this.ConfigId);
             }),
             t.SetButtonAllowEventBubbleUp(!0),
             (e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(

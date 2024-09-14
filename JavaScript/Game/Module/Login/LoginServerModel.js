@@ -13,9 +13,11 @@ const UE = require("ue"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
+  PlatformSdkManagerNew_1 = require("../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   LocalStorage_1 = require("../../Common/LocalStorage"),
   LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
   DEFAULTSERVERREGION = "America",
   CNSERVERNAME = "Default";
 exports.DEFAULTPING = 9999;
@@ -65,7 +67,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
       (this.CurrentSelectServerData = void 0),
       (this.CurrentUiSelectSeverData = void 0);
   }
-  GetCurrentSelectServerName() {
+  GetCurrentSelectPayServerName() {
     let e =
       BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea");
     return (
@@ -77,19 +79,62 @@ class LoginServerModel extends ModelBase_1.ModelBase {
       (e = StringUtils_1.StringUtils.IsEmpty(e) ? CNSERVERNAME : e)
     );
   }
-  GetCurrentLoginServerId() {
+  GetCurrentSelectServerIp() {
     var e;
-    return ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
-      ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk()
+    return ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() ||
+      PlatformSdkManagerNew_1.PlatformSdkManagerNew.IsSdkOn
+      ? ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode()
+        ? this.CurrentSelectServerData
+          ? this.CurrentSelectServerData.ip
+          : ""
+        : (e = BaseConfigController_1.BaseConfigController.GetLoginServers()) &&
+            0 < e.length
+          ? e[0].ip
+          : (Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info("Login", 28, "当前没有服务器，请检查CDN配置"),
+            "")
+      : (ModelManager_1.ModelManager.LoginModel.GetServerIp() ?? "");
+  }
+  GetCurrentSelectServerName() {
+    var e;
+    return ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode()
       ? this.CurrentSelectServerData
-        ? this.CurrentSelectServerData.id
+        ? this.CurrentSelectServerData.name
         : ""
       : (e = BaseConfigController_1.BaseConfigController.GetLoginServers()) &&
           0 < e.length
-        ? e[0].id
+        ? e[0].name
         : (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Login", 28, "当前没有服务器，请检查CDN配置"),
           "");
+  }
+  GetCurrentLoginServerId() {
+    var e;
+    return ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() ||
+      PlatformSdkManagerNew_1.PlatformSdkManagerNew.IsSdkOn
+      ? ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode()
+        ? this.CurrentSelectServerData
+          ? this.CurrentSelectServerData.id
+          : "0"
+        : (e = BaseConfigController_1.BaseConfigController.GetLoginServers()) &&
+            0 < e.length
+          ? e[0].id
+          : (Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info("Login", 28, "当前没有服务器，请检查CDN配置"),
+            "0")
+      : (ModelManager_1.ModelManager.LoginModel.GetServerId() ?? "");
+  }
+  SelectCurrentSelectServerByServerId(e, r) {
+    ModelManager_1.ModelManager.LoginModel.SetServerIp(e, 1);
+    e = BaseConfigController_1.BaseConfigController.GetLoginServers();
+    if (e && 0 < e.length)
+      for (const o of e)
+        if (o.id === r) {
+          this.CurrentSelectServerData = o;
+          break;
+        }
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("Login", 28, "选择服务器", ["serverId", r]);
   }
   IsFirstLogin(e) {
     var r = LocalStorage_1.LocalStorage.GetGlobal(
@@ -203,31 +248,31 @@ class LoginServerModel extends ModelBase_1.ModelBase {
         t.UserInfos[e].LastOnlineTime > n && (i = t.UserInfos[e].Region);
     }
     if ("" !== i) {
-      var s,
+      var g,
         e = this.PEi(i);
       if (e)
         return (
-          (s = new RegionAndIpSt()).Phrase(e.Region, e.ip),
+          (g = new RegionAndIpSt()).Phrase(e.Region, e.ip),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Login", 28, "recommendRegion", [
               "recommendRegion",
               i,
             ]),
-          s
+          g
         );
     }
-    var g = t.RecommendRegion;
+    var s = t.RecommendRegion;
     for (let e = 0; e < o; e++)
-      if (r[e].Region === g) {
+      if (r[e].Region === s) {
         if (this.xEi())
           return (
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("Login", 28, "PingHigh", [r[e].Region, r[e].ip]),
-            (L = new RegionAndIpSt()).Phrase(r[e].Region, r[e].ip),
-            L
+            (l = new RegionAndIpSt()).Phrase(r[e].Region, r[e].ip),
+            l
           );
-        var L = this.REi.get(r[e]);
-        if (L && 100 < L)
+        var l = this.REi.get(r[e]);
+        if (l && 100 < l)
           return (
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
@@ -238,8 +283,8 @@ class LoginServerModel extends ModelBase_1.ModelBase {
             this.AEi(DEFAULTSERVERREGION)
           );
         Log_1.Log.CheckDebug() && Log_1.Log.Debug("Login", 28, "返回推荐");
-        var l = new RegionAndIpSt();
-        return l.Phrase(r[e].Region, r[e].ip), l;
+        var L = new RegionAndIpSt();
+        return L.Phrase(r[e].Region, r[e].ip), L;
       }
     return this.AEi(DEFAULTSERVERREGION);
   }
@@ -323,13 +368,13 @@ class LoginServerModel extends ModelBase_1.ModelBase {
     });
     let n = i.get(e);
     var a = (n = n || new Array()).length;
-    let s = !1;
+    let g = !1;
     for (let e = 0; e < a; e++)
       if (n[e].Region === r) {
-        (n[e].Level = o), (s = !0);
+        (n[e].Level = o), (g = !0);
         break;
       }
-    s ||
+    g ||
       (((t = new LocalPlayerIpLevelData()).Region = r),
       (t.Level = o),
       n.push(t)),

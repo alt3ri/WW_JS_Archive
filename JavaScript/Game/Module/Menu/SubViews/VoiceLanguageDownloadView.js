@@ -111,7 +111,7 @@ class VoiceLanguageDownloadView extends LanguageSettingViewBase_1.LanguageSettin
     return a.Initialize(e, t, i), a;
   }
   OnRefreshView(e) {
-    var t = this.MenuDataIns.MenuDataOptionsNameList[e.GetIndex()];
+    var t = this.MenuDataIns.OptionsNameList[e.GetIndex()];
     e.SetMainText(t), e.SetDownloadStatusCallback(this.BBi);
   }
   InitScrollViewData() {
@@ -120,19 +120,19 @@ class VoiceLanguageDownloadView extends LanguageSettingViewBase_1.LanguageSettin
     this.ScrollView.RefreshByData(e.sort((e, t) => e - t));
   }
   OnAfterShow() {
-    this.NBi(this.SelectedToggle);
+    this.SelectedToggle && this.NBi(this.SelectedToggle);
   }
   NBi(e) {
-    e.Updater.IsDownloading
-      ? this.ConfirmButton.SetLocalText("PauseDownload")
-      : 2 !== e.Updater.Status &&
-        this.ConfirmButton.SetLocalText("DownloadLanguage"),
-      2 === e.Updater.Status &&
-        this.ConfirmButton.SetLocalText("DeleteLanguage"),
-      2 === e.Updater.Status &&
-      e.Updater.LanguageCode === LanguageSystem_1.LanguageSystem.PackageAudio
+    e = e.GetUpdater();
+    void 0 !== e &&
+      (e.IsDownloading
+        ? this.ConfirmButton.SetLocalText("PauseDownload")
+        : 2 !== e.Status && this.ConfirmButton.SetLocalText("DownloadLanguage"),
+      2 === e.Status && this.ConfirmButton.SetLocalText("DeleteLanguage"),
+      2 === e.Status &&
+      e.LanguageCode === LanguageSystem_1.LanguageSystem.PackageAudio
         ? this.ConfirmButton.SetFunction(this.qBi)
-        : this.ConfirmButton.SetFunction(this.GBi);
+        : this.ConfirmButton.SetFunction(this.GBi));
   }
   OnSelected(e, t) {
     this.RefreshUiBySelect(e);
@@ -276,6 +276,10 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
             "创建VoiceLanguageToggle时，找不到对应的语言配置",
             ["Index", this.Index],
           );
+  }
+  GetUpdater() {
+    var e = MenuTool_1.MenuTool.GetAudioCodeById(this.Index);
+    return LanguageUpdateManager_1.LanguageUpdateManager.GetUpdater(e);
   }
   VBi(e, t, i) {
     (e = LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(e)),

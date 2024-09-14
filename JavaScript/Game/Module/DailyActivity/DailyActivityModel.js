@@ -88,58 +88,54 @@ class DailyActivityModel extends ModelBase_1.ModelBase {
   GetActivityRewardById(t) {
     return this.bkt.get(t).Rewards;
   }
-  RefreshDailyActivityData(s, t) {
-    (this.wkt = s?.Txs ?? 0),
-      (this.Gkt = Number(MathUtils_1.MathUtils.LongToBigInt(s?.YSs ?? 0))),
+  RefreshDailyActivityData(s) {
+    (this.wkt = s?.wxs ?? 0),
+      (this.Gkt = Number(MathUtils_1.MathUtils.LongToBigInt(s?.rEs ?? 0))),
       this.bkt.forEach((t, e) => {
-        var i = s.Lxs.includes(t.Id);
+        var i = s.xxs.includes(t.Id);
         (t.Achieved = i), (t.State = this.GetActivityGoalState(t.Goal, i));
       }),
-      (this.AreaId = s.l6n),
+      (this.AreaId = s.p6n),
       (this.qkt = []);
-    for (const r of s.nMs) {
-      var e = new DailyActivityTaskItem_1.DailyActiveTaskData(),
-        i =
-          ((e.TaskId = r.J4n),
-          (e.CurrentProgress = r.iMs),
-          (e.TargetProgress = r.b6n),
-          (e.IsFunctionUnlock = r.Rxs),
-          r.sMs
-            ? r.aMs
-              ? (e.TaskState = 3)
-              : (e.TaskState = 1)
-            : (e.TaskState = 2),
+    for (const a of s.cMs) {
+      var t = new DailyActivityTaskItem_1.DailyActiveTaskData(),
+        e =
+          ((t.TaskId = a.s5n),
+          (t.CurrentProgress = a.lMs),
+          (t.TargetProgress = a.j6n),
+          (t.IsFunctionUnlock = a.bxs),
+          a.dMs
+            ? a.mMs
+              ? (t.TaskState = 3)
+              : (t.TaskState = 1)
+            : (t.TaskState = 2),
           ConfigManager_1.ConfigManager.DailyActivityConfig.GetActivityTaskConfigById(
-            r.J4n,
+            a.s5n,
           )),
-        a = ((e.Sort = i.SortRank), []);
-      for (const n of i.TaskReward.entries())
-        a.push([{ ItemId: n[0], IncId: 0 }, n[1]]);
-      (e.RewardItemList = a), this.qkt.push(e);
+        i = ((t.Sort = e.SortRank), []);
+      for (const r of e.TaskReward.entries())
+        i.push([{ ItemId: r[0], IncId: 0 }, r[1]]);
+      (t.RewardItemList = i), this.qkt.push(t);
     }
     this.SortTaskDataList(),
-      t &&
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.DailyUpdateNotify,
-        ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.DailyActivityRefresh,
       ),
       this.EmitDailyActivityStateCheck();
   }
   UpdateDailyActivityData(t) {
-    this.wkt = t?.Txs ?? 0;
-    for (const s of t.Lxs) {
+    this.wkt = t?.wxs ?? 0;
+    for (const s of t.xxs) {
       var e = this.bkt.get(s);
       e &&
         ((e.Achieved = !0), (e.State = this.GetActivityGoalState(e.Goal, !0)));
     }
-    this.AreaId = t.l6n;
-    for (const a of t.nMs) {
-      var i = this.qkt.find((t) => t.TaskId === a.J4n);
-      (i.CurrentProgress = a.iMs),
-        a.sMs
-          ? a.aMs
+    this.AreaId = t.p6n;
+    for (const a of t.cMs) {
+      var i = this.qkt.find((t) => t.TaskId === a.s5n);
+      (i.CurrentProgress = a.lMs),
+        a.dMs
+          ? a.mMs
             ? (i.TaskState = 3)
             : (i.TaskState = 1)
           : (i.TaskState = 2);

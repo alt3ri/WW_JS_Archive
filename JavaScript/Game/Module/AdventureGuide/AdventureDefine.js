@@ -18,7 +18,7 @@ const AdventureTask_1 = require("../../../Core/Define/Config/AdventureTask"),
 class AdventureTaskRecord {
   constructor(e, t) {
     (this.AdventureTaskBase = new AdventureTask_1.AdventureTask()),
-      (this.Status = Protocol_1.Aki.Protocol.Eks.Proto_UnFinish),
+      (this.Status = Protocol_1.Aki.Protocol.Aks.Proto_UnFinish),
       (this.Progress = 0),
       (this.AdventureTaskBase = e),
       (this.Status = t);

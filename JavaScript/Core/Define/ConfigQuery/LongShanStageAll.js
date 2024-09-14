@@ -17,26 +17,39 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0,
+const initStat = Stats_1.Stat.Create("configLongShanStageAll.Init"),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configLongShanStageAll.GetConfigList",
+  ),
   CONFIG_LIST_STAT_PREFIX = "configLongShanStageAll.GetConfigList(";
 exports.configLongShanStageAll = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfigList: (o, n = !0) => {
-    var i;
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${o})`),
+      i =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (i) {
       if (n) {
         var e = KEY_PREFIX + `#${o})`;
         const a = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (a) return a;
+        if (a)
+          return (
+            t.Stop(),
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
         (i = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair))
@@ -51,9 +64,9 @@ exports.configLongShanStageAll = {
             ])
           )
             break;
-          var t = void 0;
+          var g = void 0;
           if (
-            (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
+            (([i, g] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
               0,
               ...logPair,
@@ -61,22 +74,33 @@ exports.configLongShanStageAll = {
             )),
             !i)
           )
-            return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
-          t = LongShanStage_1.LongShanStage.getRootAsLongShanStage(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
+            return (
+              ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+              t.Stop(),
+              getConfigListStat.Stop(),
+              void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+            );
+          g = LongShanStage_1.LongShanStage.getRootAsLongShanStage(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(g.buffer)),
           );
-          a.push(t);
+          a.push(g);
         }
         return (
           n &&
             ((e = KEY_PREFIX + `#${o})`),
             ConfigCommon_1.ConfigCommon.SaveConfig(e, a, a.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+          t.Stop(),
+          getConfigListStat.Stop(),
+          ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
           a
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=LongShanStageAll.js.map

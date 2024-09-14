@@ -85,7 +85,7 @@ class RogueScoreUnit extends HudUnitBase_1.HudUnitBase {
   constructor() {
     super(...arguments),
       (this.IIn = 0),
-      (this.CBn = void 0),
+      (this.SBn = void 0),
       (this.RIn = new RogueScoreMachine_1.RogueScoreMachine()),
       (this.SPe = void 0),
       (this.UIn = void 0),
@@ -110,22 +110,22 @@ class RogueScoreUnit extends HudUnitBase_1.HudUnitBase {
         if (
           this.IIn !== t &&
           ((this.IIn = t),
-          this.CBn !== i &&
-            ((s = this.CBn?.Level ?? 0),
-            (e = void 0 !== this.CBn),
-            (this.CBn = i),
-            this.CBn
-              ? (this.jIn(this.CBn.Level),
-                this.WIn(this.CBn.Level),
-                this.KIn(this.CBn.Level),
-                this.QIn(this.CBn.Level),
-                this.XZi(this.CBn.Level, this.CBn.Level > s),
-                e && this.XIn(this.CBn.Level))
+          this.SBn !== i &&
+            ((s = this.SBn?.Level ?? 0),
+            (e = void 0 !== this.SBn),
+            (this.SBn = i),
+            this.SBn
+              ? (this.jIn(this.SBn.Level),
+                this.WIn(this.SBn.Level),
+                this.KIn(this.SBn.Level),
+                this.QIn(this.SBn.Level),
+                this.XZi(this.SBn.Level, this.SBn.Level > s),
+                e && this.XIn(this.SBn.Level))
               : (this.SetVisible(!1), this.XZi(0, !1))),
-          this.CBn)
+          this.SBn)
         ) {
-          var i = this.CBn.LowerUpperLimits[0],
-            s = this.CBn.LowerUpperLimits[1];
+          var i = this.SBn.LowerUpperLimits[0],
+            s = this.SBn.LowerUpperLimits[1];
           let e = 0;
           (e = s === i ? 1 : ((e = (t - i) / (s - i)), Math.min(e, 1))),
             this.Fst(e);
@@ -313,7 +313,7 @@ class RogueScoreUnit extends HudUnitBase_1.HudUnitBase {
       );
   }
   Tick(e) {
-    if (this.GetVisible()) {
+    if ((RogueScoreUnit.Ult.Start(), this.GetVisible())) {
       if ((this.RIn.Tick(e), this.kIn)) {
         let e = Time_1.Time.Now - this.VIn,
           t = (e >= UP_ANIM_TIME && ((e = UP_ANIM_TIME), (this.kIn = !1)), 0);
@@ -331,7 +331,10 @@ class RogueScoreUnit extends HudUnitBase_1.HudUnitBase {
           : ((i = this.FIn.GetCurrentValue(this.zRn / UP_EFFECT_TIME)),
             this.ZRn(i)));
     }
+    RogueScoreUnit.Ult.Stop();
   }
 }
-(exports.RogueScoreUnit = RogueScoreUnit).Ult = void 0;
+(exports.RogueScoreUnit = RogueScoreUnit).Ult = Stats_1.Stat.Create(
+  "[BattleView]RogueScoreUnitTick",
+);
 //# sourceMappingURL=RogueScoreUnit.js.map

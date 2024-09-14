@@ -32,9 +32,11 @@ class SpecialEnergyBarInfo {
       (this.KeyEnableTagId = 0),
       (this.TagEnergyBarIdMap = void 0),
       (this.EffectColor = void 0),
+      (this.OtherEffectColorList = []),
       (this.PointColor = void 0),
       (this.IconPath = void 0),
       (this.EnableIconPath = void 0),
+      (this.FrontIconPath = void 0),
       (this.NiagaraPathList = []),
       (this.KeyEnableNiagaraIndex = 0),
       (this.KeyType = 0),
@@ -51,15 +53,18 @@ class SpecialEnergyBarInfo {
       (this.MaxAttributeId = i.MaxAttributeId),
       (this.BuffId = i.BuffId),
       (this.TagEnergyBarIdMap = this.g$e(i.TagEnergyBarIdMap)),
-      (this.EffectColor = StringUtils_1.StringUtils.IsEmpty(i.EffectColor)
-        ? void 0
-        : i.EffectColor),
+      i.EffectColor
+        ? ((t = i.EffectColor.split("#")),
+          (this.EffectColor = t.shift()),
+          (this.OtherEffectColorList = t))
+        : (this.EffectColor = void 0),
       (this.PointColor = StringUtils_1.StringUtils.IsEmpty(i.PointColor)
         ? void 0
         : i.PointColor),
       (this.IconPath = i.IconPath.ToAssetPathName()),
       (this.EnableIconPath = i.EnableIconPath.ToAssetPathName()),
-      this.MNn(i.NiagaraList, this.NiagaraPathList),
+      (this.FrontIconPath = i.FrontIconPath.ToAssetPathName()),
+      this.ANn(i.NiagaraList, this.NiagaraPathList),
       (this.KeyEnableNiagaraIndex = i.KeyEnableNiagaraIndex),
       this.KeyEnableNiagaraIndex >= this.NiagaraPathList.length &&
         ((this.KeyEnableNiagaraIndex = -1), Log_1.Log.CheckError()) &&
@@ -109,7 +114,7 @@ class SpecialEnergyBarInfo {
         s.push(r);
       }
   }
-  MNn(i, s) {
+  ANn(i, s) {
     var e = i.Num();
     if (!(e <= 0))
       for (let t = 0; t < e; t++) {

@@ -10,10 +10,11 @@ const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiManager_1 = require("../../Ui/UiManager"),
   ControllerWithAssistantBase_1 = require("./ControllerAssistant/ControllerWithAssistantBase"),
+  GuaranteeAssistant_1 = require("./ControllerAssistant/GuaranteeAssistant"),
   RequestToServerAssistant_1 = require("./ControllerAssistant/RequestToServerAssistant"),
   ServerNotifyAssistant_1 = require("./ControllerAssistant/ServerNotifyAssistant"),
   TreeExpressAssistant_1 = require("./ControllerAssistant/TreeExpressAssistant"),
-  assistantMap = { [0]: void 0, 1: void 0, 2: void 0 };
+  assistantMap = { [0]: void 0, 1: void 0, 2: void 0, 3: void 0 };
 class GeneralLogicTreeController extends ControllerWithAssistantBase_1.ControllerWithAssistantBase {
   static OnClear() {
     return (GeneralLogicTreeController.uYt = void 0), super.OnClear();
@@ -24,7 +25,8 @@ class GeneralLogicTreeController extends ControllerWithAssistantBase_1.Controlle
         1,
         new RequestToServerAssistant_1.RequestToServerAssistant(),
       ),
-      this.AddAssistant(2, new TreeExpressAssistant_1.TreeExpressAssistant());
+      this.AddAssistant(2, new TreeExpressAssistant_1.TreeExpressAssistant()),
+      this.AddAssistant(3, new GuaranteeAssistant_1.GuaranteeAssistant());
   }
   static cYt(e) {
     if (this.Assistants) return this.Assistants.get(e);
@@ -77,6 +79,9 @@ class GeneralLogicTreeController extends ControllerWithAssistantBase_1.Controlle
   }
   static RequestSubmitNode(e, t, r = void 0) {
     this.cYt(1).RequestSubmitNode(e, t, r);
+  }
+  static RequestSubmitAwakeAndLoadEntityNode(e, t) {
+    this.cYt(1).RequestSubmitAwakeAndLoadEntityNode(e, t);
   }
   static RequestSetTimerInfo(e, t, r, s, o) {
     this.cYt(1).RequestSetTimerInfo(e, t, r, s, o);
@@ -151,39 +156,39 @@ class GeneralLogicTreeController extends ControllerWithAssistantBase_1.Controlle
   (GeneralLogicTreeController.mYt = (e) => {
     var t,
       r,
-      s = e.nvs;
+      s = e.cvs;
     let o = void 0;
-    switch (s._vs) {
-      case Protocol_1.Aki.Protocol.vOs.Rvs:
-        o = s.Rvs.ops;
+    switch (s.fvs) {
+      case Protocol_1.Aki.Protocol.TOs.bvs:
+        o = s.bvs.ups;
         break;
-      case Protocol_1.Aki.Protocol.vOs.Dvs:
-        o = s.Dvs.ops;
+      case Protocol_1.Aki.Protocol.TOs.Bvs:
+        o = s.Bvs.ups;
         break;
-      case Protocol_1.Aki.Protocol.vOs.Avs:
-        o = s.Avs.ops;
+      case Protocol_1.Aki.Protocol.TOs.qvs:
+        o = s.qvs.ups;
         break;
-      case Protocol_1.Aki.Protocol.vOs.Pvs:
-        o = s.Pvs.ops;
+      case Protocol_1.Aki.Protocol.TOs.Gvs:
+        o = s.Gvs.ups;
         break;
-      case Protocol_1.Aki.Protocol.vOs.Uvs:
-        o = s.Uvs.ops;
+      case Protocol_1.Aki.Protocol.TOs.Ovs:
+        o = s.Ovs.ups;
         break;
-      case Protocol_1.Aki.Protocol.vOs.qvs:
-        o = s.qvs.ops;
+      case Protocol_1.Aki.Protocol.TOs.$vs:
+        o = s.$vs.ups;
     }
     o &&
-      ((t = MathUtils_1.MathUtils.LongToBigInt(o.T5n)),
+      ((t = MathUtils_1.MathUtils.LongToBigInt(o.w5n)),
       (r = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(t))
-        ? r.DoAction(s._vs, o.L5n, e.q5n, e.T5n, e.G5n, e.avs)
+        ? r.DoAction(s.fvs, o.b5n, e.W5n, e.w5n, e.K5n, e.mvs)
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "GeneralLogicTree",
             19,
             "服务器通知执行行为时：对应的数据不存在，联系程序检查Bug",
-            ["treeType", o.tps],
+            ["treeType", o.hps],
             ["treeId", t],
-            ["actionIncId", e.T5n],
+            ["actionIncId", e.w5n],
           ));
   }),
   (GeneralLogicTreeController.HQe = (e) => {

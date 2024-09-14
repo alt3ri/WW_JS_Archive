@@ -27,6 +27,7 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   MoonChasingModel_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Model/MoonChasingModel"),
   MoonChasingRewardModel_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Reward/Model/MoonChasingRewardModel"),
   MoonChasingTaskModel_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Task/Model/MoonChasingTaskModel"),
+  MowingRiskModel_1 = require("../Module/Activity/ActivityContent/MowingRisk/Model/MowingRiskModel"),
   ActivityRecallModel_1 = require("../Module/Activity/ActivityContent/Recall/ActivityRecallModel"),
   ActivityRunModel_1 = require("../Module/Activity/ActivityContent/Run/ActivityRunModel"),
   ActivityModel_1 = require("../Module/Activity/ActivityModel"),
@@ -95,6 +96,7 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   LoadingModel_1 = require("../Module/Loading/LoadingModel"),
   LoginModel_1 = require("../Module/Login/LoginModel"),
   LoginServerModel_1 = require("../Module/Login/LoginServerModel"),
+  LogReportModel_1 = require("../Module/LogReport/LogReportModel"),
   LordGymModel_1 = require("../Module/LordGym/LordGymModel"),
   MailModel_1 = require("../Module/Mail/MailModel"),
   ComposeModel_1 = require("../Module/Manufacture/Compose/ComposeModel"),
@@ -161,6 +163,7 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   CharacterManipulateInteractModel_1 = require("../NewWorld/Character/Common/Component/CharacterManipulateInteractModel"),
   CharacterManipulaterModel_1 = require("../NewWorld/Character/Common/Component/CharacterManipulaterModel"),
   NpcConfigModel_1 = require("../NewWorld/Character/Npc/Datas/NpcConfigModel"),
+  ConnectGamePlayModel_1 = require("../NewWorld/SceneItem/Model/ConnectGamePlayModel"),
   PortalModel_1 = require("../NewWorld/SceneItem/Model/PortalModel"),
   RangeItemModel_1 = require("../NewWorld/SceneItem/Model/RangeItemModel"),
   SceneInteractionModel_1 = require("../NewWorld/SceneItem/Model/SceneInteractionModel"),
@@ -242,6 +245,11 @@ class ModelManagerCreator {
       ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.MailModel),
       (ModelManager_1.ModelManager.LoginModel = new LoginModel_1.LoginModel()),
       ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.LoginModel),
+      (ModelManager_1.ModelManager.LogReportModel =
+        new LogReportModel_1.LogReportModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.LogReportModel,
+      ),
       (ModelManager_1.ModelManager.ItemModel = new ItemModel_1.ItemModel()),
       ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.ItemModel),
       (ModelManager_1.ModelManager.SpecialItemModel =
@@ -946,6 +954,11 @@ class ModelManagerCreator {
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.MoonChasingRewardModel,
       ),
+      (ModelManager_1.ModelManager.MowingRiskModel =
+        new MowingRiskModel_1.MowingRiskModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.MowingRiskModel,
+      ),
       (ModelManager_1.ModelManager.AlertMarkModel =
         new AlertMarksModel_1.AlertMarkModel()),
       ModelManager_1.ModelManager.Add(
@@ -955,6 +968,11 @@ class ModelManagerCreator {
         new ActivityRecallModel_1.ActivityRecallModel()),
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.ActivityRecallModel,
+      ),
+      (ModelManager_1.ModelManager.ConnectGamePlayModel =
+        new ConnectGamePlayModel_1.ConnectGamePlayModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.ConnectGamePlayModel,
       ),
       (ModelManager_1.ModelManager.DigitalScreenModel =
         new DigitalScreenModel_1.DigitalScreenModel()),
@@ -1126,7 +1144,6 @@ class ModelManagerCreator {
       (ModelManager_1.ModelManager.TowerDefenseModel = void 0),
       (ModelManager_1.ModelManager.AlertMarkModel = void 0),
       (ModelManager_1.ModelManager.ActivityRecallModel = void 0),
-      (ModelManager_1.ModelManager.DigitalScreenModel = void 0),
       !(ModelManager_1.ModelManager.ScreenEffectModel = void 0)
     );
   }

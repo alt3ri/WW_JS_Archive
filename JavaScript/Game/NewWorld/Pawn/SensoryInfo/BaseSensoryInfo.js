@@ -3,7 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseSensoryInfo = void 0);
 class BaseSensoryInfo {
   constructor() {
-    (this.SensoryInfoType = 1), (this.SensoryRange = 0), (this.InRange = !1);
+    (this.RangePerceptionType = 1),
+      (this.SensoryInfoType = 1),
+      (this.SensoryRange = 0),
+      (this.InRange = !1);
   }
   Init(...s) {
     this.OnInit(s);

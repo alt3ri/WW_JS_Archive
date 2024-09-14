@@ -26,8 +26,9 @@ let PlayerAttributeComponent = class PlayerAttributeComponent extends BaseAttrib
   constructor() {
     super(...arguments), (this.PlayerId = 0);
   }
-  OnCreate(e) {
-    return (this.PlayerId = e?.PlayerId ?? 0), !0;
+  OnInitData() {
+    var e = this.Entity.CheckGetComponent(0);
+    return (this.PlayerId = e?.GetPlayerId() ?? 0), !0;
   }
   UpdateCurrentValue(e) {
     super.UpdateCurrentValue(e);
@@ -35,12 +36,12 @@ let PlayerAttributeComponent = class PlayerAttributeComponent extends BaseAttrib
       this.PlayerId,
     ))
       ModelManager_1.ModelManager.CreatureModel.GetEntity(t.GetCreatureDataId())
-        ?.Entity?.GetComponent(157)
+        ?.Entity?.GetComponent(158)
         ?.UpdateCurrentValue(e);
   }
 };
 (PlayerAttributeComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(182)],
+  [(0, RegisterComponent_1.RegisterComponent)(183)],
   PlayerAttributeComponent,
 )),
   (exports.PlayerAttributeComponent = PlayerAttributeComponent);

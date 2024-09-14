@@ -17,6 +17,7 @@ class ModelManager extends ModelManagerBase_1.ModelManagerBase {}
   (ModelManager.AreaModel = void 0),
   (ModelManager.MailModel = void 0),
   (ModelManager.LoginModel = void 0),
+  (ModelManager.LogReportModel = void 0),
   (ModelManager.ItemModel = void 0),
   (ModelManager.SpecialItemModel = void 0),
   (ModelManager.GuideModel = void 0),
@@ -180,8 +181,10 @@ class ModelManager extends ModelManagerBase_1.ModelManagerBase {}
   (ModelManager.MoonChasingBuildingModel = void 0),
   (ModelManager.MoonChasingTaskModel = void 0),
   (ModelManager.MoonChasingRewardModel = void 0),
+  (ModelManager.MowingRiskModel = void 0),
   (ModelManager.AlertMarkModel = void 0),
   (ModelManager.ActivityRecallModel = void 0),
+  (ModelManager.ConnectGamePlayModel = void 0),
   (ModelManager.DigitalScreenModel = void 0),
   (ModelManager.ScreenEffectModel = void 0);
 //# sourceMappingURL=ModelManager.js.map

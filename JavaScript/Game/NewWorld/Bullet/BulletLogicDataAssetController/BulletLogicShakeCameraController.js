@@ -14,7 +14,7 @@ class BulletLogicShakeCameraController extends BulletLogicController_1.BulletLog
       (this.B7o = 0),
       (this.b7o = void 0),
       (this.NeedTick = !0),
-      (this.Hte = e.GetComponent(154)),
+      (this.Hte = e.GetComponent(155)),
       (this.q7o = t.Count),
       (this.G7o = t.Interval * TimeUtil_1.TimeUtil.InverseMillisecond),
       ResourceSystem_1.ResourceSystem.LoadAsync(

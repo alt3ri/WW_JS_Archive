@@ -48,8 +48,8 @@ class BossRushBuffSelectView extends UiTabViewBase_1.UiTabViewBase {
               (h.ChangeAble = r.ChangeAble),
               (h.State =
                 0 === h.BuffId &&
-                r.State === Protocol_1.Aki.Protocol.fks.Proto_Selected
-                  ? Protocol_1.Aki.Protocol.fks.Proto_Empty
+                r.State === Protocol_1.Aki.Protocol.Iks.Proto_Selected
+                  ? Protocol_1.Aki.Protocol.Iks.Proto_Empty
                   : r.State),
               (h.Slot = i),
               i++,
@@ -69,7 +69,7 @@ class BossRushBuffSelectView extends UiTabViewBase_1.UiTabViewBase {
       }),
       (this.uSn = (t) => {
         if (this.lSn) return !0;
-        if (t.State !== Protocol_1.Aki.Protocol.fks.cBs) {
+        if (t.State !== Protocol_1.Aki.Protocol.Iks.pBs) {
           if (t.Selected) return !0;
           if (this.cSn()) return !0;
         }
@@ -98,7 +98,7 @@ class BossRushBuffSelectView extends UiTabViewBase_1.UiTabViewBase {
       );
   }
   OnBeforeShow() {
-    this.SOn(),
+    this.ROn(),
       (this.aSn = ModelManager_1.ModelManager.BossRushModel.CurrentTeamInfo),
       (this.hSn = []);
     for (const e of this.aSn.GetOptionBuff()) {
@@ -117,7 +117,7 @@ class BossRushBuffSelectView extends UiTabViewBase_1.UiTabViewBase {
     }
     this.Esi(), this.Jbi();
   }
-  SOn() {
+  ROn() {
     let t = "Start";
     ModelManager_1.ModelManager.BossRushModel.PlayBackAnimation &&
       (t = "ShowView"),
@@ -174,7 +174,7 @@ class BuffScrollItemData {
   constructor() {
     (this.BuffId = 0),
       (this.ChangeAble = !0),
-      (this.State = Protocol_1.Aki.Protocol.fks.Proto_Empty),
+      (this.State = Protocol_1.Aki.Protocol.Iks.Proto_Empty),
       (this.Selected = !1),
       (this.SelectedAtStart = !1),
       (this.OnClickToggle = () => {}),
@@ -219,14 +219,14 @@ class BuffGridItem extends GridProxyAbstract_1.GridProxyAbstract {
     await this.uat?.Promise,
       this.mSn.Refresh(t.BuffScrollItemData1, e, i),
       this.GetItem(0).SetAlpha(1),
-      this.mSn.SetInteractive(!0),
+      this.mSn.SetToggleActiveState(!0),
       t.BuffScrollItemData2
         ? (this.GetItem(1).SetAlpha(1),
-          this.dSn.SetInteractive(!0),
+          this.dSn.SetToggleActiveState(!0),
           this.dSn.Refresh(t.BuffScrollItemData2, e, i))
         : (this.GetItem(1).SetAlpha(0),
           this.GetItem(1).SetRaycastTarget(!1),
-          this.dSn.SetInteractive(!1));
+          this.dSn.SetToggleActiveState(!1));
   }
 }
 class BuffScrollItem extends UiPanelBase_1.UiPanelBase {
@@ -236,7 +236,7 @@ class BuffScrollItem extends UiPanelBase_1.UiPanelBase {
       (this.pHe = () => {
         if (!this.$8i) return !1;
         if (
-          this.$8i.State === Protocol_1.Aki.Protocol.fks.cBs &&
+          this.$8i.State === Protocol_1.Aki.Protocol.Iks.pBs &&
           0 === this.GetExtendToggle(0).GetToggleState()
         )
           return !0;
@@ -262,14 +262,14 @@ class BuffScrollItem extends UiPanelBase_1.UiPanelBase {
       this.GetExtendToggle(0).CanExecuteChange.Bind(this.pHe),
       this.GetExtendToggle(0).SetToggleState(0);
   }
-  SetInteractive(t) {
-    this.GetExtendToggle(0).SetSelfInteractive(t);
+  SetToggleActiveState(t) {
+    this.GetExtendToggle(0).RootUIComp.SetUIActive(t);
   }
   Refresh(t, e, i) {
-    (this.$8i = t).State !== Protocol_1.Aki.Protocol.fks.Proto_Inactive &&
-      (this.wke(), this.Oqe(), this.P5e(), this.Pqe(), this.gSn(), this.aFn());
+    (this.$8i = t).State !== Protocol_1.Aki.Protocol.Iks.Proto_Inactive &&
+      (this.wke(), this.Oqe(), this.P5e(), this.Pqe(), this.gSn(), this.gFn());
   }
-  aFn() {
+  gFn() {
     this.GetItem(5).SetUIActive(this.$8i.SelectedAtStart);
   }
   Oqe() {
@@ -278,7 +278,7 @@ class BuffScrollItem extends UiPanelBase_1.UiPanelBase {
   }
   wke() {
     this.GetItem(4).SetUIActive(
-      this.$8i.State === Protocol_1.Aki.Protocol.fks.cBs,
+      this.$8i.State === Protocol_1.Aki.Protocol.Iks.pBs,
     );
   }
   P5e() {

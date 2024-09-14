@@ -14,6 +14,7 @@ class AreaModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.UWe = void 0),
+      (this.HJa = void 0),
       (this.AWe = ""),
       (this.PWe = new Map()),
       (this.xWe = new Map()),
@@ -55,25 +56,36 @@ class AreaModel extends ModelBase_1.ModelBase {
   get AreaInfo() {
     return this.UWe;
   }
+  get LastAreaInfo() {
+    return this.HJa;
+  }
   get AllAreas() {
     return this.PWe;
   }
   GetCurrentAreaId(e) {
-    if (void 0 === e) return this.AreaInfo.AreaId;
-    var r = ConfigManager_1.ConfigManager.AreaConfig;
-    let t = this.AreaInfo.AreaId,
-      i = r.GetAreaInfo(t);
-    for (; i && i.Level !== e; ) (t = i.Father), (i = r.GetAreaInfo(t));
-    return t;
+    return this.jJa(this.AreaInfo, e);
+  }
+  GetLastAreaId(e) {
+    return this.jJa(this.LastAreaInfo, e);
+  }
+  jJa(e, r) {
+    if (void 0 === r) return e.AreaId;
+    var t = ConfigManager_1.ConfigManager.AreaConfig;
+    let i = e.AreaId,
+      a = t.GetAreaInfo(i);
+    for (; a && a.Level !== r; ) (i = a.Father), (a = t.GetAreaInfo(i));
+    return i;
   }
   SetAreaInfo(e) {
     0 !== e &&
-      (this.UWe = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e));
+      ((this.HJa = this.UWe),
+      (this.UWe = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e)));
   }
   SetAreaName(e, r = !1) {
     var t;
     0 !== e &&
-      ((this.UWe = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e)),
+      ((this.HJa = this.UWe),
+      (this.UWe = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e)),
       this.UWe.Tips &&
         ((this.AWe = this.UWe.Title),
         void 0 === (t = this.wWe.get(e)) ||
@@ -101,7 +113,7 @@ class AreaModel extends ModelBase_1.ModelBase {
     this.xWe.get(e) !== r && (this.xWe.set(e, r), t?.ToggleArea(r));
   }
   InitAreaStates(e) {
-    for (const r of e) this.xWe.set(r.l6n, r.F4n);
+    for (const r of e) this.xWe.set(r.p6n, r.Y4n);
     e = ModelManager_1.ModelManager.PlayerInfoModel.GetNumberPropById(6);
     e && this.SetAreaInfo(e);
   }

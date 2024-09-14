@@ -8,8 +8,10 @@ class SCreatureGenNavAssistFileExportDefine {
     (this.J7 = null), (this.z7 = 0);
   }
   get Areas() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.areasLength(), (e) =>
-      this.areas(e),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.areasLength(),
+      this.areas,
+      this,
     );
   }
   __init(e, t) {

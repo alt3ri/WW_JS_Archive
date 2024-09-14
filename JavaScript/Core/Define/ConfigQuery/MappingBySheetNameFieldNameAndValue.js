@@ -18,68 +18,89 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configMappingBySheetNameFieldNameAndValue.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configMappingBySheetNameFieldNameAndValue.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configMappingBySheetNameFieldNameAndValue.GetConfig(";
 exports.configMappingBySheetNameFieldNameAndValue = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (e, o, n, i = !0) => {
-    if (
-      (m = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+  GetConfig: (e, n, o, i = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var a = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${e}#${n}#${o})`),
+      t =
+        (a.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
       if (i) {
-        var a = KEY_PREFIX + `#${e}#${o}#${n})`;
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(a);
-        if (t) return t;
+        var g = KEY_PREFIX + `#${e}#${n}#${o})`;
+        const m = ConfigCommon_1.ConfigCommon.GetConfig(g);
+        if (m)
+          return (
+            a.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            m
+          );
       }
       if (
-        (m =
+        (t =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.BindString(handleId, 2, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 3, n, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindString(handleId, 2, n, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 3, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(
               handleId,
               !0,
               ...logPair,
               ["SheetName", e],
-              ["FieldName", o],
-              ["Value", n],
+              ["FieldName", n],
+              ["Value", o],
             ))
       ) {
-        var m,
-          a = void 0;
+        g = void 0;
         if (
-          (([m, a] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([t, g] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["SheetName", e],
-            ["FieldName", o],
-            ["Value", n],
+            ["FieldName", n],
+            ["Value", o],
           )),
-          m)
+          t)
         ) {
-          const t = Mapping_1.Mapping.getRootAsMapping(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
+          const m = Mapping_1.Mapping.getRootAsMapping(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(g.buffer)),
           );
           return (
             i &&
-              ((m = KEY_PREFIX + `#${e}#${o}#${n})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(m, t)),
+              ((t = KEY_PREFIX + `#${e}#${n}#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(t, m)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t
+            a.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            m
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    a.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=MappingBySheetNameFieldNameAndValue.js.map

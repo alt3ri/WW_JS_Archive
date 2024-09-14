@@ -96,7 +96,7 @@ let SceneItemAttachTargetComponent =
         });
     }
     static get Dependencies() {
-      return [185, 0];
+      return [187, 0];
     }
     OnInitData(t) {
       t = t.GetParam(SceneItemAttachTargetComponent_1)[0];
@@ -129,7 +129,7 @@ let SceneItemAttachTargetComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(185)),
+        (this.Hte = this.Entity.GetComponent(187)),
         !!this.Hte ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -155,6 +155,7 @@ let SceneItemAttachTargetComponent =
             EventDefine_1.EEventName.AddEntity,
             this.hln,
           ),
+        EventSystem_1.EventSystem.RemoveAllTargetUseKey(this),
         !0
       );
     }
@@ -178,32 +179,35 @@ let SceneItemAttachTargetComponent =
     }
     lln() {
       if (this.oln) {
-        var t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
+        var e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
           this.oln,
         );
-        if (t?.IsInit) {
-          var e = t.Entity?.GetComponent(185);
-          if (e)
-            if (this.rln && !e?.GetIsSceneInteractionLoadCompleted())
+        if (e?.IsInit) {
+          var i = e.Entity?.GetComponent(187);
+          if (i)
+            if (this.rln && !i?.GetIsSceneInteractionLoadCompleted())
               EventSystem_1.EventSystem.HasWithTarget(
-                t.Entity,
+                e.Entity,
                 EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
                 this.cln,
               ) ||
                 EventSystem_1.EventSystem.AddWithTarget(
-                  t.Entity,
+                  e.Entity,
                   EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
                   this.cln,
                 );
             else {
               let t = void 0;
-              (t = this.rln ? e.GetActorInSceneInteraction(this.rln) : e.Owner),
+              (t = this.rln ? i.GetActorInSceneInteraction(this.rln) : i.Owner),
                 this.dln(t),
-                EventSystem_1.EventSystem.Has(
+                EventSystem_1.EventSystem.HasWithTarget(
+                  e,
                   EventDefine_1.EEventName.RemoveEntity,
                   this._ln,
                 ) ||
-                  EventSystem_1.EventSystem.Add(
+                  EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+                    this,
+                    e,
                     EventDefine_1.EEventName.RemoveEntity,
                     this._ln,
                   );
@@ -221,14 +225,6 @@ let SceneItemAttachTargetComponent =
     }
     uln() {
       if (this.oln) {
-        EventSystem_1.EventSystem.Has(
-          EventDefine_1.EEventName.RemoveEntity,
-          this._ln,
-        ) &&
-          EventSystem_1.EventSystem.Remove(
-            EventDefine_1.EEventName.RemoveEntity,
-            this._ln,
-          );
         var e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
             this.oln,
           ),
@@ -244,7 +240,18 @@ let SceneItemAttachTargetComponent =
                 EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
                 this.cln,
               ),
-            e?.Entity?.GetComponent(185));
+            EventSystem_1.EventSystem.HasWithTarget(
+              e,
+              EventDefine_1.EEventName.RemoveEntity,
+              this._ln,
+            ) ||
+              EventSystem_1.EventSystem.RemoveWithTargetUseKey(
+                this,
+                e,
+                EventDefine_1.EEventName.RemoveEntity,
+                this._ln,
+              ),
+            e?.Entity?.GetComponent(187));
         let t = void 0;
         (t = this.rln
           ? e?.GetIsSceneInteractionLoadCompleted()
@@ -330,7 +337,7 @@ let SceneItemAttachTargetComponent =
                 ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
                   this.oln,
                 ).Entity,
-              h = s.GetComponent(185),
+              h = s.GetComponent(187),
               s = s.GetComponent(0),
               n = s.GetPbEntityInitData()?.Transform,
               n = n ? this.Eln(n) : s.GetTransform();
@@ -450,7 +457,7 @@ let SceneItemAttachTargetComponent =
   });
 (SceneItemAttachTargetComponent = SceneItemAttachTargetComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(111)],
+    [(0, RegisterComponent_1.RegisterComponent)(112)],
     SceneItemAttachTargetComponent,
   )),
   (exports.SceneItemAttachTargetComponent = SceneItemAttachTargetComponent);

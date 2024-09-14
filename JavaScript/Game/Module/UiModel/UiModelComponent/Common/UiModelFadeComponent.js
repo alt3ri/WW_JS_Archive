@@ -30,21 +30,21 @@ let UiModelFadeComponent = class UiModelFadeComponent extends UiModelComponentBa
       (this.gle = 0),
       (this.r1t = 0),
       (this.kJo = void 0),
-      (this.LPn = !1);
+      (this.APn = !1);
   }
   OnCreate() {
-    this.LPn = !1;
+    this.APn = !1;
   }
   OnInit() {
     this.ywr = this.Owner.CheckGetComponent(0);
   }
   OnEnd() {
     this.NeedTick && this.ywr?.SetDitherEffect(this.zwr),
-      (this.LPn = !0),
+      (this.APn = !0),
       this.av();
   }
   Fade(t, e, i, s) {
-    this.LPn ||
+    this.APn ||
       ((this.FHt = t),
       (this.zwr = e),
       (this.r1t = i),

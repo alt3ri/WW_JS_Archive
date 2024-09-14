@@ -50,13 +50,13 @@ let SceneItemInteractAudioComponent = class SceneItemInteractAudioComponent exte
       (this.qln = "physical_obj_velocity");
   }
   static get Dependencies() {
-    return [185, 0];
+    return [187, 0];
   }
   OnStart() {
     return (
       this.mFr(),
       this.Uln
-        ? ((this.n$t = this.Entity.GetComponent(185)),
+        ? ((this.n$t = this.Entity.GetComponent(187)),
           (this.Rln = this.n$t.StaticMesh),
           this.Rln &&
             this.Rln.OnComponentHit.Add((t, e, i, o, s) => {
@@ -129,9 +129,9 @@ let SceneItemInteractAudioComponent = class SceneItemInteractAudioComponent exte
               e instanceof TsBaseItem_1.default &&
                 ((t = ActorUtils_1.ActorUtils.GetEntityByActor(e)),
                 (this.wln = Vector_1.Vector.Create(
-                  t.Entity.GetComponent(114).GetVelocity(),
+                  t.Entity.GetComponent(115).GetVelocity(),
                 )),
-                this.wln.MultiplyEqual(t.Entity.GetComponent(114).Mass)),
+                this.wln.MultiplyEqual(t.Entity.GetComponent(115).Mass)),
               Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Audio",
@@ -172,7 +172,7 @@ let SceneItemInteractAudioComponent = class SceneItemInteractAudioComponent exte
   }
 };
 (SceneItemInteractAudioComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(114)],
+  [(0, RegisterComponent_1.RegisterComponent)(115)],
   SceneItemInteractAudioComponent,
 )),
   (exports.SceneItemInteractAudioComponent = SceneItemInteractAudioComponent);

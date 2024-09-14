@@ -10,10 +10,10 @@ class MoonChasingMemoryDetailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.lqe = void 0),
-      (this.H9s = void 0),
-      (this.j9s = void 0),
-      (this.W9s = () => new MemoryContentItem_1.MemoryContentItemA()),
-      (this.K9s = () => new MemoryContentItem_1.MemoryContentItemB());
+      (this.C7s = void 0),
+      (this.g7s = void 0),
+      (this.f7s = () => new MemoryContentItem_1.MemoryContentItemA()),
+      (this.p7s = () => new MemoryContentItem_1.MemoryContentItemB());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -29,20 +29,20 @@ class MoonChasingMemoryDetailView extends UiViewBase_1.UiViewBase {
       this.lqe.SetCloseCallBack(() => {
         this.CloseMe();
       }),
-      (this.H9s = new GenericLayout_1.GenericLayout(
+      (this.C7s = new GenericLayout_1.GenericLayout(
         this.GetGridLayout(1),
-        this.W9s,
+        this.f7s,
       )),
-      (this.j9s = new GenericLayout_1.GenericLayout(
+      (this.g7s = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(3),
-        this.K9s,
+        this.p7s,
       ));
   }
   OnBeforeShow() {
     var e = this.OpenParam,
       t = e.filter((e) => 0 === e.Classify),
-      t = (this.H9s.RefreshByData(t), e.filter((e) => 1 === e.Classify));
-    this.j9s.RefreshByData(t);
+      t = (this.C7s.RefreshByData(t), e.filter((e) => 1 === e.Classify));
+    this.g7s.RefreshByData(t);
   }
 }
 exports.MoonChasingMemoryDetailView = MoonChasingMemoryDetailView;

@@ -89,12 +89,12 @@ class LanguageUpdater {
           do {
             if (
               !(e = UE.KuroLauncherLibrary.DoesDiskHaveEnoughSpace(
-                UE.BlueprintPathsLibrary.ProjectSavedDir(),
+                UE.KuroLauncherLibrary.GameSavedDir(),
                 i,
               ))
             )
               if (!(await this.UpdateView.ShowNotEnoughSpaceConfirmation(i))) {
-                AppUtil_1.AppUtil.QuitGame();
+                AppUtil_1.AppUtil.QuitGame("NotEnoughSpace");
                 break;
               }
           } while (!e);
@@ -121,9 +121,13 @@ class LanguageUpdater {
           var t = this.Updater.GetNeedRemount(),
             r = this.Updater.GetPakList();
           if (t && r) {
-            for (const s of r)
-              UE.KuroPakMountStatic.MountPak(s.SavePath + ".pak", s.MountOrder);
-            this.CalculateDownloadStatus();
+            for (const n of r) {
+              var s = n.SavePath + ".pak";
+              UE.KuroPakMountStatic.MountPak(s, n.MountOrder),
+                UE.KuroPakMountStatic.AddSha1Check(s, n.PakSha1);
+            }
+            this.CalculateDownloadStatus(),
+              UE.KuroPakMountStatic.StartSha1Check();
           }
           if (!a) throw new Error("热更语音包资源失败");
         }
@@ -141,7 +145,9 @@ class LanguageUpdater {
     ((this.LocalDiskSize = e) === (this.TotalDiskSize = t) &&
       this.VersionMisc.HasMountFile()) ||
     !UE.KuroLauncherLibrary.NeedHotPatch()
-      ? ((this.Status = 2), (this.IsDownloading = !1))
+      ? ((this.Status = 2),
+        (this.IsDownloading = !1),
+        this.VersionMisc.SetUseLanguagePackage())
       : 0 < e && e !== t && (this.Status = 1);
   }
   static dIr(e) {

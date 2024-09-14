@@ -20,7 +20,7 @@ class BulletLogicSpeedReduceController extends BulletLogicController_1.BulletLog
         l -
         0.1 *
           (o =
-            (o = o?.GetComponent(163).CharacterWeight) < MIN_WEIGHT
+            (o = o?.GetComponent(164).CharacterWeight) < MIN_WEIGHT
               ? MIN_WEIGHT
               : o) *
           this.h7o.SpeedDampingRatio),

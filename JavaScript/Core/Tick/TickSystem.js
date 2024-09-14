@@ -21,7 +21,7 @@ class Ticker {
       (this.CoolDown = 0),
       (this.Pause = !1),
       (this.StatObj = void 0),
-      (this.StatObj = void 0);
+      (this.StatObj = Stats_1.Stat.Create("In TickSystem." + s));
   }
 }
 exports.Ticker = Ticker;
@@ -125,8 +125,8 @@ class TickSystem {
         e = i.CoolDown % i.TickIntervalMs;
         (t = i.CoolDown - e), (i.CoolDown = e);
       }
-      i.Count += 1;
-      e = cpp_1.KuroTime.GetMilliseconds64();
+      (i.Count += 1), i.StatObj?.Start();
+      var e = cpp_1.KuroTime.GetMilliseconds64();
       try {
         i.Handle(t);
       } catch (t) {
@@ -149,23 +149,22 @@ class TickSystem {
               ["error", t],
             );
       }
-      e = cpp_1.KuroTime.GetMilliseconds64() - e;
       PerfSight_1.PerfSight.IsEnable &&
         0 === i.Group &&
-        ("Core" === i.Name
-          ? PerfSight_1.PerfSight.PostValueF1(
+        ((e = cpp_1.KuroTime.GetMilliseconds64() - e),
+        "Core" === i.Name
+          ? cpp_1.FKuroPerfSightHelper.PostValueFloat1(
               "CustomPerformance",
-              "[PrePhysics]TickSystem.Core",
+              "[PrePhysics]TickSystem_Core",
               e,
-              Time_1.Time.Frame,
             )
           : "Game" === i.Name &&
-            PerfSight_1.PerfSight.PostValueF1(
+            cpp_1.FKuroPerfSightHelper.PostValueFloat1(
               "CustomPerformance",
-              "[PrePhysics]TickSystem.Game",
+              "[PrePhysics]TickSystem_Game",
               e,
-              Time_1.Time.Frame,
-            ));
+            )),
+        i.StatObj?.Stop();
     }
   }
   static AddTickPrerequisite(t, i) {

@@ -31,7 +31,7 @@ const CsvLoader_1 = require("./CsvLoader"),
       Type: "Int",
       Condition: "notEmpty",
       CreateType: "scheme",
-      RenderType: 42,
+      RenderType: 43,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "Remark",

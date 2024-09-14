@@ -7,7 +7,6 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
-  ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
   UiManager_1 = require("../../../../../Ui/UiManager"),
   SkipTaskManager_1 = require("../../../../SkipInterface/SkipTaskManager"),
@@ -18,13 +17,13 @@ class ActivityMoonChasingData extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments),
       (this.LimitTimeRewardOn = !1),
-      (this.jWs = new Map()),
+      (this.ZKs = new Map()),
       (this.PermanentTargetOn = !1),
       (this.ActivityFlowState = 0),
       (this.SNe = (e, t) => {
-        var i = this.jWs.get(e.Id),
-          r = this.jWs.get(t.Id);
-        return i === r ? e.Id - t.Id : i - r;
+        var i = this.ZKs.get(e.Id),
+          a = this.ZKs.get(t.Id);
+        return i === a ? e.Id - t.Id : i - a;
       });
   }
   PhraseEx(e) {
@@ -39,13 +38,12 @@ class ActivityMoonChasingData extends ActivityData_1.ActivityBaseData {
       (this.LimitTimeRewardOn = t.ActivityReward),
         (this.PermanentTargetOn = t.PermanentTarget),
         (this.ActivityFlowState = 0 === t.ActivityButtonType ? 0 : 1),
-        ControllerHolder_1.ControllerHolder.MoonChasingController.TrackMoonAllDataRequest(),
-        this.jWs.clear();
-      t = e.l$s;
+        this.ZKs.clear();
+      t = e.y$s;
       if (t) {
-        for (const i of t.h$s)
-          this.jWs.set(i.J4n, ActivityCommonDefine_1.taskStateResolver[i.w6n]);
-        this.LimitTimeRewardOn && this.WWs();
+        for (const i of t.E$s)
+          this.ZKs.set(i.s5n, ActivityCommonDefine_1.taskStateResolver[i.H6n]);
+        this.LimitTimeRewardOn && this.eQs();
       }
     } else
       Log_1.Log.CheckError() &&
@@ -61,9 +59,8 @@ class ActivityMoonChasingData extends ActivityData_1.ActivityBaseData {
   }
   GetExDataRedPointShowState() {
     return (
-      this.IsHasLimitTimeReward() ||
-      this.yya() ||
-      this.Iya() ||
+      (1 !== this.ActivityFlowState &&
+        (this.IsHasLimitTimeReward() || this.XLa() || this.YLa())) ||
       this.IsHasMoonChasingRedDot()
     );
   }
@@ -88,43 +85,43 @@ class ActivityMoonChasingData extends ActivityData_1.ActivityBaseData {
     var e,
       t,
       i = [];
-    for ([e, t] of this.jWs) {
-      var r = this.KWs(e, t);
-      r && i.push(r);
+    for ([e, t] of this.ZKs) {
+      var a = this.tQs(e, t);
+      a && i.push(a);
     }
     if (0 !== i.length)
       return { DataPageList: [{ DataList: i.sort(this.SNe) }] };
   }
-  KWs(e, n) {
-    const o =
+  tQs(e, n) {
+    const s =
       ConfigManager_1.ConfigManager.ActivityMoonChasingConfig.GetActivityMoonChasingRewardConfigById(
         e,
       );
-    if (o) {
+    if (s) {
       let e = 0,
         t = "",
         i = () => {},
-        r = !1,
-        a = !1;
+        a = !1,
+        r = !1;
       switch (n) {
         case 1:
-          o.TargetFunc
+          s.TargetFunc
             ? ((i = () => {
-                SkipTaskManager_1.SkipTaskManager.RunByConfigId(o.TargetFunc);
+                SkipTaskManager_1.SkipTaskManager.RunByConfigId(s.TargetFunc);
               }),
               (e = 1),
               (t = "Moonfiesta_Skip"),
-              (a = !0))
+              (r = !0))
             : ((e = 0), (t = "Moonfiesta_Underway"));
           break;
         case 0:
           (e = 1),
             (t = "Moonfiesta_AwardGet"),
-            (r = !0),
+            (a = !0),
             (i = () => {
               ActivityMoonChasingController_1.ActivityMoonChasingController.TrackMoonActivityTargetRewardRequest(
                 this.Id,
-                o.Id,
+                s.Id,
               );
             });
           break;
@@ -135,16 +132,16 @@ class ActivityMoonChasingData extends ActivityData_1.ActivityBaseData {
         StringUtils_1.StringUtils.IsEmpty(t) ||
           (t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t)),
         {
-          Id: o.Id,
+          Id: s.Id,
           NameText: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-            o.TargetName,
+            s.TargetName,
           ),
-          RewardList: this.GetPreviewReward(o.TargetReward),
+          RewardList: this.GetPreviewReward(s.TargetReward),
           RewardState: e,
           RewardButtonText: t,
-          RewardButtonRedDot: r,
+          RewardButtonRedDot: a,
           ClickFunction: i,
-          ClickFunctionAndCloseSelf: a,
+          ClickFunctionAndCloseSelf: r,
         }
       );
     }
@@ -157,9 +154,9 @@ class ActivityMoonChasingData extends ActivityData_1.ActivityBaseData {
       );
   }
   SetRewardState(e, t) {
-    this.jWs.has(e) &&
-      (this.jWs.set(e, t),
-      this.WWs(),
+    this.ZKs.has(e) &&
+      (this.ZKs.set(e, t),
+      this.eQs(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
         this.Id,
@@ -167,10 +164,10 @@ class ActivityMoonChasingData extends ActivityData_1.ActivityBaseData {
   }
   IsHasLimitTimeReward() {
     if (this.LimitTimeRewardOn)
-      for (const e of this.jWs.values()) if (0 === e) return !0;
+      for (const e of this.ZKs.values()) if (0 === e) return !0;
     return !1;
   }
-  WWs() {
+  eQs() {
     var e;
     UiManager_1.UiManager.IsViewOpen("ActivityRewardPopUpView") &&
       (e = this.GetAllRewardData()) &&
@@ -179,7 +176,7 @@ class ActivityMoonChasingData extends ActivityData_1.ActivityBaseData {
         e,
       );
   }
-  yya() {
+  XLa() {
     return (
       !(!this.IsUnLock() || !this.GetPreGuideQuestFinishState()) &&
       (ModelManager_1.ModelManager.MoonChasingRewardModel.GetAllTaskDataRedDotState(
@@ -188,7 +185,7 @@ class ActivityMoonChasingData extends ActivityData_1.ActivityBaseData {
         ModelManager_1.ModelManager.MoonChasingRewardModel.GetShopRedDotState())
     );
   }
-  Iya() {
+  YLa() {
     return ModelManager_1.ModelManager.MoonChasingModel.HasHandbookRewardRedDot();
   }
   IsHasMoonChasingRedDot() {

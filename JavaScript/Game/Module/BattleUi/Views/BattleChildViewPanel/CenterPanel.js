@@ -34,10 +34,10 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.UJe = void 0),
       (this.X9e = void 0),
       (this.AJe = void 0),
-      (this.PJe = (t, i) => {
-        var e = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId;
-        e &&
-          e === HOOK_PHANTOM_ID &&
+      (this.PJe = (t, e) => {
+        var i = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId;
+        i &&
+          i === HOOK_PHANTOM_ID &&
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Battle",
@@ -48,29 +48,29 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
             ),
           this.RJe ||
             (t
-              ? (this.DJe && this.DJe.GetIsInterrupting()) || this.xJe(i)
+              ? (this.DJe && this.DJe.GetIsInterrupting()) || this.xJe(e)
               : this.wJe()));
       }),
-      (this.BJe = (t, i, e) => {
+      (this.BJe = (t, e, i) => {
         var s = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
         s?.Valid &&
           t === s.Id &&
-          i === GRAPPING_HOOK_SKILL_ID &&
+          e === GRAPPING_HOOK_SKILL_ID &&
           (this.RJe = !0);
       }),
-      (this.bJe = (t, i) => {
+      (this.bJe = (t, e) => {
         !this.X9e?.Valid ||
           t !== this.X9e.Id ||
-          i !== GRAPPING_HOOK_SKILL_ID ||
+          e !== GRAPPING_HOOK_SKILL_ID ||
           ((this.RJe = !1), this.DJe?.GetIsInterrupting()) ||
           this.qJe() ||
           this.wJe();
       }),
-      (this.GJe = (t, i) => {
-        var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-        e.Valid &&
-          t === e.Id &&
-          i === GRAPPING_HOOK_SKILL_ID &&
+      (this.GJe = (t, e) => {
+        var i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+        i.Valid &&
+          t === i.Id &&
+          e === GRAPPING_HOOK_SKILL_ID &&
           this.DJe?.Interrupt();
       }),
       (this.NJe = () => {
@@ -108,17 +108,17 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
               ["bVisible", t],
             );
       }),
-      (this.VJe = (t, i) => {
+      (this.VJe = (t, e) => {
         t
           ? (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("Battle", 18, "进入处决范围"),
             this.UJe ||
               ((this.UJe = new ExecutionPanel_1.ExecutionPanel()),
               this.UJe.Init(this.RootItem)),
-            this.UJe.ShowByEntity(i))
+            this.UJe.ShowByEntity(e))
           : (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("Battle", 18, "离开处决范围"),
-            this.UJe?.HideByEntity(i));
+            this.UJe?.HideByEntity(e));
       }),
       (this.HJe = (t) => {
         this.GetItem(0).SetUIActive(t),
@@ -128,7 +128,7 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.fHe = () => {
         var t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
         (this.X9e = t.EntityHandle),
-          (this.AJe = this.X9e.Entity.GetComponent(89)),
+          (this.AJe = this.X9e.Entity.GetComponent(90)),
           this.jJe();
       });
   }
@@ -151,7 +151,7 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   InitializeTemp() {
     this.kJe(),
       (this.X9e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
-      this.X9e?.Valid && (this.AJe = this.X9e.Entity.GetComponent(89));
+      this.X9e?.Valid && (this.AJe = this.X9e.Entity.GetComponent(90));
   }
   async InitializeAsync() {
     await Promise.all([this.WJe(), this.KJe(), this.QJe(), this.XJe()]),
@@ -257,15 +257,29 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       this.ChildViewData.RemoveCallback(17, this.kJe);
   }
   OnTickBattleChildViewPanel(t) {
-    this.TJe?.Tick(t), this.LJe?.Tick(t), this.SJe.Update(t);
+    CenterPanel.$Je.Start(),
+      this.TJe?.Tick(t),
+      this.LJe?.Tick(t),
+      CenterPanel.$Je.Stop(),
+      CenterPanel.YJe.Start(),
+      this.SJe.Update(t),
+      CenterPanel.YJe.Stop();
   }
   OnAfterTickBattleChildViewPanel(t) {
-    this.MJe?.Update(t), this.EJe.Update(), this.eze();
+    CenterPanel.JJe.Start(),
+      this.MJe?.Update(t),
+      CenterPanel.JJe.Stop(),
+      CenterPanel.zJe.Start(),
+      this.EJe.Update(),
+      CenterPanel.zJe.Stop(),
+      CenterPanel.ZJe.Start(),
+      this.eze(),
+      CenterPanel.ZJe.Stop();
   }
   xJe(t) {
     this.DJe && (this.DJe.Destroy(), (this.DJe = void 0));
-    var i = UiLayer_1.UiLayer.GetBattleViewUnit(1);
-    (this.DJe = new GrapplingHookPoint_1.GrapplingHookPoint(t, i)),
+    var e = UiLayer_1.UiLayer.GetBattleViewUnit(1);
+    (this.DJe = new GrapplingHookPoint_1.GrapplingHookPoint(t, e)),
       this.DJe.BindOnInterruptCompleted(this.NJe);
   }
   qJe() {
@@ -281,13 +295,13 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     return this.UJe?.GetExecutionItem();
   }
   ize(t) {
-    var i = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId;
+    var e = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId;
     return !(
-      !i ||
-      i !== HOOK_PHANTOM_ID ||
+      !e ||
+      e !== HOOK_PHANTOM_ID ||
       !t.Valid ||
-      !(i = t.GetNextTarget()) ||
-      (i && !t.CanActivateFixHook()) ||
+      !(e = t.GetNextTarget()) ||
+      (e && !t.CanActivateFixHook()) ||
       !t.GetNextTargetVector()
     );
   }
@@ -340,25 +354,28 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   jJe() {
     this.TJe &&
       (this.ClearAllTagSignificantChangedCallback(),
-      this.ListenForTagSignificantChanged(this.X9e, forbidMoveTagId, (t, i) => {
-        this.TJe.SetForbidMove(i);
+      this.ListenForTagSignificantChanged(this.X9e, forbidMoveTagId, (t, e) => {
+        this.TJe.SetForbidMove(e);
       }),
       this.TJe.SetForbidMove(this.ContainsTag(this.X9e, forbidMoveTagId)));
     var t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
-    let i = 0;
-    t?.RoleBattleViewInfo && (i = t.RoleBattleViewInfo.JoystickType),
-      this.IJe !== i &&
-        ((this.IJe = i),
-        this.TJe?.SetVisible(3, 0 === i),
+    let e = 0;
+    t?.RoleBattleViewInfo && (e = t.RoleBattleViewInfo.JoystickType),
+      this.IJe !== e &&
+        ((this.IJe = e),
+        this.TJe?.SetVisible(3, 0 === e),
+        this.TJe?.SetEnable(0 === e),
         this.LJe && this.LJe.Destroy(),
-        1 === i) &&
+        1 === e) &&
         ((this.LJe = new MoveSkillPanel_1.MoveSkillPanel()),
         this.LJe.CreateDynamic(this.GetRootItem()));
   }
 }
-((exports.CenterPanel = CenterPanel).JJe = void 0),
-  (CenterPanel.zJe = void 0),
-  (CenterPanel.$Je = void 0),
-  (CenterPanel.ZJe = void 0),
-  (CenterPanel.YJe = void 0);
+((exports.CenterPanel = CenterPanel).JJe = Stats_1.Stat.Create(
+  "[BattleView]CenterPanelTick1",
+)),
+  (CenterPanel.zJe = Stats_1.Stat.Create("[BattleView]CenterPanelTick2")),
+  (CenterPanel.$Je = Stats_1.Stat.Create("[BattleView]CenterPanelTick5")),
+  (CenterPanel.ZJe = Stats_1.Stat.Create("[BattleView]CenterPanelTick6")),
+  (CenterPanel.YJe = Stats_1.Stat.Create("[BattleView]CenterPanelTick9"));
 //# sourceMappingURL=CenterPanel.js.map

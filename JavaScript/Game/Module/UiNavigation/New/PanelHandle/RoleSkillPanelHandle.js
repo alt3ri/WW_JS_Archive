@@ -10,16 +10,16 @@ class RoleSkillPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandleBa
     var s = this.GetNavigationGroup(e);
     if (s) {
       this.GroupName = e;
-      for (let e = 0, l = s.ListenerList.Num(); e < l; ++e)
-        s.ListenerList.Get(e).GetBehaviorComponent().bToggleOnSelect = !0;
+      for (let e = 0, l = s.ListenerList.length; e < l; ++e)
+        s.ListenerList[e].GetBehaviorComponent().bToggleOnSelect = !0;
     }
   }
   ResetToggleSelect() {
     var s = this.GetNavigationGroup(this.GroupName);
     if (s) {
       this.GroupName = "";
-      for (let e = 0, l = s.ListenerList.Num(); e < l; ++e)
-        s.ListenerList.Get(e).GetBehaviorComponent().bToggleOnSelect = !1;
+      for (let e = 0, l = s.ListenerList.length; e < l; ++e)
+        s.ListenerList[e].GetBehaviorComponent().bToggleOnSelect = !1;
     }
   }
 }

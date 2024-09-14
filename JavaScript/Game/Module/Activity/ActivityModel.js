@@ -35,23 +35,64 @@ class ActivityModel extends ModelBase_1.ModelBase {
       (this.G5e = ""),
       (this.N5e = ""),
       (this.O5e = ""),
+      (this.OnLanguageChange = () => {
+        (this.q5e = ""),
+          (this.G5e = ""),
+          (this.N5e = ""),
+          (this.O5e = ""),
+          this.uma();
+      }),
       (this.W4e = new Map()),
       (this.K4e = new Set()),
       (this.Q4e = new Set()),
-      (this.X4e = new Map());
+      (this.X4e = new Map()),
+      (this.P4a = (t, e) => {
+        var i = t.IsFinished ? 1 : 0,
+          r = e.IsFinished ? 1 : 0;
+        if (i != r) return i - r;
+        var n = [];
+        for (const o of [t.AccessType, e.AccessType]) {
+          let t = 2;
+          switch (o) {
+            case 7:
+              t = 0;
+              break;
+            case 16:
+              t = 1;
+          }
+          n.push(t);
+        }
+        return n[0] - n[1];
+      });
   }
   OnInit() {
-    return this.$4e(), this.eua(), !0;
+    return (
+      this.$4e(),
+      this.uma(),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.TextLanguageChange,
+        this.OnLanguageChange,
+      ),
+      !0
+    );
   }
   OnClear() {
     for (const t of this.j4e.values())
       TimerSystem_1.RealTimeTimerSystem.Remove(t);
-    return this.j4e.clear(), this.H4e.clear(), !0;
+    return (
+      this.j4e.clear(),
+      this.H4e.clear(),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.TextLanguageChange,
+        this.OnLanguageChange,
+      ),
+      !0
+    );
   }
   InitCache() {
     this.V4e.InitData();
   }
-  eua() {
+  uma() {
     var t;
     StringUtils_1.StringUtils.IsEmpty(this.q5e) &&
       (this.q5e =
@@ -78,14 +119,14 @@ class ActivityModel extends ModelBase_1.ModelBase {
       t.ForceClose();
     }),
       t.forEach((t) => {
-        ActivityManager_1.ActivityManager.GetActivityController(t.Z4n)
+        ActivityManager_1.ActivityManager.GetActivityController(t.h5n)
           ? this.Y4e(t)?.Phrase(t)
           : Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Activity", 28, "尚未实现活动", ["type", t.Z4n]);
+            Log_1.Log.Warn("Activity", 28, "尚未实现活动", ["type", t.h5n]);
       });
     const e = new Map();
     t.forEach((t) => {
-      e.has(t.Z4n) || e.set(t.Z4n, new Array()), e.get(t.Z4n).push(t.J4n);
+      e.has(t.h5n) || e.set(t.h5n, new Array()), e.get(t.h5n).push(t.s5n);
     }),
       e.forEach((t, e) => {
         EventSystem_1.EventSystem.Emit(
@@ -133,14 +174,14 @@ class ActivityModel extends ModelBase_1.ModelBase {
   }
   OnActivityUpdate(t) {
     t.forEach((t) => {
-      ActivityManager_1.ActivityManager.GetActivityController(t.Z4n)
+      ActivityManager_1.ActivityManager.GetActivityController(t.h5n)
         ? this.Y4e(t)?.Phrase(t)
         : Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Activity", 28, "尚未实现活动", ["type", t.Z4n]);
+          Log_1.Log.Warn("Activity", 28, "尚未实现活动", ["type", t.h5n]);
     });
     const e = new Map();
     t.forEach((t) => {
-      e.has(t.Z4n) || e.set(t.Z4n, new Array()), e.get(t.Z4n).push(t.J4n);
+      e.has(t.h5n) || e.set(t.h5n, new Array()), e.get(t.h5n).push(t.s5n);
     }),
       e.forEach((t, e) => {
         EventSystem_1.EventSystem.Emit(
@@ -164,34 +205,36 @@ class ActivityModel extends ModelBase_1.ModelBase {
   Y4e(t) {
     var e,
       i,
-      r = this.h3e.get(t.J4n);
+      r,
+      n = this.h3e.get(t.s5n);
     return (
-      r ||
-        ((r = ActivityController_1.ActivityController.CreateActivityData(t)),
-        (i = Number(MathUtils_1.MathUtils.LongToBigInt(t.Lps))),
-        (e = Number(MathUtils_1.MathUtils.LongToBigInt(t.Ips))),
-        (i = Math.max(i, e)),
-        this.z4e(i, t.J4n, !1),
-        this.h3e.set(t.J4n, r),
-        this.F4e.push(t.J4n)),
-      r
+      n ||
+        ((n = ActivityController_1.ActivityController.CreateActivityData(t)),
+        (r = TimeUtil_1.TimeUtil.GetServerTime()),
+        (i = Number(MathUtils_1.MathUtils.LongToBigInt(t.wps))),
+        (e = Number(MathUtils_1.MathUtils.LongToBigInt(t.Pps))),
+        r <= i && r <= e && ((r = Math.min(e, i)), this.z4e(r, t.s5n, !0)),
+        (e = Number(MathUtils_1.MathUtils.LongToBigInt(t.xps))),
+        (i = Number(MathUtils_1.MathUtils.LongToBigInt(t.Ups))),
+        (r = Math.max(e, i)),
+        this.z4e(r, t.s5n, !1),
+        this.h3e.set(t.s5n, n),
+        this.F4e.push(t.s5n)),
+      n
     );
   }
   z4e(t, e, i) {
     var r;
     this.H4e.has(t) ||
       t < TimeUtil_1.TimeUtil.GetServerTime() ||
-      ((r = Math.max(
-        (t - TimeUtil_1.TimeUtil.GetServerTime()) *
-          TimeUtil_1.TimeUtil.InverseMillisecond,
-        TimerSystem_1.MIN_TIME,
-      )),
+      ((r =
+        t * TimeUtil_1.TimeUtil.InverseMillisecond + TimerSystem_1.MIN_TIME),
       (e = StringUtils_1.StringUtils.Format(
         ACTIVITY_TIME_REASON,
         e.toString(),
         String(i),
       )),
-      (i = TimerSystem_1.RealTimeTimerSystem.Delay(
+      (i = TimerSystem_1.RealTimeTimerSystem.EmitOnTime(
         () => {
           this.Z4e(t);
         },
@@ -216,7 +259,7 @@ class ActivityModel extends ModelBase_1.ModelBase {
     return ModelManager_1.ModelManager.FunctionModel.IsOpen(10053);
   }
   GetIfShowActivity() {
-    return !!this.GetIfFunctionOpen() && 0 < this.W4e.size;
+    return !!this.GetIfFunctionOpen();
   }
   GetAllActivityMap() {
     return this.h3e;
@@ -321,15 +364,18 @@ class ActivityModel extends ModelBase_1.ModelBase {
       (e.i_unlock = t.IsUnLock() ? 1 : 0),
       LogReportController_1.LogReportController.LogReport(e);
   }
-  SendActivityViewJumpClickLogData(t, e) {
-    var i = new LogReportDefine_1.ActivityViewJumpClickLogData(),
-      r = TimeUtil_1.TimeUtil.GetServerTime(),
-      r = 0 === Number(t.EndOpenTime) ? 0 : Number(t.EndOpenTime) - r;
-    (i.i_activity_id = t.Id),
-      (i.i_activity_type = t.Type),
-      (i.i_time_left = Math.round(r)),
-      (i.i_button_type = e),
-      LogReportController_1.LogReportController.LogReport(i);
+  SendActivityViewJumpClickLogData(t) {
+    var e = new LogReportDefine_1.ActivityViewJumpClickLogData();
+    (e.i_activity_id = t.Id),
+      (e.i_activity_type = t.Type),
+      (e.i_unlock = t.IsUnLock() ? 1 : 0),
+      LogReportController_1.LogReportController.LogReport(e);
+  }
+  SendActivityLockConditionLogData(t) {
+    var e = new LogReportDefine_1.ActivityLockConditionClickLogData();
+    (e.i_activity_id = t.Id),
+      (e.i_activity_type = t.Type),
+      LogReportController_1.LogReportController.LogReport(e);
   }
   $4e() {
     var t = {
@@ -339,7 +385,7 @@ class ActivityModel extends ModelBase_1.ModelBase {
       GetLevelRecommendLevel:
         ActivityMowingController_1.ActivityMowingController.GetRecommendLevel,
     };
-    this.X4e.set(Protocol_1.Aki.Protocol.oks.Proto_Harvest, t);
+    this.X4e.set(Protocol_1.Aki.Protocol.uks.Proto_Harvest, t);
   }
   GetActivityLevelUnlockState(t, e) {
     t = ActivityManager_1.ActivityManager.GetActivityController(t);
@@ -404,6 +450,30 @@ class ActivityModel extends ModelBase_1.ModelBase {
         : t > CommonDefine_1.SECOND_PER_MINUTE
           ? [1, 0]
           : [0, 0];
+  }
+  GetActivityConditionData(e) {
+    var i = [];
+    for (const o of ConfigManager_1.ConfigManager.ConditionConfig.GetGroupConditionIds(
+      e.ConditionGroupId,
+    )) {
+      var r =
+        ConfigManager_1.ConfigManager.ConditionConfig.GetConditionConfig(o);
+      let t = -1;
+      r.AccessId &&
+        ((n = ConfigManager_1.ConfigManager.GetWayConfig.GetConfigById(
+          r.AccessId,
+        )),
+        (t = n.SkipName));
+      var n = {
+        ConditionId: o,
+        ConditionTextId: r.Description,
+        IsFinished: e.IsActivityConditionFinished(o),
+        AccessId: r.AccessId,
+        AccessType: t,
+      };
+      i.push(n);
+    }
+    return i.sort(this.P4a), i;
   }
 }
 (exports.ActivityModel = ActivityModel).SortFunc = (t, e) =>

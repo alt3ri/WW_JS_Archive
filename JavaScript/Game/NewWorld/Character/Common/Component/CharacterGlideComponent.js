@@ -253,7 +253,7 @@ let CharacterGlideComponent =
         }),
         (this.OnStateInherit = (t, e) => {
           t?.Valid &&
-            (t = t.GetComponent(51))?.Valid &&
+            (t = t.GetComponent(52))?.Valid &&
             !e &&
             (this.K5r.DeepCopy(t.K5r),
             this.Q5r.DeepCopy(t.Q5r),
@@ -267,10 +267,10 @@ let CharacterGlideComponent =
     OnStart() {
       return (
         (this.n$t = this.Entity.CheckGetComponent(3)),
-        (this.o4o = this.Entity.CheckGetComponent(163)),
-        (this.H5r = this.Entity.CheckGetComponent(71)),
-        (this.Xte = this.Entity.CheckGetComponent(188)),
-        (this.oRe = this.Entity.CheckGetComponent(162)),
+        (this.o4o = this.Entity.CheckGetComponent(164)),
+        (this.H5r = this.Entity.CheckGetComponent(72)),
+        (this.Xte = this.Entity.CheckGetComponent(190)),
+        (this.oRe = this.Entity.CheckGetComponent(163)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CustomMoveGlide,
@@ -390,7 +390,7 @@ let CharacterGlideComponent =
   (CharacterGlideComponent.az = Quat_1.Quat.Create()),
   (CharacterGlideComponent = CharacterGlideComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(51)],
+      [(0, RegisterComponent_1.RegisterComponent)(52)],
       CharacterGlideComponent,
     )),
   (exports.CharacterGlideComponent = CharacterGlideComponent);

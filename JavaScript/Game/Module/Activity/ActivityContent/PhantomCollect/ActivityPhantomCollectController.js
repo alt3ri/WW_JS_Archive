@@ -15,30 +15,38 @@ class ActivityPhantomCollectController extends ActivityControllerBase_1.Activity
   constructor() {
     super(...arguments),
       (this.OnPhantomCollectUpdateNotify = (t) => {
-        ActivityPhantomCollectController.ActivityId = t.T6n;
+        ActivityPhantomCollectController.ActivityId = t.w6n;
         var e = ActivityPhantomCollectController.GetCurrentActivityDataById();
-        t.Jps
-          ? (e.UpadatePhantomCollectReward(t.Jps),
-            EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.OnPhantomCollectUpdate,
-              t.Jps.Z4n,
-            ),
-            EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-              ActivityPhantomCollectController.ActivityId,
-            ))
+        e
+          ? t.oMs
+            ? (e.UpadatePhantomCollectReward(t.oMs),
+              EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName.OnPhantomCollectUpdate,
+                t.oMs.h5n,
+              ),
+              EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+                ActivityPhantomCollectController.ActivityId,
+              ))
+            : Log_1.Log.CheckError() &&
+              Log_1.Log.Error("Activity", 35, "声骇收集活动数据更新错误:", [
+                "ActivityId:",
+                t.w6n,
+              ])
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Activity", 35, "声骇收集活动数据更新错误:", [
-              "ActivityId:",
-              t.T6n,
-            ]);
+            Log_1.Log.Error(
+              "Activity",
+              35,
+              "声骇收集活动数据更新错误，没有活动数据:",
+              ["ActivityId:", t.w6n],
+            );
       });
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(29634, this.OnPhantomCollectUpdateNotify);
+    Net_1.Net.Register(15212, this.OnPhantomCollectUpdateNotify);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(29634);
+    Net_1.Net.UnRegister(15212);
   }
   OnGetActivityResource(t) {
     return "UiItem_ActivityPhantomCollect";
@@ -48,7 +56,7 @@ class ActivityPhantomCollectController extends ActivityControllerBase_1.Activity
   }
   OnCreateActivityData(t) {
     return (
-      (ActivityPhantomCollectController.ActivityId = t.J4n),
+      (ActivityPhantomCollectController.ActivityId = t.s5n),
       new ActivityPhantomCollectData_1.ActivityPhantomCollectData()
     );
   }
@@ -65,14 +73,14 @@ class ActivityPhantomCollectController extends ActivityControllerBase_1.Activity
   static async PhantomCollectRewardReceiveRequest(t) {
     var e = new Protocol_1.Aki.Protocol.k$n(),
       e =
-        ((e.Z4n = t),
-        (e.T6n = ActivityPhantomCollectController.ActivityId),
-        await Net_1.Net.CallAsync(25649, e));
+        ((e.h5n = t),
+        (e.w6n = ActivityPhantomCollectController.ActivityId),
+        await Net_1.Net.CallAsync(16175, e));
     if (e)
-      if (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs)
+      if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs)
         ErrorCodeController_1.ErrorCodeController.OpenErrorCodeTipView(
-          e.O4n,
-          25649,
+          e.Q4n,
+          16175,
         );
       else {
         e = ActivityPhantomCollectController.GetCurrentActivityDataById();
@@ -80,7 +88,7 @@ class ActivityPhantomCollectController extends ActivityControllerBase_1.Activity
           e = e.GetPhantomCollectRewardById(t);
           if (e)
             return (
-              (e.F4n = Protocol_1.Aki.Protocol.jps.Jfs),
+              (e.Y4n = Protocol_1.Aki.Protocol.zps.ovs),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.RefreshCommonActivityRedDot,
                 ActivityPhantomCollectController.ActivityId,

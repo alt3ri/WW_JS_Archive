@@ -7,7 +7,7 @@ const EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
 class LevelEventPickupDropItem extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
-      (this.OXs = (e) => {
+      (this.BJs = (e) => {
         this.FinishExecute(e);
       });
   }
@@ -18,7 +18,7 @@ class LevelEventPickupDropItem extends LevelGeneralBase_1.LevelEventBase {
       RewardController_1.RewardController.PickUpFightDrop(
         e.GetCreatureDataId(),
         e.GetPbDataId(),
-        this.OXs,
+        this.BJs,
       ))) ||
       this.FinishExecute(!1);
   }

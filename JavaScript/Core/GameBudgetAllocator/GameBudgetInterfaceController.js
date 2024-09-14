@@ -11,13 +11,14 @@ const cpp_1 = require("cpp"),
   GameBudgetAllocatorConfigCreator_1 = require("../../Game/World/Define/GameBudgetAllocatorConfigCreator"),
   Log_1 = require("../Common/Log"),
   ControllerBase_1 = require("../Framework/ControllerBase"),
+  PerfSight_1 = require("../PerfSight/PerfSight"),
   GameBudgetTimeEstimationFramesOffset_1 = require("./GameBudgetTimeEstimationFramesOffset");
 class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
   static get CenterRole() {
     return this.EK;
   }
   static get CurrentGlobalMode() {
-    return this.KIa;
+    return this.RPa;
   }
   static OnInit() {
     return (
@@ -34,6 +35,8 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
         this.IK,
       ),
       (this.TK = 0),
+      PerfSight_1.PerfSight.IsEnable &&
+        cpp_1.FKuroPerfSightHelper.BeginExtTag("EGameBudgetMode.None"),
       super.OnInit()
     );
   }
@@ -52,6 +55,13 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
         this.IK,
       ),
       (this.LK = void 0),
+      PerfSight_1.PerfSight.IsEnable &&
+        (0 === this.TK
+          ? cpp_1.FKuroPerfSightHelper.EndExtTag("EGameBudgetMode.None")
+          : 1 === this.TK
+            ? cpp_1.FKuroPerfSightHelper.EndExtTag("EGameBudgetMode.Normal")
+            : 2 === this.TK &&
+              cpp_1.FKuroPerfSightHelper.EndExtTag("EGameBudgetMode.Plot")),
       super.OnClear()
     );
   }
@@ -81,7 +91,7 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
   static UpdateBudgetTime(e) {
     this.RK.UpdateBudgetTime(e);
   }
-  static RegisterTick(e, t, a, r, i = !0) {
+  static RegisterTick(e, t, a, r, o = !0) {
     return this.UK.has(a)
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Game", 25, "Object has already added!"),
@@ -93,7 +103,7 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
           a.ScheduledTick,
           a.ScheduledAfterTick,
           a.OnEnabledChange,
-          i ? a.OnWasRecentlyRenderedOnScreenChange : void 0,
+          o ? a.OnWasRecentlyRenderedOnScreenChange : void 0,
           a.LocationProxyFunction,
           a,
         )),
@@ -113,13 +123,13 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
   static ComputeDistanceScore(e, t, a, r) {
     var e = new UE.Vector(e[0], e[1], e[2]),
       t = new UE.Vector(t[0], t[1], t[2]),
-      i =
+      o =
         (GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator
           .TsCharacterDtailConfig ||
           GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator.CreateCharacterEntityConfigOnly(),
         GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator
           .TsCharacterDtailConfig),
-      r = r ? i.Normal_Render : i.Normal_NotRendered;
+      r = r ? o.Normal_Render : o.Normal_NotRendered;
     return cpp_1.FKuroGameBudgetAllocatorInterface.ComputeDistanceScore(
       e,
       t,
@@ -169,7 +179,7 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
   }
   static PK() {
     var e = this.IsInPlot ? 2 : this.IsInFight && !this.AK ? 1 : 0;
-    (this.KIa = e),
+    (this.RPa = e),
       cpp_1.FKuroGameBudgetAllocatorInterface.SetGlobalMode(e),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -191,6 +201,19 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
           ["NewModel", e],
           ["OldModel", this.TK],
         ),
+      PerfSight_1.PerfSight.IsEnable &&
+        (0 === this.TK
+          ? cpp_1.FKuroPerfSightHelper.EndExtTag("EGameBudgetMode.None")
+          : 1 === this.TK
+            ? cpp_1.FKuroPerfSightHelper.EndExtTag("EGameBudgetMode.Normal")
+            : 2 === this.TK &&
+              cpp_1.FKuroPerfSightHelper.EndExtTag("EGameBudgetMode.Plot"),
+        0 === e
+          ? cpp_1.FKuroPerfSightHelper.BeginExtTag("EGameBudgetMode.None")
+          : 1 === e
+            ? cpp_1.FKuroPerfSightHelper.BeginExtTag("EGameBudgetMode.Normal")
+            : 2 === e &&
+              cpp_1.FKuroPerfSightHelper.BeginExtTag("EGameBudgetMode.Plot")),
       this.bK(this.TK),
       (this.TK = e),
       this.qK(e));
@@ -225,7 +248,7 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
   (GameBudgetInterfaceController.IsInPlot = !1),
   (GameBudgetInterfaceController.IsInFight = !1),
   (GameBudgetInterfaceController.AK = !1),
-  (GameBudgetInterfaceController.KIa = 0),
+  (GameBudgetInterfaceController.RPa = 0),
   (GameBudgetInterfaceController.RK =
     new GameBudgetTimeEstimationFramesOffset_1.GameBudgetTimeEstimationFramesOffset()),
   (GameBudgetInterfaceController.yK = (e) => {

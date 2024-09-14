@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraModel = exports.SeqCameraThings = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
   Time_1 = require("../../Core/Common/Time"),
   EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
   ModelBase_1 = require("../../Core/Framework/ModelBase"),
@@ -10,7 +11,7 @@ const UE = require("ue"),
   MathUtils_1 = require("../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
-  GameQualitySettingsManager_1 = require("../GameQualitySettings/GameQualitySettingsManager"),
+  GameSettingsManager_1 = require("../GameSettings/GameSettingsManager"),
   FightCamera_1 = require("./FightCamera"),
   OrbitalCamera_1 = require("./OrbitalCamera"),
   SceneCamera_1 = require("./SceneCamera"),
@@ -80,9 +81,9 @@ class CameraModel extends ModelBase_1.ModelBase {
       (this.Ihe = !1),
       (this.The = void 0),
       (this.Lhe = 1),
-      (this.gTa = 1),
-      (this.fTa = new Map()),
-      (this.pTa = this.gTa),
+      (this.ZPa = 1),
+      (this.ewa = new Map()),
+      (this.twa = this.ZPa),
       (this.Rhe = CAMERA_DEFAULT_SENSITIVITY),
       (this.Uhe = CAMERA_DEFAULT_SENSITIVITY),
       (this.Ahe = CAMERA_DEFAULT_SENSITIVITY),
@@ -95,13 +96,14 @@ class CameraModel extends ModelBase_1.ModelBase {
       (this.Ghe = MOTION_BLUR_DEFAULT_VALUE),
       (this.IsEnableResetFocus = !0),
       (this.IsEnableSidestepCamera = !0),
-      (this.IsEnableSoftLockCamera = !0),
+      (this.R3a = !0),
       (this.CameraSettingFightAdditionArmLength =
         CAMERA_ADDITION_ARM_LENGTH_VALUE_DEFAULT),
       (this.CameraSettingNormalAdditionArmLength =
         CAMERA_ADDITION_ARM_LENGTH_VALUE_DEFAULT),
       (this.Nhe = void 0),
-      (this.Ohe = !0);
+      (this.Ohe = !0),
+      (this.U3a = new Set());
   }
   get CameraBaseYawSensitivityInputModifier() {
     var t = this.Rhe,
@@ -221,7 +223,7 @@ class CameraModel extends ModelBase_1.ModelBase {
         );
   }
   get AimAssistMode() {
-    return this.pTa;
+    return this.twa;
   }
   get FightCamera() {
     return this.dhe;
@@ -266,20 +268,20 @@ class CameraModel extends ModelBase_1.ModelBase {
       (this.Mhe = t);
   }
   RefreshAimAssetMode() {
-    if (0 === this.fTa.size) this.pTa = this.gTa;
+    if (0 === this.ewa.size) this.twa = this.ZPa;
     else {
-      this.pTa = 0;
-      for (var [, t] of this.fTa) this.pTa = Math.max(this.pTa, t);
+      this.twa = 0;
+      for (var [, t] of this.ewa) this.twa = Math.max(this.twa, t);
     }
   }
   SetAimAssistMode(t) {
-    (this.gTa = t), this.RefreshAimAssetMode();
+    (this.ZPa = t), this.RefreshAimAssetMode();
   }
   SetAimAssistModeWithKey(t, i) {
-    this.fTa.set(t, i), this.RefreshAimAssetMode();
+    this.ewa.set(t, i), this.RefreshAimAssetMode();
   }
   ClearAimAssistModeWithKey(t) {
-    this.fTa.delete(t), this.RefreshAimAssetMode();
+    this.ewa.delete(t), this.RefreshAimAssetMode();
   }
   SetIsCameraResetPitch(t) {
     this.qhe = t;
@@ -330,9 +332,7 @@ class CameraModel extends ModelBase_1.ModelBase {
       MOTION_BLUR_MIN_VALUE,
       MOTION_BLUR_MAX_VALUE,
     )),
-      GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-        .GetCurrentQualityInfo()
-        .ApplyMotionBlur();
+      GameSettingsManager_1.GameSettingsManager.SetApplySave(65, this.Ghe);
   }
   get Blending() {
     return this.Ihe;
@@ -367,6 +367,25 @@ class CameraModel extends ModelBase_1.ModelBase {
   }
   GetAimAssistEnable() {
     return this.Ohe;
+  }
+  EnableSoftLock(t) {
+    return (
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Camera", 58, "开启软锁状态", ["reason", t]),
+      this.U3a.add(++CameraModel.x3a),
+      CameraModel.x3a
+    );
+  }
+  DisableSoftLock(t, i) {
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("Camera", 58, "关闭软锁状态", ["reason", i]),
+      this.U3a.has(t) && this.U3a.delete(t);
+  }
+  SetSettingSoftLockState(t) {
+    this.R3a = t;
+  }
+  IsSoftLockEnable() {
+    return this.R3a || 0 < this.U3a.size;
   }
   OnInit() {
     (this.Che = EntitySystem_1.EntitySystem.Create(
@@ -451,6 +470,9 @@ class CameraModel extends ModelBase_1.ModelBase {
   GetSavedSeqCameraThings() {
     return this.Nhe;
   }
+  ResetSavedSeqCameraThings() {
+    this.Nhe = void 0;
+  }
   IsToLockOnCameraMode() {
     return 0 === this.CameraMode;
   }
@@ -458,5 +480,5 @@ class CameraModel extends ModelBase_1.ModelBase {
     return 3 === this.CameraMode;
   }
 }
-exports.CameraModel = CameraModel;
+(exports.CameraModel = CameraModel).x3a = 0;
 //# sourceMappingURL=CameraModel.js.map

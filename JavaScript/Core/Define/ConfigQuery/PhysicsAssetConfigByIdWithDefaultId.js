@@ -18,32 +18,48 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configPhysicsAssetConfigByIdWithDefaultId.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configPhysicsAssetConfigByIdWithDefaultId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configPhysicsAssetConfigByIdWithDefaultId.GetConfig(";
 exports.configPhysicsAssetConfigByIdWithDefaultId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, i, n, e, s = !0) => {
-    if (
-      (C = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (s) {
-        var t = KEY_PREFIX + `#${o}#${i}#${n}#${e})`;
-        const d = ConfigCommon_1.ConfigCommon.GetConfig(t);
-        if (d) return d;
+  GetConfig: (o, i, n, t, e = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var s = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${i}#${n}#${t})`),
+      C =
+        (s.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (C) {
+      if (e) {
+        var f = KEY_PREFIX + `#${o}#${i}#${n}#${t})`;
+        const g = ConfigCommon_1.ConfigCommon.GetConfig(f);
+        if (g)
+          return (
+            s.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
+          );
       }
       if (
         (C =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindString(handleId, 2, i, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindString(handleId, 3, n, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.BindString(handleId, 4, e, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindString(handleId, 4, t, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(
               handleId,
@@ -52,38 +68,43 @@ exports.configPhysicsAssetConfigByIdWithDefaultId = {
               ["Id", o],
               ["Id", i],
               ["Id", n],
-              ["Id", e],
+              ["Id", t],
             ))
       ) {
-        var C,
-          t = void 0;
+        f = void 0;
         if (
-          (([C, t] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([C, f] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
             ["Id", i],
             ["Id", n],
-            ["Id", e],
+            ["Id", t],
           )),
           C)
         ) {
-          const d =
+          const g =
             PhysicsAssetConfig_1.PhysicsAssetConfig.getRootAsPhysicsAssetConfig(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(f.buffer)),
             );
           return (
-            s &&
-              ((C = KEY_PREFIX + `#${o}#${i}#${n}#${e})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(C, d)),
+            e &&
+              ((C = KEY_PREFIX + `#${o}#${i}#${n}#${t})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(C, g)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            d
+            s.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    s.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=PhysicsAssetConfigByIdWithDefaultId.js.map

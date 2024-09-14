@@ -47,7 +47,7 @@ let SceneItemGravityComponent =
         (this.R0n = void 0),
         (this.U0n = 0),
         (this.P0n = 0),
-        (this.lFn = 0),
+        (this.pFn = 0),
         (this.B0n = void 0),
         (this.nxe = 1),
         (this.q0n = -1),
@@ -67,7 +67,7 @@ let SceneItemGravityComponent =
           var e = e.Entity;
           (e?.GetComponent(3) ?? !t) ||
             (!1 !== this.R0n.StopTeleControlMove &&
-              ((t = e?.GetComponent(142)), (e = e?.GetComponent(185)), t) &&
+              ((t = e?.GetComponent(143)), (e = e?.GetComponent(187)), t) &&
               e?.IsAutonomousProxy &&
               t.ForceStopDropping());
         }),
@@ -104,10 +104,10 @@ let SceneItemGravityComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.CheckGetComponent(185)),
-        (this.Lie = this.Entity.CheckGetComponent(180)),
-        (this.mBe = this.Entity.CheckGetComponent(119)),
-        (this._un = this.Entity.CheckGetComponent(117)),
+        (this.Hte = this.Entity.CheckGetComponent(187)),
+        (this.Lie = this.Entity.CheckGetComponent(181)),
+        (this.mBe = this.Entity.CheckGetComponent(120)),
+        (this._un = this.Entity.CheckGetComponent(118)),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnEntityInOutRangeLocal,
@@ -214,7 +214,7 @@ let SceneItemGravityComponent =
       this.W0n(t * this.nxe);
     }
     OnChangeTimeDilation(t) {
-      var e = this.Entity.GetComponent(109);
+      var e = this.Entity.GetComponent(110);
       (this.nxe = e ? t * e.CurrentTimeScale : 1),
         LevelGeneralNetworks_1.LevelGeneralNetworks.CheckEntityCanPushTimeDilation(
           this.EIe.GetEntityTimeScaleModifyStrategy(),
@@ -230,7 +230,7 @@ let SceneItemGravityComponent =
           this.ChangeTransition(!0);
           break;
         case 2:
-          this._Fn(1);
+          this.vFn(1);
           break;
         case 4:
           this.K0n("[SceneItemGravityComponent] 重力机关处于完成态");
@@ -244,14 +244,14 @@ let SceneItemGravityComponent =
       switch (this.U0n) {
         case 2:
         case 0:
-          t || this._Fn(3);
+          t || this.vFn(3);
           break;
         case 3:
         case 1:
-          t && this._Fn(2);
+          t && this.vFn(2);
       }
     }
-    _Fn(t) {
+    vFn(t) {
       this.U0n !== t &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -289,18 +289,18 @@ let SceneItemGravityComponent =
       else this.K0n("[SceneItemGravityComponent] 场景交互物未初始化");
     }
     $0n(t) {
-      (this.lFn = 0), this.K0n("[SceneItemGravityComponent] 到达顶部");
+      (this.pFn = 0), this.K0n("[SceneItemGravityComponent] 到达顶部");
     }
     Y0n(t) {
-      (this.lFn = this.P0n), this.K0n("[SceneItemGravityComponent] 到达底部");
+      (this.pFn = this.P0n), this.K0n("[SceneItemGravityComponent] 到达底部");
     }
     J0n(t) {
-      (this.lFn = MathUtils_1.MathUtils.Clamp(this.lFn - t, 0, this.P0n)),
+      (this.pFn = MathUtils_1.MathUtils.Clamp(this.pFn - t, 0, this.P0n)),
         this.V0n("[SceneItemGravityComponent] 上升中"),
-        this.lFn <= 0 && this._Fn(0);
+        this.pFn <= 0 && this.vFn(0);
     }
     z0n(t) {
-      (this.lFn = MathUtils_1.MathUtils.Clamp(this.lFn + t, 0, this.P0n)),
+      (this.pFn = MathUtils_1.MathUtils.Clamp(this.pFn + t, 0, this.P0n)),
         this.V0n("[SceneItemGravityComponent] 下降中");
     }
     MLn(t, e) {
@@ -406,7 +406,7 @@ let SceneItemGravityComponent =
   });
 (SceneItemGravityComponent = SceneItemGravityComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(138)],
+    [(0, RegisterComponent_1.RegisterComponent)(139)],
     SceneItemGravityComponent,
   )),
   (exports.SceneItemGravityComponent = SceneItemGravityComponent);

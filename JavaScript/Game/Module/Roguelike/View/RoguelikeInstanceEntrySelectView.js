@@ -23,19 +23,19 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
       (this.CurRate = 0),
       (this.Qho = () => {
         RoguelikeController_1.RoguelikeController.RoguelikePopularEntriesChangeRequest(
-          this.OpenParam.X5n,
+          this.OpenParam.r6n,
           Array.from(RoguelikeInstanceEntrySelectView.SelectIndexList),
         ).then(() => {
           this.CloseMe();
         });
       }),
-      (this.Vbn = (e) => {
+      (this.Jbn = (e) => {
         return (
           1 === e.GetToggleState() ||
           ((e =
             ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePopularEntrieArg(
-              ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData.MHn,
-              this.OpenParam.X5n,
+              ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData.UHn,
+              this.OpenParam.r6n,
             ).Slot),
           !(
             RoguelikeInstanceEntrySelectView.SelectIndexList.size >= e &&
@@ -55,7 +55,7 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
       (this.$ho = () => {
         var e = new RoguelikeInstanceEntrySelectItem();
         return (
-          (e.OnSelectBuff = this.Xho), (e.CheckCanExecuteChange = this.Vbn), e
+          (e.OnSelectBuff = this.Xho), (e.CheckCanExecuteChange = this.Jbn), e
         );
       });
   }
@@ -71,7 +71,7 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
   }
   async OnBeforeStartAsync() {
     (RoguelikeInstanceEntrySelectView.SelectIndexList = new Set(
-      this.OpenParam.IHn,
+      this.OpenParam.BHn,
     )),
       (this.LeftLayout = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(0),
@@ -84,7 +84,7 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
     var e = [],
       t = [];
     for (const i of ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguelikePopularEntries())
-      i.Insts.includes(this.OpenParam.X5n) &&
+      i.Insts.includes(this.OpenParam.r6n) &&
         (0 === i.Category ? t.push(i) : 1 === i.Category && e.push(i));
     await this.LeftLayout.RefreshByDataAsync(e),
       await this.RightLayout.RefreshByDataAsync(t),
@@ -152,8 +152,8 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
     }
     var e =
       ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRoguePopularEntrieArg(
-        ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData.MHn,
-        this.OpenParam.X5n,
+        ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData.UHn,
+        this.OpenParam.r6n,
       );
     e &&
       ((e = e.Slot),

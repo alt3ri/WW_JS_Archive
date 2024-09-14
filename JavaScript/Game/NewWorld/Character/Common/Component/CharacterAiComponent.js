@@ -14,8 +14,8 @@ var CharacterAiComponent_1,
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
         n = Reflect.decorate(t, e, i, o);
       else
-        for (var h = t.length - 1; 0 <= h; h--)
-          (r = t[h]) &&
+        for (var a = t.length - 1; 0 <= a; a--)
+          (r = t[a]) &&
             (n = (s < 3 ? r(n) : 3 < s ? r(e, i, n) : r(e, i)) || n);
       return 3 < s && n && Object.defineProperty(e, i, n), n;
     };
@@ -32,6 +32,7 @@ const UE = require("ue"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils"),
   IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  IVar_1 = require("../../../../../UniverseEditor/Interface/IVar"),
   AiController_1 = require("../../../../AI/Controller/AiController"),
   TsAiController_1 = require("../../../../AI/Controller/TsAiController"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
@@ -67,10 +68,43 @@ let CharacterAiComponent =
         (this.jht = !1),
         (this.RFr = !1),
         (this.Mne = 0),
+        (this.lRa = !1),
         (this.bJe = () => {
           this.MFr?.OnSkillEnd();
         }),
-        (this.UFr = void 0);
+        (this.UFr = void 0),
+        (this.C$a = (t, e) => {
+          if (this.g$a(t, e))
+            switch ((0, IVar_1.getVarTypeByIndex)(e.iTs)) {
+              case "Boolean":
+                BlackboardController_1.BlackboardController.SetBooleanValueByEntity(
+                  this.Entity.Id,
+                  t,
+                  e.rTs,
+                );
+                break;
+              case "Float":
+                BlackboardController_1.BlackboardController.SetFloatValueByEntity(
+                  this.Entity.Id,
+                  t,
+                  e.sTs,
+                );
+                break;
+              case "Int":
+                BlackboardController_1.BlackboardController.SetIntValueByEntity(
+                  this.Entity.Id,
+                  t,
+                  MathUtils_1.MathUtils.LongToNumber(e.oTs),
+                );
+                break;
+              case "String":
+                BlackboardController_1.BlackboardController.SetStringValueByEntity(
+                  this.Entity.Id,
+                  t,
+                  e.nTs,
+                );
+            }
+        });
     }
     static get Dependencies() {
       return [3, 0];
@@ -102,7 +136,7 @@ let CharacterAiComponent =
     OnInit() {
       (this.Mne = this.Entity.GetComponent(0)?.GetPbDataId() ?? 0),
         (this.Hte = this.Entity.GetComponent(3)),
-        (this.SFr = this.Entity.GetComponent(67));
+        (this.SFr = this.Entity.GetComponent(68));
       var t = this.Hte.Actor.GetController();
       return (
         t &&
@@ -134,7 +168,7 @@ let CharacterAiComponent =
         ModelManager_1.ModelManager.GameModeModel.IsMulti &&
           ((t =
             this.Entity.GetComponent(0).GetEntityType() ===
-            Protocol_1.Aki.Protocol.wks.Proto_Npc),
+            Protocol_1.Aki.Protocol.kks.Proto_Npc),
           this.Hte.SetAutonomous(!1, t)),
         this.xFr(),
         !0
@@ -170,6 +204,16 @@ let CharacterAiComponent =
           EventDefine_1.EEventName.ChangeMode,
           this.AiController.OnChangeMode,
         ),
+        EventSystem_1.EventSystem.HasWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.EntityVarUpdate,
+          this.C$a,
+        ) &&
+          EventSystem_1.EventSystem.RemoveWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.EntityVarUpdate,
+            this.C$a,
+          ),
         this.DisableAi("CharacterAiComponent OnEnd"),
         this.RemoveTsAiController(),
         this.MFr?.Clear(),
@@ -194,7 +238,7 @@ let CharacterAiComponent =
           : t)
         ? this.LoadAiConfigs(t)
         : this.bFr()
-          ? (this.v1a(), this.qFr())
+          ? (this.Mca(), this.qFr())
           : this.DisableAi("Ai Config");
     }
     OnTick(t) {
@@ -207,7 +251,7 @@ let CharacterAiComponent =
         this.MFr && this.MFr.Tick(t);
         var e = t * MathUtils_1.MathUtils.MillisecondToSecond;
         GlobalData_1.GlobalData.IsPlayInEditor &&
-          this.vFr.IsDebugDraw &&
+          this.lRa &&
           this.vFr.DrawDebugLines(e),
           this.RFr && this.TFr && this.TFr.KuroTickComponentOutside(e);
         for (const i of this.LFr) i.KuroTickComponentOutside(e);
@@ -219,7 +263,7 @@ let CharacterAiComponent =
         ? this.MFr.AiBase?.Id !== t &&
           ((e =
             this.Hte.CreatureData.GetEntityType() ===
-            Protocol_1.Aki.Protocol.wks.Proto_Npc),
+            Protocol_1.Aki.Protocol.kks.Proto_Npc),
           this.MFr.LoadAiConfigs(t, e),
           this.MFr.AiBase
             ? (this.EFr.has("Ai Config") && this.EnableAi("Ai Config"),
@@ -297,6 +341,7 @@ let CharacterAiComponent =
               "CharacterAiComponent.SetUeController",
               ["reason", e],
             ),
+            CharacterAiComponent_1.NFr.Start(),
             this.AiController?.AiConditionEvents.Clear(),
             this.AiController?.AiPerceptionEvents.Clear(!0),
             this.RemoveTsAiController(),
@@ -304,7 +349,8 @@ let CharacterAiComponent =
             this.vFr.InitAiController(this),
             this.yFr && t.SetAiHateConfig(this.yFr),
             t.Possess(this.Hte.Actor),
-            this.jht && this.BFr())
+            this.jht && this.BFr(),
+            CharacterAiComponent_1.NFr.Stop())
           : CombatLog_1.CombatLog.Info(
               "Ai",
               this.Entity,
@@ -346,11 +392,13 @@ let CharacterAiComponent =
           }
         }
       } else this.MFr.AiBase && this.OFr(this.MFr.AiBase.BehaviorTree);
-      this.vFr.OnStart(),
+      CharacterAiComponent_1.kFr.Start(),
+        this.vFr.OnStart(),
         ModelManager_1.ModelManager.GameModeModel.IsMulti
           ? this.UFr && this.FFr(this.UFr)
           : this.vFr.获取控制权时(),
-        (this.LFr.length = 0);
+        (this.LFr.length = 0),
+        CharacterAiComponent_1.kFr.Stop();
     }
     RestartBehaviorTree() {
       var t;
@@ -462,6 +510,9 @@ let CharacterAiComponent =
         (!!(t = t.GetComponent(0)?.GetPlayerId()) && this.DFr.has(t))
       );
     }
+    SetDebugDraw(t) {
+      this.lRa = t;
+    }
     OFr(i) {
       i &&
         (Log_1.Log.CheckInfo() &&
@@ -518,7 +569,7 @@ let CharacterAiComponent =
       this.Entity.IsInit
         ? this.FFr(t)
         : ((e =
-            t.q5n === ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
+            t.W5n === ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
           CombatLog_1.CombatLog.Info(
             "Ai",
             this.Entity,
@@ -528,44 +579,44 @@ let CharacterAiComponent =
           (this.UFr = t));
     }
     FFr(e) {
-      var i = e.q5n === ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
+      var i = e.W5n === ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
         t =
           (CombatLog_1.CombatLog.Info("Ai", this.Entity, "切换控制权", [
             "v",
             i,
           ]),
-          this.Hte.CreatureData.SetBlackboardsByProtocol(e.K8n.W8n),
+          this.Hte.CreatureData.SetBlackboardsByProtocol(e.tVn.eVn),
           this.MFr.AiHateList);
-      for (const n of e.K8n.fSs) {
-        var o = MathUtils_1.MathUtils.LongToNumber(n.P4n),
+      for (const n of e.tVn.ISs) {
+        var o = MathUtils_1.MathUtils.LongToNumber(n.F4n),
           o = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
-        o && t.ChangeHatred(o.Id, 0, n.j8n);
+        o && t.ChangeHatred(o.Id, 0, n.Z8n);
       }
-      for (const h of e.K8n.vSs)
+      for (const a of e.tVn.TSs)
         this.MFr.SetCoolDownTime(
-          h.b4n,
-          MathUtils_1.MathUtils.LongToNumber(h.q4n),
+          a.j4n,
+          MathUtils_1.MathUtils.LongToNumber(a.W4n),
           !1,
           "切换控制权",
         );
       var r = this.Entity.GetComponent(3);
       if (r.IsAutonomousProxy !== i) {
         let t = i;
-        var s = this.Entity.GetComponent(47);
+        var s = this.Entity.GetComponent(48);
         s &&
           s.IsLocal &&
           (2 === s.CurrentState || 4 === s.CurrentState) &&
           (t = !0),
           r.SetAutonomous(i, t),
           i && this.TsAiController?.获取控制权时(),
-          this.MFr.OnSwitchControl(i, e.q5n),
+          this.MFr.OnSwitchControl(i, e.W5n),
           EventSystem_1.EventSystem.EmitWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharSwitchControl,
             i,
           ),
           i && this.SFr.OnControl();
-      } else this.MFr.SetControllerPlayerId(e.q5n);
+      } else this.MFr.SetControllerPlayerId(e.W5n);
     }
     SwitchControl(t) {
       this.Entity.GetComponent(3).SetAutonomous(t),
@@ -581,11 +632,11 @@ let CharacterAiComponent =
         );
     }
     static AiHateNotify(t, e) {
-      var i = t.GetComponent(39).MFr.AiHateList;
-      for (const r of e.fSs) {
-        var o = MathUtils_1.MathUtils.LongToNumber(r.P4n),
+      var i = t.GetComponent(40).MFr.AiHateList;
+      for (const r of e.ISs) {
+        var o = MathUtils_1.MathUtils.LongToNumber(r.F4n),
           o = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
-        o && i.ChangeHatred(o.Id, 0, r.j8n);
+        o && i.ChangeHatred(o.Id, 0, r.Z8n);
       }
     }
     qFr() {
@@ -636,11 +687,11 @@ let CharacterAiComponent =
         },
       );
     }
-    v1a() {
+    Mca() {
       var t = this.Entity.GetComponent(0)?.GetPbEntityInitData();
       if (t) {
         t = (0, IComponent_1.getComponent)(t.ComponentsData, "VarComponent");
-        if (t)
+        if (t) {
           for (const e of t.Vars)
             if (e.IsClient)
               switch (e.Type) {
@@ -672,20 +723,41 @@ let CharacterAiComponent =
                     e.Value,
                   );
               }
+          EventSystem_1.EventSystem.AddWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.EntityVarUpdate,
+            this.C$a,
+          );
+        }
       }
     }
+    g$a(t, e) {
+      var i = this.Entity?.GetComponent(0);
+      if (i?.IsNpc() || i?.IsAnimal()) {
+        i = i.GetPbEntityInitData();
+        if (i) {
+          i = (0, IComponent_1.getComponent)(i.ComponentsData, "VarComponent");
+          if (i) {
+            var o = (0, IVar_1.getVarTypeByIndex)(e.iTs);
+            for (const r of i.Vars)
+              if (t === r.Name) return !!r.IsClient && r.Type === o;
+          }
+        }
+      }
+      return !1;
+    }
   });
-(CharacterAiComponent.NFr = void 0),
-  (CharacterAiComponent.kFr = void 0),
+(CharacterAiComponent.NFr = Stats_1.Stat.Create("SetUeController")),
+  (CharacterAiComponent.kFr = Stats_1.Stat.Create("StartUeController")),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("zFn")],
+    [CombatMessage_1.CombatNet.SyncHandle("a3n")],
     CharacterAiComponent,
     "AiHateNotify",
     null,
   ),
   (CharacterAiComponent = CharacterAiComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(39)],
+      [(0, RegisterComponent_1.RegisterComponent)(40)],
       CharacterAiComponent,
     )),
   (exports.CharacterAiComponent = CharacterAiComponent);

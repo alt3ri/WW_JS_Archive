@@ -17,28 +17,40 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configFeedingAnimalById.Init"),
+  getConfigStat = Stats_1.Stat.Create("configFeedingAnimalById.GetConfig"),
   CONFIG_STAT_PREFIX = "configFeedingAnimalById.GetConfig(";
 exports.configFeedingAnimalById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (n, e = !0) => {
-    if (
-      (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
-        var i = KEY_PREFIX + `#${n})`;
-        const d = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (d) return d;
+  GetConfig: (n, i = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var o = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${n})`),
+      e =
+        (o.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
+      if (i) {
+        var t = KEY_PREFIX + `#${n})`;
+        const g = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (g)
+          return (
+            o.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
+          );
       }
       if (
-        (o =
+        (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, n, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,31 +58,36 @@ exports.configFeedingAnimalById = {
               n,
             ]))
       ) {
-        var o,
-          i = void 0;
+        t = void 0;
         if (
-          (([o, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", n],
           )),
-          o)
+          e)
         ) {
-          const d = FeedingAnimal_1.FeedingAnimal.getRootAsFeedingAnimal(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+          const g = FeedingAnimal_1.FeedingAnimal.getRootAsFeedingAnimal(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
-            e &&
-              ((o = KEY_PREFIX + `#${n})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(o, d)),
+            i &&
+              ((e = KEY_PREFIX + `#${n})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(e, g)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            d
+            o.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            g
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    o.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=FeedingAnimalById.js.map

@@ -27,8 +27,10 @@ class WeaponConf {
     return this.transformid();
   }
   get Models() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.modelsLength(), (t) =>
-      this.models(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.modelsLength(),
+      this.models,
+      this,
     );
   }
   get ResonLevelLimit() {
@@ -59,8 +61,10 @@ class WeaponConf {
     return this.desc();
   }
   get DescParams() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.descparamsLength(), (t) =>
-      this.descparams(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.descparamsLength(),
+      this.descparams,
+      this,
     );
   }
   get TypeDescription() {
@@ -88,8 +92,10 @@ class WeaponConf {
     return this.maxcapcity();
   }
   get ItemAccess() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.itemaccessLength(), (t) =>
-      this.itemaccess(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.itemaccessLength(),
+      this.itemaccess,
+      this,
     );
   }
   get ObtainedShow() {

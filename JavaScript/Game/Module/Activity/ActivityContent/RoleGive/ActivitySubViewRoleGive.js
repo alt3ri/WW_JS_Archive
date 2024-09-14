@@ -24,7 +24,7 @@ class ActivitySubViewRoleGive extends ActivitySubViewBase_1.ActivitySubViewBase 
       (this.LNe = void 0),
       (this.DNe = void 0),
       (this.ANe = void 0),
-      (this.DIa = void 0),
+      (this.NUa = void 0),
       (this.U2i = void 0),
       (this.Pe = void 0),
       (this.DFe = () => {
@@ -38,26 +38,26 @@ class ActivitySubViewRoleGive extends ActivitySubViewBase_1.ActivitySubViewBase 
               t < i.PopularityNeed ||
               ActivityRoleGiveController_1.ActivityRoleGiveController.TrackMoonActivityRewardRequest())
           : ModelManager_1.ModelManager.ActivityModel.GetActivitiesByType(
-              Protocol_1.Aki.Protocol.oks.Proto_TrackMoonActivity,
+              Protocol_1.Aki.Protocol.uks.Proto_TrackMoonActivity,
             ).forEach((i) => {
-              var t;
-              0 === i.ActivityFlowState &&
-                (i.GetPreGuideQuestFinishState()
-                  ? ((t = {
+              var t = i;
+              0 === t.ActivityFlowState &&
+                (t.GetPreGuideQuestFinishState()
+                  ? ((i = {
                       MarkId:
                         ConfigManager_1.ConfigManager.ActivityMoonChasingConfig.GetActivityMoonChasingConfig(
-                          this.ActivityBaseData.Id,
+                          i.Id,
                         ).FocusMarkId,
                       MarkType: 6,
                     }),
                     ControllerHolder_1.ControllerHolder.WorldMapController.OpenView(
                       2,
                       !1,
-                      t,
+                      i,
                     ))
                   : UiManager_1.UiManager.OpenView(
                       "QuestView",
-                      i.GetUnFinishPreGuideQuestId(),
+                      t.GetUnFinishPreGuideQuestId(),
                     ));
             });
       }),
@@ -94,12 +94,14 @@ class ActivitySubViewRoleGive extends ActivitySubViewBase_1.ActivitySubViewBase 
         await this.DNe.CreateThenShowByActorAsync(i.GetOwner()),
         this.GetItem(4)),
       i =
-        ((this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
+        ((this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(
+          this.Pe,
+        )),
         await this.ANe.CreateThenShowByActorAsync(i.GetOwner()),
-        (this.DIa = new RoleDescribeComponent_1.RoleDescribeComponent()),
+        (this.NUa = new RoleDescribeComponent_1.RoleDescribeComponent()),
         this.GetItem(2)),
       i =
-        (await this.DIa.CreateThenShowByActorAsync(i.GetOwner()),
+        (await this.NUa.CreateThenShowByActorAsync(i.GetOwner()),
         (this.U2i = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
         this.GetItem(5));
     await this.U2i.CreateThenShowByActorAsync(i.GetOwner());
@@ -118,7 +120,7 @@ class ActivitySubViewRoleGive extends ActivitySubViewBase_1.ActivitySubViewBase 
       this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
       (i = e.Desc),
       this.DNe.SetContentByTextId(i),
-      this.ANe.FunctionButton?.BindCallback(this.DFe),
+      this.ANe.FunctionButton?.SetFunction(this.DFe),
       (t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         "CollectActivity_Button_ahead",
       )),
@@ -126,7 +128,7 @@ class ActivitySubViewRoleGive extends ActivitySubViewBase_1.ActivitySubViewBase 
       (e = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(
         r.RoleTrialId,
       )),
-      this.DIa?.Update(e.ParentId),
+      this.NUa?.Update(e.ParentId),
       this.U2i?.RefreshByConfigId(e.ParentId),
       this.OnRefreshView());
   }
@@ -179,9 +181,10 @@ class ActivitySubViewRoleGive extends ActivitySubViewBase_1.ActivitySubViewBase 
                 ),
               ))
         : (this.ANe.FunctionButton?.SetUiActive(!1),
-          (i = this.GetCurrentLockConditionText()),
-          this.ANe.SetLockTextByTextId(i),
-          this.ANe.SetPanelConditionVisible(!0)));
+          this.ANe.SetPerformanceConditionLock(
+            this.ActivityBaseData.ConditionGroupId,
+            this.ActivityBaseData.Id,
+          )));
   }
   BNe() {
     this.ANe?.SetFunctionRedDotVisible(this.Pe.RedPointShowState);

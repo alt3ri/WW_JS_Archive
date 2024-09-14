@@ -24,7 +24,8 @@ class KillMonstersScores {
   get DifficultyOptions() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.difficultyoptionsLength(),
-      (t) => this.difficultyoptions(t),
+      this.difficultyoptions,
+      this,
     );
   }
   get Desc() {

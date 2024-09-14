@@ -26,9 +26,9 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
         );
       }),
       (this.jYe = (e) => {
-        e.G6n &&
+        e.K6n &&
           ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-            e.f8n,
+            e.L8n,
           );
       }),
       (this.sOt = () => {

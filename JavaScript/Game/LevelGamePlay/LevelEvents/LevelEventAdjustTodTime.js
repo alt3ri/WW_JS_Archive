@@ -39,7 +39,7 @@ class LevelEventAdjustTodTime extends LevelGeneralBase_1.LevelEventBase {
             })
           : (TimeOfDayController_1.TimeOfDayController.AdjustTime(
               i,
-              Protocol_1.Aki.Protocol.h4s.Proto_LevelPlayAuto,
+              Protocol_1.Aki.Protocol.C4s.Proto_LevelPlayAuto,
             ),
             this.FinishExecute(!0));
     } else this.FinishExecute(!1);

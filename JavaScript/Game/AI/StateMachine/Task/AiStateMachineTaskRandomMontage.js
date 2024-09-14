@@ -65,12 +65,12 @@ class AiStateMachineTaskRandomMontage extends AiStateMachineTask_1.AiStateMachin
           "播放随机Montage失败，MontageIndex非法",
           ["MontageIndex", this.MontageIndex],
         ),
-        (this.MontageIndex = 0)),
+        (this.MontageIndex = 0));
+    let i = "";
+    if (!this.rse) {
       this.Ine &&
         !this.Rne &&
         (this.Rne = this.Node.ActorComponent.DisableActor("状态机加载动作"));
-    let i = "";
-    if (!this.rse)
       for (let t = 0; t < this.MontageNames.length; t++) {
         var s = (this.MontageIndex + t) % this.MontageNames.length;
         if (
@@ -86,6 +86,7 @@ class AiStateMachineTaskRandomMontage extends AiStateMachineTask_1.AiStateMachin
         )
           break;
       }
+    }
     this.rse
       ? ((this.Playing = !0),
         this.Node.MontageComponent.PlayMontageTaskAndRequest(

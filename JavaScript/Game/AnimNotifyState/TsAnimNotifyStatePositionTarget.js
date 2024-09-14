@@ -23,8 +23,10 @@ class TsAnimNotifyStatePositionTarget extends UE.KuroAnimNotifyState {
       t instanceof TsBaseCharacter_1.default &&
       !(
         !(r = t.CharacterActorComponent.Entity)?.Valid ||
-        !(r = r.GetComponent(33))?.Valid ||
-        !(r = r?.SkillTarget?.Entity?.GetComponent(1)?.Owner)?.IsValid() ||
+        !(r = r.GetComponent(34))?.Valid ||
+        !(r = r
+          ?.GetSkillTargetForAns()
+          ?.Entity?.GetComponent(1)?.Owner)?.IsValid() ||
         ((t = Vector_1.Vector.Create(t.K2_GetActorLocation())),
         Vector_1.Vector.Create(r.K2_GetActorLocation()).Subtraction(
           t,
@@ -42,9 +44,9 @@ class TsAnimNotifyStatePositionTarget extends UE.KuroAnimNotifyState {
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
     var r = t.CharacterActorComponent.Entity;
     if (!r?.Valid) return !1;
-    var e = r.GetComponent(33);
+    var e = r.GetComponent(34);
     if (!e?.Valid) return !1;
-    e = e?.SkillTarget?.Entity?.GetComponent(1)?.Owner;
+    e = e?.GetSkillTargetForAns()?.Entity?.GetComponent(1)?.Owner;
     if (!e?.IsValid()) return !1;
     if (0 < this.最小距离) {
       (t = Vector_1.Vector.Create(t.K2_GetActorLocation())),
@@ -62,7 +64,7 @@ class TsAnimNotifyStatePositionTarget extends UE.KuroAnimNotifyState {
       this.速度.Multiply(t, this.TmpVector),
       this.TmpVector.GetClampedToMaxSize(this.最大速度, this.TmpVector),
       this.TmpVector.MultiplyEqual(s),
-      r.GetComponent(37)?.SetAddMoveOffset(this.TmpVector.ToUeVector()),
+      r.GetComponent(38)?.SetAddMoveOffset(this.TmpVector.ToUeVector()),
       !0
     );
   }

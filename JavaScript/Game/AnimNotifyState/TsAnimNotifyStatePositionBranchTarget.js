@@ -10,7 +10,6 @@ const UE = require("ue"),
   MathUtils_1 = require("../../Core/Utils/MathUtils"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
   GlobalData_1 = require("../GlobalData"),
-  CharacterUnifiedStateTypes_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
   BlackboardController_1 = require("../World/Controller/BlackboardController"),
   INVALID_LAST_LOCATION_THRESHOLD_SQUARED = 4e6;
 class PositionBranchTargetParams {
@@ -54,7 +53,7 @@ class PositionBranchTargetParams {
         (this.TargetCharActorComp = void 0),
         (this.SocketName = "");
     } else {
-      i = this.CharSkillComp?.SkillTarget;
+      i = this.CharSkillComp?.GetSkillTargetForAns();
       if (!i) return !1;
       if (
         this.TargetActorComp?.Entity?.Valid &&
@@ -143,13 +142,13 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
     t = t.CharacterActorComponent;
     if (!t) return !1;
     var h,
-      r = t.Entity.GetComponent(33);
+      r = t.Entity.GetComponent(34);
     let e = void 0;
     if (
       !(e =
         (this.TsIsShareTarget &&
-          ((h = t.Entity.GetComponent(48)),
-          (e = EntitySystem_1.EntitySystem.Get(h.RoleId)?.GetComponent(33)))) ||
+          ((h = t.Entity.GetComponent(49)),
+          (e = EntitySystem_1.EntitySystem.Get(h.RoleId)?.GetComponent(34)))) ||
         r)
     )
       return (
@@ -160,20 +159,20 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
           ]),
         !1
       );
-    let o = paramMap.get(t.Entity.Id);
+    let a = paramMap.get(t.Entity.Id);
     return (
-      ((o =
-        o ||
+      ((a =
+        a ||
         (paramPool.length
           ? paramPool.pop()
           : new PositionBranchTargetParams())).CharActorComp = t),
-      (o.CharUnifiedComp = t.Entity.GetComponent(160)),
-      (o.CharSkillComp = e),
-      o.RefreshTarget(this.TsBlackboardKey),
-      (o.NowTime = 0),
-      (o.TotalTime = s),
-      o.TargetActorComp
-        ? paramMap.set(t.Entity.Id, o)
+      (a.CharUnifiedComp = t.Entity.GetComponent(161)),
+      (a.CharSkillComp = e),
+      a.RefreshTarget(this.TsBlackboardKey),
+      (a.NowTime = 0),
+      (a.TotalTime = s),
+      a.TargetActorComp
+        ? paramMap.set(t.Entity.Id, a)
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Movement", 6, "BranchTarget No Target"),
       !0
@@ -294,19 +293,11 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
             ["ActorLast", i.CharActorComp?.LastActorLocation],
             ["Now", i.CharActorComp?.ActorLocationProxy],
           );
-    i.CharUnifiedComp?.PositionState ===
-    CharacterUnifiedStateTypes_1.ECharPositionState.Ground
-      ? (this.TmpVector.DivisionEqual(t),
-        i.CharActorComp.KuroMoveAlongFloor(
-          this.TmpVector.ToUeVector(),
-          t,
-          "TsAnimNotifyStatePositionBranchTarget.KuroMoveAlongFloor",
-        ))
-      : i.CharActorComp.AddActorWorldOffset(
-          this.TmpVector.ToUeVector(),
-          "TsAnimNotifyStatePositionBranchTarget.AddActorWorldOffset",
-          !0,
-        ),
+    i.CharActorComp.MoveComp.MoveCharacter(
+      this.TmpVector,
+      t,
+      "TsAnimNotifyStatePositionBranchTarget",
+    ),
       this.TsLookAtTarget &&
         (this.TargetPos.Subtraction(
           i.CharActorComp.ActorLocationProxy,

@@ -101,7 +101,7 @@ class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
             i.SetTextArgs(o, n, r.toString()),
               i.FunctionMap.set(2, () => {
                 var e = [],
-                  i = { T5n: t.IncId, o9n: 1, f8n: t.ItemId };
+                  i = { w5n: t.IncId, m9n: 1, L8n: t.ItemId };
                 e.push(i),
                   WeaponController_1.WeaponController.SendPbResonUpRequest(
                     a,

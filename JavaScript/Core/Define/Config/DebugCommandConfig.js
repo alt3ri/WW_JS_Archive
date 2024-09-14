@@ -15,15 +15,18 @@ class DebugCommandConfig {
   get ParamGetTarget() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.paramgettargetLength(),
-      (t) => this.paramgettarget(t),
+      this.paramgettarget,
+      this,
     );
   }
   get EffectStage() {
     return this.effectstage();
   }
   get ParamEffect() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.parameffectLength(), (t) =>
-      this.parameffect(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.parameffectLength(),
+      this.parameffect,
+      this,
     );
   }
   __init(t, e) {

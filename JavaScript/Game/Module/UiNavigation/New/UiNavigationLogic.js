@@ -146,8 +146,8 @@ class UiNavigationLogic {
   }
   static HasActiveListenerInGroup(t) {
     if (t)
-      for (let i = 0, e = t.ListenerList.Num(); i < e; ++i)
-        if (t.ListenerList.Get(i).IsListenerActive()) return !0;
+      for (let i = 0, e = t.ListenerList.length; i < e; ++i)
+        if (t.ListenerList[i].IsListenerActive()) return !0;
     return !1;
   }
   static UpdateNavigationListener(i) {
@@ -184,6 +184,7 @@ class UiNavigationLogic {
           e.GetCurrentPanel()?.AllowNavigateInKeyBoard),
         t
           ? (a.SetIsUseMouse(!1),
+            a.SwitchToNavigationInputType(),
             a.UpdateNavigationListener(void 0),
             ModelManager_1.ModelManager.UiNavigationModel.SetIsUseMouse(!1),
             e ||

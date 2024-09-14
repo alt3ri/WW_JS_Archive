@@ -55,13 +55,13 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
                 break;
               }
             e &&
-              (((t = Protocol_1.Aki.Protocol.B3n.create()).Xjn =
-                Protocol_1.Aki.Protocol.Cys.create()),
-              (this.D9r[0] = t.Xjn.fWn = i.PositionState),
-              (this.D9r[1] = t.Xjn.pWn = i.MoveState),
-              (this.D9r[2] = t.Xjn.vWn = i.DirectionState),
-              (this.D9r[3] = t.Xjn.MWn = i.PositionSubState),
-              CombatMessage_1.CombatNet.Call(10937, this.Entity, t, () => {}));
+              (((t = Protocol_1.Aki.Protocol.V3n.create()).rWn =
+                Protocol_1.Aki.Protocol.Eys.create()),
+              (this.D9r[0] = t.rWn.LWn = i.PositionState),
+              (this.D9r[1] = t.rWn.DWn = i.MoveState),
+              (this.D9r[2] = t.rWn.AWn = i.DirectionState),
+              (this.D9r[3] = t.rWn.UWn = i.PositionSubState),
+              CombatMessage_1.CombatNet.Call(27948, this.Entity, t, () => {}));
           }
         }
       });
@@ -69,7 +69,7 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
   OnStart() {
     return (
       (this.Hte = this.Entity.CheckGetComponent(3)),
-      (this.I5r = this.Entity.CheckGetComponent(160)),
+      (this.I5r = this.Entity.CheckGetComponent(161)),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharSwitchControl,
@@ -84,7 +84,7 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
       this.U9r,
     );
     var t = this.Entity.GetComponent(0);
-    (this.T9r = t.ComponentDataMap.get("Cys")?.Cys),
+    (this.T9r = t.ComponentDataMap.get("Eys")?.Eys),
       this.Hte.IsAutonomousProxy
         ? (this.R9r(), (this.Inited = !0))
         : this.T9r && this.A9r(this.T9r),
@@ -109,22 +109,22 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
     );
   }
   R9r() {
-    var t = Protocol_1.Aki.Protocol.P3n.create();
-    (t.SWn = Protocol_1.Aki.Protocol.Cys.create()),
-      (t.SWn.fWn = this.I5r.PositionState),
-      (t.SWn.pWn = this.I5r.MoveState),
-      (t.SWn.vWn = this.I5r.DirectionState),
-      (t.SWn.MWn = this.I5r.PositionSubState),
-      CombatMessage_1.CombatNet.Call(27805, this.Entity, t, () => {});
+    var t = Protocol_1.Aki.Protocol.F3n.create();
+    (t.RWn = Protocol_1.Aki.Protocol.Eys.create()),
+      (t.RWn.LWn = this.I5r.PositionState),
+      (t.RWn.DWn = this.I5r.MoveState),
+      (t.RWn.AWn = this.I5r.DirectionState),
+      (t.RWn.UWn = this.I5r.PositionSubState),
+      CombatMessage_1.CombatNet.Call(22557, this.Entity, t, () => {});
   }
   A9r(t) {
-    this.P9r(0, t.fWn),
-      this.P9r(1, t.pWn),
-      this.P9r(2, t.vWn),
-      this.P9r(3, t.MWn),
+    this.P9r(0, t.LWn),
+      this.P9r(1, t.DWn),
+      this.P9r(2, t.AWn),
+      this.P9r(3, t.UWn),
       CombatLog_1.CombatLog.Info("LogicState", this.Entity, "初始化逻辑状态", [
         "states",
-        [t.fWn, t.pWn, t.vWn, t.MWn],
+        [t.LWn, t.DWn, t.AWn, t.UWn],
       ]),
       (this.Inited = !0);
   }
@@ -144,32 +144,32 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
     }
   }
   static LogicStateInitNotify(t, e) {
-    t?.GetComponent(55)?.A9r(e.SWn);
+    t?.GetComponent(56)?.A9r(e.RWn);
   }
   static SwitchLogicStateNotify(t, e) {
     t?.GetComponent(3)?.IsMoveAutonomousProxy ||
-      ((t = t?.GetComponent(55)) &&
-        e.Xjn &&
-        (t.P9r(0, e.Xjn.fWn),
-        t.P9r(1, e.Xjn.pWn),
-        t.P9r(2, e.Xjn.vWn),
-        t.P9r(3, e.Xjn.MWn)));
+      ((t = t?.GetComponent(56)) &&
+        e.rWn &&
+        (t.P9r(0, e.rWn.LWn),
+        t.P9r(1, e.rWn.DWn),
+        t.P9r(2, e.rWn.AWn),
+        t.P9r(3, e.rWn.UWn)));
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.SyncHandle("DFn")],
+  [CombatMessage_1.CombatNet.SyncHandle("qFn")],
   CharacterLogicStateSyncComponent,
   "LogicStateInitNotify",
   null,
 ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("AFn")],
+    [CombatMessage_1.CombatNet.SyncHandle("GFn")],
     CharacterLogicStateSyncComponent,
     "SwitchLogicStateNotify",
     null,
   ),
   (CharacterLogicStateSyncComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(55)],
+    [(0, RegisterComponent_1.RegisterComponent)(56)],
     CharacterLogicStateSyncComponent,
   )),
   (exports.CharacterLogicStateSyncComponent = CharacterLogicStateSyncComponent);

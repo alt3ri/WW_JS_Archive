@@ -25,14 +25,14 @@ class BulletLogicForceController extends BulletLogicController_1.BulletLogicCont
       (this.E7o = Vector_1.Vector.Create()),
       (this.h7o = t),
       (this.a7o = i.GetBulletInfo()),
-      (this.S7o = i.GetComponent(154)),
+      (this.S7o = i.GetComponent(155)),
       (this.y7o = new Map()),
       (this.I7o = new Map()),
       (this.NeedTick = !0),
       (this.g7o = this.h7o.ConstantForce),
       (this.p7o = this.h7o.IsLaunching),
       (this.T7o = 0 < this.LogicController.WorkHaveTag.GameplayTags.Num()),
-      (this.DSa = this.LogicController.ImmuneStopDuration);
+      (this.XIa = this.LogicController.ImmuneStopDuration);
   }
   OnInit() {
     this.L7o();
@@ -65,16 +65,16 @@ class BulletLogicForceController extends BulletLogicController_1.BulletLogicCont
         (this.M7o = t),
         this.v7o.clear());
       for ([i] of this.a7o.CollisionInfo.CharacterEntityMap)
-        !i || (this.T7o && !i.GetComponent(188).HasAnyTag(e)) || this.R7o(i);
+        !i || (this.T7o && !i.GetComponent(190).HasAnyTag(e)) || this.R7o(i);
     } else
       for (var [s] of this.a7o.CollisionInfo.CharacterEntityMap)
-        !s || (this.T7o && !s.GetComponent(188).HasAnyTag(e)) || this.U7o(s);
+        !s || (this.T7o && !s.GetComponent(190).HasAnyTag(e)) || this.U7o(s);
   }
   U7o(t) {
     var i,
       e,
       s,
-      h = t.GetComponent(163);
+      h = t.GetComponent(164);
     !h?.Valid ||
       h.CharacterWeight > this.h7o.LimitWeight ||
       ((s = t.GetComponent(3).ActorLocationProxy),
@@ -101,16 +101,16 @@ class BulletLogicForceController extends BulletLogicController_1.BulletLogicCont
       (s = this.y7o.get(t)),
       (s = h.SetAddMoveWorld(i.ToUeVector(), MOVE_TIME, void 0, s)),
       this.y7o.set(t, s),
-      0 < this.DSa &&
-        (e = t.GetComponent(52)) &&
+      0 < this.XIa &&
+        (e = t.GetComponent(53)) &&
         !e.IsImmuneTimeScaleEffect() &&
         e.AddImmuneTimeScaleEffectTimer(
-          this.DSa * CommonDefine_1.MILLIONSECOND_PER_SECOND,
+          this.XIa * CommonDefine_1.MILLIONSECOND_PER_SECOND,
         ));
   }
   R7o(s) {
-    var h = s.GetComponent(160),
-      o = s.GetComponent(163);
+    var h = s.GetComponent(161),
+      o = s.GetComponent(164);
     if (h?.Valid && o?.Valid) {
       let i = CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_GLIDE;
       if (this.p7o)

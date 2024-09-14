@@ -165,26 +165,36 @@ class DtCameraConfig {
       o = e.Num();
     for (let t = 0; t < o; t++) {
       var a,
-        n = new CameraConfig(e.Get(t));
-      n[h] &&
-        (n.Tag && "None" !== n.Tag.TagName
-          ? ((a = n.Tag.TagId),
-            2 === n.Type
+        r = new CameraConfig(e.Get(t));
+      r[h] &&
+        (r.Tag && "None" !== r.Tag.TagName
+          ? ((a = r.Tag.TagId),
+            2 === r.Type
               ? i.has(a)
                 ? Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Camera",
-                    6,
-                    "独有镜头配置不允许重复的Tag",
+                    58,
+                    "[子镜头]独有镜头配置不允许重复的Tag",
                     ["DT", this.DataTable.GetOuter().GetName()],
-                    ["Tag", n.Tag.TagName],
+                    ["Tag", r.Tag.TagName],
+                    ["Type", r.Type],
                   )
-                : (i.set(a, n), this.SubValidKeys.add(a))
-              : 3 === n.Type &&
-                (s.has(a) ? s.get(a).add(n) : s.set(a, new Set([n])),
-                this.FocusValidKeys.add(a)))
+                : (i.set(a, r), this.SubValidKeys.add(a))
+              : 3 === r.Type &&
+                (s.has(a)
+                  ? Log_1.Log.CheckError() &&
+                    Log_1.Log.Error(
+                      "Camera",
+                      58,
+                      "[锁定目标镜头]独有镜头配置不允许重复的Tag",
+                      ["DT", this.DataTable.GetOuter().GetName()],
+                      ["Tag", r.Tag.TagName],
+                      ["Type", r.Type],
+                    )
+                  : (s.set(a, r), this.FocusValidKeys.add(a))))
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Camera", 6, "独有镜头配置不允许Tag为None", [
+            Log_1.Log.Error("Camera", 58, "独有镜头配置不允许Tag为None", [
               "DT",
               this.DataTable.GetOuter().GetName(),
             ]));
@@ -205,6 +215,7 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
       (this.Ple = new Map()),
       (this.xle = new Map()),
       (this.wle = new Set()),
+      (this.uQa = new Set()),
       (this.Ble = new Set()),
       (this.ble = (t, i) => t.Priority - i.Priority),
       (this.qle = new RbTree_1.RbTree(this.ble)),
@@ -214,68 +225,53 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
       (this.Nle = !1),
       (this.Ole = void 0),
       (this.cDn = void 0),
-      (this.kle = (t, i, s) => {
-        var h;
-        0 === i && 0 < s
-          ? this.wle.has(t)
-            ? Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn("Camera", 6, "Got config before Tag", [
-                "Tag",
-                GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t),
-              ])
-            : (h = this.Ple.get(t)) &&
-              (this.qle.Insert(h),
+      (this.cQa = (t, i) => {
+        i
+          ? this.wle.has(t) ||
+            ((i = this.Ple.get(t)) &&
+              (this.qle.Insert(i),
               this.wle.add(t),
-              this.Fle(h),
+              this.Fle(i),
               Log_1.Log.CheckDebug()) &&
-              Log_1.Log.Debug("Camera", 6, "SelfTagChanged Insert", [
+              Log_1.Log.Debug("Camera", 58, "SelfTagChanged Insert", [
                 "tag",
-                h.Tag.TagName,
-              ])
-          : 0 < i &&
-            0 === s &&
-            (h = this.Ple.get(t)) &&
+                i.Tag.TagName,
+              ]))
+          : (i = this.Ple.get(t)) &&
             this.wle.has(t) &&
-            (this.qle.Remove(h),
+            !this.Camera.ContainsTag(t, !0) &&
+            (this.qle.Remove(i),
             this.wle.delete(t),
-            this.Vle(h),
+            this.Vle(i),
             Log_1.Log.CheckDebug()) &&
-            Log_1.Log.Debug("Camera", 6, "SelfTagChanged Remove", [
+            Log_1.Log.Debug("Camera", 58, "SelfTagChanged Remove", [
               "tag",
-              h.Tag.TagName,
+              i.Tag.TagName,
             ]);
       }),
       (this.Hle = void 0),
       (this.jle = ""),
-      (this.Wle = (t, i, s) => {
-        if (0 === i && 0 < s)
-          if (this.Ble.has(t))
-            Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn("Camera", 6, "Got config before Tag", [
+      (this.Wle = (t, i) => {
+        i
+          ? this.Ble.has(t)
+            ? Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn("Camera", 58, "Got config before Tag", [
                 "Tag",
                 GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t),
-              ]);
-          else {
-            var h = this.xle.get(t);
-            if (h)
-              for (const e of h)
-                0 === e.LockOnParts.length &&
-                  (this.qle.Insert(e), this.Ble.add(t), this.Fle(e));
-          }
-        else if (0 < i && 0 === s) {
-          h = this.xle.get(t);
-          if (h && this.Ble.has(t)) {
-            for (const o of h) this.qle.Remove(o), this.Vle(o);
-            this.Ble.delete(t);
-          }
-        }
+              ])
+            : (i = this.xle.get(t)) &&
+              0 === i.LockOnParts.length &&
+              (this.qle.Insert(i), this.Ble.add(t), this.Fle(i))
+          : this.Ble.has(t) &&
+            (i = this.xle.get(t)) &&
+            (this.qle.Remove(i), this.Vle(i), this.Ble.delete(t));
       }),
       (this.OnChangeRole = (t, i) => {
         if (!(this.AdjustCameraTagMap.size <= 0))
           for (var [s, h] of this.AdjustCameraTagMap)
             this.EnableHookConfig(s, h);
       }),
-      (this.tYs = (t) => {
+      (this.JJs = (t) => {
         this.SelfCharacterEntity = t;
       }),
       (this.mDn = (t) => {
@@ -309,105 +305,81 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
     return this.Ole;
   }
   set SelfCharacterEntity(t) {
-    this.Ole !== t &&
-      (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug(
-          "Camera",
-          6,
-          "CharacterChange",
-          ["old", this.Ole?.Id],
-          ["new", t?.Id],
-        ),
-      this.Ole &&
-        this.Ole?.Entity?.Valid &&
-        EventSystem_1.EventSystem.HasWithTarget(
-          this.Ole?.Entity,
-          EventDefine_1.EEventName.OnGameplayTagChanged,
-          this.kle,
-        ) &&
-        EventSystem_1.EventSystem.RemoveWithTarget(
-          this.Ole.Entity,
-          EventDefine_1.EEventName.OnGameplayTagChanged,
-          this.kle,
-        ),
-      t?.Valid &&
-        !EventSystem_1.EventSystem.HasWithTarget(
-          t.Entity,
-          EventDefine_1.EEventName.OnGameplayTagChanged,
-          this.kle,
-        ) &&
-        EventSystem_1.EventSystem.AddWithTarget(
-          t.Entity,
-          EventDefine_1.EEventName.OnGameplayTagChanged,
-          this.kle,
-        ),
-      (this.Ole = t),
-      this.CDn());
+    if (this.Ole !== t) {
+      if (
+        (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Camera",
+            58,
+            "CharacterChange",
+            ["old", this.Ole?.Id],
+            ["new", t?.Id],
+          ),
+        this.Ole?.Valid)
+      ) {
+        var i = this.Ole.Entity.GetComponent(190);
+        if (i?.Valid)
+          for (var [, s] of this.Ple)
+            i.RemoveTagAddOrRemoveListener(s.Tag.TagId, this.cQa);
+      }
+      if (t?.Valid) {
+        var h = t.Entity.GetComponent(190);
+        if (h?.Valid)
+          for (var [, e] of this.Ple)
+            h.AddTagAddOrRemoveListener(e.Tag.TagId, this.cQa);
+      }
+      (this.Ole = t), this.CDn();
+    }
   }
   get FloatCharacterEntity() {
     return this.cDn;
   }
   set FloatCharacterEntity(t) {
-    this.cDn !== t &&
-      (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug(
-          "Camera",
-          58,
-          "FloatCharacterChange",
-          ["old", this.cDn?.Id],
-          ["new", t?.Id],
-        ),
-      this.cDn &&
-        this.cDn?.Entity?.Valid &&
-        EventSystem_1.EventSystem.HasWithTarget(
-          this.cDn?.Entity,
-          EventDefine_1.EEventName.OnGameplayTagChanged,
-          this.kle,
-        ) &&
-        EventSystem_1.EventSystem.RemoveWithTarget(
-          this.cDn.Entity,
-          EventDefine_1.EEventName.OnGameplayTagChanged,
-          this.kle,
-        ),
-      t?.Valid &&
-        !EventSystem_1.EventSystem.HasWithTarget(
-          t.Entity,
-          EventDefine_1.EEventName.OnGameplayTagChanged,
-          this.kle,
-        ) &&
-        EventSystem_1.EventSystem.AddWithTarget(
-          t.Entity,
-          EventDefine_1.EEventName.OnGameplayTagChanged,
-          this.kle,
-        ),
-      (this.cDn = t),
-      this.CDn());
+    if (this.cDn !== t) {
+      if (
+        (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Camera",
+            58,
+            "FloatCharacterChange",
+            ["old", this.cDn?.Id],
+            ["new", t?.Id],
+          ),
+        this.cDn?.Valid)
+      ) {
+        var i = this.cDn.Entity.GetComponent(190);
+        if (i?.Valid)
+          for (var [, s] of this.Ple)
+            i.RemoveTagAddOrRemoveListener(s.Tag.TagId, this.cQa);
+      }
+      if (t?.Valid) {
+        var h = t.Entity.GetComponent(190);
+        if (h?.Valid)
+          for (var [, e] of this.Ple)
+            h.AddTagAddOrRemoveListener(e.Tag.TagId, this.cQa);
+      }
+      (this.cDn = t), this.CDn();
+    }
   }
   UpdateFocusTargetAndSocket(t, i) {
     let s = !1;
-    this.Hle === t
-      ? this.jle !== i && (s = !0)
-      : (this.Hle &&
-          EventSystem_1.EventSystem.RemoveWithTarget(
-            this.Hle,
-            EventDefine_1.EEventName.OnGameplayTagChanged,
-            this.Wle,
-          ),
-        t &&
-          !EventSystem_1.EventSystem.HasWithTarget(
-            t,
-            EventDefine_1.EEventName.OnGameplayTagChanged,
-            this.Wle,
-          ) &&
-          EventSystem_1.EventSystem.AddWithTarget(
-            t,
-            EventDefine_1.EEventName.OnGameplayTagChanged,
-            this.Wle,
-          ),
-        (s = !0)),
-      (this.Hle = t),
-      (this.jle = i),
-      s && this.i1e();
+    if (this.Hle === t) this.jle !== i && (s = !0);
+    else {
+      if (this.Hle?.Valid) {
+        var h = this.Hle.GetComponent(190);
+        if (h?.Valid)
+          for (var [, e] of this.xle)
+            h.RemoveTagAddOrRemoveListener(e.Tag.TagId, this.Wle);
+      }
+      if (t?.Valid) {
+        var o = t.GetComponent(190);
+        if (o?.Valid)
+          for (var [, a] of this.xle)
+            o.AddTagAddOrRemoveListener(a.Tag.TagId, this.Wle);
+      }
+      s = !0;
+    }
+    (this.Hle = t), (this.jle = i), s && this.i1e();
   }
   Name() {
     return "ConfigController";
@@ -416,7 +388,7 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
     super.OnStart(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CameraCharacterChanged,
-        this.tYs,
+        this.JJs,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPlayerFollowerCreate,
@@ -437,7 +409,7 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
       !0,
     ))
       e?.Valid &&
-        (s = e.Entity.GetComponent(188)) &&
+        (s = e.Entity.GetComponent(190)) &&
         (void 0 === i || s.HasTag(i) || s.AddTag(i),
         s.HasTag(h) && s.RemoveTag(h),
         s.AddTag(h),
@@ -454,7 +426,7 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
       this.o1e(IAction_1.EAdjustPlayerCamera.Fixed, t),
       this.o1e(IAction_1.EAdjustPlayerCamera.AxisLock, t));
     for (const s of this.AdjustCameraEntityHandleSet) {
-      var i = s?.Entity?.GetComponent(188);
+      var i = s?.Entity?.GetComponent(190);
       i &&
         (i.RemoveTag(
           GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
@@ -487,7 +459,7 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
   }
   DisableHookConfigByType(t) {
     for (const s of this.AdjustCameraEntityHandleSet) {
-      var i = s?.Entity?.GetComponent(188);
+      var i = s?.Entity?.GetComponent(190);
       i &&
         (i.RemoveTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(t)),
         i.RemoveTag(noAimGameplayTag));
@@ -501,7 +473,8 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
     (this.Rle = CameraController_1.CameraController.GetCameraConfigList()),
       this.Ple.clear(),
       this.xle.clear(),
-      this.wle.clear();
+      this.wle.clear(),
+      this.uQa.clear();
     for (var [, t] of this.Gle)
       t.SubValidKeys.clear(), t.FocusValidKeys.clear();
     var i,
@@ -519,7 +492,7 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
                 : Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Camera",
-                    15,
+                    58,
                     "初始化镜头配置[DT_CameraConfigs]失败，子镜头没有正确配置Tag",
                   )
               : 3 === h.Type &&
@@ -527,18 +500,16 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
                   ? Log_1.Log.CheckError() &&
                     Log_1.Log.Error(
                       "Camera",
-                      15,
+                      58,
                       "初始化镜头配置[DT_CameraConfigs]失败，战斗目标镜头没有正确配置Tag",
                     )
-                  : this.xle.has(h.Tag.TagId)
-                    ? this.xle.get(h.Tag.TagId).add(h)
-                    : this.xle.set(h.Tag.TagId, new Set([h]))));
+                  : this.xle.set(h.Tag.TagId, h)));
     }
     (this.Ule && this.Ale) ||
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Camera",
-          15,
+          58,
           "初始化镜头配置[DT_CameraConfigs]失败，基础镜头/战斗镜头未配置",
         ));
     for ([, i] of this.Gle) i.SetToConfigs(this.Ple, this.xle, this.e1e);
@@ -560,21 +531,37 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
             this.e1e,
           ),
           this.Gle.set(i, t),
-          this.SelfCharacterEntity)
-        )
-          for (const h of t.SubValidKeys) {
-            var s;
-            this.Camera.ContainsTag(h) &&
-              ((s = this.Ple.get(h)),
-              this.qle.Insert(s),
-              this.wle.add(h),
-              this.Fle(s));
+          this.Ole?.Valid)
+        ) {
+          var s = this.Ole.Entity.GetComponent(190);
+          if (s?.Valid)
+            for (const a of t.SubValidKeys)
+              s.AddTagAddOrRemoveListener(a, this.cQa);
+        }
+        if (this.Hle?.Valid) {
+          var h = this.Hle.GetComponent(190);
+          if (h?.Valid)
+            for (const r of t.FocusValidKeys)
+              h.AddTagAddOrRemoveListener(r, this.Wle);
+        }
+        if (this.SelfCharacterEntity)
+          for (const n of t.SubValidKeys) {
+            var e;
+            this.Camera.ContainsTag(n, !0) &&
+              ((e = this.Ple.get(n)),
+              this.qle.Insert(e),
+              this.wle.add(n),
+              this.Fle(e));
           }
         if (this.Hle)
-          for (const e of t.FocusValidKeys)
-            if (this.Camera.TargetContainsTag(e))
-              for (const o of this.xle.get(e))
-                this.qle.Insert(o), this.Ble.add(e), this.Fle(o);
+          for (const C of t.FocusValidKeys) {
+            var o;
+            this.Camera.TargetContainsTag(C) &&
+              ((o = this.xle.get(C)),
+              this.qle.Insert(o),
+              this.Ble.add(C),
+              this.Fle(o));
+          }
       }
       ++t.ReferenceCount;
     }
@@ -582,23 +569,35 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
   UnloadCharacterConfig(t) {
     if (t) {
       var i,
-        s = this.Gle.get(t);
-      if (s) {
-        if ((--s.ReferenceCount, 0 === s.ReferenceCount)) {
+        s,
+        h = this.Gle.get(t);
+      if (h) {
+        if ((--h.ReferenceCount, 0 === h.ReferenceCount)) {
+          if (this.Ole?.Valid) {
+            var e = this.Ole.Entity.GetComponent(190);
+            if (e?.Valid)
+              for (const a of h.SubValidKeys)
+                e.RemoveTagAddOrRemoveListener(a, this.cQa);
+          }
+          if (this.Hle?.Valid) {
+            var o = this.Hle.GetComponent(190);
+            if (o?.Valid)
+              for (const r of h.FocusValidKeys)
+                o.RemoveTagAddOrRemoveListener(r, this.Wle);
+          }
           if (this.SelfCharacterEntity)
-            for (const h of s.SubValidKeys)
-              this.wle.delete(h) &&
-                ((i = this.Ple.get(h)), this.qle.Remove(i), this.Vle(i));
+            for (const n of h.SubValidKeys)
+              this.wle.delete(n) &&
+                ((i = this.Ple.get(n)), this.qle.Remove(i), this.Vle(i));
           if (this.Hle)
-            for (const e of s.FocusValidKeys)
-              if (this.Ble.delete(e))
-                for (const o of this.xle.get(e))
-                  this.qle.Remove(o), this.Vle(o);
-          s.RemoveFromConfigs(this.Ple, this.xle), this.Gle.delete(t);
+            for (const C of h.FocusValidKeys)
+              this.Ble.delete(C) &&
+                ((s = this.xle.get(C)), this.qle.Remove(s), this.Vle(s));
+          h.RemoveFromConfigs(this.Ple, this.xle), this.Gle.delete(t);
         }
       } else
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Camera", 6, "没有加载Camera配置表格", [
+          Log_1.Log.Error("Camera", 58, "没有加载Camera配置表格", [
             "DT",
             t.GetOuter().GetName(),
           ]);
@@ -610,13 +609,10 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
       this.r1e() && (t = !0),
         (this.SelfCharacterEntity = this.Camera.CharacterEntityHandle);
       var i = this.Camera?.TargetEntity
-        ? this.Camera?.TargetSocketName?.toString() ?? ""
+        ? (this.Camera?.TargetSocketName?.toString() ?? "")
         : "";
       this.UpdateFocusTargetAndSocket(this.Camera.TargetEntity?.Entity, i),
-        (t ||= this.Zle) &&
-          (Macro_1.NOT_SHIPPING_ENVIRONMENT &&
-            ModelManager_1.ModelManager.CameraModel.CameraDebugToolEnabled,
-          this.s1e()),
+        (t ||= this.Zle) && this.s1e(),
         (this.Zle = !1);
     }
   }
@@ -637,16 +633,15 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
     );
   }
   i1e() {
-    for (const s of this.Ble)
-      for (const h of this.xle.get(s))
-        (this.Camera.TargetContainsTag(s) &&
-          h.LockOnParts.includes(this.jle)) ||
-          (this.qle.Remove(h), this.Ble.delete(s), this.Vle(h));
-    for (var [t, i] of this.xle)
-      if (this.Camera.TargetContainsTag(t))
-        for (const e of i)
-          (0 !== e.LockOnParts.length && !e.LockOnParts.includes(this.jle)) ||
-            (this.qle.Insert(e), this.Ble.add(t), this.Fle(e));
+    for (const h of this.Ble) {
+      var t = this.xle.get(h);
+      (this.Camera.TargetContainsTag(h) && t.LockOnParts.includes(this.jle)) ||
+        (this.qle.Remove(t), this.Ble.delete(h), this.Vle(t));
+    }
+    for (var [i, s] of this.xle)
+      !this.Camera.TargetContainsTag(i) ||
+        (0 !== s.LockOnParts.length && !s.LockOnParts.includes(this.jle)) ||
+        (this.qle.Insert(s), this.Ble.add(i), this.Fle(s));
   }
   CDn() {
     for (const h of this.wle) {
@@ -656,7 +651,7 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
         this.wle.delete(h),
         this.Vle(t),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Camera", 6, "UpdateSelfConfig Remove", [
+          Log_1.Log.Debug("Camera", 58, "UpdateSelfConfig Remove", [
             "tag",
             t.Tag.TagName,
           ]));
@@ -668,7 +663,7 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
           this.wle.add(i),
           this.Fle(s),
           Log_1.Log.CheckDebug()) &&
-          Log_1.Log.Debug("Camera", 6, "UpdateSelfConfig Insert", [
+          Log_1.Log.Debug("Camera", 58, "UpdateSelfConfig Insert", [
             "tag",
             s.Tag.TagName,
           ]));
@@ -708,9 +703,6 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
           t ? this.Xle : this.Jle,
           t ? this.$le : this.zle,
           !0,
-          !1,
-          !1,
-          !1,
           !0,
           !0,
           !0,
@@ -841,7 +833,7 @@ class CameraConfigController extends CameraControllerBase_1.CameraControllerBase
     super.OnEnd(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CameraCharacterChanged,
-        this.tYs,
+        this.JJs,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPlayerFollowerCreate,

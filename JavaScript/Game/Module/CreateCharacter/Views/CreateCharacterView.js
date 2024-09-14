@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CreateCharacterView = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
@@ -11,8 +12,7 @@ const UE = require("ue"),
   TextInputComponent_1 = require("../../Common/InputView/View/TextInputComponent"),
   LoginDefine_1 = require("../../Login/Data/LoginDefine"),
   LoginController_1 = require("../../Login/LoginController"),
-  UiLoginSceneManager_1 = require("../../UiComponent/UiLoginSceneManager"),
-  Info_1 = require("../../../../Core/Common/Info");
+  UiLoginSceneManager_1 = require("../../UiComponent/UiLoginSceneManager");
 class CreateCharacterView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),

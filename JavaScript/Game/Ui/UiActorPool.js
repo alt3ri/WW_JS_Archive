@@ -37,14 +37,14 @@ const ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
     { ResourceId: "UiView_BlackFadeScreen_Prefab", CacheCount: () => 1 },
   ];
 class UiPoolActor {
-  constructor(e) {
-    (this.OCe = void 0), (this.Xdr = ""), (this.$dr = 0), (this.Xdr = e);
+  constructor(o) {
+    (this.OCe = void 0), (this.Xdr = ""), (this.$dr = 0), (this.Xdr = o);
   }
   get Actor() {
     return this.OCe;
   }
-  set Actor(e) {
-    this.OCe = e;
+  set Actor(o) {
+    this.OCe = o;
   }
   get IsValid() {
     return this.OCe?.IsValid() ?? !1;
@@ -58,8 +58,8 @@ class UiPoolActor {
   get EndTime() {
     return this.$dr;
   }
-  set EndTime(e) {
-    this.$dr = e;
+  set EndTime(o) {
+    this.$dr = o;
   }
   Clear() {
     this.IsValid &&
@@ -68,15 +68,15 @@ class UiPoolActor {
 }
 exports.UiPoolActor = UiPoolActor;
 class UiActorFactory {
-  constructor(e, o) {
+  constructor(o, e) {
     (this.Xdr = ""),
       (this.Ydr = void 0),
       (this.Jdr = 0),
       (this.IsKeepWhileCleaning = !1),
       (this.mp = new Queue_1.Queue(DEFAULT_CAPACITY)),
       (this.zdr = LguiResourceManager_1.LguiResourceManager.InvalidId),
-      (this.Xdr = e),
-      (this.Ydr = o) ||
+      (this.Xdr = o),
+      (this.Ydr = e) ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Pool",
@@ -85,28 +85,28 @@ class UiActorFactory {
           ));
   }
   a7() {
-    var e = new UiPoolActor(this.Xdr);
-    return (e.EndTime = Time_1.Time.Now + CACHE_TIME), e;
+    var o = new UiPoolActor(this.Xdr);
+    return (o.EndTime = Time_1.Time.Now + CACHE_TIME), o;
   }
-  h7(e) {
-    e.Clear();
+  h7(o) {
+    o.Clear();
   }
-  async PreloadActor(e) {
-    this.Jdr = e();
-    var o = e() - this.mp.Size;
-    if (!(o <= 0))
+  async PreloadActor(o) {
+    this.Jdr = o();
+    var e = o() - this.mp.Size;
+    if (!(e <= 0))
       if (this.Ydr) {
         var t = [];
-        for (let e = 0; e < o; e++) t.push(this.GetAsync(this.Xdr, this.Ydr));
-        (await Promise.all(t)).forEach((e) => {
-          this.mp.Push(e);
+        for (let o = 0; o < e; o++) t.push(this.GetAsync(this.Xdr, this.Ydr));
+        (await Promise.all(t)).forEach((o) => {
+          this.mp.Push(o);
         }),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Pool",
               17,
               "预加载UiPoolActor对象",
-              ["预加载数量", o],
+              ["预加载数量", e],
               ["资源路径", this.Xdr],
             );
       } else
@@ -117,32 +117,32 @@ class UiActorFactory {
             "[UiActorFactory:PreloadActor]初始化缓存池有问题,缓存池挂载根节点为空",
           );
   }
-  Release(e, o) {
-    return e
-      ? (this.mp.Push(e),
-        e.IsValid
-          ? (e.UiItem?.SetUIParent(this.Ydr),
-            (e.EndTime = Time_1.Time.Now + CACHE_TIME))
-          : (e.EndTime = Time_1.Time.Now),
+  Release(o, e) {
+    return o
+      ? (this.mp.Push(o),
+        o.IsValid
+          ? (o.UiItem?.SetUIParent(this.Ydr),
+            (o.EndTime = Time_1.Time.Now + CACHE_TIME))
+          : (o.EndTime = Time_1.Time.Now),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Pool",
             17,
             "回收UiPoolActor对象",
             ["目前未使用数量", this.mp.Size],
-            ["资源路径", e.Path],
+            ["资源路径", o.Path],
           ),
         !0)
-      : (o &&
+      : (e &&
           Log_1.Log.CheckError() &&
           Log_1.Log.Error("Pool", 17, "回收UiPoolActor对象不存在"),
         this.CancelGetAsync(),
         !1);
   }
-  GarbageCollect(o) {
-    if (this.mp.Size <= this.Jdr) return o;
+  GarbageCollect(e) {
+    if (this.mp.Size <= this.Jdr) return e;
     let t = 0;
-    for (let e = 0; e < o && !this.mp.Empty; ++e) {
+    for (let o = 0; o < e && !this.mp.Empty; ++o) {
       var r = this.mp.Front;
       if (r.EndTime > Time_1.Time.Now) break;
       this.mp.Pop(),
@@ -157,12 +157,12 @@ class UiActorFactory {
             ["资源路径", this.Xdr],
           );
     }
-    return o - t;
+    return e - t;
   }
   Clear() {
     for (; !this.mp.Empty; ) {
-      var e = this.mp.Pop();
-      this.h7(e);
+      var o = this.mp.Pop();
+      this.h7(o);
     }
     this.mp.Clear(),
       Log_1.Log.CheckDebug() &&
@@ -170,17 +170,17 @@ class UiActorFactory {
   }
   async Zdr() {
     if (this.Ydr) {
-      const o = new CustomPromise_1.CustomPromise();
+      const e = new CustomPromise_1.CustomPromise();
       return (
         (this.zdr = LguiResourceManager_1.LguiResourceManager.LoadPrefab(
           this.Xdr,
           this.Ydr,
-          (e) => {
+          (o) => {
             (this.zdr = LguiResourceManager_1.LguiResourceManager.InvalidId),
-              o.SetResult(e);
+              e.SetResult(o);
           },
         )),
-        o.Promise
+        e.Promise
       );
     }
     Log_1.Log.CheckError() &&
@@ -190,21 +190,21 @@ class UiActorFactory {
         "[UiActorFactory:TemplateActor]初始化缓存池有问题,缓存池挂载根节点为空",
       );
   }
-  async GetAsync(e, o) {
+  async GetAsync(o, e) {
     var t = this.mp.Empty ? this.a7() : this.mp.Pop(),
       r = (t.IsValid || (t.Actor = await this.Zdr()), t.UiItem);
     if (r)
       return (
-        o && r?.SetUIParent(o),
+        e && r?.SetUIParent(e),
         r?.SetUIActive(!0),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Pool", 17, "获取UiPoolActor对象", ["资源路径", e]),
+          Log_1.Log.Debug("Pool", 17, "获取UiPoolActor对象", ["资源路径", o]),
         t
       );
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Pool", 17, "获取UiPoolActor对象失败, 未成功加载Actor", [
         "资源路径",
-        e,
+        o,
       ]);
   }
   CancelGetAsync() {
@@ -213,17 +213,17 @@ class UiActorFactory {
   }
 }
 class UiActorPool {
-  static eCr(e) {
-    let o = UiActorPool.tCr.get(e);
+  static eCr(o) {
+    let e = UiActorPool.tCr.get(o);
     return (
-      o ||
-        ((o = new UiActorFactory(e, UiActorPool.iCr)),
-        UiActorPool.tCr.set(e, o)),
-      o
+      e ||
+        ((e = new UiActorFactory(o, UiActorPool.iCr)),
+        UiActorPool.tCr.set(o, e)),
+      e
     );
   }
-  static oCr(e) {
-    return UiActorPool.tCr.get(e);
+  static oCr(o) {
+    return UiActorPool.tCr.get(o);
   }
   static async Init() {
     this.IsOpenPool &&
@@ -233,61 +233,63 @@ class UiActorPool {
       await UiActorPool.e$e());
   }
   static async e$e() {
-    var e = [];
+    var o = [];
     for (const t of prepareConfigList) {
-      var o = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+      var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
           t.ResourceId,
         ),
-        o = UiActorPool.eCr(o);
-      e.push(o.PreloadActor(t.CacheCount));
+        e = UiActorPool.eCr(e);
+      o.push(e.PreloadActor(t.CacheCount));
     }
-    await Promise.all(e);
+    await Promise.all(o);
   }
-  static Tick(e) {
-    let o = TICK_GARBAGE_MAXCOUNT;
+  static Tick(o) {
+    UiActorPool.xW.Start();
+    let e = TICK_GARBAGE_MAXCOUNT;
     for (const t of UiActorPool.tCr.values())
-      if ((o = t.GarbageCollect(o)) <= 0) break;
+      if ((e = t.GarbageCollect(e)) <= 0) break;
+    UiActorPool.xW.Stop();
   }
   static ClearPool() {
-    for (var [e, o] of UiActorPool.tCr)
-      o.IsKeepWhileCleaning || (o.Clear(), UiActorPool.tCr.delete(e));
+    for (var [o, e] of UiActorPool.tCr)
+      e.IsKeepWhileCleaning || (e.Clear(), UiActorPool.tCr.delete(o));
   }
-  static SetKeepWhileCleaning(e, o) {
-    this.IsOpenPool && (e = UiActorPool.eCr(e)) && (e.IsKeepWhileCleaning = o);
+  static SetKeepWhileCleaning(o, e) {
+    this.IsOpenPool && (o = UiActorPool.eCr(o)) && (o.IsKeepWhileCleaning = e);
   }
-  static async GetAsync(e, o) {
+  static async GetAsync(o, e) {
     return this.IsOpenPool
-      ? UiActorPool.eCr(e).GetAsync(e, o)
-      : UiActorPool.rCr(e, o);
+      ? UiActorPool.eCr(o).GetAsync(o, e)
+      : UiActorPool.rCr(o, e);
   }
-  static async rCr(t, e) {
+  static async rCr(t, o) {
     const r = new CustomPromise_1.CustomPromise();
     return (
-      LguiResourceManager_1.LguiResourceManager.LoadPrefab(t, e, (e) => {
-        var o = new UiPoolActor(t);
-        (o.EndTime = Time_1.Time.Now + CACHE_TIME),
-          (o.Actor = e),
-          r.SetResult(o);
+      LguiResourceManager_1.LguiResourceManager.LoadPrefab(t, o, (o) => {
+        var e = new UiPoolActor(t);
+        (e.EndTime = Time_1.Time.Now + CACHE_TIME),
+          (e.Actor = o),
+          r.SetResult(e);
       }),
       r.Promise
     );
   }
-  static RecycleAsync(e, o, t = !0) {
-    o = UiActorPool.oCr(o);
-    o
-      ? o.Release(e, t)
-      : e?.Actor &&
-        (e.Clear(), Log_1.Log.CheckWarn()) &&
+  static RecycleAsync(o, e, t = !0) {
+    e = UiActorPool.oCr(e);
+    e
+      ? e.Release(o, t)
+      : o?.Actor &&
+        (o.Clear(), Log_1.Log.CheckWarn()) &&
         Log_1.Log.Warn(
           "Pool",
           11,
           "[UiActorPool:RecycleAsync]工厂不存在,直接销毁对象",
-          ["路径", e.Path],
+          ["路径", o.Path],
         );
   }
 }
 ((exports.UiActorPool = UiActorPool).tCr = new Map()),
-  (UiActorPool.xW = void 0),
+  (UiActorPool.xW = Stats_1.Stat.Create("UiActorPool.Tick")),
   (UiActorPool.iCr = void 0),
   (UiActorPool.IsOpenPool = !0);
 //# sourceMappingURL=UiActorPool.js.map

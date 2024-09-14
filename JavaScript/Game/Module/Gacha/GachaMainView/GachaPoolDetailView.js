@@ -27,65 +27,60 @@ class GachaPoolDetailView extends UiViewBase_1.UiViewBase {
   }
   async OnBeforeStartAsync() {
     var a,
-      i,
-      e = this.OpenParam,
+      i = this.OpenParam,
       t = await GachaController_1.GachaController.GachaPoolDetailRequestAsync(
-        e.Id,
+        i.Id,
       ),
-      e =
-        (this.GetText(0).SetText(t.rRa.rRa),
+      i =
+        (this.GetText(0).SetText(t.prh.prh),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(3),
           "GachaPoolDetailTitle",
-          e.Title,
+          i.Title,
         ),
-        (a, i) => (a.iRa ? -1 : i.iRa ? 1 : 0)),
-      o = [];
-    null != t.rRa?.oRa &&
-      0 < t.rRa?.oRa.length &&
-      (((a = new GachaPoolDetailData()).TitleTextKey =
-        "GachaPoolDetailFiveRoleItemTitle"),
-      (a.ItemList = t.rRa.oRa.sort(e)),
-      ((i = new GachaPoolDetailGrid()).Data = a),
-      (a = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
-      o.push(i.CreateByActorAsync(a.GetOwner())),
-      this.AddChild(i)),
-      null != t.rRa?.nRa &&
-        0 < t.rRa?.nRa.length &&
+        ConfigManager_1.ConfigManager.GachaConfig?.GetGachaPoolConfig(i.Id)),
+      i = ConfigManager_1.ConfigManager.GachaConfig?.GetGachaConfig(i.GachaId),
+      e = (a, i) => (a.frh ? -1 : i.frh ? 1 : 0),
+      o = [],
+      l =
+        (null != t.prh?.vrh &&
+          0 < t.prh?.vrh.length &&
+          (((l = new GachaPoolDetailData()).TitleTextKey =
+            "GachaPoolDetail_FiveStar_" + i?.RuleGroupId),
+          (l.ItemList = t.prh.vrh.sort(e)),
+          ((a = new GachaPoolDetailGrid()).Data = l),
+          (l = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
+          o.push(a.CreateByActorAsync(l.GetOwner())),
+          this.AddChild(a)),
+        null != t.prh?.Mrh &&
+          0 < t.prh?.Mrh.length &&
+          (((l = new GachaPoolDetailData()).TitleTextKey =
+            "GachaPoolDetail_FiveStar_" + i?.RuleGroupId),
+          (l.ItemList = t.prh.Mrh.sort(e)),
+          ((a = new GachaPoolDetailGrid()).Data = l),
+          (l = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
+          o.push(a.CreateByActorAsync(l.GetOwner())),
+          this.AddChild(a)),
+        []);
+    null != t.prh?.Srh && 0 < t.prh?.Srh.length && l.push(...t.prh.Srh),
+      null != t.prh?.yrh && 0 < t.prh?.yrh.length && l.push(...t.prh.yrh),
+      0 < l.length &&
         (((a = new GachaPoolDetailData()).TitleTextKey =
-          "GachaPoolDetailFiveWeaponItemTitle"),
-        (a.ItemList = t.rRa.nRa.sort(e)),
-        ((i = new GachaPoolDetailGrid()).Data = a),
+          "GachaPoolDetail_FourStar_" + i?.RuleGroupId),
+        (a.ItemList = l.sort(e)),
+        ((l = new GachaPoolDetailGrid()).Data = a),
         (a = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
-        o.push(i.CreateByActorAsync(a.GetOwner())),
-        this.AddChild(i)),
-      null != t.rRa?.sRa &&
-        0 < t.rRa?.sRa.length &&
+        o.push(l.CreateByActorAsync(a.GetOwner())),
+        this.AddChild(l)),
+      null != t.prh?.Erh &&
+        0 < t.prh?.Erh.length &&
         (((a = new GachaPoolDetailData()).TitleTextKey =
-          "GachaPoolDetailFourRoleItemTitle"),
-        (a.ItemList = t.rRa.sRa.sort(e)),
-        ((i = new GachaPoolDetailGrid()).Data = a),
-        (a = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
-        o.push(i.CreateByActorAsync(a.GetOwner())),
-        this.AddChild(i)),
-      null != t.rRa?.aRa &&
-        0 < t.rRa?.aRa.length &&
-        (((a = new GachaPoolDetailData()).TitleTextKey =
-          "GachaPoolDetailFourWeaponItemTitle"),
-        (a.ItemList = t.rRa.aRa.sort(e)),
-        ((i = new GachaPoolDetailGrid()).Data = a),
-        (a = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
-        o.push(i.CreateByActorAsync(a.GetOwner())),
-        this.AddChild(i)),
-      null != t.rRa?.hRa &&
-        0 < t.rRa?.hRa.length &&
-        (((a = new GachaPoolDetailData()).TitleTextKey =
-          "GachaPoolDetailThreeWeaponItemTitle"),
-        (a.ItemList = t.rRa.hRa.sort(e)),
-        ((i = new GachaPoolDetailGrid()).Data = a),
-        (t = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
-        o.push(i.CreateByActorAsync(t.GetOwner())),
-        this.AddChild(i)),
+          "GachaPoolDetail_ThreeStar_" + i?.RuleGroupId),
+        (a.ItemList = t.prh.Erh.sort(e)),
+        ((l = new GachaPoolDetailGrid()).Data = a),
+        (i = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
+        o.push(l.CreateByActorAsync(i.GetOwner())),
+        this.AddChild(l)),
       await Promise.all(o),
       this.GetItem(2).SetUIActive(!1);
   }
@@ -108,12 +103,12 @@ class GachaPoolDetailGrid extends UiPanelBase_1.UiPanelBase {
       this.Data.TitleTextKey,
     );
     var a = [];
-    for (const t of this.Data.ItemList) {
+    for (const e of this.Data.ItemList) {
       var i = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1)),
-        e = new GachaPoolDropItem();
-      (e.Data = t),
-        a.push(e.CreateByActorAsync(i.GetOwner())),
-        this.AddChild(e);
+        t = new GachaPoolDropItem();
+      (t.Data = e),
+        a.push(t.CreateByActorAsync(i.GetOwner())),
+        this.AddChild(t);
     }
     this.GetItem(2).SetUIActive(!1), await Promise.all(a);
   }
@@ -130,26 +125,26 @@ class GachaPoolDropItem extends UiPanelBase_1.UiPanelBase {
     var a,
       i =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
-          this.Data.f8n,
+          this.Data.L8n,
         ),
-      e = this.Data.iRa ? "GachaDropItemUp" : "GachaPoolDropItemNormal";
+      t = this.Data.frh ? "GachaDropItemUp" : "GachaPoolDropItemNormal";
     1 === i
       ? ((a = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(
-          this.Data.f8n,
+          this.Data.L8n,
         )),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(0),
-          e,
+          t,
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(a.Name),
         ))
       : 2 === i &&
         ((a =
           ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponConfigByItemId(
-            this.Data.f8n,
+            this.Data.L8n,
           )),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(0),
-          e,
+          t,
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(a.WeaponName),
         ));
   }

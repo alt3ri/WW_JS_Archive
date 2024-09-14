@@ -27,19 +27,19 @@ let CollectComponent = (CollectComponent_1 = class CollectComponent extends (
   EntityComponent_1.EntityComponent
 ) {
   constructor() {
-    super(...arguments), (this.QIa = !1);
+    super(...arguments), (this.MPa = !1);
   }
   OnInitData(e) {
     e = e.GetParam(CollectComponent_1)[0];
-    return (this.QIa = e.IsDisableOneClickCollection ?? !1), !0;
+    return (this.MPa = e.IsDisableOneClickCollection ?? !1), !0;
   }
   GetIsDisableOneClickCollection() {
-    return this.QIa;
+    return this.MPa;
   }
 });
 (CollectComponent = CollectComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(207)],
+    [(0, RegisterComponent_1.RegisterComponent)(213)],
     CollectComponent,
   )),
   (exports.CollectComponent = CollectComponent);

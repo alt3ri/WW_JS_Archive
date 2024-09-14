@@ -20,7 +20,7 @@ class TsTaskChangeInteractionState extends TsTaskAbortImmediatelyBase_1.default 
     var a,
       s = e.AiController;
     s
-      ? ((a = s.CharActorComp.Entity.GetComponent(181))
+      ? ((a = s.CharActorComp.Entity.GetComponent(182))
           ? a.SetInteractionState(
               this.TsInteractionState,
               "TsTaskChangeInteractionState ReceiveExecuteAI",

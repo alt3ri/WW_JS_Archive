@@ -12,6 +12,7 @@ class RedDotFunctionPayShop extends RedDotBase_1.RedDotBase {
     return [
       EventDefine_1.EEventName.OnFunctionViewShow,
       EventDefine_1.EEventName.RefreshAllPayShop,
+      EventDefine_1.EEventName.RefreshPayShopEntranceRedDot,
     ];
   }
   OnCheck() {

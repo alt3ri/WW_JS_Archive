@@ -11,9 +11,9 @@ class PhantomRoleEquipmentData {
     (this.dFe = 0), (this.NVi = [0, 0, 0, 0, 0]), (this.OVi = void 0);
   }
   Phrase(t) {
-    t instanceof Protocol_1.Aki.Protocol.j5s
-      ? ((this.dFe = t.O6n), (this.NVi = t.W7n))
-      : t instanceof Protocol_1.Aki.Protocol.W5s && (this.OVi = t);
+    t instanceof Protocol_1.Aki.Protocol.z6s
+      ? ((this.dFe = t.Q6n), (this.NVi = t.eHn))
+      : t instanceof Protocol_1.Aki.Protocol.Z6s && (this.OVi = t);
   }
   GetRoleId() {
     return this.dFe;
@@ -126,12 +126,12 @@ class PhantomRoleEquipmentData {
     var r = new Array();
     const e = new Map(),
       o =
-        (this.OVi?.Rws.forEach((t) => {
-          e.set(t.j4n, t.W4n);
+        (this.OVi?.bws.forEach((t) => {
+          e.set(t.Z4n, t.e5n);
         }),
         new Map());
-    this.OVi?.Dws.forEach((t) => {
-      o.set(t.j4n, t.W4n), e.has(t.j4n) || e.set(t.j4n, 0);
+    this.OVi?.Bws.forEach((t) => {
+      o.set(t.Z4n, t.e5n), e.has(t.Z4n) || e.set(t.Z4n, 0);
     });
     var i = Array.from(e.keys()),
       n = i.length;

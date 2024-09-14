@@ -41,7 +41,7 @@ class TsAnimNotifyChangeRoleQte extends UE.KuroAnimNotify {
         a = r.GetOwner();
         a instanceof TsBaseCharacter_1.default &&
           ((o = a?.CharacterActorComponent?.Entity),
-          (e = o?.GetComponent(192).CreateAnimNotifyContent()));
+          (e = o?.GetComponent(194).CreateAnimNotifyContent()));
         for (const n of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems())
           if (
             n.GetCreatureDataId() !== t.GetCreatureDataId() &&

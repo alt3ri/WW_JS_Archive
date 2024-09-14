@@ -14,7 +14,7 @@ class BulletActionTimeScale extends BulletActionBase_1.BulletActionBase {
   }
   OnExecute() {
     if (this.BulletInfo.BulletDataMain.TimeScale.TimeScaleWithAttacker)
-      this.kVo = this.BulletInfo.Attacker.GetComponent(109);
+      this.kVo = this.BulletInfo.Attacker.GetComponent(110);
     else {
       (this.BulletInfo.TimeScaleList = new PriorityQueue_1.PriorityQueue(
         PawnTimeScaleComponent_1.PawnTimeScaleComponent.CompareScalePriority,

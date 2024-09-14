@@ -18,65 +18,86 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configSubtitleTextByRowNameAndDatatableName.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configSubtitleTextByRowNameAndDatatableName.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configSubtitleTextByRowNameAndDatatableName.GetConfig(";
 exports.configSubtitleTextByRowNameAndDatatableName = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (e, o, t = !0) => {
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (t) {
-        var n = KEY_PREFIX + `#${e}#${o})`;
-        const a = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (a) return a;
+  GetConfig: (t, e, o = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${t}#${e})`),
+      a =
+        (n.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (a) {
+      if (o) {
+        var i = KEY_PREFIX + `#${t}#${e})`;
+        const m = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (m)
+          return (
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            m
+          );
       }
       if (
-        (i =
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.BindString(handleId, 2, o, ...logPair) &&
+        (a =
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, t, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindString(handleId, 2, e, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(
               handleId,
               !0,
               ...logPair,
-              ["RowName", e],
-              ["DatatableName", o],
+              ["RowName", t],
+              ["DatatableName", e],
             ))
       ) {
-        var i,
-          n = void 0;
+        i = void 0;
         if (
-          (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([a, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
-            ["RowName", e],
-            ["DatatableName", o],
+            ["RowName", t],
+            ["DatatableName", e],
           )),
-          i)
+          a)
         ) {
-          const a = SubtitleText_1.SubtitleText.getRootAsSubtitleText(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+          const m = SubtitleText_1.SubtitleText.getRootAsSubtitleText(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
           );
           return (
-            t &&
-              ((i = KEY_PREFIX + `#${e}#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(i, a)),
+            o &&
+              ((a = KEY_PREFIX + `#${t}#${e})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(a, m)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            a
+            n.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            m
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    n.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=SubtitleTextByRowNameAndDatatableName.js.map

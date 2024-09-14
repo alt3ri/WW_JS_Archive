@@ -23,22 +23,22 @@ class CustomMarkPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       (this.g2o = void 0),
       (this.u2o = void 0),
       (this.f2o = !1),
-      (this.Ria = !1),
+      (this.Woa = !1),
       (this.p2o = 0),
       (this.v2o = () => {
-        this.Ria ||
+        this.Woa ||
           (MapController_1.MapController.RequestTrackMapMark(
             this.u2o.MarkType,
             this.u2o.MarkId,
             !this.f2o,
           ),
-          (this.Ria = !0),
+          (this.Woa = !0),
           (this.f2o = !this.f2o),
           this.Zno(this.f2o),
           this.Close());
       }),
       (this.M2o = () => {
-        if (!this.Ria) {
+        if (!this.Woa) {
           switch (this.p2o) {
             case 0:
               MapController_1.MapController.RequestCreateCustomMark(
@@ -47,12 +47,11 @@ class CustomMarkPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
               );
               break;
             case 1:
-              MapController_1.MapController.RequestRemoveMapMark(
-                9,
+              MapController_1.MapController.RequestRemoveMapMarks(9, [
                 this.u2o.MarkId,
-              );
+              ]);
           }
-          (this.Ria = !0), this.Close();
+          (this.Woa = !0), this.Close();
         }
       });
   }
@@ -75,7 +74,7 @@ class CustomMarkPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   OnShowWorldMapSecondaryUi(t, e, i) {
     (this.p2o = e),
       (this.u2o = t),
-      (this.Ria = !1),
+      (this.Woa = !1),
       this.S2o(e),
       this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
       (this.GetText(3).text =
@@ -111,7 +110,7 @@ class CustomMarkPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
     this.wAt.SetText(e), this.Zno(this.u2o.IsTracked);
   }
   OnCloseWorldMapSecondaryUi() {
-    (this.Ria = !1),
+    (this.Woa = !1),
       this.u2o &&
         0 === this.p2o &&
         EventSystem_1.EventSystem.Emit(

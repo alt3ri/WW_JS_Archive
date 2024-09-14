@@ -53,9 +53,7 @@ let BaseAttributeComponent =
         (this.CurrentValues = new Array()),
         (this.ModifierLists = new Array()),
         (this.BoundsLockerMap = new Map()),
-        (this.BaseValueListenerMap = new Map()),
         (this.CurrentValueListenerMap = new Map()),
-        (this.AnyBaseValueListenerSet = new Set()),
         (this.AnyCurrentValueListenerSet = new Set());
     }
     OnCreate() {
@@ -78,9 +76,9 @@ let BaseAttributeComponent =
       this.AutoRecoverAttr(t);
     }
     SetBaseValue(t, e) {
+      t = this.n2a(t);
       let r = e;
       var i,
-        s,
         e = this.mbr(t),
         e =
           (void 0 !== e && (r = this.dbr(t, r, e)),
@@ -90,33 +88,31 @@ let BaseAttributeComponent =
           this.BaseValues[t]);
       e !== r &&
         ((this.BaseValues[t] = r),
-        (i = this.CurrentValues[t]),
+        (e = this.CurrentValues[t]),
         this.UpdateCurrentValue(t),
-        (s = this.CurrentValues[t]),
-        this.DispatchBaseValueEvent(t, r, e),
-        this.DispatchCurrentValueEvent(t, s, i));
+        (i = this.CurrentValues[t]),
+        this.DispatchCurrentValueEvent(t, i, e));
     }
     AddBaseValue(t, e) {
-      this.SetBaseValue(t, this.BaseValues[t] + e);
+      (t = this.n2a(t)), this.SetBaseValue(t, this.BaseValues[t] + e);
     }
     GetBaseValue(t) {
-      return this.BaseValues[t];
+      return (t = this.n2a(t)), this.BaseValues[t];
     }
     GetCurrentValue(t) {
-      return this.CurrentValues[t];
+      return (t = this.n2a(t)), this.CurrentValues[t];
     }
     mbr(t) {
-      t = CharacterAttributeTypes_1.attrsBaseValueClampMax.get(t);
+      t = CharacterAttributeTypes_1.attributeIdsWithMax.get(t);
       if (t) return this.GetCurrentValue(t);
     }
     SyncValueFromServer(t, e, r) {
-      var i = this.BaseValues[t],
-        s = (i !== e && (this.BaseValues[t] = e), this.CurrentValues[t]);
-      (this.CurrentValues[t] = r),
-        this.DispatchBaseValueEvent(t, e, i),
-        this.DispatchCurrentValueEvent(t, r, s);
+      this.BaseValues[t] !== e && (this.BaseValues[t] = e);
+      e = this.CurrentValues[t];
+      (this.CurrentValues[t] = r), this.DispatchCurrentValueEvent(t, r, e);
     }
     UpdateCurrentValue(t) {
+      t = this.n2a(t);
       let e = this.Cbr(t);
       var r = CharacterAttributeTypes_1.attrsCurrentValueClamp.get(t),
         r =
@@ -138,7 +134,7 @@ let BaseAttributeComponent =
     }
     AddModifier(t, e) {
       var r, i;
-      return t <=
+      return (t = this.n2a(t)) <=
         CharacterAttributeTypes_1.EAttributeId.Proto_EAttributeType_None ||
         t >= CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX
         ? -1
@@ -153,14 +149,15 @@ let BaseAttributeComponent =
     }
     RemoveModifier(t, e) {
       var r;
-      this.ModifierLists[t]?.delete(e) &&
-        ((e = this.CurrentValues[t]),
-        this.UpdateCurrentValue(t),
-        (r = this.CurrentValues[t]),
-        this.DispatchCurrentValueEvent(t, r, e));
+      (t = this.n2a(t)),
+        this.ModifierLists[t]?.delete(e) &&
+          ((e = this.CurrentValues[t]),
+          this.UpdateCurrentValue(t),
+          (r = this.CurrentValues[t]),
+          this.DispatchCurrentValueEvent(t, r, e));
     }
     *GetAllModifiers(t) {
-      if (this.ModifierLists[t])
+      if (((t = this.n2a(t)), this.ModifierLists[t]))
         for (const e of this.ModifierLists[t].values()) yield e;
     }
     Cbr(t) {
@@ -188,7 +185,7 @@ let BaseAttributeComponent =
                   ? this
                   : ModelManager_1.ModelManager.CreatureModel.GetEntity(
                       n.SourceEntity,
-                    )?.Entity?.GetComponent(158),
+                    )?.Entity?.GetComponent(159),
                 n.SourceAttributeId,
                 n.SourceCalculationType,
               ));
@@ -242,6 +239,7 @@ let BaseAttributeComponent =
       }
     }
     AddBoundsLocker(t, e, r) {
+      t = this.n2a(t);
       let i = this.BoundsLockerMap.get(t);
       return (
         i || this.BoundsLockerMap.set(t, (i = new Map())),
@@ -259,16 +257,19 @@ let BaseAttributeComponent =
       );
     }
     RemoveBoundsLocker(t, e) {
+      t = this.n2a(t);
       var r = this.BoundsLockerMap.get(t);
       return (
         !!r && !!r.delete(e) && (this.SetBaseValue(t, this.BaseValues[t]), !0)
       );
     }
     *GetAllBoundsLocker(t) {
+      t = this.n2a(t);
       t = this.BoundsLockerMap.get(t);
       if (t) for (const e of t.values()) yield e;
     }
     dbr(t, e, r) {
+      t = this.n2a(t);
       let i = e,
         s = void 0,
         a = r;
@@ -323,6 +324,7 @@ let BaseAttributeComponent =
       this.RemoveBoundsLocker(e, t);
     }
     AddListener(t, e, r) {
+      t = this.n2a(t);
       var i = this.CurrentValueListenerMap.get(t);
       i
         ? i.add(e)
@@ -334,6 +336,7 @@ let BaseAttributeComponent =
       });
     }
     RemoveListener(t, e) {
+      t = this.n2a(t);
       t = this.CurrentValueListenerMap.get(t);
       return !!t && (t.delete(e), !0);
     }
@@ -348,15 +351,23 @@ let BaseAttributeComponent =
     RemoveGeneralListener(t) {
       this.AnyCurrentValueListenerSet.delete(t);
     }
-    DispatchBaseValueEvent(e, t, r) {
-      if (r !== t) {
-        var i = this.BaseValueListenerMap.get(e);
-        if (i) {
-          BaseAttributeComponent_1.gbr.get(e) ||
-            BaseAttributeComponent_1.gbr.set(e, void 0);
-          for (const s of i)
+    DispatchCurrentValueEvent(e, r, i) {
+      if (i !== r) {
+        var s = this.CurrentValueListenerMap.get(e);
+        if (s) {
+          let t = BaseAttributeComponent_1.pbr.get(e);
+          t ||
+            BaseAttributeComponent_1.pbr.set(
+              e,
+              (t = Stats_1.Stat.Create(
+                `CurrentAttr#${e} event`,
+                StatDefine_1.BATTLESTAT_GROUP,
+              )),
+            );
+          for (const a of s) {
+            t?.Start();
             try {
-              s(e, t, r);
+              a(e, r, i);
             } catch (t) {
               CombatLog_1.CombatLog.ErrorWithStack(
                 "Attribute",
@@ -366,10 +377,13 @@ let BaseAttributeComponent =
                 ["属性", e],
               );
             }
+            t?.Stop();
+          }
         }
-        for (const a of this.AnyBaseValueListenerSet)
+        for (const t of this.AnyCurrentValueListenerSet) {
+          BaseAttributeComponent_1.vbr.Start();
           try {
-            a(e, t, r);
+            t(e, r, i);
           } catch (t) {
             CombatLog_1.CombatLog.ErrorWithStack(
               "Attribute",
@@ -379,39 +393,8 @@ let BaseAttributeComponent =
               ["属性", e],
             );
           }
-      }
-    }
-    DispatchCurrentValueEvent(e, t, r) {
-      if (r !== t) {
-        var i = this.CurrentValueListenerMap.get(e);
-        if (i) {
-          BaseAttributeComponent_1.pbr.get(e) ||
-            BaseAttributeComponent_1.pbr.set(e, void 0);
-          for (const s of i)
-            try {
-              s(e, t, r);
-            } catch (t) {
-              CombatLog_1.CombatLog.ErrorWithStack(
-                "Attribute",
-                this.Entity,
-                "属性回调异常",
-                t,
-                ["属性", e],
-              );
-            }
+          BaseAttributeComponent_1.vbr.Stop();
         }
-        for (const a of this.AnyCurrentValueListenerSet)
-          try {
-            a(e, t, r);
-          } catch (t) {
-            CombatLog_1.CombatLog.ErrorWithStack(
-              "Attribute",
-              this.Entity,
-              "全局属性回调异常",
-              t,
-              ["属性", e],
-            );
-          }
       }
     }
     CheckIfNeedAdvanceMultiply(t) {
@@ -419,7 +402,7 @@ let BaseAttributeComponent =
         case CharacterAttributeTypes_1.EAttributeId.Proto_CdReduse:
         case CharacterAttributeTypes_1.EAttributeId.Proto_ToughChange:
         case CharacterAttributeTypes_1.EAttributeId.Proto_SkillToughRatio:
-        case CharacterAttributeTypes_1.EAttributeId._Vn:
+        case CharacterAttributeTypes_1.EAttributeId.vVn:
         case CharacterAttributeTypes_1.EAttributeId.Proto_AutoAttackSpeed:
         case CharacterAttributeTypes_1.EAttributeId.Proto_CastAttackSpeed:
           return !0;
@@ -443,15 +426,21 @@ let BaseAttributeComponent =
         i
       );
     }
+    n2a(t) {
+      return (
+        CharacterAttributeTypes_1.elementPowerToElementEnergyIds.get(t) ?? t
+      );
+    }
   });
 (BaseAttributeComponent.ModifierHandleGenerator = 100),
-  (BaseAttributeComponent.gbr = new Map()),
-  (BaseAttributeComponent.fbr = void 0),
   (BaseAttributeComponent.pbr = new Map()),
-  (BaseAttributeComponent.vbr = void 0),
+  (BaseAttributeComponent.vbr = Stats_1.Stat.Create(
+    "AnyCurrentAttr event",
+    StatDefine_1.BATTLESTAT_GROUP,
+  )),
   (BaseAttributeComponent = BaseAttributeComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(157)],
+      [(0, RegisterComponent_1.RegisterComponent)(158)],
       BaseAttributeComponent,
     )),
   (exports.BaseAttributeComponent = BaseAttributeComponent);

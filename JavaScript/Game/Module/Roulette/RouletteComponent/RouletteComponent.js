@@ -198,17 +198,10 @@ class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
     this.GetText(0).SetUIActive(t);
   }
   RefreshTips() {}
-  RefreshTipsByText(t, e = !1) {
+  RefreshTipsByText(t, e = 0) {
     var i;
     void 0 !== t &&
-      ((i = this.GetText(1)),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(
-        i,
-        t,
-        e
-          ? ModelManager_1.ModelManager.RouletteModel.GetRouletteKeyRichText()
-          : void 0,
-      ));
+      ((i = this.GetText(1)), LguiUtil_1.LguiUtil.SetLocalTextNew(i, t));
   }
   SetTipsActive(t) {
     this.GetText(1).SetUIActive(t);
@@ -217,7 +210,7 @@ class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
     this.RefreshRouletteItem(), this.Reset(), this.E0o();
   }
   RefreshRouletteItem() {}
-  RefreshRoulettePlatformType(t) {
+  RefreshRoulettePlatformType() {
     this.Reset();
   }
   RefreshRouletteInputType() {

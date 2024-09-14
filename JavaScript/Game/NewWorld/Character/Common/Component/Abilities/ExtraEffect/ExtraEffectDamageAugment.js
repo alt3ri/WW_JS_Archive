@@ -5,7 +5,7 @@ const Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol"),
   AbilityUtils_1 = require("../AbilityUtils"),
   CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
   ExtraEffectBase_1 = require("./ExtraEffectBase");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 class DamageAugment extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments),
@@ -26,7 +26,7 @@ class DamageAugment extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {
     var t = this.gXo,
-      e = this.InstigatorEntity?.Entity?.CheckGetComponent(158),
+      e = this.InstigatorEntity?.Entity?.CheckGetComponent(159),
       r = this.fXo,
       s = this.pXo,
       r = r * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;

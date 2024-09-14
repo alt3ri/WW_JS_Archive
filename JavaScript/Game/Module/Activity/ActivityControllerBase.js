@@ -22,7 +22,8 @@ class ActivityControllerBase {
     this.OnOpenView(e);
   }
   CreateActivityData(e) {
-    return this.OnCreateActivityData(e);
+    var t = this.OnCreateActivityData(e);
+    return t.Init(e), t;
   }
   GetIsOpeningActivityRelativeView() {
     return this.OnGetIsOpeningActivityRelativeView();

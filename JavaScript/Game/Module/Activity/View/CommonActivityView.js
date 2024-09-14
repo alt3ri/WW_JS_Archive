@@ -275,7 +275,7 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
   async WNe(t) {
     const e = new CustomPromise_1.CustomPromise();
     var i = this.GetTexture(7),
-      t = t.LocalConfig.BgResource;
+      t = (i.SetUIActive(!1), t.LocalConfig.BgResource);
     this.SetTextureByPath(t, i, void 0, () => {
       e.SetResult();
     }),
@@ -297,8 +297,9 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
       this.lqe.SetCurrencyItemVisible(!1),
       (this.s5e = e),
       await this.s5e.BeforeShowSelfAsync(),
-      this.s5e.SetActive(!0),
       this.s5e.RefreshView(),
+      this.GetTexture(7).SetUIActive(!0),
+      this.s5e.SetActive(!0),
       this.UiViewSequence.HasSequenceNameInPlaying("Switch")
         ? this.UiViewSequence.ReplaySequence("Switch")
         : this.UiViewSequence.PlaySequence("Switch"),

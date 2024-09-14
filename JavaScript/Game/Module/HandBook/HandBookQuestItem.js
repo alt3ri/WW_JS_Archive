@@ -13,7 +13,7 @@ class HandBookQuestItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.VZt = void 0),
-      (this.Vxn = []),
+      (this.Nxn = []),
       (this.gei = []),
       (this.WZt = () => {
         return new HandBookQuestChildItem_1.HandBookQuestChildItem();
@@ -39,13 +39,13 @@ class HandBookQuestItem extends GridProxyAbstract_1.GridProxyAbstract {
           e,
         ),
       r =
-        ((this.Vxn = ConfigCommon_1.ConfigCommon.ToList(e)),
-        this.Vxn.sort((e, t) => e.Id - t.Id),
+        ((this.Nxn = ConfigCommon_1.ConfigCommon.ToList(e)),
+        this.Nxn.sort((e, t) => e.Id - t.Id),
         this.GetText(0).ShowTextNew(o.TypeDescription),
         (this.gei = []),
-        this.Vxn.length);
+        this.Nxn.length);
     for (let e = 0; e < r; e++) {
-      var s = this.Vxn[e],
+      var s = this.Nxn[e],
         n = new HandBookDefine_1.HandBookCommonItemData(),
         a = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
           o.Type,
@@ -67,7 +67,7 @@ class HandBookQuestItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   OnBeforeDestroy() {
     this.VZt && (this.VZt.ClearChildren(), (this.VZt = void 0)),
-      (this.Vxn = []),
+      (this.Nxn = []),
       (this.gei = []);
   }
 }

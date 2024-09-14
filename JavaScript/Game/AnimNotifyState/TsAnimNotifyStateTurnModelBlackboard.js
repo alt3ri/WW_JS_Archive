@@ -31,7 +31,7 @@ class TsAnimNotifyStateTurnModelBlackboard extends UE.KuroAnimNotifyState {
     t = t.GetOwner();
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
     var a = t.CharacterActorComponent.Entity;
-    if (!a.GetComponent(162)?.Valid) return !1;
+    if (!a.GetComponent(163)?.Valid) return !1;
     a = a.Id;
     if (!this.TurnModelKey) return !1;
     a = BlackboardController_1.BlackboardController.GetRotatorValueByEntity(
@@ -57,7 +57,7 @@ class TsAnimNotifyStateTurnModelBlackboard extends UE.KuroAnimNotifyState {
   K2_NotifyTick(t, r, e) {
     t = t.GetOwner();
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
-    var a = t.CharacterActorComponent.Entity.GetComponent(162);
+    var a = t.CharacterActorComponent.Entity.GetComponent(163);
     if (!a?.Valid) return !1;
     t = this.ParamsMap.get(t);
     if (!t) return !1;
@@ -90,7 +90,7 @@ class TsAnimNotifyStateTurnModelBlackboard extends UE.KuroAnimNotifyState {
           "TsAnimNotifyStateTurnModelBlackboard",
           !1,
         );
-    t = a.GetComponent(162);
+    t = a.GetComponent(163);
     return !!t && (t.ResetModelQuat(), !0);
   }
   GetNotifyName() {

@@ -29,16 +29,20 @@ class InstanceDungeon {
     return this.onlinetype();
   }
   get CustomTypes() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.customtypesLength(), (t) =>
-      this.customtypes(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.customtypesLength(),
+      this.customtypes,
+      this,
     );
   }
   get MiniMapId() {
     return this.minimapid();
   }
   get SubLevels() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.sublevelsLength(), (t) =>
-      this.sublevels(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.sublevelsLength(),
+      this.sublevels,
+      this,
     );
   }
   get FightFormationId() {
@@ -47,7 +51,8 @@ class InstanceDungeon {
   get TrialRoleInfo() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.trialroleinfoLength(),
-      (t) => this.trialroleinfo(t),
+      this.trialroleinfo,
+      this,
     );
   }
   get TrialRoleFormation() {
@@ -59,31 +64,36 @@ class InstanceDungeon {
   get BornPosition() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.bornpositionLength(),
-      (t) => this.bornposition(t),
+      this.bornposition,
+      this,
     );
   }
   get BornRotation() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.bornrotationLength(),
-      (t) => this.bornrotation(t),
+      this.bornrotation,
+      this,
     );
   }
   get RecoverWorldLocation() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.recoverworldlocationLength(),
-      (t) => this.recoverworldlocation(t),
+      this.recoverworldlocation,
+      this,
     );
   }
   get EntranceEntities() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.entranceentitiesLength(),
-      (t) => this.entranceentities(t),
+      this.entranceentities,
+      this,
     );
   }
   get ExitEntities() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.exitentitiesLength(),
-      (t) => this.exitentities(t),
+      this.exitentities,
+      this,
     );
   }
   get DungeonDesc() {
@@ -98,7 +108,8 @@ class InstanceDungeon {
   get MonsterPreview() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.monsterpreviewLength(),
-      (t) => this.monsterpreview(t),
+      this.monsterpreview,
+      this,
     );
   }
   get MonsterTips() {
@@ -119,7 +130,8 @@ class InstanceDungeon {
   get EnterCondition() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.enterconditionLength(),
-      (t) => this.entercondition(t),
+      this.entercondition,
+      this,
     );
   }
   get EnterConditionText() {
@@ -134,20 +146,29 @@ class InstanceDungeon {
   get RecommendLevel() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.recommendlevelLength(),
-      (t) => this.recommendlevel(t)?.key(),
-      (t) => this.recommendlevel(t)?.value(),
+      this.recommendlevelKey,
+      this.recommendlevelValue,
+      this,
     );
+  }
+  recommendlevelKey(t) {
+    return this.recommendlevel(t)?.key();
+  }
+  recommendlevelValue(t) {
+    return this.recommendlevel(t)?.value();
   }
   get RecommendRole() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.recommendroleLength(),
-      (t) => this.recommendrole(t),
+      this.recommendrole,
+      this,
     );
   }
   get RecommendElement() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.recommendelementLength(),
-      (t) => this.recommendelement(t),
+      this.recommendelement,
+      this,
     );
   }
   get ShareAttri() {
@@ -156,7 +177,8 @@ class InstanceDungeon {
   get LimitViewName() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.limitviewnameLength(),
-      (t) => this.limitviewname(t),
+      this.limitviewname,
+      this,
     );
   }
   get CanUseItem() {
@@ -174,9 +196,16 @@ class InstanceDungeon {
   get SubTitle() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.subtitleLength(),
-      (t) => this.subtitle(t)?.key(),
-      (t) => this.subtitle(t)?.value(),
+      this.subtitleKey,
+      this.subtitleValue,
+      this,
     );
+  }
+  subtitleKey(t) {
+    return this.subtitle(t)?.key();
+  }
+  subtitleValue(t) {
+    return this.subtitle(t)?.value();
   }
   get SubInstanceTitle() {
     return this.subinstancetitle();
@@ -199,18 +228,22 @@ class InstanceDungeon {
   get DifficultyLevel() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.difficultylevelLength(),
-      (t) => this.difficultylevel(t),
+      this.difficultylevel,
+      this,
     );
   }
   get DifficultyDesc() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.difficultydescLength(),
-      (t) => this.difficultydesc(t),
+      this.difficultydesc,
+      this,
     );
   }
   get Drop() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.dropLength(), (t) =>
-      this.drop(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.dropLength(),
+      this.drop,
+      this,
     );
   }
   get EnterCount() {
@@ -225,9 +258,16 @@ class InstanceDungeon {
   get RenderSettings() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.rendersettingsLength(),
-      (t) => this.rendersettings(t)?.key(),
-      (t) => this.rendersettings(t)?.value(),
+      this.rendersettingsKey,
+      this.rendersettingsValue,
+      this,
     );
+  }
+  rendersettingsKey(t) {
+    return this.rendersettings(t)?.key();
+  }
+  rendersettingsValue(t) {
+    return this.rendersettings(t)?.value();
   }
   get DropVisionLimit() {
     return this.dropvisionlimit();
@@ -637,7 +677,7 @@ class InstanceDungeon {
   }
   autoleavetime() {
     var t = this.J7.__offset(this.z7, 88);
-    return t ? this.J7.readInt32(this.z7 + t) : 60;
+    return t ? this.J7.readInt32(this.z7 + t) : 300;
   }
   limittime() {
     var t = this.J7.__offset(this.z7, 90);

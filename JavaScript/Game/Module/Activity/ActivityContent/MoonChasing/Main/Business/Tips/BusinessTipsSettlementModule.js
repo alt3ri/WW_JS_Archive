@@ -29,12 +29,12 @@ class BusinessTipsSettlementModule extends UiPanelBase_1.UiPanelBase {
           e.RefreshProgressAdd(t),
             1 === t && (e.RefreshProgress(t), e.SetLightProgressWidth());
       }),
-      (this.Zga = (t) => {
+      (this.Kpa = (t) => {
         for (const e of this.CharacterListModule.GetItemList())
           e.RefreshCurrentValue(t);
       }),
-      (this.baa = () => {
-        this.S0a(), this.E0a();
+      (this.q1a = () => {
+        this.Ypa(), this.Jpa();
       });
   }
   OnRegisterComponent() {
@@ -59,7 +59,7 @@ class BusinessTipsSettlementModule extends UiPanelBase_1.UiPanelBase {
   }
   async OnBeforeStartAsync() {
     (this.Delegate = (0, puerts_1.toManualReleaseDelegate)(this.OAn)),
-      (this.ValueDelegate = (0, puerts_1.toManualReleaseDelegate)(this.Zga)),
+      (this.ValueDelegate = (0, puerts_1.toManualReleaseDelegate)(this.Kpa)),
       await this.PAr();
   }
   OnBeforeShow() {
@@ -82,14 +82,14 @@ class BusinessTipsSettlementModule extends UiPanelBase_1.UiPanelBase {
       ((0, puerts_1.releaseManualReleaseDelegate)(this.OAn),
       (this.Delegate = void 0)),
       this.ValueDelegate &&
-        ((0, puerts_1.releaseManualReleaseDelegate)(this.Zga),
+        ((0, puerts_1.releaseManualReleaseDelegate)(this.Kpa),
         (this.ValueDelegate = void 0)),
       this.gzi();
   }
   gzi() {
     this.ExpTweener && (this.ExpTweener.Kill(), (this.ExpTweener = void 0));
   }
-  M0a() {
+  Xpa() {
     for (const t of this.CharacterListModule.GetItemList())
       t.SetLightProgressWidth(), t.PlayAddAction(), t.RefreshAddText();
     (this.ExpTweener = UE.LTweenBPLibrary.FloatTo(
@@ -99,13 +99,13 @@ class BusinessTipsSettlementModule extends UiPanelBase_1.UiPanelBase {
       1,
       TWEEN_TIME,
     )),
-      this.ExpTweener?.OnCompleteCallBack.Bind(this.baa),
+      this.ExpTweener?.OnCompleteCallBack.Bind(this.q1a),
       AudioSystem_1.AudioSystem.PostEvent("play_ui_figure_up_1s");
   }
-  S0a() {
+  Ypa() {
     for (const t of this.CharacterListModule.GetItemList()) t.PlayEndAction();
   }
-  E0a() {
+  Jpa() {
     this.ExpTweener = UE.LTweenBPLibrary.FloatTo(
       GlobalData_1.GlobalData.World,
       this.ValueDelegate,
@@ -116,7 +116,7 @@ class BusinessTipsSettlementModule extends UiPanelBase_1.UiPanelBase {
   }
   StartCharacterAnim() {
     ModelManager_1.ModelManager.MoonChasingBusinessModel.GetResultData().UseInvestProperData(),
-      this.M0a();
+      this.Xpa();
   }
 }
 exports.BusinessTipsSettlementModule = BusinessTipsSettlementModule;

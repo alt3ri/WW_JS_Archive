@@ -37,7 +37,7 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.Dpt = 0),
       (this.Rpt = 0),
       (this.Upt = ResourceSystem_1.ResourceSystem.InvalidId),
-      (this.mNn =
+      (this.ENn =
         UiModelResourcesManager_1.UiModelResourcesManager.StreamingInvalidValue),
       (this.Apt = !1),
       (this.SPe = void 0),
@@ -286,7 +286,7 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
         var o = r.Get(e);
         o.SetForcedLodModel(1), a.Add(o.StaticMesh);
       }
-    this.mNn =
+    this.ENn =
       UiModelResourcesManager_1.UiModelResourcesManager.LoadMeshesComponentsBundleStreaming(
         t,
         a,
@@ -314,9 +314,9 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
             !1,
           ),
           i.SetArmLength(t.CameraArmLength),
-          t.SetActorHiddenInGame(!1),
-          t.PlayStart(),
-          this.Tpt.SetLoadingActive(!1))
+          t?.SetActorHiddenInGame(!1),
+          t?.PlayStart(),
+          this.Tpt?.SetLoadingActive(!1))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Calabash", 44, "声骸模型为空");
   }
@@ -324,13 +324,13 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
     this.Upt !== ResourceSystem_1.ResourceSystem.InvalidId &&
       (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.Upt),
       (this.Upt = ResourceSystem_1.ResourceSystem.InvalidId)),
-      this.mNn !==
+      this.ENn !==
         UiModelResourcesManager_1.UiModelResourcesManager
           .StreamingInvalidValue &&
         (UiModelResourcesManager_1.UiModelResourcesManager.ReleaseMeshesComponentsBundleStreaming(
-          this.mNn,
+          this.ENn,
         ),
-        (this.mNn =
+        (this.ENn =
           UiModelResourcesManager_1.UiModelResourcesManager.StreamingInvalidValue)),
       UiSceneManager_1.UiSceneManager.GetHandBookVision() &&
         UiSceneManager_1.UiSceneManager.DestroyHandBookVision();

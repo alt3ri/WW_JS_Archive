@@ -21,6 +21,9 @@ class GachaViewInfo {
   get ThemeColor() {
     return this.themecolor();
   }
+  get TextTexture() {
+    return this.texttexture();
+  }
   get ContentTexturePath() {
     return this.contenttexturepath();
   }
@@ -40,19 +43,24 @@ class GachaViewInfo {
     return this.weaponprefabpath();
   }
   get UpList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.uplistLength(), (t) =>
-      this.uplist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.uplistLength(),
+      this.uplist,
+      this,
     );
   }
   get ShowIdList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.showidlistLength(), (t) =>
-      this.showidlist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.showidlistLength(),
+      this.showidlist,
+      this,
     );
   }
   get PreviewIdList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.previewidlistLength(),
-      (t) => this.previewidlist(t),
+      this.previewidlist,
+      this,
     );
   }
   __init(t, i) {
@@ -84,43 +92,47 @@ class GachaViewInfo {
     var i = this.J7.__offset(this.z7, 12);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  contenttexturepath(t) {
+  texttexture(t) {
     var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  contenttexturebgpath(t) {
+  contenttexturepath(t) {
     var i = this.J7.__offset(this.z7, 16);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  underbgtexturepath(t) {
+  contenttexturebgpath(t) {
     var i = this.J7.__offset(this.z7, 18);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  tagnotselectedspritepath(t) {
+  underbgtexturepath(t) {
     var i = this.J7.__offset(this.z7, 20);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  tagselectedspritepath(t) {
+  tagnotselectedspritepath(t) {
     var i = this.J7.__offset(this.z7, 22);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  weaponprefabpath(t) {
+  tagselectedspritepath(t) {
     var i = this.J7.__offset(this.z7, 24);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
+  weaponprefabpath(t) {
+    var i = this.J7.__offset(this.z7, 26);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetUplistAt(t) {
     return this.uplist(t);
   }
   uplist(t) {
-    var i = this.J7.__offset(this.z7, 26);
+    var i = this.J7.__offset(this.z7, 28);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   uplistLength() {
-    var t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   uplistArray() {
-    var t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 28);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -133,15 +145,15 @@ class GachaViewInfo {
     return this.showidlist(t);
   }
   showidlist(t) {
-    var i = this.J7.__offset(this.z7, 28);
+    var i = this.J7.__offset(this.z7, 30);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   showidlistLength() {
-    var t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   showidlistArray() {
-    var t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 30);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -154,15 +166,15 @@ class GachaViewInfo {
     return this.previewidlist(t);
   }
   previewidlist(t) {
-    var i = this.J7.__offset(this.z7, 30);
+    var i = this.J7.__offset(this.z7, 32);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   previewidlistLength() {
-    var t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   previewidlistArray() {
-    var t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 32);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,

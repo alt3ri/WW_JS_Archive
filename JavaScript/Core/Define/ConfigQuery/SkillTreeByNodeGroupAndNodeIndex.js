@@ -18,28 +18,44 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configSkillTreeByNodeGroupAndNodeIndex.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configSkillTreeByNodeGroupAndNodeIndex.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configSkillTreeByNodeGroupAndNodeIndex.GetConfig(";
 exports.configSkillTreeByNodeGroupAndNodeIndex = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (o, e, n = !0) => {
-    if (
-      (r = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${e})`),
+      t =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (t) {
       if (n) {
-        var i = KEY_PREFIX + `#${o}#${e})`;
-        const d = ConfigCommon_1.ConfigCommon.GetConfig(i);
-        if (d) return d;
+        var r = KEY_PREFIX + `#${o}#${e})`;
+        const d = ConfigCommon_1.ConfigCommon.GetConfig(r);
+        if (d)
+          return (
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            d
+          );
       }
       if (
-        (r =
+        (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, e, ...logPair) &&
           0 <
@@ -51,32 +67,37 @@ exports.configSkillTreeByNodeGroupAndNodeIndex = {
               ["NodeIndex", e],
             ))
       ) {
-        var r,
-          i = void 0;
+        r = void 0;
         if (
-          (([r, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([t, r] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["NodeGroup", o],
             ["NodeIndex", e],
           )),
-          r)
+          t)
         ) {
           const d = SkillTree_1.SkillTree.getRootAsSkillTree(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+            new byte_buffer_1.ByteBuffer(new Uint8Array(r.buffer)),
           );
           return (
             n &&
-              ((r = KEY_PREFIX + `#${o}#${e})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(r, d)),
+              ((t = KEY_PREFIX + `#${o}#${e})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(t, d)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             d
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=SkillTreeByNodeGroupAndNodeIndex.js.map

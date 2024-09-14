@@ -10,9 +10,16 @@ class IntIntMap {
   get MapIntInt() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.mapintintLength(),
-      (t) => this.mapintint(t)?.key(),
-      (t) => this.mapintint(t)?.value(),
+      this.mapintintKey,
+      this.mapintintValue,
+      this,
     );
+  }
+  mapintintKey(t) {
+    return this.mapintint(t)?.key();
+  }
+  mapintintValue(t) {
+    return this.mapintint(t)?.value();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;

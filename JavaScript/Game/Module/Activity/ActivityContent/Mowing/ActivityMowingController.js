@@ -33,25 +33,15 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
         ModelManager_1.ModelManager.InstanceDungeonEntranceModel.IsMowingInstanceDungeon() &&
           ActivityMowingController.RequestExitDungeon();
       }),
-      (this.oOe = () => {
-        var e;
-        0 !== ActivityMowingController.CurrentActivityId &&
-          (e = ActivityMowingController.GetMowingActivityData()) &&
-          e.RedPointShowState &&
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-            e.Id,
-          );
-      }),
       (this.RequestGetLevelReward = (t, n, e) => {
         var o = Protocol_1.Aki.Protocol.P$n.create();
-        (o.T6n = t),
-          (o.X5n = n),
-          Net_1.Net.Call(9199, o, (e) => {
-            e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+        (o.w6n = t),
+          (o.r6n = n),
+          Net_1.Net.Call(28979, o, (e) => {
+            e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
               ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.O4n,
-                  15562,
+                  e.Q4n,
+                  17604,
                 )
               : ((e =
                   ModelManager_1.ModelManager.ActivityModel.GetActivityById(
@@ -75,37 +65,37 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
       }),
       (this.d2e = (e) => {
         ModelManager_1.ModelManager.ActivityModel.GetActivityById(
-          e.T6n,
+          e.w6n,
         ).UpdatePointRewards(e),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.ActivityViewRefreshCurrent,
-            e.T6n,
+            e.w6n,
           ),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-            e.T6n,
+            e.w6n,
           );
       }),
       (this.C2e = (e) => {
         ModelManager_1.ModelManager.ActivityModel.GetActivityById(
-          e.T6n,
+          e.w6n,
         ).UpdateLevelRewards(e),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.ActivityViewRefreshCurrent,
-            e.T6n,
+            e.w6n,
           ),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-            e.T6n,
+            e.w6n,
           );
       }),
       (this.g2e = (e) => {
-        var t = e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs,
+        var t = e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs,
           n =
             (t &&
               ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.O4n,
-                2501,
+                e.Q4n,
+                17159,
               ),
             {
               ButtonTextId: "ConfirmBox_133_ButtonText_0",
@@ -119,7 +109,7 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
           o = {
             ButtonTextId: "ConfirmBox_133_ButtonText_1",
             DescriptionTextId: "MowingHighestPoint",
-            DescriptionArgs: [e.Yps.toString()],
+            DescriptionArgs: [e.rMs.toString()],
             IsTimeDownCloseView: !1,
             IsClickedCloseView: !1,
             OnClickedCallback: function () {
@@ -135,18 +125,18 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
               }
             },
           },
-          i = {
+          r = {
             TitleTextId: "MowingCurrentPoint",
-            Record: e.Xps.toString(),
-            IsNewRecord: e.Xps > e.Yps,
+            Record: e.iMs.toString(),
+            IsNewRecord: e.iMs > e.rMs,
           };
         ItemRewardController_1.ItemRewardController.OpenExploreRewardView(
           t
             ? ItemRewardDefine_1.MOWING_ERROR_RESULT
             : ItemRewardDefine_1.MOWING_RESULT,
-          !t && e.Qps,
+          !t && e.tMs,
           void 0,
-          t ? void 0 : i,
+          t ? void 0 : r,
           void 0,
           t ? [n] : [n, o],
           void 0,
@@ -156,24 +146,20 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
       });
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(6301, this.d2e),
-      Net_1.Net.Register(4350, this.C2e),
-      Net_1.Net.Register(2501, this.g2e);
+    Net_1.Net.Register(18616, this.d2e),
+      Net_1.Net.Register(25466, this.C2e),
+      Net_1.Net.Register(17159, this.g2e);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(6301),
-      Net_1.Net.UnRegister(4350),
-      Net_1.Net.UnRegister(2501);
+    Net_1.Net.UnRegister(18616),
+      Net_1.Net.UnRegister(25466),
+      Net_1.Net.UnRegister(17159);
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnQuestStateChange,
       this.DSe,
     ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.CrossDay,
-        this.oOe,
-      ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.LeaveInstanceDungeonConfirm,
         this.fSn,
@@ -184,10 +170,6 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
       EventDefine_1.EEventName.OnQuestStateChange,
       this.DSe,
     ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.CrossDay,
-        this.oOe,
-      ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.LeaveInstanceDungeonConfirm,
         this.fSn,
@@ -202,7 +184,7 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
   }
   OnCreateActivityData(e) {
     return (
-      (ActivityMowingController.CurrentActivityId = e.J4n),
+      (ActivityMowingController.CurrentActivityId = e.s5n),
       new ActivityMowingData_1.ActivityMowingData()
     );
   }
@@ -211,13 +193,13 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
   }
   RequestGetPointReward(t, n) {
     var e = Protocol_1.Aki.Protocol.D$n.create();
-    (e.T6n = t),
-      (e.J4n = n),
-      Net_1.Net.Call(17905, e, (e) => {
-        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+    (e.w6n = t),
+      (e.s5n = n),
+      Net_1.Net.Call(20168, e, (e) => {
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.O4n,
-              7572,
+              e.Q4n,
+              29836,
             )
           : ((e =
               ModelManager_1.ModelManager.ActivityModel.GetActivityById(
@@ -244,7 +226,7 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
   }
   static RequestExitDungeon() {
     var e = new Protocol_1.Aki.Protocol.q$n();
-    Net_1.Net.Call(18645, e, (e) => {
+    Net_1.Net.Call(19966, e, (e) => {
       e ||
         InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeonRequest();
     });
@@ -271,20 +253,20 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
   ActivityMowingController).CurrentActivityId = 0),
   (ActivityMowingController.RequestSetDifficulty = (n, o) => {
     var e = Protocol_1.Aki.Protocol.w$n.create();
-    (e.T6n = n),
-      (e.H6n = o),
-      Net_1.Net.Call(14862, e, (e) => {
+    (e.w6n = n),
+      (e.z6n = o),
+      Net_1.Net.Call(21385, e, (e) => {
         var t;
         e &&
-          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+          e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.O4n,
-            6701,
+            e.Q4n,
+            19565,
           );
         for ([, t] of ModelManager_1.ModelManager.ActivityModel.GetActivityById(
           n,
         ).MowingLevelInfoDict)
-          t.H6n = o;
+          t.z6n = o;
       });
   }),
   (ActivityMowingController.GetRecommendLevel = (e, t) => {

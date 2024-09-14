@@ -12,25 +12,29 @@ class InstanceTrialRoleConfig {
   get MaleFormation() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.maleformationLength(),
-      (t) => this.maleformation(t),
+      this.maleformation,
+      this,
     );
   }
   get FemaleFormation() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.femaleformationLength(),
-      (t) => this.femaleformation(t),
+      this.femaleformation,
+      this,
     );
   }
   get MaleDelayFormation() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.maledelayformationLength(),
-      (t) => this.maledelayformation(t),
+      this.maledelayformation,
+      this,
     );
   }
   get FemaleDelayFormation() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.femaledelayformationLength(),
-      (t) => this.femaledelayformation(t),
+      this.femaledelayformation,
+      this,
     );
   }
   get OnlyTrial() {

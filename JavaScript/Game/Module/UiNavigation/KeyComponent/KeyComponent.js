@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.KeyBaseComponent = void 0);
 const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   InputSettings_1 = require("../../../InputSettings/InputSettings"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
@@ -48,17 +49,24 @@ class KeyBaseComponent extends UiPanelBase_1.UiPanelBase {
   async dwo(e) {
     const t = this.GetKeyTexture();
     if (t && !StringUtils_1.StringUtils.IsEmpty(e)) {
-      e = InputSettings_1.InputSettings.GetKey(e);
-      if (e) {
-        e = e.GetKeyIconPath();
-        if (!StringUtils_1.StringUtils.IsEmpty(e) && e !== this.MSo) {
-          this.MSo = e;
-          const i = new CustomPromise_1.CustomPromise();
+      var i = InputSettings_1.InputSettings.GetKey(e);
+      if (i) {
+        i = i.GetKeyIconPath();
+        if (!StringUtils_1.StringUtils.IsEmpty(i) && i !== this.MSo) {
+          "0" === (this.MSo = i) &&
+            Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "UiNavigationHotKey",
+              11,
+              "读取到图片路径为0的情况",
+              ["keyName", e],
+            );
+          const s = new CustomPromise_1.CustomPromise();
           this.gwo(!1),
-            this.SetTextureByPath(e, t, void 0, () => {
-              t.SetSizeFromTexture(), i.SetResult();
+            this.SetTextureByPath(i, t, void 0, () => {
+              t.SetSizeFromTexture(), s.SetResult();
             }),
-            await i.Promise,
+            await s.Promise,
             this.gwo(!0);
         }
       }

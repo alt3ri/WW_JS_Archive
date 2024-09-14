@@ -6,7 +6,9 @@ class MoonChasingMainViewModel {
     (this.SkipTarget = 0),
       (this.BuildingBackToBusiness = !1),
       (this.RefreshBuildingId = 0),
-      (this.IsInBuildingModule = !1);
+      (this.IsInBuildingModule = !1),
+      (this.TaskType = 1),
+      (this.IsLastTask = !1);
   }
 }
 exports.MoonChasingMainViewModel = MoonChasingMainViewModel;

@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EntityPhotoBehaviorNode = void 0);
-const ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
+const IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
+  ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class EntityPhotoBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
     super(...arguments),
@@ -13,7 +14,7 @@ class EntityPhotoBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnCreate(e) {
     return (
       !!super.OnCreate(e) &&
-      "TakePhoto" === (e = e.Condition).Type &&
+      (e = e.Condition).Type === IQuest_1.EChildQuest.TakePhoto &&
       ((this.TakeTime = e.TimeCondition),
       (this.TakePlace = e.PosCondition),
       (this.TakeTargetArray = e.PhotoTargets),

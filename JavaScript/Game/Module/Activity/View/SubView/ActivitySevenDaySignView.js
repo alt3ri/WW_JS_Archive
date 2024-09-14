@@ -121,7 +121,7 @@ class ActivitySevenDaySignView extends ActivitySubViewBase_1.ActivitySubViewBase
       this.GetButton(3)?.RootUIComp.SetRaycastTarget(e);
   }
   F3e(e) {
-    return this.w5e.GetRewardStateByDay(e) === Protocol_1.Aki.Protocol.jps.hMs;
+    return this.w5e.GetRewardStateByDay(e) === Protocol_1.Aki.Protocol.zps.CMs;
   }
 }
 exports.ActivitySevenDaySignView = ActivitySevenDaySignView;

@@ -20,9 +20,16 @@ class TimeOfDay {
   get StateSpan() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.statespanLength(),
-      (t) => this.statespan(t)?.key(),
-      (t) => this.statespan(t)?.value(),
+      this.statespanKey,
+      this.statespanValue,
+      this,
     );
+  }
+  statespanKey(t) {
+    return this.statespan(t)?.key();
+  }
+  statespanValue(t) {
+    return this.statespan(t)?.value();
   }
   get A() {
     return this.a();
@@ -31,16 +38,25 @@ class TimeOfDay {
     return this.v();
   }
   get BanTag() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.bantagLength(), (t) =>
-      this.bantag(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.bantagLength(),
+      this.bantag,
+      this,
     );
   }
   get TimePreset() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.timepresetLength(),
-      (t) => this.timepreset(t)?.key(),
-      (t) => this.timepreset(t)?.value(),
+      this.timepresetKey,
+      this.timepresetValue,
+      this,
     );
+  }
+  timepresetKey(t) {
+    return this.timepreset(t)?.key();
+  }
+  timepresetValue(t) {
+    return this.timepreset(t)?.value();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;

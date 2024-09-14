@@ -100,7 +100,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
           ((t = this.ovt.GetCurrentSelectIndex() + 1),
           this.ovt.AttachToIndex(t, !1));
       }),
-      (this.jjs = () => {
+      (this.cWs = () => {
         if (ModelManager_1.ModelManager.GameModeModel.IsMulti) {
           let t = void 0;
           (t = ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()
@@ -211,7 +211,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         [27, this.oHt],
         [17, this.rHt],
         [16, this.nHt],
-        [32, this.jjs],
+        [32, this.cWs],
       ]);
   }
   OnStart() {
@@ -241,7 +241,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       t =
         (this.GetButton(21).RootUIComp.SetRaycastTarget(t),
         this.gHt(),
-        this.Wjs(),
+        this.mWs(),
         this.ovt.GetCurrentSelectIndex());
     this.BNe(t), this.B7t.SetToggleSelectByIndex(t);
   }
@@ -467,7 +467,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
     for (let t = 0, e = r.length; t < e; ++t) r[t].includes(i) && (n = t);
     return n;
   }
-  Wjs() {
+  mWs() {
     var t,
       e = this.GetButton(32)?.RootUIComp;
     ModelManager_1.ModelManager.GameModeModel.IsMulti
@@ -482,25 +482,25 @@ class FunctionView extends UiViewBase_1.UiViewBase {
     var e,
       i = this.GetSprite(33);
     i.SetUIActive(!0),
-      t === Protocol_1.Aki.Protocol.Y8s.Proto_UNKNOWN
+      t === Protocol_1.Aki.Protocol.r7s.Proto_UNKNOWN
         ? ((e =
             ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
               "SP_SignalUnknown",
             )),
           this.SetSpriteByPath(e, i, !1))
-        : t === Protocol_1.Aki.Protocol.Y8s.Proto_GREAT
+        : t === Protocol_1.Aki.Protocol.r7s.Proto_GREAT
           ? ((e =
               ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
                 "SP_SignalGreat",
               )),
             this.SetSpriteByPath(e, i, !1))
-          : t === Protocol_1.Aki.Protocol.Y8s.Proto_GOOD
+          : t === Protocol_1.Aki.Protocol.r7s.Proto_GOOD
             ? ((e =
                 ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
                   "SP_SignalGood",
                 )),
               this.SetSpriteByPath(e, i, !1))
-            : t === Protocol_1.Aki.Protocol.Y8s.Proto_POOR &&
+            : t === Protocol_1.Aki.Protocol.r7s.Proto_POOR &&
               ((e =
                 ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
                   "SP_SignalPoor",

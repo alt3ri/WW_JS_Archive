@@ -14,30 +14,30 @@ class ExploreProgressController extends UiControllerBase_1.UiControllerBase {
       r =
         (e.InitializeExploreAreaData(),
         e.InitializeCurrentCountryIdAndAreaId(),
-        new Protocol_1.Aki.Protocol.zes()),
+        new Protocol_1.Aki.Protocol.nts()),
       e =
-        ((r.qVn = e.GetAllAreaIdList()),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
+        ((r.WVn = e.GetAllAreaIdList()),
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
             "ExploreProgress",
             8,
             "客户端请求区域探索度ExploreProgressRequest",
             ["request", r],
           ),
-        await Net_1.Net.CallAsync(21059, r));
+        await Net_1.Net.CallAsync(20752, r));
     this.$Vt(e);
   }
 }
 (exports.ExploreProgressController = ExploreProgressController).$Vt = (e) => {
-  Log_1.Log.CheckInfo() &&
-    Log_1.Log.Info(
+  Log_1.Log.CheckDebug() &&
+    Log_1.Log.Debug(
       "ExploreProgress",
       8,
       "服务端返回区域探索度ExploreProgressResponse",
       ["response", e],
     );
   var r = ModelManager_1.ModelManager.ExploreProgressModel;
-  for (const o of e.PPs) r.RefreshExploreAreaData(o);
+  for (const o of e.GPs) r.RefreshExploreAreaData(o);
   EventSystem_1.EventSystem.Emit(
     EventDefine_1.EEventName.OnExploreProgressResponse,
   );

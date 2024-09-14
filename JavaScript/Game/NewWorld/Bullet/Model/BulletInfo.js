@@ -313,16 +313,16 @@ class BulletInfo {
     return this.eVo || (this.eVo = this.Attacker?.GetComponent(3)), this.eVo;
   }
   get AttackerSkillComp() {
-    return this.BHo || (this.BHo = this.Attacker?.GetComponent(33)), this.BHo;
+    return this.BHo || (this.BHo = this.Attacker?.GetComponent(34)), this.BHo;
   }
   get AttackerBuffComp() {
-    return this.bHo || (this.bHo = this.Attacker?.GetComponent(159)), this.bHo;
+    return this.bHo || (this.bHo = this.Attacker?.GetComponent(160)), this.bHo;
   }
   get AttackerMoveComp() {
-    return this.qHo || (this.qHo = this.Attacker?.GetComponent(163)), this.qHo;
+    return this.qHo || (this.qHo = this.Attacker?.GetComponent(164)), this.qHo;
   }
   get AttackerAudioComponent() {
-    return this.GHo || (this.GHo = this.Attacker?.GetComponent(43)), this.GHo;
+    return this.GHo || (this.GHo = this.Attacker?.GetComponent(44)), this.GHo;
   }
   get Target() {
     if (this.NHo) return this.NHo?.Entity;

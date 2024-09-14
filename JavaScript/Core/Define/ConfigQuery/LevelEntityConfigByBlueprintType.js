@@ -17,67 +17,93 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configLevelEntityConfigByBlueprintType.Init",
+  ),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configLevelEntityConfigByBlueprintType.GetConfigList",
+  ),
   CONFIG_LIST_STAT_PREFIX =
     "configLevelEntityConfigByBlueprintType.GetConfigList(";
 exports.configLevelEntityConfigByBlueprintType = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfigList: (e, n = !0) => {
-    var i;
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (n) {
-        var o = KEY_PREFIX + `#${e})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(o);
-        if (r) return r;
+  GetConfigList: (n, i = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${n})`),
+      o =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (o) {
+      if (i) {
+        var e = KEY_PREFIX + `#${n})`;
+        const f = ConfigCommon_1.ConfigCommon.GetConfig(e);
+        if (f)
+          return (
+            t.Stop(),
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            f
+          );
       }
       if (
-        (i = ConfigCommon_1.ConfigCommon.BindString(handleId, 1, e, ...logPair))
+        (o = ConfigCommon_1.ConfigCommon.BindString(handleId, 1, n, ...logPair))
       ) {
-        const r = new Array();
+        const f = new Array();
         for (;;) {
           if (
             1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "BlueprintType",
-              e,
+              n,
             ])
           )
             break;
-          var t = void 0;
+          var C = void 0;
           if (
-            (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
+            (([o, C] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
               0,
               ...logPair,
-              ["BlueprintType", e],
+              ["BlueprintType", n],
             )),
-            !i)
+            !o)
           )
-            return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
-          t = LevelEntityConfig_1.LevelEntityConfig.getRootAsLevelEntityConfig(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
+            return (
+              ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+              t.Stop(),
+              getConfigListStat.Stop(),
+              void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+            );
+          C = LevelEntityConfig_1.LevelEntityConfig.getRootAsLevelEntityConfig(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(C.buffer)),
           );
-          r.push(t);
+          f.push(C);
         }
         return (
-          n &&
-            ((o = KEY_PREFIX + `#${e})`),
-            ConfigCommon_1.ConfigCommon.SaveConfig(o, r, r.length)),
+          i &&
+            ((e = KEY_PREFIX + `#${n})`),
+            ConfigCommon_1.ConfigCommon.SaveConfig(e, f, f.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          r
+          t.Stop(),
+          getConfigListStat.Stop(),
+          ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+          f
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=LevelEntityConfigByBlueprintType.js.map

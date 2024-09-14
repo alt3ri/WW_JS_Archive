@@ -14,16 +14,16 @@ class BehaviorTreeSuspendComponent {
       (this.Yre = void 0),
       (this._Qt = void 0),
       (this.uQt = void 0),
-      (this.r$s = 0),
+      (this.Wjs = 0),
       (this.Yre = t),
       (this._Qt = []),
       (this.$mt = e);
   }
   GetSuspendType() {
-    return this.r$s
-      ? 2 == (2 & this.r$s)
+    return this.Wjs
+      ? 2 == (2 & this.Wjs)
         ? 2
-        : 1 == (1 & this.r$s)
+        : 1 == (1 & this.Wjs)
           ? 1
           : 0
       : 0;
@@ -55,17 +55,18 @@ class BehaviorTreeSuspendComponent {
       s =
         ConfigManager_1.ConfigManager.QuestNewConfig.GetOccupationResourceName(
           e.ResourceName,
-        );
-    return (
-      i.Add(s), i.Add(e.QuestName), UE.KuroStaticLibrary.KuroFormatText(t, i)
-    );
+        ),
+      e = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeName(
+        e.TreeIncId,
+      );
+    return i.Add(s), i.Add(e), UE.KuroStaticLibrary.KuroFormatText(t, i);
   }
   UpdateOccupations(e, t, i) {
-    if (0 === (this.r$s = t)) this.ClearOccupations();
+    if (0 === (this.Wjs = t)) this.ClearOccupations();
     else {
-      this.Yre.RemoveTag(10), this._Qt.splice(0, this._Qt.length);
+      this.Yre.RemoveTag(9), this._Qt.splice(0, this._Qt.length);
       for (const n of i) {
-        var s = MathUtils_1.MathUtils.LongToBigInt(n.T5n),
+        var s = MathUtils_1.MathUtils.LongToBigInt(n.w5n),
           s =
             ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
               s,
@@ -79,12 +80,12 @@ class BehaviorTreeSuspendComponent {
             )),
           (e = s.Name)),
           this._Qt.push({
-            ResourceName: n.AEs,
+            ResourceName: n.qEs,
             QuestName: e,
-            TreeIncId: MathUtils_1.MathUtils.LongToBigInt(n.T5n),
+            TreeIncId: MathUtils_1.MathUtils.LongToBigInt(n.w5n),
           });
       }
-      this.Yre.AddTag(10), (this.uQt = void 0);
+      this.Yre.AddTag(9), (this.uQt = void 0);
       (t = this.Yre.GetNode(e)),
         (i =
           (t && t.ContainTag(1) && (t.AddTag(0), (this.uQt = e)),
@@ -106,7 +107,7 @@ class BehaviorTreeSuspendComponent {
   }
   ClearOccupations() {
     this._Qt.splice(0, this._Qt.length),
-      this.Yre.RemoveTag(10),
+      this.Yre.RemoveTag(9),
       this.uQt &&
         (this.Yre.GetNode(this.uQt)?.RemoveTag(0), (this.uQt = void 0)),
       EventSystem_1.EventSystem.Emit(

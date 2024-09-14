@@ -51,7 +51,11 @@ class OnlineMultipleApplyView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   OnBeforeDestroy() {
-    this.bNi && this.bNi.ClearGridProxies(), (this.bNi = void 0);
+    this.bNi && this.bNi.ClearGridProxies(),
+      0 <
+        ModelManager_1.ModelManager.OnlineModel.GetCurrentApplyList().length &&
+        UiManager_1.UiManager.OpenView("OnlineApplyView"),
+      (this.bNi = void 0);
   }
   RefreshLoopScrollView() {
     this.bNi.ReloadData(

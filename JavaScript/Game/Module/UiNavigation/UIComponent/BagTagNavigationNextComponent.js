@@ -14,7 +14,7 @@ class BagTagNavigationNextComponent extends NavigationGroupComponent_1.Navigatio
         !StringUtils_1.StringUtils.IsEmpty(t) &&
         (o = e.GetNavigationGroupByName(i.NextGroupName))
           ? ((e = o.DefaultListener),
-            this.SetVisibleMode(2, e.IsScrollOrLayoutActive()))
+            this.SetVisibleMode(2, e?.IsScrollOrLayoutActive() ?? !1))
           : this.SetVisibleMode(2, !1);
     } else this.SetVisibleMode(2, !1);
   }

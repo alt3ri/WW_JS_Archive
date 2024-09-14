@@ -14,32 +14,53 @@ class PlotAudio {
   get FileName() {
     return this.filename();
   }
-  get IsCheckSex() {
-    return this.ischecksex();
+  get CheckGenderEn() {
+    return this.checkgenderen();
   }
-  __init(t, s) {
-    return (this.z7 = t), (this.J7 = s), this;
+  get CheckGenderJa() {
+    return this.checkgenderja();
   }
-  static getRootAsPlotAudio(t, s) {
-    return (s || new PlotAudio()).__init(
+  get CheckGenderKo() {
+    return this.checkgenderko();
+  }
+  get CheckGenderZh() {
+    return this.checkgenderzh();
+  }
+  __init(t, e) {
+    return (this.z7 = t), (this.J7 = e), this;
+  }
+  static getRootAsPlotAudio(t, e) {
+    return (e || new PlotAudio()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
   }
   id(t) {
-    var s = this.J7.__offset(this.z7, 4);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var e = this.J7.__offset(this.z7, 4);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   externalsourcesetting(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var e = this.J7.__offset(this.z7, 6);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   filename(t) {
-    var s = this.J7.__offset(this.z7, 8);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var e = this.J7.__offset(this.z7, 8);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
   }
-  ischecksex() {
+  checkgenderen() {
     var t = this.J7.__offset(this.z7, 10);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
+  checkgenderja() {
+    var t = this.J7.__offset(this.z7, 12);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
+  checkgenderko() {
+    var t = this.J7.__offset(this.z7, 14);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
+  checkgenderzh() {
+    var t = this.J7.__offset(this.z7, 16);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }

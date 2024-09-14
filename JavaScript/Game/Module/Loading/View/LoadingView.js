@@ -26,7 +26,7 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
       (this.Pvi = void 0),
       (this.xvi = void 0),
       (this.wvi = !1),
-      (this.Isa = void 0),
+      (this.fla = void 0),
       (this.Bvi = () => {
         this.bvi();
       });
@@ -66,13 +66,13 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
       HotFixSceneManager_1.HotFixSceneManager.StopHotPatchBgm(),
       ModelManager_1.ModelManager.LoginModel.HasBackToGameData() &&
         ((e = ModelManager_1.ModelManager.LoginModel.GetBackToGameData()),
-        (this.Isa = new BackToGameDefine_1.BackToGameLoadingViewData()),
-        (this.Isa.LoadingWidget = e.LoadingWidget),
-        this.Isa.RebootFinished(),
+        (this.fla = new BackToGameDefine_1.BackToGameLoadingViewData()),
+        (this.fla.LoadingWidget = e.LoadingWidget),
+        this.fla.RebootFinished(),
         ModelManager_1.ModelManager.LoginModel.RemoveBackToGameData());
   }
   OnAfterShow() {
-    this.Ovi(), this.Isa && this.GetRootItem().SetUIActive(!1);
+    this.Ovi(), this.fla && this.GetRootItem().SetUIActive(!1);
   }
   OnTick(e) {
     e /= TimeUtil_1.TimeUtil.InverseMillisecond;
@@ -87,7 +87,7 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
       t = Math.min(t, i.NextProgress),
       e = (i.CurrentProgress = t) / MathCommon_1.MathCommon.ProgressTotalValue;
     for (
-      this.Pvi.SetFillAmount(e), this.Qbe(t), this.Isa?.SetProgress(e);
+      this.Pvi.SetFillAmount(e), this.Qbe(t), this.fla?.SetProgress(e);
       i.ReachHandleQueue.Size;
 
     ) {
@@ -102,8 +102,8 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
       t >= MathCommon_1.MathCommon.ProgressTotalValue &&
       ((this.wvi = !0),
       UiManager_1.UiManager.CloseView(this.Info.Name),
-      this.Isa?.Close(),
-      (this.Isa = void 0));
+      this.fla?.Close(),
+      (this.fla = void 0));
   }
   qvi() {
     var e = ConfigManager_1.ConfigManager.LoadingConfig.GetBroadcastImageConfig(
@@ -131,12 +131,8 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
     e &&
       (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e.TipsText),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.Title),
-      ModelManager_1.ModelManager.LoadingModel.SetLoadingTitle(
-        this.GetText(2).GetText(),
-      ),
-      ModelManager_1.ModelManager.LoadingModel.SetLoadingTips(
-        this.GetText(1).GetText(),
-      ));
+      ModelManager_1.ModelManager.LoadingModel.SetLoadingTitle(e.Title),
+      ModelManager_1.ModelManager.LoadingModel.SetLoadingTips(e.TipsText));
   }
   Nvi() {
     var e =
@@ -144,7 +140,7 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
       MathCommon_1.MathCommon.ProgressTotalValue;
     this.Pvi.SetFillAmount(e),
       this.Qbe(ModelManager_1.ModelManager.LoadingModel.CurrentProgress),
-      this.Isa?.SetProgress(e);
+      this.fla?.SetProgress(e);
   }
   Qbe(e) {
     e = Math.round(e);
@@ -173,7 +169,7 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
             ]);
   }
   OnAfterDestroy() {
-    this.Isa?.Close();
+    this.fla?.Close();
   }
 }
 exports.LoadingView = LoadingView;

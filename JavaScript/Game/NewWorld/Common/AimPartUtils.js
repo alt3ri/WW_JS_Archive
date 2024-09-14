@@ -34,7 +34,7 @@ class AimPart {
       (this.GamePadCorrect = t.GamePadCorrect);
   }
   InitSceneItem(t) {
-    (this.SceneItemHit = this.OwnerBase.Entity.GetComponent(140)),
+    (this.SceneItemHit = this.OwnerBase.Entity.GetComponent(141)),
       (this.BoneNameString = t.BoneName ?? ""),
       (this.Offset.X = t.Offset.X ?? 0),
       (this.Offset.Y = t.Offset.Y ?? 0),
@@ -57,7 +57,7 @@ class AimPart {
   }
   GetAimPointLocation(t) {
     if (this.OwnerCharacter)
-      AimPart.Jca.FromUeTransform(
+      AimPart.tga.FromUeTransform(
         this.OwnerCharacter.Actor.Mesh.GetSocketTransform(this.BoneName),
       );
     else {
@@ -65,15 +65,15 @@ class AimPart {
       if (this.BoneNameString) {
         let t = this.OwnerBase.GetActorInSceneInteraction(this.BoneNameString);
         if (!t && !(t = this.OwnerBase.Owner)) return !1;
-        AimPart.Jca.FromUeTransform(t.GetTransform());
+        AimPart.tga.FromUeTransform(t.GetTransform());
       } else {
         var i = this.OwnerBase.Owner;
         if (!i) return !1;
-        AimPart.Jca.FromUeTransform(i.GetTransform());
+        AimPart.tga.FromUeTransform(i.GetTransform());
       }
     }
-    return AimPart.Jca.TransformPosition(this.Offset, t), !0;
+    return AimPart.tga.TransformPosition(this.Offset, t), !0;
   }
 }
-(exports.AimPart = AimPart).Jca = Transform_1.Transform.Create();
+(exports.AimPart = AimPart).tga = Transform_1.Transform.Create();
 //# sourceMappingURL=AimPartUtils.js.map

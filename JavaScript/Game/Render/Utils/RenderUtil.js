@@ -8,6 +8,7 @@ const UE = require("ue"),
   CharBodyEffect_1 = require("../Character/Components/Components/CharBodyEffect"),
   CharDecalShadow_1 = require("../Character/Components/Components/CharDecalShadow"),
   CharDitherEffect_1 = require("../Character/Components/Components/CharDitherEffect"),
+  CharGrassInteraction_1 = require("../Character/Components/Components/CharGrassInteraction"),
   CharNpcDitherEffect_1 = require("../Character/Components/Components/CharNpcDitherEffect"),
   CharPropertyModifier_1 = require("../Character/Components/Components/CharPropertyModifier"),
   CharSceneInteraction_1 = require("../Character/Components/Components/CharSceneInteraction"),
@@ -25,12 +26,14 @@ class RenderUtil {
           r.push(new CharSceneInteraction_1.CharSceneInteraction()),
           r.push(new CharPropertyModifier_1.CharPropertyModifier()),
           r.push(new CharBodyEffect_1.CharBodyEffect()),
-          r.push(new CharDecalShadow_1.CharDecalShadow());
+          r.push(new CharDecalShadow_1.CharDecalShadow()),
+          r.push(new CharGrassInteraction_1.CharGrassInteraction());
         break;
       case 3:
         r.push(new CharDitherEffect_1.CharDitherEffect()),
           r.push(new CharNpcDitherEffect_1.CharNpcDitherEffect()),
-          r.push(new CharDecalShadow_1.CharDecalShadow());
+          r.push(new CharDecalShadow_1.CharDecalShadow()),
+          r.push(new CharGrassInteraction_1.CharGrassInteraction());
         break;
       case 2:
         r.push(new CharMaterialController_1.CharMaterialController()),
@@ -38,7 +41,8 @@ class RenderUtil {
           r.push(new CharDitherEffect_1.CharDitherEffect()),
           r.push(new CharSceneInteraction_1.CharSceneInteraction()),
           r.push(new CharPropertyModifier_1.CharPropertyModifier()),
-          r.push(new CharDecalShadow_1.CharDecalShadow());
+          r.push(new CharDecalShadow_1.CharDecalShadow()),
+          r.push(new CharGrassInteraction_1.CharGrassInteraction());
         break;
       case 4:
         r.push(new CharMaterialController_1.CharMaterialController()),
@@ -205,7 +209,7 @@ class RenderUtil {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("RenderUtil", 47, "Begin pso sync mode"),
       1 == Info_1.Info.PlatformType
-        ? ((RenderUtil.mca = UE.KismetSystemLibrary.GetConsoleVariableIntValue(
+        ? ((RenderUtil.CCa = UE.KismetSystemLibrary.GetConsoleVariableIntValue(
             "r.PSO.CompilationMode",
           )),
           UE.KismetSystemLibrary.ExecuteConsoleCommand(
@@ -213,7 +217,7 @@ class RenderUtil {
             "r.PSO.CompilationMode 1",
           ))
         : 2 == Info_1.Info.PlatformType &&
-          ((RenderUtil.mca = UE.KismetSystemLibrary.GetConsoleVariableIntValue(
+          ((RenderUtil.CCa = UE.KismetSystemLibrary.GetConsoleVariableIntValue(
             "r.OpenGL.ProgramBinarySyncCreate",
           )),
           UE.KismetSystemLibrary.ExecuteConsoleCommand(
@@ -228,14 +232,14 @@ class RenderUtil {
       1 == Info_1.Info.PlatformType
         ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
-            "r.PSO.CompilationMode " + RenderUtil.mca,
+            "r.PSO.CompilationMode " + RenderUtil.CCa,
           )
         : 2 == Info_1.Info.PlatformType &&
           UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
-            "r.OpenGL.ProgramBinarySyncCreate " + RenderUtil.mca,
+            "r.OpenGL.ProgramBinarySyncCreate " + RenderUtil.CCa,
           ));
   }
 }
-(exports.RenderUtil = RenderUtil).mca = 0;
+(exports.RenderUtil = RenderUtil).CCa = 0;
 //# sourceMappingURL=RenderUtil.js.map

@@ -141,11 +141,11 @@ class SignalDeviceModel extends ModelBase_1.ModelBase {
       EventDefine_1.EEventName.OnSignalDeviceFinish,
     ),
       TimerSystem_1.TimerSystem.Delay(() => {
-        var t = Protocol_1.Aki.Protocol.TJn.create();
-        (t.z4n = "0"),
-          (t.Z4n = Protocol_1.Aki.Protocol.t3s.Proto_SignalDevice),
-          Net_1.Net.Call(5703, t, (t) => {
-            t.DEs === Protocol_1.Aki.Protocol.O4n.NRs &&
+        var t = Protocol_1.Aki.Protocol.wJn.create();
+        (t.a5n = "0"),
+          (t.h5n = Protocol_1.Aki.Protocol.h3s.Proto_SignalDevice),
+          Net_1.Net.Call(28002, t, (t) => {
+            t.BEs === Protocol_1.Aki.Protocol.Q4n.KRs &&
               (this.gPe(),
               SignalDeviceController_1.SignalDeviceController.CallFinishCallback());
           });

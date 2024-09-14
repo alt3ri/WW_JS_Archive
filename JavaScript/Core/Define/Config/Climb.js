@@ -14,7 +14,8 @@ class Climb {
   get ClimbDetectPoints() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.climbdetectpointsLength(),
-      (t) => this.climbdetectpoints(t),
+      this.climbdetectpoints,
+      this,
     );
   }
   get DetectRadius() {
@@ -100,10 +101,10 @@ class Climb {
     return this.climbdetectpoints(t);
   }
   climbdetectpoints(t, i) {
-    var r = this.J7.__offset(this.z7, 6);
-    return r
+    var s = this.J7.__offset(this.z7, 6);
+    return s
       ? (i || new Vector_1.Vector()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
       : null;

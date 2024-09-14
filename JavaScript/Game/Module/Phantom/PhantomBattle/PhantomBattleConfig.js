@@ -342,7 +342,10 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
     const r = new Array();
     return (
       e.forEach((e) => {
-        !e.ParentMonsterId && e.FetterGroup.includes(t) && r.push(e.MonsterId);
+        1 === e.PhantomType &&
+          !e.ParentMonsterId &&
+          e.FetterGroup.includes(t) &&
+          r.push(e.MonsterId);
       }),
       r
     );
@@ -602,6 +605,16 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
   GetVisionDestroyCost4() {
     return CommonParamById_1.configCommonParamById.GetStringConfig(
       "VisionFilterSpriteCost4",
+    );
+  }
+  GetVisionRecoveryUnDesperateIcon() {
+    return CommonParamById_1.configCommonParamById.GetStringConfig(
+      "VisionRecoveryUnDesperate",
+    );
+  }
+  GetVisionRecoveryDesperateIcon() {
+    return CommonParamById_1.configCommonParamById.GetStringConfig(
+      "VisionRecoveryDesperate",
     );
   }
   OnClear() {

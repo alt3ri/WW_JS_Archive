@@ -22,7 +22,7 @@ class TsAnimNotifyStateEnterWaterMoveOffset extends UE.KuroAnimNotifyState {
               1,
             ),
           ),
-          a.GetComponent(68)?.SetEnterWaterState(!0),
+          a.GetComponent(69)?.SetEnterWaterState(!0),
           !0
         );
       Log_1.Log.CheckWarn() &&
@@ -43,7 +43,7 @@ class TsAnimNotifyStateEnterWaterMoveOffset extends UE.KuroAnimNotifyState {
       if (r)
         return (
           e.SetAnimRootMotionTranslationScale(1),
-          r.GetComponent(68)?.SetEnterWaterState(!1),
+          r.GetComponent(69)?.SetEnterWaterState(!1),
           !0
         );
       Log_1.Log.CheckWarn() &&

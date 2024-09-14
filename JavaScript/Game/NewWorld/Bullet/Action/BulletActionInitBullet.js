@@ -21,14 +21,13 @@ class BulletActionInitBullet extends BulletActionBase_1.BulletActionBase {
       o = ((l.GenerateTime = Time_1.Time.WorldTime), e.TargetId),
       o = ((l.TargetId = o), l.SetTargetById(o), l.AttackerCreatureDataComp);
     if (o) {
-      o.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_Player
+      o.GetEntityType() !== Protocol_1.Aki.Protocol.kks.Proto_Player
         ? (l.AttackerCamp = o.GetEntityCamp())
         : (l.AttackerCamp = 0),
         (l.IsAutonomousProxy = l.AttackerActorComp.IsAutonomousProxy),
         (l.AttackerPlayerId = o.GetPlayerId()),
-        (l.SkillLevel = l.AttackerSkillComp.GetSkillLevelBySkillInfoId(
-          e.SkillId,
-        ));
+        (l.SkillLevel =
+          l.AttackerSkillComp?.GetSkillLevelBySkillInfoId(e.SkillId) ?? 0);
       var r,
         o = t.Move;
       0 < o.UpDownAngleLimit &&

@@ -20,8 +20,10 @@ class UiShow {
     return this.showcursortype();
   }
   get ObstructUi() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.obstructuiLength(), (t) =>
-      this.obstructui(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.obstructuiLength(),
+      this.obstructui,
+      this,
     );
   }
   get EffectStart() {

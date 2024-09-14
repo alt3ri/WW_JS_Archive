@@ -15,7 +15,7 @@ class RoguelikeRoomFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptF
   SetMainText() {
     var o =
       ModelManager_1.ModelManager.RoguelikeModel.CurRoomType ===
-      Protocol_1.Aki.Protocol.s8s.Proto_Normal;
+      Protocol_1.Aki.Protocol.d8s.Proto_Normal;
     this.MainText.SetUIActive(o),
       o &&
         LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -27,14 +27,14 @@ class RoguelikeRoomFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptF
   }
   SetExtraText() {
     switch (ModelManager_1.ModelManager.RoguelikeModel.CurRoomType) {
-      case Protocol_1.Aki.Protocol.s8s.Proto_Normal:
+      case Protocol_1.Aki.Protocol.d8s.Proto_Normal:
         this.GetSprite(2).SetUIActive(!1),
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.ExtraText,
             "RoguelikeRoomFloatTips_NormalDesc",
           );
         break;
-      case Protocol_1.Aki.Protocol.s8s.Proto_Boss:
+      case Protocol_1.Aki.Protocol.d8s.Proto_Boss:
         this.SetSpriteByPath(
           CommonParamById_1.configCommonParamById.GetStringConfig(
             "RoguelikeRoomFloatTips_NoHeadIcon",
@@ -48,7 +48,7 @@ class RoguelikeRoomFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptF
             "RoguelikeRoomFloatTips_NoHeadDesc",
           );
         break;
-      case Protocol_1.Aki.Protocol.s8s.Proto_Special:
+      case Protocol_1.Aki.Protocol.d8s.Proto_Special:
         this.SetSpriteByPath(
           CommonParamById_1.configCommonParamById.GetStringConfig(
             "RoguelikeRoomFloatTips_SpecialIcon",

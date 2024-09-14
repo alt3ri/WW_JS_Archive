@@ -79,10 +79,10 @@ class ScrollViewDelegate {
     if (this.Pe.length > i) return this.Pe[i];
   }
   CreateGridProxy(i, t) {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "ScrollViewGrid",
-        25,
+        44,
         `CreateProxy displayIndex: ${i}, Proxies.length: ` + this.INo.length,
       );
     var s = this.INo[i];
@@ -101,8 +101,8 @@ class ScrollViewDelegate {
     );
   }
   async CreateGridProxyAsync(i, t) {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "ScrollViewGrid",
         44,
         `CreateProxy displayIndex: ${i}, Proxies.length: ` + this.INo.length,

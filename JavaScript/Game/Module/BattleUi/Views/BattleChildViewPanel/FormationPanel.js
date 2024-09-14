@@ -19,74 +19,75 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.Oze = !1),
       (this.kze = 0),
       (this.Fze = []),
-      (this.Vze = (e, t) => {
-        this.Fze.push([e, t]);
+      (this.Vze = (t, e) => {
+        this.Fze.push([t, e]);
       }),
       (this.Hze = () => {
         if (!(this.Fze.length <= 0)) {
-          var e = this.GetOperationType();
-          for (const t of this.Fze)
-            2 === e ? this.jze(t[0], t[1]) : 1 === e && this.Wze(t[0], t[1]);
+          FormationPanel.kQe.Start();
+          var t = this.GetOperationType();
+          for (const e of this.Fze)
+            2 === t ? this.jze(e[0], e[1]) : 1 === t && this.Wze(e[0], e[1]);
           for (const i of this.Gze) i.FormationIns && i.RefreshQteActive();
-          this.Fze.length = 0;
+          (this.Fze.length = 0), FormationPanel.kQe.Stop();
         }
       }),
       (this.mWe = () => {
         this.Kze(), (this.Fze.length = 0);
       }),
-      (this.Xze = (e, t) => {
-        t = this.$ze(t);
-        t && t.ActivateConcertoChangeEffect(0, 0);
-      }),
-      (this.Yze = (e) => {
-        e = this.$ze(e.Id);
-        e && e.CureRole();
-      }),
-      (this.Jze = (e) => {
+      (this.Xze = (t, e) => {
         e = this.$ze(e);
-        e && e.RefreshRoleHealthPercent();
+        e && e.ActivateConcertoChangeEffect(0, 0);
+      }),
+      (this.Yze = (t) => {
+        t = this.$ze(t.Id);
+        t && t.CureRole();
+      }),
+      (this.Jze = (t) => {
+        t = this.$ze(t);
+        t && t.RefreshRoleHealthPercent();
       }),
       (this.zze = () => {
-        for (const e of this.Gze) e.RefreshTimeRate();
+        for (const t of this.Gze) t.RefreshTimeRate();
       }),
-      (this.TQe = (e, t, i) => {
-        e = this.Zze(e);
-        e && e.LevelUp(i);
+      (this.TQe = (t, e, i) => {
+        t = this.Zze(t);
+        t && t.LevelUp(i);
       }),
-      (this.UQe = (e) => {
-        for (const i of e) {
-          var t = this.$ze(i);
-          t && t.PlayReviveSequence();
+      (this.UQe = (t) => {
+        for (const i of t) {
+          var e = this.$ze(i);
+          e && e.PlayReviveSequence();
         }
       }),
-      (this.zpe = (e, t) => {
-        t = this.$ze(t.Id);
-        t && t.ClearRoleData();
+      (this.zpe = (t, e) => {
+        e = this.$ze(e.Id);
+        e && e.ClearRoleData();
       }),
       (this.eZe = () => {
-        for (const e of this.Gze) e.RefreshRoleName();
+        for (const t of this.Gze) t.RefreshRoleName();
       }),
       (this.tZe = () => {
-        for (const e of this.Gze) e && e.RefreshRoleHealthPercent();
+        for (const t of this.Gze) t && t.RefreshRoleHealthPercent();
       }),
-      (this.mJe = (e) => {
-        for (const t of this.Gze) {
-          if (!t) return;
-          t.RefreshConcertoResponseModule(e);
+      (this.mJe = (t) => {
+        for (const e of this.Gze) {
+          if (!e) return;
+          e.RefreshConcertoResponseModule(t);
         }
       }),
       (this.iZe = () => {
-        for (const e of this.Gze) e.RefreshRoleName();
+        for (const t of this.Gze) t.RefreshRoleName();
       }),
-      (this.oZe = (e, t) => {
+      (this.oZe = (t, e) => {
         for (const i of this.Gze)
           i &&
-            i.FormationIns?.GetPlayerId() === e &&
-            i.RefreshPlayerPingState(t);
+            i.FormationIns?.GetPlayerId() === t &&
+            i.RefreshPlayerPingState(e);
       }),
       (this.rZe = () => {
-        for (const e of this.Gze)
-          !e || e.FormationIns?.IsMyRole() || e.RefreshOnlineItem();
+        for (const t of this.Gze)
+          !t || t.FormationIns?.IsMyRole() || t.RefreshOnlineItem();
       }),
       (this.XBo = () => {
         this.SetVisible(5, Info_1.Info.IsInGamepad() === this.Oze);
@@ -100,34 +101,38 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     (this.Oze = !0), this.SetVisible(5, Info_1.Info.IsInGamepad() === this.Oze);
   }
   Reset() {
-    for (const e of this.Gze) e.Refresh(void 0);
+    for (const t of this.Gze) t.Refresh(void 0);
     (this.Gze.length = 0), super.Reset();
   }
   OnRegisterComponent() {
-    var e = this.GetOperationType();
-    2 === e
+    var t = this.GetOperationType();
+    2 === t
       ? (this.ComponentRegisterInfos = [
           [0, UE.UIItem],
           [1, UE.UIItem],
           [2, UE.UIItem],
           [3, UE.UIItem],
         ])
-      : 1 === e &&
+      : 1 === t &&
         (this.ComponentRegisterInfos = [
           [0, UE.UIItem],
           [1, UE.UIItem],
           [2, UE.UIItem],
         ]);
   }
-  OnTickBattleChildViewPanel(e) {
-    if (this.Visible) for (const t of this.Gze) t.OnTick(e);
+  OnTickBattleChildViewPanel(t) {
+    if (this.Visible) {
+      FormationPanel.vJe.Start();
+      for (const e of this.Gze) e.OnTick(t);
+      FormationPanel.vJe.Stop();
+    }
   }
   OnShowBattleChildViewPanel() {
-    for (const e of this.Gze) e.RefreshCoolDownOnShow();
+    for (const t of this.Gze) t.RefreshCoolDownOnShow();
   }
-  async nZe(e, t) {
-    e = await this.NewStaticChildViewAsync(e, FormationItem_1.FormationItem);
-    e.SetActive(!1), this.Gze.push(e);
+  async nZe(t, e) {
+    t = await this.NewStaticChildViewAsync(t, FormationItem_1.FormationItem);
+    t.SetActive(!1), this.Gze.push(t);
   }
   async Kze() {
     if (!this.Nze) {
@@ -140,37 +145,37 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Id;
         var i = 2 === this.GetOperationType(),
           s = ModelManager_1.ModelManager.FunctionModel.IsOpen(10036);
-        let t = 0;
-        for (let e = 1; e <= SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
+        let e = 0;
+        for (let t = 1; t <= SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; t++) {
           var n,
-            h,
             o,
-            _,
-            a = this.Gze[t];
-          a &&
-            (t++,
-            a.RefreshConcertoResponseModule(s),
-            (o =
+            h,
+            a,
+            r = this.Gze[e];
+          r &&
+            (e++,
+            r.RefreshConcertoResponseModule(s),
+            (h =
               ModelManager_1.ModelManager.BattleUiModel.FormationPanelData?.GetItemData(
-                e,
+                t,
               )),
             (n = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
-              o?.CreatureDataId ?? 0,
+              h?.CreatureDataId ?? 0,
               { ParamType: 3 },
             )),
-            o && !n
-              ? ((h = o.RoleId),
-                (o = o.PlayerId),
-                (_ =
+            h && !n
+              ? ((o = h.RoleId),
+                (h = h.PlayerId),
+                (a =
                   ModelManager_1.ModelManager.OnlineModel.GetWorldTeamPlayerFightInfo(
-                    o,
+                    h,
                   )?.CurRoleId),
-                a.RefreshOtherSceneRole(h, o, h === _))
+                r.RefreshOtherSceneRole(o, h, o === a))
               : i
-                ? (a.Refresh(n), a.RefreshSelectedRole())
+                ? (r.Refresh(n), r.RefreshSelectedRole())
                 : n && n.IsMyRole() && n.IsControl()
-                  ? t--
-                  : a.Refresh(n));
+                  ? e--
+                  : r.Refresh(n));
         }
       }
       this.Nze = !1;
@@ -180,29 +185,29 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     if (0 === this.Gze.length)
       switch (this.GetOperationType()) {
         case 2:
-          var e = this.GetItem(0).GetOwner(),
-            t = this.GetItem(1).GetOwner(),
+          var t = this.GetItem(0).GetOwner(),
+            e = this.GetItem(1).GetOwner(),
             i = this.GetItem(2).GetOwner(),
             s = this.GetItem(3).GetOwner();
           await Promise.all([
-            this.nZe(e, 1),
-            this.nZe(t, 2),
+            this.nZe(t, 1),
+            this.nZe(e, 2),
             this.nZe(i, 3),
             this.nZe(s, 4),
           ]);
           break;
         case 1:
-          (e = this.GetItem(0).GetOwner()),
-            (t = this.GetItem(1).GetOwner()),
+          (t = this.GetItem(0).GetOwner()),
+            (e = this.GetItem(1).GetOwner()),
             (i = this.GetItem(2).GetOwner());
-          await Promise.all([this.nZe(e, 1), this.nZe(t, 2), this.nZe(i, 3)]);
+          await Promise.all([this.nZe(t, 1), this.nZe(e, 2), this.nZe(i, 3)]);
       }
   }
-  Zze(e) {
-    for (const t of this.Gze) if (t.FormationIns?.GetConfigId === e) return t;
+  Zze(t) {
+    for (const e of this.Gze) if (e.FormationIns?.GetConfigId === t) return e;
   }
-  $ze(e) {
-    for (const t of this.Gze) if (t.EntityId === e) return t;
+  $ze(t) {
+    for (const e of this.Gze) if (e.EntityId === t) return e;
   }
   GetFormationItemList() {
     return this.Gze;
@@ -347,33 +352,33 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         this.XBo,
       );
   }
-  jze(e, t) {
-    var i = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(e),
+  jze(t, e) {
+    var i = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(t),
       s = this.$ze(this.kze),
-      e = ((this.kze = e), this.$ze(this.kze));
+      t = ((this.kze = t), this.$ze(this.kze));
     s && s.RefreshSelectedRole(),
-      e &&
-        (e.RefreshSelectedRole(),
-        (s = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(t))) &&
+      t &&
+        (t.RefreshSelectedRole(),
+        (s = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(e))) &&
         i &&
         i.GameplayTagComponent.HasTag(-1732116741) &&
-        e.ActivateConcertoChangeEffect(i.ElementType, s.ElementType);
+        t.ActivateConcertoChangeEffect(i.ElementType, s.ElementType);
   }
-  Wze(e, t) {
-    var i = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(t),
-      s = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(e);
-    (this.kze = e),
+  Wze(t, e) {
+    var i = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(e),
+      s = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(t);
+    (this.kze = t),
       this.kze &&
-        ((e = this.$ze(this.kze))
-          ? (e.Refresh(
-              ModelManager_1.ModelManager.SceneTeamModel?.GetTeamItem(t, {
+        ((t = this.$ze(this.kze))
+          ? (t.Refresh(
+              ModelManager_1.ModelManager.SceneTeamModel?.GetTeamItem(e, {
                 ParamType: 1,
               }),
             ),
             i &&
               s &&
               s.GameplayTagComponent.HasTag(-1732116741) &&
-              e.ActivateConcertoChangeEffect(s.ElementType, i.ElementType))
+              t.ActivateConcertoChangeEffect(s.ElementType, i.ElementType))
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Battle", 18, "角色上场时找不到之前的头像"));
   }
@@ -382,9 +387,19 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
   aZe() {
     if (ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity)
-      for (const e of this.Gze) e.ResetAllConcertoNiagara();
+      for (const t of this.Gze) t.ResetAllConcertoNiagara();
+  }
+  RefreshFormationCooldownExternal(t, e, i) {
+    t < 0 ||
+      t > this.Gze.length - 1 ||
+      this.Gze[t].RefreshCoolDownExternal(e, i);
+  }
+  ResetFormationCooldownExternal() {
+    for (const t of this.Gze) t.RefreshCoolDownExternal();
   }
 }
-((exports.FormationPanel = FormationPanel).vJe = void 0),
-  (FormationPanel.kQe = void 0);
+((exports.FormationPanel = FormationPanel).vJe = Stats_1.Stat.Create(
+  "[BattleView]FormationPanelTick",
+)),
+  (FormationPanel.kQe = Stats_1.Stat.Create("[ChangeRole]FormationPanel"));
 //# sourceMappingURL=FormationPanel.js.map

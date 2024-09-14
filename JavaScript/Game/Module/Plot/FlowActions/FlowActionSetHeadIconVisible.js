@@ -7,19 +7,23 @@ const EventDefine_1 = require("../../../Common/Event/EventDefine"),
 class FlowActionSetHeadIconVisible extends FlowActionBase_1.FlowActionBase {
   constructor() {
     super(...arguments),
+      (this.BQa = !1),
       (this.$$i = () => {
-        this.FinishExecute(!0);
+        this?.BQa && ((this.BQa = !1), this.FinishExecute(!0));
       });
   }
   OnExecute() {
     var e = this.ActionInfo.Params;
-    EventSystem_1.EventSystem.Emit(
-      EventDefine_1.EEventName.UpdatePortraitVisible,
-      e,
-      this.$$i,
-    );
+    (this.BQa = !0),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.UpdatePortraitVisible,
+        e,
+        this.$$i,
+      );
   }
-  OnInterruptExecute() {}
+  OnInterruptExecute() {
+    (this.BQa = !1), this.FinishExecute(!0);
+  }
 }
 exports.FlowActionSetHeadIconVisible = FlowActionSetHeadIconVisible;
 //# sourceMappingURL=FlowActionSetHeadIconVisible.js.map

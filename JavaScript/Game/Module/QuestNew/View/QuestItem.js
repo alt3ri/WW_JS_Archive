@@ -16,6 +16,7 @@ const UE = require("ue"),
   RedDotController_1 = require("../../../RedDot/RedDotController"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   GeneralLogicTreeController_1 = require("../../GeneralLogicTree/GeneralLogicTreeController"),
+  MapUtil_1 = require("../../Map/MapUtil"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   TICK_INTERVAL = 1e3;
 class QuestItem extends UiPanelBase_1.UiPanelBase {
@@ -24,7 +25,7 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
       (this.QuestId = 0),
       (this.TreeId = BigInt(0)),
       (this.QuestType = 0),
-      (this.DGn = !1),
+      (this.qGn = !1),
       (this.e8 = 0),
       (this.Cno = void 0),
       (this.Mno = void 0),
@@ -61,7 +62,7 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
   OnTick(e) {
     this.QuestId &&
       (this.e8 > TICK_INTERVAL &&
-        ((this.e8 -= TICK_INTERVAL), this.AGn(this.QuestId, !0)),
+        ((this.e8 -= TICK_INTERVAL), this.GGn(this.QuestId, !0)),
       (this.e8 += e));
   }
   UpdateItem(e, t) {
@@ -79,7 +80,7 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
         this.Ino(e),
         this.UpdateFunctionIcon(e),
         this.Tno(e),
-        this.QCa(e),
+        this.Vfa(e),
         RedDotController_1.RedDotController.BindRedDot(
           "QuestViewItem",
           this.GetItem(6),
@@ -143,17 +144,25 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
   }
   Ino(e) {
     var t,
-      i = this.GetText(3);
+      i,
+      r,
+      o = this.GetText(3);
     e.IsSuspend() ||
     !(t = e.GetCurrentActiveChildQuestNode()) ||
     !GeneralLogicTreeController_1.GeneralLogicTreeController.IsShowNodeTrackDistance(
       e.TreeId,
       t.NodeId,
     ) ||
-    ((t = e.GetTrackDistance(t.NodeId)), e.IsInTrackRange()) ||
-    !t
-      ? i.SetUIActive(!1)
-      : (LguiUtil_1.LguiUtil.SetLocalText(i, "Meter", t), i.SetUIActive(!0));
+    ((i = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+      e.TreeId,
+    )),
+    (r = ModelManager_1.ModelManager.CreatureModel.GetInstanceId()),
+    (i = i?.GetNodeDungeonId(t.NodeId) ?? 0),
+    MapUtil_1.MapUtil.IsDungeonDiffWorld(r, i)) ||
+    ((r = e.GetTrackDistance(t.NodeId)), e.IsInTrackRange()) ||
+    !r
+      ? o.SetUIActive(!1)
+      : (LguiUtil_1.LguiUtil.SetLocalText(o, "Meter", r), o.SetUIActive(!0));
   }
   UpdateFunctionIcon(e) {
     var t = this.GetTexture(8),
@@ -174,16 +183,16 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
     ).SetUIActive(!1);
   }
   Tno(i) {
-    this.DGn = !1;
+    this.qGn = !1;
     var r = i.IsQuestCanPreShow(),
       o = i.IsSuspend() ?? !1,
-      s = i.IsQuestHasRecommendPreQuest() ?? !1,
-      n = i.HasRefOccupiedEntity() ?? !1,
+      n = i.IsQuestHasRecommendPreQuest() ?? !1,
+      s = i.HasRefOccupiedEntity() ?? !1,
       a = this.GetText(10),
       _ = ModelManager_1.ModelManager.QuestNewModel.GetQuestBindingActivityId(
         i.Id,
       );
-    if (r || o || s || n || _) {
+    if (r || o || n || s || _) {
       a.SetUIActive(!0);
       let e = "",
         t = "";
@@ -194,7 +203,7 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "TaskUnableColor",
             ) ?? "");
-      else if (n)
+      else if (s)
         (e = i.GetRefOccupiedEntityText()?.split("，")[0]),
           a.SetText(e),
           (t =
@@ -211,7 +220,7 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "TaskUnableColor",
             ) ?? "");
-      else if (s) {
+      else if (n) {
         _ = i.GetRecommendPreQuest();
         let e = "";
         _?.length &&
@@ -224,8 +233,8 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
               "TaskRemindColor",
             ) ?? "");
       } else
-        (this.DGn = !0),
-          this.AGn(i.Id, !1),
+        (this.qGn = !0),
+          this.GGn(i.Id, !1),
           (t =
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "TaskCountDownColor",
@@ -234,9 +243,9 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
       a.SetColor(o);
     } else a.SetUIActive(!1);
   }
-  AGn(e, t) {
-    var i, r, o, s;
-    this.DGn &&
+  GGn(e, t) {
+    var i, r, o, n;
+    this.qGn &&
       (ModelManager_1.ModelManager.QuestNewModel.GetQuest(this.QuestId)
         ? ((i = this.GetText(10)),
           (o =
@@ -250,30 +259,30 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
           ))
             ? o.CheckIfInOpenTime()
               ? o.EndOpenTime
-                ? ((s = TimeUtil_1.TimeUtil.GetServerTime()),
-                  (o = o.EndOpenTime - s),
-                  (s =
+                ? ((n = TimeUtil_1.TimeUtil.GetServerTime()),
+                  (o = o.EndOpenTime - n),
+                  (n =
                     ModelManager_1.ModelManager.QuestNewModel.GetActivityGuideQuestRemainTimeText(
                       o,
                       r,
                     )),
-                  i.SetText(s))
+                  i.SetText(n))
                 : i.SetUIActive(!1)
               : t &&
                 (EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.ActivityQuestCountdownEnd,
                   e,
                 ),
-                (this.DGn = !1))
+                (this.qGn = !1))
             : i.SetUIActive(!1))
         : t &&
           (EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.ActivityQuestCountdownEnd,
             e,
           ),
-          (this.DGn = !1)));
+          (this.qGn = !1)));
   }
-  QCa(e) {
+  Vfa(e) {
     var t,
       i,
       r = this.GetItem(11);

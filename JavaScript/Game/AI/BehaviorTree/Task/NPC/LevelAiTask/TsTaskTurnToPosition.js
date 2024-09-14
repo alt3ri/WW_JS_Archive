@@ -37,7 +37,7 @@ class TsTaskTurnToPosition extends TsTaskAbortImmediatelyBase_1.default {
       ? ((s = (e = e.CharAiDesignComp.Entity).GetComponent(0)),
         e?.Valid
           ? ((this.Character = e.GetComponent(3)),
-            (e = e.GetComponent(37)?.CharacterMovement)?.IsValid()
+            (e = e.GetComponent(38)?.CharacterMovement)?.IsValid()
               ? ((this.MovementMode = e.MovementMode),
                 (e.MovementMode = 1),
                 AiContollerLibrary_1.AiControllerLibrary.TurnToTarget(
@@ -70,7 +70,7 @@ class TsTaskTurnToPosition extends TsTaskAbortImmediatelyBase_1.default {
     GravityUtils_1.GravityUtils.GetAngleOffsetFromCurrentToInputAbs(
       this.Character,
     ) < TOLERANCE &&
-      ((this.Character.Entity.GetComponent(37).CharacterMovement.MovementMode =
+      ((this.Character.Entity.GetComponent(38).CharacterMovement.MovementMode =
         this.MovementMode),
       this.Finish(!0));
   }

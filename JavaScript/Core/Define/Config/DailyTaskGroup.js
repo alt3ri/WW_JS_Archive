@@ -10,8 +10,10 @@ class DailyTaskGroup {
     return this.id();
   }
   get TaskIds() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.taskidsLength(), (t) =>
-      this.taskids(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.taskidsLength(),
+      this.taskids,
+      this,
     );
   }
   get TypeId() {

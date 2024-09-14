@@ -23,7 +23,7 @@ const CsvLoader_1 = require("./CsvLoader"),
     (0, CsvLoader_1.createCsvField)({
       Name: "ContentPath",
       CnName: "地图路径",
-      RenderType: 45,
+      RenderType: 46,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "IsPartition",

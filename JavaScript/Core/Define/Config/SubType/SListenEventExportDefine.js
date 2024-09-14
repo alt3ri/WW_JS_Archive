@@ -9,7 +9,8 @@ class SListenEventExportDefine {
   get ListenConfigIds() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.listenconfigidsLength(),
-      (t) => this.listenconfigids(t),
+      this.listenconfigids,
+      this,
     );
   }
   get ListenRange() {

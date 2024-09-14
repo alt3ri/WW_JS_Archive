@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalOptionView = void 0);
 const UE = require("ue"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
@@ -46,6 +47,8 @@ class PersonalOptionView extends UiViewBase_1.UiViewBase {
       [9, UE.UIGridLayout],
       [10, UE.UIText],
       [11, UE.UIText],
+      [12, UE.UIItem],
+      [13, UE.UIText],
     ];
   }
   OnAddEventListener() {
@@ -94,6 +97,7 @@ class PersonalOptionView extends UiViewBase_1.UiViewBase {
     var e = ModelManager_1.ModelManager.FunctionModel.GetPlayerLevel();
     e && this.GetText(5).SetText(String(e)),
       this.Kbe(),
+      this.qxa(),
       this.GetText(4).SetText(""),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(10), "SetPersonalData");
   }
@@ -101,6 +105,18 @@ class PersonalOptionView extends UiViewBase_1.UiViewBase {
   Kbe() {
     var e = ModelManager_1.ModelManager.PlayerInfoModel.GetHeadIconId();
     this.g8t.RefreshByRoleId(e);
+  }
+  qxa() {
+    var e, t;
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
+      ? ((t =
+          ModelManager_1.ModelManager.PlayerInfoModel.GetThirdPartyUserId()),
+        (e =
+          ModelManager_1.ModelManager.PlayerInfoModel.GetThirdPartyOnlineId()),
+        (t = "" !== t),
+        this.GetItem(12)?.SetUIActive(t),
+        t && this.GetText(13)?.SetText(e))
+      : this.GetItem(12)?.SetUIActive(!1);
   }
   K7e() {
     var e = ModelManager_1.ModelManager.FunctionModel.GetPlayerName();

@@ -21,7 +21,8 @@ class ShopInfo {
   get ShowCurrency() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.showcurrencyLength(),
-      (t) => this.showcurrency(t),
+      this.showcurrency,
+      this,
     );
   }
   get DialogueText() {

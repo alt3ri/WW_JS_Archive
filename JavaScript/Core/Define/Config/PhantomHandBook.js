@@ -34,18 +34,24 @@ class PhantomHandBook {
     return this.descrtption2();
   }
   get Scale() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.scaleLength(), (t) =>
-      this.scale(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.scaleLength(),
+      this.scale,
+      this,
     );
   }
   get Position() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.positionLength(), (t) =>
-      this.position(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.positionLength(),
+      this.position,
+      this,
     );
   }
   get Rotator() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.rotatorLength(), (t) =>
-      this.rotator(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.rotatorLength(),
+      this.rotator,
+      this,
     );
   }
   __init(t, i) {

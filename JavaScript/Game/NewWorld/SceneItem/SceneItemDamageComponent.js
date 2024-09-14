@@ -4,20 +4,20 @@ var SceneItemDamageComponent_1,
     (this && this.__decorate) ||
     function (e, t, i, n) {
       var o,
-        s = arguments.length,
-        r =
-          s < 3
+        r = arguments.length,
+        s =
+          r < 3
             ? t
             : null === n
               ? (n = Object.getOwnPropertyDescriptor(t, i))
               : n;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        r = Reflect.decorate(e, t, i, n);
+        s = Reflect.decorate(e, t, i, n);
       else
         for (var h = e.length - 1; 0 <= h; h--)
           (o = e[h]) &&
-            (r = (s < 3 ? o(r) : 3 < s ? o(t, i, r) : o(t, i)) || r);
-      return 3 < s && r && Object.defineProperty(t, i, r), r;
+            (s = (r < 3 ? o(s) : 3 < r ? o(t, i, s) : o(t, i)) || s);
+      return 3 < r && s && Object.defineProperty(t, i, s), s;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemDamageComponent = void 0);
@@ -38,7 +38,6 @@ let SceneItemDamageComponent =
   ) {
     constructor() {
       super(...arguments),
-        (this.inn = void 0),
         (this.Xln = void 0),
         (this.Qdn = -0),
         (this.Xdn = -0),
@@ -46,14 +45,7 @@ let SceneItemDamageComponent =
         (this.Qlt = void 0),
         (this.Lo = void 0),
         (this.n$t = void 0),
-        (this.Ydn = void 0),
-        (this.gIe = () => {
-          Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("SceneItem", 32, "[可破坏物] 改变状态", [
-              "State",
-              this.inn.GetTagNames(),
-            ]);
-        });
+        (this.Ydn = void 0);
     }
     OnInitData(e) {
       var e = e.GetParam(SceneItemDamageComponent_1)[0],
@@ -84,8 +76,7 @@ let SceneItemDamageComponent =
     }
     OnStart() {
       return (
-        (this.inn = this.Entity.GetComponent(180)),
-        (this.Xln = this.Entity.GetComponent(140)),
+        (this.Xln = this.Entity.GetComponent(141)),
         this.Xln.RegisterComponent(this, this.Lo),
         (this.$dn = (e) => {
           this.Zln(e);
@@ -102,11 +93,6 @@ let SceneItemDamageComponent =
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemDurabilityChange,
           this.Qlt,
-        ),
-        EventSystem_1.EventSystem.AddWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.OnGameplayTagChanged,
-          this.gIe,
         ),
         !0
       );
@@ -127,11 +113,6 @@ let SceneItemDamageComponent =
             this.Qlt,
           ),
           (this.Qlt = void 0)),
-        EventSystem_1.EventSystem.RemoveWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.OnGameplayTagChanged,
-          this.gIe,
-        ),
         !0
       );
     }
@@ -193,7 +174,7 @@ let SceneItemDamageComponent =
   });
 (SceneItemDamageComponent = SceneItemDamageComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(134)],
+    [(0, RegisterComponent_1.RegisterComponent)(135)],
     SceneItemDamageComponent,
   )),
   (exports.SceneItemDamageComponent = SceneItemDamageComponent);

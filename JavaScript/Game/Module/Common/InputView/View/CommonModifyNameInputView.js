@@ -13,7 +13,7 @@ const UE = require("ue"),
 class CommonModifyNameInputView extends CommonInputViewBase_1.CommonInputViewBase {
   constructor() {
     super(...arguments),
-      (this.Jna = () => {
+      (this.Pha = () => {
         this.Hqe();
       });
   }
@@ -21,14 +21,14 @@ class CommonModifyNameInputView extends CommonInputViewBase_1.CommonInputViewBas
     super.OnAddEventListener(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnModifyNameStateChange,
-        this.Jna,
+        this.Pha,
       );
   }
   OnRemoveEventListener() {
     super.OnRemoveEventListener(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnModifyNameStateChange,
-        this.Jna,
+        this.Pha,
       );
   }
   GetMaxLimit() {
@@ -68,7 +68,7 @@ class CommonModifyNameInputView extends CommonInputViewBase_1.CommonInputViewBas
   ExecuteInputConfirm(e) {
     this.InputData.ConfirmFunc?.(e).then(
       (e) => {
-        e === Protocol_1.Aki.Protocol.O4n.Proto_ContainsDirtyWord &&
+        e === Protocol_1.Aki.Protocol.Q4n.Proto_ContainsDirtyWord &&
           this.RefreshTips(4);
       },
       () => {

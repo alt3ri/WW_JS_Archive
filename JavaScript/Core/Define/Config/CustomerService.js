@@ -13,13 +13,24 @@ class CustomerService {
     return this.packagetype();
   }
   get Language() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.languageLength(), (t) =>
-      this.language(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.languageLength(),
+      this.language,
+      this,
+    );
+  }
+  get PackageId() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.packageidLength(),
+      this.packageid,
+      this,
     );
   }
   get Channel() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.channelLength(), (t) =>
-      this.channel(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.channelLength(),
+      this.channel,
+      this,
     );
   }
   __init(t, s) {
@@ -43,28 +54,41 @@ class CustomerService {
     return this.language(t);
   }
   language(t, s) {
-    var e = this.J7.__offset(this.z7, 8);
-    return e
-      ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, s)
+    var i = this.J7.__offset(this.z7, 8);
+    return i
+      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
       : null;
   }
   languageLength() {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
+  GetPackageidAt(t) {
+    return this.packageid(t);
+  }
+  packageid(t, s) {
+    var i = this.J7.__offset(this.z7, 10);
+    return i
+      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
+      : null;
+  }
+  packageidLength() {
+    var t = this.J7.__offset(this.z7, 10);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
   GetChannelAt(t) {
     return this.channel(t);
   }
   channel(t) {
-    var s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 12);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   channelLength() {
-    var t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   channelArray() {
-    var t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 12);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,

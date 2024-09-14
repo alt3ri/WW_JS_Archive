@@ -10,45 +10,45 @@ class RoleLevelResponseData {
     this.wuo = e;
   }
   CalculateItemList(e, t) {
-    for (const i of this.wuo.U9n)
-      if (i.j4n === e)
-        return (this.xuo = e), (i.W4n = t ? i.W4n + 1 : i.W4n - 1), !0;
+    for (const i of this.wuo.O9n)
+      if (i.Z4n === e)
+        return (this.xuo = e), (i.e5n = t ? i.e5n + 1 : i.e5n - 1), !0;
     if (!t) return !1;
     this.xuo = e;
     var s = new RoleDefine_1.ArrayIntInt();
-    return (s.j4n = e), (s.W4n = 1), this.wuo.U9n.push(s), !0;
+    return (s.Z4n = e), (s.e5n = 1), this.wuo.O9n.push(s), !0;
   }
   SetSelectedItemId(e) {
     this.xuo = e;
   }
   GetItemList() {
-    return this.wuo.U9n;
+    return this.wuo.O9n;
   }
   ClearItemList() {
-    this.wuo.U9n = [];
+    this.wuo.O9n = [];
   }
   GetItemCountByItemId(e) {
-    for (const t of this.wuo.U9n) if (t.j4n === e) return t.W4n;
+    for (const t of this.wuo.O9n) if (t.Z4n === e) return t.e5n;
     return 0;
   }
   GetCostList() {
-    return this.wuo.xHn;
+    return this.wuo.kHn;
   }
   GetOverFlowMap() {
     var e = new Map();
-    for (const t of this.wuo.BHn) e.set(t.j4n, t.W4n);
+    for (const t of this.wuo.VHn) e.set(t.Z4n, t.e5n);
     return e;
   }
   GetAddExp() {
-    return this.wuo.wHn;
+    return this.wuo.HHn;
   }
   GetFinalProp() {
     var e = new Map();
-    for (const t of this.wuo.RHn) e.set(t.j4n, t.W4n);
+    for (const t of this.wuo.NHn) e.set(t.Z4n, t.e5n);
     return e;
   }
   GetLevelExp(e) {
-    for (const t of this.wuo.bHn) if (t.j4n === e) return t.W4n;
+    for (const t of this.wuo.jHn) if (t.Z4n === e) return t.e5n;
     return 0;
   }
   GetSelectedItemId() {
@@ -58,14 +58,14 @@ class RoleLevelResponseData {
 exports.RoleLevelResponseData = RoleLevelResponseData;
 class RoleLevelUpViewResponseData {
   constructor() {
-    (this.P6n = 1),
-      (this.bHn = void 0),
-      (this.M8n = 0),
-      (this.wHn = 0),
-      (this.RHn = void 0),
-      (this.xHn = void 0),
-      (this.BHn = void 0),
-      (this.U9n = void 0);
+    (this.F6n = 1),
+      (this.jHn = void 0),
+      (this.U8n = 0),
+      (this.HHn = 0),
+      (this.NHn = void 0),
+      (this.kHn = void 0),
+      (this.VHn = void 0),
+      (this.O9n = void 0);
   }
 }
 //# sourceMappingURL=RoleLevelResponseData.js.map

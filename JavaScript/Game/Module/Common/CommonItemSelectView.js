@@ -55,7 +55,13 @@ class CommonItemSelectView extends UiPanelBase_1.UiPanelBase {
     return this.jTt.GetCurrentSelectedData();
   }
   UpdateByDataList(e) {
-    this.jTt.UpdateDataList(e);
+    this.jTt.UpdateDataList(e), this.WTt(e);
+  }
+  RefreshPartByIndex(e) {
+    this.jTt.RefreshPartByIndex(e);
+  }
+  UpdateChangeItemSelectList() {
+    this.jTt.UpdateChangeItemSelectList();
   }
   SetMaxSize(e) {
     this.jTt.SetMaxSize(e);

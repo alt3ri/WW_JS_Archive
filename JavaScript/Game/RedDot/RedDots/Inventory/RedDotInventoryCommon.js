@@ -9,6 +9,7 @@ class RedDotInventoryCommon extends RedDotBase_1.RedDotBase {
     return [
       EventDefine_1.EEventName.RedDotRefreshItemData,
       EventDefine_1.EEventName.OnRemoveItemRedDot,
+      EventDefine_1.EEventName.OnResponseCommonItemFinished,
     ];
   }
   OnCheck(e) {

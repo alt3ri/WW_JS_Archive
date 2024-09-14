@@ -18,15 +18,15 @@ class ActivitySubViewTimePointReward extends ActivitySubViewBase_1.ActivitySubVi
       (this.ActivityTimePointRewardData = void 0),
       (this.LNe = void 0),
       (this.Tei = void 0),
-      (this.lXs = void 0),
+      (this.iJs = void 0),
       (this.sGe = () => {
         var e = new TimePointRewardItem_1.TimePointRewardItem();
-        return (e.OnClickToGet = this._Xs), e;
+        return (e.OnClickToGet = this.rJs), e;
       }),
       (this.wNe = (e) => {
         this.ActivityBaseData.Id === e && this.Z3e();
       }),
-      (this._Xs = (e) => {
+      (this.rJs = (e) => {
         ActivityTimePointRewardController_1.ActivityTimePointRewardController.GetRewardById(
           this.ActivityTimePointRewardData.Id,
           e,
@@ -58,11 +58,11 @@ class ActivitySubViewTimePointReward extends ActivitySubViewBase_1.ActivitySubVi
         ConfigManager_1.ConfigManager.ActivityTimePointRewardConfig.GetConfigByActivityId(
           this.ActivityBaseData.Id,
         ));
-    (this.lXs = new UiPanelBase_1.UiPanelBase()),
+    (this.iJs = new UiPanelBase_1.UiPanelBase()),
       e.push(
-        this.lXs.CreateThenShowByResourceIdAsync(i.UiPrefab, this.GetItem(4)),
+        this.iJs.CreateThenShowByResourceIdAsync(i.UiPrefab, this.GetItem(4)),
       ),
-      this.AddChild(this.lXs),
+      this.AddChild(this.iJs),
       await Promise.all(e);
   }
   OnStart() {

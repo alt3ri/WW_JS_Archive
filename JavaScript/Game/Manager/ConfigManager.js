@@ -152,5 +152,8 @@ class ConfigManager extends ConfigManagerBase_1.ConfigManagerBase {}
   (ConfigManager.MoonChasingHandbookConfig = void 0),
   (ConfigManager.MoonChasingMemoryConfig = void 0),
   (ConfigManager.ActivityRecallConfig = void 0),
-  (ConfigManager.ViewHotKeyConfig = void 0);
+  (ConfigManager.ActivityBlackCoastConfig = void 0),
+  (ConfigManager.ViewHotKeyConfig = void 0),
+  (ConfigManager.GameSettingsConfig = void 0),
+  (ConfigManager.ActivityCorniceMeetingConfig = void 0);
 //# sourceMappingURL=ConfigManager.js.map

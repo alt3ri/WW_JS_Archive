@@ -18,8 +18,8 @@ class ExploreLevelPreviewView extends UiViewBase_1.UiViewBase {
       (this.vVt = void 0),
       (this.oVt = []),
       (this.MVt = 0),
-      (this.fHs = void 0),
-      (this.pHs = (e) => {
+      (this.UHs = void 0),
+      (this.RHs = (e) => {
         e = e.Data;
         ItemController_1.ItemController.OpenItemTipsByItemId(e);
       }),
@@ -29,12 +29,12 @@ class ExploreLevelPreviewView extends UiViewBase_1.UiViewBase {
       (this.EVt = () => {
         this.MVt = Math.max(0, this.MVt - 1);
         var e = this.oVt[this.MVt];
-        e && (this.SVt(e), this.vHs(e)), this.yVt();
+        e && (this.SVt(e), this.xHs(e)), this.yVt();
       }),
       (this.IVt = () => {
         this.MVt = Math.min(this.MVt + 1, this.oVt.length - 1);
         var e = this.oVt[this.MVt];
-        e && (this.SVt(e), this.vHs(e)), this.yVt();
+        e && (this.SVt(e), this.xHs(e)), this.yVt();
       }),
       (this.TVt = () => {
         return new ExploreLevelPreviewItem_1.ExploreLevelPreviewItem();
@@ -60,10 +60,10 @@ class ExploreLevelPreviewView extends UiViewBase_1.UiViewBase {
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.fHs = new SmallItemGrid_1.SmallItemGrid()),
-      this.fHs.BindOnExtendToggleClicked(this.pHs),
-      this.fHs.BindOnCanExecuteChange(() => !1),
-      await this.fHs.CreateThenShowByActorAsync(this.GetItem(9).GetOwner());
+    (this.UHs = new SmallItemGrid_1.SmallItemGrid()),
+      this.UHs.BindOnExtendToggleClicked(this.RHs),
+      this.UHs.BindOnCanExecuteChange(() => !1),
+      await this.UHs.CreateThenShowByActorAsync(this.GetItem(9).GetOwner());
   }
   OnStart() {
     var e = this.OpenParam,
@@ -77,7 +77,7 @@ class ExploreLevelPreviewView extends UiViewBase_1.UiViewBase {
         (this.oVt = this.fVt.GetUnlockFunctionExploreLevelRewardDataList()),
         (this.MVt = this.LVt(this.fVt.GetExploreLevel())),
         this.oVt[this.MVt]);
-    e && (this.SVt(e), this.vHs(e)), this.yVt(), this.DVt();
+    e && (this.SVt(e), this.xHs(e)), this.yVt(), this.DVt();
   }
   OnBeforeDestroy() {
     (this.fVt = void 0), this.vVt.ClearGridProxies(), (this.vVt = void 0);
@@ -105,9 +105,9 @@ class ExploreLevelPreviewView extends UiViewBase_1.UiViewBase {
         e.GetRewardNameId(),
       ));
   }
-  vHs(e) {
+  xHs(e) {
     e = e.GetPreviewItemConfigId();
-    this.fHs?.Apply({ Type: 4, Data: e, ItemConfigId: e });
+    this.UHs?.Apply({ Type: 4, Data: e, ItemConfigId: e });
   }
   yVt() {
     var e = this.oVt.length;

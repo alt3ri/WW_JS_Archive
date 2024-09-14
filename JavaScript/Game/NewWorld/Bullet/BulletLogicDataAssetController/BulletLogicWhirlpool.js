@@ -26,7 +26,7 @@ class BulletLogicWhirlpool extends BulletLogicController_1.BulletLogicController
     for (const i of this.z7o) this.Z7o(i);
   }
   Z7o(t) {
-    var o = t?.GetComponent(163);
+    var o = t?.GetComponent(164);
     !o?.Valid ||
       this.Y7o < o.CharacterWeight ||
       (o.GetWhirlpoolId() !== this.xe
@@ -53,7 +53,7 @@ class BulletLogicWhirlpool extends BulletLogicController_1.BulletLogicController
   }
   OnBulletDestroy() {
     for (const o of this.z7o) {
-      var t = o?.GetComponent(163);
+      var t = o?.GetComponent(164);
       t?.Valid &&
         t.GetWhirlpoolEnable() &&
         t.GetWhirlpoolId() === this.xe &&

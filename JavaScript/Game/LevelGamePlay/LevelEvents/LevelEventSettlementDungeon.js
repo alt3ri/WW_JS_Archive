@@ -20,55 +20,55 @@ class LevelEventSettlementDungeon extends LevelGeneralBase_1.LevelEventBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("InstanceDungeon", 5, "副本结算行为触发时，副本未成功"),
         this.FinishExecute(!0);
-    else if (
-      ModelManager_1.ModelManager.InstanceDungeonModel.InstanceRewardHaveTake
-    )
-      ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-        "HaveReceiveRewrad",
-      ),
-        this.FinishExecute(!0);
-    else if (
-      ControllerHolder_1.ControllerHolder.ConfirmBoxController.CheckIsConfirmBoxOpen()
-    )
-      this.FinishExecute(!0);
     else {
       var r =
         ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId;
-      if (
-        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceCanReward(
+      const t =
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
           r,
-        )
-      )
+        );
+      if (t)
         if (
-          ModelManager_1.ModelManager.ExchangeRewardModel.GetInstanceDungeonIfCanExchange(
+          ModelManager_1.ModelManager.InstanceDungeonModel
+            .InstanceRewardHaveTake
+        )
+          ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+            "HaveReceiveRewrad",
+          ),
+            this.FinishExecute(!0);
+        else if (
+          ControllerHolder_1.ControllerHolder.ConfirmBoxController.CheckIsConfirmBoxOpen()
+        )
+          this.FinishExecute(!0);
+        else if (
+          ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceCanReward(
             r,
           )
-        ) {
-          var n =
-              !!ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetInstanceFirstRewardId(
-                r,
-              ),
-            l =
-              ModelManager_1.ModelManager.InstanceDungeonModel
-                .CurrentInstanceIsFinish;
-          if (n && !l) this.FinishExecute(!0);
-          else {
-            const i =
-              ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
-                r,
-              );
-            if (0 === i) this.FinishExecute(!0);
+        )
+          if (
+            ModelManager_1.ModelManager.ExchangeRewardModel.GetInstanceDungeonIfCanExchange(
+              r,
+            )
+          ) {
+            var n =
+                !!ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetInstanceFirstRewardId(
+                  r,
+                ),
+              l =
+                ModelManager_1.ModelManager.InstanceDungeonModel
+                  .CurrentInstanceIsFinish;
+            if (n && !l) this.FinishExecute(!0);
             else {
-              const t = ModelManager_1.ModelManager.PowerModel.IsPowerEnough(i);
-              t
+              const i = ModelManager_1.ModelManager.PowerModel.IsPowerEnough(t);
+              i
                 ? (((n = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
                     64,
                   )).ShowPowerItem = !0),
-                  n.SetTextArgs(i.toString()),
+                  n.SetTextArgs(t.toString()),
                   n.FunctionMap.set(1, () => {}),
                   n.FunctionMap.set(2, () => {
                     var e;
-                    t
+                    i
                       ? InstanceDungeonController_1.InstanceDungeonController.GetInstExchangeRewardRequest()
                       : ((e =
                           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
@@ -80,7 +80,7 @@ class LevelEventSettlementDungeon extends LevelGeneralBase_1.LevelEventBase {
                         PowerController_1.PowerController.OpenPowerView(
                           2,
                           ModelManager_1.ModelManager.PowerModel.GetCurrentNeedPower(
-                            i,
+                            t,
                           ),
                         ));
                   }),
@@ -105,23 +105,36 @@ class LevelEventSettlementDungeon extends LevelGeneralBase_1.LevelEventBase {
                   PowerController_1.PowerController.OpenPowerView(
                     2,
                     ModelManager_1.ModelManager.PowerModel.GetCurrentNeedPower(
-                      i,
+                      t,
                     ),
                   ),
                   this.FinishExecute(!0));
             }
-          }
-        } else
-          ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-            "InstanceDungeonRewardTimeNotEnough",
-          ),
+          } else
+            this.OpenInstanceRewardTimesNotEnoughConfirmBox(),
+              this.FinishExecute(!0);
+        else
+          this.OpenInstanceRewardTimesNotEnoughConfirmBox(),
             this.FinishExecute(!0);
-      else
-        ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-          "InstanceDungeonRewardTimeNotEnough",
-        ),
-          this.FinishExecute(!0);
+      else this.FinishExecute(!0);
     }
+  }
+  OpenInstanceRewardTimesNotEnoughConfirmBox() {
+    const e = ModelManager_1.ModelManager.GameModeModel?.IsMulti;
+    var o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(e ? 218 : 217);
+    (o.IsEscViewTriggerCallBack = !1),
+      o.FunctionMap.set(1, () => {
+        e ||
+          ControllerHolder_1.ControllerHolder.InstanceDungeonEntranceController.LeaveInstanceDungeon();
+      }),
+      o.FunctionMap.set(2, () => {
+        e
+          ? ControllerHolder_1.ControllerHolder.InstanceDungeonEntranceController.LeaveInstanceDungeon()
+          : ControllerHolder_1.ControllerHolder.InstanceDungeonEntranceController.RestartInstanceDungeon();
+      }),
+      ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+        o,
+      );
   }
 }
 exports.LevelEventSettlementDungeon = LevelEventSettlementDungeon;

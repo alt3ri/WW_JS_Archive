@@ -68,7 +68,7 @@ class NetWorkMaskView extends UiTickViewBase_1.UiTickViewBase {
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "network_mask_time",
         );
-    (this.rbt = e ? 100 : i ?? 100), this.GetItem(0).SetUIActive(!1);
+    (this.rbt = e ? 100 : (i ?? 100)), this.GetItem(0).SetUIActive(!1);
   }
   OnBeforeDestroy() {
     this.$so();

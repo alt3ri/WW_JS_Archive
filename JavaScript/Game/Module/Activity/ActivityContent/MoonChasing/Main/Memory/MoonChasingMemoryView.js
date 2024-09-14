@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MoonChasingMemoryView = void 0);
 const UE = require("ue"),
+  CommonParamById_1 = require("../../../../../../../Core/Define/ConfigCommon/CommonParamById"),
   ControllerHolder_1 = require("../../../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../../../../Ui/Base/UiViewBase"),
@@ -17,9 +18,9 @@ class MoonChasingMemoryView extends UiViewBase_1.UiViewBase {
       (this.o4o = void 0),
       (this.lqe = void 0),
       (this.Cho = void 0),
-      (this.Q9s = []),
-      (this.$9s = () => {
-        UiManager_1.UiManager.OpenView("MoonChasingMemoryDetailView", this.Q9s),
+      (this.v7s = []),
+      (this.M7s = () => {
+        UiManager_1.UiManager.OpenView("MoonChasingMemoryDetailView", this.v7s),
           ModelManager_1.ModelManager.MoonChasingModel.RemoveMemoryRedDot();
       });
   }
@@ -33,9 +34,9 @@ class MoonChasingMemoryView extends UiViewBase_1.UiViewBase {
   async OnBeforeStartAsync() {
     await ControllerHolder_1.ControllerHolder.MoonChasingController.TrackMoonAllDataRequest(),
       await this.JDn(),
-      this.X9s(),
-      this.HWs(),
-      (this.Q9s =
+      this.S7s(),
+      this.VKs(),
+      (this.v7s =
         await ControllerHolder_1.ControllerHolder.MoonChasingController.TrackMoonMemoryInfoRequest());
   }
   OnStart() {
@@ -52,15 +53,20 @@ class MoonChasingMemoryView extends UiViewBase_1.UiViewBase {
   OnBeforeDestroy() {
     this.o4o.Destroy();
   }
-  HWs() {
+  VKs() {
     (this.Cho = new ButtonItem_1.ButtonItem(this.GetItem(1))),
-      this.Cho.SetFunction(this.$9s);
+      this.Cho.SetFunction(this.M7s);
   }
-  X9s() {
-    (this.o4o = new BuildingMapMoveComponent_1.BuildingMapMoveComponent(
+  S7s() {
+    this.o4o = new BuildingMapMoveComponent_1.BuildingMapMoveComponent(
       this.GetDraggable(2),
-    )),
-      this.o4o.SetScaleAdaptHeight();
+      !1,
+      !1,
+    );
+    var e = CommonParamById_1.configCommonParamById.GetFloatConfig(
+      "MoonFiestaMapSizeParam",
+    );
+    this.o4o.SetScaleSafeArea(e, 2), this.o4o.SetScale(e, 4);
   }
   async JDn() {
     (this.kDn = new BuildingMapTileModule_1.BuildingMapTileModule(!1, !0)),

@@ -27,6 +27,7 @@ class StrengthHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       (this.Uni = 0),
       (this.X9e = void 0),
       (this.xie = () => {
+        StrengthHandle.kQe.Start();
         var t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
         this.m$e(this.X9e),
           this.c$e(t),
@@ -34,7 +35,8 @@ class StrengthHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
             (this.vni.RefreshEntity(t),
             this.vni.RefreshBuffState(),
             this.vni.RefreshEnableState(),
-            this.Ani());
+            this.Ani()),
+          StrengthHandle.kQe.Stop();
       }),
       (this.zpe = (t, i) => {
         this.m$e(i);
@@ -102,10 +104,6 @@ class StrengthHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       this.xie,
     ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.RemoveEntity,
-        this.zpe,
-      ),
-      EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharOnBuffAddUITexture,
         this.AQe,
       ),
@@ -123,10 +121,7 @@ class StrengthHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       EventDefine_1.EEventName.BattleUiCurRoleDataChangedNextTick,
       this.xie,
     ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.RemoveEntity,
-        this.zpe,
-      ),
+      EventSystem_1.EventSystem.RemoveAllTargetUseKey(this),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharOnBuffAddUITexture,
         this.AQe,
@@ -166,12 +161,24 @@ class StrengthHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         778582368,
         this.kni,
         StrengthHandle.SYe,
-      )));
+      )),
+      EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+        this,
+        t.EntityHandle,
+        EventDefine_1.EEventName.RemoveEntity,
+        this.zpe,
+      ));
   }
   m$e(t) {
     t?.Valid &&
       this.Rni === t.Id &&
-      (this.Tni.EndTask(),
+      (EventSystem_1.EventSystem.RemoveWithTargetUseKey(
+        this,
+        t,
+        EventDefine_1.EEventName.RemoveEntity,
+        this.zpe,
+      ),
+      this.Tni.EndTask(),
       this.Ini.EndTask(),
       this.Lni.EndTask(),
       this.Dni.EndTask(),
@@ -255,6 +262,8 @@ class StrengthHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     );
   }
 }
-((exports.StrengthHandle = StrengthHandle).kQe = void 0),
-  (StrengthHandle.SYe = void 0);
+((exports.StrengthHandle = StrengthHandle).kQe = Stats_1.Stat.Create(
+  "[ChangeRole]StrengthHandle",
+)),
+  (StrengthHandle.SYe = Stats_1.Stat.Create("[StrengthHandle]ListenTag"));
 //# sourceMappingURL=StrengthHandle.js.map

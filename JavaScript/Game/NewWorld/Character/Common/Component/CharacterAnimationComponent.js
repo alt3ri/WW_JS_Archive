@@ -26,6 +26,7 @@ const puerts_1 = require("puerts"),
   Info_1 = require("../../../../../Core/Common/Info"),
   Log_1 = require("../../../../../Core/Common/Log"),
   Time_1 = require("../../../../../Core/Common/Time"),
+  PerformanceConditionByIdWithZero_1 = require("../../../../../Core/Define/ConfigQuery/PerformanceConditionByIdWithZero"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
@@ -39,6 +40,7 @@ const puerts_1 = require("puerts"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   Global_1 = require("../../../../Global"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   AnimController_1 = require("../../../../Module/Anim/AnimController"),
   CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
@@ -50,6 +52,7 @@ const puerts_1 = require("puerts"),
   CharacterNameDefines_1 = require("../CharacterNameDefines"),
   CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
   BaseAnimationComponent_1 = require("./BaseAnimationComponent"),
+  PERFORMANCE_COUNT = 3,
   ROTATABLE_THREADHOLD = 0.5,
   MIN_SCLOPE_SCALE = 0.5,
   MAX_SCLOPE_SCALE = 1,
@@ -118,22 +121,27 @@ let CharacterAnimationComponent =
         (this.d3r = -1),
         (this.C3r = 0),
         (this.g3r = 0),
-        (this.zda = -1),
+        (this.J0a = -1),
         (this.f3r = !1),
         (this.dFe = 0),
         (this.p3r = -1),
         (this.v3r = 2),
         (this.M3r = Vector_1.Vector.Create()),
         (this.AnimLogicParamsSetter = void 0),
-        (this.DBn = Vector_1.Vector.Create()),
-        (this.Qya = 0),
+        (this.vJ = void 0),
+        (this.BBn = Vector_1.Vector.Create()),
+        (this.pDa = 0),
+        (this.DNa = void 0),
+        (this.UNa = [!1, !1, !1]),
+        (this.MainAnimInstanceRole = void 0),
+        (this.xNa = Vector_1.Vector.Create(-1e8, -1e8, -1e8)),
         (this.I3r = (t, i) => {
           var s;
           t?.Valid &&
-            (s = t.GetComponent(162))?.Valid &&
+            (s = t.GetComponent(163))?.Valid &&
             (i
               ? this.T3r()
-              : t.GetComponent(188)?.HasTag(715234113) ||
+              : t.GetComponent(190)?.HasTag(715234113) ||
                 ((i = this.Mesh.GetAnimInstance()) !==
                   this.MainAnimInstanceInternal && i.SyncAnimStates(void 0),
                 UE.KuroStaticLibrary.IsObjectClassByName(
@@ -147,9 +155,9 @@ let CharacterAnimationComponent =
                   ? (this.MainAnimInstanceInternal.替换角色时同步动作数据(
                       s.MainAnimInstance,
                     ),
-                    this.sca(this.MainAnimInstanceInternal))
+                    this.hCa(this.MainAnimInstanceInternal))
                   : this.MainAnimInstanceInternal.SyncAnimStates(void 0),
-                (t = this.Entity.GetComponent(42))?.ClearOrders(),
+                (t = this.Entity.GetComponent(43))?.ClearOrders(),
                 t?.AnimationStateInitPush(),
                 this.T3r()));
         }),
@@ -162,11 +170,11 @@ let CharacterAnimationComponent =
         (this.R3r = (t) => {
           t || this.D3r();
         }),
-        (this.eXs = !1),
-        (this.tXs = (t, i) => {
+        (this.kYs = !1),
+        (this.GYs = (t, i) => {
           t === this.Entity.Id &&
             i &&
-            (this.StartForceDisableAnimOptimization(1), (this.eXs = !0));
+            (this.StartForceDisableAnimOptimization(1), (this.kYs = !0));
         }),
         (this.U3r = () => {
           this.StopModelBuffer();
@@ -209,13 +217,13 @@ let CharacterAnimationComponent =
     get HasKuroRootMotion() {
       return (
         !!this.MainAnimInstance &&
-        (this.zda !== Time_1.Time.Frame &&
+        (this.J0a !== Time_1.Time.Frame &&
           ((this.f3r = this.MainAnimInstance.HasKuroRootMotionAnim()),
-          (this.zda = Time_1.Time.Frame)),
+          (this.J0a = Time_1.Time.Frame)),
         this.f3r)
       );
     }
-    sca(t) {
+    hCa(t) {
       this.AnimLogicParamsSetter
         ? (t = t.LogicParams)
           ? ((this.AnimLogicParamsSetter.SitDown = t.bSitDown),
@@ -272,6 +280,9 @@ let CharacterAnimationComponent =
       return (
         (this.AnimLogicParamsSetter =
           new AnimLogicParamsSetter_1.AnimLogicParamsSetter()),
+        (this.vJ = ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(
+          this.Entity,
+        )),
         !0
       );
     }
@@ -383,11 +394,11 @@ let CharacterAnimationComponent =
         if (
           ((this.Actor = this.ActorComp.Actor),
           (this.Mesh = this.Actor.Mesh),
-          (this.Gce = this.Entity.GetComponent(37)),
-          (this.bre = this.Entity.GetComponent(39)),
-          (this.Lie = this.Entity.GetComponent(188)),
-          (this.zFr = this.Entity.GetComponent(71)),
-          (this.Qya = this.Mesh?.KuroAnimInstanceLod ?? 0),
+          (this.Gce = this.Entity.GetComponent(38)),
+          (this.bre = this.Entity.GetComponent(40)),
+          (this.Lie = this.Entity.GetComponent(190)),
+          (this.zFr = this.Entity.GetComponent(72)),
+          (this.pDa = this.Mesh?.KuroAnimInstanceLod ?? 0),
           Info_1.Info.EnableForceTick ||
             ((this.ZFr = this.Actor.GetComponentByClass(
               UE.KuroCharacterAnimationComponent.StaticClass(),
@@ -414,7 +425,8 @@ let CharacterAnimationComponent =
               ),
             !1
           );
-        this.InitBaseInfo(),
+        if (
+          (this.InitBaseInfo(),
           this.Ore(),
           this.CheckNpcAnimationAssets(),
           this.Mesh.DoesSocketExist(
@@ -429,7 +441,26 @@ let CharacterAnimationComponent =
               ))
             : this.Mesh.DoesSocketExist(CharacterAnimationComponent_1.HitCase)
               ? (this.v3r = 1)
-              : (this.v3r = 2);
+              : (this.v3r = 2),
+          this.ActorComp.IsRoleAndCtrlByMe)
+        ) {
+          var t = this.ActorComp.CreatureData,
+            t = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(
+              t.GetRoleId(),
+            );
+          if (
+            ((this.DNa =
+              PerformanceConditionByIdWithZero_1.configPerformanceConditionByIdWithZero.GetConfig(
+                t,
+                t,
+                t,
+              )),
+            !this.DNa)
+          )
+            for (let t = 0; t < PERFORMANCE_COUNT; ++t)
+              (this.UNa[t] = !0),
+                this.MainAnimInstanceRole?.ValidPerformanceIndexes.Add(t);
+        }
       }
       return !0;
     }
@@ -443,10 +474,15 @@ let CharacterAnimationComponent =
       (this.dFe = this.ActorComp.CreatureData.GetRoleId()),
         this.SightDirect.DeepCopy(Vector_1.Vector.RightVectorProxy),
         this.SightDirect2.DeepCopy(Vector_1.Vector.RightVectorProxy),
-        t === Protocol_1.Aki.Protocol.wks.Proto_Player
+        t === Protocol_1.Aki.Protocol.kks.Proto_Player
           ? (this.IsPlayer = !0)
           : (this.IsPlayer = !1),
         this.w3r();
+    }
+    GetAnimInstanceFromMesh() {
+      super.GetAnimInstanceFromMesh(),
+        this.MainAnimInstanceInternal instanceof UE.KuroAnimInstanceRole &&
+          (this.MainAnimInstanceRole = this.MainAnimInstanceInternal);
     }
     Ore() {
       this.IsPlayer &&
@@ -492,9 +528,10 @@ let CharacterAnimationComponent =
           EventDefine_1.EEventName.RequestClearMeshRotationBuffer,
           this.U3r,
         ),
-        EventSystem_1.EventSystem.Add(
+        EventSystem_1.EventSystem.AddWithTarget(
+          this.vJ,
           EventDefine_1.EEventName.OnSetActorHidden,
-          this.tXs,
+          this.GYs,
         );
     }
     kre() {
@@ -539,15 +576,16 @@ let CharacterAnimationComponent =
           EventDefine_1.EEventName.RequestClearMeshRotationBuffer,
           this.U3r,
         ),
-        EventSystem_1.EventSystem.Remove(
+        EventSystem_1.EventSystem.RemoveWithTarget(
+          this.vJ,
           EventDefine_1.EEventName.OnSetActorHidden,
-          this.tXs,
+          this.GYs,
         );
     }
     OnEnd() {
       return (
-        this.eXs &&
-          ((this.eXs = !1), this.CancelForceDisableAnimOptimization(1)),
+        this.kYs &&
+          ((this.kYs = !1), this.CancelForceDisableAnimOptimization(1)),
         AnimController_1.AnimController.UnregisterUpdateAnimInfoEntity(
           this.Entity.Id,
         ),
@@ -563,8 +601,8 @@ let CharacterAnimationComponent =
         );
     }
     OnTick(t) {
-      this.eXs && ((this.eXs = !1), this.CancelForceDisableAnimOptimization(1)),
-        this.Kya(),
+      this.kYs && ((this.kYs = !1), this.CancelForceDisableAnimOptimization(1)),
+        this.vDa(),
         this.x3r(),
         this.b3r(t),
         this.IsPlayer &&
@@ -574,7 +612,8 @@ let CharacterAnimationComponent =
               MathUtils_1.MathUtils.SmallNumber &&
             (this.C3r = 0),
           this.q3r(),
-          this.UpdateWalkRunMix(t));
+          this.UpdateWalkRunMix(t),
+          this.RefreshPerformance());
     }
     OnForceAfterTick(t) {
       this.UpdateModelBuffer(t);
@@ -590,24 +629,29 @@ let CharacterAnimationComponent =
         ),
         (this.p3r = -1),
         this.Lie?.HasTag(1144073280) ||
-          this.Entity.GetComponent(171)?.AnyIdleLoopMontagePlaying ||
+          this.Entity.GetComponent(172)?.AnyIdleLoopMontagePlaying ||
           (this.MainAnimInstanceInternal?.IsValid() &&
             (this.StopMontage(),
+            this.vJ.AddHoldEntity("CharacterAnimationComponent.OnDisable"),
             TimerSystem_1.TimerSystem.Next(() => {
-              this.Active ||
-                (this.MainAnimInstance?.ClearMontage(),
-                UE.KuroAnimLibrary.EndAnimNotifyStates(
-                  this.MainAnimInstanceInternal,
-                ));
+              this.vJ &&
+                this.vJ.RemoveHoldEntity(
+                  "CharacterAnimationComponent.OnDisable",
+                ),
+                this.Active ||
+                  (this.MainAnimInstance?.ClearMontage(),
+                  UE.KuroAnimLibrary.EndAnimNotifyStates(
+                    this.MainAnimInstanceInternal,
+                  ));
             })),
           this.SightDirect.DeepCopy(Vector_1.Vector.RightVectorProxy),
           this.SightDirect2.DeepCopy(Vector_1.Vector.RightVectorProxy));
     }
-    Kya() {
+    vDa() {
       var t = Info_1.Info.IsPcPlatform() ? 3e3 : 1500;
-      0 === this.Qya && this.Entity?.DistanceWithCamera >= t
+      0 === this.pDa && this.Entity?.DistanceWithCamera >= t
         ? (this.Mesh.KuroAnimInstanceLod = 1)
-        : 1 === this.Qya &&
+        : 1 === this.pDa &&
           this.Entity?.DistanceWithCamera < t &&
           (this.Mesh.KuroAnimInstanceLod = 0);
     }
@@ -683,7 +727,7 @@ let CharacterAnimationComponent =
     }
     AddModelLocation(t) {
       Info_1.Info.EnableForceTick
-        ? (this.DBn.AdditionEqual(t),
+        ? (this.BBn.AdditionEqual(t),
           t.Addition(this.BufferShowTransform.GetLocation(), this.h3r),
           this.BufferShowTransform.SetLocation(this.h3r),
           this.BufferNowTime < this.BufferTimeLength ||
@@ -697,7 +741,7 @@ let CharacterAnimationComponent =
     }
     ResetModelQuat() {
       Info_1.Info.EnableForceTick
-        ? (this.DBn.Addition(
+        ? (this.BBn.Addition(
             this.BufferOriginTransform.GetLocation(),
             this.h3r,
           ),
@@ -716,7 +760,7 @@ let CharacterAnimationComponent =
     }
     ResetModelLocation() {
       Info_1.Info.EnableForceTick
-        ? (this.DBn.Reset(),
+        ? (this.BBn.Reset(),
           this.BufferShowTransform.SetLocation(
             this.BufferOriginTransform.GetLocation(),
           ),
@@ -746,7 +790,7 @@ let CharacterAnimationComponent =
           s.SetRotation(this.BufferShowTransform.GetRotation()),
           s.SetScale3D(this.BufferShowTransform.GetScale3D()));
     }
-    SetTransformWithModelBuffer(t, i, s = void 0) {
+    SetTransformWithModelBuffer(t, i, s = void 0, h = !0) {
       i < MIN_BUFFER_TIME_LENGTH
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -772,7 +816,7 @@ let CharacterAnimationComponent =
           this.ActorComp.SetActorTransformExceptMesh(
             t,
             "移动表现优化，Mesh缓动",
-            !0,
+            h,
             s,
           ),
           this.G3r(i, this.ActorComp, this.BufferModelTransform),
@@ -782,7 +826,7 @@ let CharacterAnimationComponent =
               10,
             )));
     }
-    SetLocationAndRotatorWithModelBuffer(t, i, s, h, e = 2) {
+    SetLocationAndRotatorWithModelBuffer(t, i, s, h, e = 2, r = !0) {
       s < MIN_BUFFER_TIME_LENGTH
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -795,8 +839,8 @@ let CharacterAnimationComponent =
           this.ActorComp.SetActorLocationAndRotation(
             t,
             i,
-            "移动表现优化，Mesh缓动.没有缓动",
-            !0,
+            h + ".移动表现优化.Mesh缓动.没有缓动",
+            r,
             e,
           ),
           this.StopModelBuffer())
@@ -809,8 +853,8 @@ let CharacterAnimationComponent =
           this.ActorComp.SetActorLocationAndRotationExceptMesh(
             t,
             i,
-            "移动表现优化，Mesh缓动",
-            !0,
+            h + "移动表现优化，Mesh缓动",
+            r,
             e,
           ),
           this.G3r(s, this.ActorComp, this.BufferModelTransform),
@@ -988,7 +1032,7 @@ let CharacterAnimationComponent =
           ? this.ActorComp.IsAutonomousProxy
             ? this.N3r(t) && this.O3r(t)
             : (this.k3r(this.n3r), this.O3r(t))
-          : (this.GetSightTargetItem() ?? this.SightTargetPoint
+          : ((this.GetSightTargetItem() ?? this.SightTargetPoint)
               ? this.F3r(this.n3r)
               : this.V3r(this.n3r),
             this.O3r(t)));
@@ -1008,7 +1052,7 @@ let CharacterAnimationComponent =
           : ((this.u3r = Time_1.Time.WorldTime + WATCH_CAMERA_TIME),
             this.n3r.DeepCopy(this.ActorComp.ActorForwardProxy));
       else if (ModelManager_1.ModelManager.PlotModel.IsInTemplate())
-        this.GetSightTargetItem() ?? this.SightTargetPoint
+        (this.GetSightTargetItem() ?? this.SightTargetPoint)
           ? this.F3r(this.n3r)
           : this.n3r.DeepCopy(this.ActorComp.ActorForwardProxy);
       else {
@@ -1138,7 +1182,7 @@ let CharacterAnimationComponent =
         (t = []),
         ModelManager_1.ModelManager.CreatureModel.GetEntitiesInRange(
           SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD,
-          3,
+          63,
           t,
         ),
         this.W3r(t));
@@ -1222,7 +1266,7 @@ let CharacterAnimationComponent =
     GetRandomStandActionIndex() {
       var t, i, s;
       return this.ActorComp.CreatureData.GetEntityType() !==
-        Protocol_1.Aki.Protocol.wks.Proto_Player ||
+        Protocol_1.Aki.Protocol.kks.Proto_Player ||
         !(t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
           this.dFe,
         )) ||
@@ -1255,11 +1299,11 @@ let CharacterAnimationComponent =
           ModelManager_1.ModelManager.GameModeModel.IsMulti) &&
           this.ActorComp.IsAutonomousProxy &&
           s &&
-          (((s = Protocol_1.Aki.Protocol.K3n.create()).Yjn =
-            Protocol_1.Aki.Protocol.Yjn.create()),
-          (s.Yjn.Jjn = t.toString()),
-          (s.Yjn.zjn = !i),
-          CombatMessage_1.CombatNet.Call(16711, this.Entity, s, () => {}));
+          (((s = Protocol_1.Aki.Protocol.t4n.create()).nWn =
+            Protocol_1.Aki.Protocol.nWn.create()),
+          (s.nWn.sWn = t.toString()),
+          (s.nWn.aWn = !i),
+          CombatMessage_1.CombatNet.Call(16305, this.Entity, s, () => {}));
     }
     static BoneVisibleChangeNotify(t, i) {}
     w3r(t = !0) {
@@ -1293,19 +1337,20 @@ let CharacterAnimationComponent =
         i = this.Entity.GetComponent(0).GetSummonerId(),
         a = void 0 !== i && 0 !== i;
       switch (t) {
-        case Protocol_1.Aki.Protocol.wks.Proto_Player:
+        case Protocol_1.Aki.Protocol.kks.Proto_Player:
           this.DefaultVisibilityBasedAnimTickOption = 0;
           break;
-        case Protocol_1.Aki.Protocol.wks.Proto_Monster:
+        case Protocol_1.Aki.Protocol.kks.Proto_Monster:
           this.DefaultVisibilityBasedAnimTickOption = a ? 1 : 3;
           break;
-        case Protocol_1.Aki.Protocol.wks.Proto_Vision:
+        case Protocol_1.Aki.Protocol.kks.Proto_Vision:
           this.DefaultVisibilityBasedAnimTickOption = 1;
           break;
         default:
-          Protocol_1.Aki.Protocol.wks.Proto_Npc;
+          Protocol_1.Aki.Protocol.kks.Proto_Npc;
           this.DefaultVisibilityBasedAnimTickOption = 3;
       }
+      this.RefreshAnimOptimization();
     }
     SetAnimParamsInFight(t) {
       this.RefreshAnimOptimization();
@@ -1352,18 +1397,44 @@ let CharacterAnimationComponent =
         for (let t = 0; t < i.Num(); ++t)
           i.Get(t).ConsumeExtractedRootMotion(1);
     }
+    RefreshPerformance() {
+      if (
+        this.ActorComp?.IsRoleAndCtrlByMe &&
+        this.DNa &&
+        this.MainAnimInstanceRole &&
+        this.Lie?.HasTag(248240472) &&
+        !this.xNa.Equals(this.ActorComp.ActorLocationProxy)
+      ) {
+        this.xNa.DeepCopy(this.ActorComp.ActorLocationProxy);
+        var s =
+            this.Gce.CharacterMovement.CurrentFloor.HitResult.ImpactNormal.Z,
+          h = this.Entity.GetComponent(69).WaterHeightAboveMe;
+        let i = !1;
+        for (let t = 0; t < PERFORMANCE_COUNT; ++t) {
+          var e =
+            this.DNa.StandingNormalZ[t] < s && this.DNa.WaterHeight[t] > h;
+          e !== this.UNa[t] && ((this.UNa[t] = e), (i = !0));
+        }
+        if (i) {
+          this.MainAnimInstanceRole.ValidPerformanceIndexes.Empty();
+          for (let t = 0; t < PERFORMANCE_COUNT; ++t)
+            this.UNa[t] &&
+              this.MainAnimInstanceRole.ValidPerformanceIndexes.Add(t);
+        }
+      }
+    }
   });
 (CharacterAnimationComponent.CameraPosition = new UE.FName("CameraPosition")),
   (CharacterAnimationComponent.HitCase = new UE.FName("HitCase")),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("FFn")],
+    [CombatMessage_1.CombatNet.SyncHandle("YFn")],
     CharacterAnimationComponent,
     "BoneVisibleChangeNotify",
     null,
   ),
   (CharacterAnimationComponent = CharacterAnimationComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(162)],
+      [(0, RegisterComponent_1.RegisterComponent)(163)],
       CharacterAnimationComponent,
     )),
   (exports.CharacterAnimationComponent = CharacterAnimationComponent);

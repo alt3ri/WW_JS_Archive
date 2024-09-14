@@ -11,7 +11,7 @@ const UE = require("ue"),
   WAITING_TO_CLOSE = 2e3;
 class TowerDefenseInBattleTips extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
-    super(...arguments), (this.DOt = void 0), (this.Gta = 1);
+    super(...arguments), (this.DOt = void 0), (this.ioa = 1);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -32,7 +32,7 @@ class TowerDefenseInBattleTips extends UiTickViewBase_1.UiTickViewBase {
     TowerDefenceController_1.TowerDefenseController.TryReopenInBattleTip();
   }
   bl() {
-    this.Gta =
+    this.ioa =
       ModelManager_1.ModelManager.TowerDefenseModel.GetCurrentPhantomLevelInBattle();
     var e =
         TowerDefenceController_1.TowerDefenseController.BuildPhantomIconInBattleData(),
@@ -40,17 +40,23 @@ class TowerDefenseInBattleTips extends UiTickViewBase_1.UiTickViewBase {
         (this.DOt.Apply(e),
         TowerDefenceController_1.TowerDefenseController.BuildPhantomTipsInBattleData());
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.TitleTextId),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), e.DescTextId);
+      e.DescArgs
+        ? LguiUtil_1.LguiUtil.SetLocalTextNew(
+            this.GetText(3),
+            e.DescTextId,
+            ...e.DescArgs,
+          )
+        : LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), e.DescTextId);
   }
   OnAfterPlayStartSequence() {
-    this.jfa().finally(() => {
+    this.lSa().finally(() => {
       TowerDefenceController_1.TowerDefenseController.ResetCurrentPhantomLevelUpFlag(
-        this.Gta,
+        this.ioa,
       ),
         this.CloseMe();
     });
   }
-  async jfa() {
+  async lSa() {
     await TimerSystem_1.TimerSystem.Wait(WAITING_TO_CLOSE);
   }
 }

@@ -12,14 +12,15 @@ class WeaponHideConfig {
   get HideWeaponTags() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.hideweapontagsLength(),
-      (t) => this.hideweapontags(t),
+      this.hideweapontags,
+      this,
     );
   }
-  __init(t, e) {
-    return (this.z7 = t), (this.J7 = e), this;
+  __init(t, i) {
+    return (this.z7 = t), (this.J7 = i), this;
   }
-  static getRootAsWeaponHideConfig(t, e) {
-    return (e || new WeaponHideConfig()).__init(
+  static getRootAsWeaponHideConfig(t, i) {
+    return (i || new WeaponHideConfig()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -31,10 +32,10 @@ class WeaponHideConfig {
   GetHideweapontagsAt(t) {
     return this.hideweapontags(t);
   }
-  hideweapontags(t, e) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, e)
+  hideweapontags(t, i) {
+    var e = this.J7.__offset(this.z7, 6);
+    return e
+      ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i)
       : null;
   }
   hideweapontagsLength() {

@@ -6,14 +6,18 @@ const Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   AreaMarkItem_1 = require("./MarkItem/AreaMarkItem"),
   ConfigMarkItem_1 = require("./MarkItem/ConfigMarkItem"),
+  CorniceMeetingMarkItem_1 = require("./MarkItem/CorniceMeetingMarkItem"),
   CustomMarkItem_1 = require("./MarkItem/CustomMarkItem"),
   DynamicEntityMarkItem_1 = require("./MarkItem/DynamicEntityMarkItem"),
+  EnrichmentAreaItem_1 = require("./MarkItem/EnrichmentAreaItem"),
+  EnrichmentCollectProductItem_1 = require("./MarkItem/EnrichmentCollectProductItem"),
   EntityMarkItem_1 = require("./MarkItem/EntityMarkItem"),
   FixedSceneGamePlayMarkItem_1 = require("./MarkItem/FixedSceneGamePlayMarkItem"),
   LandscapeMark_1 = require("./MarkItem/LandscapeMark"),
   MingSuNpcMarkItem_1 = require("./MarkItem/MingSuNpcMarkItem"),
   ParkourMarkItem_1 = require("./MarkItem/ParkourMarkItem"),
   PlayerMarkItem_1 = require("./MarkItem/PlayerMarkItem"),
+  PunishReportMarkItem_1 = require("./MarkItem/PunishReportMarkItem"),
   SceneGameplayMarkItem_1 = require("./MarkItem/SceneGameplayMarkItem"),
   SoundBoxMarkItem_1 = require("./MarkItem/SoundBoxMarkItem"),
   TaskMarkItem_1 = require("./MarkItem/TaskMarkItem"),
@@ -37,9 +41,6 @@ class MarkItemUtil {
       }
       return e;
     }
-  }
-  static GetTrackSourceTypeByMarkType(e) {
-    return 10 !== e ? 1 : 4;
   }
   static CreateConfigMark(r, a, t, k, M) {
     if (a) {
@@ -85,6 +86,18 @@ class MarkItemUtil {
           break;
         case 20:
           e = new LandscapeMark_1.LandscapeMarkItem(r, a, M, t, k);
+          break;
+        case 25:
+          e = new PunishReportMarkItem_1.PunishReportMarkItem(r, a, M, t, k);
+          break;
+        case 24:
+          e = new CorniceMeetingMarkItem_1.CorniceMeetingMarkItem(
+            r,
+            a,
+            M,
+            t,
+            k,
+          );
           break;
         default:
           e = new ConfigMarkItem_1.ConfigMarkItem(r, a, M, t, k);
@@ -136,6 +149,17 @@ class MarkItemUtil {
             t,
           );
           break;
+        case 22:
+          e = new EnrichmentAreaItem_1.EnrichmentAreaItem(r, k, a, t);
+          break;
+        case 23:
+          e = new EnrichmentCollectProductItem_1.EnrichmentCollectProductItem(
+            r,
+            k,
+            a,
+            t,
+          );
+          break;
         default:
           return;
       }
@@ -157,7 +181,7 @@ class MarkItemUtil {
         e
       );
   }
-  static CreateDynamicEntityMark(e, r, a, t, k, M, m = !0) {
+  static CreateDynamicEntityMark(e, r, a, t, k, M, n = !0) {
     r = ConfigManager_1.ConfigManager.MapConfig.GetDynamicConfigMark(r);
     if (r)
       return (
@@ -169,7 +193,7 @@ class MarkItemUtil {
           k,
           M,
         )),
-        m && e.Initialize(),
+        n && e.Initialize(),
         e
       );
   }

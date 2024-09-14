@@ -7,13 +7,15 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  PlatformSdkManagerNew_1 = require("../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
+  PlatformSdkServer_1 = require("../../Launcher/Platform/PlatformSdk/PlatformSdkServer"),
   CommonDefine_1 = require("../Define/CommonDefine"),
   LanguageDefineByLanguageCode_1 = require("../Define/ConfigQuery/LanguageDefineByLanguageCode"),
   Info_1 = require("./Info"),
   Log_1 = require("./Log");
 class LanguageDefine {
-  constructor(e, n, a) {
-    (this.LanguageType = e), (this.LanguageCode = n), (this.AudioCode = a);
+  constructor(e, a, n) {
+    (this.LanguageType = e), (this.LanguageCode = a), (this.AudioCode = n);
   }
 }
 (exports.LanguageDefine = LanguageDefine),
@@ -73,34 +75,36 @@ class LanguageSystem {
     return LanguageSystem.T8 ?? CommonDefine_1.CHS;
   }
   static set PackageLanguage(e) {
-    var n = LanguageSystem.T8;
+    var a = LanguageSystem.T8;
     (LanguageSystem.T8 = e),
       UE.LGUIFontData.SetAllFontCurrentCulture(
         exports.languageCultureMap.get(e),
       ),
       Info_1.Info.IsPlayInEditor ||
         UE.KismetInternationalizationLibrary.SetCurrentCulture(e, !0),
-      e !== n && UE.UIText.OnTsLanguageChange();
+      e !== a && UE.UIText.OnTsLanguageChange(),
+      PlatformSdkManagerNew_1.PlatformSdkManagerNew.IsSdkOn &&
+        PlatformSdkServer_1.PlatformSdkServer.SetLanguage(e);
   }
   static get PackageAudio() {
     return LanguageSystem.L8 ?? CommonDefine_1.CHS_AUDIO;
   }
-  static SetPackageAudio(n, e) {
-    LanguageSystem.L8 = n;
-    const a = (e) => {
+  static SetPackageAudio(a, e) {
+    LanguageSystem.L8 = a;
+    const n = (e) => {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Config",
           31,
           "SetCurrentAudioCultureAsync",
           ["Success", e],
-          ["Code", n],
+          ["Code", a],
         ),
-        (0, puerts_1.releaseManualReleaseDelegate)(a);
+        (0, puerts_1.releaseManualReleaseDelegate)(n);
     };
     UE.AkGameplayStatics.SetCurrentAudioCultureAsync(
-      n,
-      (0, puerts_1.toManualReleaseDelegate)(a),
+      a,
+      (0, puerts_1.toManualReleaseDelegate)(n),
     );
   }
   static D8(e) {
@@ -109,11 +113,11 @@ class LanguageSystem {
       : CommonDefine_1.ENGLISH_ISO639_1;
   }
   static FirstTimeSetLanguage(e) {
-    var n = UE.KismetSystemLibrary.GetDefaultLanguage(),
-      a = UE.NewArray(UE.BuiltinString);
-    for (const i of CommonDefine_1.AVAILABLE_LANGUAGES) a.Add(i);
-    var g = this.D8(n),
-      t = UE.KismetInternationalizationLibrary.GetSuitableCulture(a, n, g),
+    var a = UE.KismetSystemLibrary.GetDefaultLanguage(),
+      n = UE.NewArray(UE.BuiltinString);
+    for (const r of CommonDefine_1.AVAILABLE_LANGUAGES) n.Add(r);
+    var g = this.D8(a),
+      t = UE.KismetInternationalizationLibrary.GetSuitableCulture(n, a, g),
       u =
         LanguageDefineByLanguageCode_1.configLanguageDefineByLanguageCode.GetConfig(
           t,
@@ -128,14 +132,14 @@ class LanguageSystem {
               11,
               "当前语种表格配置不允许生效",
               ["targetLanguage", t],
-              ["currentCulture", n],
+              ["currentCulture", a],
             )),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Config",
             31,
             "第一次设置语言",
-            ["设备默认语言", n],
+            ["设备默认语言", a],
             ["查找不到时匹配默认语言", g],
             ["最合适语言", t],
           ),

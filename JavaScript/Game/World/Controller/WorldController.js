@@ -16,13 +16,16 @@ const cpp_1 = require("cpp"),
   GameBudgetInterfaceController_1 = require("../../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
   Net_1 = require("../../../Core/Net/Net"),
   PerformanceController_1 = require("../../../Core/Performance/PerformanceController"),
+  PerfSight_1 = require("../../../Core/PerfSight/PerfSight"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
   TickSystem_1 = require("../../../Core/Tick/TickSystem"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  Platform_1 = require("../../../Launcher/Platform/Platform"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  GameSettingsDeviceRender_1 = require("../../GameSettings/GameSettingsDeviceRender"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
@@ -30,9 +33,9 @@ const cpp_1 = require("cpp"),
   PhantomUtil_1 = require("../../Module/Phantom/PhantomUtil"),
   ActorUtils_1 = require("../../Utils/ActorUtils"),
   VoxelUtils_1 = require("../../Utils/VoxelUtils"),
+  CreatureModel_1 = require("../Model/CreatureModel"),
   WorldModel_1 = require("../Model/WorldModel"),
   AttachToActorController_1 = require("./AttachToActorController"),
-  PerfSight_1 = require("../../../Core/PerfSight/PerfSight"),
   DELTA_TIME_LIMIT_LOW = 20,
   DELTA_TIME_LIMIT_HIGH = 25,
   MIN_DELTA = 0,
@@ -51,9 +54,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
       (ModelManager_1.ModelManager.WorldModel.CurrentSchedulerDelta =
         MAX_DELTA),
       GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen &&
-        ((e = GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-          .GetCurrentQualityInfo()
-          .GetFrameRate()),
+        ((e = GameSettingsDeviceRender_1.GameSettingsDeviceRender.FrameRate),
         GameBudgetInterfaceController_1.GameBudgetInterfaceController.SetMaximumFrameRate(
           e,
         )),
@@ -87,7 +88,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.TeleportComplete,
         this.Ilt,
       ),
-      Net_1.Net.Register(29690, WorldController.IBn),
+      Net_1.Net.Register(25203, WorldController.RBn),
       TickSystem_1.TickSystem.Add(this.k1r.bind(this), "WorldController", 2),
       (this.qpr = TimerSystem_1.TimerSystem.Forever(
         this.Gpr,
@@ -130,10 +131,22 @@ class WorldController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.TeleportComplete,
         this.Ilt,
       ),
-      Net_1.Net.UnRegister(29690),
+      Net_1.Net.UnRegister(25203),
       !(ModelManager_1.ModelManager.WorldModel.ControlPlayerLastLocation =
         void 0)
     );
+  }
+  static iJa() {
+    2 === ResourceSystem_1.ResourceSystem.GetLoadMode() &&
+      (this.Kpr
+        ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "wp.Runtime.MaxLoadingStreamingCells 1",
+          )
+        : UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "wp.Runtime.MaxLoadingStreamingCells 4",
+          ));
   }
   static ForceGarbageCollection(e) {
     var t = cpp_1.KuroTime.GetMilliseconds64(),
@@ -141,25 +154,26 @@ class WorldController extends ControllerBase_1.ControllerBase {
         (UE.KuroStaticLibrary.ForceGarbageCollection(e),
         cpp_1.KuroTime.GetMilliseconds64() - t);
     PerfSight_1.PerfSight.IsEnable &&
-      PerfSight_1.PerfSight.PostValueF1(
+      cpp_1.FKuroPerfSightHelper.PostValueFloat1(
         "CustomPerformance",
         "ForceGarbageCollection",
         e,
-        Time_1.Time.Frame,
       );
   }
   static ManuallyGarbageCollection(e) {
     var t;
-    0 === this.fzs &&
-      ((this.fzs = 1), "Android" === UE.GameplayStatics.GetPlatformName()) &&
-      (t = UE.KuroStaticLibrary.GetDeviceCPU()).includes("SDM660") &&
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("World", 31, "Disable ManuallyGarbageCollection", [
-          "cpu",
-          t,
-        ]),
-      (this.fzs = 2)),
-      1 === this.fzs &&
+    0 === this.mea &&
+      ((this.mea = 1),
+      Platform_1.Platform.IsAndroidPlatform()
+        ? (t = UE.KuroStaticLibrary.GetDeviceCPU()).includes("SDM660") &&
+          (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("World", 31, "Disable ManuallyGarbageCollection", [
+              "cpu",
+              t,
+            ]),
+          (this.mea = 2))
+        : Platform_1.Platform.IsPs5Platform() && (this.mea = 2)),
+      1 === this.mea &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("World", 25, "ManuallyGarbageCollection", [
             "Reason: ",
@@ -172,11 +186,10 @@ class WorldController extends ControllerBase_1.ControllerBase {
         global.memoryPressureNotification(),
         (e = cpp_1.KuroTime.GetMilliseconds64() - t),
         PerfSight_1.PerfSight.IsEnable) &&
-        PerfSight_1.PerfSight.PostValueF1(
+        cpp_1.FKuroPerfSightHelper.PostValueFloat1(
           "CustomPerformance",
           "ManuallyGarbageCollection",
           e,
-          Time_1.Time.Frame,
         );
   }
   static ManuallyClearStreamingPool() {
@@ -260,10 +273,12 @@ class WorldController extends ControllerBase_1.ControllerBase {
   }
   static Npr() {
     var e = ModelManager_1.ModelManager.CreatureModel;
-    e.PendingRemoveEntitySize() && this.kpr(e.PopPendingRemoveEntity());
+    e.PendingRemoveEntitySize() &&
+      e.PeekPendingRemoveEntity().AllowDestroy &&
+      this.kpr(e.PopPendingRemoveEntity());
   }
   static kpr(e) {
-    var t, r, o, l, a;
+    var t, r, o, a, l;
     e
       ? Global_1.Global.WorldEntityHelper
         ? ((t =
@@ -272,12 +287,12 @@ class WorldController extends ControllerBase_1.ControllerBase {
             )),
           (r = e.Entity.GetComponent(1)?.Owner),
           (o = e.Entity.GetComponent(0).GetCreatureDataId()),
-          (l = Global_1.Global.WorldEntityHelper.Destroy(e)),
-          (a =
+          (a = Global_1.Global.WorldEntityHelper.Destroy(e)),
+          (l =
             AttachToActorController_1.AttachToActorController.DetachActorsAfterDestroyEntity(
               e.Id,
             )),
-          l
+          a
             ? ModelManager_1.ModelManager.WorldModel.AddDestroyActor(o, e.Id, r)
             : this.DestroyEntityActor(o, e.Id, r, !1),
           ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
@@ -288,9 +303,9 @@ class WorldController extends ControllerBase_1.ControllerBase {
               "[实体生命周期:删除实体] DestroyEntity结束",
               ["CreatureDataId", o],
               ["EntityId", e.Id],
-              ["EntitySystem.DestroyEntity结果", l],
+              ["EntitySystem.DestroyEntity结果", a],
               ["BeforDetachActors", t],
-              ["AfterDetachActors", a],
+              ["AfterDetachActors", l],
             ))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -337,12 +352,12 @@ class WorldController extends ControllerBase_1.ControllerBase {
   static Fpr(e) {
     var t = e.Entity,
       r = e.GetEntityType();
-    r !== Protocol_1.Aki.Protocol.wks.Proto_Monster &&
+    (r === Protocol_1.Aki.Protocol.kks.Proto_Monster && !t.GetComponent(204)) ||
       ((r =
         (e =
           e.GetPlayerId() ===
           ModelManager_1.ModelManager.CreatureModel.GetPlayerId()) ||
-        r === Protocol_1.Aki.Protocol.wks.Proto_Npc),
+        r === Protocol_1.Aki.Protocol.kks.Proto_Npc),
       t.GetComponent(1).SetAutonomous(e, r));
   }
   static SetActorLocationAndRotation(e, t) {
@@ -352,10 +367,10 @@ class WorldController extends ControllerBase_1.ControllerBase {
       (e = e.GetRotation()),
       (o = (0, puerts_1.$ref)(new UE.HitResult())),
       t.K2_SetActorLocationAndRotation(r, e, !1, o, !0),
-      ActorUtils_1.ActorUtils.GetEntityByActor(t)?.Entity?.GetComponent(163)
+      ActorUtils_1.ActorUtils.GetEntityByActor(t)?.Entity?.GetComponent(164)
         ?.CharacterMovement) &&
       ActorUtils_1.ActorUtils.GetEntityByActor(t)
-        .Entity.GetComponent(163)
+        .Entity.GetComponent(164)
         .CharacterMovement.AddReplayData(
           (0, puerts_1.$ref)(r),
           (0, puerts_1.$ref)(e),
@@ -376,7 +391,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
     }
   }
   static DestroyEntityActor(e, t, r, o = !0) {
-    r = this.DestroyActor(r, o);
+    r = this.DestroyActor(r, e, t, o);
     return (
       ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
         ((o =
@@ -389,53 +404,48 @@ class WorldController extends ControllerBase_1.ControllerBase {
           3,
           "[实体生命周期:删除实体] 删除实体Actor",
           ["CreatureDataId", e],
+          ["EntityId", t],
           ["Result", r],
           ["AttachSuccess", o],
         ),
       r
     );
   }
-  static DestroyActor(e, t = !0) {
+  static DestroyActor(e, t, r, o = !0) {
     if (!e?.IsValid()) return !1;
     if (!e.GetWorld()?.IsValid()) return !1;
-    let r = void 0;
-    e.IsA(UE.Pawn.StaticClass()) && (r = e.Controller);
-    let o = !1,
-      l = 0;
+    let a = void 0;
     for (
-      UE.KuroStaticLibrary.IsImplementInterface(
-        e.GetClass(),
-        UE.BPI_CreatureInterface_C.StaticClass(),
-      ) && ((o = !0), (l = e.GetEntityId())),
+      e.IsA(UE.Pawn.StaticClass()) && (a = e.Controller),
         this.Hpr.length = 0,
         this.jpr(e, this.Hpr, !0);
       this.Hpr.length;
 
     ) {
-      var a = this.Hpr.pop();
-      a?.IsValid() &&
-        a.GetWorld()?.IsValid() &&
-        a !== r &&
-        !ModelManager_1.ModelManager.AttachToActorModel.GetEntityIdByActor(a) &&
-        (a.K2_DetachFromActor(1, 1, 1),
-        a.IsA(UE.TsEffectActor_C.StaticClass())
-          ? a.StopEffect(
+      var l = this.Hpr.pop();
+      l?.IsValid() &&
+        l.GetWorld()?.IsValid() &&
+        l !== a &&
+        !ModelManager_1.ModelManager.AttachToActorModel.GetEntityIdByActor(l) &&
+        (l.K2_DetachFromActor(1, 1, 1),
+        l.IsA(UE.TsEffectActor_C.StaticClass())
+          ? l.StopEffect(
               "[WorldController.DestroyActor] 销毁entity的actor前先停止所有附加的特效",
               !0,
             )
-          : a.IsA(UE.KuroEntityActor.StaticClass()) ||
+          : l.IsA(UE.KuroEntityActor.StaticClass()) ||
             (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "World",
                 3,
                 "存在未Detach的Actor",
-                ["是否是实体Actor", o],
-                ["EntityId", l],
+                ["CreatureDataId", t],
+                ["EntityId", r],
                 ["父Actor", e.GetName()],
-                ["子Actor", a.GetName()],
+                ["子Actor", l.GetName()],
               )));
     }
-    return t ? ActorSystem_1.ActorSystem.Put(e) : e.K2_DestroyActor(), !0;
+    return o ? ActorSystem_1.ActorSystem.Put(e) : e.K2_DestroyActor(), !0;
   }
   static jpr(e, t, r) {
     if (e?.IsValid()) {
@@ -453,10 +463,10 @@ class WorldController extends ControllerBase_1.ControllerBase {
     ) {
       var o = GlobalData_1.GlobalData.World;
       if (o?.IsValid()) {
-        var l = VoxelUtils_1.VoxelUtils.GetVoxelInfo(o, e),
-          t = ModelManager_1.ModelManager.WorldModel.HandleEnvironmentUpdate(l);
+        var a = VoxelUtils_1.VoxelUtils.GetVoxelInfo(o, e),
+          t = ModelManager_1.ModelManager.WorldModel.HandleEnvironmentUpdate(a);
         if (0 !== t) {
-          var a = FNameUtil_1.FNameUtil.GetDynamicFName(
+          var l = FNameUtil_1.FNameUtil.GetDynamicFName(
               ModelManager_1.ModelManager.WorldModel.CurEnvironmentInfo
                 .DataLayerType,
             ),
@@ -474,9 +484,9 @@ class WorldController extends ControllerBase_1.ControllerBase {
                 "LevelEvent",
                 61,
                 "[WorldController]Streaming:体素参数",
-                ["LoadAdjustValue", l.LoadAdjustValue],
-                ["StreamingType", l.StreamingType],
-                ["DataLayer", a],
+                ["LoadAdjustValue", a.LoadAdjustValue],
+                ["StreamingType", a.StreamingType],
+                ["DataLayer", l],
                 ["SubDatalayer", _],
               ),
             t)
@@ -485,13 +495,13 @@ class WorldController extends ControllerBase_1.ControllerBase {
               return (
                 UE.KuroRenderingRuntimeBPPluginBPLibrary.WpBeginEnterCaveOrRoom(
                   o,
-                  a,
+                  l,
                   _,
                 ),
                 UE.KuroRenderingRuntimeBPPluginBPLibrary.WpBeginAdjustLoadRange(
                   o,
-                  l.LoadAdjustValue,
-                  l.StreamingType,
+                  a.LoadAdjustValue,
+                  a.StreamingType,
                 ),
                 UE.KuroRenderingRuntimeBPPluginBPLibrary.SetIsUsingInCaveOrIndoorShadow(
                   o,
@@ -518,14 +528,14 @@ class WorldController extends ControllerBase_1.ControllerBase {
                         "[WorldController]Streaming:非传送下,无过渡区域进入封闭空间",
                         ["Location", e],
                       ),
-                    this.Wpr()),
-                a
+                    this.RequestToNearestTeleport()),
+                l
               );
             case 1:
               return (
                 UE.KuroRenderingRuntimeBPPluginBPLibrary.WpBeginEnterCaveOrRoom(
                   o,
-                  a,
+                  l,
                   _,
                 ),
                 Log_1.Log.CheckInfo() &&
@@ -535,7 +545,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
                     "[WorldController]Streaming:进入封闭空间",
                   ),
                 cpp_1.FKuroGameBudgetAllocatorInterface.SetGlobalCavernMode(3),
-                a
+                l
               );
             case 6:
               UE.KuroRenderingRuntimeBPPluginBPLibrary.WpCancelAdjustLoadRange(
@@ -543,7 +553,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
               ),
                 UE.KuroRenderingRuntimeBPPluginBPLibrary.WpBeginLeaveCaveOrRoom(
                   o,
-                  a,
+                  l,
                   _,
                 ),
                 EventSystem_1.EventSystem.Emit(
@@ -565,7 +575,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
                         "[WorldController]Streaming:非传送下,无过渡区域退出封闭空间",
                         ["Location", e],
                       ),
-                    this.Wpr()),
+                    this.RequestToNearestTeleport()),
                 UE.KuroRenderingRuntimeBPPluginBPLibrary.SetIsUsingInCaveOrIndoorShadow(
                   o,
                   !1,
@@ -599,7 +609,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
               cpp_1.FKuroGameBudgetAllocatorInterface.SetGlobalCavernMode(1),
                 UE.KuroRenderingRuntimeBPPluginBPLibrary.WpBeginLeaveCaveOrRoom(
                   o,
-                  a,
+                  l,
                   _,
                 ),
                 Log_1.Log.CheckInfo() &&
@@ -612,8 +622,8 @@ class WorldController extends ControllerBase_1.ControllerBase {
             case 3:
               UE.KuroRenderingRuntimeBPPluginBPLibrary.WpBeginAdjustLoadRange(
                 o,
-                l.LoadAdjustValue,
-                l.StreamingType,
+                a.LoadAdjustValue,
+                a.StreamingType,
               ),
                 UE.KuroRenderingRuntimeBPPluginBPLibrary.SetIsUsingInCaveOrIndoorShadow(
                   o,
@@ -637,7 +647,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
       }
     }
   }
-  static IsEncloseSpace(e, t, r, o) {
+  static IsEncloseSpace(e, t, r, o, a = !1) {
     if (!ModelManager_1.ModelManager.GameModeModel.UseWorldPartition || !e)
       return !1;
     var l = GlobalData_1.GlobalData.World;
@@ -645,19 +655,20 @@ class WorldController extends ControllerBase_1.ControllerBase {
     if (ModelManager_1.ModelManager.GameModeModel.MapId !== WP_WORLD_ID)
       return !1;
     if (
-      r === Protocol_1.Aki.Protocol.wks.Proto_Player ||
-      r === Protocol_1.Aki.Protocol.wks.Proto_Vision
+      r === Protocol_1.Aki.Protocol.kks.Proto_Player ||
+      r === Protocol_1.Aki.Protocol.kks.Proto_Vision ||
+      a
     )
       return !1;
-    let a = void 0;
+    let _ = void 0;
     if (
-      !(a =
-        o === Protocol_1.Aki.Protocol.YTs.P6n
+      !(_ =
+        o === Protocol_1.Aki.Protocol.rLs.F6n
           ? EntityVoxelInfoByMapIdAndEntityId_1.configEntityVoxelInfoByMapIdAndEntityId.GetConfig(
               ModelManager_1.ModelManager.GameModeModel.MapId,
               e,
             )
-          : a)
+          : _)
     )
       switch (VoxelUtils_1.VoxelUtils.GetVoxelInfo(l, t).EnvType) {
         case 0:
@@ -667,7 +678,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
           DEFAULT_ENVIRONMENTTYPE;
           return !1;
       }
-    switch (a.EnvType) {
+    switch (_.EnvType) {
       case 0:
       case 1:
         return !0;
@@ -676,29 +687,50 @@ class WorldController extends ControllerBase_1.ControllerBase {
         return !1;
     }
   }
-  static Wpr() {
-    Net_1.Net.Call(10826, Protocol_1.Aki.Protocol.CCs.create(), (e) => {
-      e.O4n !==
-        Protocol_1.Aki.Protocol.O4n.Proto_ErrPlayerIsTeleportCanNotDoTeleport &&
-        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+  static RequestToNearestTeleport() {
+    Net_1.Net.Call(25547, Protocol_1.Aki.Protocol.ECs.create(), (e) => {
+      e.Q4n !==
+        Protocol_1.Aki.Protocol.Q4n.Proto_ErrPlayerIsTeleportCanNotDoTeleport &&
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          e.O4n,
-          11301,
+          e.Q4n,
+          15573,
         );
     });
   }
-  static GetEntitiesInRangeWithLocation(e, t, r, o, l) {
-    var a = [];
-    l && (o instanceof Set ? o.clear() : (o.length = 0)),
-      cpp_1.FKuroGameBudgetAllocatorInterface.GetEntitiesInRangeWithLocation(
-        e,
-        t,
-        r,
-        a,
-      );
-    for (const n of a) {
-      var _ = ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(n);
-      _ && (o instanceof Set ? o.add(_) : o.push(_));
+  static GetEntitiesInRangeWithLocation(t, r, o, a, e) {
+    var l = a instanceof Set,
+      _ = (e && (l ? a.clear() : (a.length = 0)), []);
+    for (let e = 0; e < 6; e++)
+      if (o & (1 << e)) {
+        cpp_1.FKuroGameBudgetAllocatorInterface.GetEntitiesInRangeWithLocation(
+          t,
+          r,
+          FNameUtil_1.FNameUtil.GetDynamicFName(
+            CreatureModel_1.globalEntityTypeQueryName[e],
+          ),
+          _,
+        );
+        for (const i of _) {
+          var n =
+            ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(i);
+          n && (l ? a.add(n) : a.push(n));
+        }
+        _.length = 0;
+      }
+  }
+  static GetEntitiesInRange(e, t, r, o) {
+    var a,
+      l = r instanceof Set,
+      o = (o && (l ? r.clear() : (r.length = 0)), []);
+    let _ = 0;
+    for (let e = 0; e < 6; e++)
+      t & (1 << e) &&
+        ((a = CreatureModel_1.globalEntityTypePerceptionType[e]), (_ |= a));
+    cpp_1.FKuroPerceptionInterface.GetEntitiesInRange(e, _, o);
+    for (const i of o) {
+      var n = ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(i);
+      n && (l ? r.add(n) : r.push(n));
     }
   }
   static GetCustomEntityId(e, t) {
@@ -706,8 +738,8 @@ class WorldController extends ControllerBase_1.ControllerBase {
     if (r) {
       r = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
         r,
-        Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantCustom,
-        t - 1,
+        Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeConcomitantCustom,
+        t,
       );
       if (r) return r.Id;
     } else
@@ -723,10 +755,10 @@ class WorldController extends ControllerBase_1.ControllerBase {
   ((_a = WorldController).Kpr = !1),
   (WorldController.qpr = void 0),
   (WorldController.Qpr = !1),
-  (WorldController.fzs = 0),
+  (WorldController.mea = 0),
   (WorldController.AK = !1),
-  (WorldController.IBn = (e) => {
-    cpp_1.FuncOpenLibrary.TryOpen(e.NEs);
+  (WorldController.RBn = (e) => {
+    cpp_1.FuncOpenLibrary.TryOpen(e.KEs);
   }),
   (WorldController.Gpr = () => {
     _a.Kpr
@@ -755,12 +787,14 @@ class WorldController extends ControllerBase_1.ControllerBase {
       : ((r.bTickEnabled = !0), (o.EnableImposterUpdate = !0));
   }),
   (WorldController.Zpe = (e) => {
-    _a.Kpr = e;
-    var t =
-      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
-    e
-      ? t.TryReduceCsmUpdateFrequency("Battle")
-      : t.TryRestoreCsmUpdateFrequency("Battle"),
+    (_a.Kpr = e)
+      ? GameSettingsDeviceRender_1.GameSettingsDeviceRender.TryReduceCsmUpdateFrequency(
+          "Battle",
+        )
+      : GameSettingsDeviceRender_1.GameSettingsDeviceRender.TryRestoreCsmUpdateFrequency(
+          "Battle",
+        ),
+      _a.iJa(),
       !e &&
         _a.Qpr &&
         (_a.ManuallyGarbageCollection(2),

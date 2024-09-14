@@ -5,15 +5,40 @@ const child_process_1 = require("child_process"),
   fs_1 = require("fs"),
   os_1 = require("os"),
   path = require("path"),
-  Platform_1 = require("./Platform");
-class PlatformNodeJs extends Platform_1.Platform {
+  util_1 = require("util"),
+  Interface_1 = require("./Interface");
+class PlatformNodeJs extends Interface_1.Platform {
   constructor() {
-    super(...arguments), (this.Ejs = !0);
+    super(...arguments), (this.Hjs = !0);
   }
   ReadFile(e) {
     return (0, fs_1.existsSync)(e)
       ? (0, fs_1.readFileSync)(e, "utf8").replace(/^\uFEFF/, "")
       : "";
+  }
+  async ReadFileAsync(e) {
+    try {
+      return {
+        IsSuccess: !0,
+        FileContent: (
+          await (0, util_1.promisify)(fs_1.readFile)(e, { encoding: "utf8" })
+        ).replace(/^\uFEFF/, ""),
+      };
+    } catch (e) {
+      return { IsSuccess: !1, FileContent: "" };
+    }
+  }
+  async ReadBatchFilesAsync(e) {
+    var r = { FileMap: new Map(), FailedFiles: [] },
+      t = (0, util_1.promisify)(fs_1.readFile);
+    for (const i of e)
+      try {
+        var s = await t(i, { encoding: "utf8" });
+        r.FileMap.set(i, s.replace(/^\uFEFF/, ""));
+      } catch (e) {
+        r.FailedFiles.push(i);
+      }
+    return r;
   }
   WriteFile(e, r) {
     var t = path.dirname(e);
@@ -83,10 +108,10 @@ class PlatformNodeJs extends Platform_1.Platform {
     return `${e.getHours()}:${e.getMinutes()}:` + e.getSeconds();
   }
   SetLogWithTime(e) {
-    this.Ejs = e;
+    this.Hjs = e;
   }
   Log(e, r) {
-    var t = this.Ejs ? this.ke() + ": " + r : r;
+    var t = this.Hjs ? this.ke() + ": " + r : r;
     switch (e) {
       case 0:
         this.LogLevel <= 0 && console.log(t);
@@ -118,6 +143,26 @@ class PlatformNodeJs extends Platform_1.Platform {
     }
     return "";
   }
+  GetPhysicMacAddress() {
+    var [e, r] = this.Exec(
+      `wmic path Win32_NetworkAdapter where "PNPDeviceID like '%PCI%' AND AdapterTypeID='0'" get name, MacAddress`,
+    );
+    return e && r
+      ? (e = r
+          .split(
+            `
+
+`,
+          )[1]
+          .split(" ")[0]
+          .split(":"))[0] +
+          e[1] +
+          e[2] +
+          e[3] +
+          e[4] +
+          e[5]
+      : "";
+  }
   GetPlatformType() {
     return 1;
   }
@@ -138,8 +183,8 @@ class PlatformNodeJs extends Platform_1.Platform {
   }
   ReadUassetInfo(n) {
     if (n.endsWith(".uasset") && this.ExistFile(n)) {
-      const a = (0, fs_1.readFileSync)(n);
-      n = new Uint8Array(a);
+      const o = (0, fs_1.readFileSync)(n);
+      n = new Uint8Array(o);
       let e = !1,
         r = this.be("##KUROS##"),
         t = this.qe(r, n),
@@ -149,11 +194,11 @@ class PlatformNodeJs extends Platform_1.Platform {
         i = -1;
       i =
         ((s = e ? this.Ue("##KUROE##") : this.be("##KUROE##")), this.qe(s, n));
-      var o = t + r.length;
-      if (0 <= t && 0 <= i && o < i) {
-        n = new Uint8Array(n.subarray(o, i));
-        const a = Buffer.from(n);
-        return e ? a.toString("ucs2") : a.toString("utf8");
+      var a = t + r.length;
+      if (0 <= t && 0 <= i && a < i) {
+        n = new Uint8Array(n.subarray(a, i));
+        const o = Buffer.from(n);
+        return e ? o.toString("ucs2") : o.toString("utf8");
       }
     }
     return "";

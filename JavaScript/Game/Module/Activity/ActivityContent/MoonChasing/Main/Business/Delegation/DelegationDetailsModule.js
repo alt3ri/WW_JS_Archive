@@ -62,7 +62,7 @@ class DelegationDetailsModule extends UiPanelBase_1.UiPanelBase {
                 ))
               : t());
       }),
-      (this.pMa = () => {
+      (this.Tya = () => {
         ControllerHolder_1.ControllerHolder.MoonChasingController.OpenHelperView();
       }),
       (this.yke = (t, e) => {
@@ -79,7 +79,7 @@ class DelegationDetailsModule extends UiPanelBase_1.UiPanelBase {
           "Moonfiesta_PartnerFull",
         ),
         !1)),
-      (this.fda = (t) => this.SelectedRoleIdSet.has(t));
+      (this.dga = (t) => this.SelectedRoleIdSet.has(t));
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -109,7 +109,7 @@ class DelegationDetailsModule extends UiPanelBase_1.UiPanelBase {
         this.SecondCost.CreateThenShowByActorAsync(this.GetItem(11).GetOwner()),
       ]);
   }
-  async Dma() {
+  async hfa() {
     (this.RoleModule = new DelegationRoleModule_1.DelegationRoleModule()),
       await this.RoleModule.CreateThenShowByActorAsync(
         this.GetItem(9).GetOwner(),
@@ -123,11 +123,11 @@ class DelegationDetailsModule extends UiPanelBase_1.UiPanelBase {
         this.GetItem(8).GetOwner(),
       );
   }
-  async Ama() {
+  async lfa() {
     (this.EditTeamModule = new EditTeamModule_1.EditTeamModule()),
       this.EditTeamModule.SetClickEvent(this.yke),
       this.EditTeamModule.SetCanExecuteChange(this.Lke),
-      this.EditTeamModule.SetIsItemSelected(this.fda);
+      this.EditTeamModule.SetIsItemSelected(this.dga);
     var t =
       ModelManager_1.ModelManager.MoonChasingBusinessModel.GetOwnEditTeamDataList();
     this.EditTeamModule.SetEditTeamDataList(t),
@@ -136,9 +136,9 @@ class DelegationDetailsModule extends UiPanelBase_1.UiPanelBase {
         this.GetItem(13),
       );
   }
-  HWs() {
+  VKs() {
     (this.HelperBtn = new ButtonItem_1.ButtonItem(this.GetItem(14))),
-      this.HelperBtn.SetFunction(this.pMa);
+      this.HelperBtn.SetFunction(this.Tya);
   }
   async OnBeforeStartAsync() {
     (this.RecommendLayout = new GenericLayout_1.GenericLayout(
@@ -151,8 +151,8 @@ class DelegationDetailsModule extends UiPanelBase_1.UiPanelBase {
         this.vke,
         this.GetItem(2).GetOwner(),
       )),
-      await Promise.all([this.PAr(), this.ido(), this.Dma(), this.Ama()]),
-      this.HWs();
+      await Promise.all([this.PAr(), this.ido(), this.hfa(), this.lfa()]),
+      this.VKs();
   }
   async OnBeforeShowAsyncImplement() {
     await this.RefreshAsync();
@@ -215,13 +215,16 @@ class DelegationDetailsModule extends UiPanelBase_1.UiPanelBase {
           this.SelectedRoleIdSet,
           !1,
         ),
-      e =
-        (await this.CharacterListModule.RefreshByDataAsync(t),
-        this.Data.GetRecommendList());
-    for (const i of this.CharacterListModule.GetItemList())
-      i.SetGoodItemActive(e.includes(i.GetId()));
+      e = ConfigManager_1.ConfigManager.BusinessConfig.GetDelegationConfig(
+        this.Data.Id,
+      );
+    for (const s of t) s.SetMaxValue(e.AttributeMaxValue);
+    await this.CharacterListModule.RefreshByDataAsync(t);
+    var i = this.Data.GetRecommendList();
+    for (const r of this.CharacterListModule.GetItemList())
+      r.SetGoodItemActive(i.includes(r.GetId()));
   }
-  async Uma() {
+  async _fa() {
     var t =
       ModelManager_1.ModelManager.MoonChasingBusinessModel.GetOwnEditTeamDataList();
     this.EditTeamModule.SetEditTeamDataList(t),
@@ -256,7 +259,7 @@ class DelegationDetailsModule extends UiPanelBase_1.UiPanelBase {
       this.aqe(),
       this.Dke(),
       this.Rke(),
-      await Promise.all([this.Uma(), this.Uke(), this.Ike()]),
+      await Promise.all([this._fa(), this.Uke(), this.Ike()]),
       this.Ake(),
       this.Pke(),
       this.Tke(),

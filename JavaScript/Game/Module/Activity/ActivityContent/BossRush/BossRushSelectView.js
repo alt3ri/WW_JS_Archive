@@ -67,9 +67,9 @@ class BossRushSelectView extends UiTabViewBase_1.UiTabViewBase {
     this.vVt && this.vVt.RefreshByData(this.pyn.GetBossRushLevelDetailInfo());
   }
   OnBeforeShow() {
-    this.SOn(), this.Esi(), this.hDn(), this.K8e();
+    this.ROn(), this.Esi(), this.hDn(), this.K8e();
   }
-  SOn() {
+  ROn() {
     let e = "Start";
     ModelManager_1.ModelManager.BossRushModel.PlayBackAnimation &&
       (e = "ShowView"),

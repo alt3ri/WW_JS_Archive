@@ -15,7 +15,7 @@ class ActivityDoubleRewardData extends ActivityData_1.ActivityBaseData {
     super(...arguments), (this.MOe = 0), (this.EOe = void 0);
   }
   PhraseEx(e) {
-    this.MOe = e.wps.hps;
+    this.MOe = e.Nps.Cps;
   }
   GetExDataRedPointShowState() {
     var e = this.ARn();

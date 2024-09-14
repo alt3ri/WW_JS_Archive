@@ -17,28 +17,42 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configCatchSignalDifficultyById.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configCatchSignalDifficultyById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configCatchSignalDifficultyById.GetConfig(";
 exports.configCatchSignalDifficultyById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (i, o = !0) => {
-    if (
-      (t = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (o) {
-        var n = KEY_PREFIX + `#${i})`;
-        const f = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (f) return f;
+  GetConfig: (i, n = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${i})`),
+      o =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (o) {
+      if (n) {
+        var f = KEY_PREFIX + `#${i})`;
+        const a = ConfigCommon_1.ConfigCommon.GetConfig(f);
+        if (a)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
+          );
       }
       if (
-        (t =
+        (o =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, i, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,32 +60,37 @@ exports.configCatchSignalDifficultyById = {
               i,
             ]))
       ) {
-        var t,
-          n = void 0;
+        f = void 0;
         if (
-          (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([o, f] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", i],
           )),
-          t)
+          o)
         ) {
-          const f =
+          const a =
             CatchSignalDifficulty_1.CatchSignalDifficulty.getRootAsCatchSignalDifficulty(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(f.buffer)),
             );
           return (
-            o &&
-              ((t = KEY_PREFIX + `#${i})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(t, f)),
+            n &&
+              ((o = KEY_PREFIX + `#${i})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(o, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            f
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            a
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=CatchSignalDifficultyById.js.map

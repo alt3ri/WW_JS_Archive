@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AttributeEventEffects = void 0);
 const Log_1 = require("../../../../../../../Core/Common/Log"),
+  Macro_1 = require("../../../../../../../Core/Preprocessor/Macro"),
   BulletController_1 = require("../../../../../Bullet/BulletController"),
   AbilityUtils_1 = require("../AbilityUtils"),
   CharacterAttributeIntervalCheck_1 = require("../CharacterAttributeIntervalCheck"),
@@ -34,15 +35,15 @@ class AttributeEventEffects extends ExtraEffectBase_1.BuffEffect {
       e = t.ExtraEffectGrowParameters1,
       t = t.ExtraEffectGrowParameters2,
       s = this.Level,
-      h = Number(i[0]),
-      r = 1 === Number(i[1]),
+      r = Number(i[0]),
+      h = 1 === Number(i[1]),
       e = AbilityUtils_1.AbilityUtils.GetLevelValue(e, s, -1),
       t = AbilityUtils_1.AbilityUtils.GetLevelValue(t, s, -1);
     (this.KQo = new CharacterAttributeIntervalCheck_1.AttributeIntervalCheck(
-      h,
+      r,
       e,
       t,
-      r,
+      h,
     )),
       (this.GoalType = Number(i[2])),
       (this.Ids = i[3].split("#").map((t) => BigInt(t))),
@@ -53,7 +54,7 @@ class AttributeEventEffects extends ExtraEffectBase_1.BuffEffect {
   OnCreated() {
     var t = this.JQo();
     t
-      ? ((this.QQo = t.GetComponent(158)),
+      ? ((this.QQo = t.GetComponent(159)),
         this.KQo.IsPerTenThousand && void 0 === this.KQo.MaxAttributeId
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -153,17 +154,17 @@ class AttributeEventEffects extends ExtraEffectBase_1.BuffEffect {
       s = t?.Actor;
     if (i && e && s)
       for (let t = 0; t < this.Ids.length; t++) {
-        var h = String(this.Ids[t]),
-          r = AbilityUtils_1.AbilityUtils.GetArrayValue(
+        var r = String(this.Ids[t]),
+          h = AbilityUtils_1.AbilityUtils.GetArrayValue(
             this.Times,
             t,
             ExtraEffectPassiveEffects_1.DEFAULT_PASSIVE_BULLET_TIMES,
           ),
           a = this.Buff.MessageId;
-        for (let t = 0; t < r; t++)
+        for (let t = 0; t < h; t++)
           BulletController_1.BulletController.CreateBulletCustomTarget(
             s,
-            h,
+            r,
             i,
             { SyncType: 1 },
             a,

@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Rotator_1 = require("../../../../../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils"),
+  CameraController_1 = require("../../../../../../Camera/CameraController"),
   EffectSystem_1 = require("../../../../../../Effect/EffectSystem"),
   GameplayCueEffect_1 = require("./GameplayCueEffect"),
   MAGIC_NUMBER = 0.1;
@@ -20,7 +21,9 @@ class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
       (this.U$o = Rotator_1.Rotator.Create()),
       (this.A$o = !1),
       (this.P$o = !1),
+      (this.e9a = !1),
       (this.x$o = Rotator_1.Rotator.Create()),
+      (this.t9a = Rotator_1.Rotator.Create()),
       (this.w$o = 0),
       (this.B$o = void 0),
       (this.b$o = 0),
@@ -54,15 +57,17 @@ class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
       this.CueConfig.LockRotation.Y,
       this.CueConfig.LockRotation.Z,
     );
-    (this.P$o = !t.IsZero()), t.Rotation(this.x$o);
+    (this.P$o = !t.IsZero()),
+      t.Rotation(this.x$o),
+      (this.e9a = this.CueConfig.LockCamera);
   }
   OnTick(t) {
-    super.OnTick(t), this.G$o(t);
+    super.OnTick(t), this.i9a(t);
   }
   AttachEffect() {
-    this.G$o();
+    this.i9a();
   }
-  G$o(t) {
+  i9a(t) {
     if (EffectSystem_1.EffectSystem.IsValid(this.EffectViewHandle)) {
       var i = EffectSystem_1.EffectSystem.GetEffectActor(this.EffectViewHandle);
       if (
@@ -79,6 +84,10 @@ class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
           : (this.SocketTransform.FromUeTransform(
               this.TargetMesh.GetSocketTransform(this.TargetSocket),
             ),
+            this.e9a &&
+              ((this.t9a.Yaw =
+                CameraController_1.CameraController.CameraRotator.Yaw),
+              this.SocketTransform.SetRotation(this.t9a.Quaternion())),
             this.RelativeTransform.ComposeTransforms(
               this.SocketTransform,
               this.TargetTransform,

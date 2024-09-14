@@ -21,7 +21,7 @@ class InstanceDungeonInfo extends LogicTreeContainer_1.LogicTreeContainer {
       (this.v1i = 0),
       (this.M1i = void 0),
       (this.E1i = void 0),
-      (this.aca = void 0),
+      (this.lCa = void 0),
       (this.S1i = 0),
       (this.u1i = e);
   }
@@ -59,7 +59,7 @@ class InstanceDungeonInfo extends LogicTreeContainer_1.LogicTreeContainer {
     return this.E1i;
   }
   get FinishEscAction() {
-    return this.aca;
+    return this.lCa;
   }
   get SubType() {
     return this.S1i;
@@ -80,7 +80,7 @@ class InstanceDungeonInfo extends LogicTreeContainer_1.LogicTreeContainer {
           (this.c1i = PublicUtil_1.PublicUtil.GetConfigTextByKey(e.TidName)),
           (this.g1i = e.LevelPlayTrack),
           (this.E1i = e.LevelPlayOpenActions),
-          (this.aca = e.EscActionsAfterDungeonCompletion),
+          (this.lCa = e.EscActionsAfterDungeonCompletion),
           (this.S1i = t.InstSubType),
           e.LevelPlayRewardConfig.Type)
         ) {

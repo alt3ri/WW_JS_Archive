@@ -14,8 +14,8 @@ var GrapplingHookPointComponent_1,
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
         s = Reflect.decorate(t, e, i, o);
       else
-        for (var a = t.length - 1; 0 <= a; a--)
-          (n = t[a]) &&
+        for (var h = t.length - 1; 0 <= h; h--)
+          (n = t[h]) &&
             (s = (r < 3 ? n(s) : 3 < r ? n(e, i, s) : n(e, i)) || s);
       return 3 < r && s && Object.defineProperty(e, i, s), s;
     };
@@ -56,12 +56,16 @@ let GrapplingHookPointComponent =
         (this.YO = void 0),
         (this.fen = !1),
         (this.d6o = void 0),
+        (this.bSa = Vector_1.Vector.Create()),
         (this.pen = (t) => {
           t === HOOK_VISION_ID && (this.Lie.AddTag(1888174838), (this.ac = 0));
         });
     }
-    get Location() {
+    get HookLocation() {
       return Vector_1.Vector.Create(this.Hte?.ActorLocationProxy);
+    }
+    get TriggerLocation() {
+      return this.bSa;
     }
     get Radius() {
       return this.Lo?.Range.Radius ?? 0;
@@ -94,7 +98,7 @@ let GrapplingHookPointComponent =
             RestrictionId: this.Lo.PlayerStateRestritionId,
           }),
           (this.YO = { Type: 0, Conditions: [t] })),
-        (this.Lie = this.Entity.GetComponent(180)),
+        (this.Lie = this.Entity.GetComponent(181)),
         this.Lie?.Valid && this.Lie.AddTag(-254251760),
         this.Lo.HookInteractConfig)
       )
@@ -112,7 +116,15 @@ let GrapplingHookPointComponent =
     }
     OnStart() {
       if (
-        ((this.Hte = this.Entity.GetComponent(185)),
+        ((this.Hte = this.Entity.GetComponent(187)),
+        this.bSa.DeepCopy(this.Hte.ActorLocationProxy),
+        this.bSa.AdditionEqual(
+          Vector_1.Vector.Create(
+            this.Lo?.Range.Center.X ?? 0,
+            this.Lo?.Range.Center.Y ?? 0,
+            this.Lo?.Range.Center.Z ?? 0,
+          ),
+        ),
         this.Entity.GetComponent(0))
       ) {
         GrapplingHookPointComponent_1.ven ||
@@ -152,7 +164,7 @@ let GrapplingHookPointComponent =
       this.ac !== t &&
         (this.Lie.RemoveTag(hookPointStateTagMap.get(this.ac)),
         1 === this.ac &&
-          this.Entity.GetComponent(185).PlaySceneInteractionEndEffect(0),
+          this.Entity.GetComponent(187).PlaySceneInteractionEndEffect(0),
         (this.ac = t),
         this.Lie.AddTag(hookPointStateTagMap.get(this.ac)));
     }
@@ -207,7 +219,7 @@ let GrapplingHookPointComponent =
   (GrapplingHookPointComponent.ven = !1),
   (GrapplingHookPointComponent = GrapplingHookPointComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(75)],
+      [(0, RegisterComponent_1.RegisterComponent)(76)],
       GrapplingHookPointComponent,
     )),
   (exports.GrapplingHookPointComponent = GrapplingHookPointComponent);

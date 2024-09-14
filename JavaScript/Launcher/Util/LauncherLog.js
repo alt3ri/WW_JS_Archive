@@ -1,4 +1,5 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LauncherLog = void 0);
 const puerts_1 = require("puerts"),
@@ -46,14 +47,14 @@ class LauncherLog {
   static Debug(r, ...e) {
     LauncherLog.b8(3, r, e, levelTrace[3]);
   }
-  static b8(t, n, a, o, c) {
+  static b8(t, a, n, o, c) {
     if (((LauncherLog.o6 += 1), !(t > LauncherLog.B8))) {
       let r =
         `[${LauncherLog.o6}][${levelName[t]}][Launcher][${LauncherLog.ke()}] ` +
-        n;
-      if (0 < a.length) {
+        a;
+      if (0 < n.length) {
         r += " ";
-        for (const u of a) r += `[${u[0]}: ${LauncherLog.G8(u[1])}]`;
+        for (const u of n) r += `[${u[0]}: ${LauncherLog.G8(u[1])}]`;
       }
       let e = void 0;
       (e = o ? LauncherLog.N8(c, c ? 0 : DEFAULT_SKIP_INDEX) : e) &&
@@ -68,31 +69,12 @@ class LauncherLog {
       r.getMilliseconds()
     );
   }
+  static BVa(r) {
+    return JSON.stringify(r, this.bVa).replace(/"/g, "");
+  }
   static O8(r) {
     try {
-      return JSON.stringify(r, (r, e) => {
-        if (void 0 === e) return "undefined";
-        if (null === e) return "null";
-        var t = typeof e;
-        if ("bigint" == t) return e.toString() + "n";
-        if ("function" == t) return e.toString();
-        if ("function" == typeof e.ToString) return e.ToString();
-        if (e instanceof Set) {
-          let r = "";
-          for (const n of e)
-            0 === r.length ? (r += "Set(") : (r += ","),
-              (r += JSON.stringify(n));
-          return (r += ")");
-        }
-        if (e instanceof Map) {
-          let r = "";
-          for (const a of e)
-            0 === r.length ? (r += "Map(") : (r += ","),
-              (r += `[${JSON.stringify(a[0])}, ${JSON.stringify(a[1])}]`);
-          return (r += ")");
-        }
-        return e;
-      });
+      return this.BVa(r);
     } catch (r) {
       r instanceof Error
         ? LauncherLog.ErrorWithStack("Log 序列化异常", r, ["error", r.message])
@@ -107,16 +89,16 @@ class LauncherLog {
         : "string" == typeof r
           ? r
           : LauncherLog.k8 && "object" == typeof r
-            ? LauncherLog.O8(r) ?? ""
+            ? (LauncherLog.O8(r) ?? "")
             : r.toString();
   }
-  static N8(n, a) {
+  static N8(a, n) {
     var r = Error.prepareStackTrace;
     Error.prepareStackTrace = LauncherLog.F8;
     let o = void 0;
     if (
-      (n
-        ? (o = n.stack)
+      (a
+        ? (o = a.stack)
         : (Error.captureStackTrace(LauncherLog.V8, LauncherLog.N8),
           (o = LauncherLog.V8.stack),
           (LauncherLog.V8.stack = void 0)),
@@ -125,7 +107,7 @@ class LauncherLog {
     ) {
       let e = "",
         t = "";
-      for (let r = a; r < o.length; ++r) {
+      for (let r = n; r < o.length; ++r) {
         var c,
           u,
           L,
@@ -157,26 +139,72 @@ class LauncherLog {
         0 < t.length && (r = (r += "TS 堆栈:a\n") + t),
         (r =
           UE.KuroStaticLibrary.GetBlueprintCallstack &&
-          (n = UE.KuroStaticLibrary.GetBlueprintCallstack()) &&
-          0 < n.length
-            ? r + "BP 堆栈:\n" + n
+          (a = UE.KuroStaticLibrary.GetBlueprintCallstack()) &&
+          0 < a.length
+            ? r + "BP 堆栈:\n" + a
             : r)
       );
     }
   }
   static H8(r, e, t) {
-    var n;
+    var a;
     return r && 0 !== r.length
-      ? 0 < (n = r.indexOf(e))
-        ? r.substring(n + e.length + t)
+      ? 0 < (a = r.indexOf(e))
+        ? r.substring(a + e.length + t)
         : r
       : "unknown";
   }
 }
-((exports.LauncherLog = LauncherLog).B8 = 3),
+(exports.LauncherLog = LauncherLog),
+  ((_a = LauncherLog).B8 = 3),
   (LauncherLog.k8 = !0),
   (LauncherLog.o6 = 0),
   (LauncherLog.U8 = ""),
+  (LauncherLog.bVa = (r, t) => {
+    if (void 0 === t) return "undefined";
+    if (null === t) return "null";
+    var e = typeof t;
+    if ("bigint" == e) return t.toString() + "n";
+    if ("function" == e) return t.toString();
+    if ("function" == typeof t.ToString) return t.ToString();
+    if (t instanceof Set) {
+      let r = "";
+      for (const n of t)
+        0 === r.length ? (r += "Set(") : (r += ","), (r += _a.BVa(n));
+      return (r += ")");
+    }
+    if (t instanceof Map) {
+      let r = "";
+      for (const o of t)
+        0 === r.length ? (r += "Map(") : (r += ","),
+          (r += `[${_a.BVa(o[0])}, ${_a.BVa(o[1])}]`);
+      return (r += ")");
+    }
+    if (t instanceof UE.TMap) {
+      let e = "";
+      for (let r = 0; r < t.Num(); r++) {
+        0 === e.length ? (e += "TMap(") : (e += ",");
+        var a = t.GetKey(r);
+        e += `[${_a.BVa(a)}, ${_a.BVa(t.Get(a))}]`;
+      }
+      return (e += ")");
+    }
+    if (t instanceof UE.TArray) {
+      let e = "";
+      for (let r = 0; r < t.Num(); r++)
+        0 === e.length ? (e += "TArray(") : (e += ","),
+          (e += `[${_a.BVa(t.Get(r))}]`);
+      return (e += ")");
+    }
+    if (t instanceof UE.TSet) {
+      let e = "";
+      for (let r = 0; r < t.Num(); r++)
+        0 === e.length ? (e += "TSet(") : (e += ","),
+          (e += `[${_a.BVa(t.Get(r))}]`);
+      return (e += ")");
+    }
+    return t;
+  }),
   (LauncherLog.F8 = (r, e) => e),
   (LauncherLog.V8 = { stack: void 0 });
 //# sourceMappingURL=LauncherLog.js.map

@@ -51,8 +51,8 @@ class LevelSequencePlayer {
       (t = this.Qxt.GetSequencePlayerByKey(e))?.IsValid() &&
       (t = t.SequencePlayer)?.IsValid() &&
       (t.IsStopped()
-        ? (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
+        ? (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
               "UiCore",
               11,
               "UI动画播放重播时已结束,重新调用播放逻辑",
@@ -60,8 +60,8 @@ class LevelSequencePlayer {
               ["关卡序列", this.Jxt],
             ),
           this.PlayLevelSequenceByName(e, i.IsBlock))
-        : (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
+        : (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
               "UiCore",
               11,
               "UI动画播放重播时在持续,修改播放帧",

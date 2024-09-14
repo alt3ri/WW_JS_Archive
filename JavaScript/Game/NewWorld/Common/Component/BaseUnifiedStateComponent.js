@@ -123,7 +123,7 @@ let BaseUnifiedStateComponent =
     OnStart() {
       return (
         (this.ActorComponent = this.Entity.GetComponent(1)),
-        (this.TagComponent = this.Entity.GetComponent(188)),
+        (this.TagComponent = this.Entity.GetComponent(190)),
         (this.IsInGameInternal = !1),
         this.InitCharState(),
         EventSystem_1.EventSystem.AddWithTarget(
@@ -386,7 +386,7 @@ let BaseUnifiedStateComponent =
   (BaseUnifiedStateComponent.BaseNeedLoad = !0),
   (BaseUnifiedStateComponent = BaseUnifiedStateComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(91)],
+      [(0, RegisterComponent_1.RegisterComponent)(92)],
       BaseUnifiedStateComponent,
     )),
   (exports.BaseUnifiedStateComponent = BaseUnifiedStateComponent);

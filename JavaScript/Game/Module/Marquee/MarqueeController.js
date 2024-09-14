@@ -58,26 +58,18 @@ class MarqueeController extends UiControllerBase_1.UiControllerBase {
     const a = ModelManager_1.ModelManager.MarqueeModel;
     200 !== e && 404 === e
       ? MarqueeController.KAi()
-      : (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Marquee", 9, "接收到跑马灯数据", ["marquee", n]),
-        n?.includes("contents")
-          ? (e = Json_1.Json.Parse(n))
-            ? (e.forEach((e) => {
-                var n = new MarqueeModel_1.MarqueeData();
-                n.Phrase(e), a.AddOrUpdateMarqueeDate(n);
-              }),
-              a.CurMarquee &&
-                !PublicUtil_1.PublicUtil.IsInIpWhiteList(
-                  a.CurMarquee.WhiteLists,
-                ) &&
-                MarqueeController.CloseMarqueeView(!1))
-            : MarqueeController.KAi()
-          : Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Marquee",
-              28,
-              "跑马灯数据不正确未包含 contents 字段，需要检查跑马灯数据",
-            ));
+      : n?.includes("contents") &&
+        ((e = Json_1.Json.Parse(n))
+          ? (e.forEach((e) => {
+              var n = new MarqueeModel_1.MarqueeData();
+              n.Phrase(e), a.AddOrUpdateMarqueeDate(n);
+            }),
+            a.CurMarquee &&
+              !PublicUtil_1.PublicUtil.IsInIpWhiteList(
+                a.CurMarquee.WhiteLists,
+              ) &&
+              MarqueeController.CloseMarqueeView(!1))
+          : MarqueeController.KAi());
   }
   static KAi() {
     UiManager_1.UiManager.IsViewShow("MarqueeView") &&
@@ -107,28 +99,25 @@ class MarqueeController extends UiControllerBase_1.UiControllerBase {
   }
   static QAi() {
     var e;
-    Log_1.Log.CheckInfo() && Log_1.Log.Info("Marquee", 28, "检查跑马灯"),
-      UiManager_1.UiManager.IsViewShow("MarqueeView") ||
-      UiManager_1.UiManager.IsViewOpen("MarqueeView")
-        ? Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "Marquee",
-            28,
-            "CheckMarquee",
-            ["IsViewShow", UiManager_1.UiManager.IsViewShow("MarqueeView")],
-            ["IsViewOpen", UiManager_1.UiManager.IsViewOpen("MarqueeView")],
-          )
-        : (ModelManager_1.ModelManager.MarqueeModel.SortMarqueeQueue(),
-          (e = ModelManager_1.ModelManager.MarqueeModel.PeekMarqueeData())
-            ? this.CheckCurMarqueeValid(e) &&
-              PublicUtil_1.PublicUtil.IsInIpWhiteList(e.WhiteLists)
-              ? UiManager_1.UiManager.OpenView("MarqueeView")
-              : (ModelManager_1.ModelManager.MarqueeModel.RemoveMarqueeData(
-                  e.Id,
-                ),
-                MarqueeController.QAi())
-            : Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Marquee", 28, "获取队列的第一个跑马灯数据空"));
+    UiManager_1.UiManager.IsViewShow("MarqueeView") ||
+    UiManager_1.UiManager.IsViewOpen("MarqueeView")
+      ? Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "Marquee",
+          28,
+          "CheckMarquee",
+          ["IsViewShow", UiManager_1.UiManager.IsViewShow("MarqueeView")],
+          ["IsViewOpen", UiManager_1.UiManager.IsViewOpen("MarqueeView")],
+        )
+      : (ModelManager_1.ModelManager.MarqueeModel.SortMarqueeQueue(),
+        (e = ModelManager_1.ModelManager.MarqueeModel.PeekMarqueeData())
+          ? this.CheckCurMarqueeValid(e) &&
+            PublicUtil_1.PublicUtil.IsInIpWhiteList(e.WhiteLists)
+            ? UiManager_1.UiManager.OpenView("MarqueeView")
+            : (ModelManager_1.ModelManager.MarqueeModel.RemoveMarqueeData(e.Id),
+              MarqueeController.QAi())
+          : Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("Marquee", 28, "获取队列的第一个跑马灯数据空"));
   }
   static CheckCurMarqueeValid(e) {
     var n, a;

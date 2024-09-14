@@ -41,7 +41,9 @@ class ActivitySubViewGeneralInfo extends ActivitySubViewBase_1.ActivitySubViewBa
       s =
         ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
         this.GetItem(3));
-    (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
+    (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(
+      this.ActivityBaseData,
+    )),
       await Promise.all([
         this.LNe.CreateThenShowByActorAsync(t.GetOwner()),
         this.DNe.CreateThenShowByActorAsync(i.GetOwner()),
@@ -65,8 +67,8 @@ class ActivitySubViewGeneralInfo extends ActivitySubViewBase_1.ActivitySubViewBa
       this.UNe.SetTitleByTextId("CollectActivity_reward"),
       this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
       this.UNe.RefreshItemLayout(i),
-      this.ANe.FunctionButton.BindCallback(this.DFe),
-      this.ANe.FunctionButton.RefreshTextNew("CollectActivity_reward"),
+      this.ANe.FunctionButton.SetFunction(this.DFe),
+      this.ANe.FunctionButton.SetLocalTextNew("CollectActivity_reward"),
       this.OnRefreshView());
   }
   OnRefreshView() {
@@ -80,15 +82,17 @@ class ActivitySubViewGeneralInfo extends ActivitySubViewBase_1.ActivitySubViewBa
     this.ANe?.FunctionButton?.SetUiActive(t),
       this.ANe?.SetPanelConditionVisible(!t),
       t ||
-        ((t = this.GetCurrentLockConditionText()),
-        this.ANe?.SetLockTextByTextId(t));
+        this.ANe.SetPerformanceConditionLock(
+          this.ActivityBaseData.ConditionGroupId,
+          this.ActivityBaseData.Id,
+        );
   }
   FNe() {
     var [t, i] = this.GetTimeVisibleAndRemainTime();
     this.LNe.SetTimeTextVisible(t), t && this.LNe.SetTimeTextByText(i);
   }
   SetBtnText(t, ...i) {
-    this.ANe?.FunctionButton?.RefreshTextNew(t, i);
+    this.ANe?.FunctionButton?.SetLocalTextNew(t, i);
   }
   SetClickFunc(t) {
     this.k5e = t;

@@ -183,7 +183,7 @@ class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return CharacterStatisticsComponent_1.CharacterStatisticsComponent.GetItemListViewCount();
   }
   static TestLeaveSplineMove(t) {
-    t.GetEntityNoBlueprint().GetComponent(97).EndSplineMove(1),
+    t.GetEntityNoBlueprint().GetComponent(98).EndSplineMove(1),
       CameraController_1.CameraController.FightCamera.LogicComponent.ExitCameraSpline();
   }
   static GetBaseCharacterTransform() {

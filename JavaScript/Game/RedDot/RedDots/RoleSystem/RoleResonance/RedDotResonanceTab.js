@@ -12,6 +12,7 @@ class RedDotResonanceTab extends RedDotBase_1.RedDotBase {
     return [
       EventDefine_1.EEventName.RedDotRefreshItemData,
       EventDefine_1.EEventName.UpdateRoleResonanceDetailView,
+      EventDefine_1.EEventName.RoleSystemChangeRole,
     ];
   }
   OnCheck(e) {

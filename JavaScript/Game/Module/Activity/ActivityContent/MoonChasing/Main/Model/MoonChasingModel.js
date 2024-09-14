@@ -20,19 +20,19 @@ class MoonChasingModel extends ModelBase_1.ModelBase {
       (this.MainQuestIdList = []),
       (this.BranchQuestIdList = []),
       (this.HasEnteredMainViewFlag = !1),
-      (this.Y9s = new Map()),
+      (this.E7s = new Map()),
       (this.HandbookRewardIdList = []),
-      (this.J9s = (e, t) => e.Goal - t.Goal),
-      (this.z9s = (e, t) =>
+      (this.y7s = (e, t) => e.Goal - t.Goal),
+      (this.I7s = (e, t) =>
         e.Sort === t.Sort ? e.Type - t.Type : e.Sort - t.Sort),
-      (this.DCa = void 0),
-      (this.ATa = void 0);
+      (this.Efa = void 0),
+      (this.gwa = void 0);
   }
   OnInit() {
     return this.InitHandbookReward(), this.InitQuestInfo(), !0;
   }
   OnClear() {
-    return this.SaveRoleRedDot(), !0;
+    return !0;
   }
   GetPopularityValue() {
     var e = ConfigManager_1.ConfigManager.BusinessConfig.GetPopularityItemId();
@@ -82,18 +82,18 @@ class MoonChasingModel extends ModelBase_1.ModelBase {
       (e.Id = t.Id),
         (e.Goal = t.Goal),
         (e.DropId = t.RewardInfo),
-        this.Y9s.set(t.Id, e);
+        this.E7s.set(t.Id, e);
     }
     this.HandbookRewardIdList.length = 0;
-    for (const o of Array.from(this.Y9s.values()).sort(this.J9s))
+    for (const o of Array.from(this.E7s.values()).sort(this.y7s))
       this.HandbookRewardIdList.push(o.Id);
   }
   GetHandbookRewardDataById(e) {
-    return this.Y9s.get(e);
+    return this.E7s.get(e);
   }
   HasHandbookRewardRedDot() {
     var e = this.GetHandbookUnlockCount();
-    for (const t of this.Y9s.values()) if (1 === t.GetState(e)) return !0;
+    for (const t of this.E7s.values()) if (1 === t.GetState(e)) return !0;
     return !1;
   }
   GetMemoryInfo(t) {
@@ -110,19 +110,19 @@ class MoonChasingModel extends ModelBase_1.ModelBase {
       };
       switch (o.Type) {
         case 1:
-          o.Content = t.n7s.toString();
+          o.Content = t.j7s.toString();
           break;
         case 2:
-          o.Content = t.s7s.toString();
+          o.Content = t.W7s.toString();
           break;
         case 3:
-          o.Content = t.a7s.toString();
+          o.Content = t.Q7s.toString();
           break;
         case 4:
           o.Content = this.GetHandbookUnlockCount().toString();
           break;
         case 5:
-          o.Content = t.h7s.toString();
+          o.Content = t.K7s.toString();
           break;
         case 6:
           var a =
@@ -132,16 +132,16 @@ class MoonChasingModel extends ModelBase_1.ModelBase {
           o.Content = a.length.toString();
           break;
         case 7: {
-          var a = t.l7s,
-            r = void 0 !== a?.J4n && 0 !== a.J4n;
+          var a = t.X7s,
+            r = void 0 !== a?.s5n && 0 !== a.s5n;
           let e = 0;
           r
             ? ((n =
                 ConfigManager_1.ConfigManager.BusinessConfig.GetDelegationConfig(
-                  a.J4n,
+                  a.s5n,
                 )),
               (o.Content = n.Title),
-              (e = a.p8n),
+              (e = a.D8n),
               (n =
                 ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustTypeById(
                   n.EntrustType,
@@ -158,16 +158,16 @@ class MoonChasingModel extends ModelBase_1.ModelBase {
           break;
         }
         case 8: {
-          var r = t.u7s,
-            i = void 0 !== r?.J4n && 0 !== r.J4n;
+          var r = t.J7s,
+            i = void 0 !== r?.s5n && 0 !== r.s5n;
           let e = 0;
           i
             ? ((s =
                 ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustRoleById(
-                  r.J4n,
+                  r.s5n,
                 )),
               (o.Content = s.Name),
-              (e = r.p8n),
+              (e = r.D8n),
               (o.IconPath = s.Icon))
             : (o.Content = "Moonfiesta_Word3");
           var s =
@@ -179,16 +179,16 @@ class MoonChasingModel extends ModelBase_1.ModelBase {
           break;
         }
         case 9: {
-          var i = t._7s,
-            l = void 0 !== i?.J4n && 0 !== i.J4n;
+          var i = t.Y7s,
+            l = void 0 !== i?.s5n && 0 !== i.s5n;
           let e = 0;
           l
             ? ((g =
                 ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustRoleById(
-                  i.J4n,
+                  i.s5n,
                 )),
               (o.Content = g.Name),
-              (e = i.p8n),
+              (e = i.D8n),
               (o.IconPath = g.Icon))
             : (o.Content = "Moonfiesta_Word3");
           var g =
@@ -202,7 +202,7 @@ class MoonChasingModel extends ModelBase_1.ModelBase {
       }
       e.push(o);
     }
-    return e.sort(this.z9s);
+    return e.sort(this.I7s);
   }
   GetFirstUnlockData() {
     var e =
@@ -215,36 +215,36 @@ class MoonChasingModel extends ModelBase_1.ModelBase {
         ? [1, e.Id]
         : void 0;
   }
-  get ACa() {
+  get yfa() {
     var e;
     return (
-      void 0 === this.DCa &&
+      void 0 === this.Efa &&
         ((e = LocalStorage_1.LocalStorage.GetPlayer(
           LocalStorageDefine_1.ELocalStoragePlayerKey.MoonChasingDelegation,
           0,
         )),
-        (this.DCa = e)),
-      this.DCa
+        (this.Efa = e)),
+      this.Efa
     );
   }
-  set ACa(e) {
-    this.DCa !== e &&
+  set yfa(e) {
+    this.Efa !== e &&
       (LocalStorage_1.LocalStorage.SetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.MoonChasingDelegation,
         e,
       ),
-      (this.DCa = e),
+      (this.Efa = e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.MoonChasingRefreshDelegationRedDot,
       ));
   }
   CheckDelegationRedDotState() {
     return (
-      !this.ACa || TimeUtil_1.TimeUtil.GetCurrentCrossDayStamp() !== this.ACa
+      !this.yfa || TimeUtil_1.TimeUtil.GetCurrentCrossDayStamp() !== this.yfa
     );
   }
   RemoveDelegationRedDot() {
-    this.ACa = TimeUtil_1.TimeUtil.GetCurrentCrossDayStamp();
+    this.yfa = TimeUtil_1.TimeUtil.GetCurrentCrossDayStamp();
   }
   CheckRoleRedDotState() {
     return (
@@ -340,32 +340,32 @@ class MoonChasingModel extends ModelBase_1.ModelBase {
         EventDefine_1.EEventName.MoonChasingRefreshQuestRedDot,
       );
   }
-  get RTa() {
+  get fwa() {
     var e;
     return (
-      void 0 === this.ATa &&
+      void 0 === this.gwa &&
         ((e = LocalStorage_1.LocalStorage.GetPlayer(
           LocalStorageDefine_1.ELocalStoragePlayerKey.MoonChasingMemoryChecked,
           !1,
         )),
-        (this.ATa = e ?? !1)),
-      this.ATa
+        (this.gwa = e ?? !1)),
+      this.gwa
     );
   }
-  set RTa(e) {
-    this.ATa !== e &&
+  set fwa(e) {
+    this.gwa !== e &&
       (LocalStorage_1.LocalStorage.SetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.MoonChasingMemoryChecked,
         e,
       ),
-      (this.ATa = e),
+      (this.gwa = e),
       ActivityMoonChasingController_1.ActivityMoonChasingController.RefreshActivityRedDot());
   }
   CheckMemoryRedDotState() {
-    return !this.RTa;
+    return !this.fwa;
   }
   RemoveMemoryRedDot() {
-    this.RTa = !0;
+    this.fwa = !0;
   }
 }
 exports.MoonChasingModel = MoonChasingModel;

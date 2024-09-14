@@ -19,7 +19,8 @@ class SkillDescription {
   get SkillDetailNum() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.skilldetailnumLength(),
-      (t) => this.skilldetailnum(t),
+      this.skilldetailnum,
+      this,
     );
   }
   get Description() {

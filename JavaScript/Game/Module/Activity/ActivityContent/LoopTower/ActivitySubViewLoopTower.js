@@ -38,7 +38,7 @@ class ActivitySubViewLoopTower extends ActivitySubViewBase_1.ActivitySubViewBase
           e,
         );
       }),
-      (this.cZs = () => {
+      (this.Ita = () => {
         LocalStorage_1.LocalStorage.SetPlayer(
           LocalStorageDefine_1.ELocalStoragePlayerKey.LoopTowerIsClickShop,
           !0,
@@ -49,7 +49,7 @@ class ActivitySubViewLoopTower extends ActivitySubViewBase_1.ActivitySubViewBase
             0,
           );
       }),
-      (this.mZs = () => {
+      (this.Tta = () => {
         1 ===
           ModelManager_1.ModelManager.TowerModel?.GetDifficultyRewardProgress(
             TowerData_1.VARIATION_RISK_DIFFICULTY,
@@ -81,8 +81,8 @@ class ActivitySubViewLoopTower extends ActivitySubViewBase_1.ActivitySubViewBase
       [8, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [4, this.cZs],
-        [5, this.mZs],
+        [4, this.Ita],
+        [5, this.Tta],
       ]);
   }
   OnSetData() {}
@@ -100,7 +100,9 @@ class ActivitySubViewLoopTower extends ActivitySubViewBase_1.ActivitySubViewBase
         ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
         await this.UNe.CreateThenShowByActorAsync(e.GetOwner()),
         this.GetItem(3));
-    (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
+    (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(
+      this.ActivityBaseData,
+    )),
       await this.ANe.CreateThenShowByActorAsync(e.GetOwner()),
       await ControllerHolder_1.ControllerHolder.TowerController.RefreshTower();
   }
@@ -140,7 +142,7 @@ class ActivitySubViewLoopTower extends ActivitySubViewBase_1.ActivitySubViewBase
       );
   }
   OnRefreshView() {
-    this.FNe(), this.VNe(), this.dZs();
+    this.FNe(), this.VNe(), this.Lta();
   }
   OnTimer(e) {
     this._fe && this.FNe();
@@ -168,9 +170,9 @@ class ActivitySubViewLoopTower extends ActivitySubViewBase_1.ActivitySubViewBase
       "CollectActivity_Button_ahead",
     );
     this.ANe.FunctionButton.SetText(e),
-      this.ANe.FunctionButton.BindCallback(this.ONe);
+      this.ANe.FunctionButton.SetFunction(this.ONe);
   }
-  dZs() {
+  Lta() {
     var e = ModelManager_1.ModelManager.TowerModel,
       t = e.GetDifficultyMaxStars(TowerData_1.VARIATION_RISK_DIFFICULTY),
       e = e.GetDifficultyAllStars(TowerData_1.VARIATION_RISK_DIFFICULTY);

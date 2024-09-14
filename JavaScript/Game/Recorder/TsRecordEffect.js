@@ -3,15 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
+  EffectContext_1 = require("../Effect/EffectContext/EffectContext"),
   EffectSystem_1 = require("../Effect/EffectSystem"),
-  RecorderBlueprintFunctionLibrary_1 = require("./RecorderBlueprintFunctionLibrary"),
-  EffectContext_1 = require("../Effect/EffectContext/EffectContext");
+  RecorderBlueprintFunctionLibrary_1 = require("./RecorderBlueprintFunctionLibrary");
 class TsRecordEffect extends UE.KuroRecordEffect {
   constructor() {
     super(...arguments),
       (this.EffectModelDataPath = ""),
       (this.EffectModelData = void 0),
       (this.LifeTimeType = 0),
+      (this.ManualProcessTime = 0),
       (this.EffectHandle = 0),
       (this.Playing = !1);
   }
@@ -33,8 +34,15 @@ class TsRecordEffect extends UE.KuroRecordEffect {
       this.EffectModelDataPath &&
       this.TryAddEffectView(),
       this.EffectHandle &&
-        !Info_1.Info.IsGameRunning() &&
-        EffectSystem_1.EffectSystem.TickHandleInEditor(this.EffectHandle, t);
+        (Info_1.Info.IsGameRunning() ||
+          EffectSystem_1.EffectSystem.TickHandleInEditor(this.EffectHandle, t),
+        3 === this.LifeTimeType) &&
+        EffectSystem_1.EffectSystem.HandleSeekToTimeWithProcess(
+          this.EffectHandle,
+          this.ManualProcessTime,
+          !0,
+          t,
+        );
   }
   OnPlay() {
     (this.Playing = !0), this.TryAddEffectView();

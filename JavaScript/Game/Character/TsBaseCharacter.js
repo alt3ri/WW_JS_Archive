@@ -191,6 +191,13 @@ class TsBaseCharacter extends UE.BaseCharacter {
           EventDefine_1.EEventName.CustomMoveSki,
           e,
         );
+        break;
+      case CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_ROLL:
+        EventSystem_1.EventSystem.EmitWithTarget(
+          this.CharacterActorComponent.Entity,
+          EventDefine_1.EEventName.CustomMoveRoll,
+          e,
+        );
     }
   }
   FightCommand(e) {}

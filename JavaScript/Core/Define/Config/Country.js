@@ -10,8 +10,10 @@ class Country {
     return this.id();
   }
   get Influences() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.influencesLength(), (t) =>
-      this.influences(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.influencesLength(),
+      this.influences,
+      this,
     );
   }
   get Title() {

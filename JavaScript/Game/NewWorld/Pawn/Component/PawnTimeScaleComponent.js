@@ -20,16 +20,29 @@ var PawnTimeScaleComponent_1,
       return 3 < h && o && Object.defineProperty(e, i, o), o;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.PawnTimeScaleComponent = exports.TimeScale = void 0);
+  (exports.PawnTimeScaleComponent =
+    exports.TimeScale =
+    exports.getSourceGroup =
+      void 0);
 const puerts_1 = require("puerts"),
   Time_1 = require("../../../../Core/Common/Time"),
   PriorityQueue_1 = require("../../../../Core/Container/PriorityQueue"),
   EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
-  LIMIT_SCALE = 0;
+  LIMIT_SCALE = 0,
+  sourceTypeGroup = new Map([
+    [1, [0, 1, 2, 3, 4, 6, 7, 8, 11]],
+    [2, [9, 10]],
+    [3, [5]],
+  ]);
+function getSourceGroup(t) {
+  for (var [e, i] of sourceTypeGroup.entries()) if (i.includes(t)) return e;
+  return 0;
+}
+exports.getSourceGroup = getSourceGroup;
 class TimeScale {
-  constructor(t, e, i, s, r, h, o, n) {
+  constructor(t, e, i, s, r, h, o, n, a) {
     (this.StartTime = t),
       (this.EndTime = e),
       (this.Priority = i),
@@ -38,6 +51,7 @@ class TimeScale {
       (this.Duration = h),
       (this.Id = o),
       (this.SourceType = n),
+      (this.SourceTypeGroup = a),
       (this.MarkDelete = !1),
       (this.rrr = void 0),
       (this.nrr = void 0),
@@ -101,14 +115,17 @@ let PawnTimeScaleComponent =
         (this.TimeScaleMap = new Map()),
         (this.Hhn = 1),
         (this.PauseLocks = new Map()),
+        (this.RemoveLockTimestamp = -1),
         (this.DelayLocks = new Map());
     }
     static CompareScalePriority(t, e) {
-      return t.Priority !== e.Priority
-        ? e.Priority - t.Priority
-        : t.TimeDilation !== e.TimeDilation
-          ? t.TimeDilation - e.TimeDilation
-          : e.EndTime - t.EndTime;
+      return t.SourceTypeGroup !== e.SourceTypeGroup
+        ? e.SourceTypeGroup - t.SourceTypeGroup
+        : t.Priority !== e.Priority
+          ? e.Priority - t.Priority
+          : t.TimeDilation !== e.TimeDilation
+            ? t.TimeDilation - e.TimeDilation
+            : e.EndTime - t.EndTime;
     }
     OnInit() {
       return (
@@ -120,7 +137,7 @@ let PawnTimeScaleComponent =
     }
     OnStart() {
       (this.ActorComp = this.Entity.GetComponent(1)),
-        (this.Xln = this.Entity.GetComponent(52));
+        (this.Xln = this.Entity.GetComponent(53));
       var t = this.ActorComp.CreatureData.GetEntityPropertyConfig();
       return (this.Vhn = t.子弹受击顿帧时长比例 / 100), !0;
     }
@@ -144,6 +161,7 @@ let PawnTimeScaleComponent =
               s,
               this.Hhn++,
               r,
+              getSourceGroup(r),
             )),
             this.TimeScaleList.Push(o),
             this.TimeScaleMap.set(o.Id, o),
@@ -168,12 +186,14 @@ let PawnTimeScaleComponent =
       this.PauseLocks.has(t) && this.RemovePauseLock(t);
       let e = -1;
       this.Xln.IsImmuneTimeScaleEffect() ||
-        (e = this.SetTimeScale(1 / 0, 0, void 0, 1 / 0, 8)),
+        (e = this.SetTimeScale(1 / 0, 0, void 0, 1 / 0, 9)),
         this.PauseLocks.set(t, e);
     }
     RemovePauseLock(t) {
       var e = this.PauseLocks.get(t);
-      void 0 !== e && this.RemoveTimeScale(e), this.PauseLocks.delete(t);
+      void 0 !== e && this.RemoveTimeScale(e),
+        this.PauseLocks.delete(t),
+        (this.RemoveLockTimestamp = Time_1.Time.NowSeconds);
     }
     ImmunePauseLock() {
       this.PauseLocks.forEach((t) => {
@@ -182,13 +202,13 @@ let PawnTimeScaleComponent =
     }
     ResumePauseLock() {
       this.PauseLocks.forEach((t, e) => {
-        var i = this.SetTimeScale(1 / 0, 0, void 0, 1 / 0, 8);
+        var i = this.SetTimeScale(1 / 0, 0, void 0, 1 / 0, 9);
         this.PauseLocks.set(e, i);
       });
     }
     AddDelayLock(t) {
       this.DelayLocks.has(t) && this.RemoveDelayLock(t);
-      var e = this.SetTimeScale(1 / 0, 1, void 0, 1 / 0, 9);
+      var e = this.SetTimeScale(1 / 0, 1, void 0, 1 / 0, 10);
       this.DelayLocks.set(t, e);
     }
     RemoveDelayLock(t) {
@@ -198,7 +218,7 @@ let PawnTimeScaleComponent =
   });
 (PawnTimeScaleComponent = PawnTimeScaleComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(109)],
+    [(0, RegisterComponent_1.RegisterComponent)(110)],
     PawnTimeScaleComponent,
   )),
   (exports.PawnTimeScaleComponent = PawnTimeScaleComponent);

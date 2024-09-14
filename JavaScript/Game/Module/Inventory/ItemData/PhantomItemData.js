@@ -6,6 +6,12 @@ const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLa
   ModelManager_1 = require("../../../Manager/ModelManager"),
   AttributeItemData_1 = require("./AttributeItemData");
 class PhantomItemData extends AttributeItemData_1.AttributeItemData {
+  constructor() {
+    super(...arguments), (this.XVa = 0);
+  }
+  SetFetterGroupId(e) {
+    this.XVa = e;
+  }
   GetConfig() {
     return ConfigManager_1.ConfigManager.InventoryConfig.GetPhantomItemConfig(
       this.ConfigId,
@@ -44,6 +50,20 @@ class PhantomItemData extends AttributeItemData_1.AttributeItemData {
   }
   GetRedDotDisableRule() {
     return this.GetConfig().RedDotDisableRule;
+  }
+  GetFetterGroupConfig() {
+    var e;
+    return 0 !== this.XVa
+      ? ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupById(
+          this.XVa,
+        )
+      : void 0 !==
+          (e =
+            ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+              this.UniqueId,
+            ))
+        ? e.GetFetterGroupConfig()
+        : void 0;
   }
 }
 exports.PhantomItemData = PhantomItemData;

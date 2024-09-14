@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SortConfig = void 0);
-const FilterSortGroupById_1 = require("../../../../../../Core/Define/ConfigQuery/FilterSortGroupById"),
+const FilterSortConfigById_1 = require("../../../../../../Core/Define/ConfigQuery/FilterSortConfigById"),
+  FilterSortGroupById_1 = require("../../../../../../Core/Define/ConfigQuery/FilterSortGroupById"),
   MultiTextLang_1 = require("../../../../../../Core/Define/ConfigQuery/MultiTextLang"),
   SortById_1 = require("../../../../../../Core/Define/ConfigQuery/SortById"),
   SortRuleByIdAndDataId_1 = require("../../../../../../Core/Define/ConfigQuery/SortRuleByIdAndDataId"),
@@ -24,6 +25,13 @@ class SortConfig extends ConfigBase_1.ConfigBase {
   }
   GetSortId(e) {
     return FilterSortGroupById_1.configFilterSortGroupById.GetConfig(e).SortId;
+  }
+  IsConfigSortSave(e, r) {
+    e = FilterSortConfigById_1.configFilterSortConfigById.GetConfig(e);
+    return !!e && e.SaveGroupId.includes(r);
+  }
+  GetConfigSortFormatId(e, r) {
+    return e.toString() + "_" + r.toString();
   }
 }
 exports.SortConfig = SortConfig;

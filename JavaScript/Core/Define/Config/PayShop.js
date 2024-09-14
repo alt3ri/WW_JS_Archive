@@ -22,8 +22,10 @@ class PayShop {
     return this.name();
   }
   get Money() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.moneyLength(), (t) =>
-      this.money(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.moneyLength(),
+      this.money,
+      this,
     );
   }
   get Notice() {

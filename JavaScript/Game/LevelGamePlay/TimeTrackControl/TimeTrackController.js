@@ -76,7 +76,7 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
     this.TimelineTraceExitRequest();
     var e = ModelManager_1.ModelManager.CreatureModel.GetEntity(
       ModelManager_1.ModelManager.TimeTrackControlModel.RefEntityId,
-    )?.Entity?.GetComponent(149);
+    )?.Entity?.GetComponent(150);
     e && e.ForceExitSeqCamera(),
       (ModelManager_1.ModelManager.StaticSceneModel.IsNotAutoExitSceneCamera =
         !1),
@@ -92,10 +92,10 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
             7,
             "时间控制装置启动请求:当前没有有效的控制实体",
           ),
-        Protocol_1.Aki.Protocol.xCs.create());
-    (r.P4n = MathUtils_1.MathUtils.NumberToLong(a)),
-      (r.r5n = e),
-      Net_1.Net.Call(5686, r, (e) => {
+        Protocol_1.Aki.Protocol.NCs.create());
+    (r.F4n = MathUtils_1.MathUtils.NumberToLong(a)),
+      (r.c5n = e),
+      Net_1.Net.Call(15147, r, (e) => {
         e
           ? (ModelManager_1.ModelManager.TimeTrackControlModel.InitControlInfo(
               e,
@@ -103,7 +103,7 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
             (ModelManager_1.ModelManager.StaticSceneModel.IsNotAutoExitSceneCamera =
               !0),
             (ModelManager_1.ModelManager.StaticSceneModel.IsForceKeepUi = !0),
-            this.Gwe(e.ySs, t)
+            this.Gwe(e.PSs, t)
               ? Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "SceneGameplay",
@@ -142,31 +142,31 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
             "时间控制装置变更请求:当前没有有效的控制实体",
           ),
         (ModelManager_1.ModelManager.TimeTrackControlModel.CanUpdated = !1),
-        Protocol_1.Aki.Protocol.BCs.create());
-    (a.h6n = e),
-      (a.P4n = MathUtils_1.MathUtils.NumberToLong(t)),
-      Net_1.Net.Call(13837, a, (e) => {
+        Protocol_1.Aki.Protocol.VCs.create());
+    (a.f6n = e),
+      (a.F4n = MathUtils_1.MathUtils.NumberToLong(t)),
+      Net_1.Net.Call(18608, a, (e) => {
         var t;
         (ModelManager_1.ModelManager.TimeTrackControlModel.CanUpdated = !0),
           e &&
-            (e.hvs === Protocol_1.Aki.Protocol.O4n.Proto_ErrTimelineMove
+            (e.Cvs === Protocol_1.Aki.Protocol.Q4n.Proto_ErrTimelineMove
               ? EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.OnTimeTrackControlUpdate,
-                  e.zvs,
-                  e.hvs,
+                  e.nps,
+                  e.Cvs,
                 )
-              : e.hvs === Protocol_1.Aki.Protocol.O4n.NRs &&
+              : e.Cvs === Protocol_1.Aki.Protocol.Q4n.KRs &&
                 ((t =
                   ModelManager_1.ModelManager.TimeTrackControlModel
                     .ControlPoint),
                 ModelManager_1.ModelManager.TimeTrackControlModel.UpdateControlInfo(
-                  e.zvs,
+                  e.nps,
                 ),
-                this.Nwe(t, e.zvs),
+                this.Nwe(t, e.nps),
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.OnTimeTrackControlUpdate,
-                  e.zvs,
-                  e.hvs,
+                  e.nps,
+                  e.Cvs,
                 )));
       });
   }
@@ -180,9 +180,9 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
             7,
             "时间控制装置退出请求:当前没有有效的控制实体",
           ),
-        Protocol_1.Aki.Protocol.GCs.create());
-    (t.P4n = MathUtils_1.MathUtils.NumberToLong(e)),
-      Net_1.Net.Call(3811, t, (e) => {});
+        Protocol_1.Aki.Protocol.HCs.create());
+    (t.F4n = MathUtils_1.MathUtils.NumberToLong(e)),
+      Net_1.Net.Call(25003, t, (e) => {});
   }
   static Gwe(t, a) {
     if (t?.length) {
@@ -190,7 +190,7 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
         var r = MathUtils_1.MathUtils.LongToNumber(t[e]),
           i = ModelManager_1.ModelManager.CreatureModel.GetEntity(r);
         if (i?.Valid) {
-          i = i.Entity?.GetComponent(149);
+          i = i.Entity?.GetComponent(150);
           if (i && i.ForceEnterSeqCamera())
             return (
               (ModelManager_1.ModelManager.TimeTrackControlModel.RefEntityId =
@@ -221,7 +221,7 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
   static Nwe(e, t) {
     var a = ModelManager_1.ModelManager.TimeTrackControlModel.ControllerEntity;
     a?.Valid
-      ? ((a = a.Entity.GetComponent(120)),
+      ? ((a = a.Entity.GetComponent(121)),
         ModelManager_1.ModelManager.TimeTrackControlModel.GetConfigStatesCounts() <
           2 ||
           (t !== e && a?.PlayActiveSeqForDuration(t < e, -1)))
@@ -246,15 +246,15 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
 }
 (exports.TimeTrackController = TimeTrackController),
   ((_a = TimeTrackController).B7 = void 0),
-  (TimeTrackController.wBn = () => {
+  (TimeTrackController.VBn = () => {
     _a.FinishCallback(!0);
   }),
   (TimeTrackController.OnViewTargetChanged = (e) => {
     CameraController_1.CameraController.Model.IsToLockOnCameraMode() &&
       _a.B7 &&
       (e <= 1
-        ? TimerSystem_1.TimerSystem.Delay(_a.wBn, 1e3)
-        : TimerSystem_1.TimerSystem.Delay(_a.wBn, 1e3 * e));
+        ? TimerSystem_1.TimerSystem.Delay(_a.VBn, 1e3)
+        : TimerSystem_1.TimerSystem.Delay(_a.VBn, 1e3 * e));
   }),
   (TimeTrackController.zpe = (e, t) => {
     TimeTrackController.SafeUnRegisterEvents(t),

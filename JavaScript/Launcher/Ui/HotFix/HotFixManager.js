@@ -44,21 +44,21 @@ class HotFixManager {
       t ? this.dyr.UpdateProgressRate(0) : this.dyr.SetProgressActive(!1),
       await this.WaitFrame();
   }
-  async UpdateProgress(t, i, e, ...s) {
-    this.dyr.SetProgressLeftTips(e, ...s),
+  async UpdateProgress(t, i, e, ...a) {
+    this.dyr.SetProgressLeftTips(e, ...a),
       this.dyr.SetProgressActive(!0),
       this.dyr.UpdateProgressRate(i),
       (t || 1 <= i) && (await this.WaitFrame());
   }
-  async UpdatePatchDownProgress(t, i, e, s, o, r) {
-    this.dyr.SetProgressText("PatchDownload", o, r),
+  async UpdatePatchDownProgress(t, i, e, a, r, o) {
+    this.dyr.SetProgressText("PatchDownload", r, o),
       this.dyr.SetPatchText("PatchDownID", e),
-      this.dyr.SetSpeedText("PatchDownSpeed", s),
+      this.dyr.SetSpeedText("PatchDownSpeed", a),
       this.dyr.SetProgressActive(!0),
       this.dyr.UpdateProgressRate(i),
       (t || 1 <= i) && (await this.WaitFrame());
   }
-  async ShowDialog(i, e, s, o, r, a, ...h) {
+  async ShowDialog(i, e, a, r, o, s, ...h) {
     var t;
     if (
       (UE.KuroVariableFunctionLibrary.HasStringValue("back_to_game") &&
@@ -79,27 +79,27 @@ class HotFixManager {
       );
     try {
       var n = new HotPatchLogReport_1.HotPatchLog(),
-        c = ((n.s_step_id = "start_hotpatch_dialog"), { content: s, args: h });
+        c = ((n.s_step_id = "start_hotpatch_dialog"), { content: a, args: h });
       (n.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(c)),
         HotPatchLogReport_1.HotPatchLogReport.Report(n),
         (this.cyr = !0),
         this.dyr.SetRepairButtonEnable(!0);
       let t = !1;
       this.dyr.SetConfirmationTitle(e),
-        this.dyr.SetConfirmationContent(s, ...h),
+        this.dyr.SetConfirmationContent(a, ...h),
         this.dyr.SetConfirmationCloseButtonActive(!0),
         (t = i
-          ? (this.dyr.SetConfirmationLeftButtonText(o),
-            this.dyr.SetConfirmationRightButtonText(r),
+          ? (this.dyr.SetConfirmationLeftButtonText(r),
+            this.dyr.SetConfirmationRightButtonText(o),
             await this.fyr(!0))
-          : (this.dyr.SetConfirmationMiddleButtonText(a), await this.pyr(!0))),
+          : (this.dyr.SetConfirmationMiddleButtonText(s), await this.pyr(!0))),
         await this.WaitFrame(),
         (this.cyr = !1),
         this.dyr.SetRepairButtonEnable(!1);
       var _ = new HotPatchLogReport_1.HotPatchLog(),
         w =
           ((_.s_step_id = "end_hotpatch_dialog"),
-          { success: !0, info: { content: s, args: h, selectRet: t } });
+          { success: !0, info: { content: a, args: h, selectRet: t } });
       return (
         (_.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(w)),
         HotPatchLogReport_1.HotPatchLogReport.Report(_),
@@ -160,31 +160,48 @@ class HotFixManager {
     );
   }
   async ShowPrivacyProtocolView() {
-    return (
-      !PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().NeedPrivacyProtocol() ||
-      new Promise((t) => {
-        var i = SdkProtocolView_1.SdkProtocolViewData.CreateViewData(
-          () => {
-            LauncherLog_1.LauncherLog.Info("Sdk同意协议"), t(!0);
-          },
-          () => {
-            LauncherLog_1.LauncherLog.Info("Sdk拒绝协议"), t(!1);
-          },
-        );
-        this.dyr?.ShowProtocolView(i);
-      })
-    );
+    return PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().NeedPrivacyProtocol()
+      ? PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetPrivacyAgreeState()
+        ? (LauncherLog_1.LauncherLog.Info(
+            "PlatformSdkManagerNew.GetPlatformSdk().GetPrivacyAgreeState() true",
+          ),
+          !0)
+        : new Promise((t) => {
+            var i = SdkProtocolView_1.SdkProtocolViewData.CreateViewData(
+              () => {
+                LauncherLog_1.LauncherLog.Info("Sdk同意协议"),
+                  this.dyr?.SetProtocolViewViewState(!1),
+                  PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().SavePrivacyAgreeState(
+                    !0,
+                  ),
+                  t(!0);
+              },
+              () => {
+                LauncherLog_1.LauncherLog.Info("Sdk拒绝协议"),
+                  this.dyr?.SetProtocolViewViewState(!1),
+                  PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().SavePrivacyAgreeState(
+                    !1,
+                  ),
+                  t(!1);
+              },
+            );
+            this.dyr?.ShowProtocolView(i);
+          })
+      : (LauncherLog_1.LauncherLog.Info(
+          "PlatformSdkManagerNew.GetPlatformSdk().NeedPrivacyProtocol() false",
+        ),
+        !0);
   }
-  static SetLocalText(t, e, ...s) {
+  static SetLocalText(t, e, ...a) {
     e = LauncherConfigLib_1.LauncherConfigLib.GetHotPatchText(e);
     if (void 0 === e) t.SetText("");
     else {
       let i = e;
-      if (s)
-        for (let t = 0; t < s.length; t++) {
-          var o = s[t],
-            r = `{${t}}`;
-          i = i.split(r).join(o);
+      if (a)
+        for (let t = 0; t < a.length; t++) {
+          var r = a[t],
+            o = `{${t}}`;
+          i = i.split(o).join(r);
         }
       t.SetText(i);
     }

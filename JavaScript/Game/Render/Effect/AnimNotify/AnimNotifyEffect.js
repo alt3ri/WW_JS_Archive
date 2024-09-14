@@ -44,7 +44,7 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
     return !0;
   }
   K2_Notify(t, i) {
-    this.LastSkeletalMesh = t;
+    AnimNotifyEffect.NotifyStat.Start(), (this.LastSkeletalMesh = t);
     var e = this.LastSkeletalMesh.GetOwner(),
       f = this.EffectDataAssetRef.ToAssetPathName();
     if (!f?.length)
@@ -58,6 +58,7 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
             ["outer", e?.GetName()],
             ["animation", i?.GetName()],
           ),
+        AnimNotifyEffect.NotifyStat.Stop(),
         !1
       );
     if (
@@ -75,6 +76,7 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
             ["outer", e?.GetName()],
             ["animation", i?.GetName()],
           ),
+        AnimNotifyEffect.NotifyStat.Stop(),
         !1
       );
     EffectSystem_1.EffectSystem.InitializeWithPreview(!1);
@@ -84,10 +86,11 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
         e.Tags.Contains(RenderConfig_1.RenderConfig.UIName)
           ? (o = 1)
           : ((e instanceof TsBaseCharacter_1.default &&
-              e.CharacterActorComponent?.Entity?.GetComponent(33)) ||
+              e.CharacterActorComponent?.Entity?.GetComponent(34)) ||
               (e instanceof TsEffectActor_1.default &&
                 0 === e.GetEffectType())) &&
             (o = 0),
+        AnimNotifyEffect.CreateEffectContextStat.Start(),
         void 0),
       s =
         (((n =
@@ -102,6 +105,8 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
         (n.SourceObject = e),
         (n.CreateFromType = 1),
         e?.ActorHasTag(AnimNotifyEffect.TagFlagNoNiagara) && (n.PlayFlag |= 1),
+        AnimNotifyEffect.CreateEffectContextStat.Stop(),
+        AnimNotifyEffect.SpawnEffectStat.Start(),
         void 0);
     e instanceof TsBaseCharacter_1.default &&
       (s = e.CharacterActorComponent?.GetReplaceEffect(f));
@@ -116,17 +121,23 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
         EffectSystem_1.EffectSystem.SetEffectNotRecord(t, !0);
       },
     );
-    return !(
-      !i ||
-      !EffectSystem_1.EffectSystem.IsValid(i) ||
-      (this.AttachEffectToSkill(e, i),
-      this.SetupTransform(EffectSystem_1.EffectSystem.GetEffectActor(i), e),
-      EffectSystem_1.EffectSystem.ForceCheckPendingInit(i),
-      0)
+    return (
+      AnimNotifyEffect.SpawnEffectStat.Stop(),
+      i && EffectSystem_1.EffectSystem.IsValid(i)
+        ? (AnimNotifyEffect.AttachEffectToSkillStat.Start(),
+          this.AttachEffectToSkill(e, i),
+          AnimNotifyEffect.AttachEffectToSkillStat.Stop(),
+          AnimNotifyEffect.SetupTransformStat.Start(),
+          this.SetupTransform(EffectSystem_1.EffectSystem.GetEffectActor(i), e),
+          AnimNotifyEffect.SetupTransformStat.Stop(),
+          EffectSystem_1.EffectSystem.ForceCheckPendingInit(i),
+          AnimNotifyEffect.NotifyStat.Stop(),
+          !0)
+        : (AnimNotifyEffect.NotifyStat.Stop(), !1)
     );
   }
   GameplayTagsCheck(t) {
-    var i = t.CharacterActorComponent?.Entity?.GetComponent(188);
+    var i = t.CharacterActorComponent?.Entity?.GetComponent(190);
     if (i) {
       var e = this.PlayNeedTags.Num();
       if (this.NeedAnyTag) {
@@ -147,7 +158,7 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
   }
   AttachEffectToSkill(i, e) {
     if (i instanceof TsBaseCharacter_1.default) {
-      i = i.CharacterActorComponent?.Entity?.GetComponent(33);
+      i = i.CharacterActorComponent?.Entity?.GetComponent(34);
       if (i) {
         let t = 0;
         (!this.DetachWhenSkillEnd && 0 === this.WhenSkillEnd) ||
@@ -441,11 +452,19 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
   (AnimNotifyEffect.SocketNameLeftFoot = void 0),
   (AnimNotifyEffect.SocketNameRightFoot = void 0),
   (AnimNotifyEffect.LineTrace = void 0),
-  (AnimNotifyEffect.NotifyStat = void 0),
-  (AnimNotifyEffect.CreateEffectContextStat = void 0),
-  (AnimNotifyEffect.SpawnEffectStat = void 0),
-  (AnimNotifyEffect.AttachEffectToSkillStat = void 0),
-  (AnimNotifyEffect.SetupTransformStat = void 0),
+  (AnimNotifyEffect.NotifyStat = Stats_1.Stat.Create("K2_Notify")),
+  (AnimNotifyEffect.CreateEffectContextStat = Stats_1.Stat.Create(
+    "K2_Notify.CreateEffectContext",
+  )),
+  (AnimNotifyEffect.SpawnEffectStat = Stats_1.Stat.Create(
+    "K2_Notify.SpawnEffect",
+  )),
+  (AnimNotifyEffect.AttachEffectToSkillStat = Stats_1.Stat.Create(
+    "K2_Notify.AttachEffectToSkill",
+  )),
+  (AnimNotifyEffect.SetupTransformStat = Stats_1.Stat.Create(
+    "K2_Notify.SetupTransform",
+  )),
   (AnimNotifyEffect.NameNone = new UE.FName("None")),
   (AnimNotifyEffect.TagFlagNoNiagara = new UE.FName("NoNiagara")),
   (exports.default = AnimNotifyEffect);

@@ -55,10 +55,10 @@ class FragmentMemoryController extends ControllerBase_1.ControllerBase {
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(14471, this.ewn), Net_1.Net.Register(9979, this.twn);
+    Net_1.Net.Register(24591, this.ewn), Net_1.Net.Register(22347, this.twn);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(14471), Net_1.Net.UnRegister(9979);
+    Net_1.Net.UnRegister(24591), Net_1.Net.UnRegister(22347);
   }
   static t6i() {
     0 !==
@@ -76,18 +76,18 @@ class FragmentMemoryController extends ControllerBase_1.ControllerBase {
       ));
   }
   static RequestPhotoMemory() {
-    Net_1.Net.Call(16136, Protocol_1.Aki.Protocol.Efs.create(), (e) => {
+    Net_1.Net.Call(28396, Protocol_1.Aki.Protocol.Afs.create(), (e) => {
       ModelManager_1.ModelManager.FragmentMemoryModel.OnPhotoMemoryResponse(e);
     });
   }
   static RequestMemoryReward(e) {
-    var t = Protocol_1.Aki.Protocol.Lfs.create();
-    (t.OVn = e),
-      Net_1.Net.Call(16567, t, (e) => {
-        e._Ms !== Protocol_1.Aki.Protocol.O4n.NRs &&
+    var t = Protocol_1.Aki.Protocol.xfs.create();
+    (t.QVn = e),
+      Net_1.Net.Call(24793, t, (e) => {
+        e.fMs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e._Ms,
-            5493,
+            e.fMs,
+            26527,
           );
       });
   }

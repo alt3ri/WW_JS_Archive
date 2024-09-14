@@ -46,7 +46,7 @@ class CommonInputViewController extends UiControllerBase_1.UiControllerBase {
         TitleTextArgs: new LguiUtil_1.TableTextArgNew(n),
         ConfirmFunc: async (e) =>
           FriendController_1.FriendController.RequestFriendRemarkChange(
-            ModelManager_1.ModelManager.FriendModel.SelectedPlayerId,
+            ModelManager_1.ModelManager.FriendModel.GetCurrentOperationPlayerId(),
             e,
           ),
         InputText: e,

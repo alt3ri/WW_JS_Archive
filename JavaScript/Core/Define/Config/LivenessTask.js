@@ -19,13 +19,22 @@ class LivenessTask {
   get TaskReward() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.taskrewardLength(),
-      (t) => this.taskreward(t)?.key(),
-      (t) => this.taskreward(t)?.value(),
+      this.taskrewardKey,
+      this.taskrewardValue,
+      this,
     );
   }
+  taskrewardKey(t) {
+    return this.taskreward(t)?.key();
+  }
+  taskrewardValue(t) {
+    return this.taskreward(t)?.value();
+  }
   get TaskFunc() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.taskfuncLength(), (t) =>
-      this.taskfunc(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.taskfuncLength(),
+      this.taskfunc,
+      this,
     );
   }
   get UnlockCondition() {

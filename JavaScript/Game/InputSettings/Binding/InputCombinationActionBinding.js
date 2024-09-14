@@ -9,7 +9,9 @@ class InputCombinationActionBinding {
       (this.lEe = new Map()),
       (this.uEe = new Map()),
       (this.cEe = -0),
-      (this.ZMe = void 0);
+      (this.ZMe = void 0),
+      (this.JXa = 0),
+      (this.ZXa = 0);
   }
   Initialize(t, i) {
     (this.ZMe = t), (this.cEe = i);
@@ -18,7 +20,9 @@ class InputCombinationActionBinding {
     (this.hEe = void 0),
       (this.lEe = void 0),
       (this.uEe = void 0),
-      (this.ZMe = void 0);
+      (this.ZMe = void 0),
+      (this.JXa = 0),
+      (this.ZXa = 0);
   }
   AddKey(t, i) {
     this.uEe.set(t, i);
@@ -40,6 +44,18 @@ class InputCombinationActionBinding {
   GetActionName() {
     return this.ZMe;
   }
+  SetKeyboardVersion(t) {
+    this.JXa = t;
+  }
+  GetKeyboardVersion() {
+    return this.JXa;
+  }
+  SetGamepadVersion(t) {
+    this.ZXa = t;
+  }
+  GetGamepadVersion() {
+    return this.ZXa;
+  }
   GetCombinationActionKeyMap() {
     return InputSettings_1.InputSettings.GetCombinationActionKeyMap(this.ZMe);
   }
@@ -57,6 +73,9 @@ class InputCombinationActionBinding {
   }
   GetGamepadKeyNameMap(t) {
     for (var [i, e] of this.lEe) t.set(i, e);
+  }
+  GetGamepadKeyNameList(t) {
+    for (var [i, e] of this.lEe) t.push(i), t.push(e);
   }
   GetCurrentPlatformKeyNameMap(t) {
     Info_1.Info.IsInKeyBoard()

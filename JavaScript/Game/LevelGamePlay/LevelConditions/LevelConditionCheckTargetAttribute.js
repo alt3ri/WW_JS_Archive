@@ -35,11 +35,11 @@ class LevelConditionCheckTargetAttribute extends LevelGeneralBase_1.LevelConditi
     return t;
   }
   rLe(e, r) {
-    e = e.Entity?.GetComponent(158);
+    e = e.Entity?.GetComponent(159);
     if (!e) return !1;
     var t =
-      (e.GetCurrentValue(Protocol_1.Aki.Protocol.Bks.Proto_Life) /
-        e.GetCurrentValue(Protocol_1.Aki.Protocol.Bks.e5n)) *
+      (e.GetCurrentValue(Protocol_1.Aki.Protocol.Vks.Proto_Life) /
+        e.GetCurrentValue(Protocol_1.Aki.Protocol.Vks.l5n)) *
       100;
     switch (r.Compare) {
       case "Eq":

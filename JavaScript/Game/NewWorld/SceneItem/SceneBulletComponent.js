@@ -59,14 +59,14 @@ let SceneBulletComponent =
         (this.Hte = void 0),
         (this.JUn = void 0),
         (this.Jcn = !1),
-        (this.vsa = () => {
+        (this.lla = () => {
           this.oZo(this.G2e);
         }),
         (this.zcn = (t, e) => {
           e = e.Entity;
           if (
             ((this.Qcn = t),
-            this.M_n && e && (e.GetComponent(52) || e.GetComponent(140)))
+            this.M_n && e && (e.GetComponent(53) || e.GetComponent(141)))
           )
             if (t) this.oZo(this.G2e);
             else for (const i of this.Ycn.keys()) this.HVo(i);
@@ -91,9 +91,9 @@ let SceneBulletComponent =
             new BulletData(i, Transform_1.Transform.Create()),
           );
       }
-      t = this.Entity.GetComponent(0)?.ComponentDataMap.get("Nys");
+      t = this.Entity.GetComponent(0)?.ComponentDataMap.get("Kys");
       return (
-        (this.JUn = MathUtils_1.MathUtils.LongToBigInt(t?.Nys?.tVn)),
+        (this.JUn = MathUtils_1.MathUtils.LongToBigInt(t?.Kys?._Vn)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
@@ -103,11 +103,11 @@ let SceneBulletComponent =
       );
     }
     OnStart() {
-      (this.vtn = this.Entity.GetComponent(76)),
+      (this.vtn = this.Entity.GetComponent(77)),
         this.vtn
           ? this.vtn.AddOnEntityOverlapCallback(this.zcn)
           : (this.Jcn = !0);
-      var t = this.Entity.GetComponent(180);
+      var t = this.Entity.GetComponent(181);
       for (const e of this.Ycn.keys())
         if (t.HasTag(e)) {
           this.G2e = e;
@@ -125,7 +125,7 @@ let SceneBulletComponent =
           : this.Jcn &&
             EventSystem_1.EventSystem.Add(
               EventDefine_1.EEventName.SceneBulletOwnerCreated,
-              this.vsa,
+              this.lla,
             ),
         !0
       );
@@ -159,7 +159,7 @@ let SceneBulletComponent =
             t,
             this.JUn,
           );
-          s?.GetComponent(154)?.Owner?.IsValid() &&
+          s?.GetComponent(155)?.Owner?.IsValid() &&
             (((i =
               BulletController_1.BulletController.GetActionCenter().CreateBulletActionInfo(
                 14,
@@ -177,11 +177,11 @@ let SceneBulletComponent =
             s
               ? EventSystem_1.EventSystem.Has(
                   EventDefine_1.EEventName.SceneBulletOwnerCreated,
-                  this.vsa,
+                  this.lla,
                 ) &&
                 EventSystem_1.EventSystem.Remove(
                   EventDefine_1.EEventName.SceneBulletOwnerCreated,
-                  this.vsa,
+                  this.lla,
                 )
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
@@ -199,7 +199,7 @@ let SceneBulletComponent =
         for (const i of this.Ycn.get(t)) {
           if (!i.BulletEntityId) return;
           var e = EntitySystem_1.EntitySystem.Get(i.BulletEntityId);
-          e?.Valid && e.GetComponent(154).Owner?.K2_DetachFromActor(1, 1, 1),
+          e?.Valid && e.GetComponent(155).Owner?.K2_DetachFromActor(1, 1, 1),
             BulletController_1.BulletController.DestroyBullet(
               i.BulletEntityId,
               !1,
@@ -225,11 +225,11 @@ let SceneBulletComponent =
     OnEnd() {
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.SceneBulletOwnerCreated,
-        this.vsa,
+        this.lla,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.SceneBulletOwnerCreated,
-          this.vsa,
+          this.lla,
         ),
         this.vtn?.RemoveOnEntityOverlapCallback(this.zcn);
       for (const t of this.Ycn.keys()) this.HVo(t);
@@ -253,7 +253,7 @@ let SceneBulletComponent =
   });
 (SceneBulletComponent = SceneBulletComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(128)],
+    [(0, RegisterComponent_1.RegisterComponent)(129)],
     SceneBulletComponent,
   )),
   (exports.SceneBulletComponent = SceneBulletComponent);

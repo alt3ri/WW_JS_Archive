@@ -35,8 +35,9 @@ let UiWeaponBreachDaComponent = class UiWeaponBreachDaComponent extends UiModelC
       (this.n$t = void 0),
       (this.UBr = void 0),
       (this.KY = () => {
-        var e = this.UBr?.WeaponData?.GetBreachLevel() ?? 0;
-        this.RefreshWeaponBreachDa(e);
+        var e = this.UBr?.WeaponData?.GetBreachLevel() ?? 0,
+          t = this.UBr?.WeaponData?.GetRoleId() ?? 0;
+        this.RefreshWeaponBreachDa(e, t);
       });
   }
   OnInit() {
@@ -58,16 +59,18 @@ let UiWeaponBreachDaComponent = class UiWeaponBreachDaComponent extends UiModelC
       this.KY,
     );
   }
-  RefreshWeaponBreachDa(i) {
-    ModelManager_1.ModelManager.WeaponModel.BlueprintWeaponBreachLevel = i;
-    var e = ModelUtil_1.ModelUtil.GetModelConfig(
-      this.ywr.ModelConfigId,
-    )?.DA?.AssetPathName.toString();
+  RefreshWeaponBreachDa(i, e) {
+    (ModelManager_1.ModelManager.WeaponModel.BlueprintWeaponBreachLevel = i),
+      (ModelManager_1.ModelManager.WeaponModel.BlueprintWeaponEquippedRoleId =
+        e);
+    const n = this.ywr.ModelConfigId;
+    e = ModelUtil_1.ModelUtil.GetModelConfig(n)?.DA?.AssetPathName.toString();
     e &&
       !StringUtils_1.StringUtils.IsBlank(e) &&
       ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.Object, (e) => {
         var t;
         e &&
+          n === this.ywr.ModelConfigId &&
           ((t = this.n$t?.MainMeshComponent),
           e instanceof UE.PD_WeaponLevelMaterialDatas_C) &&
           UE.BP_CharacterRenderingFunctionLibrary_C.ApplyWeaponLevelMaterial(

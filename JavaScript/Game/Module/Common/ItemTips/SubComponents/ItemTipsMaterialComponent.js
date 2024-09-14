@@ -64,7 +64,6 @@ class TipsMaterialComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubCompon
           this.xxt(i.LimitTimeTxt),
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
             i.ConfigId,
-            !0,
           )),
         i =
           6e4 === e?.ItemType || 60002 === e?.ItemType || 60003 === e?.ItemType;

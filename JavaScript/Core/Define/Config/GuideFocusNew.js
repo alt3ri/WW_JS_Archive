@@ -25,8 +25,10 @@ class GuideFocusNew {
     return this.hooknameforshow();
   }
   get ExtraParam() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.extraparamLength(), (t) =>
-      this.extraparam(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.extraparamLength(),
+      this.extraparam,
+      this,
     );
   }
   get ExtraParamDesc() {
@@ -42,19 +44,24 @@ class GuideFocusNew {
     return this.content();
   }
   get Button() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buttonLength(), (t) =>
-      this.button(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buttonLength(),
+      this.button,
+      this,
     );
   }
   get InputEnums() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.inputenumsLength(), (t) =>
-      this.inputenums(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.inputenumsLength(),
+      this.inputenums,
+      this,
     );
   }
   get LimitInputEnums() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.limitinputenumsLength(),
-      (t) => this.limitinputenums(t),
+      this.limitinputenums,
+      this,
     );
   }
   get ShowMouse() {

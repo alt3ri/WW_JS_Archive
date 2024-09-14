@@ -13,8 +13,10 @@ class RogueCharacterBuff {
     return this.buffid();
   }
   get BuffIds() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.buffidsLength(), (t) =>
-      this.buffids(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buffidsLength(),
+      this.buffids,
+      this,
     );
   }
   get AffixDesc() {
@@ -23,7 +25,8 @@ class RogueCharacterBuff {
   get AffixDescParam() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.affixdescparamLength(),
-      (t) => this.affixdescparam(t),
+      this.affixdescparam,
+      this,
     );
   }
   get AffixDescSimple() {

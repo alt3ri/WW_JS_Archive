@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.BulletActionInfoAttachActor =
+  (exports.BulletActionInfoDelayDestroyBullet =
+    exports.BulletActionInfoAttachActor =
     exports.BulletActionInfoDestroyBullet =
     exports.BulletActionInfoSummonBullet =
     exports.BulletActionInfoSimple =
@@ -28,7 +29,8 @@ class BulletActionInfoSummonBullet extends BulletActionInfoBase {
       (this.Victim = void 0),
       (this.IsStayInCharacter = !1),
       (this.ParentImpactPoint = void 0),
-      (this.ParentLastPosition = void 0);
+      (this.ParentLastPosition = void 0),
+      (this.CreateOnAuthority = !0);
   }
   Clear() {
     (this.ChildrenType = void 0),
@@ -70,4 +72,18 @@ class BulletActionInfoAttachActor extends BulletActionInfoBase {
   }
 }
 exports.BulletActionInfoAttachActor = BulletActionInfoAttachActor;
+class BulletActionInfoDelayDestroyBullet extends BulletActionInfoBase {
+  constructor() {
+    super(...arguments),
+      (this.DelayTime = 0),
+      (this.SummonChild = !1),
+      (this.IgnoreBulletActorTimeScale = !1);
+  }
+  Clear() {
+    (this.DelayTime = 0),
+      (this.SummonChild = !1),
+      (this.IgnoreBulletActorTimeScale = !1);
+  }
+}
+exports.BulletActionInfoDelayDestroyBullet = BulletActionInfoDelayDestroyBullet;
 //# sourceMappingURL=BulletActionInfo.js.map

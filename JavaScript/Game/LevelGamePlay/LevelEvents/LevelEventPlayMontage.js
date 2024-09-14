@@ -21,7 +21,7 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
       (this.E0 = 0),
       (this.sDe = void 0),
       (this.gLe = void 0),
-      (this.$ca = !1),
+      (this.XCa = !1),
       (this.Kue = (e, t) => {
         this.Cfe = Time_1.Time.WorldTime;
       });
@@ -70,13 +70,13 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
                 this.E0,
               )),
             this.sDe?.Entity?.IsInit
-              ? this.Xca()
-              : ((this.$ca = !0),
+              ? this.YCa()
+              : ((this.XCa = !0),
                 WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
                   this.E0,
                   (e) => {
                     e
-                      ? this.Xca()
+                      ? this.YCa()
                       : (Log_1.Log.CheckError() &&
                           Log_1.Log.Error(
                             "Event",
@@ -87,7 +87,6 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
                           ),
                         this.FinishExecute(!1));
                   },
-                  !1,
                   DEFAULT_WAIT_ENTITY_TIMEOUT,
                   !1,
                 )))
@@ -109,14 +108,14 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
         ),
         this.FinishExecute(!1);
   }
-  Xca() {
+  YCa() {
     var e;
-    (this.$ca = !1),
+    (this.XCa = !1),
       (this.sDe = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
         this.E0,
       )),
       this.sDe?.Valid
-        ? this.sDe.Entity.GetComponent(39)?.IsAiDriver
+        ? this.sDe.Entity.GetComponent(40)?.IsAiDriver
           ? ((e = this.sDe.Entity.GetComponent(1)),
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -127,7 +126,7 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
                 ["Name", e.Owner.GetName()],
               ),
             this.FinishExecute(!0))
-          : ((this.oRe = this.sDe.Entity.GetComponent(36)),
+          : ((this.oRe = this.sDe.Entity.GetComponent(37)),
             ObjectUtils_1.ObjectUtils.IsValid(this.oRe?.MainAnimInstance)
               ? ((this.Cfe =
                   (this.gLe.Duration ?? DEFAULT_FINISHED_TIME) +
@@ -169,7 +168,7 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
           this.FinishExecute(!1));
   }
   OnTick(e) {
-    this.$ca ||
+    this.XCa ||
       (this.Cfe < Time_1.Time.WorldTime &&
         (this.oRe && this.oRe.RemoveOnMontageEnded(this.Kue),
         this.FinishExecute(!0)));

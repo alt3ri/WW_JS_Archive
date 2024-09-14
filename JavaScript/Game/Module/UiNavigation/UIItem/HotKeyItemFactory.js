@@ -24,6 +24,8 @@ const Log_1 = require("../../../../Core/Common/Log"),
   MarkBookComponent_1 = require("../UIComponent/MarkBookComponent"),
   MaskComponent_1 = require("../UIComponent/MaskComponent"),
   NavigationGroupComponent_1 = require("../UIComponent/NavigationGroupComponent"),
+  OpenRouletteSetViewComponent_1 = require("../UIComponent/OpenRouletteSetViewComponent"),
+  PlotInteractComponent_1 = require("../UIComponent/PlotInteractComponent"),
   RoleInteractComponent_1 = require("../UIComponent/RoleInteractComponent"),
   RouletteNavigationComponent_1 = require("../UIComponent/RouletteNavigationComponent"),
   ScrollBarComponent_1 = require("../UIComponent/ScrollBarComponent"),
@@ -157,6 +159,14 @@ class HotKeyItemFactory {
     "RouletteNavigation",
     RouletteNavigationComponent_1.RouletteNavigationComponent,
   ],
+  [
+    "SettingSliderIncreaseInside",
+    SliderInsideComponent_1.SettingSliderIncreaseInsideComponent,
+  ],
+  [
+    "SettingSliderReduceInside",
+    SliderInsideComponent_1.SettingSliderReduceInsideComponent,
+  ],
   ["MapCheck", MapInteractComponent_1.MapCheckComponent],
   ["MapFocusPlayer", MapInteractComponent_1.MapFocusPlayerComponent],
   ["MapMoveForward", MapInteractComponent_1.MapMoveForwardComponent],
@@ -172,5 +182,13 @@ class HotKeyItemFactory {
   ],
   ["GamepadMoveRight", GamepadInteractComponent_1.GamepadMoveRightComponent],
   ["GamepadCheck", GamepadInteractComponent_1.GamepadCheckComponent],
+  ["PlotMoveForward", PlotInteractComponent_1.PlotMoveForwardComponent],
+  ["PlotMoveRight", PlotInteractComponent_1.PlotMoveRightComponent],
+  ["PlotZoom", PlotInteractComponent_1.PlotZoomComponent],
+  ["PlotNextPage", PlotInteractComponent_1.PlotNextPageComponent],
+  [
+    "OpenRouletteSetView",
+    OpenRouletteSetViewComponent_1.OpenRouletteSetViewComponent,
+  ],
 ]);
 //# sourceMappingURL=HotKeyItemFactory.js.map

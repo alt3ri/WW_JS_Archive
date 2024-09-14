@@ -39,31 +39,31 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
     return !!ModelManager_1.ModelManager.RoleModel.IsMainRole(e);
   }
   static SendRoleSexChangeRequest(e) {
-    var r = Protocol_1.Aki.Protocol.pus.create();
-    (r._7n = e),
-      Net_1.Net.Call(14311, r, (e) => {
+    var r = Protocol_1.Aki.Protocol.Lus.create();
+    (r.v7n = e),
+      Net_1.Net.Call(15983, r, (e) => {
         e &&
-          (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
-            ? ((ModelManager_1.ModelManager.WorldLevelModel.Sex = e._7n),
+          (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
+            ? ((ModelManager_1.ModelManager.WorldLevelModel.Sex = e.v7n),
               this.U1o(),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.OnRoleChangeEnd,
               ))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.O4n,
-                13763,
+                e.Q4n,
+                17264,
               ));
       });
   }
   static SendRoleElementChangeRequest(e) {
-    var r = Protocol_1.Aki.Protocol.Sus.create();
-    (r.THn = e),
-      Net_1.Net.Call(19457, r, (e) => {
+    var r = Protocol_1.Aki.Protocol.Dus.create();
+    (r.wHn = e),
+      Net_1.Net.Call(24357, r, (e) => {
         e &&
-          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+          (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.O4n,
-                11383,
+                e.Q4n,
+                24482,
               )
             : (EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.OnRoleChangeEnd,
@@ -76,9 +76,9 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
       EditBattleTeamController_1.EditBattleTeamController.RefreshMainRoleInfo();
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(28710, (e) => {
-      var r = e.dxs,
-        e = e.V6n;
+    Net_1.Net.Register(15327, (e) => {
+      var r = e.Mxs,
+        e = e.J6n;
       ModelManager_1.ModelManager.PhantomBattleModel.DeleteBattleData(r),
         ModelManager_1.ModelManager.RoleModel.RoleChange(r, e),
         Log_1.Log.CheckDebug() &&
@@ -87,24 +87,24 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
             44,
             "角色转换成功: ",
             ["sourceRoleId", r],
-            ["roleInfo!.Proto_RoleId", e.O6n],
+            ["roleInfo!.Proto_RoleId", e.Q6n],
           );
     }),
-      Net_1.Net.Register(10788, (e) => {
+      Net_1.Net.Register(24633, (e) => {
         e &&
           ModelManager_1.ModelManager.RoleModel.UpdateCanChangeRoleIdList(
-            e.mxs,
+            e.Sxs,
           );
       });
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(28710), Net_1.Net.UnRegister(10788);
+    Net_1.Net.UnRegister(15327), Net_1.Net.UnRegister(24633);
   }
 }
 (exports.MainRoleController = MainRoleController).iVe = (e) => {
   var r =
       Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.GetComponent(
-        188,
+        190,
       )?.HasTag(1996802261),
     o = ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance();
   return r

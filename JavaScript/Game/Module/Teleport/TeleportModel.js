@@ -19,9 +19,17 @@ class TeleportModel extends ModelBase_1.ModelBase {
       (this.CheckStreamingCompletedTimerId = void 0),
       (this.CheckPhysicsCompletedTimerId = void 0),
       (this.zIo = void 0),
-      (this.fKs = void 0),
+      (this.x$s = void 0),
       (this.eTo = void 0),
-      (this.tTo = void 0);
+      (this.tTo = void 0),
+      (this.IsInSeamlessTeleport = !1),
+      (this.Treadmill = void 0),
+      (this.SeamlessConfig = void 0),
+      (this.SeamlessEffectData = void 0),
+      (this.SeamlessEndHandle = void 0),
+      (this.wea = void 0),
+      (this.Bea = void 0),
+      (this.bea = void 0);
   }
   get IsTeleport() {
     return this.QIo;
@@ -57,13 +65,22 @@ class TeleportModel extends ModelBase_1.ModelBase {
     return this.zIo;
   }
   get VoxelStreamingCompleted() {
-    return this.fKs;
+    return this.x$s;
   }
   get TeleportFinishRequest() {
     return this.eTo;
   }
   get CgTeleportCompleted() {
     return this.tTo;
+  }
+  get SeamlessAssetLoaded() {
+    return this.wea;
+  }
+  get EffectFillScreen() {
+    return this.Bea;
+  }
+  get TransitionMapUnloaded() {
+    return this.bea;
   }
   OnInit() {
     return (
@@ -85,15 +102,21 @@ class TeleportModel extends ModelBase_1.ModelBase {
   }
   CreatePromise() {
     (this.zIo = new GameModePromise_1.GameModePromise()),
-      (this.fKs = new GameModePromise_1.GameModePromise()),
+      (this.x$s = new GameModePromise_1.GameModePromise()),
       (this.eTo = new GameModePromise_1.GameModePromise()),
-      (this.tTo = new GameModePromise_1.GameModePromise());
+      (this.tTo = new GameModePromise_1.GameModePromise()),
+      (this.wea = new GameModePromise_1.GameModePromise()),
+      (this.Bea = new GameModePromise_1.GameModePromise()),
+      (this.bea = new GameModePromise_1.GameModePromise());
   }
   ResetPromise() {
     (this.zIo = void 0),
-      (this.fKs = void 0),
+      (this.x$s = void 0),
       (this.eTo = void 0),
-      (this.tTo = void 0);
+      (this.tTo = void 0),
+      (this.wea = void 0),
+      (this.Bea = void 0),
+      (this.bea = void 0);
   }
 }
 exports.TeleportModel = TeleportModel;

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CheckCombatStateBehaviorNode = void 0);
 const Log_1 = require("../../../../../Core/Common/Log"),
   GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils"),
+  IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   TickBehaviorNode_1 = require("./TickBehaviorNode");
 class CheckCombatStateBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
@@ -12,7 +13,7 @@ class CheckCombatStateBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
       (this.UXt = 0),
       (this.AXt = 0),
       (this.PXt = []),
-      (this.Lia = !0),
+      (this.Foa = !0),
       (this.OnAfterSubmit = (e) => {
         this.RXt = !1;
       });
@@ -23,7 +24,7 @@ class CheckCombatStateBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   OnCreate(e) {
     return !(
       !super.OnCreate(e) ||
-      "DetectCombatState" !== (e = e.Condition).Type ||
+      (e = e.Condition).Type !== IQuest_1.EChildQuest.DetectCombatState ||
       ((this.RXt = !1),
       (this.AXt = e.EntityId),
       (this.PXt = [e.EntityId]),
@@ -32,7 +33,7 @@ class CheckCombatStateBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
             e.State,
           )),
           this.UXt
-            ? ((this.Lia = "Ne" !== e.Compare), 0)
+            ? ((this.Foa = "Ne" !== e.Compare), 0)
             : (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "GeneralLogicTree",
@@ -56,11 +57,11 @@ class CheckCombatStateBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
         this.AXt,
       );
       if (t?.IsInit) {
-        let e = t.Entity.GetComponent(188);
-        (e = e || t.Entity.GetComponent(180)) &&
+        let e = t.Entity.GetComponent(190);
+        (e = e || t.Entity.GetComponent(181)) &&
           (e.HasTag(this.UXt)
-            ? this.Lia && this.SubmitNode()
-            : this.Lia || this.SubmitNode());
+            ? this.Foa && this.SubmitNode()
+            : this.Foa || this.SubmitNode());
       }
     }
   }

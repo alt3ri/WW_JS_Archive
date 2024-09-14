@@ -33,7 +33,8 @@ class NpcSystemBackground {
   get CostItemList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.costitemlistLength(),
-      (t) => this.costitemlist(t),
+      this.costitemlist,
+      this,
     );
   }
   get IsHelpButtonVisible() {

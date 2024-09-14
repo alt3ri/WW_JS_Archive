@@ -33,7 +33,7 @@ class CdKeyInputView extends CommonInputViewBase_1.CommonInputViewBase {
     this.InputData.ConfirmFunc?.(e).then(
       (e) => {
         var r;
-        e === Protocol_1.Aki.Protocol.O4n.NRs
+        e === Protocol_1.Aki.Protocol.Q4n.KRs
           ? ((r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(148)),
             ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
               r,

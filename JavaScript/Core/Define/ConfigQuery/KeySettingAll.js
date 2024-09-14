@@ -17,53 +17,70 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0;
+const initStat = Stats_1.Stat.Create("configKeySettingAll.Init"),
+  getConfigListStat = Stats_1.Stat.Create("configKeySettingAll.GetConfigList");
 exports.configKeySettingAll = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfigList: (e = !0) => {
-    var o;
+  GetConfigList: (t = !0) => {
+    var n;
     if (
-      (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
+      (ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start(),
+      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair)))
     ) {
-      if (e) {
-        var n = KEY_PREFIX + ")";
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(n);
-        if (t) return t;
+      if (t) {
+        var o = KEY_PREFIX + ")";
+        const e = ConfigCommon_1.ConfigCommon.GetConfig(o);
+        if (e)
+          return (
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
+          );
       }
-      const t = new Array();
+      const e = new Array();
       for (;;) {
         if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
         var i = void 0;
         if (
-          (([o, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
           )),
-          !o)
+          !n)
         )
-          return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
+          return (
+            ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            getConfigListStat.Stop(),
+            void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+          );
         i = KeySetting_1.KeySetting.getRootAsKeySetting(
           new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
         );
-        t.push(i);
+        e.push(i);
       }
       return (
-        e &&
-          ((n = KEY_PREFIX + ")"),
-          ConfigCommon_1.ConfigCommon.SaveConfig(n, t, t.length)),
+        t &&
+          ((o = KEY_PREFIX + ")"),
+          ConfigCommon_1.ConfigCommon.SaveConfig(o, e, e.length)),
         ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-        t
+        getConfigListStat.Stop(),
+        ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+        e
       );
     }
+    getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=KeySettingAll.js.map

@@ -30,7 +30,7 @@ class BuildingData {
           this.Level,
         ).UpGradePrice;
   }
-  NXs(t, e) {
+  bJs(t, e) {
     return { TextId: t, ValueText: e };
   }
   GetAdditionDataList(t) {
@@ -45,22 +45,22 @@ class BuildingData {
     return (
       0 !== i.GoldAddition &&
         ((t = i.GoldAddition / 10 + "%"),
-        e.push(this.NXs("Moonfiesta_UP1", t))),
+        e.push(this.bJs("Moonfiesta_UP1", t))),
       0 !== i.GoldAdditionFix &&
-        e.push(this.NXs("Moonfiesta_UP7", i.GoldAdditionFix.toString())),
+        e.push(this.bJs("Moonfiesta_UP7", i.GoldAdditionFix.toString())),
       0 !== i.WishAdditionFix &&
-        e.push(this.NXs("Moonfiesta_UP2", i.WishAdditionFix.toString())),
+        e.push(this.bJs("Moonfiesta_UP2", i.WishAdditionFix.toString())),
       0 !== i.EnergyAddition &&
         ((t = i.EnergyAddition / 10 + "%"),
-        e.push(this.NXs("Moonfiesta_UP3", t))),
+        e.push(this.bJs("Moonfiesta_UP3", t))),
       0 !== i.IdeaRatioAddition &&
         ((t = i.IdeaRatioAddition / 10 + "%"),
-        e.push(this.NXs("Moonfiesta_UP4", t))),
+        e.push(this.bJs("Moonfiesta_UP4", t))),
       0 !== i.SuccessAddition &&
         ((t = i.SuccessAddition / 10 + "%"),
-        e.push(this.NXs("Moonfiesta_UP5", t))),
+        e.push(this.bJs("Moonfiesta_UP5", t))),
       0 !== i.HeatAddition &&
-        e.push(this.NXs("Moonfiesta_UP6", i.HeatAddition.toString())),
+        e.push(this.bJs("Moonfiesta_UP6", i.HeatAddition.toString())),
       e
     );
   }
@@ -70,6 +70,7 @@ class BuildingData {
       ? StringUtils_1.EMPTY_STRING
       : ((t = t[0]),
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.TextId) +
+          " " +
           t.ValueText);
   }
   GetAssociateRoleId() {
@@ -95,6 +96,9 @@ class BuildingData {
   }
   get IsMax() {
     return this.Level >= this.LevelMax;
+  }
+  get IsAvailableLevelUp() {
+    return this.IsBuild && !this.IsMax;
   }
 }
 exports.BuildingData = BuildingData;

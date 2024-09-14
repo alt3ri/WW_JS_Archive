@@ -16,6 +16,7 @@ const cpp_1 = require("cpp"),
   SimpleNpcController_1 = require("../../NewWorld/Character/SimpleNpc/Logics/SimpleNpcController"),
   PerceptionRange_1 = require("../../NewWorld/Common/Perception/PerceptionRange"),
   PlayerPerceptionEvent_1 = require("../../NewWorld/Common/Perception/PlayerPerceptionEvent"),
+  CreatureModel_1 = require("../Model/CreatureModel"),
   TICK_INTERNVAL = 8e3,
   TICK_DAMPING_RATIO = 80,
   TICK_DAMPING_RATIO_INFIGHT = 16,
@@ -28,7 +29,8 @@ class EnvironmentalPerceptionController extends ControllerBase_1.ControllerBase 
         EventDefine_1.EEventName.OnChangeRole,
         this.xie,
       ),
-      !(this.Jvr = void 0)
+      (this.Jvr = Stats_1.Stat.Create("CheckIsPlayerInMapPolygon")),
+      !0
     );
   }
   static OnClear() {
@@ -65,19 +67,29 @@ class EnvironmentalPerceptionController extends ControllerBase_1.ControllerBase 
     var e = Global_1.Global.BaseCharacter;
     e &&
       (e = e.CharacterActorComponent) &&
-      (ModelManager_1.ModelManager.MapModel.IsInMapPolygon(e.ActorLocationProxy)
+      (this.Jvr.Start(),
+      (e = ModelManager_1.ModelManager.MapModel.IsInMapPolygon(
+        e.ActorLocationProxy,
+      )),
+      this.Jvr.Stop(),
+      e
         ? UnopenedAreaController_1.UnopenedAreaController.OnExitUnopenedArea()
         : UnopenedAreaController_1.UnopenedAreaController.OnEnterUnopenedArea());
   }
   static InitializeEnvironment() {
-    var e = UE.NewMap(UE.BuiltinName, UE.BuiltinInt);
-    e.Add(new UE.FName("NormalEntity"), 1),
-      e.Add(new UE.FName("BossEntity"), 2),
-      e.Add(new UE.FName("CharacterEntity"), 2),
-      e.Add(new UE.FName("SimpleNpcEntity"), 2),
-      e.Add(new UE.FName("NormalNpcEntity"), 2),
-      e.Add(new UE.FName("PlayerAlwaysTickGroup"), 4),
-      cpp_1.FKuroPerceptionInterface.InitializeEnvironment(3e3, 3e3, e, !0);
+    var t = UE.NewMap(UE.BuiltinName, UE.BuiltinInt);
+    for (
+      let e = 0;
+      e < CreatureModel_1.globalEntityTypePerceptionType.length;
+      e++
+    )
+      t.Add(
+        new UE.FName(CreatureModel_1.globalEntityTypeQueryName[e]),
+        CreatureModel_1.globalEntityTypePerceptionType[e],
+      );
+    t.Add(new UE.FName("CustomStabilizeLow"), 2),
+      t.Add(new UE.FName("AlwaysTickHotFix"), 7),
+      cpp_1.FKuroPerceptionInterface.InitializeEnvironment(3e3, 3e3, t, !0);
   }
   static CreatePlayerPerceptionEvent() {
     var e = this.tMr.Get();
@@ -101,8 +113,8 @@ class EnvironmentalPerceptionController extends ControllerBase_1.ControllerBase 
   (EnvironmentalPerceptionController.Jvr = void 0),
   (EnvironmentalPerceptionController.xie = (e, t) => {
     _a.Lie && _a.Lie.RemoveTagAddOrRemoveListener(1996802261, _a.v7e),
-      (_a.Gce = EntitySystem_1.EntitySystem.GetComponent(e.Id, 163)),
-      (_a.Lie = EntitySystem_1.EntitySystem.GetComponent(e.Id, 188)),
+      (_a.Gce = EntitySystem_1.EntitySystem.GetComponent(e.Id, 164)),
+      (_a.Lie = EntitySystem_1.EntitySystem.GetComponent(e.Id, 190)),
       _a.Lie?.AddTagAddOrRemoveListener(1996802261, _a.v7e);
   }),
   (EnvironmentalPerceptionController.Zvr = !1),

@@ -11,33 +11,33 @@ class ExploreAreaItemData {
       (this.VVt = 0),
       (this.HPt = 0),
       (this.JXt = 0),
-      (this.wHs = void 0),
-      (this.bHs = 0),
-      (this.qHs = void 0),
-      (this.GHs = void 0),
-      (this.OHs = !1),
-      (this.NHs = 0);
+      (this.KHs = void 0),
+      (this.QHs = 0),
+      (this.$Hs = void 0),
+      (this.XHs = void 0),
+      (this.YHs = !1),
+      (this.JHs = 0);
   }
   Initialize(t) {
     (this.AreaId = t.Area),
       (this.ExploreType = t.ExploreType),
-      (this.wHs = t.TypeName),
-      (this.bHs = t.PhantomSkillId),
-      (this.qHs = t.UnlockTextId),
-      (this.GHs = t.LockTextId),
-      (this.NHs = t.CountMode),
-      (this.OHs = !1),
-      0 !== this.bHs &&
-        (this.OHs =
+      (this.KHs = t.TypeName),
+      (this.QHs = t.PhantomSkillId),
+      (this.$Hs = t.UnlockTextId),
+      (this.XHs = t.LockTextId),
+      (this.JHs = t.CountMode),
+      (this.YHs = !1),
+      0 !== this.QHs &&
+        (this.YHs =
           ModelManager_1.ModelManager.RouletteModel.UnlockExploreSkillDataMap.has(
-            this.bHs,
+            this.QHs,
           ));
   }
   Refresh(t) {
-    (this.VVt = t.DPs),
-      (this.ExploreProgressId = t.APs),
-      (this.HPt = t.CDs),
-      (this.JXt = t.svs);
+    (this.VVt = t.BPs),
+      (this.ExploreProgressId = t.qPs),
+      (this.HPt = t.EDs),
+      (this.JXt = t.dvs);
   }
   GetProgress() {
     return this.VVt;
@@ -49,10 +49,10 @@ class ExploreAreaItemData {
     return this.JXt;
   }
   GetNameId() {
-    return this.wHs;
+    return this.KHs;
   }
   IsPercent() {
-    return 0 === this.NHs;
+    return 0 === this.JHs;
   }
   IsCompleted() {
     return (
@@ -60,20 +60,20 @@ class ExploreAreaItemData {
     );
   }
   HasPhantomSkill() {
-    return 0 !== this.bHs;
+    return 0 !== this.QHs;
   }
   GetUnlockTextId() {
-    return this.qHs;
+    return this.$Hs;
   }
   GetLockTextId() {
-    return this.GHs;
+    return this.XHs;
   }
   GetIsPhantomSkillUnlock() {
-    return this.OHs;
+    return this.YHs;
   }
   GetPhantomSkillHelpId() {
     var t = ConfigManager_1.ConfigManager.RouletteConfig.GetExploreConfigById(
-      this.bHs,
+      this.QHs,
     );
     if (t) return t.HelpId;
   }

@@ -21,7 +21,8 @@ class TowerDefenceInstance {
   get OptionalBuff() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.optionalbuffLength(),
-      (t) => this.optionalbuff(t),
+      this.optionalbuff,
+      this,
     );
   }
   get OpenDay() {
@@ -44,6 +45,9 @@ class TowerDefenceInstance {
   }
   get UnlockScoreLimit() {
     return this.unlockscorelimit();
+  }
+  get IsDifficult() {
+    return this.isdifficult();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
@@ -118,6 +122,10 @@ class TowerDefenceInstance {
   unlockscorelimit() {
     var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  isdifficult() {
+    var t = this.J7.__offset(this.z7, 28);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }
 exports.TowerDefenceInstance = TowerDefenceInstance;

@@ -32,7 +32,9 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     super(...arguments),
       (this.lZe = []),
       (this.Tet = new Map()),
-      (this.Let = void 0),
+      (this.Let = Stats_1.Stat.Create(
+        "[SkillButton]RefreshAllBattleSkillItem",
+      )),
       (this.Det = void 0),
       (this.$Qe = !1),
       (this.Ret = (t) => {
@@ -96,7 +98,10 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         this.xet();
       }),
       (this.xie = (t, e) => {
-        this.wet(), this.xet();
+        SkillButtonPanel.kQe.Start(),
+          this.wet(),
+          this.xet(),
+          SkillButtonPanel.kQe.Stop();
       }),
       (this.LZe = (t) => {
         for (const e of this.lZe) e.PauseGame(t);
@@ -105,7 +110,9 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         for (const t of this.lZe) t.RefreshTimeDilation();
       }),
       (this.XBo = () => {
-        this.SetVisible(5, !Info_1.Info.IsInGamepad()), this.cZe(), this.Aet();
+        Info_1.Info.IsInGamepad()
+          ? this.SetVisible(5, !1)
+          : (this.SetVisible(5, !0), this.cZe(), this.Aet());
       }),
       (this.bet = (t) => {
         ModelManager_1.ModelManager.SkillButtonUiModel.IsNormalButtonTypeList &&
@@ -181,17 +188,21 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     if (this.Visible) for (const e of this.lZe) e.Tick(t);
   }
   cZe() {
-    var e = ModelManager_1.ModelManager.SkillButtonUiModel,
-      i = e.GetButtonTypeList();
-    for (let t = 0; t < this.lZe.length; t++) {
-      var s = i[t],
-        n = this.lZe[t],
-        h = e.GetSkillButtonDataByButton(s);
-      h
-        ? s && !(s < 0) && h.GetSkillId()
-          ? n.Refresh(h)
-          : n.Deactivate()
-        : n.Deactivate();
+    if (!Info_1.Info.IsInGamepad()) {
+      this.Let.Start();
+      var e = ModelManager_1.ModelManager.SkillButtonUiModel,
+        i = e.GetButtonTypeList();
+      for (let t = 0; t < this.lZe.length; t++) {
+        var s = i[t],
+          n = this.lZe[t],
+          h = e.GetSkillButtonDataByButton(s);
+        h
+          ? s && !(s < 0) && h.GetSkillId()
+            ? n.Refresh(h)
+            : n.Deactivate()
+          : n.Deactivate();
+      }
+      this.Let.Stop();
     }
   }
   dZe() {
@@ -301,7 +312,7 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     var t,
       e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e?.Valid &&
-      ((e = e.Entity.GetComponent(160).DirectionState),
+      ((e = e.Entity.GetComponent(161).DirectionState),
       (t = this.Uet(101)) &&
         (e === CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection
           ? t.SetBehaviorToggleState(1)
@@ -537,5 +548,7 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       : (this.Det && this.Det.Stop(), this.RootItem?.SetAnchorOffsetX(i));
   }
 }
-(exports.SkillButtonPanel = SkillButtonPanel).kQe = void 0;
+(exports.SkillButtonPanel = SkillButtonPanel).kQe = Stats_1.Stat.Create(
+  "[ChangeRole]SkillButtonPanel",
+);
 //# sourceMappingURL=SkillButtonPanel.js.map

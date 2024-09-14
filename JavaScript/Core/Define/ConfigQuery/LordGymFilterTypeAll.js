@@ -17,53 +17,72 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0;
+const initStat = Stats_1.Stat.Create("configLordGymFilterTypeAll.Init"),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configLordGymFilterTypeAll.GetConfigList",
+  );
 exports.configLordGymFilterTypeAll = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfigList: (o = !0) => {
-    var e;
+    var t;
     if (
-      (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
+      (ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start(),
+      (t = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair)))
     ) {
       if (o) {
-        var r = KEY_PREFIX + ")";
-        const n = ConfigCommon_1.ConfigCommon.GetConfig(r);
-        if (n) return n;
+        var i = KEY_PREFIX + ")";
+        const e = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        if (e)
+          return (
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
+          );
       }
-      const n = new Array();
+      const e = new Array();
       for (;;) {
         if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        var i = void 0;
+        var n = void 0;
         if (
-          (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
           )),
-          !e)
+          !t)
         )
-          return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
-        i = LordGymFilterType_1.LordGymFilterType.getRootAsLordGymFilterType(
-          new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+          return (
+            ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            getConfigListStat.Stop(),
+            void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+          );
+        n = LordGymFilterType_1.LordGymFilterType.getRootAsLordGymFilterType(
+          new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
         );
-        n.push(i);
+        e.push(n);
       }
       return (
         o &&
-          ((r = KEY_PREFIX + ")"),
-          ConfigCommon_1.ConfigCommon.SaveConfig(r, n, n.length)),
+          ((i = KEY_PREFIX + ")"),
+          ConfigCommon_1.ConfigCommon.SaveConfig(i, e, e.length)),
         ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-        n
+        getConfigListStat.Stop(),
+        ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+        e
       );
     }
+    getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=LordGymFilterTypeAll.js.map

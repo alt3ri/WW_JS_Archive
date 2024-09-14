@@ -39,11 +39,11 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
       (this.ShopSuccessMontage = void 0),
       (this.rir = ""),
       (this.$Un = ""),
-      (this.$2n = !1),
-      (this.eCa = void 0),
-      (this.tCa = void 0),
-      (this.W7s = 0),
-      (this.K7s = 0),
+      (this.oNn = !1),
+      (this._va = void 0),
+      (this.uva = void 0),
+      (this.rHs = 0),
+      (this.oHs = 0),
       (this.nir = new Map()),
       (this.FQe = (t) => {
         this.uKo
@@ -56,8 +56,8 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
             this.eir?.IsValid()) &&
             (this.Htr === IComponent_1.ENpcUiInteractType.AntiqueShop ||
             this.Htr === IComponent_1.ENpcUiInteractType.ChengXiaoShanShop
-              ? this.eCa.Play(this.eir)
-              : this.eCa.PlayOnce(this.eir))
+              ? this._va.Play(this.eir)
+              : this._va.PlayOnce(this.eir))
           : EventSystem_1.EventSystem.Remove(
               EventDefine_1.EEventName.OpenView,
               this.FQe,
@@ -80,7 +80,7 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
               ["ViewName", this.uKo],
             ),
           this._Ko) &&
-          this.eCa.Play(this.eir);
+          this._va.Play(this.eir);
       }),
       (this.hir = (t, i) => {
         this.uKo && (this.iir = t);
@@ -100,17 +100,17 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
                 "[NpcPerformSystemUiState]当前正在播放D级剧情，不会再播放购买成功的D级剧情",
                 ["EntityId", this.Owner.Id],
               )
-            : (t = Time_1.Time.WorldTime) < this.K7s
+            : (t = Time_1.Time.WorldTime) < this.oHs
               ? Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "NPC",
                   8,
                   "[NpcPerformSystemUiState]处于冷却间隔中，无法再次播放购买成功D级剧情",
                   ["worldTime", t],
-                  ["CanPlayBuySuccessTimeStamp", this.K7s],
-                  ["BuySuccessNpcDialogueTimeInterval", this.W7s],
+                  ["CanPlayBuySuccessTimeStamp", this.oHs],
+                  ["BuySuccessNpcDialogueTimeInterval", this.rHs],
                 )
-              : ((this.K7s = t + this.W7s),
+              : ((this.oHs = t + this.rHs),
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "NPC",
@@ -118,8 +118,8 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
                     "[NpcPerformSystemUiState]当购买成功时播放提交成功动作 ShopSuccessMontage",
                     ["EntityId", this.Owner.Id],
                     ["worldTime", t],
-                    ["BuySuccessNpcDialogueTimeInterval", this.W7s],
-                    ["CanPlayBuySuccessTimeStamp", this.K7s],
+                    ["BuySuccessNpcDialogueTimeInterval", this.rHs],
+                    ["CanPlayBuySuccessTimeStamp", this.oHs],
                   ),
                 this._ir(this.ztr, this.uKo, !0),
                 this.uir()));
@@ -188,9 +188,9 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
                     "[CollectionItemDisplay]当提交物品升级成功时,开始播放对应Sequence",
                     ["NpcUiInteractType", this.Htr],
                     ["FinishDeliverySequence", this.rir],
-                    ["ShowNpcWhilePlayingSequence", this.$2n],
+                    ["ShowNpcWhilePlayingSequence", this.oNn],
                   ),
-                  this.$2n || this.Cir(),
+                  this.oNn || this.Cir(),
                   this.jtr.Play(() => {
                     Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
@@ -200,7 +200,7 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
                         ["NpcUiInteractType", this.Htr],
                         ["FinishDeliverySequence", this.rir],
                       ),
-                      this.eCa?.PlayFromLoop(this.eir),
+                      this._va?.PlayFromLoop(this.eir),
                       this.SetNpcAndChildEnable(),
                       EventSystem_1.EventSystem.Emit(
                         EventDefine_1.EEventName
@@ -247,10 +247,10 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
                     "[CollectionItemDisplay]当提交物品等级升至满级时,开始加载对应Sequence",
                     ["NpcUiInteractType", this.Htr],
                     ["FinishDeliverySequence", t],
-                    ["ShowNpcWhilePlayingSequence", this.$2n],
+                    ["ShowNpcWhilePlayingSequence", this.oNn],
                   ),
                 this.jtr.Load(t, () => {
-                  this.$2n || this.Cir(),
+                  this.oNn || this.Cir(),
                     Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
                         "NPC",
@@ -268,7 +268,7 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
                           ["NpcUiInteractType", this.Htr],
                           ["FinishDeliverySequence", t],
                         ),
-                        this.eCa?.PlayFromLoop(this.eir),
+                        this._va?.PlayFromLoop(this.eir),
                         this.SetNpcAndChildEnable(),
                         EventSystem_1.EventSystem.Emit(
                           EventDefine_1.EEventName
@@ -301,7 +301,7 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
             (this.Ztr = t.ShowOnUiInteract.ShopFailedFlow),
             (this.tir = t.ShowOnUiInteract.StandByMontage),
             (this.oir = t.ShowOnUiInteract.ShopSuccessMontage),
-            (this.$2n = !1);
+            (this.oNn = !1);
           break;
         case IComponent_1.ENpcUiInteractType.AntiqueShop:
           (this.Ytr = t.ShowOnUiInteract.EnterMontage),
@@ -311,7 +311,7 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
             (this.tir = t.ShowOnUiInteract.StandByMontage),
             (this.oir = t.ShowOnUiInteract.ShopSuccessMontage),
             (this.rir = t.ShowOnUiInteract.UpgradeSequence),
-            (this.$2n = !1);
+            (this.oNn = !1);
           break;
         case IComponent_1.ENpcUiInteractType.ChengXiaoShanShop:
           (this.Ytr = t.ShowOnUiInteract.EnterMontage),
@@ -322,7 +322,7 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
             (this.oir = t.ShowOnUiInteract.ShopSuccessMontage),
             (this.rir = t.ShowOnUiInteract.UpgradeSequence),
             (this.$Un = t.ShowOnUiInteract.FinishDeliverySequence),
-            (this.$2n = t.ShowOnUiInteract.ShowNpcWhilePlayingSequence ?? !1);
+            (this.oNn = t.ShowOnUiInteract.ShowNpcWhilePlayingSequence ?? !1);
       }
       (this.ConfigId = this.Owner.Entity.GetComponent(0).GetPbDataId()),
         this.nir.set("MingSuView", 3);
@@ -330,11 +330,11 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
   }
   OnEnter(t) {
     this.uKo &&
-      ((this.eCa = this.Owner?.Entity?.GetComponent(170)),
+      ((this._va = this.Owner?.Entity?.GetComponent(171)),
       (this.eir = void 0),
       (this.iir = void 0),
       (this.ShopSuccessMontage = void 0),
-      (this.W7s =
+      (this.rHs =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "BuySuccessNpcDialogueTimeInterval",
         ) ?? 0),
@@ -349,13 +349,13 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
       this.gir(!0),
       StringUtils_1.StringUtils.IsEmpty(this.Ytr) ||
         "Empty" === this.Ytr ||
-        (this.tCa = this.eCa?.LoadAsync(this.Ytr, this.air)),
+        (this.uva = this._va?.LoadAsync(this.Ytr, this.air)),
       StringUtils_1.StringUtils.IsEmpty(this.tir) ||
         "Empty" === this.tir ||
-        this.eCa?.LoadAsync(this.tir, this.hir),
+        this._va?.LoadAsync(this.tir, this.hir),
       StringUtils_1.StringUtils.IsEmpty(this.oir) ||
         "Empty" === this.oir ||
-        this.eCa?.LoadAsync(this.oir, this.lir),
+        this._va?.LoadAsync(this.oir, this.lir),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "NPC",
@@ -384,15 +384,15 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
   }
   OnDestroy() {
     this.jtr && (this.jtr.Destroy(), (this.jtr = void 0)),
-      (this.tCa = void 0),
-      (this.eCa = void 0),
+      (this.uva = void 0),
+      (this._va = void 0),
       (this.Wtr.length = 0);
   }
   sir() {
     (this.Htr !== IComponent_1.ENpcUiInteractType.AntiqueShop &&
       this.Htr !== IComponent_1.ENpcUiInteractType.ChengXiaoShanShop) ||
       !this.eir ||
-      this.eCa.PlayFromEnd(this.eir),
+      this._va.PlayFromEnd(this.eir),
       this.SetNpcAndChildEnable(),
       (this._Ko = !1),
       (this.uKo = void 0),
@@ -501,16 +501,16 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
     this.iir &&
       this.Qtr &&
       Time_1.Time.WorldTimeSeconds > this.Qtr + this.Ktr &&
-      (this.eCa.PlayOnce(this.iir),
+      (this._va.PlayOnce(this.iir),
       (this.Qtr = Time_1.Time.WorldTimeSeconds),
       (this.Ktr = this.iir.SequenceLength + STAND_BY_MONTAGE_CD));
   }
   uir() {
-    (void 0 !== this.tCa && this.eCa && !this.eCa.IsPlayingMontage(this.tCa)) ||
+    (void 0 !== this.uva && this._va && !this._va.IsPlayingMontage(this.uva)) ||
       (this.ShopSuccessMontage &&
         this._Ko &&
         Time_1.Time.WorldTimeSeconds > this.$tr + this.Xtr &&
-        (this.eCa.PlayOnce(this.ShopSuccessMontage),
+        (this._va.PlayOnce(this.ShopSuccessMontage),
         (this.$tr = Time_1.Time.WorldTimeSeconds),
         (this.Xtr = this.ShopSuccessMontage.SequenceLength),
         (this.Qtr = Time_1.Time.WorldTimeSeconds),

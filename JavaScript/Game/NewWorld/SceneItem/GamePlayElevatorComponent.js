@@ -14,8 +14,8 @@ var GamePlayElevatorComponent_1,
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
         r = Reflect.decorate(t, i, e, s);
       else
-        for (var a = t.length - 1; 0 <= a; a--)
-          (h = t[a]) &&
+        for (var n = t.length - 1; 0 <= n; n--)
+          (h = t[n]) &&
             (r = (o < 3 ? h(r) : 3 < o ? h(i, e, r) : h(i, e)) || r);
       return 3 < o && r && Object.defineProperty(i, e, r), r;
     };
@@ -33,7 +33,7 @@ const UE = require("ue"),
   TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  GameSettingsManager_1 = require("../../GameSettings/GameSettingsManager"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
   LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
@@ -83,6 +83,7 @@ let GamePlayElevatorComponent =
         (this.mun = void 0),
         (this.dun = 1),
         (this.Cun = 1),
+        (this.P3a = 0),
         (this.gun = !1),
         (this.fun = !1),
         (this.pun = !1),
@@ -107,7 +108,7 @@ let GamePlayElevatorComponent =
         (this.xun = (t, i) => {
           var e,
             i = i.Entity;
-          i.GetComponent(142) &&
+          i.GetComponent(143) &&
             ((i = i.GetComponent(1)),
             (e = this.yun.indexOf(i.Owner)),
             t
@@ -120,7 +121,7 @@ let GamePlayElevatorComponent =
           var i, e;
           this.IsMove() &&
             ((e = void 0), (i = Global_1.Global.BaseCharacter)) &&
-            (e = i.CharacterActorComponent.Entity.GetComponent(159)) &&
+            (e = i.CharacterActorComponent.Entity.GetComponent(160)) &&
             (t
               ? ((t = i.K2_GetActorLocation().Z),
                 this.Entity.GetComponent(1)?.ActorLocationProxy.Z < t &&
@@ -142,13 +143,13 @@ let GamePlayElevatorComponent =
         (this.bun = (t, i) => {
           var e = ActorUtils_1.ActorUtils.GetEntityByActor(i);
           e &&
-            e.Entity.GetComponent(142) &&
+            e.Entity.GetComponent(143) &&
             -1 === this.Sun.indexOf(i) &&
             (this.IsMove() && -1 !== this.yun.indexOf(i) && this.qun(i),
             this.Sun.push(i));
         }),
         (this.OnSceneInteractionLoadCompleted = () => {
-          var t = this.Entity.GetComponent(185),
+          var t = this.Entity.GetComponent(187),
             t =
               SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
                 t.GetSceneInteractionLevelHandleId(),
@@ -223,11 +224,11 @@ let GamePlayElevatorComponent =
     OnStart() {
       return (
         this.V6o(),
-        (this.vtn = this.Entity.GetComponent(76)),
+        (this.vtn = this.Entity.GetComponent(77)),
         this.vtn &&
           (this.vtn.AddOnPlayerOverlapCallback(this.wun),
           this.vtn.AddOnEntityOverlapCallback(this.xun)),
-        (this._un = this.Entity.GetComponent(117)),
+        (this._un = this.Entity.GetComponent(118)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
@@ -241,11 +242,16 @@ let GamePlayElevatorComponent =
         this.vtn &&
           (this.vtn.RemoveOnPlayerOverlapCallback(this.wun),
           this.vtn.RemoveOnEntityOverlapCallback(this.xun)),
-        EventSystem_1.EventSystem.RemoveWithTarget(
+        EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
           this.OnSceneInteractionLoadCompleted,
-        ),
+        ) &&
+          EventSystem_1.EventSystem.RemoveWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
+            this.OnSceneInteractionLoadCompleted,
+          ),
         void 0 !== this.xOi && TimerSystem_1.TimerSystem.Remove(this.xOi),
         !0
       );
@@ -259,12 +265,12 @@ let GamePlayElevatorComponent =
     Oun(i, e) {
       if (!this.Tun() && !this.hun) {
         this.hun = !0;
-        let t = Protocol_1.Aki.Protocol.W4s.Proto_End;
+        let t = Protocol_1.Aki.Protocol.Z4s.Proto_End;
         e &&
           (t =
             this.Cun > this.dun
-              ? Protocol_1.Aki.Protocol.W4s.h6n
-              : Protocol_1.Aki.Protocol.W4s.Proto_Reverse),
+              ? Protocol_1.Aki.Protocol.Z4s.f6n
+              : Protocol_1.Aki.Protocol.Z4s.Proto_Reverse),
           LevelGamePlayController_1.LevelGamePlayController.ElevatorStateChangeRequest(
             this.Entity.Id,
             i,
@@ -289,9 +295,11 @@ let GamePlayElevatorComponent =
         (this.lun = 0),
         (this.fun = !1),
         (this.gun = !1),
-        this.Oun(this.Cun, !1),
+        0 === this.P3a && this.Oun(this.Cun, !1),
         (this.dun = this.Cun),
-        (this.Cun = 0),
+        0 < this.P3a
+          ? (this.dun !== this.P3a && (this.Cun = this.P3a), (this.P3a = 0))
+          : (this.Cun = 0),
         this.Vun(),
         this.vun && (this.pun = !0),
         (this._un.IsMoving = !1);
@@ -369,15 +377,16 @@ let GamePlayElevatorComponent =
     }
     SetTargetFloor(t) {
       var i, e;
-      t < 1 || t > this.mun.length || this.dun === t
+      t < 1 || t > this.mun.length || this.Cun === t
         ? Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("SceneItem", 36, "SetTargetFloor Wrong Floor", [
             "targetFloor",
             t,
           ])
         : 0 !== this.Cun
-          ? Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("SceneItem", 36, "Elevator Running")
+          ? (Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn("SceneItem", 36, "Elevator Running"),
+            (this.P3a = t))
           : ((this.Cun = t),
             this.Vun(),
             this.vun && this.Oun(t, !0),
@@ -400,7 +409,7 @@ let GamePlayElevatorComponent =
         var i = Global_1.Global.BaseCharacter;
         if (
           (i &&
-            ((i = i.CharacterActorComponent.Entity), (t = i.GetComponent(159))),
+            ((i = i.CharacterActorComponent.Entity), (t = i.GetComponent(160))),
           0 === this.Cun)
         ) {
           if (
@@ -417,9 +426,7 @@ let GamePlayElevatorComponent =
               TimerSystem_1.TimerSystem.Next(() => {
                 this.Qun(e);
               });
-          GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-            ?.GetCurrentQualityInfo()
-            ?.ApplyMotionBlur();
+          GameSettingsManager_1.GameSettingsManager.ReApply(65);
         } else if (
           (UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
@@ -464,7 +471,7 @@ let GamePlayElevatorComponent =
         (this._un.IsMoving = !0);
     }
     Tun() {
-      return this.Entity.GetComponent(180).HasTag(-662723379);
+      return this.Entity.GetComponent(181).HasTag(-662723379);
     }
     Dun() {
       if (!this.vtn) return !1;
@@ -490,7 +497,7 @@ let GamePlayElevatorComponent =
           !e &&
           (r.Entity ===
             Global_1.Global.BaseCharacter.CharacterActorComponent.Entity &&
-            r.Entity.GetComponent(56)?.StopManipualte(),
+            r.Entity.GetComponent(57)?.StopManipualte(),
           this.Yun(r.Entity),
           (o = !0));
       return o;
@@ -523,31 +530,31 @@ let GamePlayElevatorComponent =
             (this.kRe.X = e.X + this.cz.X * (t / 3)),
               (this.kRe.Y = e.Y + this.cz.Y * (t / 3)),
               (this.kRe.Z = e.Z);
-            var [r, a] = TraceUtils_1.TraceUtils.LineTraceWithLocation(
+            var [r, n] = TraceUtils_1.TraceUtils.LineTraceWithLocation(
               this.kRe,
               2e3,
               0,
             );
-            if (r && !a.bStartPenetrating) {
-              var n,
+            if (r && !n.bStartPenetrating) {
+              var a,
                 r =
                   ModelManager_1.ModelManager.TraceElementModel
                     .CommonHitLocation,
-                a =
+                n =
                   (TraceElementCommon_1.TraceElementCommon.GetImpactPoint(
-                    a,
+                    n,
                     0,
                     r,
                   ),
                   l.GetRadius()),
-                a = ((r.Z += a), i.GetComponent(3));
-              a
-                ? ((n = l.DisableCollision(
+                n = ((r.Z += n), i.GetComponent(3));
+              n
+                ? ((a = l.DisableCollision(
                     "[GamePlayElevatorComponent.SetEntitySafePos]",
                   )),
-                  a.TeleportAndFindStandLocation(r),
-                  l.EnableCollision(n))
-                : ((a = i.GetComponent(142)) && a.TryEnableTick(!0),
+                  n.TeleportAndFindStandLocation(r),
+                  l.EnableCollision(a))
+                : ((n = i.GetComponent(143)) && n.TryEnableTick(!0),
                   l.SetActorLocation(
                     r.ToUeVector(),
                     this.constructor.name,
@@ -588,9 +595,9 @@ let GamePlayElevatorComponent =
     qun(t) {
       var i = ActorUtils_1.ActorUtils.GetEntityByActor(t);
       i &&
-        (i = i.Entity.GetComponent(142)) &&
+        (i = i.Entity.GetComponent(143)) &&
         (i.TryDisableTick("[GamePlayElevator.AttachToElevator] 上电梯关闭Tick"),
-        (i = this.Entity.GetComponent(185)),
+        (i = this.Entity.GetComponent(187)),
         ControllerHolder_1.ControllerHolder.AttachToActorController.AttachToActor(
           t,
           i.Owner,
@@ -613,7 +620,7 @@ let GamePlayElevatorComponent =
         1,
       );
       var t = ActorUtils_1.ActorUtils.GetEntityByActor(t);
-      t && (t = t.Entity.GetComponent(142)) && t.TryEnableTick(!0);
+      t && (t = t.Entity.GetComponent(143)) && t.TryEnableTick(!0);
     }
     OnActivate() {
       !Info_1.Info.EnableForceTick &&
@@ -649,7 +656,7 @@ let GamePlayElevatorComponent =
   });
 (GamePlayElevatorComponent = GamePlayElevatorComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(125)],
+    [(0, RegisterComponent_1.RegisterComponent)(126)],
     GamePlayElevatorComponent,
   )),
   (exports.GamePlayElevatorComponent = GamePlayElevatorComponent);

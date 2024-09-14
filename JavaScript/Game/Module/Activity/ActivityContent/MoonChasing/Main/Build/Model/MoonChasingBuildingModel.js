@@ -11,7 +11,7 @@ const CommonParamById_1 = require("../../../../../../../../Core/Define/ConfigCom
   BuildingData_1 = require("./BuildingData");
 class MoonChasingBuildingModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.JOe = new Map()), (this.pCa = void 0);
+    super(...arguments), (this.JOe = new Map()), (this.ofa = void 0);
   }
   OnInit() {
     var e = ConfigManager_1.ConfigManager.BuildingConfig.GetBuildingAll();
@@ -29,9 +29,9 @@ class MoonChasingBuildingModel extends ModelBase_1.ModelBase {
     );
   }
   SetBuildingData(e) {
-    var t = this.JOe.get(e.q6n);
-    (t.IsUnlock = e.G6n),
-      (t.Level = e.P6n),
+    var t = this.JOe.get(e.W6n);
+    (t.IsUnlock = e.K6n),
+      (t.Level = e.F6n),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.MoonChasingRefreshBuildingRedDot,
       );
@@ -40,16 +40,16 @@ class MoonChasingBuildingModel extends ModelBase_1.ModelBase {
     this.SetBuildingData(e);
   }
   LevelUpBuildingData(e, t, i) {
-    this.SetBuildingData(e), this.InitPopularityData(e.q6n, t, i, !0);
+    this.SetBuildingData(e), this.InitPopularityData(t, i, !0);
   }
   GetBuildingDataById(e) {
     return this.JOe.get(e);
   }
   UnlockBuildingData(e, t, i) {
-    var n = this.JOe.get(e);
-    (n.IsUnlock = !0),
-      (n.Level = 1),
-      this.InitPopularityData(e, t, i, !1),
+    e = this.JOe.get(e);
+    (e.IsUnlock = !0),
+      (e.Level = 1),
+      this.InitPopularityData(t, i, !1),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.TrackMoonHandbookUpdate,
       );
@@ -65,27 +65,29 @@ class MoonChasingBuildingModel extends ModelBase_1.ModelBase {
     for (var [, t] of this.JOe) t.IsBuild && e++;
     return e;
   }
-  InitPopularityData(e, t, i, n) {
-    var a =
+  InitPopularityData(e, t, i) {
+    var n =
         ModelManager_1.ModelManager.MoonChasingBusinessModel.GetPopularityConfigByValue(
-          i,
+          t,
         ),
-      e = this.JOe.get(e),
-      n = n ? "Moonfiesta_Title4" : "Moonfiesta_Title3",
-      e = new MoonChasingPopularityUpData_1.MoonChasingPopularityUpData(
-        e.GetAssociateRoleId(),
+      a =
+        ModelManager_1.ModelManager.MoonChasingBusinessModel.GetPlayerRoleId(),
+      o = 1 === ModelManager_1.ModelManager.PlayerInfoModel?.GetPlayerGender(),
+      i = i ? "Moonfiesta_Title4" : "Moonfiesta_Title3",
+      a = new MoonChasingPopularityUpData_1.MoonChasingPopularityUpData(
+        a,
+        e,
         t,
+        o ? n.NpcDialog : n.NpcDialogGirl,
         i,
-        a.NpcDialog,
-        n,
       );
-    this.SetPopularityUpData(e);
+    this.SetPopularityUpData(a);
   }
   SetPopularityUpData(e) {
-    this.pCa = e;
+    this.ofa = e;
   }
   GetPopularityUpData() {
-    return this.pCa;
+    return this.ofa;
   }
   CheckAllBuildingRedDotState() {
     for (const e of this.JOe.values())
@@ -95,6 +97,10 @@ class MoonChasingBuildingModel extends ModelBase_1.ModelBase {
   GetFirstUnLockBuildingData() {
     for (const e of this.JOe.values())
       if (e.IsUnlock && 0 === e.Level && e.IsCanLevelUp) return e;
+  }
+  GetFirstCanLevelUpBuildingId() {
+    for (const e of this.JOe.values())
+      if (e.IsAvailableLevelUp && this.CheckBuildingRedDotState(e)) return e.Id;
   }
   CheckBuildingRedDotState(e) {
     var t = ModelManager_1.ModelManager.MoonChasingModel.GetCoinValue();

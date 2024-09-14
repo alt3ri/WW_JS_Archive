@@ -71,7 +71,7 @@ class SceneTeamItem {
     return this.EntityHandle
       ? this.IsDead()
         ? 4
-        : (e = this.EntityHandle.Entity.CheckGetComponent(188)).HasTag(
+        : (e = this.EntityHandle.Entity.CheckGetComponent(190)).HasTag(
               -2100129479,
             ) && !e.HasTag(781722537)
           ? 2
@@ -81,7 +81,7 @@ class SceneTeamItem {
   CanGoDown(e) {
     var t;
     return this.EntityHandle
-      ? (t = this.EntityHandle.Entity.CheckGetComponent(188)).HasTag(
+      ? (t = this.EntityHandle.Entity.CheckGetComponent(190)).HasTag(
           -1697149502,
         )
         ? 6

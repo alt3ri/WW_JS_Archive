@@ -74,15 +74,15 @@ class CharacterWeapon {
             UE.Actor &&
           t?.IsValid() &&
           t.bHidden !== e &&
-          t.SetActorHiddenInGame(e)
+          EffectSystem_1.EffectSystem.SetEffectHidden(s, e)
         : this.WeaponBuffEffects.delete(s);
     }
   }
   AddBuffEffect(e) {
     this.WeaponBuffEffects.add(e),
       this.WeaponHidden &&
-        (e = EffectSystem_1.EffectSystem.GetEffectActor(e))?.IsValid() &&
-        e.SetActorHiddenInGame(!0);
+        EffectSystem_1.EffectSystem.GetEffectActor(e)?.IsValid() &&
+        EffectSystem_1.EffectSystem.SetEffectHidden(e, !0);
   }
   RemoveBuffEffect(e) {
     this.WeaponBuffEffects.delete(e);

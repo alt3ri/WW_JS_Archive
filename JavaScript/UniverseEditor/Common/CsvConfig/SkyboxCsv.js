@@ -19,12 +19,12 @@ const CsvLoader_1 = require("./CsvLoader"),
     (0, CsvLoader_1.createCsvField)({
       Name: "StaticSkybox",
       CnName: "固定天空盒",
-      RenderType: 36,
+      RenderType: 37,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "DynamicSkybox",
       CnName: "动态天空盒",
-      RenderType: 37,
+      RenderType: 38,
     }),
   ];
 class SkyboxCsvLoader extends CsvLoader_1.CsvLoader {

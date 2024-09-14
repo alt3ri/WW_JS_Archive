@@ -8,6 +8,9 @@ const Info_1 = require("../../../Core/Common/Info"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   Vector2D_1 = require("../../../Core/Utils/Math/Vector2D"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   CameraControllerBase_1 = require("./CameraControllerBase"),
   ARM_OFFSET_Y_SPEED = 100,
@@ -56,6 +59,10 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
       (this.RelativePitchHardMin = 0),
       (this.SoftUnlockYawSpeed = 0),
       (this.SoftUnlockPitchSpeed = 0),
+      (this.SoftUnlockInputTime = 0),
+      (this.SoftUnlockInputYawMinSpeed = 0),
+      (this.SoftUnlockInputPitchMinSpeed = 0),
+      (this.Bja = 0),
       (this.s_e = Vector_1.Vector.Create()),
       (this.Ele = Rotator_1.Rotator.Create()),
       (this.a_e = !1),
@@ -67,7 +74,14 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
       (this.l_e = Vector2D_1.Vector2D.Create()),
       (this.dTn = !0),
       (this.__e = !0),
-      (this.u_e = 0);
+      (this.u_e = 0),
+      (this.BJe = (t, i, s) => {
+        var h = Global_1.Global.BaseCharacter?.GetEntityNoBlueprint();
+        t === h?.Id &&
+          (t = h.GetComponent(34))?.Valid &&
+          0 === t.CurrentSkill?.SkillInfo.SkillTarget.SkillTargetDirection &&
+          this.z$a();
+      });
   }
   Name() {
     return "FocusController";
@@ -91,6 +105,9 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
       this.SetConfigMap(6, "YawSignAdaptionCooldown"),
       this.SetConfigMap(7, "RelativeYawSoftMin"),
       this.SetConfigMap(8, "RelativeYawSoftMax"),
+      this.SetConfigMap(37, "SoftUnlockInputTime"),
+      this.SetConfigMap(38, "SoftUnlockInputYawMinSpeed"),
+      this.SetConfigMap(39, "SoftUnlockInputPitchMinSpeed"),
       this.SetConfigMap(9, "CameraOffsetSoft"),
       this.SetConfigMap(10, "CameraOffset"),
       this.SetConfigMap(11, "HardLockInputYawSensitivity"),
@@ -156,7 +173,11 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
         ),
       this.Camera.CameraAutoController.EnableForce(this),
       this.Camera.CameraSidestepController.Lock(this),
-      (this.AddCameraOffsetY = 0);
+      (this.AddCameraOffsetY = 0),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.CharUseSkill,
+        this.BJe,
+      );
   }
   InitFocusData(t, i, s, h) {
     0 !== h &&
@@ -166,7 +187,11 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
       (this.FocusLimitYawSpeed = i));
   }
   OnDisable() {
-    (this.a_e = !1),
+    EventSystem_1.EventSystem.Remove(
+      EventDefine_1.EEventName.CharUseSkill,
+      this.BJe,
+    ),
+      (this.a_e = !1),
       this.Camera.CameraAutoController.DisableForce(this),
       this.Camera.CameraSidestepController.Unlock(this),
       (this.h_e = 0),
@@ -180,9 +205,28 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
     );
   }
   UpdateInternal(t) {
-    this.UpdateArmRotation(t), this.UpdateShowTarget(t);
+    this.qKa(t), this.OKa(t), this.GKa(t);
   }
-  UpdateArmRotation(o) {
+  qKa(t) {
+    var i, s;
+    this.Camera.TargetEntity &&
+      this.Camera.IsTargetLocationValid &&
+      (([i, s] =
+        this.Camera.CharacterEntityHandle.Entity.GetComponent(
+          54,
+        ).GetCameraInput()),
+      (i *= Info_1.Info.IsInGamepad()
+        ? this.SoftLockInputYawSensitivityGamepad
+        : this.SoftLockInputYawSensitivity),
+      (s *= Info_1.Info.IsInGamepad()
+        ? this.SoftLockInputPitchSensitivityGamepad
+        : this.SoftLockInputPitchSensitivity),
+      (Math.abs(i) > this.SoftUnlockInputYawMinSpeed ||
+        Math.abs(s) > this.SoftUnlockInputPitchMinSpeed) &&
+        (this.Bja = this.SoftUnlockInputTime),
+      this.Bja <= 0 || (this.Bja -= t));
+  }
+  OKa(o) {
     if (
       this.Camera.TargetEntity &&
       this.Camera.IsTargetLocationValid &&
@@ -193,7 +237,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
       this.__e = !1;
       var [n, r] =
           this.Camera.CharacterEntityHandle.Entity.GetComponent(
-            53,
+            54,
           ).GetCameraInput(),
         l = this.Camera.CurrentCamera.ArmRotation,
         _ = this.Camera.PlayerLocation,
@@ -205,19 +249,19 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
         i = !1,
         s = 0,
         h = 0,
-        a = 0,
-        e = 0;
+        e = 0,
+        a = 0;
       (this.Ele.Pitch = this.Camera.AdjustPitch(this.s_e)),
         (this.Ele.Yaw =
           Math.atan2(this.s_e.Y, this.s_e.X) * MathUtils_1.MathUtils.RadToDeg);
       var M = MathUtils_1.MathUtils.WrapAngle(
           this.Camera.CameraRotation.Yaw - this.Ele.Yaw,
         ),
-        R = MathUtils_1.MathUtils.WrapAngle(
+        S = MathUtils_1.MathUtils.WrapAngle(
           this.Camera.CameraRotation.Pitch - this.Ele.Pitch,
         ),
-        S = 0 <= M ? 1 : -1,
-        g = 0 <= R ? 1 : -1;
+        v = 0 <= M ? 1 : -1,
+        R = 0 <= S ? 1 : -1;
       if (_) {
         if (this.YawSignAdaptionOn) {
           var _ =
@@ -227,7 +271,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
                 : this.HardLockInputYawSensitivity)
                 ? 1
                 : -1,
-            v =
+            c =
               0 <=
               (r = -(r *= Info_1.Info.IsInGamepad()
                 ? this.HardLockInputPitchSensitivityGamepad
@@ -236,63 +280,64 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
                 : -1;
           if (
             (0 === this.h_e &&
-              ((this.h_e = S),
+              ((this.h_e = v),
               (this.u_e = Time_1.Time.Now + this.YawSignAdaptionCooldown)),
             Time_1.Time.Now > this.u_e &&
-              this.h_e !== S &&
-              ((this.h_e = S),
+              this.h_e !== v &&
+              ((this.h_e = v),
               (this.u_e = Time_1.Time.Now + this.YawSignAdaptionCooldown)),
             Math.abs(M) < this.RelativeYawHardMin)
           )
-            (a += this.h_e * this.RelativeYawHardMin), _ == S && (a += n);
+            (e += this.h_e * this.RelativeYawHardMin), _ == v && (e += n);
           else if (Math.abs(M) > this.RelativeYawHardMax)
-            (a += this.h_e * this.RelativeYawHardMax), _ != S && (a += n);
+            (e += this.h_e * this.RelativeYawHardMax), _ != v && (e += n);
           else {
             const d = M + n;
-            S * d < 0 &&
-              (S == _ &&
+            v * d < 0 &&
+              (v == _ &&
                 180 !== this.RelativeYawHardMax &&
                 ((n = MathUtils_1.MathUtils.WrapAngle(
                   this.Ele.Yaw + this.h_e * this.RelativeYawHardMax,
                 )),
-                (c = MathUtils_1.MathUtils.WrapAngle(
+                (g = MathUtils_1.MathUtils.WrapAngle(
                   this.Ele.Yaw + this.h_e * this.RelativeYawHardMin,
                 )),
-                (h = Math.max(c, n)),
-                (s = Math.min(c, n)),
+                (h = Math.max(g, n)),
+                (s = Math.min(g, n)),
                 (i = !0)),
-              S != _) &&
+              v != _) &&
               0 !== this.RelativeYawHardMin &&
-              ((c = MathUtils_1.MathUtils.WrapAngle(
+              ((g = MathUtils_1.MathUtils.WrapAngle(
                 this.Ele.Yaw + this.h_e * this.RelativeYawHardMax,
               )),
               (n = MathUtils_1.MathUtils.WrapAngle(
                 this.Ele.Yaw + this.h_e * this.RelativeYawHardMin,
               )),
-              (h = Math.max(n, c)),
-              (s = Math.min(n, c)),
+              (h = Math.max(n, g)),
+              (s = Math.min(n, g)),
               (i = !0)),
-              (a += d);
+              (e += d);
           }
-          if (Math.abs(R) < this.RelativePitchHardMin)
-            (e += g * this.RelativePitchHardMin), v == g && (e += r);
-          else if (Math.abs(R) > this.RelativePitchHardMax)
-            (e += g * this.RelativePitchHardMax), v != g && (e += r);
+          if (Math.abs(S) < this.RelativePitchHardMin)
+            (a += R * this.RelativePitchHardMin), c == R && (a += r);
+          else if (Math.abs(S) > this.RelativePitchHardMax)
+            (a += R * this.RelativePitchHardMax), c != R && (a += r);
           else {
-            const d = R + r;
-            e += d;
+            const d = S + r;
+            a += d;
           }
-          (a = MathUtils_1.MathUtils.Clamp(a, M - 179, M + 179)),
-            (e = MathUtils_1.MathUtils.Clamp(e, R - 179, R + 179)),
-            (this.Ele.Yaw += a),
-            (this.Ele.Pitch += e),
+          (e = MathUtils_1.MathUtils.Clamp(e, M - 179, M + 179)),
+            (a = MathUtils_1.MathUtils.Clamp(a, S - 179, S + 179)),
+            (this.Ele.Yaw += e),
+            (this.Ele.Pitch += a),
             (this.Ele.Yaw = MathUtils_1.MathUtils.WrapAngle(this.Ele.Yaw)),
             (this.Ele.Pitch = MathUtils_1.MathUtils.WrapAngle(this.Ele.Pitch)),
-            (t = S * this.CameraOffset);
+            (t = v * this.CameraOffset);
         }
       } else
-        !ModelManager_1.ModelManager.CameraModel.IsEnableSoftLockCamera ||
+        !ModelManager_1.ModelManager.CameraModel.IsSoftLockEnable() ||
         this.ShouldSoftUnlock() ||
+        this.CanMoveCameraInSoftLock() ||
         this.Camera.IsModifiedArmRotationPitch ||
         this.Camera.IsModifiedArmRotationYaw
           ? ((this.Ele.Yaw = l.Yaw), (this.Ele.Pitch = l.Pitch))
@@ -300,9 +345,9 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
             _?.ShowTarget?.Valid &&
             ((this.__e = !0),
             Math.abs(M) < this.RelativeYawSoftMin
-              ? (this.Ele.Yaw += S * this.RelativeYawSoftMin)
+              ? (this.Ele.Yaw += v * this.RelativeYawSoftMin)
               : Math.abs(M) > this.RelativeYawSoftMax
-                ? (this.Ele.Yaw += S * this.RelativeYawSoftMax)
+                ? (this.Ele.Yaw += v * this.RelativeYawSoftMax)
                 : (this.Ele.Yaw = this.Camera.CameraRotation.Yaw)),
           (t = this.h_e * this.CameraOffsetSoft);
       const d = Math.abs(t - this.AddCameraOffsetY);
@@ -322,18 +367,18 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
                 this.RelativeRotationLagDistanceRangeMin),
           ),
         ),
-        c = MathUtils_1.MathUtils.Lerp(
+        g = MathUtils_1.MathUtils.Lerp(
           this.RelativeRotationLagYawSpeedMin,
           this.RelativeRotationLagYawSpeedMax,
           this.RelativeRotationLagYawCurve.GetCurrentValue(
             Math.abs(M) / this.RelativeRotationLagYawAngleRange,
           ),
         ),
-        v = MathUtils_1.MathUtils.Lerp(
+        c = MathUtils_1.MathUtils.Lerp(
           this.RelativeRotationLagPitchSpeedMin,
           this.RelativeRotationLagPitchSpeedMax,
           this.RelativeRotationLagPitchCurve.GetCurrentValue(
-            Math.abs(R) / this.RelativeRotationLagPitchAngleRange,
+            Math.abs(S) / this.RelativeRotationLagPitchAngleRange,
           ),
         );
       (this.Camera.DesiredCamera.ArmRotation.Yaw =
@@ -341,14 +386,14 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
           l.Yaw,
           this.Ele.Yaw,
           o,
-          n * c,
+          n * g,
         )),
         (this.Camera.DesiredCamera.ArmRotation.Pitch =
           MathUtils_1.MathUtils.RotatorAxisInterpTo(
             l.Pitch,
             this.Ele.Pitch,
             o,
-            v,
+            c,
           )),
         i &&
           (this.Camera.DesiredCamera.ArmRotation.Yaw =
@@ -361,12 +406,12 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
         (this.Camera.IsModifiedArmRotationYaw = !0);
     }
   }
-  UpdateShowTarget(t) {
+  GKa(t) {
     var i, s, h;
     !this.Camera.ContainsTag(-1150819426) ||
     (([s, h] =
       this.Camera.CharacterEntityHandle.Entity.GetComponent(
-        53,
+        54,
       ).GetCameraInput()),
     0 === s && 0 === h)
       ? (this.l_e.Reset(), (this.dTn = !0))
@@ -397,19 +442,20 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
   }
   UpdateDeactivateInternal(t) {
     var i;
-    void 0 !== this.AddCameraOffsetY &&
-      ((i = Math.abs(0 - this.AddCameraOffsetY)) > ARM_OFFSET_Y_SPEED * t
-        ? (this.AddCameraOffsetY = MathUtils_1.MathUtils.Lerp(
-            this.AddCameraOffsetY,
-            0,
-            (ARM_OFFSET_Y_SPEED * t) / i,
-          ))
-        : (this.AddCameraOffsetY = void 0));
+    this.z$a(),
+      void 0 !== this.AddCameraOffsetY &&
+        ((i = Math.abs(0 - this.AddCameraOffsetY)) > ARM_OFFSET_Y_SPEED * t
+          ? (this.AddCameraOffsetY = MathUtils_1.MathUtils.Lerp(
+              this.AddCameraOffsetY,
+              0,
+              (ARM_OFFSET_Y_SPEED * t) / i,
+            ))
+          : (this.AddCameraOffsetY = void 0));
   }
   ShouldSoftUnlock() {
     var [t, i] =
       this.Camera.CharacterEntityHandle.Entity.GetComponent(
-        53,
+        54,
       ).GetCameraInput();
     return (
       (t *= Info_1.Info.IsInGamepad()
@@ -421,6 +467,12 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
       Math.abs(t) > this.SoftUnlockYawSpeed ||
         Math.abs(i) > this.SoftUnlockPitchSpeed
     );
+  }
+  CanMoveCameraInSoftLock() {
+    return 0 < this.Bja;
+  }
+  z$a() {
+    this.Bja = 0;
   }
 }
 exports.CameraFocusController = CameraFocusController;

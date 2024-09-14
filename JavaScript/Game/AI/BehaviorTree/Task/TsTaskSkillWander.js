@@ -65,8 +65,8 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
     i = i.AiController;
     if (i) {
       this.TsWalkOff ||
-        i.CharActorComp.Entity.GetComponent(163)?.SetWalkOffLedgeRecord(!1);
-      var s = i.CharActorComp.Entity.CheckGetComponent(160);
+        i.CharActorComp.Entity.GetComponent(164)?.SetWalkOffLedgeRecord(!1);
+      var s = i.CharActorComp.Entity.CheckGetComponent(161);
       if (s.Valid)
         switch (this.TsMoveState) {
           case 1:
@@ -166,13 +166,13 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
               ]),
               this.StopMoveToLocation(h);
           }
-          s = h.Entity.GetComponent(37);
+          s = h.Entity.GetComponent(38);
           (s && s.MoveController.IsMovingToLocation()) ||
-            (h.Entity.GetComponent(91)?.MoveState !==
+            (h.Entity.GetComponent(92)?.MoveState !==
             CharacterUnifiedStateTypes_1.ECharMoveState.Walk
               ? (AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
                   h,
-                  this.TmpSelfToTarget,
+                  this.TmpVector,
                   i,
                 ),
                 h.SetInputDirect(h.ActorForwardProxy))
@@ -196,7 +196,7 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
         this.FinishExecute(!1);
   }
   StopMoveToLocation(i) {
-    i = i.Entity.GetComponent(37);
+    i = i.Entity.GetComponent(38);
     i &&
       i.MoveController.IsMovingToLocation() &&
       i?.MoveController.StopMoveToLocation(),
@@ -205,7 +205,7 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
   SetMoveToLocation(i, t, s, e) {
     this.TmpVector2.DeepCopy(i),
       this.TmpVector2.AdditionEqual(t.ActorLocationProxy);
-    i = t.Entity.GetComponent(37);
+    i = t.Entity.GetComponent(38);
     return (
       !!i &&
       ((!this.LastDestination.IsNearlyZero() ||
@@ -227,8 +227,8 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
     );
   }
   FindArea(i, t, s, e, h) {
-    var r = i.CharAiDesignComp.Entity.CheckGetComponent(33),
-      o = r.Entity.GetComponent(188);
+    var r = i.CharAiDesignComp.Entity.CheckGetComponent(34),
+      o = r.Entity.GetComponent(190);
     this.TmpForward.DeepCopy(h),
       (this.TmpForward.Z = 0),
       this.TmpForward.Normalize(),
@@ -361,7 +361,7 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
     this.AIOwner instanceof TsAiController_1.default &&
       ((i =
         this.AIOwner.AiController.CharActorComp.Entity.GetComponent(
-          37,
+          38,
         ))?.MoveController.StopMoveToLocation(),
       this.LastDestination?.Reset(),
       AiContollerLibrary_1.AiControllerLibrary.ClearInput(this.AIOwner),

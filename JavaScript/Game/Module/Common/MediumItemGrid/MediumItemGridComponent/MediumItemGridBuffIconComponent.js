@@ -33,6 +33,9 @@ class MediumItemGridBuffIconComponent extends MediumItemGridComponent_1.MediumIt
           break;
         case 5:
           e = r.ResurrectionBuffSpritePath;
+          break;
+        case 6:
+          e = r.ExploreBuffSpritePath;
       }
       e
         ? ((t = this.GetSprite(0)),

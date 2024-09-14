@@ -7,27 +7,29 @@ class LevelAiTaskMoveAlong extends LevelAiTask_1.LevelAiTask {
     super(...arguments),
       (this.PathPoint = void 0),
       (this.Navigation = !0),
+      (this.ResetAllPoints = !1),
       (this.Gce = void 0);
   }
   ExecuteTask() {
-    var e;
+    var s;
     return (
-      (this.Gce = this.CreatureDataComponent.Entity.GetComponent(37)),
+      (this.Gce = this.CreatureDataComponent.Entity.GetComponent(38)),
       this.Gce
-        ? ((e = {
+        ? ((s = {
             Points: this.PathPoint,
             Navigation: this.Navigation,
             IsFly: !1,
             DebugMode: !0,
             Loop: !1,
-            Callback: (e) => {
-              this.wTe(e);
+            Callback: (s) => {
+              this.wTe(s);
             },
             UsePreviousIndex: !0,
             UseNearestPoint: !0,
             ReturnFalseWhenNavigationFailed: !1,
+            ResetAllPoints: this.ResetAllPoints,
           }),
-          this.Gce.MoveAlongPath(e),
+          this.Gce.MoveAlongPath(s),
           3)
         : 1
     );
@@ -35,8 +37,8 @@ class LevelAiTaskMoveAlong extends LevelAiTask_1.LevelAiTask {
   AbortTask() {
     return this.Gce.StopMove(!0), 2;
   }
-  wTe(e) {
-    switch ((this.Gce.StopMove(!0), e)) {
+  wTe(s) {
+    switch ((this.Gce.StopMove(!0), s)) {
       case 1:
         this.FinishLatentTask(0);
         break;

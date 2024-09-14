@@ -25,7 +25,7 @@ const CsvLoader_1 = require("./CsvLoader"),
       Type: "Int",
       Condition: "notEmpty",
       CreateType: "scheme",
-      RenderType: 42,
+      RenderType: 43,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "Description",
@@ -37,7 +37,7 @@ const CsvLoader_1 = require("./CsvLoader"),
       Name: "Tags",
       CnName: "表现Tag",
       Type: "Array<Int>",
-      RenderType: 59,
+      RenderType: 60,
     }),
   ];
 class EntityPerformanceAttributeCsvLoader extends CsvLoader_1.CsvLoader {

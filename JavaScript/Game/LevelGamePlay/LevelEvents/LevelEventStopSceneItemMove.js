@@ -27,25 +27,25 @@ class LevelEventStopSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
     if (this.OPt) {
       var e = this.OPt.EntityIds,
         t = [],
-        o = Protocol_1.Aki.Protocol.eZs.create(),
+        o = Protocol_1.Aki.Protocol.hta.create(),
         r =
-          ((o.rZs = []),
+          ((o.uta = []),
           this.OPt.StopType === IAction_1.EStopSceneItemMoveType.StopAtNextPos);
       for (const a of e) {
-        var n = Protocol_1.Aki.Protocol.nZs.create(),
+        var n = Protocol_1.Aki.Protocol.Sta.create(),
           i = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(a);
         if (i?.Valid) {
-          var s = i.Entity.GetComponent(115);
+          var s = i.Entity.GetComponent(116);
           if (s?.Valid) {
             let e = void 0;
             r && (e = s.GetNextTarget());
             var l = i.Entity.GetComponent(0),
               v = i.Entity.GetComponent(1),
               l =
-                ((n.P4n = MathUtils_1.MathUtils.NumberToLong(
+                ((n.F4n = MathUtils_1.MathUtils.NumberToLong(
                   l.GetCreatureDataId(),
                 )),
-                (n.y5n = v.ActorLocationProxy),
+                (n.P5n = v.ActorLocationProxy),
                 {
                   Entity: i.Entity,
                   Location: Vector_1.Vector.Create(v.ActorLocationProxy),
@@ -53,10 +53,10 @@ class LevelEventStopSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
                 });
             r &&
               e.HasTarget &&
-              ((n.y5n = e.Target),
+              ((n.P5n = e.Target),
               (l.Location = Vector_1.Vector.Create(e.Target)),
               (l.Velocity = e.Velocity)),
-              s.IsMoving && o.rZs.push(n),
+              s.IsMoving && o.uta.push(n),
               t.push(l);
           } else
             Log_1.Log.CheckError() &&
@@ -70,15 +70,15 @@ class LevelEventStopSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error("Event", 32, "实体不合法", ["entityId", a]);
       }
-      Net_1.Net.Call(18221, o, (e) => {
-        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+      Net_1.Net.Call(29004, o, (e) => {
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.O4n,
-            17217,
+            e.Q4n,
+            23314,
           );
       });
       for (const m of t) {
-        var _ = m.Entity.GetComponent(115),
+        var _ = m.Entity.GetComponent(116),
           c =
             (_.StopMove(),
             EventSystem_1.EventSystem.EmitWithTarget(

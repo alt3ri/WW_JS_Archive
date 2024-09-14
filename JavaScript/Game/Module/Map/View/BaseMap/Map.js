@@ -13,7 +13,7 @@ const UE = require("ue"),
   MapMarkMgr_1 = require("./Assistant/MapMarkMgr"),
   MapTileMgr_1 = require("./Assistant/MapTileMgr");
 class BaseMap extends UiPanelBase_1.UiPanelBase {
-  constructor(e, t, i, s = 1, r = 100, h) {
+  constructor(e, t, i, s, r = 1, h = 100, a) {
     super(),
       (this.SelfPlayerNode = void 0),
       (this.PlayerArrow = void 0),
@@ -27,18 +27,20 @@ class BaseMap extends UiPanelBase_1.UiPanelBase {
       (this.kut = void 0),
       (this.pAi = 100),
       (this.vAi = void 0),
-      (this.daa = !1),
+      (this.C1a = !1),
+      (this._Ui = void 0),
       (this.MAi = () => {
         this.gAi.OnMapSetUp(),
           this.CAi.OnMapSetup(),
           this.RootItem.SetUIActive(!0);
       }),
-      (this.fAi = h),
-      (this.dAi = t),
-      (this.lUi = s),
-      (this.MapType = e),
-      (this.kut = i),
-      (this.pAi = r);
+      (this._Ui = e),
+      (this.MapType = t),
+      (this.dAi = i),
+      (this.kut = s),
+      (this.lUi = r),
+      (this.pAi = h),
+      (this.fAi = a);
   }
   get MapRootItem() {
     return this.RootItem;
@@ -87,7 +89,13 @@ class BaseMap extends UiPanelBase_1.UiPanelBase {
     2 === BaseMap.MapMaterialVersion && (s = this.GetTexture(9));
     var r = this.GetItem(7),
       h = this.GetTexture(8);
-    (this.CAi = new MapMarkMgr_1.MapMarkMgr(this.MapType, t, this.kut, e)),
+    (this.CAi = new MapMarkMgr_1.MapMarkMgr(
+      this.MapType,
+      this._Ui,
+      t,
+      this.kut,
+      e,
+    )),
       this.CAi.Initialize(),
       (this.gAi = new MapTileMgr_1.MapTileMgr(
         this.RootItem,
@@ -96,6 +104,7 @@ class BaseMap extends UiPanelBase_1.UiPanelBase {
         r,
         h,
         this.MapType,
+        this._Ui,
         BaseMap.MapMaterialVersion,
         this.fAi,
       )),
@@ -138,6 +147,9 @@ class BaseMap extends UiPanelBase_1.UiPanelBase {
   }
   CreateCustomMark(e) {
     return this.CAi.CreateDynamicMark(e);
+  }
+  FindNearbyMarkItems(e, t) {
+    return this.CAi.FindNearbyMarkItems(e, t);
   }
   get MapOffset() {
     return this.gAi.MapOffset;
@@ -187,16 +199,16 @@ class BaseMap extends UiPanelBase_1.UiPanelBase {
       });
   }
   SetClickRangeVisible(e, t = Vector2D_1.Vector2D.Create(0, 0)) {
-    this.laa(e, t);
+    this._1a(e, t);
   }
-  async laa(e, t) {
+  async _1a(e, t) {
     var i;
     return (
-      this.daa !== e &&
+      this.C1a !== e &&
         ((i = this.GetItem(6)),
-        (this.daa = e),
-        this.daa
-          ? (i.SetUIActive(this.daa),
+        (this.C1a = e),
+        this.C1a
+          ? (i.SetUIActive(this.C1a),
             i.SetWorldScale3D(new UE.Vector(1, 1, 1)),
             i?.SetAnchorOffset(t.ToUeVector2D(!0)),
             await this.vAi?.PlaySequenceAsync(
@@ -207,10 +219,21 @@ class BaseMap extends UiPanelBase_1.UiPanelBase {
               "Close",
               new CustomPromise_1.CustomPromise(),
             ),
-            i?.SetUIActive(this.daa))),
+            i?.SetUIActive(this.C1a))),
       !0
     );
   }
+  InValidMapTile(e) {
+    return this.gAi.InValidTile(e);
+  }
+  SyncTransformToFrontContainer() {
+    var e = this.GetRootItem(),
+      t = e.GetAnchorOffset(),
+      t = (this.kut.SetAnchorOffset(t), e.RelativeScale3D);
+    this.kut.SetRelativeScale3D(t),
+      this.kut.SetWidth(e.Width),
+      this.kut.SetHeight(e.Height);
+  }
 }
-(exports.BaseMap = BaseMap).MapMaterialVersion = 2;
+(exports.BaseMap = BaseMap).MapMaterialVersion = 1;
 //# sourceMappingURL=Map.js.map

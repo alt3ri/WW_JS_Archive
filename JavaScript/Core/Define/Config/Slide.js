@@ -14,9 +14,16 @@ class Slide {
   get FallingLateralFrictions() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.fallinglateralfrictionsLength(),
-      (t) => this.fallinglateralfrictions(t)?.key(),
-      (t) => this.fallinglateralfrictions(t)?.value(),
+      this.fallinglateralfrictionsKey,
+      this.fallinglateralfrictionsValue,
+      this,
     );
+  }
+  fallinglateralfrictionsKey(t) {
+    return this.fallinglateralfrictions(t)?.key();
+  }
+  fallinglateralfrictionsValue(t) {
+    return this.fallinglateralfrictions(t)?.value();
   }
   get SlideFriction() {
     return this.slidefriction();

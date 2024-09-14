@@ -12,16 +12,16 @@ const Log_1 = require("../../../Core/Common/Log"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   LguiUtil_1 = require("../Util/LguiUtil");
 class GeneralLogicTreeUtil {
-  static GetEntityConfigPosition(e) {
-    let r = void 0;
-    e = ModelManager_1.ModelManager.CreatureModel.GetEntityData(e);
-    return (r = e
+  static GetEntityConfigPosition(e, r) {
+    let o = void 0;
+    e = ModelManager_1.ModelManager.CreatureModel.GetEntityData(e, r);
+    return (o = e
       ? Vector_1.Vector.Create(
           e.Transform?.Pos.X ?? 0,
           e.Transform?.Pos.Y ?? 0,
           e.Transform?.Pos.Z ?? 0,
         )
-      : r);
+      : o);
   }
   static GetEntityConfigRotator(e) {
     let r = void 0;
@@ -44,11 +44,11 @@ class GeneralLogicTreeUtil {
   static GetNodeConfig(e, r, o) {
     let t = void 0;
     switch (e) {
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest:
         t = ModelManager_1.ModelManager.QuestNewModel.GetQuestNodeConfig(r, o);
         break;
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeInst:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeInst:
         t = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayNodeConfig(
           r,
           o,
@@ -59,16 +59,16 @@ class GeneralLogicTreeUtil {
   static GetLogicTreeContainer(e, r) {
     let o = void 0;
     switch (e) {
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest:
         o = ModelManager_1.ModelManager.QuestNewModel.GetQuest(r);
         break;
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay:
         o =
           ModelManager_1.ModelManager.LevelPlayModel.GetProcessingLevelPlayInfo(
             r,
           );
         break;
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeInst:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeInst:
         o =
           ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceDungeonInfo();
     }

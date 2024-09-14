@@ -31,8 +31,8 @@ class ControllerBase {
   static ChangeMode() {
     return this.OnChangeMode();
   }
-  static SetPerformanceStateObject(t, e = 0, r) {
-    this.PerformanceState = void 0;
+  static SetPerformanceStateObject(t, e = "", r = "") {
+    this.PerformanceState = Stats_1.Stat.Create(t, e, r);
   }
   static GetPerformanceStateObject() {
     return this.OnGetPerformanceStateObject();

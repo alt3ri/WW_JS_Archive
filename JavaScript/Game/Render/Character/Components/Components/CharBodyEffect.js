@@ -12,23 +12,32 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
   constructor() {
     super(...arguments),
       (this.Entity = void 0),
+      (this.vJ = void 0),
       (this.Visible = !1),
       (this.Opacity = 0),
       (this.EffectHandles = []),
       (this.NeedUpdate = !1),
-      (this.OnSetActorVisible = (e, t) => {
-        (this.Entity && e !== this.Entity.Id) || this.ehr(t);
+      (this.gfn = (e) => {
+        var t,
+          s = this.EffectHandles.findIndex((t) => t.Id === e);
+        s < 0 ||
+          ((t = this.EffectHandles[s]),
+          this.EffectHandles.splice(s, 1),
+          t.RemoveFinishCallback(this.gfn));
+      }),
+      (this.OnSetActorVisible = (t, e) => {
+        (this.Entity && t !== this.Entity.Id) || this.ehr(e);
       }),
       (this.yvi = () => {
-        for (const e of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems())
-          if (e.IsControl() && e.EntityHandle?.Entity === this.Entity)
+        for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems())
+          if (t.IsControl() && t.EntityHandle?.Entity === this.Entity)
             return void this.ehr(!0);
         this.ehr(!1);
       }),
-      (this.xie = (e, t) => {
-        e.Entity === this.Entity && this.ehr(!0);
+      (this.xie = (t, e) => {
+        t.Entity === this.Entity && this.ehr(!0);
       }),
-      (this.m9s = () => {
+      (this.M9s = () => {
         this.ehr(!1);
       });
   }
@@ -38,25 +47,31 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
   GetComponentId() {
     return RenderConfig_1.RenderConfig.IdBodyEffect;
   }
-  Awake(e) {
-    super.Awake(e);
+  Awake(t) {
+    super.Awake(t);
   }
-  RegisterEffect(e) {
-    this.EffectHandles.push(e),
+  RegisterEffect(t) {
+    this.EffectHandles.push(t),
       (1 === this.Opacity && this.Visible) ||
-        e.GetEffectSpec()?.UpdateBodyEffect(this.Opacity, this.Visible),
-      e.AddFinishCallback((t) => {
-        var e = this.EffectHandles.findIndex((e) => e.Id === t);
-        0 < e && this.EffectHandles.splice(e, 1);
-      });
+        t.GetEffectSpec()?.UpdateBodyEffect(this.Opacity, this.Visible),
+      t.AddFinishCallback(this.gfn);
+  }
+  UnregisterEffect(t) {
+    var e = this.EffectHandles.indexOf(t);
+    e < 0 ||
+      (this.EffectHandles.splice(e, 1), t.RemoveFinishCallback(this.gfn));
   }
   Start() {
     this.Opacity = 1;
-    var e = this.GetRenderingComponent().GetOwner();
-    e instanceof TsBaseCharacter_1.default &&
-      e.CharacterActorComponent?.Entity &&
-      ((this.Entity = e.CharacterActorComponent.Entity),
-      EventSystem_1.EventSystem.Add(
+    var t = this.GetRenderingComponent().GetOwner();
+    t instanceof TsBaseCharacter_1.default &&
+      t.CharacterActorComponent?.Entity &&
+      ((this.Entity = t.CharacterActorComponent.Entity),
+      (this.vJ = ModelManager_1.ModelManager.CreatureModel?.GetEntityById(
+        this.Entity.Id,
+      )),
+      EventSystem_1.EventSystem.AddWithTarget(
+        this.vJ,
         EventDefine_1.EEventName.OnSetActorHidden,
         this.OnSetActorVisible,
       ),
@@ -71,21 +86,22 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.OnRoleGoDownFinish,
-        this.m9s,
+        this.M9s,
       )),
       this.OnInitSuccess();
   }
   Update() {
     if (this.NeedUpdate) {
-      for (const e of this.EffectHandles)
-        e.GetEffectSpec()?.UpdateBodyEffect(this.Opacity, this.Visible);
+      for (const t of this.EffectHandles)
+        t.GetEffectSpec()?.UpdateBodyEffect(this.Opacity, this.Visible);
       this.NeedUpdate = !1;
     }
   }
   LateUpdate() {}
   Destroy() {
     this.Entity &&
-      (EventSystem_1.EventSystem.Remove(
+      (EventSystem_1.EventSystem.RemoveWithTarget(
+        this.vJ,
         EventDefine_1.EEventName.OnSetActorHidden,
         this.OnSetActorVisible,
       ),
@@ -100,15 +116,15 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.OnRoleGoDownFinish,
-        this.m9s,
+        this.M9s,
       ));
   }
-  SetOpacity(e) {
-    MathUtils_1.MathUtils.IsNearlyEqual(this.Opacity, e) ||
-      ((this.Opacity = e), (this.NeedUpdate = !0));
+  SetOpacity(t) {
+    MathUtils_1.MathUtils.IsNearlyEqual(this.Opacity, t) ||
+      ((this.Opacity = t), (this.NeedUpdate = !0));
   }
-  ehr(e) {
-    this.Visible !== e && ((this.Visible = e), (this.NeedUpdate = !0));
+  ehr(t) {
+    this.Visible !== t && ((this.Visible = t), (this.NeedUpdate = !0));
   }
 }
 exports.CharBodyEffect = CharBodyEffect;

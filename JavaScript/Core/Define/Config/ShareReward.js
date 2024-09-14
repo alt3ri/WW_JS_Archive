@@ -16,9 +16,16 @@ class ShareReward {
   get ShareReward() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.sharerewardLength(),
-      (t) => this.sharereward(t)?.key(),
-      (t) => this.sharereward(t)?.value(),
+      this.sharerewardKey,
+      this.sharerewardValue,
+      this,
     );
+  }
+  sharerewardKey(t) {
+    return this.sharereward(t)?.key();
+  }
+  sharerewardValue(t) {
+    return this.sharereward(t)?.value();
   }
   get UpdateType() {
     return this.updatetype();

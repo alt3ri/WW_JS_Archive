@@ -6,19 +6,19 @@ class RoguelikeChooseData {
   constructor(t) {
     (this.CostCurrency = []),
       (this.CallBack = void 0),
-      (this.Index = t.r5n ?? void 0),
-      (this.RoguelikeGainDataType = t.Z4n ?? void 0),
-      (this.MaxTime = t.V2s),
-      (this.UseTime = t.$2s),
-      (this.EventId = t.H2s),
-      (this.Layer = t.vHn),
-      (this.IsSelect = t.w2s),
+      (this.Index = t.c5n ?? void 0),
+      (this.RoguelikeGainDataType = t.h5n ?? void 0),
+      (this.MaxTime = t.X2s),
+      (this.UseTime = t.Y2s),
+      (this.EventId = t.J2s),
+      (this.Layer = t.AHn),
+      (this.IsSelect = t.k2s),
       (this.RogueGainEntryList = new Array());
-    for (const s of t.j2s)
+    for (const s of t.z2s)
       this.RogueGainEntryList.push(
         new RogueGainEntry_1.RogueGainEntry(s, this.Index),
       );
-    this.CostCurrency = t.W2s;
+    this.CostCurrency = t.Z2s;
   }
 }
 exports.RoguelikeChooseData = RoguelikeChooseData;

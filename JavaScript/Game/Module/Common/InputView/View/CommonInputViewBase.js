@@ -133,7 +133,7 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
   ExecuteInputConfirm(t) {
     this.InputData.ConfirmFunc?.(t).then(
       (t) => {
-        t === Protocol_1.Aki.Protocol.O4n.Proto_ContainsDirtyWord
+        t === Protocol_1.Aki.Protocol.Q4n.Proto_ContainsDirtyWord
           ? this.RefreshTips(4)
           : this.CloseMe();
       },

@@ -16,6 +16,7 @@ class AiStateMachineTaskSkill extends AiStateMachineTask_1.AiStateMachineTask {
       (this.PreExecution = !1);
   }
   OnInit(t) {
+    var i;
     return this.Node.SkillId
       ? (this.Node.Owner.PushErrorMessage(
           `状态节点配置错误，重复配置技能，节点[${this.Node.Name}]]`,
@@ -23,9 +24,10 @@ class AiStateMachineTaskSkill extends AiStateMachineTask_1.AiStateMachineTask {
         !1)
       : (t.TaskSkillByName
           ? ((this.SkillName = t.TaskSkillByName.SkillName),
-            (this.SkillId =
-              this.Node.Entity.GetComponent(33).GetSkillByName(this.SkillName)
-                ?.SkillId ?? 0),
+            (i = this.Node.Entity.GetComponent(34).GetSkillIdByName(
+              this.SkillName,
+            )),
+            (this.SkillId = i || 0),
             (this.Node.SkillId = this.SkillId))
           : t.TaskSkill
             ? ((this.SkillId = t.TaskSkill.SkillId),
@@ -71,9 +73,9 @@ class AiStateMachineTaskSkill extends AiStateMachineTask_1.AiStateMachineTask {
             this.Node.Entity,
             `状态机技能释放失败 节点[${this.Node.Name}]，技能名[${this.SkillName}]`,
           ),
-          ((s = Protocol_1.Aki.Protocol.o4n.create()).X4n = this.SkillId),
+          ((s = Protocol_1.Aki.Protocol.m4n.create()).r5n = this.SkillId),
           CombatMessage_1.CombatNet.Call(
-            23875,
+            19436,
             this.Node.Entity,
             s,
             () => {},

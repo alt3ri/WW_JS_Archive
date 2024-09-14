@@ -18,34 +18,49 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configResonantChainByGroupIdAndNodeType.Init",
+  ),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configResonantChainByGroupIdAndNodeType.GetConfigList",
+  ),
   CONFIG_LIST_STAT_PREFIX =
     "configResonantChainByGroupIdAndNodeType.GetConfigList(";
 exports.configResonantChainByGroupIdAndNodeType = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfigList: (o, n, e = !0) => {
-    var i;
-    if (
-      (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (e) {
+  GetConfigList: (o, n, i = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${o}#${n})`),
+      e =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
+      if (i) {
         var a = KEY_PREFIX + `#${o}#${n})`;
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(a);
-        if (t) return t;
+        const r = ConfigCommon_1.ConfigCommon.GetConfig(a);
+        if (r)
+          return (
+            t.Stop(),
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            r
+          );
       }
       if (
-        (i =
+        (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, n, ...logPair))
       ) {
-        const t = new Array();
+        const r = new Array();
         for (;;) {
           if (
             1 !==
@@ -58,33 +73,44 @@ exports.configResonantChainByGroupIdAndNodeType = {
             )
           )
             break;
-          var r = void 0;
+          var C = void 0;
           if (
-            (([i, r] = ConfigCommon_1.ConfigCommon.GetValue(
+            (([e, C] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
               0,
               ...logPair,
               ["GroupId", o],
               ["NodeType", n],
             )),
-            !i)
+            !e)
           )
-            return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
-          r = ResonantChain_1.ResonantChain.getRootAsResonantChain(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(r.buffer)),
+            return (
+              ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+              t.Stop(),
+              getConfigListStat.Stop(),
+              void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+            );
+          C = ResonantChain_1.ResonantChain.getRootAsResonantChain(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(C.buffer)),
           );
-          t.push(r);
+          r.push(C);
         }
         return (
-          e &&
+          i &&
             ((a = KEY_PREFIX + `#${o}#${n})`),
-            ConfigCommon_1.ConfigCommon.SaveConfig(a, t, t.length)),
+            ConfigCommon_1.ConfigCommon.SaveConfig(a, r, r.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          t
+          t.Stop(),
+          getConfigListStat.Stop(),
+          ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+          r
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=ResonantChainByGroupIdAndNodeType.js.map

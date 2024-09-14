@@ -43,7 +43,7 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
           "BulletRowName",
           this.BulletInfo.BulletRowName,
         ]),
-      this.k5o(t.Base.Shape),
+      this.k5o(t.Base.Shape, t.Base.Size),
       this.BulletInfo.CloseCollision || 4 === t.Base.Shape
         ? (this.BulletInfo.IsCollisionRelativeLocationZero = !0)
         : (this.F5o(),
@@ -62,7 +62,7 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
       this.CollisionInfo.ActiveDelayMs <= 0 &&
         (this.CollisionInfo.IsStartup = !0);
   }
-  k5o(t) {
+  k5o(t, i) {
     switch (t) {
       case 0:
         this.H5o();
@@ -80,16 +80,19 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
         this.Q5o();
         break;
       case 6:
-        this.X5o(UE.KuroRegionBoxComponent.StaticClass());
+        this.X5o(UE.KuroRegionBoxComponent.StaticClass()),
+          (this.BulletInfo.CloseCollision = i.X <= 0 || i.Y <= 0 || i.Z <= 0);
         break;
       case 7:
-        this.$5o();
+        this.BulletInfo.CloseCollision = i.X <= 0;
         break;
       case 8:
-        this.X5o(UE.KuroRegionSectorComponent.StaticClass());
+        this.X5o(UE.KuroRegionSectorComponent.StaticClass()),
+          (this.BulletInfo.CloseCollision = i.X <= 0 || i.Z <= 0);
         break;
       case 9:
-        this.X5o(UE.KuroRegionCylinderComponent.StaticClass());
+        this.X5o(UE.KuroRegionCylinderComponent.StaticClass()),
+          (this.BulletInfo.CloseCollision = i.X <= 0 || i.Z <= 0);
     }
   }
   H5o() {
@@ -207,9 +210,6 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
     (i.Speed = this.BulletInfo.Size.X / TimeUtil_1.TimeUtil.InverseMillisecond),
       (i.BlockByCharacter = "f" !== t.Base.SpecialParams.get(1));
   }
-  $5o() {
-    this.BulletInfo.CloseCollision = !1;
-  }
   X5o(t) {
     var i = this.BulletInfo.Actor,
       s =
@@ -232,7 +232,6 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
         i.AddComponentByClass(t, !1, MathUtils_1.MathUtils.DefaultTransform, s);
     (this.CollisionInfo.RegionComponent = t),
       e.RegionMap.Set(BulletConstant_1.BulletConstant.RegionKey, t),
-      (this.BulletInfo.CloseCollision = !1),
       s &&
         (l ||
           ((e.CreationMethod = 3),

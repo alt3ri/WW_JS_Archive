@@ -33,10 +33,10 @@ function exportBranchConfigToJson() {
     Branch: "branch_1.0",
     Stream: "//aki/branch_1.0",
     ShortName: "1.0",
-    IdSegment: [8e5, 899999],
+    IdSegment: [0, 0],
     SharedPackageDir:
       "\\\\share.kuro.com\\share\\aki\\Package\\Win64\\branch_1.0",
-    IsPublished: !1,
+    IsPublished: !0,
   },
   {
     Branch: "branch_1.1",
@@ -45,7 +45,7 @@ function exportBranchConfigToJson() {
     IdSegment: [9e5, 999999],
     SharedPackageDir:
       "\\\\share.kuro.com\\share\\aki\\Package\\Wuthering_Waves\\branch_1.1\\Win64\\Development\\CN\\Development\\Development\\Package",
-    IsPublished: !1,
+    IsPublished: !0,
   },
   {
     Branch: "branch_1.2",
@@ -66,6 +66,15 @@ function exportBranchConfigToJson() {
     IsPublished: !1,
   },
   {
+    Branch: "branch_1.4",
+    Stream: "//aki/branch_1.4",
+    ShortName: "1.4",
+    IdSegment: [8e5, 899999],
+    SharedPackageDir:
+      "\\\\share.kuro.com\\share\\aki\\Package\\Wuthering_Waves\\branch_1.4\\Win64\\Development\\CN\\Development\\Development\\Package",
+    IsPublished: !1,
+  },
+  {
     Branch: "development",
     Stream: "//aki/development",
     ShortName: "dev",
@@ -76,11 +85,14 @@ function exportBranchConfigToJson() {
   },
 ]),
   (exports.allPlannedBranchConfig = [
-    { Branch: "branch_1.4", ShortName: "1.4" },
-    { Branch: "branch_2.0", ShortName: "2.0" },
-    { Branch: "branch_2.1", ShortName: "2.1" },
-    { Branch: "branch_2.2", ShortName: "2.2" },
-    { Branch: "development", ShortName: "dev" },
+    { Branch: "branch_2.0", ShortName: "2.0", IdSegment: [5e4, 99999] },
+    { Branch: "branch_2.1", ShortName: "2.1", IdSegment: [1e5, 149999] },
+    { Branch: "branch_2.2", ShortName: "2.2", IdSegment: [15e4, 199999] },
+    { Branch: "branch_2.3", ShortName: "2.3", IdSegment: [2e5, 249999] },
+    { Branch: "branch_2.4", ShortName: "2.4", IdSegment: [25e4, 299999] },
+    { Branch: "branch_2.5", ShortName: "2.5", IdSegment: [3e5, 349999] },
+    { Branch: "branch_2.6", ShortName: "2.6", IdSegment: [35e4, 399999] },
+    { Branch: "development", ShortName: "dev", IdSegment: [5e5, 699999] },
   ]),
   (exports.getAllBranchConfigs = getAllBranchConfigs),
   (exports.getAllPlannedBranchConfigs = getAllPlannedBranchConfigs),

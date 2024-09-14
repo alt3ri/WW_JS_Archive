@@ -13,17 +13,17 @@ class ActivityRecallSignInRewardItem extends UiPanelBase_1.UiPanelBase {
     super(...arguments),
       (this.sft = void 0),
       (this.Xy = 0),
-      (this.q_a = 0),
-      (this.G_a = void 0),
-      (this.G1a = void 0),
+      (this.Qda = 0),
+      (this.Kda = void 0),
+      (this.Kca = void 0),
       (this.u6e = void 0),
       (this.G3e = () => {
         var i;
-        this.G1a.CheckRewardState(this.q_a, 1)
+        this.Kca.CheckRewardState(this.Qda, 1)
           ? this.u6e?.(this.Xy)
           : (([i] =
               ModelManager_1.ModelManager.ActivityRecallModel.GetSignRewardPreviewReward(
-                this.G_a,
+                this.Kda,
               )),
             ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
               i,
@@ -52,13 +52,13 @@ class ActivityRecallSignInRewardItem extends UiPanelBase_1.UiPanelBase {
       this.sft.BindOnExtendToggleClicked(this.G3e);
   }
   RefreshByData(i, e, t) {
-    (this.G1a = i), (this.Xy = e), (this.G_a = t);
+    (this.Kca = i), (this.Xy = e), (this.Kda = t);
     i = e + 1;
-    this.q_a = i;
+    this.Qda = i;
     this.GetText(5).SetText("0" + i);
-    var t = this.G1a.CheckRewardState(this.q_a, 1),
-      e = this.G1a.CheckRewardState(this.q_a, 2),
-      i = this.G1a.GetSignRewardState(i),
+    var t = this.Kca.CheckRewardState(this.Qda, 1),
+      e = this.Kca.CheckRewardState(this.Qda, 2),
+      i = this.Kca.GetSignRewardState(i),
       s =
         ModelManager_1.ModelManager.ActivityRecallModel.GetSignRewardLocalTextKeyByState(
           i,
@@ -68,7 +68,7 @@ class ActivityRecallSignInRewardItem extends UiPanelBase_1.UiPanelBase {
     this.GetItem(2).SetUIActive(e);
     var [r, s] =
       ModelManager_1.ModelManager.ActivityRecallModel.GetSignRewardPreviewItemInfo(
-        this.G_a,
+        this.Kda,
       );
     ActivityRecallHelper_1.ActivityRecallHelper.RefreshItemGrid(
       this.sft,

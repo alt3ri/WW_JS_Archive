@@ -32,10 +32,7 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
                 this.BulletInfo,
                 "[BulletActionUpdateEffect.OnExecute] 1",
               )),
-            EffectSystem_1.EffectSystem.IsValid(t.EffectExtremity)) &&
-            EffectSystem_1.EffectSystem.GetEffectActor(
-              t.EffectExtremity,
-            ).SetActorHiddenInGame(!0),
+            EffectSystem_1.EffectSystem.SetEffectHidden(t.EffectExtremity, !0)),
           (e = l.get(2)) &&
             0 < e.length &&
             ((l = this.BulletInfo.Actor),
@@ -47,10 +44,7 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
                 this.BulletInfo,
                 "[BulletActionUpdateEffect.OnExecute] 2",
               )),
-            EffectSystem_1.EffectSystem.IsValid(t.EffectBlock)) &&
-            EffectSystem_1.EffectSystem.GetEffectActor(
-              t.EffectBlock,
-            ).SetActorHiddenInGame(!0))
+            EffectSystem_1.EffectSystem.SetEffectHidden(t.EffectBlock, !0)))
         : (this.IsFinish = !0);
   }
   VVo() {
@@ -138,12 +132,14 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
         l.ToUeVector(),
       ),
       BulletPool_1.BulletPool.RecycleVector(l),
-      EffectSystem_1.EffectSystem.GetEffectActor(
+      EffectSystem_1.EffectSystem.SetEffectHidden(
         e.EffectExtremity,
-      )?.SetActorHiddenInGame(this.BulletInfo.RayInfo.IsBlock),
-      EffectSystem_1.EffectSystem.GetEffectActor(
+        this.BulletInfo.RayInfo.IsBlock,
+      ),
+      EffectSystem_1.EffectSystem.SetEffectHidden(
         e.EffectBlock,
-      )?.SetActorHiddenInGame(!this.BulletInfo.RayInfo.IsBlock),
+        !this.BulletInfo.RayInfo.IsBlock,
+      ),
       (this.BulletInfo.RayInfo.IsBlock
         ? (EffectSystem_1.EffectSystem.GetEffectActor(
             e.EffectBlock,

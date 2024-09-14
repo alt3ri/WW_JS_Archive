@@ -10,6 +10,7 @@ const puerts_1 = require("puerts"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   BaseConfigController_1 = require("../../../../Launcher/BaseConfig/BaseConfigController"),
+  Platform_1 = require("../../../../Launcher/Platform/Platform"),
   PakKeyUpdate_1 = require("../../../../Launcher/Update/PakKeyUpdate"),
   LocalStorage_1 = require("../../../Common/LocalStorage"),
   LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
@@ -48,7 +49,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
                 "LoginFailEmptyAccount",
               )
             : (this.g3t(),
-              "Windows" !== UE.GameplayStatics.GetPlatformName() &&
+              Platform_1.Platform.IsWindowsPlatform() ||
                 UE.KismetSystemLibrary.ExecuteConsoleCommand(
                   GlobalData_1.GlobalData.World,
                   "r.DepthOfFieldQuality 1",
@@ -105,7 +106,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
       (this.S3t = (e) => {
         this.GetSprite(10).SetUIActive(1 === e);
       }),
-      (this.PSa = (e) => {
+      (this.YIa = (e) => {
         1 === e
           ? ((ModelManager_1.ModelManager.LoginModel.IsCopyAccount = !0),
             this.GetItem(17)?.SetUIActive(!0))
@@ -243,13 +244,14 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
         [6, this.f3t],
         [7, this.E3t],
         [9, this.S3t],
-        [16, this.PSa],
+        [16, this.YIa],
       ]);
   }
   OnStart() {
     (this.m3t = (0, puerts_1.toManualReleaseDelegate)(this.D3t)),
       ModelManager_1.ModelManager.LoginModel.InitConfig(),
       ModelManager_1.ModelManager.LoginModel.FixLoginFailInfo(),
+      ModelManager_1.ModelManager.LoginModel.InitRecentlyAccountList(),
       this.GetExtendToggle(16)?.SetToggleState(0),
       this.GetItem(17)?.SetUIActive(!1),
       (this.u3t = UE.NewArray(UE.UIDropdownOptionData)),
@@ -280,22 +282,22 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
         t =
           (o.Options.Empty(),
           ModelManager_1.ModelManager.LoginModel.GetServerInfoList()),
-        n = this.Kkn();
+        a = this.tFn();
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Login",
           9,
           "debug 登录信息",
-          ["serverIp", n],
+          ["serverIp", a],
           ["serverInfoList", t],
         );
       let i = !1;
       if (t)
         for (let e = 0; e < t.length; ++e) {
-          var a = t[e];
-          o.Options.Add(new UE.UIDropdownOptionData(a.Name, r, 0, "")),
-            a.Ip === n &&
-              ((o.Value = e), o.CaptionText.UIText.SetText(a.Name), (i = !0));
+          var n = t[e];
+          o.Options.Add(new UE.UIDropdownOptionData(n.Name, r, 0, "")),
+            n.Ip === a &&
+              ((o.Value = e), o.CaptionText.UIText.SetText(n.Name), (i = !0));
         }
       i ||
         (t &&
@@ -308,29 +310,29 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
     if (r) {
       var e,
         t = r.GetOption(0).Sprite,
-        n =
+        a =
           (r.Options.Empty(),
           ModelManager_1.ModelManager.LoginModel.GetSingleMapList()),
-        a = ModelManager_1.ModelManager.LoginModel.GetSingleMapId(),
-        g = ConfigManager_1.ConfigManager.LoginConfig.GetDefaultSingleMapId();
+        n = ModelManager_1.ModelManager.LoginModel.GetSingleMapId(),
+        _ = ConfigManager_1.ConfigManager.LoginConfig.GetDefaultSingleMapId();
       let i = void 0,
         o = !1;
-      if (n)
-        for (let e = 0; e < n.length; ++e) {
-          var _ = n[e],
-            s = _.MapId + "-" + _.MapName,
-            l = new UE.UIDropdownOptionData(s, t, 0, "");
-          this.u3t.Add(l),
-            r.Options.Add(l),
-            _.MapId === a &&
-              ((r.Value = e), r.CaptionText.UIText.SetText(s), (o = !0)),
-            _.MapId === g && (i = e);
+      if (a)
+        for (let e = 0; e < a.length; ++e) {
+          var g = a[e],
+            l = g.MapId + "-" + g.MapName,
+            s = new UE.UIDropdownOptionData(l, t, 0, "");
+          this.u3t.Add(s),
+            r.Options.Add(s),
+            g.MapId === n &&
+              ((r.Value = e), r.CaptionText.UIText.SetText(l), (o = !0)),
+            g.MapId === _ && (i = e);
         }
       o ||
         ((e = i || 0),
-        n &&
-          n.length > e &&
-          ((e = (e = n[(r.Value = e)]).MapId + "-" + e.MapName),
+        a &&
+          a.length > e &&
+          ((e = (e = a[(r.Value = e)]).MapId + "-" + e.MapName),
           r.CaptionText.UIText.SetText(e)));
     }
   }
@@ -410,7 +412,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
   M3t() {
     return `${PublicUtil_1.PublicUtil.GetLocalHost()}[${TimeUtil_1.TimeUtil.DateFormat(new Date())}]`;
   }
-  zqn(e) {
+  aGn(e) {
     e = /(?<ip>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(?::(?<port>\d{1,5}))?/.exec(
       e,
     );
@@ -453,7 +455,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
               0 <= e &&
               ((e = ModelManager_1.ModelManager.LoginModel.GetServerInfo(e))
                 ? (ModelManager_1.ModelManager.LoginModel.SetServerName(e.Name),
-                  this.Qkn(e.Ip, 1))
+                  this.iFn(e.Ip, 1))
                 : ((e =
                     ModelManager_1.ModelManager.LoginModel.GetServerInfoList()),
                   Log_1.Log.CheckInfo() &&
@@ -466,11 +468,11 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
         this.GetInputText(12).GetText()),
       e =
         (StringUtils_1.StringUtils.IsEmpty(e) ||
-          ((t = this.zqn(e)) &&
+          ((t = this.aGn(e)) &&
             (ModelManager_1.ModelManager.LoginModel.SetServerName(
               "手动输入IP地址服务器",
             ),
-            this.Qkn(e, 2),
+            this.iFn(e, 2),
             ModelManager_1.ModelManager.LoginModel.TrySetCustomServerPort(
               t.Port,
               2,
@@ -500,7 +502,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
           "Login",
           9,
           "已保存登录数据",
-          ["ServerIp", this.Kkn()],
+          ["ServerIp", this.tFn()],
           [
             "CustomServerPort",
             ModelManager_1.ModelManager.LoginModel.GetCustomServerPort(),
@@ -532,14 +534,14 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
               )
           : this.R3t(!1, void 0, void 0, !1)));
   }
-  Qkn(e, i) {
+  iFn(e, i) {
     ModelManager_1.ModelManager.LoginModel.SetServerIp(e, i),
       LocalStorage_1.LocalStorage.SetGlobal(
         LocalStorageDefine_1.ELocalStorageGlobalKey.LoginDebugServerIp,
         e,
       );
   }
-  Kkn() {
+  tFn() {
     var e = LocalStorage_1.LocalStorage.GetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.LoginDebugServerIp,
       "-1",

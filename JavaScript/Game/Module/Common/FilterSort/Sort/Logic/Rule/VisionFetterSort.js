@@ -6,31 +6,31 @@ const ModelManager_1 = require("../../../../../../Manager/ModelManager"),
 class VisionFetterSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
-      (this.aUt = (e, r, t) => {
-        var o = e,
-          s = r,
-          e = ModelManager_1.ModelManager.RoleModel?.GetCurSelectMainRoleId();
+      (this.aUt = (e, r, t, o) => {
+        var s = e,
+          n = r,
+          e = o;
         if (e && 0 < e)
-          for (const i of ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
+          for (const M of ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
             e,
           ).GetIncrIdList()) {
             var a =
                 ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-                  i,
+                  M,
                 ),
               a = a ? a.GetMonsterId() : 0;
             let e =
               ModelManager_1.ModelManager.PhantomBattleModel.GetFetterGroupMonsterIdArray(
-                o.Id,
+                s.Id,
               );
-            var n = e.includes(a) ? 1 : -1,
+            var i = e.includes(a) ? 1 : -1,
               a = (e =
                 ModelManager_1.ModelManager.PhantomBattleModel.GetFetterGroupMonsterIdArray(
-                  s.Id,
+                  n.Id,
                 )).includes(a)
                 ? 1
                 : -1;
-            if (n != a) return a < n ? (t ? 1 : -1) : t ? -1 : 1;
+            if (i != a) return a < i ? (t ? 1 : -1) : t ? -1 : 1;
           }
         return 0;
       }),

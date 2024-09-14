@@ -11,8 +11,10 @@ class SCreatureGenAreaExportDefine {
     return this.shapetype();
   }
   get Transforms() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.transformsLength(), (t) =>
-      this.transforms(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.transformsLength(),
+      this.transforms,
+      this,
     );
   }
   get Weight() {

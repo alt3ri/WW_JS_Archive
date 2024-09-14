@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SnapModifier =
       void 0);
 const Log_1 = require("../../../../../../../Core/Common/Log"),
+  Macro_1 = require("../../../../../../../Core/Preprocessor/Macro"),
   AbilityUtils_1 = require("../AbilityUtils"),
   CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
   ExtraEffectBase_1 = require("./ExtraEffectBase");
@@ -85,9 +86,9 @@ class SnapModifyBuffEffect extends ExtraEffectBase_1.BuffEffect {
   WXo(t, s) {
     switch (s) {
       case 1:
-        return this.OwnerEntity?.CheckGetComponent(158);
+        return this.OwnerEntity?.CheckGetComponent(159);
       case 0:
-        return this.InstigatorEntity?.Entity?.CheckGetComponent(158);
+        return this.InstigatorEntity?.Entity?.CheckGetComponent(159);
       case 2:
         return t.AttackerSnapshot;
       case 3:
@@ -220,7 +221,7 @@ class ShieldSnapshotModify extends SnapModifyBuffEffect {
         : this.OwnerEntity;
     if (h) {
       var a,
-        h = h.CheckGetComponent(66)?.GetShieldValue(this.ShieldId) ?? 0;
+        h = h.CheckGetComponent(67)?.GetShieldValue(this.ShieldId) ?? 0;
       let t = h >= this.ConvertThreshold,
         s = h;
       0 < this.ConvertLimit && (s = Math.min(s, this.ConvertLimit)),

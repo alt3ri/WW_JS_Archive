@@ -62,7 +62,7 @@ let PerformanceComponent =
             this.vnn(),
             this.Mnn(t, e),
             this.Enn(t, e),
-            (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
+            (0, RegisterComponent_1.isComponentInstance)(this.n$t, 187) &&
               (!(t = this.n$t.CurLevelPrefabShowActor)?.IsValid() ||
               UE.KuroStaticLibrary.IsObjectClassByName(
                 t,
@@ -80,7 +80,7 @@ let PerformanceComponent =
             !this.rnn.has(t) &&
             ((e = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(t)),
             void 0 !== (e = this.nXr.场景交互物特效列表.Get(e))) &&
-            !!(0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
+            !!(0, RegisterComponent_1.isComponentInstance)(this.n$t, 187) &&
             (this.n$t.PlaySceneInteractionEffect(e), this.rnn.set(t, e), !0)
           );
         }),
@@ -121,7 +121,7 @@ let PerformanceComponent =
     OnStart() {
       return (
         (this.mnn = void 0),
-        (this.inn = this.Entity.CheckGetComponent(180)),
+        (this.inn = this.Entity.CheckGetComponent(181)),
         (this.n$t = this.Entity.GetComponent(1)),
         (this.nXr = this.n$t.CreatureData.GetModelConfig()),
         !(this.dnn = !1)
@@ -131,7 +131,7 @@ let PerformanceComponent =
       this.n$t.SkeletalMesh || this.LoadAndChangeStaticMesh(),
         this.xnn(),
         (this.rnn = new Map()),
-        (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
+        (0, RegisterComponent_1.isComponentInstance)(this.n$t, 187) &&
           !this.n$t.GetIsSceneInteractionLoadCompleted() &&
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
@@ -160,7 +160,7 @@ let PerformanceComponent =
             EventDefine_1.EEventName.OnLevelTagChanged,
             this.Cnn,
           ),
-        (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
+        (0, RegisterComponent_1.isComponentInstance)(this.n$t, 187) &&
           EventSystem_1.EventSystem.HasWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
@@ -223,42 +223,44 @@ let PerformanceComponent =
       this.qnn(!1);
     }
     qnn(t) {
-      var e = this.Gnn(this.nXr.场景交互物状态列表);
-      if (void 0 !== e) {
-        if (e === this.nnn) return;
-        this.nnn = e;
-      } else {
-        var e = -821437887,
-          i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(e);
-        if (e === this.nnn || void 0 === this.nXr.场景交互物状态列表.Get(i))
-          return void (
-            (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
-            this.n$t.SetIsSceneInteractionLoadCompleted()
-          );
-        this.nnn = e;
-      }
-      if ((0, RegisterComponent_1.isComponentInstance)(this.n$t, 185)) {
-        let e = void 0;
-        if (
-          ((e =
-            1227933697 === this.nnn
-              ? 20
-              : ((i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(
-                  this.nnn,
-                )),
-                this.nXr.场景交互物状态列表.Get(i))),
-          t)
-        ) {
-          let t = !1;
-          -991879492 === this.nnn && (t = !0),
-            this.n$t.LoadSceneInteractionLevel(e, t);
-        } else this.n$t.SwitchToState(e, !this.dnn, this.dnn);
+      if (this.Entity.Active || t) {
+        var e = this.Gnn(this.nXr.场景交互物状态列表);
+        if (void 0 !== e) {
+          if (e === this.nnn) return;
+          this.nnn = e;
+        } else {
+          var e = -821437887,
+            i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(e);
+          if (e === this.nnn || void 0 === this.nXr.场景交互物状态列表.Get(i))
+            return void (
+              (0, RegisterComponent_1.isComponentInstance)(this.n$t, 187) &&
+              this.n$t.SetIsSceneInteractionLoadCompleted()
+            );
+          this.nnn = e;
+        }
+        if ((0, RegisterComponent_1.isComponentInstance)(this.n$t, 187)) {
+          let e = void 0;
+          if (
+            ((e =
+              1227933697 === this.nnn
+                ? 20
+                : ((i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(
+                    this.nnn,
+                  )),
+                  this.nXr.场景交互物状态列表.Get(i))),
+            t)
+          ) {
+            let t = !1;
+            -991879492 === this.nnn && (t = !0),
+              this.n$t.LoadSceneInteractionLevel(e, t);
+          } else this.n$t.SwitchToState(e, !this.dnn, this.dnn);
+        }
       }
     }
     Unn() {
       if (this.inn) {
         if (
-          (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
+          (0, RegisterComponent_1.isComponentInstance)(this.n$t, 187) &&
           this.rnn &&
           0 < this.rnn.size
         ) {
@@ -274,7 +276,7 @@ let PerformanceComponent =
       if (this.inn)
         for (const e of this.inn.GetTagIds()) {
           var t = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(e);
-          (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
+          (0, RegisterComponent_1.isComponentInstance)(this.n$t, 187) &&
             void 0 !== t &&
             this.n$t.PlayExtraEffect(t);
         }
@@ -285,7 +287,7 @@ let PerformanceComponent =
         this.rnn.has(s) &&
           ((i = this.rnn.get(s)),
           this.rnn.delete(s),
-          (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185)) &&
+          (0, RegisterComponent_1.isComponentInstance)(this.n$t, 187)) &&
           void 0 !== i &&
           (this.n$t.EndSceneInteractionEffect(i),
           this.n$t.PlaySceneInteractionEndEffect(i));
@@ -295,13 +297,13 @@ let PerformanceComponent =
     Enn(t, e) {
       for (const h of e) {
         var i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(h);
-        (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
+        (0, RegisterComponent_1.isComponentInstance)(this.n$t, 187) &&
           void 0 !== i &&
           this.n$t.StopExtraEffect(i);
       }
       for (const n of t) {
         var s = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(n);
-        (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
+        (0, RegisterComponent_1.isComponentInstance)(this.n$t, 187) &&
           void 0 !== s &&
           this.n$t.PlayExtraEffect(s, !1);
       }
@@ -319,7 +321,7 @@ let PerformanceComponent =
             return;
           this.snn = t;
         }
-        (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
+        (0, RegisterComponent_1.isComponentInstance)(this.n$t, 187) &&
           ((e = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(
             this.snn,
           )),
@@ -468,8 +470,10 @@ let PerformanceComponent =
     }
     Tnn(t, e) {
       EffectSystem_1.EffectSystem.IsValid(t) &&
-        (EffectSystem_1.EffectSystem.GetEffectActor(t)?.SetActorHiddenInGame(
+        (EffectSystem_1.EffectSystem.SetEffectHidden(
+          t,
           !e,
+          "PerformanceComponent",
         ),
         EffectSystem_1.EffectSystem.SetTimeScale(t, e ? this.TimeDilation : 0));
     }
@@ -477,7 +481,7 @@ let PerformanceComponent =
 (PerformanceComponent.Onn = 1227933697),
   (PerformanceComponent = PerformanceComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(95)],
+      [(0, RegisterComponent_1.RegisterComponent)(96)],
       PerformanceComponent,
     )),
   (exports.PerformanceComponent = PerformanceComponent);

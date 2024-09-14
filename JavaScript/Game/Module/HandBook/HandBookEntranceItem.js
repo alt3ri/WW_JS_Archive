@@ -41,6 +41,9 @@ class HandBookEntranceItem extends GridProxyAbstract_1.GridProxyAbstract {
           case 10:
             UiManager_1.UiManager.OpenView("HandBookRoleView");
             break;
+          case 11:
+            UiManager_1.UiManager.OpenView("NounHandBookView");
+            break;
           default:
             Log_1.Log.CheckError() &&
               Log_1.Log.Error("HandBook", 5, "没有找到图鉴入口类型，请检查", [

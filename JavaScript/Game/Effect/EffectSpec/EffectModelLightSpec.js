@@ -24,7 +24,13 @@ class EffectModelLightSpec extends EffectSpec_1.EffectSpec {
     this.LightModel = this.EffectModel;
     var t = this.Handle.GetSureEffectActor(),
       i =
-        (Stats_1.Stat.Enable && ((this.E0e = void 0), (this.S0e = void 0)),
+        (Stats_1.Stat.Enable &&
+          ((this.E0e = Stats_1.Stat.Create(
+            "[EffectModelLightSpec.Tick] Path:" + this.Handle.Path,
+          )),
+          (this.S0e = Stats_1.Stat.Create(
+            "[EffectModelLightSpec.Tick.UpdateParameter]",
+          ))),
         this.Handle.Parent),
       i = i ? i.GetEffectSpec()?.GetSceneComponent() : void 0;
     return (
@@ -49,9 +55,11 @@ class EffectModelLightSpec extends EffectSpec_1.EffectSpec {
     );
   }
   OnTick(t) {
-    this.LightComponent?.IsValid() &&
-      this.LightComponent.IsVisible() &&
-      this.r0e(this.GetPlayInEditor());
+    this.E0e?.Start(),
+      this.LightComponent?.IsValid() &&
+        this.LightComponent.IsVisible() &&
+        (this.S0e?.Start(), this.r0e(this.GetPlayInEditor()), this.S0e?.Stop()),
+      this.E0e?.Stop();
   }
   r0e(t) {
     (this.HasTransformAnim || t) &&

@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
   Protocol_1 = require("../../Core/Define/Net/Protocol"),
   Vector_1 = require("../../Core/Utils/Math/Vector"),
@@ -32,6 +33,9 @@ class WorldGlobal {
       GlobalData_1.GlobalData.GameInstance.场景加载通知器.BindBeginTravelLoadMap(
         (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.YEr),
       ),
+      GlobalData_1.GlobalData.GameInstance.场景加载通知器.BindEndLoadTransitionMap(
+        (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.Nea),
+      ),
       GlobalData_1.GlobalData.GameInstance.场景加载通知器.BindBeginLoadMap(
         (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.JEr),
       ),
@@ -42,12 +46,13 @@ class WorldGlobal {
         (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.ZEr),
       ),
       GlobalData_1.GlobalData.GameInstance.场景加载通知器.BindUnLoadStreamLevel(
-        (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.TBn),
+        (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.xBn),
       );
   }
   static Clear() {
     (0, puerts_1.releaseManualReleaseDelegate)(WorldGlobal.JEr),
       (0, puerts_1.releaseManualReleaseDelegate)(WorldGlobal.YEr),
+      (0, puerts_1.releaseManualReleaseDelegate)(WorldGlobal.Nea),
       (0, puerts_1.releaseManualReleaseDelegate)(WorldGlobal.zEr),
       (0, puerts_1.releaseManualReleaseDelegate)(WorldGlobal.ZEr),
       GlobalData_1.GlobalData.GameInstance.场景加载通知器.Clear();
@@ -104,14 +109,14 @@ class WorldGlobal {
     for (; o.length < a; ) o.push(e);
   }
   static ToTsVector(o) {
-    var a = Protocol_1.Aki.Protocol.Pks.create();
+    var a = Protocol_1.Aki.Protocol.Gks.create();
     return (a.X = o.X), (a.Y = o.Y), (a.Z = o.Z), a;
   }
   static ToUeVector(o) {
     return o ? new UE.Vector(o.X, o.Y, o.Z) : Vector_1.Vector.ZeroVector;
   }
   static ToTsRotator(o) {
-    var a = Protocol_1.Aki.Protocol.S2s.create();
+    var a = Protocol_1.Aki.Protocol.D2s.create();
     return (a.Pitch = o.Pitch), (a.Yaw = o.Yaw), (a.Roll = o.Roll), a;
   }
   static ToUeRotator(o) {
@@ -121,16 +126,16 @@ class WorldGlobal {
     var a = new UE.GameplayAttributeData();
     return (
       void 0 !== o &&
-        ((a.AttributeType = o.QMs),
-        (a.BaseValue = o.KMs),
-        (a.CurrentValue = o.d6n)),
+        ((a.AttributeType = o.tSs),
+        (a.BaseValue = o.eSs),
+        (a.CurrentValue = o.y6n)),
       a
     );
   }
 }
 ((exports.WorldGlobal = WorldGlobal).OnStatStart = () => {
   GlobalData_1.GlobalData.World &&
-    !UE.KuroStaticLibrary.IsBuildShipping() &&
+    !Info_1.Info.IsBuildShipping &&
     (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Stat", 34, "STAT统计开启"),
     UE.KismetSystemLibrary.ExecuteConsoleCommand(
       GlobalData_1.GlobalData.World,
@@ -139,7 +144,7 @@ class WorldGlobal {
 }),
   (WorldGlobal.OnStatStop = () => {
     GlobalData_1.GlobalData.World &&
-      !UE.KuroStaticLibrary.IsBuildShipping() &&
+      !Info_1.Info.IsBuildShipping &&
       (UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "STAT STOPFILE",
@@ -149,7 +154,7 @@ class WorldGlobal {
   }),
   (WorldGlobal.ResetLoadTime = () => {
     GlobalData_1.GlobalData.World &&
-      !UE.KuroStaticLibrary.IsBuildShipping() &&
+      !Info_1.Info.IsBuildShipping &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Stat", 34, "重置LoadTime时长"),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
@@ -158,7 +163,7 @@ class WorldGlobal {
       ));
   }),
   (WorldGlobal.GetLoadTime = () => {
-    return UE.KuroStaticLibrary.IsBuildShipping()
+    return Info_1.Info.IsBuildShipping
       ? 0
       : UE.KismetSystemLibrary.GetConsoleVariableFloatValue(
           "LoadTimes.TestTime",
@@ -166,7 +171,7 @@ class WorldGlobal {
   }),
   (WorldGlobal.LoadTimesCheckBegin = (o = "default") => {
     GlobalData_1.GlobalData.World &&
-      !UE.KuroStaticLibrary.IsBuildShipping() &&
+      !Info_1.Info.IsBuildShipping &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Stat", 34, "LoadTime统计开启：", ["groupName", o]),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
@@ -180,7 +185,7 @@ class WorldGlobal {
   }),
   (WorldGlobal.LoadTimesCheckEnd = () => {
     GlobalData_1.GlobalData.World &&
-      !UE.KuroStaticLibrary.IsBuildShipping() &&
+      !Info_1.Info.IsBuildShipping &&
       (UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "LoadTimes.DumpTest LOWTIME=-1",
@@ -194,6 +199,11 @@ class WorldGlobal {
   }),
   (WorldGlobal.YEr = (o) => {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.BeforeTravelMap);
+  }),
+  (WorldGlobal.Nea = (o) => {
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.OnEnterTransitionMap,
+    );
   }),
   (WorldGlobal.JEr = (o) => {
     Log_1.Log.CheckDebug() &&
@@ -229,7 +239,7 @@ class WorldGlobal {
           e,
         );
   }),
-  (WorldGlobal.TBn = (o, a) => {
+  (WorldGlobal.xBn = (o, a) => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "World",

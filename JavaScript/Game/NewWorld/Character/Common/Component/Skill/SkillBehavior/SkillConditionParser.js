@@ -3,16 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConditionArray = exports.Parser = void 0);
 class Parser {
   constructor(t) {
-    (this.ROn = t), (this.Ugr = []), (this.Xy = 0), this.Tokenize();
+    (this.NOn = t), (this.Ugr = []), (this.Xy = 0), this.Tokenize();
   }
   Tokenize() {
     let s = "";
-    for (let t = 0; t < this.ROn.length; t++) {
-      var r = this.ROn[t];
+    for (let t = 0; t < this.NOn.length; t++) {
+      var r = this.NOn[t];
       " " !== r &&
         ("|&!".includes(r)
           ? (s && (this.Ugr.push({ Type: "number", Value: s }), (s = "")),
-            t + 1 < this.ROn.length && this.ROn[t + 1] === r
+            t + 1 < this.NOn.length && this.NOn[t + 1] === r
               ? (this.Ugr.push({ Type: "operator", Value: r + r }), t++)
               : this.Ugr.push({ Type: "operator", Value: r }))
           : "()".includes(r)
@@ -30,26 +30,26 @@ class Parser {
     return t;
   }
   Agr() {
-    return this.xOn();
+    return this.kOn();
   }
-  xOn() {
-    let t = this.POn();
+  kOn() {
+    let t = this.FOn();
     for (; this.Xy < this.Ugr.length && "||" === this.Ugr[this.Xy].Value; )
-      this.Xy++, (t = { Or: [t, this.POn()] });
+      this.Xy++, (t = { Or: [t, this.FOn()] });
     return t;
   }
-  POn() {
-    let t = this.BOn();
+  FOn() {
+    let t = this.VOn();
     for (; this.Xy < this.Ugr.length && "&&" === this.Ugr[this.Xy].Value; )
-      this.Xy++, (t = { And: [t, this.BOn()] });
+      this.Xy++, (t = { And: [t, this.VOn()] });
     return t;
   }
-  BOn() {
+  VOn() {
     return this.Xy < this.Ugr.length && "!" === this.Ugr[this.Xy].Value
-      ? (this.Xy++, { Not: this.BOn() })
-      : this.wOn();
+      ? (this.Xy++, { Not: this.VOn() })
+      : this.HOn();
   }
-  wOn() {
+  HOn() {
     if (this.Xy >= this.Ugr.length) throw new Error("Unexpected end of input");
     if ("(" === this.Ugr[this.Xy].Value) {
       this.Xy++;
@@ -66,19 +66,19 @@ class Parser {
 exports.Parser = Parser;
 class ConditionArray {
   constructor(t, s) {
-    (this.Qte = t), (this.bOn = s);
+    (this.Qte = t), (this.jOn = s);
   }
   Evaluate() {
-    return this.qOn(this.bOn);
+    return this.WOn(this.jOn);
   }
-  qOn(t) {
+  WOn(t) {
     return "Index" in t && void 0 !== t.Index
       ? this.Qte[t.Index]
       : t.Or
-        ? t.Or.some((t) => this.qOn(t))
+        ? t.Or.some((t) => this.WOn(t))
         : t.And
-          ? t.And.every((t) => this.qOn(t))
-          : !!t.Not && !this.qOn(t.Not);
+          ? t.And.every((t) => this.WOn(t))
+          : !!t.Not && !this.WOn(t.Not);
   }
 }
 exports.ConditionArray = ConditionArray;

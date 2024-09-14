@@ -5,9 +5,9 @@ const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ActivityData_1 = require("../../ActivityData");
 exports.stateResolver = {
-  [Protocol_1.Aki.Protocol.pps.Proto_Running]: 0,
-  [Protocol_1.Aki.Protocol.pps.Proto_WaitTakeReward]: 1,
-  [Protocol_1.Aki.Protocol.pps.Proto_Finish]: 2,
+  [Protocol_1.Aki.Protocol.Lps.Proto_Running]: 0,
+  [Protocol_1.Aki.Protocol.Lps.Proto_WaitTakeReward]: 1,
+  [Protocol_1.Aki.Protocol.Lps.Proto_Finish]: 2,
 };
 class ActivityRoleTrialData extends ActivityData_1.ActivityBaseData {
   constructor() {
@@ -29,17 +29,17 @@ class ActivityRoleTrialData extends ActivityData_1.ActivityBaseData {
   }
   PhraseEx(t) {
     (this.RoleIdList.length = 0), (this.RoleTrialIdList.length = 0);
-    t = t.bps;
+    t = t.Vps;
     if (t)
-      for (const o of t.Mps) {
-        var e = exports.stateResolver[o.pps],
+      for (const o of t.Rps) {
+        var e = exports.stateResolver[o.Lps],
           r =
             ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialInfoConfigByRoleId(
-              o.O6n,
+              o.Q6n,
             );
         this.RoleTrialIdList.push(r.TrialRoleId),
-          this.RoleIdList.push(o.O6n),
-          this.Z2e.set(o.O6n, e);
+          this.RoleIdList.push(o.Q6n),
+          this.Z2e.set(o.Q6n, e);
       }
   }
   GetRewardStateByRoleId(t) {

@@ -8,7 +8,7 @@ class LevelBuffSetWalkableFloorAngle extends LevelBuffBase_1.LevelBuffBase {
     super(...arguments), (this.s$o = 0);
   }
   OnCreated() {
-    var e = this.Entity.CheckGetComponent(163).CharacterMovement,
+    var e = this.Entity.CheckGetComponent(164).CharacterMovement,
       l = ((this.s$o = e.WalkableFloorAngle), Number(this.Params[0]));
     l
       ? e.SetWalkableFloorAngle(l)
@@ -21,7 +21,7 @@ class LevelBuffSetWalkableFloorAngle extends LevelBuffBase_1.LevelBuffBase {
         );
   }
   OnRemoved(e) {
-    this.Entity.CheckGetComponent(163).CharacterMovement.SetWalkableFloorAngle(
+    this.Entity.CheckGetComponent(164).CharacterMovement.SetWalkableFloorAngle(
       this.s$o,
     );
   }

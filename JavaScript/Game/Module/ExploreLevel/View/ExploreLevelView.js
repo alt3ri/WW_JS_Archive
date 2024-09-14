@@ -23,15 +23,15 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
       (this.RVt = void 0),
       (this.bOe = void 0),
       (this.UVt = void 0),
-      (this.MHs = 0),
-      (this.SHs = 0),
-      (this.EHs = 0),
-      (this.yHs = 0),
-      (this.IHs = 0),
-      (this.THs = 0),
-      (this.LHs = 0),
-      (this.DHs = !1),
-      (this.AHs = !1),
+      (this.PHs = 0),
+      (this.BHs = 0),
+      (this.wHs = 0),
+      (this.bHs = 0),
+      (this.qHs = 0),
+      (this.GHs = 0),
+      (this.OHs = 0),
+      (this.NHs = !1),
+      (this.kHs = !1),
       (this.lyt = () => {
         UiManager_1.UiManager.CloseView("ExploreLevelView");
       }),
@@ -40,7 +40,7 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
         this.wVt();
         var e = this.fVt.GetExploreScore(),
           t = this.RVt.GetMaxExploreScore();
-        t < 0 ? this.xVt() : this.UHs(this.MHs, this.SHs, e, t);
+        t < 0 ? this.xVt() : this.FHs(this.PHs, this.BHs, e, t);
       }),
       (this.BVt = () => {
         (this.fVt =
@@ -48,13 +48,13 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
           (this.RVt = this.fVt.GetCurrentExploreLevelRewardData());
         var e = this.fVt.GetExploreScore(),
           t = this.RVt.GetMaxExploreScore();
-        t < 0 ? this.xVt() : this.UHs(this.MHs, this.SHs, e, t);
+        t < 0 ? this.xVt() : this.FHs(this.PHs, this.BHs, e, t);
       }),
       (this.FQe = (e, t) => {
-        "ExploreLevelRewardView" === e && this.RHs(!0);
+        "ExploreLevelRewardView" === e && this.VHs(!0);
       }),
       (this.$Ge = (e, t) => {
-        "ExploreLevelRewardView" === e && this.RHs(!1);
+        "ExploreLevelRewardView" === e && this.VHs(!1);
       }),
       (this.gVt = (e, t, i) => {
         var s = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
@@ -79,9 +79,9 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
             e.CountryId,
             () => {
               e.GetIsReceived() ||
-                ((this.MHs = this.fVt.GetExploreScore()),
-                (this.SHs = this.RVt.GetMaxExploreScore()),
-                this.xHs());
+                ((this.PHs = this.fVt.GetExploreScore()),
+                (this.BHs = this.RVt.GetMaxExploreScore()),
+                this.HHs());
             },
           );
       }),
@@ -195,43 +195,43 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
       (this.fVt = void 0);
   }
   OnTick(e) {
-    if (this.DHs && !this.AHs)
-      if (this.IHs < this.EHs) {
+    if (this.NHs && !this.kHs)
+      if (this.qHs < this.wHs) {
         const t = MathUtils_1.MathUtils.Lerp(
-          this.EHs,
-          this.yHs,
-          this.LHs / PLAY_PROGRESS_BAR_TIME,
+          this.wHs,
+          this.bHs,
+          this.OHs / PLAY_PROGRESS_BAR_TIME,
         );
-        this.PHs(t, this.yHs),
-          t >= this.yHs && this.UHs(0, this.THs, this.IHs, this.THs),
-          void (this.LHs += e);
+        this.jHs(t, this.bHs),
+          t >= this.bHs && this.FHs(0, this.GHs, this.qHs, this.GHs),
+          void (this.OHs += e);
       } else {
         const t = MathUtils_1.MathUtils.Lerp(
-          this.EHs,
-          this.IHs,
-          this.LHs / PLAY_PROGRESS_BAR_TIME,
+          this.wHs,
+          this.qHs,
+          this.OHs / PLAY_PROGRESS_BAR_TIME,
         );
-        this.PHs(t, this.THs),
-          this.LHs >= PLAY_PROGRESS_BAR_TIME
-            ? (this.bVt(), this.xVt(), this.BHs())
-            : (this.LHs += e);
+        this.jHs(t, this.GHs),
+          this.OHs >= PLAY_PROGRESS_BAR_TIME
+            ? (this.bVt(), this.xVt(), this.WHs())
+            : (this.OHs += e);
       }
   }
-  UHs(e, t, i, s) {
-    (this.EHs = e),
-      (this.yHs = t),
-      (this.IHs = i),
-      (this.THs = s),
-      (this.LHs = 0),
-      (this.DHs = !0);
+  FHs(e, t, i, s) {
+    (this.wHs = e),
+      (this.bHs = t),
+      (this.qHs = i),
+      (this.GHs = s),
+      (this.OHs = 0),
+      (this.NHs = !0);
   }
-  RHs(e) {
-    this.AHs = e;
+  VHs(e) {
+    this.kHs = e;
   }
-  BHs() {
-    (this.DHs = !1), (this.LHs = 0);
+  WHs() {
+    (this.NHs = !1), (this.OHs = 0);
   }
-  xHs() {
+  HHs() {
     var e = this.GetUiNiagara(14);
     e.IsUIActiveSelf() ? e.ActivateSystem(!0) : e.SetUIActive(!0);
   }
@@ -253,7 +253,7 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
     t <= 0
       ? this.GetItem(11)?.SetUIActive(!1)
       : ((e = this.fVt.GetExploreScore()),
-        this.PHs(e, t),
+        this.jHs(e, t),
         this.SetTextureByPath(
           ModelManager_1.ModelManager.ExploreLevelModel
             .ExploreScoreItemTexturePath,
@@ -261,7 +261,7 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
         ),
         this.GetItem(11)?.SetUIActive(!0));
   }
-  PHs(e, t) {
+  jHs(e, t) {
     (e = Math.floor(Math.min(t, e))), (t = Math.floor(t));
     this.GetSprite(2).SetFillAmount(e / t),
       this.GetText(4).SetText(e + "/" + t);

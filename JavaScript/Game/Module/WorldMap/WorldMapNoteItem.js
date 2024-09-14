@@ -20,6 +20,10 @@ class WorldMapNoteItem extends UiPanelBase_1.UiPanelBase {
       [0, UE.UISprite],
       [1, UE.UIText],
       [2, UE.UIButtonComponent],
+      [3, UE.UIItem],
+      [4, UE.UIItem],
+      [5, UE.UIItem],
+      [6, UE.UIItem],
     ]),
       (this.BtnBindInfo = [[2, this.eTt]]);
   }
@@ -29,8 +33,14 @@ class WorldMapNoteItem extends UiPanelBase_1.UiPanelBase {
     var i = this.GetSprite(0),
       e = MapNoteById_1.configMapNoteById.GetConfig(e),
       i = (this.SetSpriteByPath(e.Icon, i, !0), this.GetText(1)),
-      e = e.Desc;
-    i.ShowTextNew(e), (this.MCt = s), (this.NTt = t);
+      o = e.Desc,
+      i = (i.ShowTextNew(o), e.Style);
+    this.GetItem(3).SetUIActive(0 === i),
+      this.GetItem(6).SetUIActive(0 === i),
+      this.GetItem(4).SetUIActive(1 === i),
+      this.GetItem(5).SetUIActive(1 === i),
+      (this.MCt = s),
+      (this.NTt = t);
   }
 }
 exports.WorldMapNoteItem = WorldMapNoteItem;

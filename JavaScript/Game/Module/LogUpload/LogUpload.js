@@ -69,9 +69,10 @@ class LogUpload {
             LocalStorageDefine_1.ELocalStorageGlobalKey.RecentlyLoginUID,
           )) && (e = o.toString());
     let r = "0";
-    !this.Yvi &&
-      ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
-      (r = ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig().Uid),
+    ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
+      (r = ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig()?.Uid
+        ? ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig().Uid.toString()
+        : "0"),
       (this.tMi = r + "-" + e),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Log", 38, "获取日志上传UID", ["UID", this.tMi]);

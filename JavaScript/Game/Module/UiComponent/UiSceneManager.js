@@ -5,6 +5,7 @@ const puerts_1 = require("puerts"),
   UE = require("ue"),
   ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
   CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   Stack_1 = require("../../../Core/Container/Stack"),
   FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
@@ -12,7 +13,8 @@ const puerts_1 = require("puerts"),
   CameraController_1 = require("../../Camera/CameraController"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  GameSettingsDeviceRender_1 = require("../../GameSettings/GameSettingsDeviceRender"),
+  GameSettingsManager_1 = require("../../GameSettings/GameSettingsManager"),
   GlobalData_1 = require("../../GlobalData"),
   RenderModuleController_1 = require("../../Render/Manager/RenderModuleController"),
   SkeletalObserverManager_1 = require("../SkeletalObserver/SkeletalObserverManager"),
@@ -106,10 +108,8 @@ class UiSceneManager {
             UiSceneManager.GetUiSceneLoadingState(),
           )),
       (this.LoadSuccessFunction = void 0),
-      GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform()) ||
-      (GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-        .GetCurrentQualityInfo()
-        .ApplyMobileResolution(),
+      Info_1.Info.IsPcOrGamepadPlatform()) ||
+      (GameSettingsManager_1.GameSettingsManager.ReApply(67),
       UE.LGUIBPLibrary.FreeUnusedResourcesInRenderTargetPool(),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -140,12 +140,12 @@ class UiSceneManager {
               ? (GlobalData_1.GlobalData.SetUiState(2),
                 this.LoadSuccessFunction &&
                   (this.LoadSuccessFunction(),
-                  GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform() ||
+                  Info_1.Info.IsPcOrGamepadPlatform() ||
                     (UE.KismetSystemLibrary.ExecuteConsoleCommand(
                       GlobalData_1.GlobalData.World,
                       "r.TemporalAA.Sharpness 1.0",
                     ),
-                    GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatformLow()
+                    GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsAndroidPlatformLow()
                       ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
                           GlobalData_1.GlobalData.World,
                           "r.ScreenPercentage 80",
@@ -350,9 +350,11 @@ class UiSceneManager {
       ),
       r = e?.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass());
     if (r) for (let e = 0; e < r.Num(); e++) r.Get(e).SetTickableWhenPaused(!0);
-    var t = a.K2_GetActorLocation(),
+    var t = e?.K2_GetComponentsByClass(UE.StaticMeshComponent.StaticClass());
+    if (t) for (let e = 0; e < t.Num(); e++) t.Get(e).SetTickableWhenPaused(!0);
+    var n = a.K2_GetActorLocation(),
       a = a.K2_GetActorRotation();
-    e.K2_SetActorLocationAndRotation(t, a, !1, void 0, !1),
+    e.K2_SetActorLocationAndRotation(n, a, !1, void 0, !1),
       this.yxo && this.DestroyHandBookVision(),
       (this.yxo = e);
   }
@@ -418,7 +420,11 @@ class UiSceneManager {
       await a.Promise;
   }
   static ExitScene() {
-    UiSceneManager.CloseUiScene();
+    UE.KismetSystemLibrary.ExecuteConsoleCommand(
+      GlobalData_1.GlobalData.World,
+      "r.Shadow.ForceUpdateCSMOnce 1",
+    ),
+      UiSceneManager.CloseUiScene();
   }
   static Ixo() {
     GlobalData_1.GlobalData.World &&

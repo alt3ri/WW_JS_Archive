@@ -49,7 +49,13 @@ class EffectModelMultiEffectSpec extends EffectSpec_1.EffectSpec {
         this.Handle.GetSureEffectActor()?.bHidden ?? !1);
     for (const c of e) {
       var i = EffectSystem_1.EffectSystem.GetSureEffectActor(c);
-      i?.IsValid() && i.bHidden !== s && i.SetActorHiddenInGame(s);
+      i?.IsValid() &&
+        i.bHidden !== s &&
+        EffectSystem_1.EffectSystem.SetEffectHidden(
+          c,
+          s,
+          "EffectModelMultiEffectSpec.Tick",
+        );
     }
   }
   OnEnd() {

@@ -18,7 +18,8 @@ class UniversalActivity {
   get FunctionParams() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.functionparamsLength(),
-      (t) => this.functionparams(t),
+      this.functionparams,
+      this,
     );
   }
   __init(t, i) {

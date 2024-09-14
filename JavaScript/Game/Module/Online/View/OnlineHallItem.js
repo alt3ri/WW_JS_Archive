@@ -36,13 +36,14 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
         "OnlineWorldHallView" === this.DNi
           ? OnlineController_1.OnlineController.ApplyJoinWorldRequest(
               this.LNi.PlayerId,
-              ModelManager_1.ModelManager.OnlineModel.ShowFriend
-                ? Protocol_1.Aki.Protocol.H8s.Proto_QueryJoin
-                : Protocol_1.Aki.Protocol.H8s.Proto_LobbyJoin,
+              ModelManager_1.ModelManager.OnlineModel.ShowFriend ||
+                ModelManager_1.ModelManager.OnlineModel.HallViewIsShowSearching
+                ? Protocol_1.Aki.Protocol.J8s.Proto_QueryJoin
+                : Protocol_1.Aki.Protocol.J8s.Proto_LobbyJoin,
             )
           : OnlineController_1.OnlineController.ApplyJoinWorldRequest(
               this.LNi.PlayerId,
-              Protocol_1.Aki.Protocol.H8s.Proto_QueryJoin,
+              Protocol_1.Aki.Protocol.J8s.Proto_QueryJoin,
             ),
           this.LNi.SetApplyTime(
             TimeUtil_1.TimeUtil.GetServerTime() +
@@ -99,6 +100,7 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetButton(16).RootUIComp.SetUIActive(!1),
       this.GetButton(14).RootUIComp.SetUIActive(!1),
       this.GetButton(15).RootUIComp.SetUIActive(!1),
+      this.GetItem(18).SetUIActive(!0),
       (this.XFt = this.GetText(11));
   }
   OnBeforeDestroy() {

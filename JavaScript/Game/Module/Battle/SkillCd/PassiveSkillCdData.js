@@ -82,16 +82,16 @@ class WorldPassiveSkillCdData {
   }
   HandlePassiveSkillNotify(i) {
     var t = Time_1.Time.ServerTimeStamp;
-    for (const a of i.OBs) {
-      let i = this.nQe(a.O6n);
+    for (const a of i.jBs) {
+      let i = this.nQe(a.Q6n);
       i ||
-        ((i = new PassiveSkillCdData()), this.OffRoleSkillCdMap.set(a.O6n, i));
-      for (const l of a.GBs) {
+        ((i = new PassiveSkillCdData()), this.OffRoleSkillCdMap.set(a.Q6n, i));
+      for (const l of a.HBs) {
         var s,
           e,
-          o = MathUtils_1.MathUtils.LongToNumber(l.qBs);
+          o = MathUtils_1.MathUtils.LongToNumber(l.$Bs);
         o <= t ||
-          ((s = MathUtils_1.MathUtils.LongToBigInt(l.X4n)),
+          ((s = MathUtils_1.MathUtils.LongToBigInt(l.r5n)),
           (e = i.SkillCdInfoMap.get(s))
             ? (e.CurRemainingCd = (o - t) * TimeUtil_1.TimeUtil.Millisecond)
             : i.ServerSkillCd.set(s, o));

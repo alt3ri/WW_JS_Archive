@@ -26,28 +26,28 @@ class BuffItemControl extends UiControllerBase_1.UiControllerBase {
     return !0;
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(1619, BuffItemControl.B0t),
-      Net_1.Net.Register(16806, BuffItemControl.b0t);
+    Net_1.Net.Register(19358, BuffItemControl.B0t),
+      Net_1.Net.Register(23554, BuffItemControl.b0t);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(1619), Net_1.Net.UnRegister(16806);
+    Net_1.Net.UnRegister(19358), Net_1.Net.UnRegister(23554);
   }
   static RequestUseBuffItem(e, g, r) {
-    var t = new Protocol_1.Aki.Protocol.gzn();
-    (t.f8n = e),
-      (t.p8n = g),
-      (t.O6n = r),
+    var t = new Protocol_1.Aki.Protocol.yzn();
+    (t.L8n = e),
+      (t.D8n = g),
+      (t.Q6n = r),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("BuffItem", 8, "[Inventory]客户端请求使用Buff道具", [
           "massage",
           t,
         ]);
-    Net_1.Net.Call(25161, t, (r) => {
-      if (r.O4n === Protocol_1.Aki.Protocol.O4n.NRs) {
-        var t = r.rLs;
+    Net_1.Net.Call(20487, t, (r) => {
+      if (r.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs) {
+        var t = r._Ls;
         if (t) {
-          var o = t.f8n,
-            a = MathUtils_1.MathUtils.LongToNumber(t.iLs),
+          var o = t.L8n,
+            a = MathUtils_1.MathUtils.LongToNumber(t.lLs),
             t = TimeUtil_1.TimeUtil.GetServerTime();
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -112,7 +112,7 @@ class BuffItemControl extends UiControllerBase_1.UiControllerBase {
           s = n.GetConfigId,
           l = ModelManager_1.ModelManager.RoleModel.GetRoleName(s),
           n = n.EntityHandle,
-          _ = n?.Entity?.GetComponent(158);
+          _ = n?.Entity?.GetComponent(159);
         let e = 0,
           r = 0,
           t = 0;
@@ -120,7 +120,7 @@ class BuffItemControl extends UiControllerBase_1.UiControllerBase {
           ((e = _.GetCurrentValue(
             CharacterAttributeTypes_1.EAttributeId.Proto_Lv,
           )),
-          (r = _.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.e5n)),
+          (r = _.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.l5n)),
           (t = _.GetCurrentValue(
             CharacterAttributeTypes_1.EAttributeId.Proto_Life,
           ))),
@@ -173,13 +173,13 @@ class BuffItemControl extends UiControllerBase_1.UiControllerBase {
       "massage",
       e,
     ]);
-  var r = e.oLs;
+  var r = e.uLs;
   if (r) {
     var t = ModelManager_1.ModelManager.BuffItemModel,
       o = ConfigManager_1.ConfigManager.BuffItemConfig;
     for (const _ of r) {
-      var a = _.f8n,
-        i = MathUtils_1.MathUtils.LongToNumber(_.iLs),
+      var a = _.L8n,
+        i = MathUtils_1.MathUtils.LongToNumber(_.lLs),
         n = o.GetBuffItemConfig(a);
       if (n) {
         var f = n.PublicCdGroup;
@@ -206,10 +206,10 @@ class BuffItemControl extends UiControllerBase_1.UiControllerBase {
           "massage",
           e,
         ]),
-      e.nLs)
+      e.cLs)
     ) {
-      var r = e.nLs.f8n,
-        t = MathUtils_1.MathUtils.LongToNumber(e.nLs.iLs),
+      var r = e.cLs.L8n,
+        t = MathUtils_1.MathUtils.LongToNumber(e.cLs.lLs),
         o = ConfigManager_1.ConfigManager.BuffItemConfig,
         a = ModelManager_1.ModelManager.BuffItemModel,
         i = o.GetBuffItemConfig(r);

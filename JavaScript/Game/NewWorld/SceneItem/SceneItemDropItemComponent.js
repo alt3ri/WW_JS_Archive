@@ -242,16 +242,16 @@ let SceneItemDropItemComponent =
     }
     OnInitData() {
       this.Ovr = this.Entity.GetComponent(0);
-      var t = this.Ovr.ComponentDataMap.get("dys");
+      var t = this.Ovr.ComponentDataMap.get("Mys");
       return (
         !!t &&
-        (this.pie(t.dys), !!this.fGt) &&
-        (this.mCn(t.dys) && (this.Jdn = !0), !0)
+        (this.pie(t.Mys), !!this.fGt) &&
+        (this.mCn(t.Mys) && (this.Jdn = !0), !0)
       );
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(185)),
+        (this.Hte = this.Entity.GetComponent(187)),
         this.InitDropStateFunction(),
         !0
       );
@@ -291,21 +291,18 @@ let SceneItemDropItemComponent =
     }
     pie(t) {
       var e,
-        i = t.f8n,
-        o = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          i,
-          !0,
-        );
+        i = t.L8n,
+        o = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(i);
       o
         ? o.Mesh
           ? ((this.fGt = new DropItemData()),
             (this.fGt.ConfigId = i),
             (this.fGt.Config = o),
-            (this.fGt.ItemCount = t.YVn),
-            (this.fGt.ShowPlanId = t.q9n),
+            (this.fGt.ItemCount = t.n9n),
+            (this.fGt.ShowPlanId = t.W9n),
             (t = (e =
               ConfigManager_1.ConfigManager.RewardConfig).GetDropShowPlan(
-              t.q9n,
+              t.W9n,
             )),
             (this.fGt.AdsorptionType = t?.Adsorption),
             (this.fGt.StartSpeed = e.GetSpeed()),
@@ -323,12 +320,12 @@ let SceneItemDropItemComponent =
           Log_1.Log.Error("World", 11, "掉落配置查询数据为空", ["道具id", i]);
     }
     mCn(t) {
-      if (!t.v5n) return !0;
-      t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t.v5n);
+      if (!t.A5n) return !0;
+      t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t.A5n);
       if (!t) return !0;
       if (
         t.Entity.GetComponent(0).GetEntityType() !==
-        Protocol_1.Aki.Protocol.wks.Proto_Monster
+        Protocol_1.Aki.Protocol.kks.Proto_Monster
       )
         return !0;
       var e = CommonParamById_1.configCommonParamById.GetFloatConfig(
@@ -477,7 +474,7 @@ let SceneItemDropItemComponent =
     }
     fCn() {
       var t,
-        e = this.Entity.GetComponent(181);
+        e = this.Entity.GetComponent(182);
       e &&
         (e = e.GetInteractController()) &&
         (((t =
@@ -639,7 +636,7 @@ let SceneItemDropItemComponent =
 (SceneItemDropItemComponent.cz = Vector_1.Vector.Create()),
   (SceneItemDropItemComponent = SceneItemDropItemComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(135)],
+      [(0, RegisterComponent_1.RegisterComponent)(136)],
       SceneItemDropItemComponent,
     )),
   (exports.SceneItemDropItemComponent = SceneItemDropItemComponent);

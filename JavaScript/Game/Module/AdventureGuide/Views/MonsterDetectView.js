@@ -22,7 +22,6 @@ const UE = require("ue"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
   LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
-  AdventureDefine_1 = require("../AdventureDefine"),
   AdventureGuideController_1 = require("../AdventureGuideController"),
   MonsterDetectItem_1 = require("./MonsterDetectItem"),
   MONSTER_HELP = 17,
@@ -127,8 +126,7 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
         var e;
         Time_1.Time.Now - this.L6e <= TimeUtil_1.TimeUtil.InverseMillisecond ||
           ((this.L6e = Time_1.Time.Now),
-          ModelManager_1.ModelManager.CreatureModel.GetInstanceId() !==
-          AdventureDefine_1.BigWorldID
+          ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
             ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "DungeonDetection",
               )
@@ -142,7 +140,7 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
                 !0,
               ),
               ControllerHolder_1.ControllerHolder.AdventureGuideController.RequestForDetection(
-                Protocol_1.Aki.Protocol.X6n.Proto_NormalMonster,
+                Protocol_1.Aki.Protocol.r8n.Proto_NormalMonster,
                 [],
                 this.F6e,
               )));

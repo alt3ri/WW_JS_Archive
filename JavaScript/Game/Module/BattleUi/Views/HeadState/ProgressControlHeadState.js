@@ -9,8 +9,11 @@ class ProgressControlHeadState extends HeadStateViewBase_1.HeadStateViewBase {
     super(...arguments),
       (this.Wlt = 0),
       (this.OnProgressControlDataChange = (t) => {
-        "CaptureStrategicPoint" === t.ProgressCtrlType &&
-          this.x_t(t.CurrentValue / t.MaxValue);
+        switch (t.ProgressCtrlType) {
+          case "CaptureStrategicPoint":
+          case "ChargingDevice":
+            this.x_t(t.CurrentValue / t.MaxValue);
+        }
       });
   }
   OnRegisterComponent() {
@@ -26,15 +29,18 @@ class ProgressControlHeadState extends HeadStateViewBase_1.HeadStateViewBase {
     super.ActiveBattleHeadState(t);
     var e = this.GetSprite(0),
       s = this.GetText(1),
-      r = e.GetStretchLeft(),
-      i = e.GetParentAsUIItem().GetWidth(),
-      i =
-        ((this.Wlt = i - 2 * r),
+      i = e.GetStretchLeft(),
+      a = e.GetParentAsUIItem().GetWidth(),
+      r =
+        ((this.Wlt = a - 2 * i),
         e.SetUIActive(!0),
         s.SetUIActive(!0),
         t.GetProgressControlData());
-    "CaptureStrategicPoint" === i.ProgressCtrlType &&
-      this.x_t(i.CurrentValue / i.MaxValue);
+    switch (r.ProgressCtrlType) {
+      case "CaptureStrategicPoint":
+      case "ChargingDevice":
+        this.x_t(r.CurrentValue / r.MaxValue);
+    }
   }
   BindCallback() {
     super.BindCallback(),

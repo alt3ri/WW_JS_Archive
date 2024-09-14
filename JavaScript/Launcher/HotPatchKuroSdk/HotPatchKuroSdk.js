@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HotPatchKuroSdk = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
   LauncherLog_1 = require("../Util/LauncherLog"),
   HotPatchKuroTdm_1 = require("./HotPatchKuroTdm"),
@@ -34,20 +35,20 @@ class HotPatchKuroSdk {
           e?.();
       else {
         UE.KuroSDKManager.Initialize();
-        const o = (t) => {
-          UE.KuroSDKManager.Get().InitDelegate.Remove(o),
+        const r = (t) => {
+          UE.KuroSDKManager.Get().InitDelegate.Remove(r),
             LauncherLog_1.LauncherLog.Debug("SDK初始化完成"),
             HotPatchKuroTdm_1.HotPatchKuroTdm.Init(),
             e?.();
         };
-        UE.KuroSDKManager.Get().InitDelegate.Add(o),
+        UE.KuroSDKManager.Get().InitDelegate.Add(r),
           UE.KuroSDKManager.KuroSDKEvent(17, ""),
           UE.KuroSDKManager.Get().ExitDelegate.Clear(),
           UE.KuroSDKManager.Get().ExitDelegate.Add(() => {
             LauncherLog_1.LauncherLog.Debug(
               "HotPatchKuroSdk KuroSDKManager.Get()!.ExitDelegate Call",
             ),
-              UE.KuroStaticLibrary.ExitGame(!1);
+              cpp_1.KuroApplication.ExitWithReason(!1, "SDK");
           });
       }
     else e?.();

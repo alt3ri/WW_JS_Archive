@@ -17,84 +17,104 @@ const LanguageSystem_1 = require("../../Common/LanguageSystem"),
     ["语句", COMMAND],
   ],
   langCache = new Map(),
-  initStat = void 0,
-  getLocalTextStat = void 0,
+  initStat = Stats_1.Stat.Create("configSpeakerLang.Init"),
+  getLocalTextStat = Stats_1.Stat.Create("configSpeakerLang.GetLocalText"),
   LOCAL_TEXT_STAT_PREFIX = "configSpeakerLang.GetLocalText(";
 exports.configSpeakerLang = {
   Init: () => {
-    ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND);
+    initStat.Start(),
+      ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND),
+      initStat.Stop();
   },
   GetLocalText: (e, o = void 0) => {
-    if (LanguageSystem_1.LanguageSystem.GmShowLanguageKey)
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getLocalTextStat.Start();
+    var t = Stats_1.Stat.Create("" + LOCAL_TEXT_STAT_PREFIX + e + `, ${o})`);
+    if ((t.Start(), LanguageSystem_1.LanguageSystem.GmShowLanguageKey))
       return (
-        (n = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(o)),
-        TABLE + `|${e}|` + n
+        (i = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(o)),
+        t.Stop(),
+        getLocalTextStat.Stop(),
+        ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+        TABLE + `|${e}|` + i
       );
-    let i = langCache.get(e);
-    i || ((i = new Map()), langCache.set(e, i));
-    var n = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(o);
-    let t = i.get(n);
-    if (t) return t;
-    var r = ConfigCommon_1.ConfigCommon.GetLangStatementId(
+    let n = langCache.get(e);
+    n || ((n = new Map()), langCache.set(e, n));
+    var i = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(o);
+    let a = n.get(i);
+    if (a)
+      return (
+        t.Stop(),
+        getLocalTextStat.Stop(),
+        ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+        a
+      );
+    var g = ConfigCommon_1.ConfigCommon.GetLangStatementId(
       TABLE,
       DB,
       COMMAND,
-      n,
+      i,
     );
     if (
-      (g =
-        ConfigCommon_1.ConfigCommon.CheckStatement(r) &&
-        ConfigCommon_1.ConfigCommon.BindInt(r, 1, e, ...logPair, ["Id", e]) &&
+      (m =
+        ConfigCommon_1.ConfigCommon.CheckStatement(g) &&
+        ConfigCommon_1.ConfigCommon.BindInt(g, 1, e, ...logPair, ["Id", e]) &&
         0 <
           ConfigCommon_1.ConfigCommon.Step(
-            r,
+            g,
             !0,
             ...logPair,
             ["传入语言", o],
-            ["查询语言", n],
+            ["查询语言", i],
             ["文本Id", e],
           ))
     ) {
-      var a = void 0;
+      var C = void 0;
       if (
-        (([g, a] = ConfigCommon_1.ConfigCommon.GetValue(
-          r,
+        (([m, C] = ConfigCommon_1.ConfigCommon.GetValue(
+          g,
           0,
           ...logPair,
           ["传入语言", o],
-          ["查询语言", n],
+          ["查询语言", i],
           ["文本Id", e],
         )),
-        g)
+        m)
       ) {
-        var g = DeserializeConfig_1.DeserializeConfig.ParseStringRange(
-          a,
+        var m = DeserializeConfig_1.DeserializeConfig.ParseStringRange(
+          C,
           0,
-          a.byteLength,
+          C.byteLength,
           ...logPair,
           ["传入语言", o],
-          ["查询语言", n],
+          ["查询语言", i],
           ["文本Id", e],
         );
-        if (g.Success)
+        if (m.Success)
           return (
-            (t = g.Value),
-            ConfigCommon_1.ConfigCommon.Reset(r),
-            StringUtils_1.StringUtils.IsEmpty(t) &&
+            (a = m.Value),
+            ConfigCommon_1.ConfigCommon.Reset(g),
+            t.Stop(),
+            getLocalTextStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            StringUtils_1.StringUtils.IsEmpty(a) &&
               o !== CommonDefine_1.CHS &&
-              ((a = exports.configSpeakerLang.GetLocalText(
+              ((C = exports.configSpeakerLang.GetLocalText(
                 e,
                 CommonDefine_1.CHS,
               )),
-              StringUtils_1.StringUtils.IsEmpty(a) ||
-                ((g = void 0 === o ? "" : "|" + o),
-                (t = TEXTNOTFOUNT + "|" + e + g))),
-            i.set(n, t),
-            t
+              StringUtils_1.StringUtils.IsEmpty(C) ||
+                ((m = void 0 === o ? "" : "|" + o),
+                (a = TEXTNOTFOUNT + "|" + e + m))),
+            n.set(i, a),
+            a
           );
       }
     }
-    ConfigCommon_1.ConfigCommon.Reset(r);
+    ConfigCommon_1.ConfigCommon.Reset(g),
+      t.Stop(),
+      getLocalTextStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=SpeakerLang.js.map

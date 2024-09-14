@@ -40,7 +40,7 @@ class EndShowProcess extends PendingProcess {
 class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor(t) {
     super(),
-      (this.cVs = 0),
+      (this.CVs = 0),
       (this._ro = void 0),
       (this.uro = void 0),
       (this.UYt = []),
@@ -65,14 +65,14 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
           ModelManager_1.ModelManager.GeneralLogicTreeModel.UpdateGuideLineStartShowTime();
       }),
       (this.$Ct = (t) => {
-        t === this.cVs &&
+        t === this.CVs &&
           (ModelManager_1.ModelManager.GeneralLogicTreeModel.UpdateGuideLineStartShowTime(),
           this.yro());
       }),
       (this.DQt = (t, e, s) => {
         6 === t.Type &&
-          (this.dYs()?.Id ?? 0) === t.TreeConfigId &&
-          s === Protocol_1.Aki.Protocol.DNs.t5n &&
+          (this.lzs()?.Id ?? 0) === t.TreeConfigId &&
+          s === Protocol_1.Aki.Protocol.BNs._5n &&
           this.$Ct(t.BtType);
       }),
       (this.SpawnQuestGuideLine = () => {
@@ -93,8 +93,8 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
       (this.Iro = () => {
         (this.QZe.Finished = !0), this.UYt.shift(), (this.QZe = void 0);
       }),
-      (this.HSa = !0),
-      (this.cVs = t);
+      (this.CTa = !0),
+      (this.CVs = t);
   }
   OnInit() {}
   OnDestroy() {
@@ -168,13 +168,13 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
   }
   Lro() {
     this.UYt.push(new EndShowProcess()),
-      this.HSa || ((this.HSa = !0), this._ro?.NS_Fx_WayFinding.SetPaused(!0));
+      this.CTa || ((this.CTa = !0), this._ro?.NS_Fx_WayFinding.SetPaused(!0));
   }
   CheckCanShowGuideLine() {
     var t;
     return (
       !ModelManager_1.ModelManager.PlotModel.IsInPlot &&
-      ((t = this.dYs()) && t.CanShowGuideLine()
+      ((t = this.lzs()) && t.CanShowGuideLine()
         ? !!t.IsAlwaysShowGuideLine() ||
           ((t =
             ModelManager_1.ModelManager.GeneralLogicTreeModel.GetGuideLineStartShowTime()),
@@ -191,7 +191,7 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
   Rro() {
     var t =
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
-        37,
+        38,
       );
     return t ? this.Pro(t.IsMoving) : (this.Pro(!1), !1);
   }
@@ -204,7 +204,7 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
       (this.pro = this.Mro));
   }
   Uro() {
-    var t = this.dYs();
+    var t = this.lzs();
     if (t) {
       var e = t.GetCurrentActiveChildQuestNode();
       if (e) {
@@ -229,8 +229,8 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
               }
               this.xro(this._ro.Spline, this.uro, 4),
                 this._ro.NS_Fx_WayFinding.ReinitializeSystem(),
-                this.HSa &&
-                  ((this.HSa = !1), this._ro.NS_Fx_WayFinding.SetPaused(!1));
+                this.CTa &&
+                  ((this.CTa = !1), this._ro.NS_Fx_WayFinding.SetPaused(!1));
             }
           else this.Lro();
         } else this.Lro();
@@ -281,13 +281,13 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
   Pro(t) {
     return this.Ero !== t && ((this.Ero = t), !0);
   }
-  dYs() {
+  lzs() {
     let t = void 0;
-    switch (this.cVs) {
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
+    switch (this.CVs) {
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest:
         t = ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest();
         break;
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay:
         t = ModelManager_1.ModelManager.LevelPlayModel.GetTrackLevelPlayInfo();
     }
     return t;

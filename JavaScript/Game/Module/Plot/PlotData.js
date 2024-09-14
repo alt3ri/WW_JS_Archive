@@ -32,7 +32,10 @@ class PlotInfo {
       (this.UiParam = void 0),
       (this.CanBeAbandoned = !1),
       (this.FadeBegin = void 0),
-      (this.Pos = void 0);
+      (this.FadeBeginDone = !1),
+      (this.WaitUiTime = 0),
+      (this.Pos = void 0),
+      (this.KeepMainRolePose = !1);
   }
   Init(t, i, s, o, e, h, r, l, n, d = {}, v = !1, a = !1, c) {
     (this.FlowListName = s),
@@ -55,32 +58,35 @@ class PlotInfo {
     let s = "LevelC",
       o = !1,
       e = !1,
-      h = void 0;
-    var r;
-    !(h =
-      0 < i.length &&
-      "SetPlotMode" === (r = i[0]).Name &&
-      ((r = r.Params),
-      (s = r.Mode),
-      (o = r.WaitForPlayerMotionEnd ?? !1),
-      (e = r.NoUiEnterAnimation ?? !1),
-      r.FastFadeIn)
-        ? r.FastFadeIn.ScreenType ?? IAction_1.EFadeInScreenShowType.Black
-        : h) &&
-      1 < i.length &&
-      "FadeInScreen" === (r = i[1]).Name &&
-      ((r = r.Params),
-      (h = r.ScreenType ?? IAction_1.EFadeInScreenShowType.Black)),
+      h = void 0,
+      r = !1;
+    var l;
+    0 < i.length &&
+      "SetPlotMode" === (l = i[0]).Name &&
+      ((l = l.Params),
+      (s = l.Mode),
+      (o = l.WaitForPlayerMotionEnd ?? !1),
+      (e = l.NoUiEnterAnimation ?? !1),
+      l.FastFadeIn &&
+        (h = l.FastFadeIn.ScreenType ?? IAction_1.EFadeInScreenShowType.Black),
+      l.KeepMainRolePose) &&
+      (r = !0),
+      !h &&
+        1 < i.length &&
+        "FadeInScreen" === (l = i[1]).Name &&
+        ((l = l.Params),
+        (h = l.ScreenType ?? IAction_1.EFadeInScreenShowType.Black)),
       (t.PlotLevel = s),
       (t.IsWaitAnim = o),
       (t.UiParam.DisableAnim = e),
       (t.FadeBegin = h),
+      (t.KeepMainRolePose = r),
       ("LevelD" !== s && "Prompt" !== s) ||
         t.UiParam.ViewName ||
         (t.UiParam.ViewName = "BattleView"),
-      "Prompt" === s && this._bn(i, t);
+      "Prompt" === s && this.pbn(i, t);
   }
-  static _bn(t, i) {
+  static pbn(t, i) {
     var s,
       o,
       e = new Map();
@@ -120,6 +126,8 @@ class PlotInfo {
       (this.UiParam = void 0),
       (this.CanBeAbandoned = !1),
       (this.FadeBegin = void 0),
+      (this.FadeBeginDone = !1),
+      (this.WaitUiTime = 0),
       (this.Pos = void 0);
   }
   static Create() {

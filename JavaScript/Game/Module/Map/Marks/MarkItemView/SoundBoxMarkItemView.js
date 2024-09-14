@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SoundBoxMarkItemView = void 0);
 const UE = require("ue"),
-  EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
   ServerMarkItemView_1 = require("./ServerMarkItemView");
 class SoundBoxMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
   constructor(e) {
-    super(e), (this.GRi = void 0), (this.Hbn = !1);
+    super(e), (this.GRi = void 0), (this.zbn = !1);
   }
   async OnCreateAsync() {
     var e, t;
@@ -26,15 +26,15 @@ class SoundBoxMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
       this.OnIconPathChanged(this.Holder.IconPath),
       this.GRi?.SetUIParent(this.GetRootItem());
   }
-  OnSafeUpdate(e, t, i) {
-    var r = this.Holder.GetSoundBoxEntityId();
-    r &&
-      ((r = EntitySystem_1.EntitySystem.Get(r)),
-      this.SwitchSleepState(void 0 === r));
+  OnSafeUpdate(e, t, r) {
+    var i = this.Holder.GetSoundBoxEntityId();
+    i &&
+      ((i = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(i)),
+      this.SwitchSleepState(void 0 === i));
   }
   SwitchSleepState(e) {
-    this.Hbn !== e &&
-      ((this.Hbn = e)
+    this.zbn !== e &&
+      ((this.zbn = e)
         ? (this.SetSpriteByPath(
             ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
               e ? "SP_MarkSleep" : "SP_MarkNormal",

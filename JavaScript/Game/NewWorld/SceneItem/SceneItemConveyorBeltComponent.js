@@ -131,26 +131,26 @@ let SceneItemConveyorBeltComponent =
           e = e.Entity;
           const i = e.GetComponent(1);
           var o = i?.CreatureData.GetEntityType();
-          if (o === Protocol_1.Aki.Protocol.wks.Proto_Player)
+          if (o === Protocol_1.Aki.Protocol.kks.Proto_Player)
             (this.kdn = t)
-              ? ((this.qdn = e.GetComponent(163)),
-                (this.Gdn = e.GetComponent(91)),
+              ? ((this.qdn = e.GetComponent(164)),
+                (this.Gdn = e.GetComponent(92)),
                 (this.qdn.DeltaConveyBeltSpeed = this.iun.ToUeVector()))
               : ((this.qdn.DeltaConveyBeltSpeed = void 0),
                 (this.qdn = void 0),
                 (this.Gdn = void 0));
           else if (
-            o === Protocol_1.Aki.Protocol.wks.Proto_Npc ||
-            o === Protocol_1.Aki.Protocol.wks.Proto_Monster ||
-            o === Protocol_1.Aki.Protocol.wks.Proto_Animal ||
-            o === Protocol_1.Aki.Protocol.wks.Proto_Vision
+            o === Protocol_1.Aki.Protocol.kks.Proto_Npc ||
+            o === Protocol_1.Aki.Protocol.kks.Proto_Monster ||
+            o === Protocol_1.Aki.Protocol.kks.Proto_Animal ||
+            o === Protocol_1.Aki.Protocol.kks.Proto_Vision
           ) {
-            var s = e.GetComponent(37);
+            var s = e.GetComponent(38);
             s &&
               ((n = this.Odn.get(s)),
               t ? n || this.Odn.set(s, -1) : n && this.Odn.delete(s));
-          } else if (o === Protocol_1.Aki.Protocol.wks.Proto_SceneItem)
-            if (e.GetComponent(142)) {
+          } else if (o === Protocol_1.Aki.Protocol.kks.Proto_SceneItem)
+            if (e.GetComponent(143)) {
               const i = e.GetComponent(1);
               var n = this.Ndn.indexOf(i);
               t
@@ -185,7 +185,7 @@ let SceneItemConveyorBeltComponent =
     }
     OnStart() {
       return (
-        (this.vtn = this.Entity.GetComponent(76)),
+        (this.vtn = this.Entity.GetComponent(77)),
         this.vtn && this.vtn.AddOnEntityOverlapCallback(this.Vdn),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
@@ -247,7 +247,7 @@ let SceneItemConveyorBeltComponent =
     }
     Kdn() {
       this.Bdn = void 0;
-      var t = this.Entity.GetComponent(119).State;
+      var t = this.Entity.GetComponent(120).State;
       let e = "";
       1 === t ? (e = "常态") : 2 === t && (e = "激活");
       for (const i of this.bdn) i.EntityState.includes(e) && (this.Bdn = i);
@@ -278,7 +278,7 @@ let SceneItemConveyorBeltComponent =
   });
 (SceneItemConveyorBeltComponent = SceneItemConveyorBeltComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(133)],
+    [(0, RegisterComponent_1.RegisterComponent)(134)],
     SceneItemConveyorBeltComponent,
   )),
   (exports.SceneItemConveyorBeltComponent = SceneItemConveyorBeltComponent);

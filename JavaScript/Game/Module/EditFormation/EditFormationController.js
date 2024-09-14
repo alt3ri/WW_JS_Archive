@@ -44,10 +44,10 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(1524, EditFormationController.i5t);
+    Net_1.Net.Register(20881, EditFormationController.i5t);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(1524);
+    Net_1.Net.UnRegister(20881);
   }
   static OnAddOpenViewCheckFunction() {
     UiManager_1.UiManager.AddOpenViewCheckFunction(
@@ -68,8 +68,8 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
   static GetFormationDataRequest() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Formation", 49, "请求所有编队数据");
-    var o = new Protocol_1.Aki.Protocol.kis();
-    Net_1.Net.Call(8450, o, (o) => {});
+    var o = new Protocol_1.Aki.Protocol.Wis();
+    Net_1.Net.Call(24282, o, (o) => {});
   }
   static async EditFormationRequest(o) {
     var r,
@@ -110,31 +110,31 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
                 break;
               }
         }
-        l = new Protocol_1.Aki.Protocol.d5s();
-        (l.AVn = r), (l.UVn = i), (l.s5n = t), (l.RVn = o), e.push(l);
+        l = new Protocol_1.Aki.Protocol.M6s();
+        (l.GVn = r), (l.OVn = i), (l.C5n = t), (l.NVn = o), e.push(l);
       }
     }
-    var g = new Protocol_1.Aki.Protocol.xis();
-    (g.xVn = e),
+    var g = new Protocol_1.Aki.Protocol.Nis();
+    (g.kVn = e),
       ModelManager_1.ModelManager.SceneTeamModel.RefreshLastTransform(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Formation", 49, "更新单机编队", ["formations", e]),
-      await Net_1.Net.CallAsync(29036, g);
+      await Net_1.Net.CallAsync(25429, g);
   }
   static async UpdateFormationRequest(o, r, t, e) {
-    var n = new Protocol_1.Aki.Protocol.d5s(),
+    var n = new Protocol_1.Aki.Protocol.M6s(),
       o =
-        ((n.AVn = o),
-        (n.UVn = r),
-        (n.s5n = t),
-        (n.RVn = e),
-        new Protocol_1.Aki.Protocol.xis()),
+        ((n.GVn = o),
+        (n.OVn = r),
+        (n.C5n = t),
+        (n.NVn = e),
+        new Protocol_1.Aki.Protocol.Nis()),
       r =
-        ((o.xVn = [n]),
+        ((o.kVn = [n]),
         ModelManager_1.ModelManager.SceneTeamModel.RefreshLastTransform(),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Formation", 49, "更新单机编队", ["formation", n]),
-        await Net_1.Net.CallAsync(29036, o));
+        await Net_1.Net.CallAsync(25429, o));
     return void 0 !== r;
   }
   static async UpdateFightRoleRequest() {
@@ -150,12 +150,12 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
             break;
           }
       o
-        ? (((e = new Protocol_1.Aki.Protocol.qis()).PVn = o),
-          (e.s5n = t),
+        ? (((e = new Protocol_1.Aki.Protocol.$is()).FVn = o),
+          (e.C5n = t),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Formation", 49, "更新联机编队", ["massage", e]),
           ModelManager_1.ModelManager.SceneTeamModel.RefreshLastTransform(),
-          await Net_1.Net.CallAsync(1457, e))
+          await Net_1.Net.CallAsync(17584, e))
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Formation", 49, "更新联机编队，找不到当前角色");
     }
@@ -169,6 +169,13 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
       return (
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Formation", 5, "打开编队按钮时，未满足开启条件"),
+        !1
+      );
+    if (ModelManager_1.ModelManager.FunctionModel.IsLockByBehaviorTree(10007))
+      return (
+        ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+          EditFormationController.o5t,
+        ),
         !1
       );
     var r = ModelManager_1.ModelManager.SceneTeamModel;
@@ -185,15 +192,22 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
         ),
         !1
       );
-    r = r.GetCurrentEntity;
-    if (!r?.Valid)
+    var t = r.GetCurrentEntity;
+    if (!t?.Valid)
       return (
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Formation", 5, "打开编队按钮时，当前实体不存在"),
         !1
       );
-    var t = r.Entity.GetComponent(188);
-    if (!t?.Valid)
+    var e = ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
+    if (2 === r.GetCurrentGroupLivingState(e))
+      return (
+        Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn("Formation", 49, "打开编队按钮时，当前编队已死亡"),
+        !1
+      );
+    r = t.Entity.GetComponent(190);
+    if (!r?.Valid)
       return (
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -203,7 +217,7 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
           ),
         !1
       );
-    var e = r.Entity.GetComponent(159);
+    e = t.Entity.GetComponent(160);
     if (!e?.Valid)
       return (
         Log_1.Log.CheckWarn() &&
@@ -226,7 +240,7 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
         ),
         !1
       );
-    if (t.HasTag(855966206))
+    if (r.HasTag(855966206))
       return (
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Formation", 5, "打开编队按钮时，当前角色正在水中"),
@@ -235,7 +249,7 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
         ),
         !1
       );
-    if (t.HasTag(191377386))
+    if (r.HasTag(191377386))
       return (
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -248,7 +262,7 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
         ),
         !1
       );
-    if (t.HasTag(40422668))
+    if (r.HasTag(40422668))
       return (
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Formation", 5, "打开编队按钮时，当前角色处于空中"),
@@ -257,7 +271,7 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
         ),
         !1
       );
-    if (t.HasTag(1996802261))
+    if (r.HasTag(1996802261))
       return (
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Formation", 5, "打开编队按钮时，当前角色在战斗中"),
@@ -266,7 +280,16 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
         ),
         !1
       );
-    if (t.HasTag(-1697149502))
+    if (r.HasTag(504239013))
+      return (
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Formation", 5, "打开编队按钮时，当前角色处于攀爬中"),
+        ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+          EditFormationController.o5t,
+        ),
+        !1
+      );
+    if (r.HasTag(-1697149502))
       return (
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Formation", 7, "打开编队按钮时，当前角色不能切人"),
@@ -275,12 +298,12 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
         ),
         !1
       );
-    if (t.HasTag(-2100129479)) {
-      var t = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
-        r.Entity,
-        Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantVision,
+    if (r.HasTag(-2100129479)) {
+      var r = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
+        t.Entity,
+        Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeConcomitantVision,
       );
-      if (t && t.Entity.GetComponent(188)?.HasTag(40422668))
+      if (r && r.Entity.GetComponent(190)?.HasTag(40422668))
         return (
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -302,8 +325,8 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
         ),
         !1)
       : !(
-          (t = r.Entity.GetComponent(70)) &&
-          0 < t.WalkOnWaterStage &&
+          (r = t.Entity.GetComponent(71)) &&
+          0 < r.WalkOnWaterStage &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Formation",
@@ -331,12 +354,12 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
   (EditFormationController.$Ge = (o) => {
     "EditFormationView" === o &&
       EditFormationController.r5t &&
-      ((o = EditFormationController.r5t.lUs),
+      ((o = EditFormationController.r5t.gUs),
       ModelManager_1.ModelManager.EditFormationModel.UpdatePlayerFormations(o),
       (EditFormationController.r5t = void 0));
   }),
   (EditFormationController.i5t = (o) => {
-    var r = o.lUs;
+    var r = o.gUs;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Formation", 49, "更新背包编队", ["formations", r]),
       ModelManager_1.ModelManager.OnlineModel.RefreshWorldTeamRoleInfo(r),

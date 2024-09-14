@@ -31,7 +31,8 @@ class FlowContext {
       (this.OptionsCollection = []),
       (this.UiParam = void 0),
       (this.FormatIdInner = void 0),
-      (this.Pos = void 0);
+      (this.Pos = void 0),
+      (this.RollbackRecord = []);
   }
   Init(t, i, s, h, o, e, r, n, l = !1, d = void 0, C) {
     this.ht(),
@@ -70,7 +71,8 @@ class FlowContext {
       (this.CanSkip = !1),
       (this.CurShowTalkActionId = 0),
       (this.IsFadeSkip = !1),
-      (this.Pos = void 0);
+      (this.Pos = void 0),
+      (this.RollbackRecord.length = 0);
   }
   static Create() {
     let t = FlowContext.Pool.Get();

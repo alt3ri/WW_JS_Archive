@@ -14,7 +14,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e[(e.BeDamageTrigger = 8)] = "BeDamageTrigger"),
       (e[(e.GameplayEventTrigger = 9)] = "GameplayEventTrigger"),
       (e[(e["temp_hittrigger1.0"] = 10)] = "temp_hittrigger1.0"),
-      (e[(e.GlobalDamageTrigger = 11)] = "GlobalDamageTrigger");
+      (e[(e.GlobalDamageTrigger = 11)] = "GlobalDamageTrigger"),
+      (e[(e.QteGoBattleTrigger = 12)] = "QteGoBattleTrigger"),
+      (e[(e.QteGoDownTrigger = 13)] = "QteGoDownTrigger");
   })((ETriggerEvent = exports.ETriggerEvent || (exports.ETriggerEvent = {}))),
   (exports.INVALID_TRIGGER_HANDLE = -1);
 //# sourceMappingURL=TriggerType.js.map

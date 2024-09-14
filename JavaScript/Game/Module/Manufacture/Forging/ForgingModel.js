@@ -20,7 +20,7 @@ class ForgingModel extends ModelBase_1.ModelBase {
       (this.ForgingSuccessFlow = void 0),
       (this.ForgingFailFlow = void 0),
       (this.sLi = void 0),
-      (this.cKs = new Map()),
+      (this.XQs = new Map()),
       (this.aLi = void 0),
       (this.hLi = 0),
       (this.lLi = void 0),
@@ -132,13 +132,13 @@ class ForgingModel extends ModelBase_1.ModelBase {
           TotalMakeCountInLimitTime: 0,
         };
       this.sLi.push(e),
-        this.cKs.set(t, e),
+        this.XQs.set(t, e),
         (e.IsForging = this.CheckCanForging(t) ? 1 : 0);
     }
   }
-  mKs(e) {
+  YQs(e) {
     var t = this.sLi.findIndex((t) => t.ItemId === e);
-    this.sLi.splice(t, 1), this.cKs.delete(e);
+    this.sLi.splice(t, 1), this.XQs.delete(e);
   }
   CheckCanForging(t) {
     t = this.GetForgingDataById(t);
@@ -178,18 +178,18 @@ class ForgingModel extends ModelBase_1.ModelBase {
   }
   UpdateForgingDataList(t) {
     for (const o of t) {
-      var e = o.J4n,
+      var e = o.s5n,
         i = this.GetForgingDataById(e);
       i &&
-        ((i.LastRoleId = o.nPs ?? 0),
+        ((i.LastRoleId = o.cPs ?? 0),
         (i.ExistStartTime =
-          MathUtils_1.MathUtils.LongToNumber(o.hPs) *
+          MathUtils_1.MathUtils.LongToNumber(o.CPs) *
           TimeUtil_1.TimeUtil.Millisecond),
         (i.ExistEndTime =
-          MathUtils_1.MathUtils.LongToNumber(o.lPs) *
+          MathUtils_1.MathUtils.LongToNumber(o.gPs) *
           TimeUtil_1.TimeUtil.Millisecond),
-        (i.MadeCountInLimitTime = o.vUs),
-        (i.TotalMakeCountInLimitTime = o.sPs),
+        (i.MadeCountInLimitTime = o.TUs),
+        (i.TotalMakeCountInLimitTime = o.dPs),
         (i.IsUnlock = 1),
         (i.IsForging = this.CheckCanForging(e) ? 1 : 0));
     }
@@ -197,24 +197,24 @@ class ForgingModel extends ModelBase_1.ModelBase {
   UpdateForgingByServerConfig(t) {
     for (const n of t) {
       var e =
-          MathUtils_1.MathUtils.LongToNumber(n.hPs) *
+          MathUtils_1.MathUtils.LongToNumber(n.CPs) *
           TimeUtil_1.TimeUtil.Millisecond,
         i =
-          MathUtils_1.MathUtils.LongToNumber(n.lPs) *
+          MathUtils_1.MathUtils.LongToNumber(n.gPs) *
           TimeUtil_1.TimeUtil.Millisecond,
-        o = n.J4n,
+        o = n.s5n,
         r = this.GetForgingDataById(o);
       r &&
         ((0 == e && 0 == i) || TimeUtil_1.TimeUtil.IsInTimeSpan(e, i)
           ? ((r.ExistStartTime = e), (r.ExistEndTime = i))
-          : this.mKs(o));
+          : this.YQs(o));
     }
   }
   GetForgingDataList() {
     return this.sLi;
   }
   GetForgingDataById(t) {
-    return this.cKs.get(t);
+    return this.XQs.get(t);
   }
   GetForgingRoleId(t) {
     t = this.GetForgingDataById(t);
@@ -227,12 +227,12 @@ class ForgingModel extends ModelBase_1.ModelBase {
     for (const i of ConfigManager_1.ConfigManager.ForgingConfig.GetForgeFormulaById(
       t,
     ).ConsumeItems)
-      e.push({ f8n: i.ItemId, MVn: i.Count, G6n: !0 });
+      e.push({ L8n: i.ItemId, UVn: i.Count, K6n: !0 });
     return e;
   }
   UpdateForgingItemList(t) {
     this.aLi || (this.aLi = new Array()), (this.aLi.length = 0);
-    for (const e of t) this.aLi.push({ ItemId: e.f8n, ItemNum: e.MVn });
+    for (const e of t) this.aLi.push({ ItemId: e.L8n, ItemNum: e.UVn });
   }
   GetForgingItemList() {
     return this.aLi;

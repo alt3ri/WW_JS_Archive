@@ -36,16 +36,17 @@ let VisionSkillComponent = class VisionSkillComponent extends CharacterSkillComp
       (this.vZo = void 0),
       (this.EZo = void 0),
       (this.SZo = 0),
-      (this.hjs = !1),
+      (this.kXa = 0),
+      (this.Ujs = !1),
       (this.yZo = !1),
       (this.IZo = !1),
       (this.TZo = !1),
-      (this.MGn = !0),
+      (this.UGn = !0),
       (this.LZo = (t, i) => {
         var e, s, n;
         !(
           t === InputEnums_1.EInputAction.幻象2 ||
-          (t === InputEnums_1.EInputAction.攻击 && this.MGn)
+          (t === InputEnums_1.EInputAction.攻击 && this.UGn)
         ) ||
           this.SZo <= 0 ||
           ((t = this.EZo.GetMultiSkillInfo(this.SZo))?.NextSkillId &&
@@ -66,7 +67,7 @@ let VisionSkillComponent = class VisionSkillComponent extends CharacterSkillComp
                     useNextSkillTagId,
                   ),
                 ),
-                (t = n.Entity.CheckGetComponent(33)),
+                (t = n.Entity.CheckGetComponent(34)),
                 super.BeginSkill(e, {
                   Target: t.SkillTarget?.Entity,
                   SocketName: t.SkillTargetSocket,
@@ -83,13 +84,13 @@ let VisionSkillComponent = class VisionSkillComponent extends CharacterSkillComp
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error("Battle", 18, "幻象缺少技能", ["skillId", e])));
       }),
-      (this._js = () => {
+      (this.xjs = () => {
         this.TZo || this.RZo();
       });
   }
   InitVisionSkill(t, i = !1) {
     this.vZo !== t &&
-      (this.ujs(!0, !0),
+      (this.Pjs(!0, !0),
       (this.vZo = t),
       (this.fZo =
         ModelManager_1.ModelManager.SkillCdModel.GetCurWorldSkillCdData()),
@@ -98,13 +99,13 @@ let VisionSkillComponent = class VisionSkillComponent extends CharacterSkillComp
         ((this.EZo = this.fZo.InitMultiSkill(t)),
         this.EZo.Init(this.vZo.Id, t),
         this.EZo.InitMultiSkillInfo(this.LoadedSkills))),
-      (this.hjs = i),
+      (this.Ujs = i),
       (this.IZo = !1),
       (this.TZo = !1),
-      (this.MGn = !0);
+      (this.UGn = !0);
   }
   BeginSkill(t, i = {}) {
-    if (!this.hjs) return super.BeginSkill(t, i);
+    if (!this.Ujs) return super.BeginSkill(t, i);
     let e = t;
     i.CheckMultiSkill &&
       0 !== this.SZo &&
@@ -114,12 +115,13 @@ let VisionSkillComponent = class VisionSkillComponent extends CharacterSkillComp
     var s,
       t = this.GetSkill(e);
     return t
-      ? ((s = this.EZo.IsMultiSkill(t.SkillInfo)),
+      ? ((s = this.EZo.IsMultiSkill(t.SkillInfo)) && (this.kXa = e),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Battle", 18, "使用幻象技能", ["skillId", e]),
         super.BeginSkill(e, i)
           ? (s &&
-              (this.cjs(!0, !0), this.EZo.StartMultiSkill(t, !1)) &&
+              this.kXa === e &&
+              (this.Bjs(!0, !0), this.EZo.StartMultiSkill(t, !1)) &&
               (this.SZo = e),
             (this.yZo = !0))
           : (CombatLog_1.CombatLog.Warn(
@@ -144,7 +146,7 @@ let VisionSkillComponent = class VisionSkillComponent extends CharacterSkillComp
     (this.IZo = t), (this.TZo = i);
   }
   SetEnableAttackInputAction(t) {
-    this.MGn = t;
+    this.UGn = t;
   }
   CanSummonerStartNextMultiSkill() {
     var t, i;
@@ -168,7 +170,7 @@ let VisionSkillComponent = class VisionSkillComponent extends CharacterSkillComp
   OnVisionAbilityDestroy() {
     this.fZo &&
       (this.fZo.RemoveMultiSkill(this.Entity.Id), this.EZo?.ClearAllSkill()),
-      this.vZo && (this.ujs(!0, !0), (this.vZo = void 0)),
+      this.vZo && (this.Pjs(!0, !0), (this.vZo = void 0)),
       (this.fZo = void 0),
       (this.EZo = void 0),
       (this.SZo = 0);
@@ -178,9 +180,10 @@ let VisionSkillComponent = class VisionSkillComponent extends CharacterSkillComp
   }
   RZo() {
     0 !== this.SZo && (this.EZo.ResetMultiSkills(this.SZo, !0), (this.SZo = 0)),
-      this.ujs(!0, !1);
+      (this.kXa = 0),
+      this.Pjs(!0, !1);
   }
-  cjs(t, i) {
+  Bjs(t, i) {
     var e;
     this.vZo?.Valid &&
       ((e = this.vZo.Entity),
@@ -199,15 +202,15 @@ let VisionSkillComponent = class VisionSkillComponent extends CharacterSkillComp
       !EventSystem_1.EventSystem.HasWithTarget(
         e,
         EventDefine_1.EEventName.OnChangeRoleCoolDownChanged,
-        this._js,
+        this.xjs,
       ) &&
       EventSystem_1.EventSystem.AddWithTarget(
         e,
         EventDefine_1.EEventName.OnChangeRoleCoolDownChanged,
-        this._js,
+        this.xjs,
       );
   }
-  ujs(t, i) {
+  Pjs(t, i) {
     var e;
     this.vZo?.Valid &&
       ((e = this.vZo.Entity),
@@ -226,17 +229,17 @@ let VisionSkillComponent = class VisionSkillComponent extends CharacterSkillComp
       EventSystem_1.EventSystem.HasWithTarget(
         e,
         EventDefine_1.EEventName.OnChangeRoleCoolDownChanged,
-        this._js,
+        this.xjs,
       ) &&
       EventSystem_1.EventSystem.RemoveWithTarget(
         e,
         EventDefine_1.EEventName.OnChangeRoleCoolDownChanged,
-        this._js,
+        this.xjs,
       );
   }
 };
 (VisionSkillComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(34)],
+  [(0, RegisterComponent_1.RegisterComponent)(35)],
   VisionSkillComponent,
 )),
   (exports.VisionSkillComponent = VisionSkillComponent);

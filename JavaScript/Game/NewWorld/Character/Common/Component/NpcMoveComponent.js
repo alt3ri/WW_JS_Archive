@@ -137,8 +137,8 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
       (this.CharacterMovement = t.Actor.CharacterMovement),
       (this.CharacterMovement.GravityScale = 2),
       (this.CharacterMovement.bRotationFollowBaseMovement = !0),
-      (this.AnimComp = this.Entity.GetComponent(162)),
-      (this.UnifiedStateComponent = this.Entity.GetComponent(91)),
+      (this.AnimComp = this.Entity.GetComponent(163)),
+      (this.UnifiedStateComponent = this.Entity.GetComponent(92)),
       (this.CapsuleOffset = Vector_1.Vector.Create(
         0,
         0,
@@ -393,7 +393,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
 });
 (NpcMoveComponent = NpcMoveComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(165)],
+    [(0, RegisterComponent_1.RegisterComponent)(166)],
     NpcMoveComponent,
   )),
   (exports.NpcMoveComponent = NpcMoveComponent);

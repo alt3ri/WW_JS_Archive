@@ -26,9 +26,7 @@ class GameplayCueFromSummoned extends GameplayCueBase_1.GameplayCueBase {
   }
   OnInit() {
     var t,
-      e = this.Entity.CheckGetComponent(159)
-        ?.GetBuffByHandle(this.ActiveHandleId)
-        ?.GetInstigator();
+      e = this.Instigator?.Entity;
     e
       ? (this.Vi(),
         (this.H$o = Transform_1.Transform.Create()),

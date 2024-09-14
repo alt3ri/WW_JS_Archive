@@ -16,8 +16,10 @@ class PhantomItem {
     return this.monstername();
   }
   get ElementType() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.elementtypeLength(), (t) =>
-      this.elementtype(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.elementtypeLength(),
+      this.elementtype,
+      this,
     );
   }
   get LevelUpGroupId() {
@@ -29,7 +31,8 @@ class PhantomItem {
   get CalabashBuffs() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.calabashbuffsLength(),
-      (t) => this.calabashbuffs(t),
+      this.calabashbuffs,
+      this,
     );
   }
   get Rarity() {
@@ -39,18 +42,24 @@ class PhantomItem {
     return this.meshid();
   }
   get Zoom() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.zoomLength(), (t) =>
-      this.zoom(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.zoomLength(),
+      this.zoom,
+      this,
     );
   }
   get Location() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.locationLength(), (t) =>
-      this.location(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.locationLength(),
+      this.location,
+      this,
     );
   }
   get Rotator() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.rotatorLength(), (t) =>
-      this.rotator(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.rotatorLength(),
+      this.rotator,
+      this,
     );
   }
   get StandAnim() {
@@ -81,8 +90,10 @@ class PhantomItem {
     return this.maxcapcity();
   }
   get ItemAccess() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.itemaccessLength(), (t) =>
-      this.itemaccess(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.itemaccessLength(),
+      this.itemaccess,
+      this,
     );
   }
   get ObtainedShow() {
@@ -110,9 +121,14 @@ class PhantomItem {
     return this.reddotdisablerule();
   }
   get FetterGroup() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.fettergroupLength(), (t) =>
-      this.fettergroup(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.fettergroupLength(),
+      this.fettergroup,
+      this,
     );
+  }
+  get PhantomType() {
+    return this.phantomtype();
   }
   get ParentMonsterId() {
     return this.parentmonsterid();
@@ -361,8 +377,12 @@ class PhantomItem {
         )
       : null;
   }
-  parentmonsterid() {
+  phantomtype() {
     var t = this.J7.__offset(this.z7, 66);
+    return t ? this.J7.readInt32(this.z7 + t) : 1;
+  }
+  parentmonsterid() {
+    var t = this.J7.__offset(this.z7, 68);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

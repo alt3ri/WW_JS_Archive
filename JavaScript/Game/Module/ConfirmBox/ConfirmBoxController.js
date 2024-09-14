@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConfirmBoxController = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   GlobalData_1 = require("../../GlobalData"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
@@ -59,7 +60,7 @@ class ConfirmBoxController extends UiControllerBase_1.UiControllerBase {
                   0,
                   !1,
                 )
-              : UE.KuroStaticLibrary.ExitGame(!1);
+              : cpp_1.KuroApplication.ExitWithReason(!1, "ExitGameConfirmBox");
           },
         ),
         ConfirmBoxController.ShowConfirmBoxNew(o));

@@ -46,7 +46,7 @@ class LockValue extends ExtraEffectBase_1.BuffEffect {
         (this.Percent = Number(t.ExtraEffectParameters[2]));
   }
   OnCreated() {
-    this.OwnerEntity?.CheckGetComponent(157)?.AddStateAttributeLock(
+    this.OwnerEntity?.CheckGetComponent(158)?.AddStateAttributeLock(
       this.ActiveHandleId,
       this.AttributeId,
       this.Percent,
@@ -55,7 +55,7 @@ class LockValue extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {}
   OnRemoved() {
-    this.OwnerEntity?.CheckGetComponent(157)?.RemoveStateAttributeLock(
+    this.OwnerEntity?.CheckGetComponent(158)?.RemoveStateAttributeLock(
       this.ActiveHandleId,
       this.AttributeId,
     );
@@ -86,7 +86,7 @@ class LockUpperBound extends ExtraEffectBase_1.BuffEffect {
         (this.Percent = Number(t.ExtraEffectParameters[2]));
   }
   OnCreated() {
-    this.OwnerEntity?.CheckGetComponent(157)?.AddIntervalLock(
+    this.OwnerEntity?.CheckGetComponent(158)?.AddIntervalLock(
       0,
       this.ActiveHandleId,
       this.AttributeId,
@@ -96,7 +96,7 @@ class LockUpperBound extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {}
   OnRemoved() {
-    this.OwnerEntity?.CheckGetComponent(157)?.RemoveIntervalLock(
+    this.OwnerEntity?.CheckGetComponent(158)?.RemoveIntervalLock(
       0,
       this.ActiveHandleId,
       this.AttributeId,
@@ -128,7 +128,7 @@ class LockLowerBound extends ExtraEffectBase_1.BuffEffect {
         (this.Percent = Number(t.ExtraEffectParameters[2]));
   }
   OnCreated() {
-    this.OwnerEntity?.CheckGetComponent(157)?.AddIntervalLock(
+    this.OwnerEntity?.CheckGetComponent(158)?.AddIntervalLock(
       1,
       this.ActiveHandleId,
       this.AttributeId,
@@ -138,7 +138,7 @@ class LockLowerBound extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {}
   OnRemoved() {
-    this.OwnerEntity?.CheckGetComponent(157)?.RemoveIntervalLock(
+    this.OwnerEntity?.CheckGetComponent(158)?.RemoveIntervalLock(
       1,
       this.ActiveHandleId,
       this.AttributeId,
@@ -324,7 +324,7 @@ class AddBuffToVision extends ExtraEffectBase_1.BuffEffect {
         (e ||
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Bullet", 36, "没有父Buff的上下文信息")),
-        t?.GetComponent(159));
+        t?.GetComponent(160));
     if (s)
       for (const i of this.BuffIds)
         s.AddBuff(i, {
@@ -340,7 +340,7 @@ class AddBuffToVision extends ExtraEffectBase_1.BuffEffect {
     var t = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
       this.OwnerEntity,
       this.SummonType,
-    )?.Entity?.GetComponent(159);
+    )?.Entity?.GetComponent(160);
     if (t)
       for (const e of this.BuffIds)
         t.RemoveBuff(e, -1, `召唤者的buff${this.BuffId}移除`);
@@ -356,7 +356,7 @@ class ModifyToughReduce extends ExtraEffectBase_1.BuffEffect {
       (this.ModifyRate = Number(t.ExtraEffectParameters[0] ?? 0));
   }
   OnCreated() {
-    var t = this.OwnerEntity?.CheckGetComponent(157);
+    var t = this.OwnerEntity?.CheckGetComponent(158);
     t &&
       (this.ModifierHandle = t.AddModifier(
         CharacterAttributeTypes_1.EAttributeId.Proto_ToughReduce,
@@ -365,7 +365,7 @@ class ModifyToughReduce extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {}
   OnRemoved() {
-    var t = this.OwnerEntity?.CheckGetComponent(157);
+    var t = this.OwnerEntity?.CheckGetComponent(158);
     t &&
       t.RemoveModifier(
         CharacterAttributeTypes_1.EAttributeId.Proto_ToughReduce,

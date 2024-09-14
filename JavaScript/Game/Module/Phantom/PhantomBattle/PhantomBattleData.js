@@ -10,15 +10,15 @@ class PhantomBattleData extends PhantomDataBase_1.PhantomDataBase {
     super(...arguments), (this.wTt = 0);
   }
   SetData(t) {
-    (this.wTt = t.L9n ?? 0),
-      (this.PhantomLevel = t.qws ?? 0),
-      (this.ItemId = t.J4n ?? 0),
-      (this.PhantomExp = t.Gws ?? 0),
-      (this.PhantomMainProp = t.Ows ?? []),
-      (this.PhantomSubProp = t.kws ?? []),
-      (this.FetterGroupId = t.Nws ?? 0),
-      (this.FuncValue = t.Bws ?? 0),
-      this.SetSkinId(t.j7n ?? 0),
+    (this.wTt = t.b9n ?? 0),
+      (this.PhantomLevel = t.$ws ?? 0),
+      (this.ItemId = t.s5n ?? 0),
+      (this.PhantomExp = t.Hws ?? 0),
+      (this.PhantomMainProp = t.jws ?? []),
+      (this.PhantomSubProp = t.Wws ?? []),
+      (this.FetterGroupId = t.Kws ?? 0),
+      (this.FuncValue = t.Vws ?? 0),
+      this.SetSkinId(t.Z7n ?? 0),
       this.SetIncId(this.wTt);
   }
   GetUniqueId() {
@@ -29,11 +29,11 @@ class PhantomBattleData extends PhantomDataBase_1.PhantomDataBase {
     for (const n of this.GetPhantomMainProp()) {
       var e =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomMainPropertyItemId(
-            n.$ws,
+            n.Yws,
           ),
         a = new PhantomBattleModel_1.PhantomSortStruct();
       (a.PhantomPropId = e.PropId),
-        (a.Value = n.W4n),
+        (a.Value = n.e5n),
         (a.IfPercentage = e.AddType === CommonComponentDefine_1.RATIO),
         t.push(a);
     }
@@ -44,15 +44,15 @@ class PhantomBattleData extends PhantomDataBase_1.PhantomDataBase {
     for (const o of this.GetPhantomSubProp()) {
       var e =
           ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
-            o.$ws,
+            o.Yws,
           ),
         a =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSubPropertyById(
-            o.$ws,
+            o.Yws,
           ),
         n = new PhantomBattleModel_1.PhantomSortStruct();
       (n.PhantomPropId = e.Id),
-        (n.Value = o.W4n),
+        (n.Value = o.e5n),
         (n.IfPercentage = a.AddType === CommonComponentDefine_1.RATIO),
         t.push(n);
     }

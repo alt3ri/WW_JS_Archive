@@ -77,8 +77,10 @@ class RouletteGridBase extends UiPanelBase_1.UiPanelBase {
       RedDotController_1.RedDotController.BindRedDot(t, s, void 0, i);
   }
   UnBindRedDot() {
+    var t;
     this.l4e &&
-      (RedDotController_1.RedDotController.UnBindRedDot(this.l4e),
+      ((t = this.GetItem(11)),
+      RedDotController_1.RedDotController.UnBindGivenUi(this.l4e, t),
       (this.l4e = void 0));
   }
   SetRedDotVisible(t) {

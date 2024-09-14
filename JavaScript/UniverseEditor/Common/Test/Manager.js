@@ -33,7 +33,10 @@ class TestManager {
       try {
         require(s), (0, Log_1.log)(`[${this.Name}] import test file: ` + s);
       } catch (e) {
-        (0, Log_1.error)(`[${this.Name}] import test file ${s} failed: ` + e);
+        (0, Log_1.error)(
+          `[${this.Name}] import test file ${s} failed: ${e}
+` + e.stack,
+        );
       }
     }
     (0, TestOp_1.popTestRunningContextName)();
@@ -135,6 +138,9 @@ class RunTestProxy {
     e = this.CreateTestFilter(e);
     return this.RunTest(e.GetAllTestNames());
   }
+  GetAllTestCasesByNode(e) {
+    return this.CreateTestFilter(e).GetAllTestCases();
+  }
   Qe(e, t) {
     if ("case" === e.Type) t.Add(e);
     else for (const s of e.Cases) this.Qe(s, t);
@@ -158,10 +164,13 @@ class RunTestProxy {
   OnRelease() {}
 }
 class UnitTestProxy extends (exports.RunTestProxy = RunTestProxy) {
+  IsUnitTest() {
+    return !0;
+  }
   async RunTest(e) {
     this.IsRunning = !0;
     var e = await this.Manager.RunTestByName(e),
-      t = this.Manager.GetTestReport(e),
+      t = (this.Manager.OutputTestResults(e), this.Manager.GetTestReport(e)),
       e = this.Manager.GetResultSummary(e);
     return (this.IsRunning = !1), [t, e];
   }

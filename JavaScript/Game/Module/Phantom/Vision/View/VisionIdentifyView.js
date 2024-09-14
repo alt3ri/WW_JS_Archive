@@ -42,15 +42,44 @@ class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
       }),
       (this.jHi = () => {
         this.WHi();
+      }),
+      (this.SNa = (e) => {
+        e === this.qHi && this.Oqe();
+      }),
+      (this.OnClickLockToggle = () => {
+        var e = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(
+          this.qHi,
+        );
+        void 0 !== e &&
+          ControllerHolder_1.ControllerHolder.InventoryController.ItemLockRequest(
+            this.qHi,
+            !e.GetIsLock(),
+          );
+      }),
+      (this.OnClickDeprecateToggle = () => {
+        var e = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(
+          this.qHi,
+        );
+        void 0 !== e &&
+          ControllerHolder_1.ControllerHolder.InventoryController.ItemDeprecateRequest(
+            this.qHi,
+            !e.GetIsDeprecated(),
+          );
       });
   }
   OnRegisterComponent() {
-    this.ComponentRegisterInfos = [
+    (this.ComponentRegisterInfos = [
       [0, UE.UIItem],
       [1, UE.UIItem],
       [2, UE.UIItem],
       [3, UE.UIText],
-    ];
+      [4, UE.UIExtendToggle],
+      [5, UE.UIExtendToggle],
+    ]),
+      (this.BtnBindInfo = [
+        [4, this.OnClickLockToggle],
+        [5, this.OnClickDeprecateToggle],
+      ]);
   }
   async OnBeforeStartAsync() {
     (this.BHi = new VisionIdentifyComponent_1.LevelUpIdentifyComponent(
@@ -79,6 +108,10 @@ class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
         EventDefine_1.EEventName.OnVisionIdentifyDoAnimation,
         this.VHi,
       ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnItemFuncValueChange,
+        this.SNa,
+      ),
       (this.NHi = !0);
   }
   dSe() {
@@ -91,10 +124,14 @@ class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnVisionIdentifyDoAnimation,
         this.VHi,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnItemFuncValueChange,
+        this.SNa,
       ));
   }
   Og() {
-    this.KHi(), this.sqi(), this.P5e();
+    this.KHi(), this.sqi(), this.P5e(), this.Oqe();
   }
   P5e() {
     var e =
@@ -192,6 +229,17 @@ class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
       ),
       t = 0 < e.length;
     t && this.BHi.Update(e, !1), this.BHi.SetActive(t);
+  }
+  Oqe() {
+    var e,
+      t = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(
+        this.qHi,
+      );
+    void 0 !== t &&
+      ((e = t.GetIsLock() ? 0 : 1),
+      this.GetExtendToggle(4).SetToggleState(e, !1),
+      (e = t.GetIsDeprecated() ? 1 : 0),
+      this.GetExtendToggle(5).SetToggleState(e, !1));
   }
   OnBeforeHide() {
     this.dSe(), UiLayer_1.UiLayer.SetShowMaskLayer("PhantomLevelUp", !1);

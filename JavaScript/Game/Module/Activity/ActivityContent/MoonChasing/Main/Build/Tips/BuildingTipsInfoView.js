@@ -20,7 +20,7 @@ class BuildingTipsInfoView extends UiViewBase_1.UiViewBase {
       (this.ConfirmItem = void 0),
       (this.CaptionItem = void 0),
       (this.AttrLayout = void 0),
-      (this.zGn =
+      (this.aOn =
         new BuildingTipsInfoViewController_1.BuildingTipsInfoViewController()),
       (this.G1o = () => new BuildingAttributeItem_1.BuildingAttributeItem());
   }
@@ -51,17 +51,17 @@ class BuildingTipsInfoView extends UiViewBase_1.UiViewBase {
       [22, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [13, this.zGn.SwitchPrev],
-        [14, this.zGn.SwitchNext],
-        [15, this.zGn.JumpToMap],
-        [22, this.zGn.JumpToConditionTip],
+        [13, this.aOn.SwitchPrev],
+        [14, this.aOn.SwitchNext],
+        [15, this.aOn.JumpToMap],
+        [22, this.aOn.JumpToConditionTip],
       ]);
   }
   async zDn() {
     (this.CaptionItem = new PopupCaptionItem_1.PopupCaptionItem(
       this.GetItem(16),
     )),
-      this.CaptionItem.SetCloseCallBack(this.zGn.CloseSelf);
+      this.CaptionItem.SetCloseCallBack(this.aOn.CloseSelf);
     var i = ConfigManager_1.ConfigManager.BusinessConfig.GetCoinItemId();
     await this.CaptionItem.SetCurrencyItemList([i]);
   }
@@ -79,14 +79,14 @@ class BuildingTipsInfoView extends UiViewBase_1.UiViewBase {
     );
   }
   async OnBeforeStartAsync() {
-    this.zGn.RegisterView(this),
+    this.aOn.RegisterView(this),
       (this.ConfirmItem = new ButtonItem_1.ButtonItem(this.GetItem(9))),
-      this.ConfirmItem.SetFunction(this.zGn.UnlockOrLevelUp),
+      this.ConfirmItem.SetFunction(this.aOn.UnlockOrLevelUp),
       this.dAn(),
       await Promise.all([this.ido(), this.zDn()]);
   }
   async OnBeforeShowAsyncImplementImplement() {
-    await this.zGn.Refresh();
+    await this.aOn.Refresh();
   }
   GetGuideUiItemAndUiItemForShowEx(i) {
     return i.length < 1 ||
@@ -158,7 +158,7 @@ class BuildingTipsInfoView extends UiViewBase_1.UiViewBase {
           this.CostItem.UpdateItem(t, e.GetConsumeCount()),
           this.CostItem.RefreshCountEnableState(),
           e.IsBuild
-            ? this.ConfirmItem.SetShowText("PrefabTextItem_3945913769_Text")
+            ? this.ConfirmItem.SetShowText("PrefabTextItem_2996025119_Text")
             : this.ConfirmItem.SetShowText("Moonfiesta_BuildingTips_Building"))
         : ((s =
             ConfigManager_1.ConfigManager.BuildingConfig.GetBuildingById(i)),

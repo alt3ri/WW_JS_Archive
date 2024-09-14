@@ -15,8 +15,8 @@ class RewardExploreConfirmButton extends UiPanelBase_1.UiPanelBase {
       (this.gfi = void 0),
       (this.ffi = void 0),
       (this.pfi = void 0),
-      (this.$js = void 0),
-      (this.Xjs = void 0),
+      (this.gWs = void 0),
+      (this.fWs = void 0),
       (this.vfi = () => {
         --this.ffi,
           this.ffi <= 0 &&
@@ -28,11 +28,11 @@ class RewardExploreConfirmButton extends UiPanelBase_1.UiPanelBase {
           t = this.GetText(2);
         LguiUtil_1.LguiUtil.SetLocalTextNew(t, i, this.ffi);
       }),
-      (this.Yjs = () => {
+      (this.pWs = () => {
         var i, t, e;
-        --this.$js,
-          this.$js <= 0
-            ? (this.Jjs(),
+        --this.gWs,
+          this.gWs <= 0
+            ? (this.vWs(),
               this.Sfi(this.gfi.ButtonTextId),
               this.GetButton(3)?.SetSelfInteractive(!0))
             : ((i = this.GetText(0)),
@@ -43,7 +43,7 @@ class RewardExploreConfirmButton extends UiPanelBase_1.UiPanelBase {
                 MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
                   "OnClickCd",
                 )),
-              (e = StringUtils_1.StringUtils.Format(e, this.$js.toString())),
+              (e = StringUtils_1.StringUtils.Format(e, this.gWs.toString())),
               i?.SetText(t + e));
       }),
       (this.UFe = () => {
@@ -54,7 +54,7 @@ class RewardExploreConfirmButton extends UiPanelBase_1.UiPanelBase {
           s = (s && s(this.Efi), this.gfi?.ClickCd);
         s &&
           0 < s &&
-          (this.zjs(s),
+          (this.MWs(s),
           this.GetButton(3)?.SetSelfInteractive(!1),
           (i = this.GetText(0)),
           (t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -120,14 +120,14 @@ class RewardExploreConfirmButton extends UiPanelBase_1.UiPanelBase {
       TimerSystem_1.TimerSystem.Has(this.pfi) &&
       (TimerSystem_1.TimerSystem.Remove(this.pfi), (this.pfi = void 0));
   }
-  zjs(i) {
-    (this.$js = i / TimeUtil_1.TimeUtil.InverseMillisecond),
-      (this.Xjs = TimerSystem_1.TimerSystem.Forever(this.Yjs, 1e3));
+  MWs(i) {
+    (this.gWs = i / TimeUtil_1.TimeUtil.InverseMillisecond),
+      (this.fWs = TimerSystem_1.TimerSystem.Forever(this.pWs, 1e3));
   }
-  Jjs() {
-    this.Xjs &&
-      TimerSystem_1.TimerSystem.Has(this.Xjs) &&
-      (TimerSystem_1.TimerSystem.Remove(this.Xjs), (this.Xjs = void 0));
+  vWs() {
+    this.fWs &&
+      TimerSystem_1.TimerSystem.Has(this.fWs) &&
+      (TimerSystem_1.TimerSystem.Remove(this.fWs), (this.fWs = void 0));
   }
 }
 exports.RewardExploreConfirmButton = RewardExploreConfirmButton;

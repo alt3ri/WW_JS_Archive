@@ -12,18 +12,18 @@ const UE = require("ue"),
   UiManager_1 = require("../../../Ui/UiManager"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   FriendController_1 = require("../FriendController");
-var Proto_FriendApplyOperator = Protocol_1.Aki.Protocol.E5s;
+var Proto_FriendApplyOperator = Protocol_1.Aki.Protocol.A6s;
 class FriendApplyView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
       (this.XFt = void 0),
       (this.pNi = void 0),
       (this.vNi = !1),
-      (this.Lta = void 0),
+      (this.Wra = void 0),
       (this.MNi = () => {
         var e,
           i = ModelManager_1.ModelManager.FriendModel.GetApplyViewDataList(
-            this.Lta,
+            this.Wra,
           );
         i.length < 1
           ? UiManager_1.UiManager.CloseView("FriendMultipleApplyView")
@@ -39,23 +39,28 @@ class FriendApplyView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.uHe = () => {
         var e = ModelManager_1.ModelManager.FriendModel.GetApplyViewDataList(
-          this.Lta,
+          this.Wra,
         );
-        e.length < 1
-          ? UiManager_1.UiManager.CloseView("OnlineMultipleApplyView")
-          : 1 === e.length &&
-            ((e = e[0].ApplyPlayerData),
-            FriendController_1.FriendController.RequestFriendApplyHandle(
-              [e.PlayerId],
-              Proto_FriendApplyOperator.Proto_Reject,
-            ));
+        if (e.length < 1)
+          UiManager_1.UiManager.CloseView("OnlineMultipleApplyView");
+        else {
+          var i = [];
+          for (const r of e) {
+            var t = r.ApplyPlayerData;
+            t && i.push(t.PlayerId);
+          }
+          FriendController_1.FriendController.RequestFriendApplyHandle(
+            i,
+            Proto_FriendApplyOperator.Proto_Reject,
+          );
+        }
       }),
-      (this.Dta = () => {
-        this.Ata(), this.Og();
+      (this.Qra = () => {
+        this.Kra(), this.Og();
       }),
-      (this.Xua = (e) => {
-        this.Lta &&
-          (-1 !== (e = this.Lta?.indexOf(e)) && this.Lta.splice(e, 1),
+      (this.zma = (e) => {
+        this.Wra &&
+          (-1 !== (e = this.Wra?.indexOf(e)) && this.Wra.splice(e, 1),
           this.Og());
       });
   }
@@ -77,10 +82,10 @@ class FriendApplyView extends UiTickViewBase_1.UiTickViewBase {
       ]);
   }
   OnStart() {
-    (this.Lta = this.OpenParam),
+    (this.Wra = this.OpenParam),
       (this.XFt = this.GetText(5)),
       (this.pNi = this.GetSprite(6)),
-      this.Ata(),
+      this.Kra(),
       this.Og();
   }
   OnBeforeDestroy() {
@@ -89,7 +94,7 @@ class FriendApplyView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnTick(e) {
     var i = ModelManager_1.ModelManager.FriendModel.GetApplyViewDataList(
-      this.Lta,
+      this.Wra,
     );
     0 === i.length || i[0].ApplyTimeLeftTime < 0
       ? this.vNi || (this.CloseMe(), (this.vNi = !0))
@@ -104,26 +109,26 @@ class FriendApplyView extends UiTickViewBase_1.UiTickViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RefreshFriendApplicationRedDot,
-      this.Dta,
+      this.Qra,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.FriendOnMultiItemAction,
-        this.Xua,
+        this.zma,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RefreshFriendApplicationRedDot,
-      this.Dta,
+      this.Qra,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.FriendOnMultiItemAction,
-        this.Xua,
+        this.zma,
       );
   }
-  Ata() {
+  Kra() {
     var e = ModelManager_1.ModelManager.FriendModel.GetApplyViewDataList(
-      this.Lta,
+      this.Wra,
     );
     if (0 !== e.length)
       for (const i of e)
@@ -134,7 +139,7 @@ class FriendApplyView extends UiTickViewBase_1.UiTickViewBase {
       i,
       t,
       r = ModelManager_1.ModelManager.FriendModel.GetApplyViewDataList(
-        this.Lta,
+        this.Wra,
       );
     0 === r.length
       ? this.Hide()

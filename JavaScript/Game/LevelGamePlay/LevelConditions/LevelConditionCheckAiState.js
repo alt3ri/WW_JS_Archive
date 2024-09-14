@@ -26,7 +26,7 @@ class LevelConditionCheckAiState extends LevelGeneralBase_1.LevelConditionBase {
           Log_1.Log.Error("LevelCondition", 30, "对象Entity不合法"),
         !1
       );
-    var i = n.Entity.GetComponent(188);
+    var i = n.Entity.GetComponent(190);
     let r = !1;
     switch (e.StateType) {
       case ICondition_1.EAiStateType.AnimalRandomAction:

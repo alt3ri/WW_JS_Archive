@@ -19,7 +19,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   SceneTeamDefine_1 = require("../../Module/SceneTeam/SceneTeamDefine"),
   LevelGeneralBase_1 = require("../LevelGeneralBase"),
   LevelGeneralDefine_1 = require("../LevelGeneralDefine");
-var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 class LevelConditionFunctionUnlock extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n, ...o) {
     var t, i;
@@ -93,10 +93,10 @@ class LevelConditionHpLowerThan extends LevelGeneralBase_1.LevelConditionBase {
         ? !(
             !(t =
               ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity) ||
-            ((i = t.Entity.GetComponent(158)?.GetCurrentValue(
+            ((i = t.Entity.GetComponent(159)?.GetCurrentValue(
               EAttributeId.Proto_Life,
             )),
-            (r = t.Entity.GetComponent(158)?.GetCurrentValue(EAttributeId.e5n)),
+            (r = t.Entity.GetComponent(159)?.GetCurrentValue(EAttributeId.l5n)),
             !i) ||
             !r
           ) && i / r < o / CommonDefine_1.RATE_10000
@@ -134,8 +134,8 @@ class LevelConditionHarmonyQte extends LevelGeneralBase_1.LevelConditionBase {
             !1)
           : ((e = o[0]),
             (o = o[1]),
-            10 * (e = e.GetComponent(81)?.RoleElementType) +
-              (o = o.GetComponent(81)?.RoleElementType) ===
+            10 * (e = e.GetComponent(82)?.RoleElementType) +
+              (o = o.GetComponent(82)?.RoleElementType) ===
               t || 10 * o + e === t))
     );
   }
@@ -213,32 +213,35 @@ class LevelConditionGetNewItem extends LevelGeneralBase_1.LevelConditionBase {
 exports.LevelConditionGetNewItem = LevelConditionGetNewItem;
 class LevelConditionFightWithMonster extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n, ...o) {
-    var t;
-    return (
-      !!o?.length &&
-      (0 === e.LimitParams.size
-        ? (Log_1.Log.CheckError() &&
+    if (o?.length)
+      if (0 === e.LimitParams.size)
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "LevelCondition",
+            17,
+            "配置错误！条件的参数不应该为空",
+            ["inConditionInfo.Id", e.Id],
+          );
+      else {
+        var t = e.LimitParams.get("MonsterId");
+        if (t) {
+          for (const i of o[0])
+            if (
+              t ===
+              EntitySystem_1.EntitySystem.Get(i)
+                ?.GetComponent(0)
+                ?.GetPbEntityInitData()?.BlueprintType
+            )
+              return !0;
+        } else
+          Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
               17,
-              "配置错误！条件的参数不应该为空",
-              ["inConditionInfo.Id", e.Id],
-            ),
-          !1)
-        : (t = e.LimitParams.get("MonsterId"))
-          ? ((o = o[0]),
-            t ===
-              EntitySystem_1.EntitySystem.Get(o)
-                ?.GetComponent(0)
-                ?.GetPbEntityInitData()?.BlueprintType)
-          : (Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "LevelCondition",
-                17,
-                `配置错误！条件${e.Id}的MonsterId参数不符合条件类型${LevelGeneralDefine_1.ELevelGeneralCondition.FightWithMonster}的定义`,
-              ),
-            !1))
-    );
+              `配置错误！条件${e.Id}的MonsterId参数不符合条件类型${LevelGeneralDefine_1.ELevelGeneralCondition.FightWithMonster}的定义`,
+            );
+      }
+    return !1;
   }
 }
 exports.LevelConditionFightWithMonster = LevelConditionFightWithMonster;

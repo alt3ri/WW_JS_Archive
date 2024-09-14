@@ -14,6 +14,7 @@ class TsAnimNotifySwitchSequenceCamera extends UE.KuroAnimNotify {
       (this.AdditiveRotation = void 0),
       (this.CameraAttachSocket = ""),
       (this.CameraDetectSocket = ""),
+      (this.强制播放Sequence = !1),
       (this.ExtraDetectSphereRadius = -0),
       (this.ExtraSphereLocation = void 0),
       (this.IsShowExtraSphere = !1),
@@ -44,6 +45,7 @@ class TsAnimNotifySwitchSequenceCamera extends UE.KuroAnimNotify {
         this.DisableMovementInput,
         this.DisableLookAtInput,
         this.DisableMotionBlur,
+        this.强制播放Sequence,
       ),
       !0)
     );

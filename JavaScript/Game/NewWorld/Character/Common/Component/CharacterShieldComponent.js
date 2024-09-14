@@ -57,15 +57,15 @@ let CharacterShieldComponent = class CharacterShieldComponent extends EntityComp
   }
   OnStart() {
     return (
-      (this.m1t = this.Entity.CheckGetComponent(159)),
-      (this.Xte = this.Entity.CheckGetComponent(188)),
+      (this.m1t = this.Entity.CheckGetComponent(160)),
+      (this.Xte = this.Entity.CheckGetComponent(190)),
       !0
     );
   }
   OnActivate() {
     this.Kjr.clear, (this.Qjr = 0);
-    var t = this.Entity.GetComponent(0).ComponentDataMap.get("Hys")?.Hys?.pTs;
-    if (t) for (const e of t) this.Add(e.iVn, e._9n, e.CTs);
+    var t = this.Entity.GetComponent(0).ComponentDataMap.get("Jys")?.Jys?.LTs;
+    if (t) for (const e of t) this.Add(e.uVn, e.v9n, e.ETs);
     return !0;
   }
   Xjr(t) {
@@ -99,17 +99,17 @@ let CharacterShieldComponent = class CharacterShieldComponent extends EntityComp
       : this.Add(t, e, i);
   }
   static OnShieldUpdateNotify(t, e) {
-    var i = t?.GetComponent(66);
+    var i = t?.GetComponent(67);
     if (i)
-      for (const s of e.wAs) {
-        var o = s.UAs,
-          r = Protocol_1.Aki.Protocol.U4s;
-        o === r.Proto_EShieldUpdateTypeAdd && 0 < s.CTs
-          ? i.Add(s.iVn, s._9n, s.CTs)
-          : o === r.Proto_EShieldUpdateTypeDel && 0 === s.CTs
-            ? i.Remove(s.iVn)
-            : o === r.Proto_EShieldUpdateTypeModify && 0 < s.CTs
-              ? i.ChangeValue(s.iVn, s._9n, s.CTs)
+      for (const s of e.kAs) {
+        var o = s.OAs,
+          r = Protocol_1.Aki.Protocol.O4s;
+        o === r.Proto_EShieldUpdateTypeAdd && 0 < s.ETs
+          ? i.Add(s.uVn, s.v9n, s.ETs)
+          : o === r.Proto_EShieldUpdateTypeDel && 0 === s.ETs
+            ? i.Remove(s.uVn)
+            : o === r.Proto_EShieldUpdateTypeModify && 0 < s.ETs
+              ? i.ChangeValue(s.uVn, s.v9n, s.ETs)
               : Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn("Battle", 36, "护盾更新错误", ["shield", s]);
       }
@@ -129,13 +129,13 @@ let CharacterShieldComponent = class CharacterShieldComponent extends EntityComp
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.Listen("m3n", !1)],
+  [CombatMessage_1.CombatNet.Listen("E3n", !1)],
   CharacterShieldComponent,
   "OnShieldUpdateNotify",
   null,
 ),
   (CharacterShieldComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(66)],
+    [(0, RegisterComponent_1.RegisterComponent)(67)],
     CharacterShieldComponent,
   )),
   (exports.CharacterShieldComponent = CharacterShieldComponent);

@@ -19,13 +19,13 @@ class LevelConditionCheckBuff extends LevelGeneralBase_1.LevelConditionBase {
       );
     if (a) {
       a = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
-      const l = EntitySystem_1.EntitySystem.Get(a)?.GetComponent(159);
+      const l = EntitySystem_1.EntitySystem.Get(a)?.GetComponent(160);
       return !!l?.GetBuffTotalStackById(e);
     }
     const l =
       ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
         t,
-      )?.Entity?.GetComponent(159);
+      )?.Entity?.GetComponent(160);
     return !!l?.GetBuffTotalStackById(e);
   }
 }

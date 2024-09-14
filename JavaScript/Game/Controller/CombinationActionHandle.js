@@ -35,8 +35,8 @@ class CombinationActionHandle {
   }
   ReleaseAnyKey(t) {
     this.jde === t && this.Kde
-      ? (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
+      ? (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
             "InputSettings",
             8,
             "[Input]先抬起组合键副键,广播Action抬起",
@@ -48,8 +48,8 @@ class CombinationActionHandle {
       : this.Hde === t && this.Yde();
   }
   Xde(t) {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("InputSettings", 8, "[Input]按下组合Action主键", [
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("InputSettings", 8, "[Input]按下组合Action主键", [
         "MainKeyName",
         t,
       ]),
@@ -59,8 +59,8 @@ class CombinationActionHandle {
   Yde() {
     this.jde &&
       this.Kde &&
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "InputSettings",
           8,
           "[Input]先抬起组合主副键,若副键还没抬起，则也会广播Action抬起",
@@ -68,8 +68,8 @@ class CombinationActionHandle {
           ["SecondaryKeyName", this.jde],
         ),
       this.$de()),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("InputSettings", 8, "[Input]抬起组合Action主键", [
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("InputSettings", 8, "[Input]抬起组合Action主键", [
           "PressMainKeyName",
           this.Hde,
         ]),
@@ -84,8 +84,8 @@ class CombinationActionHandle {
         e = n.GetSecondaryKeyValidTime();
       if (0 < e)
         if (TimeUtil_1.TimeUtil.GetServerTimeStamp() - this.Wde > e) {
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
               "InputSettings",
               8,
               "[Input]当按下主键超过此时间没有按下副键时，再按下副键不会广播副键的按下和抬起",
@@ -96,8 +96,8 @@ class CombinationActionHandle {
             );
           continue;
         }
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "InputSettings",
           8,
           "[Input]按下组合Action",
@@ -115,8 +115,8 @@ class CombinationActionHandle {
     if (this.Kde)
       for (const i of this.Kde) {
         var t = i.GetActionName();
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
             "InputSettings",
             8,
             "[Input]抬起组合Action",
@@ -137,28 +137,30 @@ class CombinationActionHandle {
   }
   CheckCombinationAction(t) {
     if (this.Hde) {
-      var i = [];
-      InputSettingsManager_1.InputSettingsManager.GetActionBinding(
-        t,
-      ).GetKeyNameList(i);
-      for (const e of i)
-        if (
-          InputSettingsManager_1.InputSettingsManager.IsCombinationAction(
-            this.Hde,
-            e,
+      var i = InputSettingsManager_1.InputSettingsManager.GetActionBinding(t),
+        e = i.GetActionMappingConfig();
+      if (!e || !e.IsIdleAction) {
+        e = [];
+        i.GetKeyNameList(e);
+        for (const n of e)
+          if (
+            InputSettingsManager_1.InputSettingsManager.IsCombinationAction(
+              this.Hde,
+              n,
+            )
           )
-        )
-          return (
-            Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info(
-                "InputSettings",
-                8,
-                "[Input]当前已经按下组合键主键，现在按下了任意组合键副键，不会执行副键自己的Action输入",
-                ["actionName", t],
-                ["keyName", e],
-              ),
-            !1
-          );
+            return (
+              Log_1.Log.CheckDebug() &&
+                Log_1.Log.Debug(
+                  "InputSettings",
+                  8,
+                  "[Input]当前已经按下组合键主键，现在按下了任意组合键副键，不会执行副键自己的Action输入",
+                  ["actionName", t],
+                  ["keyName", n],
+                ),
+              !1
+            );
+      }
     }
     return !0;
   }

@@ -195,10 +195,10 @@ class PawnInteractController {
         }
         (this.a$t = e.MatchRoleOption), this.Brr(e);
       } else this.Lrr = this.Irr;
-      i = t.ComponentDataMap.get("vys")?.vys;
+      i = t.ComponentDataMap.get("Tys")?.Tys;
       this.brr(i, e?.RandomInteract, t.GetPbDataId()),
         this.qrr(i),
-        i && this.frr.SetServerLockInteract(i.IIs, "Init Interact Controller"),
+        i && this.frr.SetServerLockInteract(i.UIs, "Init Interact Controller"),
         this.Grr();
     } else
       Log_1.Log.CheckError() &&
@@ -211,16 +211,16 @@ class PawnInteractController {
         );
   }
   qrr(t) {
-    if (t?.EIs)
-      for (const r of t.EIs) {
+    if (t?.AIs)
+      for (const r of t.AIs) {
         var i = ModelManager_1.ModelManager.InteractionModel.GetDynamicConfig(
-            r.W5n,
+            r.e6n,
           ),
           e =
             LevelGeneralContextUtil_1.LevelGeneralContextUtil.CreateByServerContext(
-              r.nvs,
+              r.cvs,
             );
-        this.AddDynamicInteractOption(i, e, r.SIs, r.dca, !1);
+        this.AddDynamicInteractOption(i, e, r.DIs, r.eCa, !1);
       }
   }
   ClearDirectOptions() {
@@ -274,9 +274,9 @@ class PawnInteractController {
     }
   }
   brr(t, i, e) {
-    if (t && t.yIs && t.yIs.length)
+    if (t && t.PIs && t.PIs.length)
       if (i)
-        for (const n of t.yIs) {
+        for (const n of t.PIs) {
           var r = i.Options[n].Option,
             r = this.Orr(r, 2);
           (r.RandomOptionIndex = n), this.prr.push(r);
@@ -319,7 +319,7 @@ class PawnInteractController {
       var s = this.Hte.CreatureData.GetEntityType(),
         s =
           ((t =
-            s === Protocol_1.Aki.Protocol.wks.Proto_SceneItem
+            s === Protocol_1.Aki.Protocol.kks.Proto_SceneItem
               ? this.Hte.ActorRightProxy
               : this.Hte.ActorForwardProxy),
           PawnInteractController.cz),
@@ -433,7 +433,7 @@ class PawnInteractController {
       (i instanceof LevelGeneralContextDefine_1.QuestContext
         ? ((o = 1), (s = i.QuestId))
         : i instanceof LevelGeneralContextDefine_1.GeneralLogicTreeContext &&
-          i.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
+          i.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
           ((o = 1), (s = i.TreeConfigId)));
     t = this.Orr(t, 1, i, 0, o, r);
     return (
@@ -446,6 +446,11 @@ class PawnInteractController {
         ((r = this.Hrr(t.Context)),
         this.ChangeOptionDisabled(t.InstanceId, !r)),
       n && this.Grr(),
+      this.frr?.Entity.Valid &&
+        EventSystem_1.EventSystem.EmitWithTarget(
+          this.frr.Entity,
+          EventDefine_1.EEventName.OnAddDynamicOption,
+        ),
       t.InstanceId
     );
   }
@@ -488,27 +493,36 @@ class PawnInteractController {
         (n = !0), this.prr.splice(t, 1)[0].Dispose();
         break;
       }
-    return n && this.Grr(), n;
+    return (
+      n && this.Grr(),
+      this.frr?.Entity.Valid &&
+        EventSystem_1.EventSystem.EmitWithTarget(
+          this.frr.Entity,
+          EventDefine_1.EEventName.OnRemoveDynamicOption,
+        ),
+      n
+    );
   }
-  AddClientInteractOption(t, i, e = "Option", r, n, s = 0, o) {
-    var h = new LevelGameplayActionsDefine_1.CommonActionInfo(),
-      t = ((h.Params = t), new Array()),
-      h = (t.push(h), new LevelGameplayActionsDefine_1.CommonInteractActions()),
+  AddClientInteractOption(t, i, e = "Option", r, n, s = 0, o, h) {
+    var a = new LevelGameplayActionsDefine_1.CommonActionInfo(),
+      t = ((a.Params = t), new Array()),
+      a = (t.push(a), new LevelGameplayActionsDefine_1.CommonInteractActions()),
       t =
-        ((h.Actions = t),
+        ((a.Actions = t),
         new LevelGameplayActionsDefine_1.CommonInteractOption());
     return (
-      (t.Type = h),
+      (t.Type = a),
       (t.Condition = i),
       (t.DoIntactType = e),
       r && (t.Range = r),
       n && (t.TidContent = n),
       o && (this.LocationOffset = o),
       this.prr
-        ? ((h = this.Orr(t, 3, void 0, s)),
-          this.prr.push(h),
+        ? ((a = this.Orr(t, 3, void 0, s)),
+          this.prr.push(a),
           this.Grr(),
-          h.InstanceId)
+          void 0 !== h && (this.IsPlayerTurnAround = h),
+          a.InstanceId)
         : -1
     );
   }
@@ -741,8 +755,8 @@ class PawnInteractController {
     this.frr?.Valid &&
       (WorldFunctionLibrary_1.default.GetEntityTypeByEntity(
         this.frr.Entity.Id,
-      ) === Protocol_1.Aki.Protocol.wks.Proto_Npc &&
-        this.frr.Entity.GetComponent(37)?.MoveToLocationLogic?.PushMoveInfo(),
+      ) === Protocol_1.Aki.Protocol.kks.Proto_Npc &&
+        this.frr.Entity.GetComponent(38)?.MoveToLocationLogic?.PushMoveInfo(),
       this.frr.SetInteractionState(!1, "发送交互请求"),
       InputDistributeController_1.InputDistributeController.RefreshInputTag()),
       this.OnInteractActionEnd && this.OnInteractActionEnd();
@@ -751,24 +765,26 @@ class PawnInteractController {
     this.frr?.Valid &&
       (this.frr.SetServerLockInteract(i, "Interaction Response"),
       this.frr.SetInteractionState(!0, "接收交互应答")),
-      t !== Protocol_1.Aki.Protocol.O4n.NRs
+      t !== Protocol_1.Aki.Protocol.Q4n.KRs
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Interaction", 37, "交互失败", ["errorCode", t]),
           this.frr.SetServerLockInteract(!1, "交互失败"),
-          t !== Protocol_1.Aki.Protocol.O4n.Proto_ErrSceneEntityNotExist &&
-            t !== Protocol_1.Aki.Protocol.O4n.Proto_ErrInteractRange &&
-            t !== Protocol_1.Aki.Protocol.O4n.Proto_ErrInteractCd &&
-            t !== Protocol_1.Aki.Protocol.O4n.Proto_ErrPreCondition &&
+          t !== Protocol_1.Aki.Protocol.Q4n.Proto_ErrSceneEntityNotExist &&
+            t !== Protocol_1.Aki.Protocol.Q4n.Proto_ErrInteractRange &&
+            t !== Protocol_1.Aki.Protocol.Q4n.Proto_ErrInteractCd &&
+            t !== Protocol_1.Aki.Protocol.Q4n.Proto_ErrPreCondition &&
             t !==
-              Protocol_1.Aki.Protocol.O4n.Proto_ErrInteractOptionGuidInvalid &&
+              Protocol_1.Aki.Protocol.Q4n.Proto_ErrInteractOptionGuidInvalid &&
+            t !==
+              Protocol_1.Aki.Protocol.Q4n.Proto_ErrInteractIsNotParticipant &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               t,
-              11211,
+              29153,
             ),
           !ModelManager_1.ModelManager.PlotModel.IsInPlot &&
             UiManager_1.UiManager.IsViewShow("PlotView") &&
             PlotController_1.PlotController.EndInteraction(!1, !0))
-        : ((i = this.Hte?.Entity?.GetComponent(127)) && i.CloseAllCollisions(),
+        : ((i = this.Hte?.Entity?.GetComponent(128)) && i.CloseAllCollisions(),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnInteractDropItemSuccess,
           ));

@@ -5,27 +5,41 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.secondaryUiPanelComponentsRegisterInfoB =
     exports.secondaryUiPanelComponentsRegisterInfoA =
     exports.ESecondaryPanel =
+    exports.MULTI_MAP_ICON_PATH =
+    exports.SUB_ICON_PATH =
+    exports.BLOCK_MARK_ICON_PATH =
+    exports.MULTI_MAP_SELECT_ICON_PATH =
       void 0);
 const UE = require("ue");
 var ESecondaryPanel;
-!(function (e) {
-  (e[(e.CustomMarkPanel = 0)] = "CustomMarkPanel"),
-    (e[(e.TeleportPanel = 1)] = "TeleportPanel"),
-    (e[(e.GeneralPanel = 2)] = "GeneralPanel"),
-    (e[(e.MarkMenuPanel = 3)] = "MarkMenuPanel"),
-    (e[(e.QuestPanel = 4)] = "QuestPanel"),
-    (e[(e.InstanceDungeonEntrancePanel = 5)] = "InstanceDungeonEntrancePanel"),
-    (e[(e.SceneGameplayPanel = 6)] = "SceneGameplayPanel"),
-    (e[(e.TowerEntrancePanel = 7)] = "TowerEntrancePanel"),
-    (e[(e.ParkourPanel = 8)] = "ParkourPanel"),
-    (e[(e.TemporaryTeleportPanel = 9)] = "TemporaryTeleportPanel"),
-    (e[(e.DetectorPanel = 10)] = "DetectorPanel"),
-    (e[(e.BoxPanel = 11)] = "BoxPanel"),
-    (e[(e.LordGymPanel = 12)] = "LordGymPanel"),
-    (e[(e.RoguelikePanel = 13)] = "RoguelikePanel");
-})(
-  (ESecondaryPanel = exports.ESecondaryPanel || (exports.ESecondaryPanel = {})),
-),
+(exports.MULTI_MAP_SELECT_ICON_PATH = "SP_MarkMultiMapSelect"),
+  (exports.BLOCK_MARK_ICON_PATH = "SP_MarkBlock"),
+  (exports.SUB_ICON_PATH = "SP_MarkRecommend"),
+  (exports.MULTI_MAP_ICON_PATH = "SP_MarkMultiMap"),
+  (function (e) {
+    (e[(e.CustomMarkPanel = 0)] = "CustomMarkPanel"),
+      (e[(e.TeleportPanel = 1)] = "TeleportPanel"),
+      (e[(e.GeneralPanel = 2)] = "GeneralPanel"),
+      (e[(e.MarkMenuPanel = 3)] = "MarkMenuPanel"),
+      (e[(e.QuestPanel = 4)] = "QuestPanel"),
+      (e[(e.SceneGameplayPanel = 5)] = "SceneGameplayPanel"),
+      (e[(e.InstanceDungeonEntrancePanel = 6)] =
+        "InstanceDungeonEntrancePanel"),
+      (e[(e.TowerEntrancePanel = 7)] = "TowerEntrancePanel"),
+      (e[(e.ParkourPanel = 8)] = "ParkourPanel"),
+      (e[(e.TemporaryTeleportPanel = 9)] = "TemporaryTeleportPanel"),
+      (e[(e.DetectorPanel = 10)] = "DetectorPanel"),
+      (e[(e.BoxPanel = 11)] = "BoxPanel"),
+      (e[(e.LordGymPanel = 12)] = "LordGymPanel"),
+      (e[(e.RoguelikePanel = 13)] = "RoguelikePanel"),
+      (e[(e.EnrichmentAreaPanel = 14)] = "EnrichmentAreaPanel"),
+      (e[(e.PunishReportPanel = 15)] = "PunishReportPanel"),
+      (e[(e.CorniceMeetingPanel = 16)] = "CorniceMeetingPanel"),
+      (e[(e.QuickNavigatePanel = 17)] = "QuickNavigatePanel");
+  })(
+    (ESecondaryPanel =
+      exports.ESecondaryPanel || (exports.ESecondaryPanel = {})),
+  ),
   (exports.secondaryUiPanelComponentsRegisterInfoA = [
     [0, UE.UISprite],
     [1, UE.UIText],
@@ -52,6 +66,18 @@ var ESecondaryPanel;
     [22, UE.UIItem],
     [23, UE.UISprite],
     [24, UE.UISprite],
+    [25, UE.UIItem],
+    [26, UE.UIItem],
+    [27, UE.UIItem],
+    [28, UE.UIButtonComponent],
+    [29, UE.UIButtonComponent],
+    [30, UE.UIText],
+    [31, UE.UIItem],
+    [32, UE.UIItem],
+    [33, UE.UIItem],
+    [34, UE.UISprite],
+    [35, UE.UIItem],
+    [36, UE.UIText],
   ]),
   (exports.secondaryUiPanelComponentsRegisterInfoB = [
     [0, UE.UISprite],
@@ -87,9 +113,9 @@ class MarkPriority2HierarchyIndexHelper {
       let r = -1;
       for (let e = 0; e < a; ++e) {
         var n = this.d3o[e],
-          i = n.Priority;
-        if (!(i < t)) {
-          if (i === t) {
+          E = n.Priority;
+        if (!(E < t)) {
+          if (E === t) {
             (o += n.MaxHierarchyIndex), ++n.MaxHierarchyIndex;
             break;
           }

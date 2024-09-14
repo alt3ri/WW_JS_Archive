@@ -26,6 +26,7 @@ class QuickRoleSelectViewData {
       (this.OnBack = void 0),
       (this.OnHideFinish = void 0),
       (this.OnRoleSelectFull = void 0),
+      (this.HideGrayIcon = !1),
       (this.UseWay = i),
       (this.SelectedRoleList = e),
       (this.RoleList = t);
@@ -41,7 +42,7 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
       (this.Vlo = void 0),
       (this.d5t = void 0),
       (this.C5t = void 0),
-      (this.uca = void 0),
+      (this.mCa = void 0),
       (this.qAt = () => {
         var e = ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap,
           t = new Array();
@@ -79,6 +80,7 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
         return (
           i.BindOnExtendToggleStateChanged(this.ToggleFunction),
           i.BindOnCanExecuteChange(this.CanExecuteChange),
+          i.SetHideGrayIcon(this.Pe.HideGrayIcon),
           i
         );
       }),
@@ -180,7 +182,7 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
       (this.d5t = TimerSystem_1.TimerSystem.Delay(() => {
         this.GetButton(4)?.RootUIComp.SetUIActive(!1),
           this.GetItem(13)?.SetUIActive(!0),
-          this.uca?.PlaySequence("Progressing");
+          this.mCa?.PlaySequence("Progressing");
       }, EditFormationDefine_1.DELAY_SHOW_LOADING))),
       this.C5t ||
         (this.C5t = TimerSystem_1.TimerSystem.Delay(() => {
@@ -194,7 +196,7 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
         this.GetItem(10).GetOwner(),
         this.cHe,
       )),
-      (this.uca = new UiSequencePlayer_1.UiSequencePlayer(this.GetItem(13)));
+      (this.mCa = new UiSequencePlayer_1.UiSequencePlayer(this.GetItem(13)));
   }
   OnBeforeDestroy() {
     this.Pe?.OnHideFinish?.(),

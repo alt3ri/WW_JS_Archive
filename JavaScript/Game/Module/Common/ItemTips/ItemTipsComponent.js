@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemTipsComponentContentComponent = exports.ItemTipsComponent =
     void 0);
 const UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
   GlobalData_1 = require("../../../GlobalData"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
@@ -28,10 +29,14 @@ class ItemTipsComponent extends UiPanelBase_1.UiPanelBase {
     this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem);
   }
   OnBeforeShow() {
-    this.PlayStartSequence();
+    this.bco();
   }
-  PlayStartSequence() {
+  bco() {
     this.SPe?.PlaySequencePurely("Start");
+  }
+  async PlayCloseSequence() {
+    var e = new CustomPromise_1.CustomPromise();
+    await this.SPe.PlaySequenceAsync("Close", e);
   }
   RefreshTipsComponentByType(e) {
     this.zz?.RefreshTipsComponentByType(e);

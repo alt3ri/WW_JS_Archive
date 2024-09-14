@@ -10,8 +10,10 @@ class GamePlayInformationGroup {
     return this.id();
   }
   get InfoGroup() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.infogroupLength(), (t) =>
-      this.infogroup(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.infogroupLength(),
+      this.infogroup,
+      this,
     );
   }
   get IconString() {

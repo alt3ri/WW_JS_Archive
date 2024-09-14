@@ -17,28 +17,42 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configTowerDifficultyByDifficulty.Init"),
+  getConfigStat = Stats_1.Stat.Create(
+    "configTowerDifficultyByDifficulty.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configTowerDifficultyByDifficulty.GetConfig(";
 exports.configTowerDifficultyByDifficulty = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
   GetConfig: (i, o = !0) => {
-    if (
-      (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${i})`),
+      f =
+        (t.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (f) {
       if (o) {
-        var f = KEY_PREFIX + `#${i})`;
-        const n = ConfigCommon_1.ConfigCommon.GetConfig(f);
-        if (n) return n;
+        var n = KEY_PREFIX + `#${i})`;
+        const e = ConfigCommon_1.ConfigCommon.GetConfig(n);
+        if (e)
+          return (
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
+          );
       }
       if (
-        (e =
+        (f =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, i, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
@@ -46,31 +60,36 @@ exports.configTowerDifficultyByDifficulty = {
               i,
             ]))
       ) {
-        var e,
-          f = void 0;
+        n = void 0;
         if (
-          (([e, f] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([f, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Difficulty", i],
           )),
-          e)
+          f)
         ) {
-          const n = TowerDifficulty_1.TowerDifficulty.getRootAsTowerDifficulty(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(f.buffer)),
+          const e = TowerDifficulty_1.TowerDifficulty.getRootAsTowerDifficulty(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(n.buffer)),
           );
           return (
             o &&
-              ((e = KEY_PREFIX + `#${i})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(e, n)),
+              ((f = KEY_PREFIX + `#${i})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(f, e)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            n
+            t.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            e
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    t.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=TowerDifficultyByDifficulty.js.map

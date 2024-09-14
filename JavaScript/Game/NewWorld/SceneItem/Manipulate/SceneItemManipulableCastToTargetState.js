@@ -102,8 +102,7 @@ class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastStat
       t.MultiplyEqual(this.SceneItem.Config.ThrowCfg.MotionConfig.Velocity),
       this.SceneItem.ActorComp.GetPrimitiveComponent().SetPhysicsLinearVelocity(
         t.ToUeVector(),
-      ),
-      (this.SceneItem.CurrentState = this.SceneItem.ResetState));
+      ));
   }
 }
 exports.SceneItemManipulableCastToTargetState =

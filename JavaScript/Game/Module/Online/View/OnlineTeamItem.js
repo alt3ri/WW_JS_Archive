@@ -25,7 +25,7 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.gOi = () => {
         FriendController_1.FriendController.RequestFriendApplyAddSend(
           this.dOi.PlayerId,
-          Protocol_1.Aki.Protocol.S5s.Proto_RecentlyTeam,
+          Protocol_1.Aki.Protocol.D6s.Proto_RecentlyTeam,
         ),
           (this.COi = !0);
       }),
@@ -165,7 +165,7 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
           ? (l.SetUIActive(!0), this.SetSpriteByPath(s, l, !1))
           : l.SetUIActive(!1),
         this.pOi(e.PingState),
-        e.PlayerDetails.CSs);
+        e.PlayerDetails.ESs);
     0 < s &&
       ((l = BackgroundCardById_1.configBackgroundCardById.GetConfig(s)),
       this.SetTextureByPath(l.LongCardPath, this.GetTexture(21)));
@@ -174,25 +174,25 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
     var i,
       r = this.GetSprite(19);
     r.SetUIActive(!0),
-      e === Protocol_1.Aki.Protocol.Y8s.Proto_UNKNOWN
+      e === Protocol_1.Aki.Protocol.r7s.Proto_UNKNOWN
         ? ((i =
             ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
               "SP_SignalUnknown",
             )),
           this.SetSpriteByPath(i, r, !1))
-        : e === Protocol_1.Aki.Protocol.Y8s.Proto_GREAT
+        : e === Protocol_1.Aki.Protocol.r7s.Proto_GREAT
           ? ((i =
               ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
                 "SP_SignalGreat",
               )),
             this.SetSpriteByPath(i, r, !1))
-          : e === Protocol_1.Aki.Protocol.Y8s.Proto_GOOD
+          : e === Protocol_1.Aki.Protocol.r7s.Proto_GOOD
             ? ((i =
                 ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
                   "SP_SignalGood",
                 )),
               this.SetSpriteByPath(i, r, !1))
-            : e === Protocol_1.Aki.Protocol.Y8s.Proto_POOR &&
+            : e === Protocol_1.Aki.Protocol.r7s.Proto_POOR &&
               ((i =
                 ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
                   "SP_SignalPoor",

@@ -33,9 +33,9 @@ class GroupSkillCdInfo {
       (this.CurRemainingDelayCd = -0),
       (this.CurDelaySkillId = 0),
       (this.CurDelaySkillCd = 0),
-      (this.$zo = void 0),
+      (this.sDe = void 0),
       (this.CdTags = []),
-      (this.Uqn = []);
+      (this.Oqn = []);
   }
   IsInCd() {
     return 0 < this.CurRemainingCd;
@@ -47,14 +47,14 @@ class GroupSkillCdInfo {
     return 0 < this.CurRemainingDelayCd;
   }
   StartCd(t, i, s, h, e) {
-    this.$zo = s;
+    this.sDe = s;
     s = this.SkillCdInfoMap.get(t);
     return (
       !!s &&
       !(
         this.RemainingCount <= 0 ||
         ((i =
-          i.GetCurrentValue(Protocol_1.Aki.Protocol.Bks.Proto_CdReduse) /
+          i.GetCurrentValue(Protocol_1.Aki.Protocol.Vks.Proto_CdReduse) /
           DEFAULT_PROPORTTION_VALUE),
         (h = h.CalcExtraEffectCd(s.SkillCd, t, e) * i),
         this.IsInDelay()
@@ -189,14 +189,17 @@ class GroupSkillCdInfo {
           ));
   }
   OnCountChanged() {
-    var t;
-    this.RemainingCount <= 0
-      ? ((t = this.$zo.AddTagWithReturnHandle(this.CdTags)), this.Uqn.push(t))
-      : (this.Uqn.forEach((t) => {
-          this.$zo.RemoveBuffByHandle(t, -1, "技能CD结束移除");
-        }),
-        (this.Uqn.length = 0)),
-      this.iQe();
+    if (this.sDe?.Valid) {
+      const i = this.sDe.Entity.GetComponent(160);
+      var t;
+      this.RemainingCount <= 0
+        ? ((t = i.AddTagWithReturnHandle(this.CdTags)), this.Oqn.push(t))
+        : (this.Oqn.forEach((t) => {
+            i.RemoveBuffByHandle(t, -1, "技能CD结束移除");
+          }),
+          (this.Oqn.length = 0));
+    }
+    this.iQe();
   }
   iQe() {
     Log_1.Log.CheckDebug() &&

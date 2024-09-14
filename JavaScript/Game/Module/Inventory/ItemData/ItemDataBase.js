@@ -36,6 +36,10 @@ class ItemDataBase {
     var t = this.GetItemTypeConfig();
     return !!t && t.Lock;
   }
+  CanDeprecate() {
+    var t = this.GetItemTypeConfig();
+    return !!t && t.Deprecate;
+  }
   GetQualityConfig() {
     var t = this.GetQuality();
     return ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityConfig(
@@ -43,6 +47,9 @@ class ItemDataBase {
     );
   }
   GetIsLock() {
+    return !1;
+  }
+  GetIsDeprecated() {
     return !1;
   }
 }

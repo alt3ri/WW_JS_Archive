@@ -24,18 +24,21 @@ class UpRoleGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
     if (this.GachaViewInfo) {
       var e = this.GachaViewInfo.ShowIdList[0];
       this.mWt.Update(e, 6 !== this.GachaType);
-      const t = this.GetTexture(0);
-      this.SetTextureByPath(
-        this.GachaViewInfo.ContentTexturePath,
-        t,
-        void 0,
-        () => {
-          t.SetSizeFromTexture();
-        },
-      );
-      e = UE.Color.FromHex(this.GachaViewInfo.ThemeColor);
-      this.GetTexture(3).SetColor(e);
-      const s = this.GetTexture(2);
+      const t = this.GetTexture(0),
+        s =
+          (this.SetTextureByPath(
+            this.GachaViewInfo.ContentTexturePath,
+            t,
+            void 0,
+            () => {
+              t.SetSizeFromTexture();
+            },
+          ),
+          this.SetTextureByPath(
+            this.GachaViewInfo.TextTexture,
+            this.GetTexture(3),
+          ),
+          this.GetTexture(2));
       this.SetTextureByPath(
         this.GachaViewInfo.ContentTextureBgPath,
         s,

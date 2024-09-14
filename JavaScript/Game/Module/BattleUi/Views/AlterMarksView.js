@@ -26,7 +26,7 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
       (this.Q$e = new Map()),
       (this.X$e = new Map()),
       (this.$$e = new Map()),
-      (this.m2n = new Map()),
+      (this.E2n = new Map()),
       (this.Y$e = new Map()),
       (this.J$e = !1),
       (this.z$e = 0),
@@ -74,19 +74,20 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
             SneakController_1.SneakController.IsSneaking ||
             this.SetActive(!1));
       }),
-      (this.d2n = (t, e) => {
-        this.m2n.has(t) ||
+      (this.y2n = (t, e, i) => {
+        this.E2n.has(t) ||
           ((e = new EavesdropMark_1.EavesdropMark(e, t)).Initialize(
             UiLayer_1.UiLayer.WorldSpaceUiRootItem,
+            i,
           ),
-          this.m2n.set(t, e));
+          this.E2n.set(t, e));
       }),
-      (this.C2n = (t) => {
-        var e = this.m2n.get(t);
-        e && (e.Destroy(), this.m2n.delete(t));
+      (this.I2n = (t) => {
+        var e = this.E2n.get(t);
+        e && (e.Destroy(), this.E2n.delete(t));
       }),
-      (this.g2n = (t) => {
-        for (var [e, i] of this.m2n)
+      (this.T2n = (t) => {
+        for (var [e, i] of this.E2n)
           e === t ? i.PlayFoundSeq() : i.PlayEndSeq();
       }),
       (this._Ye = (t, e) => {
@@ -141,7 +142,7 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
                   this.pYe,
                 ));
             for (const s of this.rYe.Entity.CheckGetComponent(
-              160,
+              161,
             ).GetAggroSet()) {
               var i =
                 ModelManager_1.ModelManager.CreatureModel.GetEntityById(
@@ -190,7 +191,7 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
     super.Initialize(t),
       this.cYe(),
       this.EYe(),
-      this.f2n(),
+      this.L2n(),
       this.ProcessPendingMarkInfo(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiCurRoleDataChanged,
@@ -243,7 +244,7 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
     super.Reset(),
       this.uYe(),
       this.yYe(),
-      this.p2n(),
+      this.D2n(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiCurRoleDataChanged,
         this.xie,
@@ -284,7 +285,7 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
     this.IYe();
     for (var [, e] of this.Q$e) e.Update();
     for (var [, i] of this.X$e) i.Update();
-    for (var [, s] of this.m2n) s.Update();
+    for (var [, s] of this.E2n) s.Update();
     for (var [, h] of this.$$e) h.CheckShowUiCondition() && h.Update();
     this.J$e &&
       ((this.eYe =
@@ -313,32 +314,32 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
   mYe() {
     this.J$e && ((this.J$e = !1), this.iYe.SetUiActive(this.J$e));
   }
-  f2n() {
+  L2n() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.AddEavesdropMark,
-      this.d2n,
+      this.y2n,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RemoveEavesdropMark,
-        this.C2n,
+        this.I2n,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnEavesdropFound,
-        this.g2n,
+        this.T2n,
       );
   }
-  p2n() {
+  D2n() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.AddEavesdropMark,
-      this.d2n,
+      this.y2n,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RemoveEavesdropMark,
-        this.C2n,
+        this.I2n,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnEavesdropFound,
-        this.g2n,
+        this.T2n,
       );
   }
   EYe() {
@@ -421,14 +422,14 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
     if (
       0 !== ModelManager_1.ModelManager.AlertMarkModel.PendingMarkInfos.size
     ) {
-      for (var [t, [e, i]] of ModelManager_1.ModelManager.AlertMarkModel
+      for (var [t, [e, i, s]] of ModelManager_1.ModelManager.AlertMarkModel
         .PendingMarkInfos)
         switch (i) {
           case 2:
             this.hYe(t, e);
             break;
           case 3:
-            this.d2n(t, e);
+            this.y2n(t, e, s);
         }
       ModelManager_1.ModelManager.AlertMarkModel?.PendingMarkInfos.clear();
     }
@@ -437,5 +438,7 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
     SneakController_1.SneakController.IsSneaking && this.SetActive(t);
   }
 }
-(exports.AlterMarksView = AlterMarksView).SYe = void 0;
+(exports.AlterMarksView = AlterMarksView).SYe = Stats_1.Stat.Create(
+  "[AlterMarksView]ListenTag",
+);
 //# sourceMappingURL=AlterMarksView.js.map

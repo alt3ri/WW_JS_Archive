@@ -12,14 +12,14 @@ class MarkSelectComponent extends UiPanelBase_1.UiPanelBase {
     this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem);
   }
   SetActive(e) {
-    this.laa(e);
+    this._1a(e);
   }
-  async laa(e) {
+  async _1a(e) {
     return (
       this.mRi !== e &&
         ((this.mRi = e),
         this.mRi
-          ? (this.RootItem.SetUIActive(e),
+          ? (this.RootItem.SetUIActive(this.mRi),
             await this.SPe.PlaySequenceAsync(
               "xuanzhong",
               new CustomPromise_1.CustomPromise(),
@@ -28,7 +28,7 @@ class MarkSelectComponent extends UiPanelBase_1.UiPanelBase {
               "Close",
               new CustomPromise_1.CustomPromise(),
             ),
-            this.RootItem.SetUIActive(e))),
+            this.RootItem.SetUIActive(this.mRi))),
       !0
     );
   }

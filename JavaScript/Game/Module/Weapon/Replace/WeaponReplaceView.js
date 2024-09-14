@@ -70,6 +70,7 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
         this.LoopScrollView.DeselectCurrentGridProxy(!0),
           this.LoopScrollView.ReloadProxyData(this.lko, e.length, !1),
           e.length <= 0 ||
+            this.IsShow ||
             (this.LoopScrollView.ScrollToGridIndex(0),
             this.LoopScrollView.SelectGridProxy(0, !0),
             (e = e[0]),
@@ -88,7 +89,7 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
             this.RoleDataId,
           ),
           r = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(e);
-        const o = i.GetRoleId();
+        const s = i.GetRoleId();
         r.HasRole()
           ? ((i = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponName(
               r.GetWeaponConfig().WeaponName,
@@ -102,7 +103,7 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
             ),
             t.FunctionMap.set(2, () => {
               WeaponController_1.WeaponController.SendPbEquipTakeOnRequest(
-                o,
+                s,
                 WeaponDefine_1.WEAPON_EQUIPTYPE,
                 e,
               );
@@ -111,7 +112,7 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
               t,
             ))
           : WeaponController_1.WeaponController.SendPbEquipTakeOnRequest(
-              o,
+              s,
               WeaponDefine_1.WEAPON_EQUIPTYPE,
               e,
             );

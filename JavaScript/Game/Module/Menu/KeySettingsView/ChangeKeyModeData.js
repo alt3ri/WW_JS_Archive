@@ -6,16 +6,16 @@ class ChangeKeyModeData {
   constructor(e) {
     (this.TitleName = void 0),
       (this.DefaultGroupIndex = 0),
-      (this.Hzs = []),
+      (this.Qea = []),
       (this.TitleName = e.TitleName),
       (this.DefaultGroupIndex = e.DefaultGroupIndex);
     for (const o of e.ChangeKeyModeGroupList) {
       var t = new ChangeKeyModeGroupData_1.ChangeKeyModeGroupData(o);
-      this.Hzs.push(t);
+      this.Qea.push(t);
     }
   }
   GetChangeKeyModeGroupDataList() {
-    return this.Hzs;
+    return this.Qea;
   }
   GetMaxGroupIndex() {
     return this.GetChangeKeyModeGroupDataList().length - 1;

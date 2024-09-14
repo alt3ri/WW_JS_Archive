@@ -113,6 +113,19 @@ class CommonConfig extends ConfigBase_1.ConfigBase {
       "BlockOnIosCheckServer",
     );
   }
+  GetKoShopRuleUrl() {
+    return CommonParamById_1.configCommonParamById.GetStringConfig(
+      "KoShopRuleUrl",
+    );
+  }
+  GetReviewCd() {
+    return CommonParamById_1.configCommonParamById.GetIntConfig("ReviewCd");
+  }
+  OpenReviewDelay() {
+    return CommonParamById_1.configCommonParamById.GetIntConfig(
+      "OpenReviewDelay",
+    );
+  }
 }
 exports.CommonConfig = CommonConfig;
 //# sourceMappingURL=CommonConfig.js.map

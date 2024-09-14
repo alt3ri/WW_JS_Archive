@@ -35,11 +35,11 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
       (this._8e = void 0),
       (this.u8e = 0),
       (this.t5e = 0),
-      (this.bWs = 1),
+      (this.UKs = 1),
       (this.c8e = (e) => new OneTextTitleItem_1.OneTextTitleItem(e)),
       (this.m8e = (e) => new OneTextDropDownItem_1.OneTextDropDownItem(e)),
       (this.d8e = (e) => {
-        (this.bWs = e),
+        (this.UKs = e),
           (ModelManager_1.ModelManager.AdventureGuideModel.CurrentShowLevel =
             e),
           EventSystem_1.EventSystem.Emit(
@@ -132,7 +132,7 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
             (this.t5e = t.HelpGroupId),
             this.RefreshDungeonType(),
             this.p8e(),
-            r && this.d8e(this.bWs),
+            r && this.d8e(this.UKs),
             this._8e?.GetCurrentSequence()
               ? this._8e?.ReplaySequenceByKey("Switch")
               : this._8e?.PlayLevelSequenceByName("Switch"),
@@ -172,7 +172,7 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
     )
       r.push(e);
     (this.u8e = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel - 1),
-      (this.bWs = this.u8e),
+      (this.UKs = this.u8e),
       this.h8e.SetOnSelectCall(this.C8e),
       this.h8e.SetShowType(0),
       this.h8e.InitScroll(r, this.g8e, this.u8e);

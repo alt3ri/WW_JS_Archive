@@ -148,7 +148,7 @@ class GuaranteeController extends ControllerBase_1.ControllerBase {
             (e = l?.TreeId));
           break;
         case 6:
-          (n.BtType !== Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest || a) &&
+          (n.BtType !== Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest || a) &&
             (e = n.TreeIncId);
       }
       e &&

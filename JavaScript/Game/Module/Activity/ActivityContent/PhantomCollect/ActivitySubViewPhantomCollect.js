@@ -146,7 +146,7 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
       (this.ItemId = void 0),
       (this.OnBtnGo = () => {
         if (
-          this.Data?.Z4n === Protocol_1.Aki.Protocol.hks.Proto_PhantomSideQuest
+          this.Data?.h5n === Protocol_1.Aki.Protocol.Cks.Proto_PhantomSideQuest
         ) {
           var e =
             ConfigManager_1.ConfigManager.ActivityPhantomCollectConfig?.GetPhantomCollectConfig(
@@ -176,8 +176,22 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
             "PhantomSideQuestNoTask",
           );
         } else
-          this.Data?.Z4n === Protocol_1.Aki.Protocol.hks.Proto_DataDock &&
+          this.Data?.h5n === Protocol_1.Aki.Protocol.Cks.Proto_DataDock &&
             UiManager_1.UiManager.OpenView("CalabashRootView");
+      }),
+      (this.OnClickReward = () => {
+        this.Data.Y4n === Protocol_1.Aki.Protocol.zps.CMs &&
+          ActivityPhantomCollectController_1.ActivityPhantomCollectController.PhantomCollectRewardReceiveRequest(
+            this.Data.h5n,
+          ).then((t) => {
+            t
+              ? ((this.Data = t), this.Refresh(this.Data, !1, this.GridIndex))
+              : Log_1.Log.CheckError() &&
+                Log_1.Log.Error("Activity", 35, "声骸收集活动领取奖励失败", [
+                  "Type",
+                  this.Data.h5n,
+                ]);
+          });
       });
   }
   OnRegisterComponent() {
@@ -190,33 +204,23 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
       [5, UE.UISprite],
       [6, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[4, this.OnBtnGo]]);
+      (this.BtnBindInfo = [
+        [4, this.OnBtnGo],
+        [0, this.OnClickReward],
+      ]);
   }
   OnStart() {
     (this.RewardItem = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
       this.RewardItem.Initialize(this.GetItem(1).GetOwner()),
       this.RewardItem.BindOnExtendTogglePress((t) => {
-        switch (this.Data.F4n) {
-          case Protocol_1.Aki.Protocol.jps.Jfs:
-          case Protocol_1.Aki.Protocol.jps.j6n:
+        switch (this.Data.Y4n) {
+          case Protocol_1.Aki.Protocol.zps.ovs:
+          case Protocol_1.Aki.Protocol.zps.Z6n:
             this.ItemId &&
-              (ItemController_1.ItemController.OpenItemTipsByItemId(
-                this.ItemId,
-              ),
-              this.RewardItem.SetLockVisible(!0));
+              ItemController_1.ItemController.OpenItemTipsByItemId(this.ItemId);
             break;
-          case Protocol_1.Aki.Protocol.jps.hMs:
-            ActivityPhantomCollectController_1.ActivityPhantomCollectController.PhantomCollectRewardReceiveRequest(
-              this.Data.Z4n,
-            ).then((t) => {
-              t
-                ? ((this.Data = t), this.Refresh(this.Data, !1, this.GridIndex))
-                : Log_1.Log.CheckError() &&
-                  Log_1.Log.Error("Activity", 35, "声骸收集活动领取奖励失败", [
-                    "Type",
-                    this.Data.Z4n,
-                  ]);
-            });
+          case Protocol_1.Aki.Protocol.zps.CMs:
+            this.OnClickReward();
         }
       });
   }
@@ -236,91 +240,94 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
         ]);
     else {
       let t = 0;
-      e.Z4n === Protocol_1.Aki.Protocol.hks.Proto_PhantomsCollect
+      e.h5n === Protocol_1.Aki.Protocol.Cks.Proto_PhantomsCollect
         ? (t = o.PhantomReward)
-        : e.Z4n === Protocol_1.Aki.Protocol.hks.Proto_DataDock
+        : e.h5n === Protocol_1.Aki.Protocol.Cks.Proto_DataDock
           ? (t = o.DataDockReward)
-          : e.Z4n === Protocol_1.Aki.Protocol.hks.Proto_PhantomSideQuest &&
+          : e.h5n === Protocol_1.Aki.Protocol.Cks.Proto_PhantomSideQuest &&
             (t = o.PhantomSideQuestReward),
         0 !== t &&
-          ((s =
+          ((l =
             ConfigManager_1.ConfigManager.RewardConfig?.GetDropPackagePreview(
               t,
             )),
-          (r = [{ IncId: 0, ItemId: (s = Array.from(s))[0][0] }, s[0][1]]),
-          (this.ItemId = s[0][0]),
+          (r = [{ IncId: 0, ItemId: (l = Array.from(l))[0][0] }, l[0][1]]),
+          (this.ItemId = l[0][0]),
           this.RewardItem.Refresh(r),
           this.RewardItem.SetReceivedVisible(
-            e.F4n === Protocol_1.Aki.Protocol.jps.Jfs,
+            e.Y4n === Protocol_1.Aki.Protocol.zps.ovs,
           ),
           this.RewardItem.SetLockVisible(
-            e.F4n === Protocol_1.Aki.Protocol.jps.j6n,
+            e.Y4n === Protocol_1.Aki.Protocol.zps.Z6n,
           ),
           this.RewardItem.SetReceivableVisible(
-            e.F4n === Protocol_1.Aki.Protocol.jps.hMs,
+            e.Y4n === Protocol_1.Aki.Protocol.zps.CMs,
           )),
-        e.F4n === Protocol_1.Aki.Protocol.jps.Jfs
-          ? ((s = UE.Color.FromHex("394449FF")),
-            this.GetSprite(5).SetColor(s),
-            this.GetText(2)?.SetColor(s),
+        e.Y4n === Protocol_1.Aki.Protocol.zps.ovs
+          ? ((l = UE.Color.FromHex("394449FF")),
+            this.GetSprite(5).SetColor(l),
+            this.GetText(2)?.SetColor(l),
             this.GetButton(0)?.SetSelfInteractive(!1),
             this.GetItem(6).SetUIActive(!0))
-          : e.F4n === Protocol_1.Aki.Protocol.jps.j6n
+          : e.Y4n === Protocol_1.Aki.Protocol.zps.Z6n
             ? ((r = UE.Color.FromHex("394449FF")),
               this.GetSprite(5).SetColor(r),
               this.GetText(2)?.SetColor(r),
               this.GetButton(0)?.SetSelfInteractive(!0),
               this.GetItem(6).SetUIActive(!1))
-            : e.F4n === Protocol_1.Aki.Protocol.jps.hMs &&
-              ((s = UE.Color.FromHex("A28129FF")),
-              this.GetSprite(5).SetColor(s),
-              this.GetText(2)?.SetColor(s),
+            : e.Y4n === Protocol_1.Aki.Protocol.zps.CMs &&
+              ((l = UE.Color.FromHex("A28129FF")),
+              this.GetSprite(5).SetColor(l),
+              this.GetText(2)?.SetColor(l),
               this.GetButton(0)?.SetSelfInteractive(!0),
               this.GetItem(6).SetUIActive(!1));
       var r =
           ConfigManager_1.ConfigManager.ActivityPhantomCollectConfig.GetPhantomCollectTaskDesc(
-            e.Z4n,
+            e.h5n,
           ),
-        s =
+        l =
           ActivityPhantomCollectController_1.ActivityPhantomCollectController.GetCurrentActivityDataById();
       if (
         (LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(2),
           r.Title,
-          s.GetCollectPhantomCount(),
-          s.GetCollectPhantomList().length,
+          l.GetCollectPhantomCount(),
+          l.GetCollectPhantomList().length,
         ),
-        e.Z4n === Protocol_1.Aki.Protocol.hks.Proto_PhantomsCollect)
+        e.h5n === Protocol_1.Aki.Protocol.Cks.Proto_PhantomsCollect)
       ) {
-        const l = [],
-          n = [],
-          a = MathUtils_1.MathUtils.LargeNumber;
-        o.Phantoms.forEach((t) => {
-          var e;
-          ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomIsUnlock(t)
-            ? ((e =
-                ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-                  t,
-                )),
-              a > e?.GetQuality()
-                ? ((n.length = 0), n.push(t))
-                : a === e?.GetQuality() && n.push(t))
-            : l.push(t);
+        const n = [],
+          a = [];
+        let s = MathUtils_1.MathUtils.LargeNumber;
+        o.Phantoms.forEach((e) => {
+          if (
+            ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomIsUnlock(e)
+          ) {
+            var i = [];
+            let t = 0;
+            for (const r of ModelManager_1.ModelManager.CalabashModel.GetCalabashDevelopRewardInfoData(
+              e,
+            )) {
+              var o = r.IsUnlock;
+              i.push(o), o && t++;
+            }
+            s > t ? ((a.length = 0), a.push(e), (s = t)) : s === t && a.push(e);
+          } else n.push(e);
         });
-        s =
-          0 < l.length
-            ? Math.floor(Math.random() * l.length)
-            : Math.floor(Math.random() * n.length);
+        l =
+          0 < n.length
+            ? Math.floor(Math.random() * n.length)
+            : Math.floor(Math.random() * a.length);
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(3),
-          0 < l.length ? o.PhantomDesc.get(l[s]) : o.PhantomDesc.get(n[s]),
+          0 < n.length ? o.PhantomDesc.get(n[l]) : o.PhantomDesc.get(a[l]),
         );
       } else LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), r.Desc);
       this.GetButton(4)
         .GetRootComponent()
         .SetUIActive(
-          e.Z4n !== Protocol_1.Aki.Protocol.hks.Proto_PhantomsCollect &&
-            e.F4n !== Protocol_1.Aki.Protocol.jps.Jfs,
+          e.h5n !== Protocol_1.Aki.Protocol.Cks.Proto_PhantomsCollect &&
+            e.Y4n === Protocol_1.Aki.Protocol.zps.Z6n,
         );
     }
   }

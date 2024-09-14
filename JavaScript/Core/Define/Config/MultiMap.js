@@ -19,24 +19,31 @@ class MultiMap {
     return this.floor();
   }
   get MapTilePath() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.maptilepathLength(), (t) =>
-      this.maptilepath(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.maptilepathLength(),
+      this.maptilepath,
+      this,
     );
   }
   get MiniMapTilePath() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.minimaptilepathLength(),
-      (t) => this.minimaptilepath(t),
+      this.minimaptilepath,
+      this,
     );
   }
   get Area() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.areaLength(), (t) =>
-      this.area(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.areaLength(),
+      this.area,
+      this,
     );
   }
   get Mark() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.markLength(), (t) =>
-      this.mark(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.markLength(),
+      this.mark,
+      this,
     );
   }
   get ConditionId() {

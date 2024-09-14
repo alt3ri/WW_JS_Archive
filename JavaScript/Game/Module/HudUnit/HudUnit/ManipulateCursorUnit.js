@@ -68,8 +68,7 @@ class ManipulateCursorUnit extends HudUnitBase_1.HudUnitBase {
           this.Zti.SetUIActive(!1))
         : (i = this.GetItem(13)) &&
           ((this.Qtt = new CombineKeyItem_1.CombineKeyItem()),
-          await this.Qtt.CreateByActorAsync(i.GetOwner()),
-          this.RefreshKeyVisible(),
+          await this.Qtt.CreateThenShowByActorAsync(i.GetOwner()),
           this.SetKeyAction(InputMappingsDefine_1.actionMappings.幻象1)),
       this.Qnt(),
       this.Appear(),
@@ -108,12 +107,6 @@ class ManipulateCursorUnit extends HudUnitBase_1.HudUnitBase {
   }
   SetKeyAction(i) {
     this.Qtt?.RefreshAction(i);
-  }
-  RefreshKeyVisible() {
-    this.Qtt &&
-      (2 !== Info_1.Info.OperationType
-        ? this.Qtt.SetActive(!1)
-        : this.Qtt.SetActive(!0));
   }
   StartProcess(i) {
     this.mct?.SetUIActive(!0),

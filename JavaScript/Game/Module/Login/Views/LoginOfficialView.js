@@ -7,6 +7,7 @@ const UE = require("ue"),
   MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
   BaseConfigController_1 = require("../../../../Launcher/BaseConfig/BaseConfigController"),
   HotPatchLogReport_1 = require("../../../../Launcher/HotPatchLogReport"),
+  Platform_1 = require("../../../../Launcher/Platform/Platform"),
   PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   PakKeyUpdate_1 = require("../../../../Launcher/Update/PakKeyUpdate"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
@@ -33,42 +34,70 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.VEi = !1),
       (this.HEi = () => {
-        this.VEi
-          ? !ModelManager_1.ModelManager.LoginModel.IsSdkLoggedIn() &&
-            ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
-            ? LoginController_1.LoginController.ReOpenSdkLoginView()
-            : (Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Login", 17, "LoginProcedure-获取完整Pak包"),
-              PakKeyUpdate_1.PakKeyUpdate.CheckPakKey(
-                () => {
-                  UE.KuroPakKeyLibrary.HasPendingEncryptedPaks()
-                    ? (Log_1.Log.CheckWarn() &&
-                        Log_1.Log.Warn("Login", 22, "存在未成功挂载的Pak包！"),
-                      LoginController_1.LoginController.GetAndShowStopServerNotice())
-                    : (KuroSdkReport_1.KuroSdkReport.Report(
-                        new KuroSdkReport_1.SdkReportClickEnterGame(void 0),
-                      ),
-                      HotPatchLogReport_1.HotPatchLogReport.ReportLogin(
-                        HotPatchLogReport_1.LoginLogEventDefine.EnterGame,
-                        "enter_game_start",
-                      ),
-                      LoginController_1.LoginController.GetHttp(!1, !1));
-                },
-                () => {
-                  var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(33),
-                    r =
-                      ConfigManager_1.ConfigManager.TextConfig.GetTextById(
-                        "NoNetwork",
+        if (this.VEi)
+          if (ModelManager_1.ModelManager.LoginModel.IsSdkLoggingIn())
+            Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info(
+                "Login",
+                17,
+                "LoginProcedure-点击登录按钮-重复点击SDK登录",
+              );
+          else {
+            if (ModelManager_1.ModelManager.LoginModel.IsSdkLogout()) {
+              if (
+                ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
+              )
+                return void LoginController_1.LoginController.ReOpenSdkLoginView();
+              if (PlatformSdkManagerNew_1.PlatformSdkManagerNew.IsSdkOn)
+                return void LoginController_1.LoginController.SdkLoginNew();
+            }
+            ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
+              LoginDefine_1.ELoginStatus.Init,
+            )
+              ? (Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info("Login", 17, "LoginProcedure-点击登录按钮"),
+                PakKeyUpdate_1.PakKeyUpdate.CheckPakKey(
+                  () => {
+                    UE.KuroPakKeyLibrary.HasPendingEncryptedPaks()
+                      ? (Log_1.Log.CheckWarn() &&
+                          Log_1.Log.Warn(
+                            "Login",
+                            22,
+                            "存在未成功挂载的Pak包！",
+                          ),
+                        LoginController_1.LoginController.GetAndShowStopServerNotice())
+                      : (KuroSdkReport_1.KuroSdkReport.Report(
+                          new KuroSdkReport_1.SdkReportClickEnterGame(void 0),
+                        ),
+                        HotPatchLogReport_1.HotPatchLogReport.ReportLogin(
+                          HotPatchLogReport_1.LoginLogEventDefine.EnterGame,
+                          "enter_game_start",
+                        ),
+                        LoginController_1.LoginController.GetHttp(!1, !1));
+                  },
+                  () => {
+                    var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(33),
+                      r =
+                        ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+                          "NoNetwork",
+                        );
+                    e.SetTextArgs(r),
+                      ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+                        e,
                       );
-                  e.SetTextArgs(r),
-                    ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                      e,
-                    );
-                },
-              ).catch((e) => {}))
-          : ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
-              "AgreementTips",
-            );
+                  },
+                ).catch((e) => {}))
+              : Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info(
+                  "Login",
+                  17,
+                  "LoginProcedure-点击登录按钮-重复点击",
+                );
+          }
+        else
+          ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
+            "AgreementTips",
+          );
       }),
       (this.jEi = () => {
         var e;
@@ -229,7 +258,7 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Login", 17, "LoginProcedure-SdkLogin-登录成功"),
             this.SetUiActive(!1),
-            "Windows" !== UE.GameplayStatics.GetPlatformName() &&
+            Platform_1.Platform.IsWindowsPlatform() ||
               UE.KismetSystemLibrary.ExecuteConsoleCommand(
                 GlobalData_1.GlobalData.World,
                 "r.DepthOfFieldQuality 1",
@@ -243,6 +272,8 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
             this.rSi(),
             this.GetButton(14).RootUIComp.SetUIActive(!1))
           : (this.iSi(!1),
+            (ModelManager_1.ModelManager.LoginModel.PlayStationGameAutoLoginId =
+              "-1"),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Login",
@@ -252,6 +283,15 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
       }),
       (this.nSi = () => {
         this.sSi();
+      }),
+      (this.l3a = () => {
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Login",
+            5,
+            "PS5 PlaySession 直接启动 - 模拟点击登录按钮 事件触发",
+          ),
+          this.HEi();
       }),
       (this.aSi = () => {}),
       (this.WEi = () => {
@@ -348,13 +388,15 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
       this.dSi(),
       this.CSi(),
       this.gSi(),
-      this.FCa(),
-      this.VCa();
+      this.qfa(),
+      this.Ofa();
   }
-  FCa() {
+  qfa() {
     var e;
-    ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
-      ? ((e = UE.KuroSDKManager.GetPackageId()),
+    ControllerHolder_1.ControllerHolder.LoginController.IsSdkLoginMode()
+      ? ((e = PlatformSdkManagerNew_1.PlatformSdkManagerNew.IsSdkOn
+          ? PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetProductId()
+          : UE.KuroSDKManager.GetPackageId()),
         (e =
           !ConfigManager_1.ConfigManager.LoginConfig.GetLoginViewNoExitButtonPackageIdList().includes(
             e,
@@ -362,14 +404,15 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
         this.GetButton(12).RootUIComp.SetUIActive(e))
       : this.GetButton(12).RootUIComp.SetUIActive(!0);
   }
-  VCa() {
-    var e;
-    ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
-      ? ((e = UE.KuroSDKManager.GetPackageId()),
-        (e =
-          !ConfigManager_1.ConfigManager.LoginConfig.GetLoginViewNoAccountButtonPackageIdList().includes(
-            e,
-          )),
+  Ofa(e = !1) {
+    var r, o;
+    ControllerHolder_1.ControllerHolder.LoginController.IsSdkLoginMode()
+      ? ((r = PlatformSdkManagerNew_1.PlatformSdkManagerNew.IsSdkOn
+          ? PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetProductId()
+          : UE.KuroSDKManager.GetPackageId()),
+        (o =
+          ConfigManager_1.ConfigManager.LoginConfig.GetLoginViewNoAccountButtonPackageIdList()),
+        (e = e && !o.includes(r)),
         this.GetButton(1).RootUIComp.SetUIActive(e))
       : this.GetButton(1).RootUIComp.SetUIActive(!0);
   }
@@ -400,6 +443,10 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnConfirmServerItem,
         this.nSi,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.PlayStationJoinSessionEvent,
+        this.l3a,
       );
   }
   OnRemoveEventListener() {
@@ -422,6 +469,10 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnConfirmServerItem,
         this.nSi,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.PlayStationJoinSessionEvent,
+        this.l3a,
       );
   }
   OnAfterShow() {
@@ -435,13 +486,28 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
               Log_1.Log.Info("Login", 17, "LoginProcedure-SdkLogin-非首次登录"),
             LoginController_1.LoginController.ReOpenSdkLoginView())),
       PlatformSdkManagerNew_1.PlatformSdkManagerNew.IsSdkOn &&
-        ControllerHolder_1.ControllerHolder.LoginController.SdkLoginNew(),
-      CloudGameManager_1.CloudGameManager.IsCloudGame && this.tSi();
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Login", 17, "LoginProcedure-SdkLoginNew-SDK登录"),
+        "-1" ===
+        ModelManager_1.ModelManager.LoginModel.PlayStationGameAutoLoginId
+          ? ControllerHolder_1.ControllerHolder.LoginController.SdkLoginNew()
+          : (Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info(
+                "Login",
+                5,
+                "PS5 PlaySession 直接启动 - 模拟点击登录按钮1",
+              ),
+            ControllerHolder_1.ControllerHolder.LoginController.SdkLoginNew(
+              this.HEi,
+            ))),
+      CloudGameManager_1.CloudGameManager.IsCloudGame &&
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Login", 17, "LoginProcedure-SdkLoginNew-云游戏登录"),
+        this.tSi());
   }
   oSi() {
     this.SetUiActive(!0),
-      ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
-        ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk() &&
+      ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode() &&
         (ModelManager_1.ModelManager.LoginServerModel.InitSuggestData(
           ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig()?.Uid ?? "",
           (e) => {
@@ -449,22 +515,34 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
               ModelManager_1.ModelManager.LoginModel.SetServerId(e.id);
           },
         ),
-        this.fSi() && UiManager_1.UiManager.OpenView("LoginServerView"),
+        this.fSi() &&
+          (UiManager_1.UiManager.OpenView("LoginServerView"),
+          (ModelManager_1.ModelManager.LoginModel.PlayStationGameAutoLoginId =
+            "-1")),
         this.GetButton(14).RootUIComp.SetUIActive(!0),
-        this.sSi());
+        this.sSi(),
+        "-1" !==
+          ModelManager_1.ModelManager.LoginModel.PlayStationGameAutoLoginId) &&
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Login",
+            5,
+            "PS5 PlaySession 直接启动 - 模拟点击登录按钮2",
+          ),
+        this.HEi());
   }
   fSi() {
     var e = ModelManager_1.ModelManager.LoginServerModel,
       r = ModelManager_1.ModelManager.LoginModel;
     return !(
-      !ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk() ||
+      !ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode() ||
       !e.IsFirstLogin(r.GetSdkLoginConfig()?.Uid ?? "")
     );
   }
   rSi() {
     var e = ModelManager_1.ModelManager.LoginServerModel,
       r = ModelManager_1.ModelManager.LoginModel;
-    ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk() &&
+    ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode() &&
       LoginServerController_1.LoginServerController.GetLoginPlayerInfo(
         1,
         r.GetSdkLoginConfig()?.Uid ?? "",
@@ -480,17 +558,17 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
   }
   mSi() {
     this.GetButton(8).RootUIComp.SetUIActive(
-      !ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk(),
+      !ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode(),
     );
   }
   cSi() {
     this.GetButton(4).RootUIComp.SetUIActive(
-      !ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk(),
+      !ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode(),
     );
   }
   dSi() {
     this.GetItem(16).SetUIActive(
-      !ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk(),
+      !ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode(),
     );
   }
   CSi() {
@@ -507,27 +585,28 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
   }
   sSi() {
     var e =
-      ModelManager_1.ModelManager.LoginServerModel.CurrentSelectServerData.name;
+      ModelManager_1.ModelManager.LoginServerModel.GetCurrentSelectServerName();
     this.GetText(15).SetText(e);
   }
   eSi() {}
   pSi() {
     this.GetButton(11).RootUIComp.SetUIActive(
-      ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
+      ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode() &&
         ModelManager_1.ModelManager.LoginModel.IsSdkLoggedIn(),
     );
   }
   iSi(e) {
     var r = this.GetButton(2),
       o = this.GetButton(3);
-    ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
+    ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode()
       ? (r.RootUIComp.SetUIActive(e),
         o.RootUIComp.SetUIActive(!e),
         this.GetItem(18).SetUIActive(e))
       : (r.RootUIComp.SetUIActive(!0), o.RootUIComp.SetUIActive(!1)),
       !e &&
-        ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk() &&
+        ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode() &&
         this.GetButton(14).RootUIComp.SetUIActive(!1),
+      this.Ofa(e),
       this.pSi();
   }
 }

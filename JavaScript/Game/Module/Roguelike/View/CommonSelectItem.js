@@ -61,7 +61,7 @@ class CommonSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.Update(t);
   }
   Update(t) {
-    t.RoguelikeGainDataType === Protocol_1.Aki.Protocol.e8s.Proto_CommonBuff &&
+    t.RoguelikeGainDataType === Protocol_1.Aki.Protocol.a8s.Proto_CommonBuff &&
       ((this.RogueGainEntry = t), this.Fq());
   }
   Fq() {

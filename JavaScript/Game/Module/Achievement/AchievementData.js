@@ -8,6 +8,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0);
 const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   StringBuilder_1 = require("../../../Core/Utils/StringBuilder"),
+  PlatformSdkManagerNew_1 = require("../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager");
 class AchievementData {
@@ -18,6 +19,7 @@ class AchievementData {
       (this.mbe = !1),
       (this.dbe = void 0),
       (this.Cbe = void 0),
+      (this.HBa = -1),
       (this.xe = t),
       (this.gbe =
         ConfigManager_1.ConfigManager.AchievementConfig.GetAchievementNextLink(
@@ -28,13 +30,29 @@ class AchievementData {
     this.ube = t;
   }
   Phrase(t) {
-    (this._be = t.Yfs),
-      (this.mbe = t.Jfs),
-      (this.dbe = t.zfs.Qfs),
-      (this.Cbe = t.zfs.Xfs);
+    (this._be = t.rvs),
+      (this.mbe = t.ovs),
+      (this.dbe = t.nvs.tvs),
+      (this.Cbe = t.nvs.ivs),
+      (this.HBa =
+        ConfigManager_1.ConfigManager.AchievementConfig.GetThirdPartyTrophyId(
+          this.xe,
+        )),
+      this.jBa();
+  }
+  jBa() {
+    var t = this.GetThirdPartyTrophyId();
+    0 !== this.GetFinishState() &&
+      -1 !== t &&
+      PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.UnlockSdkTrophy(
+        t,
+      );
   }
   GetId() {
     return this.xe;
+  }
+  GetThirdPartyTrophyId() {
+    return this.HBa;
   }
   RedPoint() {
     return !(!this.GetShowState() || 1 !== this.GetFinishState());
@@ -270,13 +288,13 @@ class AchievementCategoryData {
     for (const i of ModelManager_1.ModelManager.AchievementModel.GetAchievementCategoryGroups(
       this.xe,
     ))
-      for (const n of ModelManager_1.ModelManager.AchievementModel.GetGroupAchievements(
+      for (const a of ModelManager_1.ModelManager.AchievementModel.GetGroupAchievements(
         i.GetId(),
         !1,
       )) {
-        var r = n.GetFinishState();
-        (n.GetHiddenState() && 0 === r) ||
-          void 0 === n.GetMaxProgress() ||
+        var r = a.GetFinishState();
+        (a.GetHiddenState() && 0 === r) ||
+          void 0 === a.GetMaxProgress() ||
           (t++, 0 !== r && e++);
       }
     return Math.round((100 * e) / t) + "%";
@@ -293,7 +311,7 @@ class AchievementGroupData {
       (this.xe = t);
   }
   Phrase(t) {
-    (this.mbe = t.Jfs), (this._be = t.Yfs), (this.vbe = !0);
+    (this.mbe = t.ovs), (this._be = t.rvs), (this.vbe = !0);
   }
   GetId() {
     return this.xe;

@@ -10,8 +10,10 @@ class RoleTrialActivity {
     return this.id();
   }
   get RoleIdList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.roleidlistLength(), (t) =>
-      this.roleidlist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.roleidlistLength(),
+      this.roleidlist,
+      this,
     );
   }
   __init(t, i) {

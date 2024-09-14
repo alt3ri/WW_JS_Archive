@@ -58,8 +58,8 @@ class AiTaunt {
         s = EntitySystem_1.EntitySystem.Get(this.Dre);
       (t =
         s?.Active &&
-        ((i = s.GetComponent(160))?.Valid && !i.IsInGame && (t = !1),
-        (i = s.GetComponent(188))?.Valid || (t = !1),
+        ((i = s.GetComponent(161))?.Valid && !i.IsInGame && (t = !1),
+        (i = s.GetComponent(190))?.Valid || (t = !1),
         !i.HasTag(1008164187))
           ? t
           : !1) ||
@@ -90,7 +90,7 @@ class AiTaunt {
     this.Clear(), this.Init(t);
   }
   ClearCurrentTauntAndGe() {
-    this.Bte.CharAiDesignComp.Entity.GetComponent(159)?.RemoveBuffByHandle(
+    this.Bte.CharAiDesignComp.Entity.GetComponent(160)?.RemoveBuffByHandle(
       this.Rre,
     ),
       this.Are();

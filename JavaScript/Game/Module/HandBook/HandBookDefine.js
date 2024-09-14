@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.HandBookChipDynamicData =
+  (exports.HandBookNounDynamicData =
+    exports.HandBookChipDynamicData =
     exports.noSelectColor =
     exports.selectColor =
     exports.HandBookQuestViewOpenParam =
@@ -15,8 +16,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0);
 const UE = require("ue");
 class HandBookEntry {
-  constructor(t, o, s, i) {
-    (this.Id = t), (this.CreateTime = o), (this.Num = s), (this.IsRead = i);
+  constructor(t, o, s, a) {
+    (this.Id = t), (this.CreateTime = o), (this.Num = s), (this.IsRead = a);
   }
 }
 exports.HandBookEntry = HandBookEntry;
@@ -57,11 +58,11 @@ class HandBookPhotoData {
 }
 exports.HandBookPhotoData = HandBookPhotoData;
 class HandBookQuestNode {
-  constructor(t = "", o = void 0, s = 0, i = 0) {
+  constructor(t = "", o = void 0, s = 0, a = 0) {
     (this.TidText = t),
       (this.FlowListName = o),
       (this.FlowId = s),
-      (this.StateId = i);
+      (this.StateId = a);
   }
 }
 exports.HandBookQuestNode = HandBookQuestNode;
@@ -104,4 +105,12 @@ class HandBookChipDynamicData {
   }
 }
 exports.HandBookChipDynamicData = HandBookChipDynamicData;
+class HandBookNounDynamicData {
+  constructor() {
+    (this.HandBookNounConfigId = 0),
+      (this.HandBookCommonItemData = void 0),
+      (this.IsShowContent = !1);
+  }
+}
+exports.HandBookNounDynamicData = HandBookNounDynamicData;
 //# sourceMappingURL=HandBookDefine.js.map

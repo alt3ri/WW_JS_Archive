@@ -33,7 +33,7 @@ class TsAnimNotifyStateSimpleDisableCollision extends UE.KuroAnimNotifyState {
     return !0;
   }
   GetNotifyName() {
-    return "设置Actor碰撞";
+    return "禁用Actor碰撞";
   }
 }
 exports.default = TsAnimNotifyStateSimpleDisableCollision;

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionRecoveryResultView = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../../Core/Common/Log"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
   ItemController_1 = require("../../../Item/ItemController"),
@@ -56,10 +57,10 @@ class VisionRecoveryResultView extends UiViewBase_1.UiViewBase {
           !1,
         )),
         await this.$vt.CreateThenShowByActorAsync(this.GetItem(1).GetOwner()),
-        this.Zvt(e.UBs),
-        this.eMt(e.RMs),
-        await this.tMt(e.PBs),
-        this.iMt(e.PBs));
+        this.Zvt(e.OBs),
+        this.eMt(e.bMs),
+        await this.tMt(e.GBs),
+        this.iMt(e.GBs));
   }
   Zvt(e) {
     e =
@@ -96,29 +97,32 @@ class VisionRecoveryResultView extends UiViewBase_1.UiViewBase {
           i.SetUIActive(!1);
       else {
         i.SetUIActive(!0);
-        const s = this.GetItem(3),
-          r = this.GetItem(4),
+        const r = this.GetItem(3),
+          s = this.GetItem(4),
           o = new Array();
         t.forEach(() => {
           var e = new VisionRecoverySlotItem_1.VisionRecoverySlotItem(
               this.zvt,
               !1,
             ),
-            i = LguiUtil_1.LguiUtil.CopyItem(r, s);
+            i = LguiUtil_1.LguiUtil.CopyItem(s, r);
           o.push(e.CreateThenShowByActorAsync(i.GetOwner())), this.Yvt.push(e);
         }),
           await Promise.all(o),
           this.Yvt.forEach((e, i) => {
             e.RefreshUi(t[i]);
           }),
-          r.SetUIActive(!1);
+          s.SetUIActive(!1);
       }
     }
   }
   iMt(e) {
     e.length <= 0 ||
       this.UiViewSequence.AddSequenceFinishEvent("Start", () => {
-        switch (e.length) {
+        switch (
+          (ControllerHolder_1.ControllerHolder.UiNavigationNewController.RepeatCursorMove(),
+          e.length)
+        ) {
           case 1:
             this.UiViewSequence.PlaySequence("RewardA");
             break;

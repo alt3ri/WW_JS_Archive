@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  IQuest_1 = require("../../../../UniverseEditor/Interface/IQuest"),
+  IUtil_1 = require("../../../../UniverseEditor/Interface/IUtil"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
@@ -13,7 +15,7 @@ const UE = require("ue"),
   BehaviorTreeShowBridge_1 = require("./BehaviorTreeShowBridge"),
   BehaviorTreeTagComponent_1 = require("./BehaviorTreeTagComponent");
 class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
-  constructor(e, t, r, i, s) {
+  constructor(e, t, i, r, s) {
     switch (
       (super(),
       (this.gQt = 0),
@@ -21,19 +23,24 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
       (this.MarkType = 12),
       (this.TrackSource = void 0),
       (this.MapMarkResident = !1),
+      (this.UseInnerTrackIconId = !1),
       (this.CurrentDungeonId = 0),
+      (this.ChangeCurrentDungeonIdNodeId = 0),
       (this.IsTracking = !1),
       (this.IsSleeping = !1),
-      (this.BtType = Protocol_1.Aki.Protocol.tps.Proto_BtTypeInvalid),
+      (this.BtType = Protocol_1.Aki.Protocol.hps.Proto_BtTypeInvalid),
       (this.TreeIncId = BigInt(0)),
       (this.TreeConfigId = 0),
-      (this.PreparingRollbackNodes = void 0),
+      (this.wDa = []),
+      (this.BDa = new Map()),
+      (this.bDa = new Set()),
       (this.fZ = void 0),
       (this.pQt = void 0),
       (this.vQt = void 0),
       (this.UiTrackTextInfo = void 0),
       (this.SilentAreaShowInfo = []),
-      (this.EWs = void 0),
+      (this.gKs = void 0),
+      (this.RollbackPoint = 0),
       (this.TrackViewModel = "All"),
       (this.GetNodeConfig = (e) => {
         var t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetNodeConfig(
@@ -60,32 +67,32 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
       }),
       (this.BtType = e),
       (this.TreeIncId = t),
-      (this.TreeConfigId = r),
-      (this.gQt = i),
-      (this.CurrentDungeonId = i),
-      (this.PreparingRollbackNodes = []),
+      (this.TreeConfigId = i),
+      (this.gQt = r),
+      (this.CurrentDungeonId = r),
       (this.fZ = new Map()),
       (this.pQt = new Map()),
       (this.vQt = new Map()),
       (this.UiTrackTextInfo =
         new GeneralLogicTreeDefine_1.TreeTrackTextExpressionInfo()),
-      (this.EWs = new Map()),
+      (this.gKs = new Map()),
       (this.fQt = s),
       (this.MarkType = 12),
       this.BtType)
     ) {
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest:
         this.TrackSource = 5;
         break;
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay:
         this.TrackSource = 4;
         break;
-      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeInst:
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeInst:
         this.TrackSource = 2;
     }
   }
   get TaskMarkTableId() {
-    return this.BtType !== Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
+    return !this.UseInnerTrackIconId &&
+      this.BtType !== Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
       this.IsChallengeUi()
       ? GeneralLogicTreeDefine_1.CHALLENGELEVELPLAY_TRACKICONID
       : this.fQt;
@@ -96,6 +103,12 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
   set DungeonId(e) {
     this.CurrentDungeonId = e ?? this.gQt;
   }
+  get ChangeDungeonIdNodeId() {
+    return this.ChangeCurrentDungeonIdNodeId;
+  }
+  set ChangeDungeonIdNodeId(e) {
+    this.ChangeCurrentDungeonIdNodeId = e;
+  }
   get IsOccupied() {
     var e = ModelManager_1.ModelManager.GeneralLogicTreeModel;
     return (
@@ -104,7 +117,12 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
     );
   }
   Dispose() {
-    (this.PreparingRollbackNodes = void 0), this.EQt();
+    this.EQt(),
+      this.vQt?.clear(),
+      this.gKs?.clear(),
+      this.wDa.splice(0, this.wDa.length),
+      this.BDa.clear(),
+      this.bDa.clear();
   }
   AddNode(e, t) {
     this.fZ.set(e, t);
@@ -115,8 +133,8 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
   }
   AddNodeToStatusGroup(e, t) {
     t = this.GetGroupIdByStatus(t);
-    let r = this.GetNodesByGroupId(t);
-    (r = r || this.SQt(t)).set(e.NodeId, e);
+    let i = this.GetNodesByGroupId(t);
+    (i = i || this.SQt(t)).set(e.NodeId, e);
   }
   UpdateTreeVar(e, t) {
     this.vQt.set(e, t);
@@ -127,11 +145,11 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
   ClearTreeVars() {
     this.vQt.clear();
   }
-  UpdateNodeInStatusGroup(e, t, r) {
-    t !== r &&
+  UpdateNodeInStatusGroup(e, t, i) {
+    t !== i &&
       ((t = this.GetGroupIdByStatus(t)),
       (t = this.GetNodesByGroupId(t)) && t.delete(e.NodeId),
-      this.AddNodeToStatusGroup(e, r));
+      this.AddNodeToStatusGroup(e, i));
   }
   GetAllNodes() {
     return this.fZ;
@@ -146,9 +164,9 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
     var t = this.GetNodesByGroupId(1);
     if (t) {
       let e = void 0;
-      for (var [, r] of t)
-        if ("ChildQuest" === r.NodeType) {
-          e = r;
+      for (var [, i] of t)
+        if ("ChildQuest" === i.NodeType) {
+          e = i;
           break;
         }
       return e;
@@ -158,9 +176,9 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
     var e = this.GetNodesByGroupId(1);
     if (e) {
       var t,
-        r = [];
-      for ([, t] of e) "ChildQuest" === t.NodeType && r.push(t.NodeId);
-      return r;
+        i = [];
+      for ([, t] of e) "ChildQuest" === t.NodeType && i.push(t.NodeId);
+      return i;
     }
   }
   EQt() {
@@ -170,20 +188,20 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
   GetGroupIdByStatus(e) {
     let t = 0;
     switch (e) {
-      case Protocol_1.Aki.Protocol.DNs.Proto_NotActive:
+      case Protocol_1.Aki.Protocol.BNs.Proto_NotActive:
         break;
-      case Protocol_1.Aki.Protocol.DNs.t5n:
-      case Protocol_1.Aki.Protocol.DNs.Proto_Completing:
+      case Protocol_1.Aki.Protocol.BNs._5n:
+      case Protocol_1.Aki.Protocol.BNs.Proto_Completing:
         t = 1;
         break;
-      case Protocol_1.Aki.Protocol.DNs.Proto_CompletedSuccess:
+      case Protocol_1.Aki.Protocol.BNs.Proto_CompletedSuccess:
         t = 2;
         break;
-      case Protocol_1.Aki.Protocol.DNs.Proto_CompletedFailed:
-      case Protocol_1.Aki.Protocol.DNs.Proto_Destroy:
+      case Protocol_1.Aki.Protocol.BNs.Proto_CompletedFailed:
+      case Protocol_1.Aki.Protocol.BNs.Proto_Destroy:
         t = 3;
         break;
-      case Protocol_1.Aki.Protocol.DNs.Proto_Suspend:
+      case Protocol_1.Aki.Protocol.BNs.Proto_Suspend:
         t = 4;
     }
     return t;
@@ -191,25 +209,25 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
   SetMapMarkResident(e) {
     this.MapMarkResident = e;
   }
-  RemovePreparingRollbackNode(e) {
-    e = this.PreparingRollbackNodes.indexOf(e);
-    0 <= e && this.PreparingRollbackNodes.splice(e, 1),
-      0 === this.PreparingRollbackNodes.length && this.RemoveTag(7),
-      EventSystem_1.EventSystem.EmitWithTarget(
-        this,
-        EventDefine_1.EEventName.GeneralLogicTreeRemovePrepareRollbackNode,
-      );
+  SetUseInnerTrackIconId(e) {
+    this.UseInnerTrackIconId = e;
   }
   IsSuspend() {
-    return this.ContainTag(10);
+    return this.ContainTag(9);
   }
   GetCurrentCommunicateId() {
     var e = this.GetCurrentActiveChildQuestNode();
-    if ("ChildQuest" === e.NodeType && "ReceiveTelecom" === e.ChildQuestType)
+    if (
+      "ChildQuest" === e.NodeType &&
+      e.ChildQuestType === IQuest_1.EChildQuest.ReceiveTelecom
+    )
       return e?.CommunicateId;
   }
   IsChallengeUi() {
     return this.ContainTag(11);
+  }
+  IsCustomUi() {
+    return this.ContainTag(10);
   }
   CreateShowBridge() {
     return BehaviorTreeShowBridge_1.BehaviorTreeShowBridge.Create(this);
@@ -234,32 +252,32 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
         e,
       );
   }
-  AddSilentShowInfo(r, e) {
-    var t = this.SilentAreaShowInfo.findIndex((e, t) => e.SourceOfAdd === r);
+  AddSilentShowInfo(i, e) {
+    var t = this.SilentAreaShowInfo.findIndex((e, t) => e.SourceOfAdd === i);
     t < 0
       ? this.SilentAreaShowInfo.push(
-          new GeneralLogicTreeDefine_1.SilentAreaShowInfo(r, e),
+          new GeneralLogicTreeDefine_1.SilentAreaShowInfo(i, e),
         )
       : (this.SilentAreaShowInfo[t].ShowInfo = e);
   }
-  RemoveSilentShowInfo(r) {
-    var e = this.SilentAreaShowInfo.findIndex((e, t) => e.SourceOfAdd === r);
+  RemoveSilentShowInfo(i) {
+    var e = this.SilentAreaShowInfo.findIndex((e, t) => e.SourceOfAdd === i);
     e < 0 || this.SilentAreaShowInfo.splice(e, 1);
   }
   IsNeedScaledTrackMark(e) {
-    return this.ContainTag(11) && this.UiTrackTextInfo.IsSubTitle(e);
+    return this.ContainTag(10) && this.UiTrackTextInfo.IsSubTitle(e);
   }
   AddRefOccupationId(e, t) {
-    let r = this.EWs.get(t);
-    r || ((r = []), this.EWs.set(t, r)), r.push(e);
+    let i = this.gKs.get(t);
+    i || ((i = []), this.gKs.set(t, i)), i.push(e);
   }
   RemoveRefOccupationId(t, e) {
-    var r,
-      e = this.EWs.get(e);
-    !e || (r = e.findIndex((e) => e === t)) < 0 || e.splice(r, 1);
+    var i,
+      e = this.gKs.get(e);
+    !e || (i = e.findIndex((e) => e === t)) < 0 || e.splice(i, 1);
   }
   HasRefOccupiedEntity() {
-    for (var [e] of this.EWs) {
+    for (var [e] of this.gKs) {
       var t =
         ModelManager_1.ModelManager.GeneralLogicTreeModel.IsOccupationExist(e);
       if (t)
@@ -274,21 +292,89 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
   }
   GetRefOccupiedEntityText() {
     if (this.HasRefOccupiedEntity())
-      for (var [e] of this.EWs) {
+      for (var [e] of this.gKs) {
         var t =
             ModelManager_1.ModelManager.GeneralLogicTreeModel.GetOccupationQuestName(
               e,
             ),
-          r = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+          i = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
             "QuestResourcesIsOccupied",
           ),
-          i = UE.NewArray(UE.BuiltinString),
+          r = UE.NewArray(UE.BuiltinString),
           e =
             ConfigManager_1.ConfigManager.QuestNewConfig.GetOccupationResourceName(
               e,
             );
-        return i.Add(e), i.Add(t), UE.KuroStaticLibrary.KuroFormatText(r, i);
+        return r.Add(e), r.Add(t), UE.KuroStaticLibrary.KuroFormatText(i, r);
       }
+  }
+  AddGuaranteeActionInfo(t, i, r, e) {
+    if (!this.qDa(r, e)) {
+      this.wDa.push(r);
+      let e = this.BDa.get(i);
+      e || ((e = new Set()), this.BDa.set(i, e)),
+        e.add(this.wDa.length - 1),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "GeneralLogicTree",
+            19,
+            "GeneralLogicTree:添加保底行为：" + r.Name,
+            ["触发行为", t],
+            ["ActionInfo", r],
+            ["treeConfigId", this.TreeConfigId],
+          );
+    }
+  }
+  qDa(t, i) {
+    return (
+      0 !== i &&
+      this.wDa.some((e) =>
+        1 === i
+          ? e.Name === t.Name
+          : e.Name === t.Name && (0, IUtil_1.deepEquals)(e, t),
+      )
+    );
+  }
+  PopGuaranteeActionInfo(t, i) {
+    for (let e = this.wDa.length - 1; 0 <= e; e--) {
+      var r = this.wDa[e];
+      if (r.Name === i.Name && (0, IUtil_1.deepEquals)(r, i)) {
+        this.wDa.splice(e, 1);
+        for (var [, s] of this.BDa) s.delete(e);
+        return (
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "GeneralLogicTree",
+              19,
+              "GeneralLogicTree:移除保底行为：" + i.Name,
+              ["触发行为", t],
+              ["ActionInfo", i],
+              ["treeConfigId", this.TreeConfigId],
+            ),
+          r
+        );
+      }
+    }
+  }
+  ClearGuaranteeActions(e) {
+    if (e) {
+      var t = this.BDa.get(e);
+      if (t)
+        for (let e = this.wDa.length - 1; 0 <= e; e--)
+          t.has(e) && (this.wDa.splice(e, 1), t.delete(e));
+    } else this.wDa.splice(0, this.wDa.length);
+  }
+  GetGuaranteeActions() {
+    return this.wDa;
+  }
+  AddCurrentExecuteActions(e) {
+    this.bDa.add(e);
+  }
+  RemoveCurrentExecuteActions(e) {
+    this.bDa.delete(e);
+  }
+  GetCurrentExecuteActions() {
+    return this.bDa;
   }
 }
 exports.Blackboard = Blackboard;

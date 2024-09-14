@@ -10,33 +10,38 @@ const BaseConfigController_1 = require("../../BaseConfig/BaseConfigController"),
   PlayStation5Sdk_1 = require("./PlayStation5Sdk");
 class PlatformSdkManagerNew {
   static Initialize() {
-    PlatformSdkManagerNew.IsSdkOn
-      ? (PlatformSdkConfig_1.PlatformSdkConfig.Initialize(),
+    return PlatformSdkManagerNew.IsSdkOn
+      ? (this.nAa(),
+        PlatformSdkConfig_1.PlatformSdkConfig.Initialize(),
         PlatformSdkServer_1.PlatformSdkServer.Initialize(),
-        this.Zya(),
-        this.eIa.Initialize())
-      : LauncherLog_1.LauncherLog.Info(
+        !!this.sAa.Initialize())
+      : (LauncherLog_1.LauncherLog.Info(
           "[PlatformSdkNew] PlatformSdkManagerNew.Initialize: 平台Sdk未开启",
-        );
+        ),
+        !0);
   }
   static UnInitialize() {
-    this.eIa?.UnInitialize();
+    this.sAa?.UnInitialize();
   }
-  static Zya() {
-    8 === Platform_1.Platform.Type &&
-      (this.eIa = new PlayStation5Sdk_1.PlayStation5Sdk());
+  static nAa() {
+    LauncherLog_1.LauncherLog.Info("当前平台", [
+      "type",
+      Platform_1.Platform.Type,
+    ]),
+      7 === Platform_1.Platform.Type &&
+        (this.sAa = new PlayStation5Sdk_1.PlayStation5Sdk());
   }
   static GetPlatformSdk() {
-    return PlatformSdkManagerNew.eIa;
+    return PlatformSdkManagerNew.sAa;
   }
   static get IsSdkOn() {
     return (
-      !!this.eIa.IsOn() &&
+      7 === Platform_1.Platform.Type &&
       "1" ===
         BaseConfigController_1.BaseConfigController.GetPublicValue("UseSDK")
     );
   }
 }
-(exports.PlatformSdkManagerNew = PlatformSdkManagerNew).eIa =
+(exports.PlatformSdkManagerNew = PlatformSdkManagerNew).sAa =
   new PlatformSdkNew_1.PlatformSdkNew();
 //# sourceMappingURL=PlatformSdkManagerNew.js.map

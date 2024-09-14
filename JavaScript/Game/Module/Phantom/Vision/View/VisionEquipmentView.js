@@ -94,7 +94,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       (this.r7i = 0),
       (this.n7i = !0),
       (this.s7i = !1),
-      (this.eoa = 0),
+      (this.Gsa = 0),
       (this.JTt = (i) => {
         "ContrastSwitch" === i && this.GetItem(11).SetUIActive(this.o7i);
       }),
@@ -132,7 +132,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
           !this.n7i &&
           ((this.n7i = !0), this._7i(this.B9i?.GetUniqueId() ?? 0));
       }),
-      (this.Hqn = (i) => {
+      (this.zqn = (i) => {
         i && ((i = this.N9i), (this.N9i = 0), this._7i(i, !1));
       }),
       (this.u7i = () => {
@@ -153,8 +153,8 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
           this.B9i.GetUniqueId(),
         );
       }),
-      (this.toa = () => {
-        (this.eoa = this.N9i),
+      (this.Osa = () => {
+        (this.Gsa = this.N9i),
           this.CHi(),
           CalabashController_1.CalabashController.JumpToCalabashRootView(
             "VisionRecoveryTabView",
@@ -339,6 +339,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
             i,
           ) && this.LoopScrollView.ResetGridController(),
           this.q7i(),
+          this.B9i && this.R7i(this.B9i),
           AudioSystem_1.AudioSystem.PostEvent("ui_vision_item_click");
       }),
       (this.Og = (i) => {
@@ -351,7 +352,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
               this.LoopScrollView.RefreshAllGridProxies())
             : this.GetLoopScrollViewComponent(6).RootUIComp.SetUIActive(!1);
       }),
-      (this.k7i = () => {
+      (this.SNa = () => {
         this.LoopScrollView.RefreshAllGridProxies();
       }),
       (this.F7i = () => {
@@ -568,7 +569,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
         [21, this.h7i],
         [27, this.Cpt],
         [29, this.d7i],
-        [32, this.toa],
+        [32, this.Osa],
       ]);
   }
   OnAddEventListener() {
@@ -577,8 +578,8 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       this.F7i,
     ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnItemLock,
-        this.k7i,
+        EventDefine_1.EEventName.OnItemFuncValueChange,
+        this.SNa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PhantomEquipError,
@@ -602,7 +603,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.VisionSkinViewClose,
-        this.Hqn,
+        this.zqn,
       );
   }
   OnRemoveEventListener() {
@@ -611,8 +612,8 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       this.F7i,
     ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnItemLock,
-        this.k7i,
+        EventDefine_1.EEventName.OnItemFuncValueChange,
+        this.SNa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PhantomEquipError,
@@ -636,7 +637,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.VisionSkinViewClose,
-        this.Hqn,
+        this.zqn,
       );
   }
   OnStart() {
@@ -685,10 +686,11 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       );
   }
   OnHandleLoadScene() {
-    this._7i(this.eoa),
+    0 < this.Gsa &&
+      (this._7i(this.Gsa),
       PhantomBattleController_1.PhantomBattleController.SetMeshTransform(
         this.tHi,
-      );
+      ));
   }
   async OnBeforeStartAsync() {
     (this.dFe = this.OpenParam),

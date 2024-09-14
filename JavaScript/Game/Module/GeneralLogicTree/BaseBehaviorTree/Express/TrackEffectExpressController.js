@@ -55,7 +55,7 @@ class TrackEffectExpressController {
     return this.kQt.get(t);
   }
   UpdateTrackEffectExpression(t, e) {
-    e === Protocol_1.Aki.Protocol.DNs.Proto_Destroy &&
+    e === Protocol_1.Aki.Protocol.BNs.Proto_Destroy &&
       (this.GetNodeTrackMarkCreator(t)?.Destroy(), this.kQt.delete(t));
   }
   OnBtApplyExpressionOccupation(t) {
@@ -221,7 +221,7 @@ class NodeTrackEffect {
     this.XQt(this.VQt, !1), this.XQt(this.HQt, !1);
   }
   XQt(t, e) {
-    EffectSystem_1.EffectSystem.GetEffectActor(t)?.SetActorHiddenInGame(!e);
+    EffectSystem_1.EffectSystem.SetEffectHidden(t, !e);
   }
   OnExpressOccupied() {
     this.pCt = !0;

@@ -270,12 +270,24 @@ class LevelConditionCenter {
         LevelConditionForMoonChasing_1.LevelConditionForMoonChasingCheckTargetBuiltCount,
       ),
       this.$Te(
+        E_LGC.ForMoonChasingCheckHasCanLevelUpBuilding,
+        LevelConditionForMoonChasing_1.LevelConditionForMoonChasingCheckHasCanLevelUpBuilding,
+      ),
+      this.$Te(
         E_LGC.ForMoonChasingCheckNeedBranch,
         LevelConditionForMoonChasing_1.LevelConditionForMoonChasingCheckNeedBranch,
       ),
       this.$Te(
         E_LGC.ForMoonChasingCheckHasNotFinishedTask,
         LevelConditionForMoonChasing_1.LevelConditionForMoonChasingCheckHasNotFinishedTask,
+      ),
+      this.$Te(
+        E_LGC.ForMoonChasingCheckTaskState,
+        LevelConditionForMoonChasing_1.LevelConditionForMoonChasingCheckTaskState,
+      ),
+      this.$Te(
+        E_LGC.ForMoonChasingCheckMainlineTaskDone,
+        LevelConditionForMoonChasing_1.LevelConditionForMoonChasingCheckMainlineTaskDone,
       ),
       this.$Te(
         E_LGC.ForMoonChasingOpenInteractive,
@@ -649,10 +661,7 @@ class LevelConditionCenter {
       this.$Te(
         E_LGC.CheckIsMulti,
         LevelConditionCheckIsMulti_1.LevelConditionCheckIsMulti,
-        [
-          EventDefine_1.EEventName.OnSetGameModeDataDone,
-          EventDefine_1.EEventName.ChangeMode,
-        ],
+        [EventDefine_1.EEventName.OnFinishLoadingState],
       ),
       this.$Te(
         E_LGC.PickupInTowerDefenceBattle,

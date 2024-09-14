@@ -12,9 +12,13 @@ class DeadReviveModel extends ModelBase_1.ModelBase {
       (this.RevivePosition = void 0),
       (this.ReviveRotator = void 0),
       (this.ReviveConfig = void 0),
+      (this.DeadDelayTimer = void 0),
+      (this.OpenedViewName = void 0),
+      (this.BlockAllInput = !1),
       (this.SkipFallInjure = !1),
       (this.SkipDeathAnim = !1),
-      (this.ReviveFlowIncId = 0);
+      (this.ReviveFlowIncId = 0),
+      (this.HandleOnClickGiveUpExternal = void 0);
   }
   InitReviveConfig(e) {
     (this.ReviveConfig && this.ReviveConfig.Id === e) ||
@@ -31,14 +35,21 @@ class DeadReviveModel extends ModelBase_1.ModelBase {
   }
   qFt() {
     this.ClearReviveData(),
+      this.ClearExternalHandles(),
       (this.RevivePosition = void 0),
       (this.ReviveRotator = void 0),
-      (this.ReviveFlowIncId = 0);
+      (this.ReviveFlowIncId = 0),
+      (this.BlockAllInput = !1);
   }
   ClearReviveData() {
     (this.ReviveLimitTime = 0),
       (this.IsShowRevive = !1),
-      (this.IsAutoRevive = !1);
+      (this.IsAutoRevive = !1),
+      this.DeadDelayTimer &&
+        (this.DeadDelayTimer.Remove(), (this.DeadDelayTimer = void 0));
+  }
+  ClearExternalHandles() {
+    this.HandleOnClickGiveUpExternal = void 0;
   }
 }
 exports.DeadReviveModel = DeadReviveModel;

@@ -9,6 +9,7 @@ const Info_1 = require("../../Core/Common/Info"),
   CameraController_1 = require("../Camera/CameraController"),
   PackageConfigUtil_1 = require("../Common/PackageConfigUtil"),
   CrashCollectionController_1 = require("../CrashCollection/CrashCollectionController"),
+  GameSettingsController_1 = require("../GameSettings/GameSettingsController"),
   InputController_1 = require("../Input/InputController"),
   InputSettingsController_1 = require("../InputSettings/InputSettingsController"),
   KuroPushController_1 = require("../KuroPushSdk/KuroPushController"),
@@ -96,6 +97,7 @@ const Info_1 = require("../../Core/Common/Info"),
   ItemHintController_1 = require("../Module/ItemHint/ItemHintController"),
   ItemRewardController_1 = require("../Module/ItemReward/ItemRewardController"),
   JoinTeamController_1 = require("../Module/JoinTeam/JoinTeamController"),
+  KuroAutoCoolController_1 = require("../Module/KuroAutoCool/KuroAutoCoolController"),
   KuroPerformanceController_1 = require("../Module/KuroPerformance/KuroPerformanceController"),
   LanguageController_1 = require("../Module/Language/LanguageController"),
   LevelLoadingController_1 = require("../Module/LevelLoading/LevelLoadingController"),
@@ -167,10 +169,12 @@ const Info_1 = require("../../Core/Common/Info"),
   BulletController_1 = require("../NewWorld/Bullet/BulletController"),
   CharacterController_1 = require("../NewWorld/Character/CharacterController"),
   CharacterShadowController_1 = require("../NewWorld/Character/CharacterShadowController"),
+  CharacterBuffController_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterBuffController"),
   DynamicFlowController_1 = require("../NewWorld/Character/Common/Component/Flow/DynamicFlowController"),
-  PerformGroupStateController_1 = require("../NewWorld/Character/Npc/Controller/PerformGroupStateController"),
+  NpcPerformController_1 = require("../NewWorld/Character/Npc/Controller/NpcPerformController"),
   RoleAudioController_1 = require("../NewWorld/Character/Role/RoleAudioController"),
   RoleTriggerController_1 = require("../NewWorld/Character/Role/RoleTriggerController"),
+  PortalController_1 = require("../NewWorld/SceneItem/Controller/PortalController"),
   SceneItemBuffController_1 = require("../NewWorld/SceneItem/Controller/SceneItemBuffController"),
   SecenItemMoveController_1 = require("../NewWorld/SceneItem/Controller/SecenItemMoveController"),
   PerfSightController_1 = require("../PerfSight/PerfSightController"),
@@ -189,13 +193,13 @@ const Info_1 = require("../../Core/Common/Info"),
   GameModeController_1 = require("../World/Controller/GameModeController"),
   LogController_1 = require("../World/Controller/LogController"),
   MultiInteractionActorController_1 = require("../World/Controller/MultiInteractionActorController"),
+  PlayerVelocityController_1 = require("../World/Controller/PlayerVelocityController"),
   PreloadController_1 = require("../World/Controller/PreloadController"),
   PreloadControllerNew_1 = require("../World/Controller/PreloadControllerNew"),
   ServerGmController_1 = require("../World/Controller/ServerGmController"),
   WorldController_1 = require("../World/Controller/WorldController"),
   WorldDebugController_1 = require("../World/Controller/WorldDebugController"),
   EnvironmentalPerceptionController_1 = require("../World/Enviroment/EnvironmentalPerceptionController"),
-  PlayerVelocityController_1 = require("../World/Controller/PlayerVelocityController"),
   ControllerHolder_1 = require("./ControllerHolder"),
   ControllerManager_1 = require("./ControllerManager");
 class ControllerRegisterManager {
@@ -739,9 +743,9 @@ class ControllerRegisterManager {
       (ControllerHolder_1.ControllerHolder.DynamicFlowController =
         DynamicFlowController_1.DynamicFlowController),
       this.qp(DynamicFlowController_1.DynamicFlowController),
-      (ControllerHolder_1.ControllerHolder.PerformGroupStateController =
-        PerformGroupStateController_1.PerformGroupStateController),
-      this.qp(PerformGroupStateController_1.PerformGroupStateController),
+      (ControllerHolder_1.ControllerHolder.NpcPerformController =
+        NpcPerformController_1.NpcPerformController),
+      this.qp(NpcPerformController_1.NpcPerformController),
       (ControllerHolder_1.ControllerHolder.GamepadController =
         GamepadController_1.GamepadController),
       this.qp(GamepadController_1.GamepadController),
@@ -768,6 +772,9 @@ class ControllerRegisterManager {
       (ControllerHolder_1.ControllerHolder.KuroPerformanceController =
         KuroPerformanceController_1.KuroPerformanceController),
       this.qp(KuroPerformanceController_1.KuroPerformanceController),
+      (ControllerHolder_1.ControllerHolder.KuroAutoCoolController =
+        KuroAutoCoolController_1.KuroAutoCoolController),
+      this.qp(KuroAutoCoolController_1.KuroAutoCoolController),
       (ControllerHolder_1.ControllerHolder.LogController =
         LogController_1.LogController),
       this.qp(LogController_1.LogController),
@@ -784,6 +791,12 @@ class ControllerRegisterManager {
         SecenItemMoveController_1.SceneItemMoveController),
       this.qp(SecenItemMoveController_1.SceneItemMoveController),
       this.qp(ServerGmController_1.ServerGmController),
+      (ControllerHolder_1.ControllerHolder.PortalController =
+        PortalController_1.PortalController),
+      this.qp(PortalController_1.PortalController),
+      (ControllerHolder_1.ControllerHolder.GameSettingsController =
+        GameSettingsController_1.GameSettingsController),
+      this.qp(GameSettingsController_1.GameSettingsController),
       "true" ===
         PackageConfigUtil_1.PackageConfigUtil.GetPackageConfigOrDefault(
           "WaterMask",
@@ -800,6 +813,7 @@ class ControllerRegisterManager {
           },
         ),
       this.qp(CommonInputViewController_1.CommonInputViewController),
+      this.qp(CharacterBuffController_1.default),
       !0
     );
   }
@@ -832,6 +846,7 @@ class ControllerRegisterManager {
       this.PBe(LevelPlayController_1.LevelPlayController),
       this.PBe(GeneralLogicTreeController_1.GeneralLogicTreeController),
       this.PBe(BulletController_1.BulletController),
+      this.PBe(AceAntiCheatController_1.AceAntiCheatController),
       this.PBe(UnopenedAreaController_1.UnopenedAreaController),
       this.PBe(UiNavigationNewController_1.UiNavigationNewController),
       this.PBe(OnlineController_1.OnlineController),
@@ -847,11 +862,14 @@ class ControllerRegisterManager {
       this.PBe(SequenceController_1.SequenceController),
       this.PBe(LevelLoadingController_1.LevelLoadingController),
       this.PBe(TeleportController_1.TeleportController),
+      this.PBe(SeamlessTravelController_1.SeamlessTravelController),
       this.PBe(KuroPerformanceController_1.KuroPerformanceController),
+      this.PBe(KuroAutoCoolController_1.KuroAutoCoolController),
       this.PBe(
         MultiInteractionActorController_1.MultiInteractionActorController,
       ),
       this.PBe(BpActorController_1.BpActorController),
+      this.PBe(RoleAudioController_1.RoleAudioController),
       this.PBe(PlayerVelocityController_1.PlayerVelocityController),
       !0
     );

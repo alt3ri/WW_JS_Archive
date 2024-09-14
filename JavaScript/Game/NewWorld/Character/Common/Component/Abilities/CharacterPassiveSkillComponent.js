@@ -54,8 +54,8 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
   OnInit() {
     return (
       (this.xOr = this.Entity.CheckGetComponent(25)),
-      (this.wOr = this.Entity.CheckGetComponent(159)),
-      (this.BOr = this.Entity.GetComponent(190)),
+      (this.wOr = this.Entity.CheckGetComponent(160)),
+      (this.BOr = this.Entity.GetComponent(192)),
       !0
     );
   }
@@ -63,11 +63,11 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
     return !0;
   }
   OnActivate() {
-    var t = this.Entity.GetComponent(0).ComponentDataMap.get("bys")?.bys?.NIs;
+    var t = this.Entity.GetComponent(0).ComponentDataMap.get("Fys")?.Fys?.KIs;
     if (t)
       for (const e of t)
-        this.LearnPassiveSkill(MathUtils_1.MathUtils.LongToBigInt(e.X4n), {
-          CombatMessageId: MathUtils_1.MathUtils.LongToBigInt(e.G8n.k8n),
+        this.LearnPassiveSkill(MathUtils_1.MathUtils.LongToBigInt(e.r5n), {
+          CombatMessageId: MathUtils_1.MathUtils.LongToBigInt(e.K8n.$8n),
         });
     return !0;
   }
@@ -139,7 +139,7 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
       (t, e) => {
         let i = this.Entity;
         var s = l.InstigatorType;
-        (i = s ? t?.[s] ?? e?.[s] : i) && i instanceof Entity_1.Entity
+        (i = s ? (t?.[s] ?? e?.[s]) : i) && i instanceof Entity_1.Entity
           ? this.ExecuteAction(o, i)
           : CombatLog_1.CombatLog.Error(
               "PassiveSkill",
@@ -149,9 +149,9 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
               ["skillId", o],
             );
       },
+      () => !this.BOr?.IsPassiveSkillInCd(o),
     );
     return (
-      l.IsDefaultActivated && this.xOr.SetTriggerActive(e, !0),
       this.bOr.set(o, {
         SkillId: o,
         TriggerHandle: e,
@@ -159,6 +159,7 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
         TargetKey: l.InstigatorType,
         CombatMessageId: t?.CombatMessageId,
       }),
+      l.IsDefaultActivated && this.xOr.SetTriggerActive(e, !0),
       this.BOr?.InitPassiveSkill(l),
       this.OnPassiveSkillAdded(o, t),
       !0
@@ -290,7 +291,7 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
                 }
                 break;
               case ESkillAction.AddBuff:
-                var n = e.GetComponent(159),
+                var n = e.GetComponent(160),
                   c = `被动技能${t}添加`;
                 for (const S of u.BuffId)
                   n.AddBuff(S, {
@@ -300,7 +301,7 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
                   });
                 break;
               case ESkillAction.RemoveBuff:
-                var h = e.GetComponent(159),
+                var h = e.GetComponent(160),
                   v = `被动技能${t}移除`;
                 for (let t = 0; t < u.BuffId.length; t++) {
                   var k = u.StackCount[t] ?? -1;
@@ -308,7 +309,7 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
                 }
                 break;
               case ESkillAction.StartSkill:
-                o = e.CheckGetComponent(33);
+                o = e.CheckGetComponent(34);
                 o &&
                   o.BeginSkill(u.SkillId, {
                     ContextId: i.CombatMessageId,
@@ -340,25 +341,25 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
   }
   static PassiveSkillAddNotify(t, e) {
     var i = t?.GetComponent(23);
-    for (const s of e.NIs)
-      i?.LearnPassiveSkill(MathUtils_1.MathUtils.LongToBigInt(s.X4n), {
-        CombatMessageId: MathUtils_1.MathUtils.LongToBigInt(s.G8n.k8n),
+    for (const s of e.KIs)
+      i?.LearnPassiveSkill(MathUtils_1.MathUtils.LongToBigInt(s.r5n), {
+        CombatMessageId: MathUtils_1.MathUtils.LongToBigInt(s.K8n.$8n),
       });
   }
   static PassiveSkillRemoveNotify(t, e) {
     var i = t?.GetComponent(23);
-    for (const s of e.rAs)
+    for (const s of e._As)
       i?.ForgetPassiveSkill(MathUtils_1.MathUtils.LongToBigInt(s));
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.Listen("g3n", !1)],
+  [CombatMessage_1.CombatNet.Listen("T3n", !1)],
   CharacterPassiveSkillComponent,
   "PassiveSkillAddNotify",
   null,
 ),
   __decorate(
-    [CombatMessage_1.CombatNet.Listen("f3n", !1)],
+    [CombatMessage_1.CombatNet.Listen("L3n", !1)],
     CharacterPassiveSkillComponent,
     "PassiveSkillRemoveNotify",
     null,

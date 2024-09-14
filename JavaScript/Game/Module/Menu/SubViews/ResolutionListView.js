@@ -1,39 +1,52 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ResolutionToggle = exports.ResolutionListView = void 0);
-const GameQualitySettingsManager_1 = require("../../../GameQualitySettings/GameQualitySettingsManager"),
+const GameSettingsDeviceRender_1 = require("../../../GameSettings/GameSettingsDeviceRender"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
   MenuController_1 = require("../MenuController"),
   LanguageSettingViewBase_1 = require("./LanguageSettingViewBase");
 class ResolutionListView extends LanguageSettingViewBase_1.LanguageSettingViewBase {
   constructor() {
     super(...arguments),
+      (this.Hve = []),
       (this.DoRefreshScrollView = (e, t) => {
-        var s = MenuController_1.MenuController.GetTargetConfig(6) === e,
-          t = this.CreateToggle(t, e, s);
+        var i = MenuController_1.MenuController.GetTargetConfig(6) === e,
+          t = this.CreateToggle(t, e, i);
         t &&
-          (s ? (this.SelectedToggle = t) : t.UnSelect(),
+          (i ? (this.SelectedToggle = t) : t.UnSelect(),
           t.SetSelectedCallBack(this.DoSelected),
           this.OnRefreshView(t));
       });
   }
-  CreateToggle(e, t, s) {
-    var i = new ResolutionToggle();
-    return i.Initialize(e, t, s), i;
+  CreateToggle(e, t, i) {
+    var r = new ResolutionToggle();
+    return r.Initialize(e, t, i), r;
   }
   OnRefreshView(e) {
-    var t =
-      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetResolutionList()[
-        e.GetIndex()
-      ];
+    var t = this.Hve[e.GetIndex()];
     e.SetMainRawText(t.X + "x" + t.Y);
   }
   OnSelected(e, t) {}
   InitScrollViewData() {
-    this.ScrollView.RefreshByData(
-      MenuController_1.MenuController.GetResolutionList(
-        this.MenuDataIns.MenuDataOptionsNameList,
-      ),
-    );
+    var i = ModelManager_1.ModelManager.MenuModel.AllowResolutionList;
+    if (i) {
+      let e = 0,
+        t = 1;
+      for (var r = new Set(); t < i.length; ) {
+        var s = i[e],
+          n = i[t];
+        r.add(s / n), (e += 2), (t += 2);
+      }
+      this.Hve =
+        GameSettingsDeviceRender_1.GameSettingsDeviceRender.GetResolutionList();
+      var a = [];
+      for (let e = 0; e < this.Hve.length; e++) {
+        var o = this.Hve[e],
+          o = o.X / o.Y;
+        r.has(o) && a.push(e);
+      }
+      this.ScrollView.RefreshByData(a);
+    }
   }
 }
 exports.ResolutionListView = ResolutionListView;

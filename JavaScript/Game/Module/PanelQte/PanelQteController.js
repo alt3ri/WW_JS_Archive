@@ -15,29 +15,29 @@ const Log_1 = require("../../../Core/Common/Log"),
   ];
 class PanelQteController extends UiControllerBase_1.UiControllerBase {
   static StartAnimNotifyQte(e, t, a) {
-    var r;
+    var n;
     return this.vOi()
-      ? (((r = new PanelQteContext_1.PanelQteContext()).QteId = e),
-        (r.PreMessageId = a),
-        (r.Source = 0),
-        (r.SourceMeshComp = t),
-        (r.SourceActor = t.GetOwner()),
-        this.MOi(r))
+      ? (((n = new PanelQteContext_1.PanelQteContext()).QteId = e),
+        (n.PreMessageId = a),
+        (n.Source = 0),
+        (n.SourceMeshComp = t),
+        (n.SourceActor = t.GetOwner()),
+        this.MOi(n))
       : -1;
   }
-  static StartBuffQte(e, t, a, r, n) {
-    var o;
-    return this.vOi() && r && r.Id === Global_1.Global.BaseCharacter?.EntityId
-      ? (((o = new PanelQteContext_1.PanelQteContext()).QteId = e),
-        (o.Source = 1),
-        (o.PreMessageId = n),
-        (o.SourceBuffId = t),
-        (o.SourceBuffHandleId = a),
-        (o.SourceActor = r.GetComponent(1)?.Owner),
-        (o.SourceEntityHandle =
-          ModelManager_1.ModelManager.CharacterModel?.GetHandleByEntity(r)),
-        (o.IsInitSourceEntity = !0),
-        this.MOi(o))
+  static StartBuffQte(e, t, a, n, r) {
+    var i;
+    return this.vOi() && n && n.Id === Global_1.Global.BaseCharacter?.EntityId
+      ? (((i = new PanelQteContext_1.PanelQteContext()).QteId = e),
+        (i.Source = 1),
+        (i.PreMessageId = r),
+        (i.SourceBuffId = t),
+        (i.SourceBuffHandleId = a),
+        (i.SourceActor = n.GetComponent(1)?.Owner),
+        (i.SourceEntityHandle =
+          ModelManager_1.ModelManager.CharacterModel?.GetHandleByEntity(n)),
+        (i.IsInitSourceEntity = !0),
+        this.MOi(i))
       : -1;
   }
   static StartLevelSequenceQte(e, t) {
@@ -49,6 +49,14 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
         this.MOi(a))
       : -1;
   }
+  static StartLevelEventQte(e) {
+    var t;
+    return this.vOi()
+      ? (((t = new PanelQteContext_1.PanelQteContext()).QteId = e),
+        (t.Source = 3),
+        this.MOi(t))
+      : -1;
+  }
   static StopQte(e, t = !1) {
     if (!ModelManager_1.ModelManager.PanelQteModel.StopQte(e)) return !1;
     var a = ModelManager_1.ModelManager.PanelQteModel;
@@ -58,24 +66,24 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
             6,
           ),
           (a.IsHideAllBattleUi = !1))
-        : (r = a.HideBattleUiChildren) &&
+        : (n = a.HideBattleUiChildren) &&
           (ModelManager_1.ModelManager.BattleUiModel.ChildViewData.SetChildrenVisible(
             6,
-            r,
+            n,
             !0,
           ),
           (a.HideBattleUiChildren = void 0)),
       a.DisableFightInput)
     ) {
       let e = void 0;
-      var r = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
+      var n = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
       if (
         (e =
-          r?.EntityHandle === a.CurRoleEntity
-            ? r.GameplayTagComponent
-            : a.CurRoleEntity.Entity.GetComponent(188))
+          n?.EntityHandle === a.CurRoleEntity
+            ? n.GameplayTagComponent
+            : a.CurRoleEntity.Entity.GetComponent(190))
       )
-        for (const n of disableInputTagIds) e.RemoveTag(n);
+        for (const r of disableInputTagIds) e.RemoveTag(r);
       else
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -105,23 +113,35 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
     if (!t) return -1;
     e.Config = t;
     var a = ModelManager_1.ModelManager.PanelQteModel,
-      r = a.StartQte(e),
-      n = e.Config.ViewType;
-    switch (n) {
+      n = a.StartQte(e),
+      r = e.Config.ViewType;
+    switch (r) {
       case 0:
         UiManager_1.UiManager.IsViewOpen("FrozenQteView") &&
           UiManager_1.UiManager.CloseView("FrozenQteView"),
-          UiManager_1.UiManager.OpenView("FrozenQteView", r);
+          UiManager_1.UiManager.OpenView("FrozenQteView", n);
         break;
       case 1:
         UiManager_1.UiManager.IsViewOpen("InteractQteView") &&
           UiManager_1.UiManager.CloseView("InteractQteView"),
-          UiManager_1.UiManager.OpenView("InteractQteView", r),
+          UiManager_1.UiManager.OpenView("InteractQteView", n),
+          (a.DisableFightInput = !0);
+        break;
+      case 2:
+        (e.BuffIndex = Math.floor(Math.random() * t.MaxSuccessCount)),
+          UiManager_1.UiManager.IsViewOpen("YouHuQteView") &&
+            UiManager_1.UiManager.CloseView("YouHuQteView"),
+          UiManager_1.UiManager.OpenView("YouHuQteView", n);
+        break;
+      case 3:
+        UiManager_1.UiManager.IsViewOpen("FreeRunningQteView") &&
+          UiManager_1.UiManager.CloseView("FreeRunningQteView"),
+          UiManager_1.UiManager.OpenView("FreeRunningQteView", n),
           (a.DisableFightInput = !0);
         break;
       default:
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("PanelQte", 18, "QTE界面类型没有实现", ["", n]);
+          Log_1.Log.Error("PanelQte", 18, "QTE界面类型没有实现", ["", r]);
     }
     if (t.HideAllBattleUi)
       (a.IsHideAllBattleUi = !0),
@@ -131,48 +151,48 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
         );
     else {
       a.IsHideAllBattleUi = !1;
-      var o = t.HideUIElement.Num();
-      if (0 < o) {
-        var i = [];
-        for (let e = 0; e < o; e++) i.push(t.HideUIElement.Get(e));
+      var i = t.HideUIElement.Num();
+      if (0 < i) {
+        var o = [];
+        for (let e = 0; e < i; e++) o.push(t.HideUIElement.Get(e));
         ModelManager_1.ModelManager.BattleUiModel.ChildViewData.SetChildrenVisible(
           6,
-          i,
+          o,
           !1,
         ),
-          (a.HideBattleUiChildren = i);
+          (a.HideBattleUiChildren = o);
       } else a.HideBattleUiChildren = void 0;
     }
     if (a.DisableFightInput) {
-      e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
-      if (e) {
-        var l = e.EntityHandle,
-          _ = e.GameplayTagComponent;
-        if (_) {
-          for (const s of disableInputTagIds) _.AddTag(s);
-          a.CurRoleEntity = l;
+      var l = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
+      if (l) {
+        var _ = l.EntityHandle,
+          s = l.GameplayTagComponent;
+        if (s) {
+          for (const M of disableInputTagIds) s.AddTag(M);
+          a.CurRoleEntity = _;
         }
       }
     }
     return (
-      EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.PanelQteStart, r),
-      r
+      EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.PanelQteStart, n),
+      n
     );
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnTeamLivingStateChange,
-      PanelQteController.M7s,
+      PanelQteController.t$s,
     );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnTeamLivingStateChange,
-      PanelQteController.M7s,
+      PanelQteController.t$s,
     );
   }
 }
-(exports.PanelQteController = PanelQteController).M7s = (e, t, a) => {
+(exports.PanelQteController = PanelQteController).t$s = (e, t, a) => {
   e &&
     1 === t &&
     2 === a &&

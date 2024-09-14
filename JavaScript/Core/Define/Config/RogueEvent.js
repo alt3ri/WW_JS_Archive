@@ -22,8 +22,10 @@ class RogueEvent {
     return this.eventtype();
   }
   get Args() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.argsLength(), (t) =>
-      this.args(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.argsLength(),
+      this.args,
+      this,
     );
   }
   get FlowListName() {

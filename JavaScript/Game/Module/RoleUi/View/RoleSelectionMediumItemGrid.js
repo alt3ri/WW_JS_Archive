@@ -6,10 +6,10 @@ const ModelManager_1 = require("../../../Manager/ModelManager"),
   RoleDataBase_1 = require("../RoleData/RoleDataBase");
 class RoleSelectionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
-    super(...arguments), (this.gaa = !1);
+    super(...arguments), (this.f1a = !1);
   }
   SetNeedShowTrial(e) {
-    this.gaa = !1;
+    this.f1a = !1;
   }
   OnRefresh(e, t, o) {
     var i = e.GetDataId(),
@@ -26,7 +26,7 @@ class RoleSelectionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollM
         BottomTextParameter: [e.GetLevelData().GetLevel()],
         IsInTeam: i,
         ElementId: e.GetRoleConfig().ElementId,
-        IsTrialRoleVisible: e.IsTrialRole() && this.gaa,
+        IsTrialRoleVisible: e.IsTrialRole() && this.f1a,
         IsNewVisible: e.GetIsNew(),
       };
     this.Apply(i), this.SetSelected(t);

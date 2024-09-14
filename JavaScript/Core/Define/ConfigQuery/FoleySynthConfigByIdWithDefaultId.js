@@ -18,32 +18,48 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configFoleySynthConfigByIdWithDefaultId.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configFoleySynthConfigByIdWithDefaultId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configFoleySynthConfigByIdWithDefaultId.GetConfig(";
 exports.configFoleySynthConfigByIdWithDefaultId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (o, n, i, e, t = !0) => {
-    if (
-      (d = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (t) {
-        var C = KEY_PREFIX + `#${o}#${n}#${i}#${e})`;
-        const f = ConfigCommon_1.ConfigCommon.GetConfig(C);
-        if (f) return f;
+  GetConfig: (o, n, i, t, e = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var C = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${n}#${i}#${t})`),
+      f =
+        (C.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (f) {
+      if (e) {
+        var g = KEY_PREFIX + `#${o}#${n}#${i}#${t})`;
+        const d = ConfigCommon_1.ConfigCommon.GetConfig(g);
+        if (d)
+          return (
+            C.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            d
+          );
       }
       if (
-        (d =
+        (f =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, n, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 3, i, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.BindInt(handleId, 4, e, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 4, t, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(
               handleId,
@@ -52,38 +68,43 @@ exports.configFoleySynthConfigByIdWithDefaultId = {
               ["Id", o],
               ["Id", n],
               ["Id", i],
-              ["Id", e],
+              ["Id", t],
             ))
       ) {
-        var d,
-          C = void 0;
+        g = void 0;
         if (
-          (([d, C] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([f, g] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
             ["Id", n],
             ["Id", i],
-            ["Id", e],
+            ["Id", t],
           )),
-          d)
+          f)
         ) {
-          const f =
+          const d =
             FoleySynthConfig_1.FoleySynthConfig.getRootAsFoleySynthConfig(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(C.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(g.buffer)),
             );
           return (
-            t &&
-              ((d = KEY_PREFIX + `#${o}#${n}#${i}#${e})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(d, f)),
+            e &&
+              ((f = KEY_PREFIX + `#${o}#${n}#${i}#${t})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(f, d)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            f
+            C.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            d
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    C.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=FoleySynthConfigByIdWithDefaultId.js.map

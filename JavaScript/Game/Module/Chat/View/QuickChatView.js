@@ -38,7 +38,7 @@ class QuickChatView extends UiViewBase_1.UiViewBase {
                 ])
               );
           }
-          this.qSt(e, Protocol_1.Aki.Protocol.l8n.SIs), this.CloseMe();
+          this.qSt(e, Protocol_1.Aki.Protocol.p8n.DIs), this.CloseMe();
         } else
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Chat", 5, "当前没有加入任何一个聊天室");
@@ -121,13 +121,13 @@ class QuickChatView extends UiViewBase_1.UiViewBase {
                   ? ChatController_1.ChatController.ChannelChatRequest(
                       t,
                       e,
-                      Protocol_1.Aki.Protocol.DFs.Proto_MatchTeam,
+                      Protocol_1.Aki.Protocol.BFs.Proto_MatchTeam,
                     )
                   : r instanceof WorldTeamChatRoom_1.WorldChatRoom &&
                     ChatController_1.ChatController.ChannelChatRequest(
                       t,
                       e,
-                      Protocol_1.Aki.Protocol.DFs.Proto_WorldTeam,
+                      Protocol_1.Aki.Protocol.BFs.Proto_WorldTeam,
                     ))
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Chat", 8, "当前没有加入任何一个聊天室");

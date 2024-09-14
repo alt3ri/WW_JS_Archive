@@ -60,7 +60,7 @@ class LevelGamePlayUtils {
     var e,
       t = Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity;
     t?.Valid &&
-      ((t = t.GetComponent(188))?.HasTag((e = 477750727)) &&
+      ((t = t.GetComponent(190))?.HasTag((e = 477750727)) &&
         (t.RemoveTag(e), Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug(
           "Test",
@@ -231,7 +231,7 @@ class LevelGamePlayUtils {
     var e,
       t = Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity;
     t?.Valid &&
-      ((t = t.GetComponent(188))?.HasTag((e = 477750727)) &&
+      ((t = t.GetComponent(190))?.HasTag((e = 477750727)) &&
         (t.RemoveTag(e), Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug(
           "Test",
@@ -249,7 +249,7 @@ class LevelGamePlayUtils {
       ((t = Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity),
       e.ForbidSprint &&
         t?.Valid &&
-        (t.GetComponent(188)?.AddTag(477750727), Log_1.Log.CheckDebug()) &&
+        (t.GetComponent(190)?.AddTag(477750727), Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug(
           "Test",
           30,
@@ -257,8 +257,8 @@ class LevelGamePlayUtils {
         ),
       t?.Valid &&
         (e.ForceWalk
-          ? t.GetComponent(188)?.AddTag(-63548288)
-          : e.ForceJog && t.GetComponent(188)?.AddTag(229513169)),
+          ? t.GetComponent(190)?.AddTag(-63548288)
+          : e.ForceJog && t.GetComponent(190)?.AddTag(229513169)),
       InputController_1.InputController.SetMoveControlEnabled(
         e.Forward,
         e.Back,

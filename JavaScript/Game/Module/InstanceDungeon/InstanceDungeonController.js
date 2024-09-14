@@ -61,11 +61,11 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(29824, InstanceDungeonController.shi),
-      Net_1.Net.Register(4781, InstanceDungeonController.nhi);
+    Net_1.Net.Register(28975, InstanceDungeonController.shi),
+      Net_1.Net.Register(20520, InstanceDungeonController.nhi);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(29824), Net_1.Net.UnRegister(4781);
+    Net_1.Net.UnRegister(28975), Net_1.Net.UnRegister(20520);
   }
   static GetBeInviteOverdueTime(e) {
     return e
@@ -74,47 +74,48 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
       : 0;
   }
   static GetInstExchangeRewardRequest() {
-    var e = new Protocol_1.Aki.Protocol.Nos();
-    Net_1.Net.Call(25200, e, (e) => {
-      e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+    var e = new Protocol_1.Aki.Protocol.Kos();
+    Net_1.Net.Call(27474, e, (e) => {
+      e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeScrollingTipsView(
-          e.O4n,
+          e.Q4n,
           [],
         ),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
             "协议id",
-            "10214" + Protocol_1.Aki.Protocol.Fos.name,
+            "10214" + Protocol_1.Aki.Protocol.Qos.name,
           ]);
     });
   }
   static OnClickInstanceDungeonExitButton(e, n, o = !0) {
-    let r = 4;
+    const r = this.NeedOpenReChallengeConfirmBox();
+    let t = r ? 219 : 4;
     if (ModelManager_1.ModelManager.TowerModel.CheckInTower()) {
-      r = 133;
-      const l = new ConfirmBoxDefine_1.ConfirmBoxDataNew(r);
-      (l.IsEscViewTriggerCallBack = !1),
-        l.FunctionMap.set(1, () => {
+      t = 133;
+      const i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(t);
+      (i.IsEscViewTriggerCallBack = !1),
+        i.FunctionMap.set(1, () => {
           TowerController_1.TowerController.LeaveTower(), n && n();
         }),
-        l.FunctionMap.set(2, () => {
+        i.FunctionMap.set(2, () => {
           TowerController_1.TowerController.ReChallengeTower(), e && e();
         }),
         void ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-          l,
+          i,
         );
     } else if (ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike())
       UiManager_1.UiManager.OpenView("RoguelikeExitTips");
     else {
       TowerDefenceController_1.TowerDefenseController.CheckInInstanceDungeon() &&
-        (r = 207);
-      var t =
+        (t = 207);
+      var l =
         ModelManager_1.ModelManager.InstanceDungeonModel?.InstanceFinishSuccess;
       if (
         ModelManager_1.ModelManager.InstanceDungeonModel?.GetInstanceDungeonInfo()
           ?.FinishEscAction &&
         o &&
-        1 === t
+        1 === l
       )
         InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeonRequest(
           0,
@@ -122,21 +123,29 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
           1,
         );
       else {
-        const l = new ConfirmBoxDefine_1.ConfirmBoxDataNew(r);
-        (l.IsEscViewTriggerCallBack = !1),
-          l.FunctionMap.set(0, n),
-          l.FunctionMap.set(1, () => {
-            n && n();
+        const i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(t);
+        (i.IsEscViewTriggerCallBack = !1),
+          i.FunctionMap.set(0, n),
+          i.FunctionMap.set(1, () => {
+            r &&
+              (this.Syn() ||
+                InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeonRequest(),
+              EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName.LeaveInstanceDungeonConfirm,
+              )),
+              n && n();
           }),
-          l.FunctionMap.set(2, () => {
+          i.FunctionMap.set(2, () => {
             this.Syn() ||
-              InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeonRequest(),
+              (r
+                ? InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.RestartInstanceDungeon()
+                : InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeonRequest()),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.LeaveInstanceDungeonConfirm,
               ),
               e && e();
           }),
-          (l.BeforePlayCloseFunction = () => {
+          (i.BeforePlayCloseFunction = () => {
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("InstanceDungeon", 5, "副本离开确认框时停结束"),
               -1 !== this.ahi &&
@@ -149,7 +158,7 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
                 }));
           }),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-            l,
+            i,
           ),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("InstanceDungeon", 5, "副本离开确认框触发时停");
@@ -165,6 +174,15 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
       }
     }
   }
+  static NeedOpenReChallengeConfirmBox() {
+    return (
+      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+        ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
+      ).SettleButtonType ===
+        InstanceDungeonEntranceController_1.SETTLE_TYPE_MATERIALS &&
+      !ModelManager_1.ModelManager.GameModeModel.IsMulti
+    );
+  }
   static Syn() {
     let e =
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.SelectInstanceId;
@@ -172,7 +190,10 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
       (e = ModelManager_1.ModelManager.CreatureModel.GetInstanceId());
     var n = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e);
     return (
-      19 === n?.InstSubType || 20 === n?.InstSubType || 21 === n?.InstSubType
+      19 === n?.InstSubType ||
+      20 === n?.InstSubType ||
+      21 === n?.InstSubType ||
+      22 === n?.InstSubType
     );
   }
   static async PrewarTeamFightRequest(e, n, o = 0, r = 0, t, l) {
@@ -190,29 +211,36 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
         ),
         !1
       );
+    if (this.IsForbidDungeon(e))
+      return (
+        ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+          "PhantomFormationEnterInstanceTip",
+        ),
+        !1
+      );
     InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.RestoreDungeonEntranceEntity();
-    var i = Protocol_1.Aki.Protocol.Uos.create(),
+    var i = Protocol_1.Aki.Protocol.Oos.create(),
       e =
-        ((i.n5n = e),
-        (i.s5n = n),
-        (i.f9n = o),
-        (i.a5n = r),
-        (i.h5n = t),
-        (i.DYs = l ?? []),
+        ((i.d5n = e),
+        (i.C5n = n),
+        (i.L9n = o),
+        (i.g5n = r),
+        (i.f5n = t),
+        (i.Tzs = l ?? []),
         BlackScreenController_1.BlackScreenController.AddBlackScreen(
           "None",
           "LeaveScene",
         ),
-        await Net_1.Net.CallAsync(12597, i).finally(() => {
+        await Net_1.Net.CallAsync(23442, i).finally(() => {
           BlackScreenController_1.BlackScreenController.RemoveBlackScreen(
             "None",
             "LeaveScene",
           );
         }));
-    return e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+    return e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
       ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          e.O4n,
-          25251,
+          e.Q4n,
+          15565,
         ),
         !1)
       : ((ModelManager_1.ModelManager.InstanceDungeonModel.LastEnterRoleList =
@@ -231,18 +259,18 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
         !1
       );
     InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.RestoreDungeonEntranceEntity();
-    var n = Protocol_1.Aki.Protocol.Xos.create(),
+    var n = Protocol_1.Aki.Protocol.ins.create(),
       n =
-        ((n.s5n = e),
-        (n.DYs =
+        ((n.C5n = e),
+        (n.Tzs =
           ModelManager_1.ModelManager.TowerDefenseModel.GetProtocolPhantomIdList(
             e,
           ) ?? []),
-        await Net_1.Net.CallAsync(18214, n));
-    return n.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+        await Net_1.Net.CallAsync(22356, n));
+    return n.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
       ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          n.O4n,
-          1076,
+          n.Q4n,
+          21037,
         ),
         !1)
       : ((ModelManager_1.ModelManager.InstanceDungeonModel.LastEnterRoleList =
@@ -252,8 +280,16 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
         ),
         !0);
   }
+  static IsForbidDungeon(e) {
+    return !(this.fXa || !this.pXa || this.pXa.includes(e));
+  }
+  static UpdateForbidDungeon(e, n) {
+    (this.fXa = e), (this.pXa = n);
+  }
 }
 ((exports.InstanceDungeonController = InstanceDungeonController).ahi = -1),
+  (InstanceDungeonController.fXa = !0),
+  (InstanceDungeonController.pXa = []),
   (InstanceDungeonController.rhi = (e) => {
     !ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() ||
       e !== InputMappingsDefine_1.actionMappings.功能菜单 ||
@@ -284,19 +320,19 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("InstanceDungeon", 5, "副本信息通知", [
         "副本玩法Id:",
-        e.J4n,
+        e.s5n,
       ]),
       ModelManager_1.ModelManager.InstanceDungeonModel.CreateInstanceInfo(
-        e.J4n,
+        e.s5n,
       );
   }),
   (InstanceDungeonController.nhi = (e) => {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("InstanceDungeon", 5, "副本结束通知", ["副本Id:", e.J4n]),
-      e.J4n === ModelManager_1.ModelManager.CreatureModel.GetInstanceId() &&
+      Log_1.Log.Info("InstanceDungeon", 5, "副本结束通知", ["副本Id:", e.s5n]),
+      e.s5n === ModelManager_1.ModelManager.CreatureModel.GetInstanceId() &&
         ((ModelManager_1.ModelManager.InstanceDungeonModel.InstanceFinishSuccess =
-          e.Qps ? 1 : 2),
+          e.tMs ? 1 : 2),
         (ModelManager_1.ModelManager.InstanceDungeonModel.InstanceRewardHaveTake =
-          e.Cws));
+          e.Ews));
   });
 //# sourceMappingURL=InstanceDungeonController.js.map

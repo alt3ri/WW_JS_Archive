@@ -26,7 +26,7 @@ class LevelEventFadeInScreen extends LevelGeneralBase_1.LevelEventBase {
           n &&
           6 === n.Type &&
           (n = n) &&
-          n.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay &&
+          n.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay &&
           ((e = n.TreeConfigId), Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info("BlackScreen", 46, "玩法内开启黑幕：", [
             "treeId",

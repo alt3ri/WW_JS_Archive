@@ -41,11 +41,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     };
     s.TaskMoveToTarget = class a {
       constructor() {
-        (this.MoveState = 0),
-          (this.NavigationOn = !1),
+        (this.TargetType = 0),
+          (this.MoveState = 0),
           (this.EndDistance = 0),
           (this.TurnSpeed = 0),
-          (this.FixPeriod = 0),
           (this.WalkOff = !1);
       }
     };
@@ -369,6 +368,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
         (this.Uuid = 0),
           (this.ReferenceUuid = void 0),
           (this.OverrideCommonUuid = void 0),
+          (this.IsAnimStateMachine = !1),
+          (this.IsConduitNode = !1),
           (this.Name = ""),
           (this.TakeControlType = 0),
           (this.TransitionRule = 0);

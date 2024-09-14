@@ -18,10 +18,10 @@ class TsServiceNpcPerceptionDecision extends UE.BTService_BlueprintBase {
       if (l && 0 < l.size)
         for (const n of l)
           switch (WorldFunctionLibrary_1.default.GetEntityTypeByEntity(n)) {
-            case Protocol_1.Aki.Protocol.wks.Proto_Monster:
+            case Protocol_1.Aki.Protocol.kks.Proto_Monster:
               r++;
               break;
-            case Protocol_1.Aki.Protocol.wks.Proto_Player:
+            case Protocol_1.Aki.Protocol.kks.Proto_Player:
               o = n;
           }
       for (const c of e.AiPerception.Allies) {

@@ -134,7 +134,7 @@ class RoguelikeAchievementView extends UiViewBase_1.UiViewBase {
     if (void 0 !== e) {
       e =
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-          e.MHn,
+          e.UHn,
         );
       if (
         ((this.AchievementGroupDataList =

@@ -21,152 +21,201 @@ const intCache = new Map(),
   stringCache = new Map(),
   intListCache = new Map(),
   floatListCache = new Map();
-function getDataView(i) {
-  var o, e;
-  return (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, [
+function getDataView(t) {
+  var a, o;
+  return (a = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, [
     "command",
     COMMAND,
   ]))
-    ? (o =
-        (o = ConfigCommon_1.ConfigCommon.BindString(
+    ? (a =
+        (a = ConfigCommon_1.ConfigCommon.BindString(
           handleId,
           1,
-          i,
+          t,
           ...logPair,
-          ["Id", i],
+          ["Id", t],
         )) &&
         0 <
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, ["Id", i]))
-      ? ((e = void 0),
-        ([o, e] = ConfigCommon_1.ConfigCommon.GetValue(
+          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, ["Id", t]))
+      ? ((o = void 0),
+        ([a, o] = ConfigCommon_1.ConfigCommon.GetValue(
           handleId,
           0,
           ...logPair,
-          ["Id", i],
+          ["Id", t],
         )),
         ConfigCommon_1.ConfigCommon.Reset(handleId),
-        [o, e])
+        [a, o])
       : (ConfigCommon_1.ConfigCommon.Reset(handleId), [!1, void 0])
     : [!1, void 0];
 }
-const initStat = void 0,
-  getIntConfigStat = void 0,
+const initStat = Stats_1.Stat.Create("configCommonParamById.Init"),
+  getIntConfigStat = Stats_1.Stat.Create("configCommonParamById.GetIntConfig"),
   INT_STAT_PREFIX = "configCommonParamById.GetIntConfig(",
-  getFloatConfigStat = void 0,
+  getFloatConfigStat = Stats_1.Stat.Create(
+    "configCommonParamById.GetFloatConfig",
+  ),
   FLOAT_STAT_PREFIX = "configCommonParamById.GetFloatConfig(",
-  getBoolConfigStat = void 0,
+  getBoolConfigStat = Stats_1.Stat.Create(
+    "configCommonParamById.GetBoolConfig",
+  ),
   BOOL_STAT_PREFIX = "configCommonParamById.GetBoolConfig(",
-  getStringConfigStat = void 0,
+  getStringConfigStat = Stats_1.Stat.Create(
+    "configCommonParamById.GetStringConfig",
+  ),
   STRING_STAT_PREFIX = "configCommonParamById.GetStringConfig(",
-  getIntArrayConfigStat = void 0,
+  getIntArrayConfigStat = Stats_1.Stat.Create(
+    "configCommonParamById.GetIntArrayConfig",
+  ),
   INT_ARRAY_STAT_PREFIX = "configCommonParamById.GetIntArrayConfig(",
-  getFloatArrayConfigStat = void 0,
+  getFloatArrayConfigStat = Stats_1.Stat.Create(
+    "configCommonParamById.GetFloatArrayConfig",
+  ),
   FLOAT_ARRAY_STAT_PREFIX = "configCommonParamById.GetFloatArrayConfig(";
 exports.configCommonParamById = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetIntConfig: (i) => {
-    var o = intCache.get(i);
-    if (o) return o;
-    var [o, e] = getDataView(i);
-    if (o) {
-      o = DeserializeConfig_1.DeserializeConfig.ParseInt(e, 0, ...logPair, [
+  GetIntConfig: (t) => {
+    var a = Stats_1.Stat.Create("" + INT_STAT_PREFIX + t + ")"),
+      o = (getIntConfigStat.Start(), a.Start(), intCache.get(t));
+    if (o) return a.Stop(), getIntConfigStat.Stop(), o;
+    var [o, n] = getDataView(t);
+    if (
+      o &&
+      (o = DeserializeConfig_1.DeserializeConfig.ParseInt(n, 0, ...logPair, [
         "Id",
-        i,
-      ]);
-      if (o.Success) return intCache.set(i, o.Value), o.Value;
-    }
+        t,
+      ])).Success
+    )
+      return (
+        intCache.set(t, o.Value), a.Stop(), getIntConfigStat.Stop(), o.Value
+      );
+    a.Stop(), getIntConfigStat.Stop();
   },
-  GetFloatConfig: (i) => {
-    var o = floatCache.get(i);
-    if (o) return o;
-    var [o, e] = getDataView(i);
-    if (o) {
-      o = DeserializeConfig_1.DeserializeConfig.ParseFloat(e, 0, ...logPair, [
+  GetFloatConfig: (t) => {
+    var a = Stats_1.Stat.Create("" + FLOAT_STAT_PREFIX + t + ")"),
+      o = (getFloatConfigStat.Start(), a.Start(), floatCache.get(t));
+    if (o) return a.Stop(), getFloatConfigStat.Stop(), o;
+    var [o, n] = getDataView(t);
+    if (
+      o &&
+      (o = DeserializeConfig_1.DeserializeConfig.ParseFloat(n, 0, ...logPair, [
         "Id",
-        i,
-      ]);
-      if (o.Success) return floatCache.set(i, o.Value), o.Value;
-    }
+        t,
+      ])).Success
+    )
+      return (
+        floatCache.set(t, o.Value), a.Stop(), getFloatConfigStat.Stop(), o.Value
+      );
+    a.Stop(), getFloatConfigStat.Stop();
   },
-  GetBoolConfig: (i) => {
-    var o = boolCache.get(i);
-    if (o) return o;
-    var [o, e] = getDataView(i);
-    if (o) {
-      o = DeserializeConfig_1.DeserializeConfig.ParseBoolean(e, 0, ...logPair, [
+  GetBoolConfig: (t) => {
+    var a = Stats_1.Stat.Create("" + BOOL_STAT_PREFIX + t + ")"),
+      o = (getBoolConfigStat.Start(), a.Start(), boolCache.get(t));
+    if (o) return a.Stop(), getBoolConfigStat.Stop(), o;
+    var [o, n] = getDataView(t);
+    if (
+      o &&
+      (o = DeserializeConfig_1.DeserializeConfig.ParseBoolean(
+        n,
+        0,
+        ...logPair,
+        ["Id", t],
+      )).Success
+    )
+      return (
+        boolCache.set(t, o.Value), a.Stop(), getBoolConfigStat.Stop(), o.Value
+      );
+    a.Stop(), getBoolConfigStat.Stop();
+  },
+  GetStringConfig: (t) => {
+    var a = Stats_1.Stat.Create("" + STRING_STAT_PREFIX + t + ")"),
+      o = (getStringConfigStat.Start(), a.Start(), stringCache.get(t));
+    if (o) return a.Stop(), getStringConfigStat.Stop(), o;
+    var [o, n] = getDataView(t);
+    if (
+      o &&
+      (o = DeserializeConfig_1.DeserializeConfig.ParseString(n, 0, ...logPair, [
         "Id",
-        i,
-      ]);
-      if (o.Success) return boolCache.set(i, o.Value), o.Value;
-    }
+        t,
+      ])).Success
+    )
+      return (
+        stringCache.set(t, o.Value),
+        a.Stop(),
+        getStringConfigStat.Stop(),
+        o.Value
+      );
+    a.Stop(), getStringConfigStat.Stop();
   },
-  GetStringConfig: (i) => {
-    var o = stringCache.get(i);
-    if (o) return o;
-    var [o, e] = getDataView(i);
-    if (o) {
-      o = DeserializeConfig_1.DeserializeConfig.ParseString(e, 0, ...logPair, [
-        "Id",
-        i,
-      ]);
-      if (o.Success) return stringCache.set(i, o.Value), o.Value;
-    }
-  },
-  GetIntArrayConfig: (e) => {
-    if ((n = intListCache.get(e))) return n;
-    var [i, a] = getDataView(e);
-    if (i) {
-      var n = new Array(),
-        t = DeserializeConfig_1.DeserializeConfig.ParseInt(a, 0, ...logPair, [
+  GetIntArrayConfig: (o) => {
+    var n = Stats_1.Stat.Create("" + INT_ARRAY_STAT_PREFIX + o + ")");
+    if ((getIntArrayConfigStat.Start(), n.Start(), (e = intListCache.get(o))))
+      return n.Stop(), getIntArrayConfigStat.Stop(), e;
+    var [t, i] = getDataView(o);
+    if (t) {
+      var e = new Array(),
+        r = DeserializeConfig_1.DeserializeConfig.ParseInt(i, 0, ...logPair, [
           "Id",
-          e,
+          o,
         ]);
-      if (t.Success) {
-        let o = t.Position;
-        for (let i = 0; i < t.Value; i++) {
-          var r = DeserializeConfig_1.DeserializeConfig.ParseInt(
+      if (r.Success) {
+        let a = r.Position;
+        for (let t = 0; t < r.Value; t++) {
+          var g = DeserializeConfig_1.DeserializeConfig.ParseInt(
+            i,
             a,
-            o,
             ...logPair,
-            ["Id", e],
+            ["Id", o],
           );
-          if (!r.Success) return;
-          (o = r.Position), n.push(r.Value);
+          if (!g.Success) return n.Stop(), void getIntArrayConfigStat.Stop();
+          (a = g.Position), e.push(g.Value);
         }
-        return intListCache.set(e, n), n;
+        return (
+          intListCache.set(o, e), n.Stop(), getIntArrayConfigStat.Stop(), e
+        );
       }
     }
+    n.Stop(), getIntArrayConfigStat.Stop();
   },
-  GetFloatArrayConfig: (e) => {
-    if ((n = floatListCache.get(e))) return n;
-    var [i, a] = getDataView(e);
-    if (i) {
-      var n = new Array(),
-        t = DeserializeConfig_1.DeserializeConfig.ParseInt(a, 0, ...logPair, [
+  GetFloatArrayConfig: (o) => {
+    var n = Stats_1.Stat.Create("" + FLOAT_ARRAY_STAT_PREFIX + o + ")");
+    if (
+      (getFloatArrayConfigStat.Start(), n.Start(), (e = floatListCache.get(o)))
+    )
+      return n.Stop(), getFloatArrayConfigStat.Stop(), e;
+    var [t, i] = getDataView(o);
+    if (t) {
+      var e = new Array(),
+        r = DeserializeConfig_1.DeserializeConfig.ParseInt(i, 0, ...logPair, [
           "Id",
-          e,
+          o,
         ]);
-      if (t.Success) {
-        let o = t.Position;
-        for (let i = 0; i < t.Value; i++) {
-          var r = DeserializeConfig_1.DeserializeConfig.ParseFloat(
+      if (r.Success) {
+        let a = r.Position;
+        for (let t = 0; t < r.Value; t++) {
+          var g = DeserializeConfig_1.DeserializeConfig.ParseFloat(
+            i,
             a,
-            o,
             ...logPair,
-            ["Id", e],
+            ["Id", o],
           );
-          if (!r.Success) return;
-          (o = r.Position), n.push(r.Value);
+          if (!g.Success) return n.Stop(), void getFloatArrayConfigStat.Stop();
+          (a = g.Position), e.push(g.Value);
         }
-        return floatListCache.set(e, n), n;
+        return (
+          floatListCache.set(o, e), n.Stop(), getFloatArrayConfigStat.Stop(), e
+        );
       }
     }
+    n.Stop(), getFloatArrayConfigStat.Stop();
   },
 };
 //# sourceMappingURL=CommonParamById.js.map

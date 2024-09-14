@@ -23,6 +23,7 @@ class PayShopInstanceRedDot extends RedDotBase_1.RedDotBase {
       EventDefine_1.EEventName.RefreshGoods,
       EventDefine_1.EEventName.RefreshGoodsList,
       EventDefine_1.EEventName.UnLockGoods,
+      EventDefine_1.EEventName.RefreshPayShopInstanceRedDot,
     ];
   }
   OnCheck(e) {

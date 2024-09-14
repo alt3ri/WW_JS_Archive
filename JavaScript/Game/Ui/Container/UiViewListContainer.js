@@ -24,12 +24,17 @@ class UiViewListContainer extends UiViewContainer_1.UiViewContainer {
       : (this.Gcr.splice(i, 1), await this.CloseViewImplementAsync(e));
   }
   ClearContainer() {
+    var i = [];
     for (let e = this.Gcr.length - 1; 0 <= e; --e) {
-      var i = this.Gcr[e];
-      (i.IsExistInLeaveLevel = !0),
-        i.Info.IsPermanent ||
-          (i.IsDestroyOrDestroying || this.TryCatchViewDestroyCompatible(i),
-          this.Gcr.pop());
+      var t = this.Gcr[e];
+      (t.IsExistInLeaveLevel = !0),
+        t.Info.IsPermanent ||
+          (t.IsDestroyOrDestroying || this.TryCatchViewDestroyCompatible(t),
+          i.push(t));
+    }
+    for (const s of i) {
+      var e = this.Gcr.indexOf(s);
+      this.Gcr.splice(e, 1);
     }
   }
   CloseAllView() {

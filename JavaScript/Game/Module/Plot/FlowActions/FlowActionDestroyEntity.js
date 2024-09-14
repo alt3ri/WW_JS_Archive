@@ -20,12 +20,12 @@ class FlowActionDestroyEntity extends FlowActionServerAction_1.FlowActionServerA
             "加载实体失败",
           );
         let o = !1;
-        for (const s of e.EntityIds) {
+        for (const l of e.EntityIds) {
           var i =
-            ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(s);
+            ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(l);
           if (i) {
             var r = i.Entity.GetComponent(0).GetPbEntityInitData(),
-              n = i.Entity.GetComponent(119);
+              n = i.Entity.GetComponent(120);
             let t = !1;
             r &&
               ((r = (0, IComponent_1.getComponent)(
@@ -34,11 +34,11 @@ class FlowActionDestroyEntity extends FlowActionServerAction_1.FlowActionServerA
               )),
               (t = Boolean(n && r?.DestroyStageConfig.PerformDuration))),
               t
-                ? (i.Entity.GetComponent(180)?.RemoveServerTagByIdLocal(
+                ? (i.Entity.GetComponent(181)?.RemoveServerTagByIdLocal(
                     -1152559349,
                     "[SceneItemStateComponent]ForceHandleDestroyState",
                   ),
-                  i.Entity.GetComponent(180)?.AddServerTagByIdLocal(
+                  i.Entity.GetComponent(181)?.AddServerTagByIdLocal(
                     -1278190765,
                     "[SceneItemStateComponent]ForceHandleDestroyState",
                   ),
@@ -52,11 +52,13 @@ class FlowActionDestroyEntity extends FlowActionServerAction_1.FlowActionServerA
             Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn("Plot", 27, "实体未下发，联系服务端检查配置", [
                 "ids",
-                s,
+                l,
               ]),
               (o = !0);
         }
-        o && this.RequestServerAction(!1), this.FinishExecute(!0);
+        o && this.RequestServerAction(!1),
+          this.RecordAction(),
+          this.FinishExecute(!0);
       });
   }
   OnExecute() {
@@ -81,7 +83,6 @@ class FlowActionDestroyEntity extends FlowActionServerAction_1.FlowActionServerA
           : (this.Task = WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
               e.EntityIds,
               this.W$i,
-              !0,
               FlowActionUtils_1.WAIT_ENTITY_TIME,
             ));
       } else this.FinishExecute(!0);
@@ -92,6 +93,17 @@ class FlowActionDestroyEntity extends FlowActionServerAction_1.FlowActionServerA
   }
   OnInterruptExecute() {
     this.Task?.Cancel(), (this.Task = void 0), this.FinishExecute(!0);
+  }
+  OnRollback(t, e) {
+    for (const i of t.ActionInfo.Params.EntityIds) {
+      var o = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(i);
+      o?.IsInit &&
+        ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
+          o.Entity,
+          !0,
+          "FlowActionAwakeEntity.OnRollback",
+        );
+    }
   }
 }
 exports.FlowActionDestroyEntity = FlowActionDestroyEntity;

@@ -25,7 +25,7 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
       (this.z$i = -1),
       (this.Z$i = 0),
       (this.eYi = void 0),
-      (this.d9s = void 0),
+      (this.w9s = void 0),
       (this.tYi = (e) => {
         ModelManager_1.ModelManager.InteractionModel.IsInteractionTurning &&
         this.Z$i < GUARANTEED_WAIT_TIME
@@ -46,8 +46,8 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
       (this.Ilt = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Plot", 27, "剧情前保底传送 -结束");
-        var e = this.d9s;
-        (this.d9s = void 0), e.SetResult();
+        var e = this.w9s;
+        (this.w9s = void 0), e.SetResult();
       });
   }
   OnExecute() {
@@ -77,15 +77,11 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
             ),
           (this.Context.IsBackground = !0),
           this.FinishExecute(!0))
-        : Promise.all([
-            this.iYi(),
-            this.oYi(),
-            this.rYi(),
-            this.nYi(),
-            this.C9s(),
-          ]).finally(() => {
-            this.FinishExecute(!0);
-          });
+        : Promise.all([this.iYi(), this.oYi(), this.rYi(), this.nYi()]).finally(
+            () => {
+              this.FinishExecute(!0);
+            },
+          );
   }
   async iYi() {
     ModelManager_1.ModelManager.PlotModel.PlotConfig.ShouldSwitchMainRole &&
@@ -127,7 +123,7 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
       )),
       await this.J$i.Promise);
   }
-  async C9s() {
+  async CheckPosSafe() {
     var e,
       t =
         Global_1.Global.BaseCharacter?.CharacterActorComponent
@@ -143,10 +139,10 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
             ["cur", t],
             ["target", this.Context.Pos],
           ),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Plot", 27, "剧情前保底传送 -开始"),
         e > SAFE_DISTANCE_SQAURED &&
-          ((this.d9s = new CustomPromise_1.CustomPromise()),
+          (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Plot", 27, "剧情前保底传送 -开始"),
+          (this.w9s = new CustomPromise_1.CustomPromise()),
           FlowNetworks_1.FlowNetworks.RequestSafeTeleport(
             this.Context.FlowIncId,
             (e) => {
@@ -155,10 +151,10 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
                     EventDefine_1.EEventName.TeleportComplete,
                     this.Ilt,
                   )
-                : this.d9s.SetResult();
+                : this.w9s.SetResult();
             },
           ),
-          await this.d9s.Promise))
+          await this.w9s.Promise))
       : Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Plot", 27, "无剧情保底坐标点", ["curPos", t]);
   }

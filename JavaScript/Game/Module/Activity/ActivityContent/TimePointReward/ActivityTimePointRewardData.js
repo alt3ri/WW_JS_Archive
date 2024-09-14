@@ -19,19 +19,19 @@ class TimePointRewardData {
 exports.TimePointRewardData = TimePointRewardData;
 class ActivityTimePointRewardData extends ActivityData_1.ActivityBaseData {
   constructor() {
-    super(...arguments), (this.cXs = new Map());
+    super(...arguments), (this.nJs = new Map());
   }
   PhraseEx(t) {
-    this.cXs.clear();
-    const e = t.N$s;
+    this.nJs.clear();
+    const e = t.xYs;
     if (e) {
-      for (const i of e.zbs) {
+      for (const i of e.nBs) {
         const e = new TimePointRewardData();
-        (e.Id = i.J4n),
-          (e.RewardTime = Number(MathUtils_1.MathUtils.LongToBigInt(i.F$s))),
-          (e.HasClaimed = i.aLs),
-          (e.HasUnlock = i.vxs),
-          this.cXs.set(i.J4n, e);
+        (e.Id = i.s5n),
+          (e.RewardTime = Number(MathUtils_1.MathUtils.LongToBigInt(i.bYs))),
+          (e.HasClaimed = i.mLs),
+          (e.HasUnlock = i.Txs),
+          this.nJs.set(i.s5n, e);
       }
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
@@ -40,18 +40,18 @@ class ActivityTimePointRewardData extends ActivityData_1.ActivityBaseData {
     }
   }
   GetExDataRedPointShowState() {
-    for (const t of this.cXs.values()) if (1 === t.RewardState) return !0;
+    for (const t of this.nJs.values()) if (1 === t.RewardState) return !0;
     return !1;
   }
   SetRewardToGotState(t) {
-    const e = this.cXs.get(t);
+    const e = this.nJs.get(t);
     if (e) {
       (e.HasClaimed = !0),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.RefreshCommonActivityRedDot,
           this.Id,
         );
-      for (const e of this.cXs.values()) if (2 !== e.RewardState) return;
+      for (const e of this.nJs.values()) if (2 !== e.RewardState) return;
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshActivityTab,
         this.Id,
@@ -59,7 +59,7 @@ class ActivityTimePointRewardData extends ActivityData_1.ActivityBaseData {
     }
   }
   GetRewardDataList() {
-    return Array.from(this.cXs.values()).sort((t, e) => t.Id - e.Id);
+    return Array.from(this.nJs.values()).sort((t, e) => t.Id - e.Id);
   }
 }
 exports.ActivityTimePointRewardData = ActivityTimePointRewardData;

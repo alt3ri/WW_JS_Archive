@@ -8,7 +8,7 @@ class TextLanguageSettingView extends LanguageSettingViewBase_1.LanguageSettingV
     return a.Initialize(e, t, g), a;
   }
   OnRefreshView(e) {
-    var t = this.MenuDataIns.MenuDataOptionsNameList[e.GetIndex()];
+    var t = this.MenuDataIns.OptionsNameList[e.GetIndex()];
     e.SetMainText(t);
   }
   OnSelected(e, t) {

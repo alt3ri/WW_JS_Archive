@@ -116,7 +116,7 @@ class KuroSdkReport {
     SdkReportQuestFinish.IfNeedReport(e) &&
       (((r = new SdkReportQuestFinish(void 0)).QuestId = e), _a.Report(r)),
       SdkReportChapter.IfNeedReport(e, 0) &&
-        t === Protocol_1.Aki.Protocol.tTs.Proto_Finish &&
+        t === Protocol_1.Aki.Protocol.hTs.Proto_Finish &&
         (((r = new SdkReportChapter(void 0)).TreeConfigId = e), _a.Report(r));
   }),
   (KuroSdkReport.RSe = (e, t, r) => {
@@ -125,7 +125,7 @@ class KuroSdkReport {
       ((E = e.TreeConfigId),
       (e = e.NodeId),
       SdkReportBattleTech.IfNeedReport(E, e)) &&
-      r === Protocol_1.Aki.Protocol.bNs.Proto_CQNS_Finished &&
+      r === Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Finished &&
       (((r = new SdkReportBattleTech(void 0)).TreeConfigId = E),
       (r.NodeId = e),
       _a.Report(r));

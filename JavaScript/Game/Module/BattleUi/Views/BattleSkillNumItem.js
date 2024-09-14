@@ -7,6 +7,7 @@ class BattleSkillNumItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.pot = -1),
+      (this.TargetActive = !1),
       (this.vot = new Map()),
       this.CreateByResourceIdAsync("UiItem_BattleSkillNumItem", t);
   }
@@ -20,6 +21,7 @@ class BattleSkillNumItem extends UiPanelBase_1.UiPanelBase {
     for (const t of this.vot.values()) t();
   }
   SetComponentActive(t) {
+    this.TargetActive = t;
     var e = () => {
       this.SetActive(t);
     };

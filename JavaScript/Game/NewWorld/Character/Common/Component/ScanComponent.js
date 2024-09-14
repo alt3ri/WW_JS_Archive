@@ -82,7 +82,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
       (this.nzr = !1),
       (this.szr = !1),
       (this.azr = new Array()),
-      (this.bGn = !1),
+      (this.jGn = !1),
       (this.hzr = 0),
       (this.lzr = 0),
       (this.xC = !1),
@@ -129,7 +129,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
       (this.pie(),
       (this.n$t = this.Entity.GetComponent(1)),
       (this.Ovr = this.Entity.GetComponent(0)),
-      (this.rzr = this.Entity.GetComponent(108)),
+      (this.rzr = this.Entity.GetComponent(109)),
       this.rzr &&
         this.rzr.SetLogicRange(
           ConfigManager_1.ConfigManager.LevelGamePlayConfig
@@ -346,7 +346,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
         "[ScanComponent.CancelEntityConcealState]",
         new EffectContext_1.EffectContext(this.Entity.Id),
       ));
-    var t = this.Entity.GetComponent(180);
+    var t = this.Entity.GetComponent(181);
     t?.HasTag(1227933697) && t.RemoveTag(1227933697);
   }
   wzr(e, t = !1) {
@@ -397,9 +397,9 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
         i &&
         n &&
         (this.Entity.GetComponent(
-          171,
+          172,
         )?.MaterialController?.ApplySimpleMaterialEffect(n),
-        (this.bGn = !0),
+        (this.jGn = !0),
         this.hzr++),
       i
     );
@@ -432,9 +432,9 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
                 ModelManager_1.ModelManager.RenderModuleModel.DisableActorData(
                   t,
                 );
-              this.bGn &&
+              this.jGn &&
                 this.Entity.GetComponent(
-                  171,
+                  172,
                 )?.MaterialController?.RemoveSimpleMaterialEffect(),
                 (this.azr.length = 0),
                 this.gzr.delete(i);
@@ -669,7 +669,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
   (ScanComponent.yzr = -1),
   (ScanComponent = ScanComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(73)],
+      [(0, RegisterComponent_1.RegisterComponent)(74)],
       ScanComponent,
     )),
   (exports.ScanComponent = ScanComponent);

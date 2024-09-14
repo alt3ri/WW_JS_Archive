@@ -218,7 +218,7 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
       (this.L1i = () => {
         TimeOfDayController_1.TimeOfDayController.AdjustTime(
           this.jTo.ToSecond,
-          Protocol_1.Aki.Protocol.h4s.Proto_PlayerOperate,
+          Protocol_1.Aki.Protocol.C4s.Proto_PlayerOperate,
         ),
           TimeOfDayController_1.TimeOfDayController.PauseTime(),
           UiLayer_1.UiLayer.SetShowNormalMaskLayer(!0),

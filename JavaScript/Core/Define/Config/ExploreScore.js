@@ -13,9 +13,16 @@ class ExploreScore {
   get ExploreScore() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.explorescoreLength(),
-      (t) => this.explorescore(t)?.key(),
-      (t) => this.explorescore(t)?.value(),
+      this.explorescoreKey,
+      this.explorescoreValue,
+      this,
     );
+  }
+  explorescoreKey(t) {
+    return this.explorescore(t)?.key();
+  }
+  explorescoreValue(t) {
+    return this.explorescore(t)?.value();
   }
   __init(t, e) {
     return (this.z7 = t), (this.J7 = e), this;

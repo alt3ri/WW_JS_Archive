@@ -7,6 +7,7 @@ const UE = require("ue"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
@@ -50,7 +51,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
       (this.bSt = (t) => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Chat", 8, "当聊天文本提交时", ["content", t]),
-          this.qSt(t, Protocol_1.Aki.Protocol.l8n.SIs);
+          this.qSt(t, Protocol_1.Aki.Protocol.p8n.DIs);
       }),
       (this.GSt = () => {}),
       (this.NSt = (t) => !0),
@@ -104,9 +105,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
           this.jSt(s),
           this.WSt(r, s),
           i === t) &&
-          this.YSt(e, (t) => {
-            this.XSt(!0), this.JSt(ChatDefine_1.CHAT_SCROLL_DELAY);
-          });
+          this.$Wa(e);
       }),
       (this.Uze = () => {
         this.xSt.SetScrollProgress(1), (this.PSt = !1);
@@ -153,7 +152,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
                 ])
               );
           }
-          this.qSt(t.toString(), Protocol_1.Aki.Protocol.l8n.Proto_Emoji);
+          this.qSt(t.toString(), Protocol_1.Aki.Protocol.p8n.Proto_Emoji);
         } else
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Chat", 8, "当前没有加入任何一个聊天室");
@@ -169,7 +168,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.ayt = () => {
         var t = this.GetInputText(2).GetText();
-        this.qSt(t, Protocol_1.Aki.Protocol.l8n.SIs);
+        this.qSt(t, Protocol_1.Aki.Protocol.p8n.DIs);
       }),
       (this.hyt = () => {
         var t = ModelManager_1.ModelManager.ChatModel.GetJoinedChatRoom();
@@ -231,7 +230,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
           this.GetItem(11)
             .GetOwner()
             .GetComponentByClass(UE.UIInturnAnimController.StaticClass())
-            .Play();
+            ?.Play();
       });
   }
   OnRegisterComponent() {
@@ -257,6 +256,8 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
       [18, UE.UIText],
       [19, UE.UIItem],
       [20, UE.UIItem],
+      [21, UE.UIItem],
+      [22, UE.UIText],
     ]),
       (this.BtnBindInfo = [
         [0, this.ryt],
@@ -437,6 +438,15 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
         this.XBo,
       );
   }
+  async $Wa(t) {
+    let e = !1;
+    var i =
+      await PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.GetSdkBlockingUser();
+    (e = i && t.PsAccountId && i.get(t.PsAccountId) ? !0 : e) ||
+      this.YSt(t, (t) => {
+        this.XSt(!0), this.JSt(ChatDefine_1.CHAT_SCROLL_DELAY);
+      });
+  }
   JSt(t) {
     (this.PSt = !0),
       this.xze(),
@@ -512,13 +522,13 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
               ? ChatController_1.ChatController.ChannelChatRequest(
                   e,
                   t,
-                  Protocol_1.Aki.Protocol.DFs.Proto_MatchTeam,
+                  Protocol_1.Aki.Protocol.BFs.Proto_MatchTeam,
                 )
               : i instanceof WorldTeamChatRoom_1.WorldChatRoom &&
                 ChatController_1.ChatController.ChannelChatRequest(
                   e,
                   t,
-                  Protocol_1.Aki.Protocol.DFs.Proto_WorldTeam,
+                  Protocol_1.Aki.Protocol.BFs.Proto_WorldTeam,
                 );
           this.GetInputText(2).SetText("", !1);
         }
@@ -542,6 +552,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
       ((e = ModelManager_1.ModelManager.ChatModel.GetAllSortedChatRoom()),
       this.cyt(t, !0),
       this.K7e(t),
+      this.qxa(t),
       this.WSt(t, e),
       this.eyt(t),
       this.vyt(!0),
@@ -553,15 +564,21 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
       ((e = ModelManager_1.ModelManager.ChatModel.GetAllSortedChatRoom()),
       this.WSt(t, e),
       this.eyt(t),
+      this.qxa(void 0),
       this.cyt(void 0, !1),
       this.K7e(void 0, !0),
       this.vyt(!1),
       this.XSt(!0));
   }
-  eyt(t) {
+  async eyt(t) {
     this.fyt();
-    t = t.GetChatContentList();
-    this.Myt(t);
+    var t = t.GetChatContentList(),
+      e =
+        await PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.GetSdkBlockingUser(),
+      i = [];
+    for (const s of t)
+      (s.PsAccountId && e && e.has(s.PsAccountId)) || i.push(s);
+    this.Myt(i);
   }
   Myt(e, i = 0) {
     var t = e[i];
@@ -578,8 +595,8 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
     let s = void 0;
     return (
       (s =
-        t.NoticeType === Protocol_1.Aki.Protocol.PFs.Proto_EnterTeam ||
-        t.NoticeType === Protocol_1.Aki.Protocol.PFs.Proto_ExitTeam
+        t.NoticeType === Protocol_1.Aki.Protocol.GFs.Proto_EnterTeam ||
+        t.NoticeType === Protocol_1.Aki.Protocol.GFs.Proto_ExitTeam
           ? new ChatTeamTipsContent_1.ChatTeamTipsContent(
               ChatDefine_1.TEAM_CONTENT_RESOURCE_ID,
               i,
@@ -690,6 +707,17 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
         if (e instanceof WorldTeamChatRoom_1.WorldChatRoom)
           return this.Cyt(), e;
       }
+  }
+  qxa(t) {
+    var e;
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
+      ? ((e = void 0 !== t && "" !== t?.GetPsnUserId()),
+        this.GetItem(21)?.SetUIActive(e),
+        e && t
+          ? (this.GetText(22)?.SetText(t.GetPsnOnlineId()),
+            this.GetText(22)?.SetUIActive(!0))
+          : this.GetText(22)?.SetUIActive(!1))
+      : (this.GetItem(21)?.SetUIActive(!1), this.GetText(22)?.SetUIActive(!1));
   }
 }
 exports.ChatView = ChatView;

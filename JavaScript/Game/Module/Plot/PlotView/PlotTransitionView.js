@@ -296,10 +296,7 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
         ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
           i.ExternalSourceSetting,
         ),
-      i = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName([
-        i.IsCheckSex,
-        i.FileName,
-      ]);
+      i = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName(i);
     AudioController_1.AudioController.PostEventByExternalSourcesByUi(
       t.AudioEventPath,
       i,

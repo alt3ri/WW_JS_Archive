@@ -34,13 +34,13 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
       (this.fct = void 0),
       (this.$ut = void 0),
       (this.IsShowingBehaviorTreeView = !1),
-      (this.VOn = !1),
+      (this.$On = !1),
       (this.pct = !1),
       (this.Zut = 0),
-      (this.HOn = 0),
+      (this.YOn = 0),
       (this.vct = 0),
-      (this.gxn = (t) => {
-        "Start" === t &&
+      (this.mxn = (e) => {
+        "Start" === e &&
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("BattleUiSet", 19, "开始调用ProcessItem节点Active"),
           this.SetUiActive(!0),
@@ -52,8 +52,8 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
                 this.$ut.TrackTextConfig,
               ));
       }),
-      (this.fxn = (t) => {
-        switch (t) {
+      (this.dxn = (e) => {
+        switch (e) {
           case "Start":
             this.GetText(8).IsUIActiveSelf() &&
               this.fct?.PlayStartSequence(
@@ -66,14 +66,14 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
             this.SetUiActive(!1), this.Ict();
         }
       }),
-      (this.nXn = (t) => {
-        "Start" === t &&
+      (this.dXn = (e) => {
+        "Start" === e &&
           (this.GetText(6).SetText(this.$ut?.QuestName ?? ""),
           this.mct.SetUIActive(!1),
           this.dct.SetUIActive(!0));
       }),
-      (this.Lct = (t) => {
-        switch (t) {
+      (this.Lct = (e) => {
+        switch (e) {
           case "Start":
             this.QuestFinishSequencePlayer.PlayLevelSequenceByName("Close");
             break;
@@ -81,78 +81,78 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
             this.mct.SetUIActive(!0), this.dct.SetUIActive(!1), this.Ict();
         }
       }),
-      (this.Mxn = () => {
-        var t,
-          e = this.GetText(8);
+      (this.fxn = () => {
+        var e,
+          t = this.GetText(8);
         return this.$ut &&
-          this.$ut.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
-          (t =
+          this.$ut.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
+          (e =
             ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
               this.$ut.TreeIncId,
             )) &&
-          (t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
-            t.TreeConfigId,
+          (e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
+            e.TreeConfigId,
           ))
-          ? (e.SetText(t.Name), e.SetUIActive(!0), !0)
-          : (e.SetUIActive(!1), !1);
+          ? (t.SetText(e.Name), t.SetUIActive(!0), !0)
+          : (t.SetUIActive(!1), !1);
       }),
-      (this.lqn = (t) => {
-        this.TreeIncId !== t ||
+      (this.pqn = (e) => {
+        this.TreeIncId !== e ||
           this.GetText(8).IsUIActiveSelf() ||
           this.GetSprite(0)?.SetUIActive(!1);
       }),
-      (this._qn = (t) => {
-        this.TreeIncId !== t || this.GetText(8).IsUIActiveSelf() || this.Ost();
+      (this.vqn = (e) => {
+        this.TreeIncId !== e || this.GetText(8).IsUIActiveSelf() || this.Ost();
       }),
       (this.Ect = () => {
         this.$ut && this.GetText(6).SetText(this.$ut.QuestName);
       }),
       (this.Sct = () => {
-        var t,
-          e = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestMarkConfig(
+        var e,
+          t = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestMarkConfig(
             this.$ut?.TrackIconConfigId ?? 0,
           );
-        e &&
-          (t = this.GetUiNiagara(7)) &&
-          (t.SetColor(UE.Color.FromHex(e.TrackTextStartEffectColor)),
-          t.ActivateSystem(!0));
+        t &&
+          (e = this.GetUiNiagara(7)) &&
+          (e.SetColor(UE.Color.FromHex(t.TrackTextStartEffectColor)),
+          e.ActivateSystem(!0));
       }),
-      (this.Rct = (t) => {
-        t === this.$ut?.TreeIncId && this.WOn(0);
+      (this.Rct = (e) => {
+        e === this.$ut?.TreeIncId && this.zOn(0);
       }),
-      (this.Uct = (t) => {
-        6 === t.Type &&
-          t.TreeIncId === this.$ut?.TreeIncId &&
+      (this.Uct = (e) => {
+        6 === e.Type &&
+          e.TreeIncId === this.$ut?.TreeIncId &&
           (this.Act(), this.Rct(this.$ut.TreeIncId));
       }),
-      (this.Pct = (t) => {
-        8 === t && this.Act();
+      (this.Pct = (e) => {
+        7 === e && this.Act();
       }),
-      (this.xct = (t) => {
-        8 === t && this.Act();
+      (this.xct = (e) => {
+        7 === e && this.Act();
       }),
-      (this.bMe = (t, e) => {
-        1 === e && this.wct();
+      (this.bMe = (e, t) => {
+        1 === t && this.wct();
       }),
       (this.wct = () => {
         if (this.$ut && !this.pct)
           switch (((this.pct = !0), this.vct)) {
             case 1:
-              var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(114);
-              t.SetCloseFunction(() => {
-                var t;
+              var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(114);
+              e.SetCloseFunction(() => {
+                var e;
                 this.$ut?.IsRollbackWaiting() &&
-                  ((t = this.$ut.GetBlackboard()),
+                  ((e = this.$ut.GetBlackboard()),
                   EventSystem_1.EventSystem.EmitWithTarget(
-                    t,
+                    e,
                     EventDefine_1.EEventName
                       .GeneralLogicTreeRollbackWaitingUpdate,
                   ));
               }),
-                t.FunctionMap.set(1, () => {
+                e.FunctionMap.set(1, () => {
                   this.pct = !1;
                 }),
-                t.FunctionMap.set(2, () => {
+                e.FunctionMap.set(2, () => {
                   !this.$ut || this.$ut?.IsRollbackWaiting()
                     ? (this.pct = !1)
                     : GeneralLogicTreeController_1.GeneralLogicTreeController.RequestGiveUp(
@@ -163,21 +163,28 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
                       );
                 }),
                 ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                  t,
+                  e,
                 );
               break;
             case 2:
-              t = this.$ut.GetCurrentCommunicateId();
+              e = this.$ut.GetCurrentCommunicateId();
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.CommunicateAgain,
-                t,
+                e,
+              ),
+                this.Act(),
+                (this.pct = !1);
+              break;
+            case 3:
+              EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName.ChallengeAgain,
               ),
                 this.Act(),
                 (this.pct = !1);
           }
       }),
       (this.Bct = () => {
-        this.$ut?.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
+        this.$ut?.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnLogicTreeTrackUpdate,
             this.$ut.BtType,
@@ -217,21 +224,21 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
       (this.dct = this.GetItem(4)),
       this.dct.SetUIActive(!1),
       this.GetText(6).OnSelfLanguageChange.Bind(this.Ect),
-      this.GetText(8).OnSelfLanguageChange.Bind(this.Mxn),
+      this.GetText(8).OnSelfLanguageChange.Bind(this.fxn),
       (this.TotalTitleSequencePlayer =
         new LevelSequencePlayer_1.LevelSequencePlayer(this.mct)),
-      this.TotalTitleSequencePlayer.BindSequenceStartEvent(this.gxn),
-      this.TotalTitleSequencePlayer.BindSequenceCloseEvent(this.fxn),
+      this.TotalTitleSequencePlayer.BindSequenceStartEvent(this.mxn),
+      this.TotalTitleSequencePlayer.BindSequenceCloseEvent(this.dxn),
       (this.QuestFinishSequencePlayer =
         new LevelSequencePlayer_1.LevelSequencePlayer(this.dct)),
-      this.QuestFinishSequencePlayer.BindSequenceStartEvent(this.nXn),
+      this.QuestFinishSequencePlayer.BindSequenceStartEvent(this.dXn),
       this.QuestFinishSequencePlayer.BindSequenceCloseEvent(this.Lct),
       (this.Cct = this.RootItem.GetOwner().GetComponentByClass(
         UE.UIButtonComponent.StaticClass(),
       ));
     this.GetUiNiagara(7).SetNiagaraUIActive(!0, !1);
-    var t = this.GetItem(1);
-    (this.fct = new MissionPanelStep_1.MissionPanelStep()), this.fct.Init(t);
+    var e = this.GetItem(1);
+    (this.fct = new MissionPanelStep_1.MissionPanelStep()), this.fct.Init(e);
   }
   OnBeforeDestroy() {
     InputDistributeController_1.InputDistributeController.UnBindAction(
@@ -250,17 +257,18 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
       (this.TotalTitleSequencePlayer = void 0);
   }
   OnPanelShow() {
-    (this.VOn = !0),
+    (this.$On = !0),
       this.Ore(),
       this.QuestFinishSequencePlayer.GetCurrentSequence() &&
         this.QuestFinishSequencePlayer.ResumeSequence(),
       this.TotalTitleSequencePlayer.GetCurrentSequence() &&
         this.TotalTitleSequencePlayer.ResumeSequence(),
       this.fct?.ResumeSequence(),
-      this.Act();
+      this.Act(),
+      this.fxn();
   }
   OnPanelHide() {
-    (this.VOn = !1),
+    (this.$On = !1),
       this.kre(),
       this.QuestFinishSequencePlayer.GetCurrentSequence() &&
         this.QuestFinishSequencePlayer.PauseSequence(),
@@ -292,15 +300,15 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.MissionPanelStepTitleAnimStart,
-        this.lqn,
+        this.pqn,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.MissionPanelStepTitleAnimEnd,
-        this._qn,
+        this.vqn,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnQuestStageNameChange,
-        this.Mxn,
+        this.fxn,
       ),
       Info_1.Info.IsInTouch() ||
         EventSystem_1.EventSystem.Add(
@@ -332,15 +340,15 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.MissionPanelStepTitleAnimStart,
-        this.lqn,
+        this.pqn,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.MissionPanelStepTitleAnimEnd,
-        this._qn,
+        this.vqn,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnQuestStageNameChange,
-        this.Mxn,
+        this.fxn,
       ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.InputControllerChange,
@@ -351,43 +359,43 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
           this.XBo,
         );
   }
-  UpdateSelfData(t) {
-    this.Gct(t), this.Ost(), this.Act();
+  UpdateSelfData(e) {
+    this.Gct(e), this.Ost(), this.Act();
   }
-  Gct(t) {
+  Gct(e) {
     this.$ut &&
-      this.$ut !== t &&
+      this.$ut !== e &&
       BehaviorTreeShowBridge_1.BehaviorTreeShowBridge.Recycle(this.$ut),
-      (this.$ut = t);
+      (this.$ut = e);
   }
   Ost() {
-    var t, e;
+    var e, t;
     this.$ut &&
-      (t = this.$ut.TrackIconConfigId) &&
-      ((e = this.GetSprite(0)),
+      (e = this.$ut.TrackIconConfigId) &&
+      ((t = this.GetSprite(0)),
       this.CheckVisible()
-        ? (e.SetUIActive(!0),
+        ? (t.SetUIActive(!0),
           this.SetSpriteByPath(
-            ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeMark(t),
-            e,
+            ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeMark(e),
+            t,
             !1,
           ))
-        : e.SetUIActive(!1));
+        : t.SetUIActive(!1));
   }
-  jOn() {
+  JOn() {
     this.$ut && this.fct.Update(this.$ut.TreeIncId, this.$ut.TrackTextConfig);
   }
   Act() {
-    let e = void (this.vct = 0);
+    let t = void (this.vct = 0);
     var i = this.GetText(2),
-      t = this.$ut?.TreeIncId;
+      e = this.$ut?.TreeIncId;
     switch (
-      (t &&
-        (e =
+      (e &&
+        (t =
           ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-            t,
+            e,
           )) &&
-        (this.vct = e.GetCurrentNodeShortcutShow()),
+        (this.vct = t.GetCurrentNodeShortcutShow()),
       this.vct)
     ) {
       case 0:
@@ -402,10 +410,10 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
           i.SetUIActive(!1);
         break;
       case 1: {
-        let t = e.GetGiveUpText();
+        let e = t.GetGiveUpText();
         if (
-          ((t =
-            t ||
+          ((e =
+            e ||
             ConfigManager_1.ConfigManager.TextConfig.GetTextById(
               "GeneralLogicTreeGiveUp",
             )),
@@ -428,17 +436,17 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
                 ]);
             break;
           }
-          var s = `<texture=${s.GetKeyIconPath()}/>` + t;
+          var s = `<texture=${s.GetKeyIconPath()}/>` + e;
           i.SetText(s);
         } else
           Info_1.Info.IsInGamepad()
             ? ((s =
-                this.Nct(InputMappingsDefine_1.actionMappings.玩法放弃, t) ??
-                t),
+                this.Nct(InputMappingsDefine_1.actionMappings.玩法放弃, e) ??
+                e),
               i.SetText(s))
             : ((s =
                 `<texture=${ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath("FightMissionStop")}/>` +
-                t),
+                e),
               i.SetText(s));
         i.SetAlpha(1),
           i.SetUIActive(!0),
@@ -450,6 +458,49 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
             InputMappingsDefine_1.actionMappings.玩法放弃,
             this.bMe,
           );
+        break;
+      }
+      case 3: {
+        let e = t.GetGiveUpText();
+        if (
+          ((e =
+            e ||
+            ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+              "ChallengeAgain",
+            )),
+          Info_1.Info.IsInKeyBoard())
+        ) {
+          s = InputSettingsManager_1.InputSettingsManager.GetActionBinding(
+            InputMappingsDefine_1.actionMappings.重新挑战,
+          );
+          if (!s) {
+            i.SetUIActive(!1);
+            break;
+          }
+          s = s.GetPcKey();
+          if (!s) {
+            i.SetUIActive(!1),
+              Log_1.Log.CheckError() &&
+                Log_1.Log.Error("GeneralLogicTree", 19, "pcKey为空", [
+                  "actionMapping",
+                  InputMappingsDefine_1.actionMappings.重新挑战,
+                ]);
+            break;
+          }
+          s = `<texture=${s.GetKeyIconPath()}/>` + e;
+          i.SetText(s);
+        } else
+          Info_1.Info.IsInGamepad()
+            ? ((s =
+                this.Nct(InputMappingsDefine_1.actionMappings.重新挑战, e) ??
+                e),
+              i.SetText(s))
+            : ((s =
+                ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+                  "ChallengeAgain_mobile",
+                ) ?? e),
+              i.SetText(s));
+        i.SetAlpha(1), i.SetUIActive(!0);
         break;
       }
       case 2: {
@@ -481,7 +532,7 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
         var n = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
           "QuestCommunicateCallback",
         );
-        let t = n;
+        let e = n;
         if (Info_1.Info.IsInKeyBoard()) {
           s = s.GetPcKey();
           if (!s) {
@@ -494,39 +545,39 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
             break;
           }
           s = s.GetKeyIconPath();
-          t = `<texture=${s}/>` + n;
+          e = `<texture=${s}/>` + n;
         } else
           Info_1.Info.IsInGamepad() &&
-            (t =
+            (e =
               this.Nct(InputMappingsDefine_1.actionMappings.任务追踪, n) ?? n);
-        i.SetText(t), i.SetAlpha(1), i.SetUIActive(!0);
+        i.SetText(e), i.SetAlpha(1), i.SetUIActive(!0);
         break;
       }
     }
   }
   Nct(i, s) {
-    var t =
+    var e =
       InputSettingsManager_1.InputSettingsManager.GetCombinationActionBindingByActionName(
         i,
       );
-    if (t) {
+    if (e) {
       var n = new Map();
-      if ((t.GetCurrentPlatformKeyNameMap(n), n)) {
-        let t = i,
-          e = i;
+      if ((e.GetCurrentPlatformKeyNameMap(n), n)) {
+        let e = i,
+          t = i;
         for (var [h, r] of n) {
           (h = InputSettings_1.InputSettings.GetKey(h)),
             (r = InputSettings_1.InputSettings.GetKey(r));
-          h && (t = h.GetKeyIconPath()), r && (e = r.GetKeyIconPath());
+          h && (e = h.GetKeyIconPath()), r && (t = r.GetKeyIconPath());
           break;
         }
-        return `<texture=${t}/>+<texture=${e}/>` + s;
+        return `<texture=${e}/>+<texture=${t}/>` + s;
       }
     }
   }
-  vxn(t) {
+  gxn(e) {
     return (
-      (this.Zut = t),
+      (this.Zut = e),
       TimerSystem_1.TimerSystem.Next(this.Sct),
       this.TotalTitleSequencePlayer.StopCurrentSequence(!0, !0),
       this.TotalTitleSequencePlayer.PlayLevelSequenceByName("Start"),
@@ -536,20 +587,20 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
       !1
     );
   }
-  StartShow(t, e) {
+  StartShow(e, t) {
     return (
       (this.IsShowingBehaviorTreeView = !0),
-      this.UpdateSelfData(e),
-      this.Mxn(),
-      this.vxn(t)
+      this.UpdateSelfData(t),
+      this.fxn(),
+      this.gxn(e)
     );
   }
-  EndShow(t, e) {
+  EndShow(e, t) {
     return (
       (this.IsShowingBehaviorTreeView = !1),
       this.GetActive()
-        ? ((this.Zut = t),
-          2 === e
+        ? ((this.Zut = e),
+          2 === t
             ? this.QuestFinishSequencePlayer.PlayLevelSequenceByName("Start")
             : (this.TotalTitleSequencePlayer.StopCurrentSequence(!0, !0),
               this.TotalTitleSequencePlayer.PlayLevelSequenceByName("Close")),
@@ -558,42 +609,42 @@ class BehaviorTreeView extends BattleChildView_1.BattleChildView {
         : (this.Gct(void 0), !0)
     );
   }
-  OnLogicTreeUpdateShow(t, e) {
+  OnLogicTreeUpdateShow(e, t) {
     var i = this.$ut.TrackTextConfig,
-      s = e.TrackTextConfig;
+      s = t.TrackTextConfig;
     return i.CheckTextEqual(s)
-      ? (this.UpdateSelfData(e), this.jOn(), !0)
-      : ((this.Zut = t),
-        this.fct.ExecuteSequenceOnUpdate(t, e, () => {
-          this.UpdateSelfData(e);
+      ? (this.UpdateSelfData(t), this.JOn(), !0)
+      : ((this.Zut = e),
+        this.fct.ExecuteSequenceOnUpdate(e, t, () => {
+          this.UpdateSelfData(t);
         }),
         !1);
   }
-  OnRefresh(t, e) {
-    this.VOn &&
-      (this.HOn > BattleUiDefine_1.REFRESH_POSITION_INTERVAL &&
-        ((this.HOn -= BattleUiDefine_1.REFRESH_POSITION_INTERVAL), this.WOn(e)),
-      (this.HOn += t));
+  OnRefresh(e, t) {
+    this.$On &&
+      (this.YOn > BattleUiDefine_1.REFRESH_POSITION_INTERVAL &&
+        ((this.YOn -= BattleUiDefine_1.REFRESH_POSITION_INTERVAL), this.zOn(t)),
+      (this.YOn += e));
   }
-  WOn(t) {
-    (t && t === this.Zut) ||
+  zOn(e) {
+    (e && e === this.Zut) ||
       (this.CheckVisible()
-        ? (this.jOn(), this.SetUiActive(!0))
+        ? (this.JOn(), this.SetUiActive(!0))
         : this.SetUiActive(!1));
   }
   CheckVisible() {
-    var t;
+    var e;
     return !(
       !this.$ut ||
       !this.IsShowingBehaviorTreeView ||
-      !(t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetLogicTreeContainer(
+      !(e = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetLogicTreeContainer(
         this.$ut.BtType,
         this.$ut.TreeConfigId,
       )) ||
-      (this.BtType !== Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest
-        ? !t.CanShowInUiPanel() || this.$ut.CheckShowConfigEmpty()
+      (this.BtType !== Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest
+        ? !e.CanShowInUiPanel() || this.$ut.CheckShowConfigEmpty()
         : ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() ||
-          !t.CanShowInUiPanel())
+          !e.CanShowInUiPanel())
     );
   }
   Ict() {

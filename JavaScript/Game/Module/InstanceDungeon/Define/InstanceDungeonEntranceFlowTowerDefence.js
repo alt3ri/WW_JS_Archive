@@ -21,17 +21,17 @@ class InstanceDungeonEntranceFlowTowerDefense extends InstanceDungeonEntranceFlo
           );
       }),
       this.AddStep(() => {
-        TowerDefenceController_1.TowerDefenseController.EnterTowerDefense()
-          .then((e) => {
-            e &&
-              EditBattleTeamController_1.EditBattleTeamController.CloseEditBattleTeamView();
-          })
-          .finally(() => {
-            this.Reset(),
-              TowerDefenceController_1.TowerDefenseController.SetIsUiFlowOpen(
-                !1,
-              );
-          });
+        TowerDefenceController_1.TowerDefenseController.EnterTowerDefense().then(
+          (e) => {
+            e
+              ? (EditBattleTeamController_1.EditBattleTeamController.CloseEditBattleTeamView(),
+                this.Reset(),
+                TowerDefenceController_1.TowerDefenseController.SetIsUiFlowOpen(
+                  !1,
+                ))
+              : this.RevertStep();
+          },
+        );
       });
   }
 }

@@ -1,14 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.checkP4Connection =
-    exports.upperStringFirstLetter =
-    exports.checkMonsterValid =
-    exports.getNextPathName =
-    exports.getPreName =
-    exports.getUniqueName =
-    exports.getNextName =
-    exports.getNameWithoutIndex =
-    exports.killProcess =
+  (exports.killProcess =
     exports.isProcessRunning =
     exports.isProcessRunningInPath =
     exports.getProcessImagePathsByName =
@@ -17,7 +9,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.exec =
     exports.getTimeSeconds =
     exports.genGuid =
+    exports.getNetWorkAddress =
     exports.getMacAddress =
+    exports.hasFieldMatch =
     exports.forEachField =
     exports.strcmpi =
     exports.strcmp =
@@ -33,7 +27,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.alignNumber =
     exports.stringifyEditor =
     exports.stringifyBool =
+    exports.parseVarValue =
+    exports.parsePos =
+    exports.parseCsvLongArray =
+    exports.parseCsvFloatArray =
     exports.parseCsvStringArray =
+    exports.parseCsvInt2Array =
     exports.parseCsvIntArray =
     exports.parseBool =
     exports.parseIntSafe =
@@ -48,25 +47,17 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.unionArray =
     exports.addArray =
     exports.subArray =
+    exports.getEnumNameByValue =
     exports.getEnumNames =
     exports.getEnumValues =
       void 0),
-  (exports.getTextFileOriginRequiredList =
-    exports.getFileSourceBranchAsync =
-    exports.getBatchFileBranchDataAsync =
-    exports.getFileDepotInfoAsync =
-    exports.getFileDepotInfo =
-    exports.isCurrentBranchAsset =
-    exports.getAllDepotBranchDataSync =
-    exports.getBranchOriginsDataSync =
-    exports.getBranchReqShortPath =
+  (exports.getBranchReqShortPath =
     exports.compareTextOrder =
     exports.doJsonHttpDelete =
     exports.doJsonHttpPost =
     exports.doJsonHttpGet =
     exports.toDepotPath =
     exports.deepCopyData =
-    exports.getNetWorkAddress =
     exports.getMd5 =
     exports.stringIsNullOrEmpty =
     exports.formatDateTime =
@@ -95,21 +86,43 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.loadEditorSaviorSyncConfig =
     exports.getAkiBaseProjectPath =
     exports.getAkiBaseLocalPath =
+    exports.getChangeListShelveFiles =
     exports.getCurrentP4Owner =
     exports.getWorkspaceBranch =
     exports.getCurrentP4Branch =
     exports.getCurrentClientName =
     exports.getCurrentClientRoot =
     exports.getCurrentP4Stream =
+    exports.checkP4Connection =
+    exports.upperStringFirstLetter =
+    exports.checkMonsterValid =
+    exports.getNextPathName =
+    exports.getPreName =
+    exports.getUniqueName =
+    exports.getNextName =
+    exports.getNameWithoutIndex =
       void 0),
-  (exports.execAsync =
-    exports.isTextFileByExtension =
+  (exports.isIpAddress =
+    exports.touchInstance =
+    exports.execAsync =
     exports.isCurrentBranchAssetAsync =
+    exports.getFileSourceBranchAsync =
+    exports.getBatchFileBranchDataAsync =
+    exports.isTextFileInOriginRequiredListAsync =
+    exports.isTextFileByExtension =
+    exports.getTextFileOriginRequiredList =
+    exports.getFileDepotInfoAsync =
+    exports.getFileDepotInfo =
+    exports.isCurrentBranchAsset =
+    exports.getAllDepotBranchDataSync =
+    exports.getBranchOriginsDataSync =
       void 0);
 const crypto = require("crypto-js"),
   IEditor_1 = require("../../Interface/IEditor"),
   Init_1 = require("../../Interface/Init"),
   IUtil_1 = require("../../Interface/IUtil"),
+  IVar_1 = require("../../Interface/IVar"),
+  Recorder_1 = require("../Performance/Recorder"),
   Platform_1 = require("../Platform/Platform"),
   Async_1 = require("./Async"),
   File_1 = require("./File"),
@@ -121,6 +134,10 @@ function getEnumValues(e) {
 }
 function getEnumNames(t) {
   return Object.keys(t).filter((t) => Number.isNaN(Number(t)));
+}
+function getEnumNameByValue(e, r) {
+  var t = Object.keys(e).find((t) => e[t] === r);
+  return t || "";
 }
 function subArray(t, e) {
   return e.length <= 0 ? t : t.filter((t) => !e.includes(t));
@@ -198,8 +215,47 @@ function parseCsvIntArray(t) {
     .split(",")
     .map((t) => parseIntSafe(t));
 }
+function parseCsvInt2Array(t) {
+  return JSON.parse(t);
+}
 function parseCsvStringArray(t) {
   return t.substring(1, t.length - 1).split(",");
+}
+function parseCsvFloatArray(t) {
+  return t
+    .substring(1, t.length - 1)
+    .split(",")
+    .map((t) => parseFloatSafe(t));
+}
+function parseCsvLongArray(t) {
+  return t
+    .substring(1, t.length - 1)
+    .split(",")
+    .map((t) => parseIntSafe(t));
+}
+function parsePos(t) {
+  t = parseCsvIntArray(t);
+  return t ? { X: t[0], Y: t[1], Z: t[2] } : { X: 0, Y: 0, Z: 0 };
+}
+function parseVarValue(t, e) {
+  switch (t) {
+    case "Boolean":
+      return parseBool(e);
+    case "String":
+      return e;
+    case "Float":
+      return parseFloat(e);
+    case "Entity":
+    case "Quest":
+    case "QuestState":
+    case "Prefab":
+    case "Int":
+      var r = parseInt(e);
+      return isNaN(r) ? 0 : r;
+    case "Pos":
+      return parsePos(e);
+  }
+  return IVar_1.varConfig[t];
 }
 function stringifyBool(t) {
   return t ? "1" : "0";
@@ -255,29 +311,29 @@ function createMultiData(e, t, r) {
   if (e instanceof Array) {
     var n = t;
     if (!n || e.length !== n.length) return null;
-    const a = [];
+    const s = [];
     for (let t = 0; t < e.length; t++) {
       var o = createMultiData(e[t], n[t], r);
-      a.push(o);
+      s.push(o);
     }
-    return a;
+    return s;
   }
-  const a = {};
-  for (const c in t) r?.(c) || (void 0 === e[c] && (a[c] = null));
+  const s = {};
+  for (const c in t) r?.(c) || (void 0 === e[c] && (s[c] = null));
   for (const p in e) {
-    var s, i, u;
+    var a, i, u;
     r?.(p) ||
-      ((s = t[p]),
+      ((a = t[p]),
       (i = e[p]),
-      null === s || null === i
-        ? (a[p] = null)
-        : void 0 === s
-          ? (a[p] = void 0 === i ? void 0 : null)
-          : (u = typeof s) == typeof i && "object" == u
-            ? ((u = createMultiData(s, i, r)), (a[p] = u))
-            : (a[p] = s !== i ? null : s));
+      null === a || null === i
+        ? (s[p] = null)
+        : void 0 === a
+          ? (s[p] = void 0 === i ? void 0 : null)
+          : (u = typeof a) == typeof i && "object" == u
+            ? ((u = createMultiData(a, i, r)), (s[p] = u))
+            : (s[p] = a !== i ? null : a));
   }
-  return a;
+  return s;
 }
 function applyMultiData(r, t, n) {
   if (null === t) return r;
@@ -294,8 +350,8 @@ function applyMultiData(r, t, n) {
     return r;
   }
   var o,
-    a,
     s,
+    a,
     i,
     u = {};
   for (const c in t)
@@ -307,13 +363,13 @@ function applyMultiData(r, t, n) {
         (u[c] = (0, IUtil_1.removeNullField)(o)));
   for (const p in r)
     n?.(p) ||
-      ((a = t[p]),
-      (s = r[p]),
-      null !== a
-        ? (i = typeof a) == typeof s && "object" == i
-          ? ((i = applyMultiData(s, a, n)), (u[p] = i))
-          : (u[p] = a)
-        : (u[p] = s));
+      ((s = t[p]),
+      (a = r[p]),
+      null !== s
+        ? (i = typeof s) == typeof a && "object" == i
+          ? ((i = applyMultiData(a, s, n)), (u[p] = i))
+          : (u[p] = s)
+        : (u[p] = a));
   return u;
 }
 function strcmp(t, e) {
@@ -329,14 +385,32 @@ function strcmpi(t, e) {
 function forEachField(t, e, r) {
   if ("object" == typeof t) {
     var n = t;
-    for (const a in n) {
-      var o = n[a];
-      "object" == typeof o ? forEachField(o, e, r) : e(a, o) && r(n, a, o);
+    for (const s in n) {
+      var o = n[s];
+      "object" == typeof o ? forEachField(o, e, r) : e(s, o) && r(n, s, o);
     }
   }
 }
+function hasFieldMatch(t, e) {
+  if ("object" == typeof t) {
+    var r = t;
+    for (const o in r) {
+      var n = r[o];
+      if (e(o, n)) return !0;
+      if ("object" == typeof n && hasFieldMatch(n, e)) return !0;
+      if (Array.isArray(n))
+        for (const s of n)
+          if ("object" == typeof s && hasFieldMatch(s, e)) return !0;
+    }
+  }
+  return !1;
+}
 function getMacAddress() {
   return (0, Platform_1.getPlatform)().GetMacAddress();
+}
+function getNetWorkAddress() {
+  var t = (0, Platform_1.getPlatform)().GetPhysicMacAddress();
+  if ("" !== t) return t;
 }
 function genGuid() {
   let r = new Date().getTime(),
@@ -406,8 +480,8 @@ function getNextName(t, e = "-") {
     return "" + t + e + "1";
   var o = Number.parseInt(n);
   if (isNaN(o)) return "" + t + e + "1";
-  var a = n.length;
-  for (n = (o + 1).toString(); n.length < a; ) n = "0" + n;
+  var s = n.length;
+  for (n = (o + 1).toString(); n.length < s; ) n = "0" + n;
   return "" + t.substring(0, r) + e + n;
 }
 function getUniqueName(e, t, r = "-") {
@@ -436,22 +510,22 @@ function checkMonsterValid(t) {
     r = t[0].Y ?? 0,
     n = t[1].X ?? 0,
     o = t[1].Y ?? 0;
-  let a = n < e ? n : e,
-    s = n < e ? e : n,
+  let s = n < e ? n : e,
+    a = n < e ? e : n,
     i = o < r ? o : r,
     u = o < r ? r : o,
     c = 2;
   for (c = 2; c < t.length; c++) {
     var p = t[c].X ?? 0,
       f = t[c].Y ?? 0;
-    (a = p < a ? p : a),
-      (s = p > s ? p : s),
+    (s = p < s ? p : s),
+      (a = p > a ? p : a),
       (i = f < i ? f : i),
       (u = f > u ? f : u);
   }
   return [
-    { X: (a + s) / 2, Y: (u + i) / 2, Z: 0 },
-    Math.floor(Math.sqrt((s - a) * (s - a) + (u - i) * (u - i))) / 2,
+    { X: (s + a) / 2, Y: (u + i) / 2, Z: 0 },
+    Math.floor(Math.sqrt((a - s) * (a - s) + (u - i) * (u - i))) / 2,
   ];
 }
 function upperStringFirstLetter(t) {
@@ -473,6 +547,7 @@ function checkP4Connection() {
 }
 (exports.getEnumValues = getEnumValues),
   (exports.getEnumNames = getEnumNames),
+  (exports.getEnumNameByValue = getEnumNameByValue),
   (exports.subArray = subArray),
   (exports.addArray = addArray),
   (exports.unionArray = unionArray),
@@ -487,7 +562,12 @@ function checkP4Connection() {
   (exports.parseIntSafe = parseIntSafe),
   (exports.parseBool = parseBool),
   (exports.parseCsvIntArray = parseCsvIntArray),
+  (exports.parseCsvInt2Array = parseCsvInt2Array),
   (exports.parseCsvStringArray = parseCsvStringArray),
+  (exports.parseCsvFloatArray = parseCsvFloatArray),
+  (exports.parseCsvLongArray = parseCsvLongArray),
+  (exports.parsePos = parsePos),
+  (exports.parseVarValue = parseVarValue),
   (exports.stringifyBool = stringifyBool),
   (exports.stringifyEditor = stringifyEditor),
   (exports.alignNumber = alignNumber),
@@ -503,7 +583,9 @@ function checkP4Connection() {
   (exports.strcmp = strcmp),
   (exports.strcmpi = strcmpi),
   (exports.forEachField = forEachField),
+  (exports.hasFieldMatch = hasFieldMatch),
   (exports.getMacAddress = getMacAddress),
+  (exports.getNetWorkAddress = getNetWorkAddress),
   (exports.genGuid = genGuid),
   (exports.getTimeSeconds = getTimeSeconds),
   (exports.exec = exec),
@@ -594,12 +676,23 @@ function getWorkspaceBranch() {
 function getCurrentP4Owner() {
   return getP4ClientData()?.Owner;
 }
+function getChangeListShelveFiles(t) {
+  var t = "p4 -ztag -Mj describe -S " + t,
+    [t, e] = (0, Platform_1.getPlatform)().Exec(t);
+  if (!t) return [];
+  t = parse(e);
+  if (!t) return [];
+  var r = [];
+  for (const n of Object.entries(t)) n[0].includes("depotFile") && r.push(n[1]);
+  return r;
+}
 (exports.getCurrentP4Stream = getCurrentP4Stream),
   (exports.getCurrentClientRoot = getCurrentClientRoot),
   (exports.getCurrentClientName = getCurrentClientName),
   (exports.getCurrentP4Branch = getCurrentP4Branch),
   (exports.getWorkspaceBranch = getWorkspaceBranch),
-  (exports.getCurrentP4Owner = getCurrentP4Owner);
+  (exports.getCurrentP4Owner = getCurrentP4Owner),
+  (exports.getChangeListShelveFiles = getChangeListShelveFiles);
 let akiBasePath = void 0;
 function getAkiBaseLocalPath() {
   if (akiBasePath) return akiBasePath;
@@ -662,7 +755,7 @@ function getCurrentSyncData() {
   return e && r
     ? ((t = isNaN(e.Timestamp) ? -1 : e.Timestamp),
       (isNaN(r.Timestamp) ? -1 : r.Timestamp) < t ? e : r)
-    : e ?? r;
+    : (e ?? r);
 }
 (exports.getAkiBaseLocalPath = getAkiBaseLocalPath),
   (exports.getAkiBaseProjectPath = getAkiBaseProjectPath),
@@ -738,12 +831,12 @@ function subVector(t, e) {
   };
 }
 function isTransformEqual(t, e, r = 1e-4, n = 1e-4, o = 1e-4) {
-  var a = { X: 0, Y: 0, Z: 0 },
-    s = { X: 1, Y: 1, Z: 1 };
+  var s = { X: 0, Y: 0, Z: 0 },
+    a = { X: 1, Y: 1, Z: 1 };
   return (
-    isVectorEqual(t.Pos || a, e.Pos || a, 0, r) &&
-    isVectorEqual(t.Rot ?? a, e.Rot ?? a, 0, n) &&
-    isVectorEqual(t.Scale ?? s, e.Scale ?? s, 1, o)
+    isVectorEqual(t.Pos || s, e.Pos || s, 0, r) &&
+    isVectorEqual(t.Rot ?? s, e.Rot ?? s, 0, n) &&
+    isVectorEqual(t.Scale ?? a, e.Scale ?? a, 1, o)
   );
 }
 function isSetEqual(t, e) {
@@ -752,7 +845,10 @@ function isSetEqual(t, e) {
   return !0;
 }
 function isPortInUse(t) {
-  return (0, Platform_1.getPlatform)().IsPortInUse(t);
+  return Recorder_1.perfRecorder.Run(
+    () => (0, Platform_1.getPlatform)().IsPortInUse(t),
+    "isPortInUse",
+  );
 }
 (exports.getLocalSafeVersion = getLocalSafeVersion),
   (exports.getPlatformType = getPlatformType),
@@ -788,13 +884,13 @@ function getEditorCommandArgs() {
   var n = {},
     o = Object.keys(IEditor_1.defaultEditorArgConfig);
   for (let e = 0; e < r.length; e++) {
-    var a = r[e];
-    if (a.startsWith("-")) {
-      a = a.slice(1);
+    var s = r[e];
+    if (s.startsWith("-")) {
+      s = s.slice(1);
       let t = "";
-      o.includes(a) &&
+      o.includes(s) &&
         (e + 1 < r.length && !r[e + 1].startsWith("-") && ((t = r[e + 1]), e++),
-        (n[a] = t));
+        (n[s] = t));
     }
   }
   return n;
@@ -815,19 +911,25 @@ function isInPie() {
 function isPipelineEnv() {
   return (0, Platform_1.getPlatform)().IsPipelineEnv;
 }
-function formatDateTime(t) {
-  var t = new Date(t),
-    e = t.getFullYear(),
-    r = 9 < t.getMonth() + 1 ? t.getMonth() + 1 : "0" + (t.getMonth() + 1),
-    n = 9 < t.getDate() ? t.getDate() : "0" + t.getDate(),
-    o = 9 < t.getHours() ? t.getHours() : "0" + t.getHours(),
-    a = 9 < t.getMinutes() ? t.getMinutes() : "0" + t.getMinutes(),
-    s = 9 < t.getSeconds() ? t.getSeconds() : "0" + t.getSeconds();
-  return (
-    e +
-    `-${r}-${n}-${"星期" + "日一二三四五六".charAt(t.getDay())} ${o}:${a}:` +
-    s
-  );
+function formatDateTime(t, e = "cn") {
+  var r = new Date(t),
+    n = r.getFullYear(),
+    o = 9 < r.getMonth() + 1 ? r.getMonth() + 1 : "0" + (r.getMonth() + 1),
+    s = 9 < r.getDate() ? r.getDate() : "0" + r.getDate(),
+    a = 9 < r.getHours() ? r.getHours() : "0" + r.getHours(),
+    i = 9 < r.getMinutes() ? r.getMinutes() : "0" + r.getMinutes(),
+    u = 9 < r.getSeconds() ? r.getSeconds() : "0" + r.getSeconds();
+  switch (e) {
+    case "cn":
+      return (
+        n +
+        `-${o}-${s}-${"星期" + "日一二三四五六".charAt(r.getDay())} ${a}:${i}:` +
+        u
+      );
+    case "simple":
+      return "" + n + o + s + a + i + u;
+  }
+  throw new Error("formatDateTime: unknown format " + e);
 }
 function stringIsNullOrEmpty(t) {
   return "string" != typeof t || void 0 === t || 0 === t.length;
@@ -835,38 +937,21 @@ function stringIsNullOrEmpty(t) {
 function getMd5(t) {
   return crypto.MD5(t).toString();
 }
-function getNetWorkAddress() {
-  var [t, e] = exec(
-    `wmic path Win32_NetworkAdapter where "PNPDeviceID like '%PCI%' AND AdapterTypeID='0'" get name, MacAddress`,
-  );
-  if (t && e)
-    return (
-      (t = e
-        .split(
-          `
-
-`,
-        )[1]
-        .split(" ")[0]
-        .split(":"))[0] +
-      t[1] +
-      t[2] +
-      t[3] +
-      t[4] +
-      t[5]
-    );
-}
 function deepCopyData(t) {
   return JSON.parse(JSON.stringify(t));
 }
 function toDepotPath(t) {
-  var e = getCurrentP4Stream(),
+  let e = getCurrentP4Stream(),
     r = getCurrentClientRoot();
+  var n;
   if (e && r)
     return (
       (t = (0, File_1.getAbsolutePath)(t)),
-      (r = new RegExp(r.replace(/\\/g, "/"), "gi")),
-      t.replace(/\\/g, "/").replace(r, e)
+      (r = r.replace(/\\/g, "/")).endsWith("/") &&
+        !e.endsWith("/") &&
+        (e += "/"),
+      (n = new RegExp(r, "gi")),
+      t.replace(/\\/g, "/").replace(n, e)
     );
 }
 async function doJsonHttpGet(t, e) {
@@ -930,7 +1015,7 @@ function getBranchOriginsDataSync(t) {
       if (!(e < 0))
         return {
           Origins: (e = parse(r.substring(e))).data.origins,
-          IsManageByBranch: !e.data.useDefault,
+          IsInDepot: !e.data.useDefault,
         };
       (0, Log_1.error)(
         `[${t}]获取文件分支信息返回异常: 
@@ -948,7 +1033,6 @@ function getBranchOriginsDataSync(t) {
   (exports.formatDateTime = formatDateTime),
   (exports.stringIsNullOrEmpty = stringIsNullOrEmpty),
   (exports.getMd5 = getMd5),
-  (exports.getNetWorkAddress = getNetWorkAddress),
   (exports.deepCopyData = deepCopyData),
   (exports.toDepotPath = toDepotPath),
   (exports.doJsonHttpGet = doJsonHttpGet),
@@ -1029,89 +1113,22 @@ async function getFileDepotInfoAsync(t) {
   );
   return r.Error && (0, Log_1.error)(r.Error), r;
 }
-async function getBatchFileBranchDataAsync(e) {
-  const r = getCurrentP4Stream();
-  if (!r) return { Success: !1, Error: "获取当前分支失败" };
-  var t = [],
-    n = new Map(),
-    o = new Map();
-  for (const l of e) {
-    var a,
-      s = getBranchReqShortPath(l);
-    s &&
-      (a = await getFileDepotInfoAsync(s)).Success &&
-      -1 !== a.Result.findIndex((t) => t.endsWith(r)) &&
-      (o.set(s, a.Result), t.push(s), n.set(s, l));
-  }
-  var i = new Map(),
-    e = { filePaths: t };
-  try {
-    var u,
-      c = await doJsonHttpPost(
-        "http://tools.aki.kuro.com:1025/multibranch/aki/file_origins/batch",
-        e,
-      );
-    if (!c)
-      return (
-        (u = `获取分支信息失败: ${c} (${stringify(e)})`),
-        (0, Log_1.error)(u),
-        { Success: !1, Error: u }
-      );
-    for (const [x, g] of Object.entries(c.data)) {
-      var p = n.get(x);
-      if (g.useDefault) {
-        var f = o.get(x) ?? [];
-        if (!(0 < f.length)) {
-          i.set(p, { IsManageByBranch: !1, Origins: [r] });
-          continue;
-        }
-        if (f.every((t) => !g.origins.includes(t))) {
-          i.set(p, { IsManageByBranch: !0, Origins: [f[0]] });
-          continue;
-        }
-      }
-      i.set(p, { IsManageByBranch: !0, Origins: g.origins });
-    }
-    return { Success: !0, Result: i };
-  } catch (t) {
-    e = "获取分支信息失败: " + t;
-    return (0, Log_1.error)(e), { Success: !1, Error: e };
-  }
-}
-async function getFileSourceBranchAsync(t) {
-  var e = await getBatchFileBranchDataAsync([t]);
-  return e.Success
-    ? { Success: !0, Result: e.Result.get(t) }
-    : { Success: !1, Error: e.Error };
-}
+(exports.getAllDepotBranchDataSync = getAllDepotBranchDataSync),
+  (exports.isCurrentBranchAsset = isCurrentBranchAsset),
+  (exports.getFileDepotInfo = getFileDepotInfo),
+  (exports.getFileDepotInfoAsync = getFileDepotInfoAsync);
+let fileOriginRequiredList = void 0;
 async function getTextFileOriginRequiredList() {
-  var t = await doJsonHttpGet(
-    "http://tools.aki.kuro.com:1025/multibranch/aki/originrequiredlist",
+  var t;
+  return (
+    fileOriginRequiredList ||
+    ((t = await doJsonHttpGet(
+      "http://tools.aki.kuro.com:1025/multibranch/aki/originrequiredlist",
+    ))
+      ? (fileOriginRequiredList = t.data)
+      : ((t = "获取分支管理文本文件路径信息失败: " + t),
+        void (0, Log_1.error)(t)))
   );
-  return t
-    ? { Success: !0, Result: t.data }
-    : ((t = "获取分支管理文本文件路径信息失败: " + t),
-      (0, Log_1.error)(t),
-      { Success: !1, Error: t });
-}
-async function isCurrentBranchAssetAsync(t) {
-  var e = getBranchReqShortPath(t);
-  if (!e) return !1;
-  var r = getCurrentP4Stream();
-  if (!r) return !1;
-  e = { filePath: e };
-  try {
-    var n = await doJsonHttpPost(
-      "http://tools.aki.kuro.com:1025/multibranch/aki/file_origins",
-      e,
-    );
-    return n
-      ? n.data.origins.includes(r)
-      : ((0, Log_1.error)(`获取分支信息失败: ${n} (${t})`), !1);
-  } catch (t) {
-    e = "获取分支信息失败: " + t;
-    return (0, Log_1.error)(e), !1;
-  }
 }
 function isTextFileByExtension(t) {
   t = t.split(".").pop()?.toLowerCase();
@@ -1151,17 +1168,120 @@ function isTextFileByExtension(t) {
     ].includes(t)
   );
 }
+async function isTextFileInOriginRequiredListAsync(t) {
+  var e = await getTextFileOriginRequiredList();
+  if (e)
+    for (const o of e) {
+      var r = o.replace(/\./g, "\\.").replace(/\*/g, ".*"),
+        r = new RegExp(`(^|\\/|\\\\)${r}$`),
+        n = t.replace(/^.*\/Source/, "Source");
+      if (r.test(n)) return !0;
+    }
+  return !1;
+}
+async function getBatchFileBranchDataAsync(e) {
+  const r = getCurrentP4Stream();
+  if (!r) return { Success: !1, Error: "获取当前分支失败" };
+  var t = new Map(),
+    n = [],
+    o = new Map(),
+    s = new Map();
+  for (const l of e) {
+    var a,
+      i = getBranchReqShortPath(l);
+    i &&
+      (a = await getFileDepotInfoAsync(i)).Success &&
+      (a.Result.findIndex((t) => t.endsWith(r)) < 0
+        ? t.set(l, { IsInDepot: !1, Origins: [r] })
+        : (s.set(i, a.Result), n.push(i), o.set(i, l)));
+  }
+  e = { filePaths: n };
+  try {
+    var u,
+      c = await doJsonHttpPost(
+        "http://tools.aki.kuro.com:1025/multibranch/aki/file_origins/batch",
+        e,
+      );
+    if (!c)
+      return (
+        (u = `获取分支信息失败: ${c} (${stringify(e)})`),
+        (0, Log_1.error)(u),
+        { Success: !1, Error: u }
+      );
+    for (const [x, g] of Object.entries(c.data)) {
+      var p = o.get(x);
+      if (
+        isTextFileByExtension(p) &&
+        !(await isTextFileInOriginRequiredListAsync(p))
+      )
+        t.set(p, { IsInDepot: !0, Origins: ["//aki/" + getWorkspaceBranch()] });
+      else {
+        if (g.useDefault) {
+          var f = s.get(x) ?? [];
+          if (!(0 < f.length)) {
+            t.set(p, { IsInDepot: !1, Origins: [r] });
+            continue;
+          }
+          if (f.every((t) => !g.origins.includes(t))) {
+            t.set(p, { IsInDepot: !0, Origins: [f[0]] });
+            continue;
+          }
+        }
+        t.set(p, { IsInDepot: !0, Origins: g.origins });
+      }
+    }
+    return { Success: !0, Result: t };
+  } catch (t) {
+    e = "获取分支信息失败: " + t;
+    return (0, Log_1.error)(e), { Success: !1, Error: e };
+  }
+}
+async function getFileSourceBranchAsync(t) {
+  var e = await getBatchFileBranchDataAsync([t]);
+  return e.Success
+    ? toDepotPath(t)
+      ? { Success: !0, Result: e.Result.get(t) }
+      : { Success: !1, Error: "文件路径非法，不是项目内的文件" }
+    : { Success: !1, Error: e.Error };
+}
+async function isCurrentBranchAssetAsync(t) {
+  var e = getBranchReqShortPath(t);
+  if (!e) return !1;
+  var r = getCurrentP4Stream();
+  if (!r) return !1;
+  e = { filePath: e };
+  try {
+    var n = await doJsonHttpPost(
+      "http://tools.aki.kuro.com:1025/multibranch/aki/file_origins",
+      e,
+    );
+    return n
+      ? n.data.origins.includes(r)
+      : ((0, Log_1.error)(`获取分支信息失败: ${n} (${t})`), !1);
+  } catch (t) {
+    e = "获取分支信息失败: " + t;
+    return (0, Log_1.error)(e), !1;
+  }
+}
 async function execAsync(t) {
   return await (0, Platform_1.getPlatform)().ExecAsync(t);
 }
-(exports.getAllDepotBranchDataSync = getAllDepotBranchDataSync),
-  (exports.isCurrentBranchAsset = isCurrentBranchAsset),
-  (exports.getFileDepotInfo = getFileDepotInfo),
-  (exports.getFileDepotInfoAsync = getFileDepotInfoAsync),
+function touchInstance(t) {
+  return t.Instance;
+}
+function isIpAddress(t) {
+  return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(
+    t,
+  );
+}
+(exports.getTextFileOriginRequiredList = getTextFileOriginRequiredList),
+  (exports.isTextFileByExtension = isTextFileByExtension),
+  (exports.isTextFileInOriginRequiredListAsync =
+    isTextFileInOriginRequiredListAsync),
   (exports.getBatchFileBranchDataAsync = getBatchFileBranchDataAsync),
   (exports.getFileSourceBranchAsync = getFileSourceBranchAsync),
-  (exports.getTextFileOriginRequiredList = getTextFileOriginRequiredList),
   (exports.isCurrentBranchAssetAsync = isCurrentBranchAssetAsync),
-  (exports.isTextFileByExtension = isTextFileByExtension),
-  (exports.execAsync = execAsync);
+  (exports.execAsync = execAsync),
+  (exports.touchInstance = touchInstance),
+  (exports.isIpAddress = isIpAddress);
 //# sourceMappingURL=Util.js.map

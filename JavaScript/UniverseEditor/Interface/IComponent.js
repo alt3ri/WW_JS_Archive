@@ -54,9 +54,11 @@ var EInteractPlayerDiractionType,
   EFanGearType,
   EAiGearStrategy,
   EPickInteraction,
-  EDetectionFrequency;
+  EDetectionFrequency,
+  EGroupAiMode,
+  EInhalationPerformanceType;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.EPatrolCycleMode =
+  (exports.patrolMoveStateNameByValue =
     exports.EPatrolMoveState =
     exports.EEffectSplineCreateMode =
     exports.EPointGroupGenerateType =
@@ -107,7 +109,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.componentInterfaceMap =
     exports.componentMap =
       void 0),
-  (exports.EDetectionFrequency =
+  (exports.EInhalationPerformanceType =
+    exports.EGroupAiMode =
+    exports.EDetectionFrequency =
     exports.EPickInteraction =
     exports.EAiGearStrategy =
     exports.levelPrefabBpPathConfig =
@@ -119,8 +123,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.EReboundOptionType =
     exports.EControllerType =
     exports.ELevelAiCycleMode =
+    exports.EPatrolCycleMode =
       void 0),
   (exports.componentMap = {
+    AirWallSpawnerComponent: void 0,
     ActorStateComponent: void 0,
     AiComponent: void 0,
     LevelAiComponent: void 0,
@@ -205,6 +211,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     CombatComponent: void 0,
     EntityListComponent: void 0,
     AnimalComponent: void 0,
+    EntityAudioComponent: void 0,
     EntityStateAudioComponent: void 0,
     SceneItemMovementComponent: void 0,
     RangeComponent: void 0,
@@ -246,6 +253,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     ClientTriggerComponent: void 0,
     LocationSafetyComponent: void 0,
     BatchBulletCasterComponent: void 0,
+    VehicleComponent: void 0,
+    EnrichmentAreaComponent: void 0,
+    ChessmanComponent: void 0,
+    MonitorComponent: void 0,
+    GroupAiComponent: void 0,
+    InhalationAbilityComponent: void 0,
+    InhaledItemComponent: void 0,
   }),
   (exports.componentInterfaceMap = exports.componentMap),
   (exports.componentList = Object.keys(exports.componentInterfaceMap).sort()),
@@ -363,7 +377,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     (o.CategoryMatching = "CategoryMatching"),
       (o.BuildingBlock = "BuildingBlock"),
       (o.PulseDevice = "PulseDevice"),
-      (o.RangeAdsorption = "RangeAdsorption");
+      (o.RangeAdsorption = "RangeAdsorption"),
+      (o.PullStatue = "PullStatue");
   })(
     (EItemFoundation =
       exports.EItemFoundation || (exports.EItemFoundation = {})),
@@ -452,7 +467,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     (o.HandInItem = "HandInItem"),
       (o.Shop = "Shop"),
       (o.AntiqueShop = "AntiqueShop"),
-      (o.ChengXiaoShanShop = "ChengXiaoShanShop");
+      (o.ChengXiaoShanShop = "ChengXiaoShanShop"),
+      (o.Gramophone = "Gramophone");
   })(
     (ENpcUiInteractType =
       exports.ENpcUiInteractType || (exports.ENpcUiInteractType = {})),
@@ -484,7 +500,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (o.Butterfly = "Butterfly"),
       (o.Effect = "Effect"),
       (o.Patrol = "Patrol"),
-      (o.LevelAI = "LevelAI");
+      (o.LevelAI = "LevelAI"),
+      (o.AirPassage = "AirPassage"),
+      (o.ContinuesVariableSpeedMovement = "ContinuesVariableSpeedMovement");
   })((ESplineType = exports.ESplineType || (exports.ESplineType = {}))),
   ((EPointGroupGenerateType =
     exports.EPointGroupGenerateType ||
@@ -497,11 +515,18 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (exports.EEffectSplineCreateMode = {})),
   ),
   (function (o) {
-    (o[(o.Walk = 1)] = "Walk"), (o[(o.Run = 2)] = "Run");
+    (o[(o.Walk = 1)] = "Walk"),
+      (o[(o.Run = 2)] = "Run"),
+      (o[(o.Sprint = 3)] = "Sprint");
   })(
     (EPatrolMoveState =
       exports.EPatrolMoveState || (exports.EPatrolMoveState = {})),
   ),
+  (exports.patrolMoveStateNameByValue = {
+    [EPatrolMoveState.Walk]: "走",
+    [EPatrolMoveState.Run]: "跑",
+    [EPatrolMoveState.Sprint]: "冲刺",
+  }),
   (function (o) {
     (o.Loop = "Loop"), (o.Once = "Once");
   })(
@@ -533,9 +558,15 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       exports.EJigsawCompleteCondition ||
       (exports.EJigsawCompleteCondition = {})),
   ),
-  ((EExploreSkillInteractType =
-    exports.EExploreSkillInteractType ||
-    (exports.EExploreSkillInteractType = {})).PullGiant = "PullGiant"),
+  (function (o) {
+    (o.PullGiant = "PullGiant"),
+      (o.StatueInteractPoint = "StatueInteractPoint"),
+      (o.PullStatue = "PullStatue");
+  })(
+    (EExploreSkillInteractType =
+      exports.EExploreSkillInteractType ||
+      (exports.EExploreSkillInteractType = {})),
+  ),
   (function (o) {
     (o.Hit = "Hit"), (o.FKey = "FKey");
   })(
@@ -567,5 +598,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   })(
     (EDetectionFrequency =
       exports.EDetectionFrequency || (exports.EDetectionFrequency = {})),
+  ),
+  ((EGroupAiMode = exports.EGroupAiMode || (exports.EGroupAiMode = {})).Patrol =
+    "Patrol"),
+  (function (o) {
+    (o.Role = "Role"), (o.SceneItem = "SceneItem");
+  })(
+    (EInhalationPerformanceType =
+      exports.EInhalationPerformanceType ||
+      (exports.EInhalationPerformanceType = {})),
   );
 //# sourceMappingURL=IComponent.js.map

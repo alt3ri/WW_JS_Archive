@@ -18,26 +18,42 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigStat = void 0,
+const initStat = Stats_1.Stat.Create(
+    "configEntrustFinishDialogByEntrustIdAndLevel.Init",
+  ),
+  getConfigStat = Stats_1.Stat.Create(
+    "configEntrustFinishDialogByEntrustIdAndLevel.GetConfig",
+  ),
   CONFIG_STAT_PREFIX =
     "configEntrustFinishDialogByEntrustIdAndLevel.GetConfig(";
 exports.configEntrustFinishDialogByEntrustIdAndLevel = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfig: (n, o, i = !0) => {
-    if (
-      (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
-      if (i) {
-        var t = KEY_PREFIX + `#${n}#${o})`;
-        const r = ConfigCommon_1.ConfigCommon.GetConfig(t);
-        if (r) return r;
+  GetConfig: (n, o, t = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat.Start();
+    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${n}#${o})`),
+      e =
+        (i.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (e) {
+      if (t) {
+        var g = KEY_PREFIX + `#${n}#${o})`;
+        const r = ConfigCommon_1.ConfigCommon.GetConfig(g);
+        if (r)
+          return (
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            r
+          );
       }
       if (
         (e =
@@ -52,10 +68,9 @@ exports.configEntrustFinishDialogByEntrustIdAndLevel = {
               ["Level", o],
             ))
       ) {
-        var e,
-          t = void 0;
+        g = void 0;
         if (
-          (([e, t] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([e, g] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
@@ -66,19 +81,25 @@ exports.configEntrustFinishDialogByEntrustIdAndLevel = {
         ) {
           const r =
             EntrustFinishDialog_1.EntrustFinishDialog.getRootAsEntrustFinishDialog(
-              new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
+              new byte_buffer_1.ByteBuffer(new Uint8Array(g.buffer)),
             );
           return (
-            i &&
+            t &&
               ((e = KEY_PREFIX + `#${n}#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(e, r)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+            i.Stop(),
+            getConfigStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             r
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    i.Stop(),
+      getConfigStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=EntrustFinishDialogByEntrustIdAndLevel.js.map

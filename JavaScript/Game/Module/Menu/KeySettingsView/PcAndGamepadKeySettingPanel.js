@@ -6,9 +6,11 @@ const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  Platform_1 = require("../../../../Launcher/Platform/Platform"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   InputSettings_1 = require("../../../InputSettings/InputSettings"),
+  InputSettingsController_1 = require("../../../InputSettings/InputSettingsController"),
   InputSettingsManager_1 = require("../../../InputSettings/InputSettingsManager"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
@@ -27,7 +29,8 @@ const UE = require("ue"),
   KeySettingPanel_1 = require("./KeySettingPanel"),
   KeySettingRowData_1 = require("./KeySettingRowData"),
   PsGamepadItem_1 = require("./PsGamepadItem"),
-  XboxGamepadItem_1 = require("./XboxGamepadItem");
+  XboxGamepadItem_1 = require("./XboxGamepadItem"),
+  GAMEPAD_CONFIRM_AND_CANCEL_KEYSETTING_ID = 100;
 class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -35,7 +38,7 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
       (this.hxi = void 0),
       (this.lxi = []),
       (this.bAn = []),
-      (this.fkn = new Map()),
+      (this.Lkn = new Map()),
       (this.oxi = 0),
       (this.cxi = void 0),
       (this.mxi = void 0),
@@ -47,7 +50,7 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
       (this.vxi = void 0),
       (this.GamepadItem = void 0),
       (this.Mxi = void 0),
-      (this.o2n = void 0),
+      (this.m2n = void 0),
       (this.Exi = () => {
         let t = this.oxi;
         (t = 1 === this.gxi ? this.Sxi(2) : this.Sxi(1)), this.Refresh(t);
@@ -59,15 +62,8 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
       (this.Ixi = () => {
         var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(179);
         t.FunctionMap.set(2, () => {
-          InputSettingsManager_1.InputSettingsManager.ClearAllKeys(),
-            InputSettingsManager_1.InputSettingsManager.RefreshAllActionKeys(
-              !0,
-            ),
-            InputSettingsManager_1.InputSettingsManager.RefreshAllAxisKeys(!0),
-            InputSettingsManager_1.InputSettingsManager.RefreshCombinationActionKeys(
-              !0,
-            ),
-            InputSettings_1.InputSettings.SaveKeyMappings(),
+          InputSettingsManager_1.InputSettingsManager.ResetDefaultInputKey(),
+            InputSettingsController_1.InputSettingsController.InputSettingUpdateRequest(),
             this.Refresh(this.oxi);
         }),
           ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(t);
@@ -146,6 +142,7 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
           t &&
           (this.cxi.ChangeBothAction(this.oxi),
           this.mxi?.Refresh(this.cxi, this.oxi),
+          InputSettingsController_1.InputSettingsController.InputSettingUpdateRequest(),
           InputSettings_1.InputSettings.SaveKeyMappings()),
           this.Lxi();
       }),
@@ -263,8 +260,9 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
                                 this.cxi.SetAxisBindingKeys(i)),
                             (n = this.bxi())?.RefreshRow(this.cxi),
                             n?.RefreshRow(h),
-                            this.pkn(this.cxi, o),
-                            this.pkn(h, t),
+                            this.Dkn(this.cxi, o),
+                            this.Dkn(h, t),
+                            InputSettingsController_1.InputSettingsController.InputSettingUpdateRequest(),
                             InputSettings_1.InputSettings.SaveKeyMappings())
                           : this.qxi(!0);
                       },
@@ -275,12 +273,17 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
                 0 < this.fxi.length &&
                   (this.cxi.SetKey(this.fxi, this.oxi),
                   this.mxi?.Refresh(this.cxi, this.oxi),
-                  this.pkn(this.cxi, this.fxi),
+                  this.Dkn(this.cxi, this.fxi),
+                  InputSettingsController_1.InputSettingsController.InputSettingUpdateRequest(),
                   InputSettings_1.InputSettings.SaveKeyMappings(),
                   this.Lxi());
             }
           else this.Lxi();
         }
+      }),
+      (this.DXa = () => {
+        1 === this.gxi &&
+          (this.GetItem(7)?.bIsUIActive && this.Lxi(), this.Refresh(1));
       });
   }
   OnRegisterComponent() {
@@ -297,11 +300,15 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
       [9, UE.UIButtonComponent],
       [10, UE.UIItem],
       [11, UE.UIItem],
+      [12, UE.UIItem],
+      [13, UE.UIItem],
+      [14, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
         [0, this.Exi],
         [1, this.yxi],
         [9, this.Ixi],
+        [14, this.Ixi],
       ]);
   }
   async OnBeforeStartAsync() {
@@ -328,24 +335,25 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
           "UiItem_HandleSetPs",
           this.GetItem(10),
         ));
-    (this.o2n = new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(7))),
+    (this.m2n = new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(7))),
       await Promise.all([t, i, e, s]);
   }
   OnStart() {
     var t = ConfigManager_1.ConfigManager.MenuBaseConfig.GetAllKeyTypeConfig();
     t &&
-      (this.fkn.clear(),
+      (this.Lkn.clear(),
       this.Gxi(),
       this.Nxi(t),
       this.Oxi(t),
+      this.DOa(),
       this.Fxi(),
       this.Ore());
   }
   OnBeforeDestroy() {
     this.kre(),
       this.Vxi(),
-      this.o2n?.Clear(),
-      (this.o2n = void 0),
+      this.m2n?.Clear(),
+      (this.m2n = void 0),
       (this.axi = void 0),
       (this.hxi = void 0),
       (this.cxi = void 0),
@@ -359,26 +367,34 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnInputAnyKey,
       this.rAt,
-    );
+    ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnDeviceLangChange,
+        this.DXa,
+      );
   }
   kre() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnInputAnyKey,
       this.rAt,
-    );
+    ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnDeviceLangChange,
+        this.DXa,
+      );
   }
-  vkn(t, i) {
+  Akn(t, i) {
     var e = [];
     let s = t.ConnectedKeySettingId;
     for (; 0 !== s; ) {
-      var r = this.Mkn(s);
+      var r = this.Ukn(s);
       if (!r) return e;
       r.SetKey(i, this.oxi), e.push(r), (s = r.ConnectedKeySettingId);
     }
     return e;
   }
-  pkn(t, i) {
-    var t = this.vkn(t, i),
+  Dkn(t, i) {
+    var t = this.Akn(t, i),
       e = this.bxi();
     for (const s of t) e?.RefreshRow(s);
   }
@@ -399,7 +415,7 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
         e.InitializeKeyType(n), this.lxi.push(e), s.sort((t, i) => t.Id - i.Id);
         for (const h of s) {
           var r = new KeySettingRowData_1.KeySettingRowData();
-          r.InitializeKeySetting(h), this.lxi.push(r), this.fkn.set(h.Id, r);
+          r.InitializeKeySetting(h), this.lxi.push(r), this.Lkn.set(h.Id, r);
         }
       }
     }
@@ -413,14 +429,29 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
         e = i.GetKeySettingConfigListByTypeIdAndInputControllerType(e, 0) ?? [],
         s = s.concat(e);
       if (!(s.length <= 0)) {
-        e = new KeySettingRowData_1.KeySettingRowData();
+        var r,
+          e = new KeySettingRowData_1.KeySettingRowData();
         e.InitializeKeyType(n), this.bAn.push(e), s.sort((t, i) => t.Id - i.Id);
-        for (const h of s) {
-          var r = new KeySettingRowData_1.KeySettingRowData();
-          r.InitializeKeySetting(h), this.bAn.push(r), this.fkn.set(h.Id, r);
-        }
+        for (const h of s)
+          (Platform_1.Platform.IsPs5Platform() &&
+            h.Id === GAMEPAD_CONFIRM_AND_CANCEL_KEYSETTING_ID) ||
+            ((r =
+              new KeySettingRowData_1.KeySettingRowData()).InitializeKeySetting(
+              h,
+            ),
+            this.bAn.push(r),
+            this.Lkn.set(h.Id, r));
       }
     }
+  }
+  DOa() {
+    var t = Platform_1.Platform.IsPs5Platform(),
+      i = Info_1.Info.IsMobilePlatform() && Info_1.Info.IsInGamepad();
+    this.GetButton(0)?.RootUIComp.SetUIActive(!t && !i),
+      this.GetButton(1)?.RootUIComp.SetUIActive(!t && !i),
+      this.GetButton(9)?.RootUIComp.SetUIActive(!t),
+      this.GetItem(13)?.SetUIActive(t),
+      this.GetItem(12)?.SetUIActive(!t);
   }
   Refresh(t) {
     this.oxi = t;
@@ -530,14 +561,14 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
     StringUtils_1.StringUtils.IsEmpty(t)
       ? (this.GetItem(7)?.SetUIActive(!1),
         this.GetItem(11)?.SetUIActive(!0),
-        this.o2n.StopCurrentSequence())
+        this.m2n.StopCurrentSequence())
       : (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), t),
         this.GetItem(7)?.SetUIActive(!0),
         this.GetItem(11)?.SetUIActive(!1),
-        this.o2n.PlayLevelSequenceByName("Start"));
+        this.m2n.PlayLevelSequenceByName("Start"));
   }
-  Mkn(t) {
-    return this.fkn.get(t);
+  Ukn(t) {
+    return this.Lkn.get(t);
   }
   bxi() {
     switch (this.oxi) {
@@ -549,7 +580,7 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
   }
   GetGuideItemByKeySettingId(t, i) {
     var e = this.bxi(),
-      t = this.Mkn(t);
+      t = this.Ukn(t);
     if (e && t) return e.GetRowByData(t, i)?.GetRootItem();
   }
 }

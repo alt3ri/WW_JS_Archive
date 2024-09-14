@@ -9,7 +9,7 @@ const Log_1 = require("../../../Core/Common/Log"),
 class LevelEventTimeTrackControl extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
-      (this.OXs = (e) => {
+      (this.BJs = (e) => {
         this.FinishExecute(e);
       });
   }
@@ -24,7 +24,7 @@ class LevelEventTimeTrackControl extends LevelGeneralBase_1.LevelEventBase {
             TimeTrackController_1.TimeTrackController.OpenTimeTrackControlView(
               o,
               e.ConfigIndex,
-              this.OXs,
+              this.BJs,
             ))
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(

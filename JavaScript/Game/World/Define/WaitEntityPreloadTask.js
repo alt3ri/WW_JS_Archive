@@ -86,7 +86,6 @@ class WaitEntityPreloadTask {
   }
   Init() {
     (this.Ovr = this.vJ.Entity.GetComponent(0)),
-      (this.Vvr = this.Ovr.GetDependenceEntities().join()),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PreloadEntityFinished,
         this.Hvr,
@@ -125,45 +124,22 @@ class WaitEntityPreloadTask {
       (this.Gvr = void 0);
   }
   Wvr() {
-    var t, i, e, s, h;
-    for ([t, i] of this.Ovr.GetDependenceEntities())
-      0 === i
-        ? this.kvr.has(t)
-          ? Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Entity", 3, "重复添加依赖实体", [
-              "CreatureDataId",
-              t,
-            ])
-          : this.kvr.set(t, i)
-        : 1 === i
-          ? this.Fvr.has(t)
-            ? Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Entity", 3, "重复添加依赖实体", ["PbDataId", t])
-            : this.Fvr.set(t, i)
-          : 2 === i &&
-            (this.YKo.has(t)
-              ? Log_1.Log.CheckError() &&
-                Log_1.Log.Error("Entity", 3, "重复添加依赖实体", [
-                  "EntityId",
-                  t,
-                ])
-              : this.YKo.set(t, i));
-    for ([e] of this.kvr) {
-      var r = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
+    for (var [t] of this.kvr) {
+      var i = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
+      i?.Valid &&
+        (i.Entity.GetComponent(0).GetPreloadFinished() || i?.IsInit) &&
+        this.kvr.delete(t);
+    }
+    for (var [e] of this.Fvr) {
+      var s = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e);
+      s?.Valid &&
+        (s.Entity.GetComponent(0).GetPreloadFinished() || s?.IsInit) &&
+        this.Fvr.delete(e);
+    }
+    for (var [h] of this.YKo) {
+      var r = ModelManager_1.ModelManager.CreatureModel.GetEntityById(h);
       r?.Valid &&
         (r.Entity.GetComponent(0).GetPreloadFinished() || r?.IsInit) &&
-        this.kvr.delete(e);
-    }
-    for ([s] of this.Fvr) {
-      var a = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(s);
-      a?.Valid &&
-        (a.Entity.GetComponent(0).GetPreloadFinished() || a?.IsInit) &&
-        this.Fvr.delete(s);
-    }
-    for ([h] of this.YKo) {
-      var o = ModelManager_1.ModelManager.CreatureModel.GetEntityById(h);
-      o?.Valid &&
-        (o.Entity.GetComponent(0).GetPreloadFinished() || o?.IsInit) &&
         this.YKo.delete(h);
     }
   }

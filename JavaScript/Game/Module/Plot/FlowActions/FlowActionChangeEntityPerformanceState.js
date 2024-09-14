@@ -25,7 +25,7 @@ class FlowActionChangeEntityPerformanceState extends FlowActionBase_1.FlowAction
             (t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e));
       }
       t?.IsInit
-        ? (a = t?.Entity?.GetComponent(119))
+        ? (a = t?.Entity?.GetComponent(120))
           ? (o = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
               i.PerformanceTag,
             ))

@@ -9,9 +9,9 @@ const Log_1 = require("../../../Core/Common/Log"),
 class ComponentForceTickController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      (this.S0r = [125]),
-      (this.y0r = [45, 59, 125, 96, 142, 144, 135, 133, 137, 145]),
-      (this.I0r = [55, 59, 144]),
+      (this.S0r = [126]),
+      (this.y0r = [46, 60, 126, 97, 143, 145, 136, 134, 138, 146]),
+      (this.I0r = [56, 60, 145]),
       !0
     );
   }
@@ -93,12 +93,12 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
     for (var [e, r] of this.D0r)
       if (e.Active)
         try {
-          this.m6(
+          var t = this.m6(
             this.U0r,
             e.constructor.name,
             "ComponentForceTickController.OnTick.",
           );
-          r(o * this.SW);
+          t?.Start(), r(o * this.SW), t?.Stop();
         } catch (o) {
           o instanceof Error
             ? Log_1.Log.CheckError() &&
@@ -123,13 +123,15 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
   static OnAfterTick(o) {
     for (var [e, r] of this._It)
       try {
+        var t;
         e.Active &&
-          (this.m6(
+          ((t = this.m6(
             this.A0r,
             e.constructor.name,
             "ComponentForceTickController.OnAfterTick.",
-          ),
-          r(o * this.SW));
+          ))?.Start(),
+          r(o * this.SW),
+          t?.Stop());
       } catch (o) {
         o instanceof Error
           ? Log_1.Log.CheckError() &&
@@ -166,10 +168,10 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
       this.I0r.find((o) => (0, RegisterComponent_1.isComponentInstance)(e, o)),
     );
   }
-  static m6(e, r, o) {
+  static m6(e, r, t) {
     if (Stats_1.Stat.Enable) {
       let o = e.get(r);
-      return o || ((o = void 0), e.set(r, o)), o;
+      return o || ((o = Stats_1.Stat.Create(t + r)), e.set(r, o)), o;
     }
   }
   static SetTimeDilation(o) {

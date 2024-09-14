@@ -27,6 +27,7 @@ class FriendModel extends ModelBase_1.ModelBase {
       (this.FreshFriendApplicationIds = new Set()),
       (this.RecentlyTeamList = new Map()),
       (this.t8t = void 0),
+      (this.V8a = void 0),
       (this.i8t = void 0),
       (this.o8t = void 0),
       (this.TestDataLoaded = !1),
@@ -82,12 +83,10 @@ class FriendModel extends ModelBase_1.ModelBase {
   GetFriendListCount() {
     return this.J6t.size;
   }
-  GetFriendApplyCount() {
-    return this.z6t.size;
-  }
   GetFriendSortedListIds() {
     var e = new Array();
-    for (const t of this.J6t.keys()) e.push(t);
+    for (const t of this.J6t.values())
+      t.CanShowInFriendList() && e.push(t.PlayerId);
     return FriendController_1.FriendController.GetSortedFriendListByRules(
       e,
       FriendController_1.FriendController.FriendListSortHook,
@@ -95,12 +94,15 @@ class FriendModel extends ModelBase_1.ModelBase {
   }
   GetFriendApplyListIds() {
     var e = new Array();
-    for (const t of this.z6t.keys()) e.push(t);
+    for (const t of this.z6t.values())
+      t.ApplyPlayerData?.CanShowInFriendList() &&
+        e.push(t.ApplyPlayerData.PlayerId);
     return FriendController_1.FriendController.GetSortedBlackOrApplyList(e);
   }
   GetRecentlyTeamIds() {
     var e = new Array();
-    for (const t of this.RecentlyTeamList.keys()) e.push(t);
+    for (const t of this.RecentlyTeamList.values())
+      t.PlayerData?.CanShowInFriendList() && e.push(t.PlayerData.PlayerId);
     return (
       e.sort((e, t) => {
         (e = this.GetRecentlyTeamData(e)), (t = this.GetRecentlyTeamData(t));
@@ -164,7 +166,8 @@ class FriendModel extends ModelBase_1.ModelBase {
   }
   AddFriendApplication(e) {
     this.z6t.set(e.ApplyPlayerData.PlayerId, e),
-      this.FreshFriendApplicationIds.add(e.ApplyPlayerData.PlayerId);
+      e.ApplyPlayerData.CanShowInFriendList() &&
+        this.FreshFriendApplicationIds.add(e.ApplyPlayerData.PlayerId);
   }
   HasFriendApplication(e) {
     return this.z6t.has(e);
@@ -197,18 +200,19 @@ class FriendModel extends ModelBase_1.ModelBase {
   DeleteBlockedPlayer(e) {
     this.e8t.delete(e);
   }
-  GetSelectedPlayerOrItemInstance(e) {
-    var t = e ?? this.t8t;
-    if (this.ShowingView)
-      switch (this.ShowingView) {
+  GetSelectedPlayerOrItemInstance(e, t) {
+    var i = e ?? this.t8t,
+      r = t ?? this.ShowingView;
+    if (r)
+      switch (r) {
         case "FriendView":
           switch (this.FilterState) {
             case 1:
-              return this.GetFriendById(t);
+              return this.GetFriendById(i);
             case 2:
-              return this.GetFriendDataInApplicationById(t);
+              return this.GetFriendDataInApplicationById(i);
             case 3:
-              return this.GetRecentlyTeamData(t).PlayerData;
+              return this.GetRecentlyTeamData(i).PlayerData;
             default:
               return void (
                 Log_1.Log.CheckError() &&
@@ -219,20 +223,17 @@ class FriendModel extends ModelBase_1.ModelBase {
               );
           }
         case "FriendSearchView":
-          return this.IsMyFriend(t)
-            ? this.GetFriendById(t)
-            : this.GetFriendSearchResultById(t);
+          return this.IsMyFriend(i)
+            ? this.GetFriendById(i)
+            : this.GetFriendSearchResultById(i);
         case "FriendBlackListView":
-          return this.GetBlockedPlayerById(t).GetBlockedPlayerData;
+          return this.GetBlockedPlayerById(i).GetBlockedPlayerData;
         case "OnlineWorldHallView":
-          return this.GetFriendById(t);
+          return this.GetFriendById(i);
         default:
           return void (
             Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Friend", 28, "当前展示View错误！", [
-              "view名",
-              this.ShowingView,
-            ])
+            Log_1.Log.Error("Friend", 28, "当前展示View错误！", ["view名", r])
           );
       }
   }
@@ -290,17 +291,19 @@ class FriendModel extends ModelBase_1.ModelBase {
       [t, e]
     );
   }
-  InitRecentlyTeamDataByResponse(e) {
-    if (e) {
-      this.RecentlyTeamList.clear();
-      for (const i of e) {
-        var t = new FriendData_1.RecentlyTeamData();
-        t.InitData(i), this.RecentlyTeamList.set(t.PlayerData.PlayerId, t);
-      }
+  async InitRecentlyTeamDataByResponse(e) {
+    e &&
+      (this.RecentlyTeamList.clear(),
+      (e = e.map(async (e) => {
+        const t = new FriendData_1.RecentlyTeamData();
+        return t.InitData(e).then(() => {
+          this.RecentlyTeamList.set(t.PlayerData.PlayerId, t);
+        });
+      })),
+      await Promise.all(e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.UpdateRecentlyTeamDataEvent,
-      );
-    }
+      ));
   }
   GetRecentlyTeamData(e) {
     return this.RecentlyTeamList.get(e);
@@ -331,6 +334,12 @@ class FriendModel extends ModelBase_1.ModelBase {
   }
   set ShowingView(e) {
     this.o8t = e;
+  }
+  SetCurrentOperationPlayerId(e) {
+    this.V8a = e;
+  }
+  GetCurrentOperationPlayerId() {
+    return this.V8a;
   }
 }
 exports.FriendModel = FriendModel;

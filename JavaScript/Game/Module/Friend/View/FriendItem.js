@@ -5,6 +5,7 @@ const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
@@ -42,7 +43,7 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
           this.p8t() &&
           OnlineController_1.OnlineController.ApplyJoinWorldRequest(
             this.f8t().PlayerId,
-            Protocol_1.Aki.Protocol.H8s.Proto_LobbyJoin,
+            Protocol_1.Aki.Protocol.J8s.Proto_LobbyJoin,
           );
       }),
       (this.v8t = () =>
@@ -90,7 +91,7 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
               this.C8t.push(e.PlayerId),
               FriendController_1.FriendController.RequestFriendApplyHandle(
                 this.C8t,
-                Protocol_1.Aki.Protocol.E5s.Proto_Reject,
+                Protocol_1.Aki.Protocol.A6s.Proto_Reject,
               ))
             : (FriendController_1.FriendController.LocalRemoveApplicationFriend(
                 this.FriendInstanceId,
@@ -129,7 +130,7 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
                     this.C8t.push(t.PlayerId),
                     FriendController_1.FriendController.RequestFriendApplyHandle(
                       this.C8t,
-                      Protocol_1.Aki.Protocol.E5s.Proto_Approve,
+                      Protocol_1.Aki.Protocol.A6s.Proto_Approve,
                     )))
               : (FriendController_1.FriendController.LocalRemoveApplicationFriend(
                   this.FriendInstanceId,
@@ -144,10 +145,10 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
             this.FriendInstanceId,
           )?.Debug
         ) {
-          let e = Protocol_1.Aki.Protocol.S5s.Proto_Search;
+          let e = Protocol_1.Aki.Protocol.D6s.Proto_Search;
           "FriendView" === this.BelongView &&
             3 === ModelManager_1.ModelManager.FriendModel.FilterState &&
-            (e = Protocol_1.Aki.Protocol.S5s.Proto_RecentlyTeam);
+            (e = Protocol_1.Aki.Protocol.D6s.Proto_RecentlyTeam);
           var t,
             i = this.f8t();
           i &&
@@ -189,6 +190,9 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
           (this.f8t()
             ? ((ModelManager_1.ModelManager.FriendModel.SelectedPlayerId =
                 this.FriendInstanceId),
+              ModelManager_1.ModelManager.FriendModel.SetCurrentOperationPlayerId(
+                this.FriendInstanceId,
+              ),
               (ModelManager_1.ModelManager.FriendModel.ShowingView =
                 this.BelongView),
               UiManager_1.UiManager.OpenView("FriendProcessView"))
@@ -220,6 +224,8 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
       [14, UE.UIItem],
       [15, UE.UIItem],
       [16, UE.UIItem],
+      [17, UE.UIItem],
+      [18, UE.UIText],
     ]),
       (this.BtnBindInfo = [[12, this.R8t]]);
   }
@@ -282,7 +288,8 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.x8t(),
       this.G8t(),
       this.N8t(),
-      this.O8t();
+      this.O8t(),
+      this.qxa();
   }
   N8t() {
     this.GetText(9).SetText(this.f8t().Signature),
@@ -395,7 +402,19 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
   f8t() {
     return ModelManager_1.ModelManager.FriendModel.GetSelectedPlayerOrItemInstance(
       this.FriendInstanceId,
+      this.BelongView,
     );
+  }
+  qxa() {
+    var e;
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
+      ? ((e = "" !== this.f8t()?.GetSdkUserId()),
+        this.GetItem(17)?.SetUIActive(e),
+        this.GetText(18)?.SetUIActive(e),
+        e &&
+          ((e = this.f8t()?.GetSdkOnlineId() ?? ""),
+          this.GetText(18)?.SetText(e)))
+      : (this.GetItem(17)?.SetUIActive(!1), this.GetText(18)?.SetUIActive(!1));
   }
   U8t() {
     var e = ModelManager_1.ModelManager.FriendModel.FilterState;

@@ -35,8 +35,8 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       (this.Y0i = void 0),
       (this.J0i = void 0),
       (this.z0i = void 0),
-      (this.Kjs = void 0),
-      (this.ZYs = void 0),
+      (this.dWs = void 0),
+      (this.Xzs = void 0),
       (this.Z0i = void 0),
       (this.Iyn = void 0),
       (this.Het = []),
@@ -47,22 +47,23 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
           for (const i of t) this.Het[e].Refresh(i), e++;
         }
       }),
-      (this.eJs = () => {
+      (this.Yzs = () => {
         var e =
           ItemRewardController_1.ItemRewardController.BuildExploreFriendDataList();
         ItemRewardController_1.ItemRewardController.SetExploreFriendDataList(e),
-          this.tJs();
+          this.Jzs();
       }),
-      (this.xta = () => {
+      (this.Yra = () => {
         var e =
           ItemRewardController_1.ItemRewardController.BuildExploreFriendIdList();
         FriendController_1.FriendController.CheckHasAnyApplied(e) &&
+          !UiManager_1.UiManager.IsViewOpen("FriendApplyView") &&
           UiManager_1.UiManager.OpenView("FriendApplyView", e);
       }),
       (this.BYt = (e) => {
         this.sOe && this.sOe.Refresh(this.$Tt.GetItemList());
       }),
-      (this.iJs = () =>
+      (this.zzs = () =>
         new RewardExploreFriendItem_1.RewardExploreFriendItem());
   }
   OnRegisterComponent() {
@@ -93,15 +94,15 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.FriendApplyReceived,
-        this.xta,
+        this.Yra,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.FriendApplicationListUpdate,
-        this.eJs,
+        this.Yzs,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.FriendAdded,
-        this.eJs,
+        this.Yzs,
       );
   }
   OnRemoveEventListener() {
@@ -115,15 +116,15 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.FriendApplyReceived,
-        this.xta,
+        this.Yra,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.FriendApplicationListUpdate,
-        this.eJs,
+        this.Yzs,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.FriendAdded,
-        this.eJs,
+        this.Yzs,
       );
   }
   async OnBeforeStartAsync() {
@@ -141,7 +142,7 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
         this.N0i.ItemList &&
         0 < this.N0i.ItemList?.length &&
         (await this.ofi()),
-      this.G0i.IsShowOnlineChallengePlayer && (await this.Qjs()),
+      this.G0i.IsShowOnlineChallengePlayer && (await this.CWs()),
       this.G0i.IsExploreProgressVisible &&
         this.N0i.ExploreBarDataList &&
         (await this.rfi()),
@@ -150,7 +151,7 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
         (await this.nfi()),
       this.N0i.StateToggle && (await this.sfi()),
       this.N0i.ScoreReached && (await this.Tyn()),
-      this.N0i.ExploreFriendDataList && (await this.rJs());
+      this.N0i.ExploreFriendDataList && (await this.Zzs());
     var t = this.N0i.ButtonInfoList;
     if (t && 0 < t?.length) {
       let e = 0;
@@ -165,7 +166,7 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       this.Q0i() && this.X0i();
   }
   OnAfterShow() {
-    this.N0i.ExploreFriendDataList && this.xta();
+    this.N0i.ExploreFriendDataList && this.Yra();
   }
   OnAfterPlayStartSequence() {
     this.$Tt.GetRewardInfo().IsSuccess
@@ -236,9 +237,9 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       })),
       StringUtils_1.StringUtils.IsEmpty(i) || e.SetColor(UE.Color.FromHex(i));
   }
-  tJs() {
+  Jzs() {
     var e = this.N0i.ExploreFriendDataList;
-    e && this.ZYs?.RefreshByData(e);
+    e && this.Xzs?.RefreshByData(e);
   }
   async tfi() {
     var e,
@@ -289,11 +290,11 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       await this.z0i.CreateThenShowByResourceIdAsync("UiItem_Settlement", e),
       this.z0i.SetBarList(t));
   }
-  async Qjs() {
+  async CWs() {
     var e = this.GetItem(20);
-    (this.Kjs =
+    (this.dWs =
       new RewardExploreOnlineChallengePlayer_1.RewardExploreOnlineChallengePlayer()),
-      await this.Kjs.CreateThenShowByResourceIdAsync(
+      await this.dWs.CreateThenShowByResourceIdAsync(
         "UiItem_ChallengeAgain",
         e,
       );
@@ -319,11 +320,11 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       await this.Iyn.CreateThenShowByResourceIdAsync("UiItem_ResultScore", e),
       this.Iyn.Refresh(t));
   }
-  async rJs() {
+  async Zzs() {
     var e = this.N0i.ExploreFriendDataList,
       t = this.GetVerticalLayout(21),
-      i = new GenericLayout_1.GenericLayout(t, this.iJs);
-    await i.RefreshByDataAsync(e), t.RootUIComp.SetUIActive(!0), (this.ZYs = i);
+      i = new GenericLayout_1.GenericLayout(t, this.zzs);
+    await i.RefreshByDataAsync(e), t.RootUIComp.SetUIActive(!0), (this.Xzs = i);
   }
   afi(e, t) {
     var i = this.GetItem(5),

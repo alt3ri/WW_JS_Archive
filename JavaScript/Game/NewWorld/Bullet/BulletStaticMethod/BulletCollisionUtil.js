@@ -9,7 +9,6 @@ const UE = require("ue"),
   Transform_1 = require("../../../../Core/Utils/Math/Transform"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
-  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
   EffectSystem_1 = require("../../../Effect/EffectSystem"),
   GlobalData_1 = require("../../../GlobalData"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
@@ -357,7 +356,7 @@ class BulletCollisionUtil {
         void 0 === i ||
           ((e = a.GetComponent(3)) &&
             (this.tHo(t, a, e.IsRoleAndCtrlByMe), 0 < i) &&
-            a.GetComponent(109)?.RemoveTimeScale(i),
+            a.GetComponent(110)?.RemoveTimeScale(i),
           o.CharacterEntityMap.delete(a),
           t.BulletDataMain.Base.Interval <= 0 &&
             o.ObjectsHitCurrent.delete(a.Id),
@@ -377,7 +376,7 @@ class BulletCollisionUtil {
   static tHo(t, l, o) {
     (o = l.GetComponent(0)?.IsRole() && !o), (t = t.BulletDataMain);
     if (!o && t.Execution.GeIdApplyToVictim) {
-      var e = l.GetComponent(159);
+      var e = l.GetComponent(160);
       if (e)
         for (const i of t.Execution.GeIdApplyToVictim)
           e.RemoveBuff(
@@ -387,109 +386,145 @@ class BulletCollisionUtil {
           );
     }
   }
-  static iHo(t, l, o, e, i, a) {
-    BulletCollisionUtil.Xfa.clear();
-    var l = l.EffectOnHit.get(o ? 7 : 4);
-    l && 0 < l.length && "None" !== l && BulletCollisionUtil.Xfa.set(l, !0),
-      i &&
-        t.IsPartHit &&
-        (o = t.GetPartHitConf(e)) &&
-        (o.ReplaceBulletHitEffect && BulletCollisionUtil.Xfa.clear(),
-        (l = o.Effect),
-        ObjectUtils_1.ObjectUtils.SoftObjectReferenceValid(l) &&
-          BulletCollisionUtil.Xfa.set(l.ToAssetPathName(), !1),
-        a) &&
-        ((i = o.Audio),
-        ObjectUtils_1.ObjectUtils.SoftObjectReferenceValid(i)) &&
-        BulletCollisionUtil.Xfa.set(i.ToAssetPathName(), !1);
-  }
-  static PlayHitEffect(l, e, i, a, s, r) {
-    var _ = e.Entity.GetComponent(188);
-    if (!_.HasTag(-1728163740)) {
-      var _ = l.BulletDataMain,
-        u = _.Render,
-        _ = 0 < _.Base.DamageId;
-      if (
-        (BulletCollisionUtil.iHo(
-          e,
-          u,
-          a,
-          i,
-          _,
-          l.BulletDataMain.Base.EnablePartHitAudio,
-        ),
-        0 < BulletCollisionUtil.Xfa.size)
-      ) {
-        e = u.EffectOnHitConf.get(0);
+  static GetHitEffects(l, o, e, i, a, s, r, _) {
+    if ((BulletCollisionUtil.dSa.clear(), a)) {
+      if (!_?.HasTag(-1728163740)) {
+        a = r?.GetHitEffectReplaced();
         let t = void 0;
-        (t = e
-          ? (e.EnableHighLimit &&
-              ((a = l.GetActorLocation().Z),
-              (i = e.HighLimit),
-              (s.Z = MathUtils_1.MathUtils.Clamp(s.Z, a + i.X, a + i.Y))),
-            e.Scale)
-          : Vector_1.Vector.OneVectorProxy),
-          BulletCollisionUtil.oHo.Set(s, r.Quaternion(), t);
-        var n = l.Attacker?.GetComponent(52)?.HitEffectMap,
-          c = l.Attacker?.GetComponent(3),
-          _ = l.Attacker?.GetComponent(43);
-        let o = !1;
-        (0, RegisterComponent_1.isComponentInstance)(_, 173) &&
-          (o = "p1" === _.Priority.State);
-        var U = BulletStaticFunction_1.HitStaticFunction.CreateEffectContext(
-          l.Attacker,
-          o,
-        );
-        const P = u.AudioOnHit;
-        var B,
-          C,
-          h = (t, l) => {
-            BulletStaticFunction_1.HitStaticFunction.PlayHitAudio(t, l, P, o);
-          };
-        for ([B, C] of BulletCollisionUtil.Xfa) {
-          let t = 0,
-            l = c?.GetReplaceEffect(B);
-          l = l || B;
-          var f = n.get(l);
-          f &&
-          f.Size >= CharacterHitComponent_1.MAX_HIT_EFFECT_COUNT &&
-          ((t = f.Pop()), EffectSystem_1.EffectSystem.IsValid(t))
-            ? (EffectSystem_1.EffectSystem.ReplayEffect(
+        if (l.IsPartHit && i) {
+          l = l.GetPartHitConf(i);
+          if (l) {
+            var u = l.ReplaceBulletHitEffect;
+            t = l.Effect.ToAssetPathName();
+            r = r?.GetHitEffectReplacedIgnoreBones()?.has(i) ?? !1;
+            if (
+              ((t = BulletCollisionUtil.Dha(
                 t,
-                "ReUseHitEffect",
-                BulletCollisionUtil.oHo.ToUeTransform(),
-              ),
-              f.Push(t),
-              C &&
-                BulletStaticFunction_1.HitStaticFunction.PlayHitAudio(
-                  5,
+                a?.受击特效.ToAssetPathName(),
+                r,
+              )) && BulletCollisionUtil.dSa.set(t, !1),
+              s &&
+                ((t = l.Audio.ToAssetPathName()),
+                (t = BulletCollisionUtil.Dha(
                   t,
-                  P,
-                  o,
-                ))
-            : ((t = EffectSystem_1.EffectSystem.SpawnEffect(
-                GlobalData_1.GlobalData.World,
-                BulletCollisionUtil.oHo.ToUeTransform(),
-                l,
-                "[BulletCollisionUtil.ProcessHitEffect]",
-                U,
-                void 0,
-                void 0,
-                C ? h : void 0,
-              )),
-              n.has(l) || n.set(l, new Queue_1.Queue()),
-              n.get(l).Push(t));
+                  a?.受击音效.ToAssetPathName(),
+                  r,
+                ))) &&
+                BulletCollisionUtil.dSa.set(t, !1),
+              u)
+            )
+              return BulletCollisionUtil.dSa;
+          }
         }
+        (t = BulletCollisionUtil.Iza(o, e, _)),
+          (t = BulletCollisionUtil.Aha(t, a?.命中特效.ToAssetPathName())) &&
+            BulletCollisionUtil.dSa.set(t, !0);
       }
+    } else {
+      const t = BulletCollisionUtil.Iza(o, e, _);
+      t && 0 < t.length && "None" !== t && BulletCollisionUtil.dSa.set(t, !0);
+    }
+    return BulletCollisionUtil.dSa;
+  }
+  static Iza(t, l, o) {
+    var e = t.EffectOnHit.get(9);
+    return e && 0 < e.length && o?.HasTag(501201e3)
+      ? e
+      : t.EffectOnHit.get(l ? 7 : 4);
+  }
+  static Aha(t, l) {
+    if (t && 0 < t.length && "None" !== t)
+      return l && 0 < l.length && "None" !== l ? l : t;
+  }
+  static Dha(t, l, o) {
+    return !o && l && 0 < l.length && "None" !== l
+      ? l
+      : t && 0 < t.length && "None" !== t
+        ? t
+        : void 0;
+  }
+  static PlayHitEffect(l, e, i, a, s, r, _) {
+    var u = l.BulletDataMain,
+      n = u.Render,
+      u = 0 < u.Base.DamageId,
+      t = e.Entity.GetComponent(190),
+      e = BulletCollisionUtil.GetHitEffects(
+        e,
+        n,
+        a,
+        i,
+        u,
+        l.BulletDataMain.Base.EnablePartHitAudio,
+        _,
+        t,
+      );
+    if (0 < e.size) {
+      a = n.EffectOnHitConf.get(0);
+      let t = void 0;
+      (t = a
+        ? (a.EnableHighLimit &&
+            ((i = l.GetActorLocation().Z),
+            (u = a.HighLimit),
+            (s.Z = MathUtils_1.MathUtils.Clamp(s.Z, i + u.X, i + u.Y))),
+          a.Scale)
+        : Vector_1.Vector.OneVectorProxy),
+        BulletCollisionUtil.oHo.Set(s, r.Quaternion(), t),
+        BulletCollisionUtil.rHo.Start();
+      var c = l.Attacker?.GetComponent(53)?.HitEffectMap,
+        B = l.Attacker?.GetComponent(3),
+        _ = l.Attacker?.GetComponent(44);
+      let o = !1;
+      (0, RegisterComponent_1.isComponentInstance)(_, 174) &&
+        (o = "p1" === _.Priority.State);
+      var U = BulletStaticFunction_1.HitStaticFunction.CreateEffectContext(
+        l.Attacker,
+        o,
+      );
+      const E = n.AudioOnHit;
+      var C,
+        f,
+        h = (t, l) => {
+          BulletStaticFunction_1.HitStaticFunction.PlayHitAudio(t, l, E, o);
+        };
+      for ([C, f] of e) {
+        let t = 0,
+          l = B?.GetReplaceEffect(C);
+        l = l || C;
+        var P = c.get(l);
+        P &&
+        P.Size >= CharacterHitComponent_1.MAX_HIT_EFFECT_COUNT &&
+        ((t = P.Pop()), EffectSystem_1.EffectSystem.IsValid(t))
+          ? (EffectSystem_1.EffectSystem.ReplayEffect(
+              t,
+              "ReUseHitEffect",
+              BulletCollisionUtil.oHo.ToUeTransform(),
+            ),
+            P.Push(t),
+            f &&
+              BulletStaticFunction_1.HitStaticFunction.PlayHitAudio(5, t, E, o))
+          : ((t = EffectSystem_1.EffectSystem.SpawnEffect(
+              GlobalData_1.GlobalData.World,
+              BulletCollisionUtil.oHo.ToUeTransform(),
+              l,
+              "[BulletCollisionUtil.ProcessHitEffect]",
+              U,
+              void 0,
+              void 0,
+              f ? h : void 0,
+            )),
+            c.has(l) || c.set(l, new Queue_1.Queue()),
+            c.get(l).Push(t));
+      }
+      BulletCollisionUtil.rHo.Stop();
     }
   }
   static PlaySceneItemHitEffect(t, l, o, e) {
-    var i = t?.GetComponent(52)?.HitEffectMap;
+    var i = t?.GetComponent(53)?.HitEffectMap;
     let a = 0;
     var s = i.get(l),
-      r = t?.GetComponent(43);
+      r = t?.GetComponent(44);
     let _ = !1;
-    (0, RegisterComponent_1.isComponentInstance)(r, 173) &&
+    (0, RegisterComponent_1.isComponentInstance)(r, 174) &&
       (_ = "p1" === r.Priority.State),
       s &&
       s.Size >= CharacterHitComponent_1.MAX_HIT_EFFECT_COUNT &&
@@ -594,7 +629,7 @@ class BulletCollisionUtil {
           o.FromUeVector(l.GetActorLocation()));
   }
   static GetHitPointBoxComp(t, l, o, e) {
-    this.lHo.FromUeTransform(t.K2_GetComponentToWorld());
+    this.hHo.Start(), this.lHo.FromUeTransform(t.K2_GetComponentToWorld());
     var e = e ?? l.GetActorLocation(),
       i =
         (this.lHo.InverseTransformPosition(e, this._Ho),
@@ -645,7 +680,8 @@ class BulletCollisionUtil {
           ColorUtils_1.ColorUtils.LinearBlue,
           2,
           3,
-        ));
+        )),
+      this.hHo.Stop();
   }
   static cHo(e, i, a, s, t) {
     let r = 0,
@@ -668,12 +704,11 @@ class BulletCollisionUtil {
     return i.Multiply(r, t), t.AdditionEqual(e), 1;
   }
   static GetImpactPointSceneItem(t, l, o) {
-    var e,
-      i = BulletPool_1.BulletPool.CreateVector(),
-      a =
-        (i.FromUeVector(t.K2_GetComponentLocation()),
+    var e = BulletPool_1.BulletPool.CreateVector(),
+      i =
+        (e.FromUeVector(t.K2_GetComponentLocation()),
         BulletPool_1.BulletPool.CreateVector());
-    const s = t.Bounds.SphereRadius;
+    const a = t.Bounds.SphereRadius;
     if (
       (Math.abs(l.MoveInfo.BulletSpeed) < MathUtils_1.MathUtils.SmallNumber
         ? t.IsA(UE.BoxComponent.StaticClass())
@@ -683,17 +718,13 @@ class BulletCollisionUtil {
               o,
               l.AttackerActorComp.ActorLocationProxy,
             )
-          : (l.AttackerActorComp.ActorLocationProxy.Subtraction(i, a),
-            a.Normalize(),
-            a.MultiplyEqual(s),
-            a.Addition(i, o))
-        : (i.Subtraction(l.CollisionInfo.LastFramePosition, a),
-          (e = a.Size() - s),
-          a.Normalize(),
-          a.MultiplyEqual(e),
-          l.CollisionInfo.LastFramePosition.Addition(a, o)),
+          : (l.AttackerActorComp.ActorLocationProxy.Subtraction(e, i),
+            i.Normalize(),
+            i.MultiplyEqual(a),
+            i.Addition(e, o))
+        : o.FromUeVector(l.CollisionInfo.LastFramePosition),
+      BulletPool_1.BulletPool.RecycleVector(e),
       BulletPool_1.BulletPool.RecycleVector(i),
-      BulletPool_1.BulletPool.RecycleVector(a),
       BulletConstant_1.BulletConstant.OpenHitActorLog &&
         Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -701,15 +732,15 @@ class BulletCollisionUtil {
           21,
           "命中特效 碰撞点 场景物",
           ["boneName", t.GetName()],
-          ["radius", s],
+          ["radius", a],
           ["bulletRowName", l.BulletRowName],
         ),
       ModelManager_1.ModelManager.BulletModel.ShowBulletTrace(l.Attacker.Id))
     ) {
-      const s = 4;
+      const a = 4;
       UE.KismetSystemLibrary.DrawDebugSphere(
         GlobalData_1.GlobalData.World,
-        i.ToUeVector(),
+        e.ToUeVector(),
         4,
         8,
         ColorUtils_1.ColorUtils.LinearBlue,
@@ -730,9 +761,9 @@ class BulletCollisionUtil {
 }
 ((exports.BulletCollisionUtil = BulletCollisionUtil).eHo =
   Vector_1.Vector.Create()),
-  (BulletCollisionUtil.rHo = void 0),
+  (BulletCollisionUtil.dSa = new Map()),
+  (BulletCollisionUtil.rHo = Stats_1.Stat.Create("PlayHitEffect")),
   (BulletCollisionUtil.oHo = Transform_1.Transform.Create()),
-  (BulletCollisionUtil.Xfa = new Map()),
   (BulletCollisionUtil.nHo = Vector_1.Vector.Create()),
   (BulletCollisionUtil.sHo = Vector_1.Vector.Create()),
   (BulletCollisionUtil.aHo = Vector_1.Vector.Create()),
@@ -740,5 +771,5 @@ class BulletCollisionUtil {
   (BulletCollisionUtil._Ho = Vector_1.Vector.Create()),
   (BulletCollisionUtil.uHo = Vector_1.Vector.Create()),
   (BulletCollisionUtil.mHo = Vector_1.Vector.Create()),
-  (BulletCollisionUtil.hHo = void 0);
+  (BulletCollisionUtil.hHo = Stats_1.Stat.Create("GetHitPointBoxComp"));
 //# sourceMappingURL=BulletCollisionUtil.js.map

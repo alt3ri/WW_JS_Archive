@@ -34,7 +34,7 @@ let UiModelLoadingIconComponent = class UiModelLoadingIconComponent extends UiMo
       (this.UiModelDataComponent = void 0),
       (this.LoadingItem = void 0),
       (this.eBr = () => {
-        (this.NeedTick = !0), this.Mjs(), this.LoadingItem.SetLoadingActive(!0);
+        (this.NeedTick = !0), this.Fjs(), this.LoadingItem.SetLoadingActive(!0);
       }),
       (this.Fwr = () => {
         (this.NeedTick = !1), this.LoadingItem.SetLoadingActive(!1);
@@ -62,7 +62,7 @@ let UiModelLoadingIconComponent = class UiModelLoadingIconComponent extends UiMo
       );
   }
   OnTick(e) {
-    this.Mjs();
+    this.Fjs();
   }
   OnEnd() {
     EventSystem_1.EventSystem.RemoveWithTarget(
@@ -83,7 +83,7 @@ let UiModelLoadingIconComponent = class UiModelLoadingIconComponent extends UiMo
   SetLoadingActive(e) {
     this.LoadingItem.SetLoadingActive(e);
   }
-  Mjs() {
+  Fjs() {
     var e;
     this.UiModelDataComponent?.GetLoadingIconFollowState() &&
       this.UiModelActorComponent &&

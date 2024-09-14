@@ -124,10 +124,11 @@ class PhantomEntryItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   RefreshPreview(e = void 0) {
     let t = !0;
-    for (const r of this._ho.GetLayoutItemList()) r.RefreshPanel(e) || (t = !1);
-    var i = !this.lho.IsUnlock && t,
-      s =
-        (i
+    for (const n of this._ho.GetLayoutItemList()) n.RefreshPanel(e) || (t = !1);
+    var i,
+      s = !this.lho.IsUnlock && t,
+      r =
+        (s
           ? (this.cho(),
             (this.uho = !0),
             EventSystem_1.EventSystem.Emit(
@@ -135,10 +136,19 @@ class PhantomEntryItem extends GridProxyAbstract_1.GridProxyAbstract {
             ))
           : this.uho &&
             (this.SPe.PlayLevelSequenceByName("Disappear"), (this.uho = !1)),
-        this.GetItem(2).SetUIActive(i),
+        this.GetItem(2).SetUIActive(s),
         this.GetText(3));
-    LguiUtil_1.LguiUtil.SetLocalTextNew(s, this.lho.GetAffixDesc()),
-      s.SetChangeColor(i, s?.changeColor);
+    0 === ModelManager_1.ModelManager.RoguelikeModel?.GetDescModel()
+      ? LguiUtil_1.LguiUtil.SetLocalTextNew(r, this.lho.GetAffixDesc())
+      : (i = ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRogueAffixConfig(
+          this.lho.Id,
+        )) &&
+        LguiUtil_1.LguiUtil.SetLocalTextNew(
+          r,
+          this.lho.GetAffixDesc(),
+          i?.AffixDescParam,
+        ),
+      r.SetChangeColor(s, r?.changeColor);
   }
   cho() {
     this.SPe.PlayLevelSequenceByName(RoguelikeDefine_1.COMPLETE);

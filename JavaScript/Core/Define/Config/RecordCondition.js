@@ -14,44 +14,81 @@ class RecordCondition {
     return this.type();
   }
   get Nullenable() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.nullenableLength(), (t) =>
-      this.nullenable(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.nullenableLength(),
+      this.nullenable,
+      this,
     );
   }
   get Param1() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.param1Length(),
-      (t) => this.param1(t)?.key(),
-      (t) => this.param1(t)?.value(),
+      this.param1Key,
+      this.param1Value,
+      this,
     );
+  }
+  param1Key(t) {
+    return this.param1(t)?.key();
+  }
+  param1Value(t) {
+    return this.param1(t)?.value();
   }
   get Param2() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.param2Length(),
-      (t) => this.param2(t)?.key(),
-      (t) => this.param2(t)?.value(),
+      this.param2Key,
+      this.param2Value,
+      this,
     );
+  }
+  param2Key(t) {
+    return this.param2(t)?.key();
+  }
+  param2Value(t) {
+    return this.param2(t)?.value();
   }
   get Param3() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.param3Length(),
-      (t) => this.param3(t)?.key(),
-      (t) => this.param3(t)?.value(),
+      this.param3Key,
+      this.param3Value,
+      this,
     );
+  }
+  param3Key(t) {
+    return this.param3(t)?.key();
+  }
+  param3Value(t) {
+    return this.param3(t)?.value();
   }
   get Param4() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.param4Length(),
-      (t) => this.param4(t)?.key(),
-      (t) => this.param4(t)?.value(),
+      this.param4Key,
+      this.param4Value,
+      this,
     );
+  }
+  param4Key(t) {
+    return this.param4(t)?.key();
+  }
+  param4Value(t) {
+    return this.param4(t)?.value();
   }
   get Param5() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.param5Length(),
-      (t) => this.param5(t)?.key(),
-      (t) => this.param5(t)?.value(),
+      this.param5Key,
+      this.param5Value,
+      this,
     );
+  }
+  param5Key(t) {
+    return this.param5(t)?.key();
+  }
+  param5Value(t) {
+    return this.param5(t)?.value();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;

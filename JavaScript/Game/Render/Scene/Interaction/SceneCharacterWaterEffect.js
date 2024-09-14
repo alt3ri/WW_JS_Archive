@@ -11,6 +11,7 @@ const UE = require("ue"),
   EffectSystem_1 = require("../../../Effect/EffectSystem"),
   GlobalData_1 = require("../../../GlobalData"),
   CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  RenderDataManager_1 = require("../../Data/RenderDataManager"),
   ONE_SECOND = 1e3;
 class WaterEffectItem {
   constructor() {
@@ -51,7 +52,8 @@ class WaterEffectSubConfig {
     (this.MoveEffects = []),
       (this.FallEffects = []),
       (this.JumpEffects = []),
-      (this.FallJumpDepthThreshold = 0);
+      (this.FallJumpDepthThreshold = 0),
+      (this.TriggerInGrass = !1);
   }
   FindMoveEffect(t, e) {
     let i = 0;
@@ -97,7 +99,8 @@ class WaterEffectSubConfig {
     for (let t = 0; t < h; t++)
       (this.JumpEffects[t] = new WaterEffectItem()),
         this.JumpEffects[t].Init(e.JumpEffects.Get(t));
-    this.FallJumpDepthThreshold = e.FallJumpDepthThreshold;
+    (this.FallJumpDepthThreshold = e.FallJumpDepthThreshold),
+      (this.TriggerInGrass = e.TriggerInGrass);
   }
 }
 class VelocityHistoryCache {
@@ -114,12 +117,12 @@ class VelocityHistoryCache {
       (this.VelocityHistoryArrayPtr =
         (this.VelocityHistoryArrayPtr + 1) % this.VelocityHistory.length);
   }
-  GetMaxVelocityZPositive() {
+  GetMaxVelocityZpositive() {
     let t = 0;
     for (const e of this.VelocityHistory) t = e.Z > t ? e.Z : t;
     return t;
   }
-  GetMaxVelocityZNegative() {
+  GetMaxVelocityZnegative() {
     let t = 0;
     for (const e of this.VelocityHistory) t = e.Z < t ? e.Z : t;
     return t;
@@ -181,7 +184,7 @@ class SceneCharacterWaterEffect {
   Enable() {
     this.IsReady &&
       ((this.OwnerStateComponent =
-        this.Owner.CharacterActorComponent?.Entity?.GetComponent(160)),
+        this.Owner.CharacterActorComponent?.Entity?.GetComponent(161)),
       (this.IsEnabled = !0),
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info("RenderEffect", 26, "WaterEffect Enabled", [
@@ -257,7 +260,11 @@ class SceneCharacterWaterEffect {
       }));
   }
   IsMaterialInUse(t) {
-    return this.OnMaterialSubConfig.has(t);
+    return (
+      !!this.OnMaterialSubConfig.has(t) &&
+      (!this.OnMaterialSubConfig.get(t).TriggerInGrass ||
+        RenderDataManager_1.RenderDataManager.Get().GetPlayerInGrass())
+    );
   }
   SetStateNone(t) {
     this.IsEnabled &&
@@ -303,18 +310,18 @@ class SceneCharacterWaterEffect {
       (this.CurrentSubConfig = this.InWaterSubConfig),
       (this.State = 1));
   }
-  SetStateOnMaterial(t, e, i, s, h, f) {
+  SetStateOnMaterial(t, e, i, s, h, r) {
     this.IsEnabled &&
       ((t = this.OnMaterialSubConfig.get(t))
         ? ((this.CurrentWaterDepth = e),
-          this.CurrentWaterLocation.Set(h.X, h.Y, f),
+          this.CurrentWaterLocation.Set(h.X, h.Y, r),
           (this.CurrentWaterNormal = i),
           this.VelocityHistory.AddVelocity(s),
           (this.CurrentSpeed = s.Size()),
           0 === this.State &&
             this.OnCharacterFallInWater(s, this.CurrentWaterLocation, i, t, e),
-          (f = t.FindMoveEffect(e, this.CurrentSpeed)) &&
-            this.SpawnEffect(f.EffectDataPath, f.AudioEffectDataPath, h, i),
+          (r = t.FindMoveEffect(e, this.CurrentSpeed)) &&
+            this.SpawnEffect(r.EffectDataPath, r.AudioEffectDataPath, h, i),
           (this.CurrentSubConfig = t),
           (this.State = 2))
         : this.SetStateNone(s));
@@ -328,10 +335,10 @@ class SceneCharacterWaterEffect {
           26,
           "WaterEffect Spawn Fall In Water",
           ["Owner", this.Owner.GetName()],
-          ["vel", this.VelocityHistory.GetMaxVelocityZNegative()],
+          ["vel", this.VelocityHistory.GetMaxVelocityZnegative()],
         ),
       (h = s.FindFallEffectAtSpeed(
-        -this.VelocityHistory.GetMaxVelocityZNegative(),
+        -this.VelocityHistory.GetMaxVelocityZnegative(),
       ))) &&
       ((s = Vector_1.Vector.Create(
         e.X + t.X * this.Config.FallJumpPositionFix,
@@ -351,7 +358,7 @@ class SceneCharacterWaterEffect {
           ["Owner", this.Owner.GetName()],
         ),
       (h = s.FindJumpEffectAtSpeed(
-        this.VelocityHistory.GetMaxVelocityZPositive(),
+        this.VelocityHistory.GetMaxVelocityZpositive(),
       ))) &&
       ((s = Vector_1.Vector.Create(
         e.X + t.X * this.Config.FallJumpPositionFix,

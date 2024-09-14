@@ -9,12 +9,13 @@ const cpp_1 = require("cpp"),
   PerformanceController_1 = require("../../../../Core/Performance/PerformanceController"),
   ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
   TickSystem_1 = require("../../../../Core/Tick/TickSystem"),
+  Platform_1 = require("../../../../Launcher/Platform/Platform"),
   EffectSystem_1 = require("../../../Effect/EffectSystem"),
   Global_1 = require("../../../Global"),
   GlobalData_1 = require("../../../GlobalData"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ConfirmBoxDefine_1 = require("../../../Module/ConfirmBox/ConfirmBoxDefine"),
   EffectGlobal_1 = require("../EffectGlobal"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   EFFECT_PATHS_DA_PATH =
     "/Game/Aki/Render/RuntimeBP/Effect/Debug/DA_EffectPaths.DA_EffectPaths";
 class EffectStatData {
@@ -73,13 +74,13 @@ class AutoStatEffectDataMgr {
     return (
       this.Instance ||
         ((this.Instance = new AutoStatEffectDataMgr()),
-        (this.Dpe = void 0),
-        (this.n1r = void 0)),
+        (this.Dpe = Stats_1.Stat.Create("AutoStatEffectDataMgr:SpawnEffect")),
+        (this.n1r = Stats_1.Stat.Create("AutoStatEffectDataMgr:UpdateEffect"))),
       this.Instance
     );
   }
   static GetMicrosecond() {
-    return "Windows" === UE.GameplayStatics.GetPlatformName()
+    return Platform_1.Platform.IsWindowsPlatform()
       ? 0.1 * cpp_1.KuroTime.GetCycles64()
       : cpp_1.KuroTime.GetCycles64();
   }
@@ -103,7 +104,7 @@ class AutoStatEffectDataMgr {
       (EffectGlobal_1.EffectGlobal.AllowEffectInPool = !1),
       (EffectGlobal_1.EffectGlobal.AllowEffectOutPool = !1);
   }
-  Play(a = 0, r = -1) {
+  Play(i = 0, r = -1) {
     Info_1.Info.IsBuildDevelopmentOrDebug
       ? (this.av(),
         Log_1.Log.CheckDebug() &&
@@ -114,9 +115,9 @@ class AutoStatEffectDataMgr {
           (t) => {
             var e = t.BasePaths;
             let s = 0,
-              i = (0 < a && a < e.Num() - 1 && (s = a), e.Num() - 1);
-            -1 !== r && r < e.Num() && (i = r), (this.BasePaths = new Array());
-            for (let t = s; t <= i; t++) this.BasePaths.push(e.Get(t));
+              a = (0 < i && i < e.Num() - 1 && (s = i), e.Num() - 1);
+            -1 !== r && r < e.Num() && (a = r), (this.BasePaths = new Array());
+            for (let t = s; t <= a; t++) this.BasePaths.push(e.Get(t));
             (this.TickId = TickSystem_1.TickSystem.Add(
               this.r6,
               "PlayEffectOneByOne",
@@ -128,7 +129,7 @@ class AutoStatEffectDataMgr {
                   "加载特效路径完成",
                   ["特效数量", this.BasePaths.length],
                   ["开始索引", s],
-                  ["结束索引", i],
+                  ["结束索引", a],
                   ["最大播放时长(ms)", AutoStatEffectDataMgr.s1r],
                   ["播放间歇时长(ms)", AutoStatEffectDataMgr.a1r],
                 );
@@ -185,10 +186,12 @@ class AutoStatEffectDataMgr {
   l1r(t) {
     var e;
     EffectSystem_1.EffectSystem.IsValid(this.rvi) &&
-      ((e =
+      (AutoStatEffectDataMgr.n1r.Start(),
+      (e =
         PerformanceController_1.PerformanceController.ConsumeTickTime(
           "NiagaraDebugTick",
         )),
+      AutoStatEffectDataMgr.n1r.Stop(),
       this.t1r[this.t1r.length - 1].UpdateTimeArray.push(1e3 * e));
   }
   h1r() {
@@ -207,7 +210,7 @@ class AutoStatEffectDataMgr {
         (TickSystem_1.TickSystem.Remove(this.TickId),
         (this.TickId = TickSystem_1.TickSystem.InvalidId));
       var t = new Array();
-      for (const i of this.t1r.values()) t.push(i.ToCsv());
+      for (const a of this.t1r.values()) t.push(a.ToCsv());
       var e = `${UE.KismetSystemLibrary.GetProjectSavedDirectory()}Profiling/${Date.now()}_EffectStats.csv`,
         e =
           (Log_1.Log.CheckDebug() &&
@@ -235,6 +238,7 @@ class AutoStatEffectDataMgr {
         ? (this.i1r++,
           (!this.o1r || this.i1r > AutoStatEffectDataMgr.u1r) &&
             ((this.o1r = this.BasePaths.pop()), (this.i1r = 1)),
+          AutoStatEffectDataMgr.Dpe.Start(),
           (s = AutoStatEffectDataMgr.GetMicrosecond()),
           (this.rvi = EffectSystem_1.EffectSystem.SpawnEffect(
             GlobalData_1.GlobalData.World,
@@ -249,6 +253,7 @@ class AutoStatEffectDataMgr {
           )),
           EffectSystem_1.EffectSystem.IsValid(this.rvi)
             ? ((e = AutoStatEffectDataMgr.GetMicrosecond()),
+              AutoStatEffectDataMgr.Dpe.Stop(),
               Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug("RenderEffect", 41, "", ["测试特效", this.o1r]),
               this.t1r.push(new EffectStatData(this.o1r, e - s)))

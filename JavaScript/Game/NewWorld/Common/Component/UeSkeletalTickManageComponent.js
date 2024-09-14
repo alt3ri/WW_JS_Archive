@@ -2,22 +2,22 @@
 var UeSkeletalTickManageComponent_1,
   __decorate =
     (this && this.__decorate) ||
-    function (t, e, i, o) {
-      var s,
+    function (t, e, i, s) {
+      var o,
         r = arguments.length,
-        n =
+        h =
           r < 3
             ? e
-            : null === o
-              ? (o = Object.getOwnPropertyDescriptor(e, i))
-              : o;
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        n = Reflect.decorate(t, e, i, o);
+        h = Reflect.decorate(t, e, i, s);
       else
-        for (var h = t.length - 1; 0 <= h; h--)
-          (s = t[h]) &&
-            (n = (r < 3 ? s(n) : 3 < r ? s(e, i, n) : s(e, i)) || n);
-      return 3 < r && n && Object.defineProperty(e, i, n), n;
+        for (var n = t.length - 1; 0 <= n; n--)
+          (o = t[n]) &&
+            (h = (r < 3 ? o(h) : 3 < r ? o(e, i, h) : o(e, i)) || h);
+      return 3 < r && h && Object.defineProperty(e, i, h), h;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UeSkeletalTickManageComponent = exports.UeSkeletalTickController =
@@ -62,12 +62,13 @@ let UeSkeletalTickManageComponent =
       super(...arguments),
         (this.Tsn = !1),
         (this.Hte = void 0),
+        (this.I5r = void 0),
         (this.d3r = -1),
         (this.Lsn = !1),
         (this.Dsn = 0),
         (this.Rsn = void 0),
-        (this.Gpa = void 0),
-        (this.XQs = void 0),
+        (this.GSa = void 0),
+        (this.mYs = void 0),
         (this.TickType = 0),
         (this.Usn = new Array()),
         (this.Asn = new Array());
@@ -77,34 +78,38 @@ let UeSkeletalTickManageComponent =
     }
     set TickMode(t) {
       if (this.Dsn !== t) {
-        if (1 === (this.Dsn = t)) {
-          for (const e of this.Usn)
-            TickSystem_1.TickSystem.SetSkeletalMeshProxyTickFunction(0, e);
-          for (const i of this.Asn)
-            TickSystem_1.TickSystem.SetSkeletalMeshProxyTickFunction(4, i);
-        } else {
-          for (const o of this.Usn)
-            o
-              ? Log_1.Log.CheckWarn() &&
-                Log_1.Log.Warn(
-                  "Test",
-                  6,
-                  "HasSkeletalMesh",
-                  ["EntityId", this.Entity.Id],
-                  ["Actor", this.Hte?.Owner?.GetName()],
-                  ["SkelMesh", o.GetName()],
-                )
-              : Log_1.Log.CheckError() &&
-                Log_1.Log.Error(
-                  "Test",
-                  6,
-                  "NoSkeletalMesh",
-                  ["EntityId", this.Entity.Id],
-                  ["Actor", this.Hte?.Owner?.GetName()],
-                ),
-              TickSystem_1.TickSystem.CleanSkeletalMeshProxyTickFunction(o);
-          for (const s of this.Asn)
-            s ||
+        var e = this.Dsn;
+        if (1 === (this.Dsn = t))
+          if (2 === e)
+            0 < this.Usn.length &&
+              TickSystem_1.TickSystem.SetSkeletalMeshProxyTickFunction(
+                0,
+                this.Usn[0],
+              );
+          else {
+            for (const i of this.Usn)
+              TickSystem_1.TickSystem.SetSkeletalMeshProxyTickFunction(0, i);
+            for (const s of this.Asn)
+              TickSystem_1.TickSystem.SetSkeletalMeshProxyTickFunction(4, s);
+          }
+        else if (2 === t)
+          if (1 === e)
+            0 < this.Usn.length &&
+              TickSystem_1.TickSystem.CleanSkeletalMeshProxyTickFunction(
+                this.Usn[0],
+              );
+          else {
+            let t = 0;
+            for (const o of this.Usn)
+              0 < t &&
+                TickSystem_1.TickSystem.SetSkeletalMeshProxyTickFunction(0, o),
+                ++t;
+            for (const r of this.Asn)
+              TickSystem_1.TickSystem.SetSkeletalMeshProxyTickFunction(4, r);
+          }
+        else {
+          for (const h of this.Usn)
+            h ||
               (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Test",
@@ -113,30 +118,41 @@ let UeSkeletalTickManageComponent =
                   ["EntityId", this.Entity.Id],
                   ["Actor", this.Hte?.Owner?.GetName()],
                 )),
-              TickSystem_1.TickSystem.CleanSkeletalMeshProxyTickFunction(s);
+              TickSystem_1.TickSystem.CleanSkeletalMeshProxyTickFunction(h);
+          for (const n of this.Asn)
+            n ||
+              (Log_1.Log.CheckError() &&
+                Log_1.Log.Error(
+                  "Test",
+                  6,
+                  "NoSkeletalMesh",
+                  ["EntityId", this.Entity.Id],
+                  ["Actor", this.Hte?.Owner?.GetName()],
+                )),
+              TickSystem_1.TickSystem.CleanSkeletalMeshProxyTickFunction(n);
         }
         if (
           (UeSkeletalTickController.DeleteManager(this),
           (1 !== t && 2 !== t) || UeSkeletalTickController.AddManager(this),
           4 === t)
         ) {
-          for (const r of this.Usn)
-            r.SetTickGroup(1),
-              r.SetComponentTickEnabled(this.Active),
-              r.SetKuroOnlyTickOutside(!1);
-          for (const n of this.Asn)
-            n.SetTickGroup(1),
-              n.SetComponentTickEnabled(this.Active),
-              n.SetKuroOnlyTickOutside(!1);
+          for (const a of this.Usn)
+            a.SetTickGroup(1),
+              a.SetComponentTickEnabled(this.Active),
+              a.SetKuroOnlyTickOutside(!1);
+          for (const c of this.Asn)
+            c.SetTickGroup(1),
+              c.SetComponentTickEnabled(this.Active),
+              c.SetKuroOnlyTickOutside(!1);
         } else {
-          for (const h of this.Usn)
-            h.SetTickGroup(0),
-              h.SetComponentTickEnabled(!1),
-              h.SetKuroOnlyTickOutside(!0);
-          for (const a of this.Asn)
-            a.SetTickGroup(4),
-              a.SetComponentTickEnabled(!1),
-              a.SetKuroOnlyTickOutside(!0);
+          for (const l of this.Usn)
+            l.SetTickGroup(0),
+              l.SetComponentTickEnabled(!1),
+              l.SetKuroOnlyTickOutside(!0);
+          for (const f of this.Asn)
+            f.SetTickGroup(4),
+              f.SetComponentTickEnabled(!1),
+              f.SetKuroOnlyTickOutside(!0);
         }
       }
     }
@@ -147,26 +163,30 @@ let UeSkeletalTickManageComponent =
       return !0;
     }
     OnActivate() {
-      this.Hte = this.Entity.GetComponent(1);
+      (this.Hte = this.Entity.GetComponent(1)),
+        (this.I5r = this.Entity.GetComponent(92));
       var e = this.Hte.Owner.K2_GetComponentsByClass(
           UE.SkeletalMeshComponent.StaticClass(),
         ),
         i = e.Num();
       for (let t = 0; t < i; ++t) {
-        var o = e.Get(t);
-        o instanceof UE.SkeletalMeshComponent &&
-          (o.MasterPoseComponent
-            ? this.Asn.push(o)
-            : (this.Usn.push(o), this.Gpa || (this.Gpa = o)),
-          this.XQs || (this.XQs = o.GetAnimInstance()));
+        var s = e.Get(t);
+        s instanceof UE.SkeletalMeshComponent &&
+          ((s.bConsumeAllRootMotion = !0),
+          s.MasterPoseComponent
+            ? this.Asn.push(s)
+            : (this.Usn.push(s), this.GSa || (this.GSa = s)),
+          this.mYs || (this.mYs = s.GetAnimInstance()));
       }
-      this.XQs && this.XQs.SetDelayAnimTime(0, 0),
+      this.mYs && this.mYs.SetDelayAnimTime(0, 0),
         PerformanceController_1.PerformanceController
           .IsEntityTickPerformanceTest
           ? (this.TickMode = 1)
           : this.Psn(),
         (this.TickType = 1),
-        (this.Rsn = void 0);
+        (this.Rsn = Stats_1.Stat.Create(
+          "ProxyTick " + this.Hte?.Owner?.GetName(),
+        ));
     }
     OnEnd() {
       (this.TickMode = 0), (this.TickType = 0);
@@ -174,42 +194,42 @@ let UeSkeletalTickManageComponent =
       return !0;
     }
     OnTick(t) {
-      var e;
+      var e =
+        t *
+        MathUtils_1.MathUtils.MillisecondToSecond *
+        this.TimeDilation *
+        (this.Entity.GetComponent(110)?.CurrentTimeScale ?? 1);
       if (
-        (1 < this.Entity.GetTickInterval() &&
-          ((e =
-            t *
-            MathUtils_1.MathUtils.MillisecondToSecond *
-            this.TimeDilation *
-            (this.Entity.GetComponent(109)?.CurrentTimeScale ?? 1)),
-          this.XQs?.SetDelayAnimTime(
-            Math.min(MAX_TIME_DELAY_ANIM, e),
-            Math.min(MAX_COLLECT_PERIOD_DELAY_ANIM, e / 2),
-          )),
+        (1 < this.Entity.GetTickInterval()
+          ? this.mYs?.SetDelayAnimTime(
+              Math.min(MAX_TIME_DELAY_ANIM, e),
+              Math.min(MAX_COLLECT_PERIOD_DELAY_ANIM, e / 2),
+            )
+          : this.I5r?.IsInFighting
+            ? this.mYs?.SetDelayAnimTime(0, MAX_TIME_DELAY_ANIM)
+            : this.mYs?.SetDelayAnimTime(
+                0,
+                Math.min(MAX_COLLECT_PERIOD_DELAY_ANIM, e),
+              ),
         this.Psn(),
         3 === this.TickMode)
       ) {
-        var i =
-          t *
-          MathUtils_1.MathUtils.MillisecondToSecond *
-          this.TimeDilation *
-          (this.Entity.GetComponent(109)?.CurrentTimeScale ?? 1);
-        (this.d3r = Time_1.Time.Frame), this.XQs?.AddDeltaForDelayAnim(i);
-        for (const o of this.Usn)
-          (2 === this.TickType && !this.CheckMainMesh(o)) ||
-            o.KuroTickComponentOutside(i);
+        (this.d3r = Time_1.Time.Frame), this.mYs?.AddDeltaForDelayAnim(e);
+        for (const i of this.Usn)
+          (2 === this.TickType && !this.CheckMainMesh(i)) ||
+            i.KuroTickComponentOutside(e);
         if (2 !== this.TickType)
-          for (const s of this.Asn) s.KuroTickComponentOutside(i);
+          for (const s of this.Asn) s.KuroTickComponentOutside(e);
       }
     }
     ProxyTick(t) {
       if (1 === this.TickType || 2 === this.TickType) {
-        this.d3r = Time_1.Time.Frame;
+        this.Rsn?.Start(), (this.d3r = Time_1.Time.Frame);
         var e =
           t *
           this.TimeDilation *
-          (this.Entity.GetComponent(109)?.CurrentTimeScale ?? 1);
-        this.XQs?.AddDeltaForDelayAnim(e);
+          (this.Entity.GetComponent(110)?.CurrentTimeScale ?? 1);
+        this.mYs?.AddDeltaForDelayAnim(e);
         for (const i of this.Usn)
           (2 === this.TickType && !this.CheckMainMesh(i)) ||
             (i
@@ -222,20 +242,22 @@ let UeSkeletalTickManageComponent =
                   ["EntityId", this.Entity.Id],
                   ["Actor", this.Hte?.Owner?.GetName()],
                 ));
+        this.Rsn?.Stop();
       }
     }
     AfterProxyTick(t) {
       if (1 === this.TickType) {
+        this.Rsn?.Start();
         var e =
           t *
           this.TimeDilation *
-          (this.Entity.GetComponent(109)?.CurrentTimeScale ?? 1);
+          (this.Entity.GetComponent(110)?.CurrentTimeScale ?? 1);
         if (this.Tsn && ((this.Tsn = !1), this.d3r !== Time_1.Time.Frame))
           for (const i of this.Usn) i.KuroTickComponentOutside(t);
-        if (this.Gpa?.RenderedAndNotSkipUpdate())
-          for (const o of this.Asn)
-            o
-              ? o.KuroTickComponentOutside(e)
+        if (this.GSa?.RenderedAndNotSkipUpdate())
+          for (const s of this.Asn)
+            s
+              ? s.KuroTickComponentOutside(e)
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Test",
@@ -244,6 +266,7 @@ let UeSkeletalTickManageComponent =
                   ["EntityId", this.Entity.Id],
                   ["Actor", this.Hte?.Owner?.GetName()],
                 );
+        this.Rsn?.Stop();
       }
     }
     OnEnable() {
@@ -292,21 +315,9 @@ let UeSkeletalTickManageComponent =
     }
   });
 (UeSkeletalTickManageComponent.MainRoleParallel = !1),
-  __decorate(
-    [(0, PerformanceDecorators_1.TickEntitySkeletonProxyPerformance)()],
-    UeSkeletalTickManageComponent.prototype,
-    "ProxyTick",
-    null,
-  ),
-  __decorate(
-    [(0, PerformanceDecorators_1.TickEntitySkeletonProxyPerformance)()],
-    UeSkeletalTickManageComponent.prototype,
-    "AfterProxyTick",
-    null,
-  ),
   (UeSkeletalTickManageComponent = UeSkeletalTickManageComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(101)],
+      [(0, RegisterComponent_1.RegisterComponent)(102)],
       UeSkeletalTickManageComponent,
     )),
   (exports.UeSkeletalTickManageComponent = UeSkeletalTickManageComponent);

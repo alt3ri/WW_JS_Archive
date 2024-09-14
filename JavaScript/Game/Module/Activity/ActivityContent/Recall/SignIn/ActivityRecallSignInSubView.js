@@ -6,17 +6,17 @@ const UE = require("ue"),
   ActivityRecallSignPanel_1 = require("./ActivityRecallSignPanel");
 class ActivityRecallSignInSubView extends ActivityRecallDefine_1.ActivityMainSubViewBase {
   constructor() {
-    super(...arguments), (this.ica = void 0);
+    super(...arguments), (this.oCa = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIItem]];
   }
   async OnBeforeStartAsync() {
-    (this.ica = new ActivityRecallSignPanel_1.ActivityRecallSignPanel()),
-      await this.ica.CreateThenShowByActorAsync(this.GetItem(0).GetOwner());
+    (this.oCa = new ActivityRecallSignPanel_1.ActivityRecallSignPanel()),
+      await this.oCa.CreateThenShowByActorAsync(this.GetItem(0).GetOwner());
   }
   OnRefreshByData(e) {
-    this.ica.RefreshByData(e);
+    this.oCa.RefreshByData(e);
   }
 }
 exports.ActivityRecallSignInSubView = ActivityRecallSignInSubView;

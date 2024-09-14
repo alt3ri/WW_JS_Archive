@@ -43,8 +43,8 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
       (this.lTi = []),
       (this.SNt = void 0),
       (this.bTi = !1),
-      (this.zVs = !1),
-      (this.qjs = void 0),
+      (this.p9s = !1),
+      (this.oWs = void 0),
       (this.qTi = () => {
         this.INt(),
           (this.bTi = !0),
@@ -94,11 +94,11 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
       (this.jwe = (e) => {
         "OnBlackScreen" === e &&
           (this.ChildPopView?.PlayLevelSequenceByName("BlackScreenShow"),
-          this.qjs?.IsPending() && this.qjs.SetResult(),
+          this.oWs?.IsPending() && this.oWs.SetResult(),
           ComposeController_1.ComposeController.PlayCompositeEnterDisplay(
             this.VTi,
           ),
-          (this.zVs = !0));
+          (this.p9s = !0));
       }),
       (this.VTi = () => {
         UiManager_1.UiManager.IsViewShow("ComposeRootView") &&
@@ -329,7 +329,7 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
       )),
       CommonManager_1.CommonManager.SetCurrentSystem(1),
       ComposeController_1.ComposeController.RegisterCurrentInteractionEntity(),
-      (this.qjs = new CustomPromise_1.CustomPromise()),
+      (this.oWs = new CustomPromise_1.CustomPromise()),
       (ModelManager_1.ModelManager.ComposeModel.CurrentInteractCreatureDataLongId =
         ModelManager_1.ModelManager.InteractionModel.InteractCreatureDataLongId),
       EventSystem_1.EventSystem.Add(
@@ -351,11 +351,11 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
   }
   async OnBeforeShowAsyncImplement() {
     UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingBlendInSequence() &&
-      this.qjs &&
-      (await this.qjs.Promise);
+      this.oWs &&
+      (await this.oWs.Promise);
   }
   OnAfterShow() {
-    this.JNt(), (this.qjs = void 0);
+    this.JNt(), (this.oWs = void 0);
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
@@ -377,13 +377,13 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
       RedDotController_1.RedDotController.UnBindRedDot(
         "ComposeReagentProduction",
       ),
-      (this.qjs = void 0);
+      (this.oWs = void 0);
   }
   JNt() {
     var e,
       t = this.ChildPopView.PopItem;
     t &&
-      !this.zVs &&
+      !this.p9s &&
       ((e =
         !UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingBlendInSequence()),
       t.GetActive() !== e) &&

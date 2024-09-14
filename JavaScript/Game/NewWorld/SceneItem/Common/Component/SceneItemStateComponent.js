@@ -3,19 +3,19 @@ var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
     var n,
-      o = arguments.length,
-      h =
-        o < 3
+      h = arguments.length,
+      o =
+        h < 3
           ? e
           : null === s
             ? (s = Object.getOwnPropertyDescriptor(e, i))
             : s;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      h = Reflect.decorate(t, e, i, s);
+      o = Reflect.decorate(t, e, i, s);
     else
       for (var r = t.length - 1; 0 <= r; r--)
-        (n = t[r]) && (h = (o < 3 ? n(h) : 3 < o ? n(e, i, h) : n(e, i)) || h);
-    return 3 < o && h && Object.defineProperty(e, i, h), h;
+        (n = t[r]) && (o = (h < 3 ? n(o) : 3 < h ? n(e, i, o) : n(e, i)) || o);
+    return 3 < h && o && Object.defineProperty(e, i, o), o;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemStateComponent = void 0);
@@ -36,7 +36,7 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   BulletController_1 = require("../../../Bullet/BulletController"),
   MIN_DELAY_THRESHOLD = 0.1,
   RESET_LIMIT = 2,
-  SERVER_DATA = "Rys";
+  SERVER_DATA = "bys";
 let SceneItemStateComponent = class SceneItemStateComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -56,6 +56,7 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
       (this.h_n = void 0),
       (this.l_n = void 0),
       (this.__n = void 0),
+      (this.i3a = void 0),
       (this.Rnn = () => {
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
@@ -64,13 +65,9 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
         );
         var t = this.r_n?.CreateStageConfig.PerformDuration;
         t >= MIN_DELAY_THRESHOLD
-          ? TimerSystem_1.TimerSystem.Delay(() => {
-              this.Xte?.RemoveTag(-991879492),
-                (this.s_n = !0),
-                LevelGeneralNetworks_1.LevelGeneralNetworks.RequestSetInitTagRequest(
-                  this.Wpo,
-                );
-            }, t * TimeUtil_1.TimeUtil.InverseMillisecond)
+          ? (this.i3a = TimerSystem_1.TimerSystem.Delay(() => {
+              this.r3a(!1);
+            }, t * TimeUtil_1.TimeUtil.InverseMillisecond))
           : (LevelGeneralNetworks_1.LevelGeneralNetworks.RequestSetInitTagRequest(
               this.Wpo,
             ),
@@ -103,7 +100,7 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
         (this.l_n = !0);
       var e = t.GetPbEntityInitData();
       if (e) {
-        (this.Xte = this.Entity?.GetComponent(180)),
+        (this.Xte = this.Entity?.GetComponent(181)),
           (this.Wpo = t.GetCreatureDataId()),
           (this.r_n = (0, IComponent_1.getComponent)(
             e.ComponentsData,
@@ -124,9 +121,9 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
           for (const n of e.StateChangeBehaviors)
             this.BehaviorMap.set(t, n.Action), t++;
         }
-        (i = t.ComponentDataMap.get(SERVER_DATA)?.Rys),
-          (s = ((this.W1n = i.N5n), t.ComponentDataMap.get("kys")));
-        s && (this.JUn = MathUtils_1.MathUtils.LongToBigInt(s.kys?.tVn));
+        (i = t.ComponentDataMap.get(SERVER_DATA)?.bys),
+          (s = ((this.W1n = i.X5n), t.ComponentDataMap.get("Wys")));
+        s && (this.JUn = MathUtils_1.MathUtils.LongToBigInt(s.Wys?._Vn));
       }
     }
     return !0;
@@ -161,7 +158,7 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
         (this.Xte?.RemoveTag(-991879492), this.UpdateState(-1278190765, !0)),
       3 !== this._ii || !this.r_n)
     )
-      return (e = this.Entity.GetComponent(149))
+      return (e = this.Entity.GetComponent(150))
         ? ((t = (t = this.StateConfig?.State)
             ? GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(t)
             : void 0),
@@ -225,37 +222,36 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
             this.JUn,
           );
     }
-    if (((this.s_n = !1), 2096634051 !== t)) this.UpdateState(t, !0, !0);
-    else {
-      (this.W1n = t), (this._ii = 0);
-      (i = this.r_n?.CreateStageConfig.PerformDuration),
-        (t =
-          GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(-991879492));
-      const n = void 0 !== this.nXr?.场景交互物状态列表.Get(t);
-      n &&
-      (this.Xte.AddTag(-991879492),
-      !this.Entity.GetComponent(185).GetIsSceneInteractionLoadCompleted())
-        ? EventSystem_1.EventSystem.AddWithTarget(
-            this.Entity,
-            EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-            this.Rnn,
-          )
-        : i >= MIN_DELAY_THRESHOLD
-          ? TimerSystem_1.TimerSystem.Delay(() => {
-              n && this.Xte?.RemoveTag(-991879492),
-                (this.s_n = !0),
-                LevelGeneralNetworks_1.LevelGeneralNetworks.RequestSetInitTagRequest(
+    i = 0;
+    (this.s_n = !1),
+      2096634051 !== t
+        ? this.UpdateState(t, !0, !0)
+        : ((this.W1n = t),
+          (this._ii = 0),
+          (i = this.r_n?.CreateStageConfig.PerformDuration),
+          (t =
+            GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(-991879492)),
+          void 0 !== this.nXr?.场景交互物状态列表.Get(t) &&
+          (this.Xte.AddTag(-991879492),
+          !this.Entity.GetComponent(187).GetIsSceneInteractionLoadCompleted())
+            ? EventSystem_1.EventSystem.AddWithTarget(
+                this.Entity,
+                EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
+                this.Rnn,
+              )
+            : i >= MIN_DELAY_THRESHOLD
+              ? (this.i3a = TimerSystem_1.TimerSystem.Delay(() => {
+                  this.r3a(!1);
+                }, i * TimeUtil_1.TimeUtil.InverseMillisecond))
+              : (LevelGeneralNetworks_1.LevelGeneralNetworks.RequestSetInitTagRequest(
                   this.Wpo,
-                );
-            }, i * TimeUtil_1.TimeUtil.InverseMillisecond)
-          : (LevelGeneralNetworks_1.LevelGeneralNetworks.RequestSetInitTagRequest(
-              this.Wpo,
-            ),
-            (this.s_n = !0));
-    }
+                ),
+                (this.s_n = !0)));
   }
   UpdateState(t, e, i = !1) {
-    switch (((this.s_n = e), (this.W1n = t), this.W1n)) {
+    switch (
+      (0 === this._ii && this.r3a(!0), (this.s_n = e), (this.W1n = t), this.W1n)
+    ) {
       case -1152559349:
         this._ii = 1;
         break;
@@ -311,9 +307,21 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
     return (t ? this.r_n?.CreateStageConfig : this.r_n?.DestroyStageConfig)
       .Actions;
   }
+  r3a(t) {
+    this.Xte?.RemoveTag(-991879492),
+      t
+        ? TimerSystem_1.TimerSystem.Has(this.i3a) &&
+          this.i3a &&
+          TimerSystem_1.TimerSystem.Remove(this.i3a)
+        : ((this.s_n = !0),
+          LevelGeneralNetworks_1.LevelGeneralNetworks.RequestSetInitTagRequest(
+            this.Wpo,
+          )),
+      (this.i3a = void 0);
+  }
 };
 (SceneItemStateComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(119)],
+  [(0, RegisterComponent_1.RegisterComponent)(120)],
   SceneItemStateComponent,
 )),
   (exports.SceneItemStateComponent = SceneItemStateComponent);

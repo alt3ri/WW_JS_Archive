@@ -68,7 +68,7 @@ class ManufactureView extends UiNavigationView_1.UiNavigationView {
       }),
       (this.xOt = (t) => {
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-          t.f8n,
+          t.L8n,
         );
       }),
       (this.VIi = () => {}),

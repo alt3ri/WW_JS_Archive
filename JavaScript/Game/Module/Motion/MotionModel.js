@@ -30,39 +30,39 @@ class MotionModel extends ModelBase_1.ModelBase {
     this.gqi(t, o), this.pqi(t, o);
   }
   OnRoleMotionActive(o) {
-    o.iUs.tUs.forEach((t) => {
-      this.gqi(o.iUs.O6n, t.J4n),
-        t.w6n === Protocol_1.Aki.Protocol.t5s.Proto_ItemLocked
-          ? this.vqi(o.iUs.O6n, t.J4n)
-          : t.w6n === Protocol_1.Aki.Protocol.t5s.Proto_ItemUnLocked
-            ? this.fqi(o.iUs.O6n, t.J4n)
-            : t.w6n === Protocol_1.Aki.Protocol.t5s.Proto_ItemCanUnLock &&
-              this.pqi(o.iUs.O6n, t.J4n);
+    o.lUs.hUs.forEach((t) => {
+      this.gqi(o.lUs.Q6n, t.s5n),
+        t.H6n === Protocol_1.Aki.Protocol.h6s.Proto_ItemLocked
+          ? this.vqi(o.lUs.Q6n, t.s5n)
+          : t.H6n === Protocol_1.Aki.Protocol.h6s.Proto_ItemUnLocked
+            ? this.fqi(o.lUs.Q6n, t.s5n)
+            : t.H6n === Protocol_1.Aki.Protocol.h6s.Proto_ItemCanUnLock &&
+              this.pqi(o.lUs.Q6n, t.s5n);
     });
   }
   OnGetAllRoleMotionInfo(t) {
     this.cqi.clear(),
       this.dqi.clear(),
       this.mqi.clear(),
-      t.rUs.forEach((o) => {
-        o.tUs.forEach((t) => {
-          this.gqi(o.O6n, t.J4n),
-            t.w6n === Protocol_1.Aki.Protocol.t5s.Proto_ItemLocked
-              ? this.vqi(o.O6n, t.J4n)
-              : t.w6n === Protocol_1.Aki.Protocol.t5s.Proto_ItemUnLocked
-                ? this.fqi(o.O6n, t.J4n)
-                : t.w6n === Protocol_1.Aki.Protocol.t5s.Proto_ItemCanUnLock &&
-                  this.pqi(o.O6n, t.J4n);
+      t._Us.forEach((o) => {
+        o.hUs.forEach((t) => {
+          this.gqi(o.Q6n, t.s5n),
+            t.H6n === Protocol_1.Aki.Protocol.h6s.Proto_ItemLocked
+              ? this.vqi(o.Q6n, t.s5n)
+              : t.H6n === Protocol_1.Aki.Protocol.h6s.Proto_ItemUnLocked
+                ? this.fqi(o.Q6n, t.s5n)
+                : t.H6n === Protocol_1.Aki.Protocol.h6s.Proto_ItemCanUnLock &&
+                  this.pqi(o.Q6n, t.s5n);
         });
       });
-    var o = t.jPs;
+    var o = t.zPs;
     for (const i of Object.keys(o)) {
       var e = Number(i);
       this.UpdateCondition(e, o[e]);
     }
   }
   OnMotionFinishCondition(t) {
-    var o = t.jPs;
+    var o = t.zPs;
     for (const i of Object.keys(o)) {
       var e = Number(i);
       this.UpdateCondition(e, o[e]);
@@ -94,14 +94,14 @@ class MotionModel extends ModelBase_1.ModelBase {
   }
   UpdateCondition(t, o) {
     var e = this.Cqi.get(t) ?? new Map(),
-      i = o.JPs;
+      i = o.oUs;
     for (const M of Object.keys(i)) {
       var n = Number(M),
-        r = i[n].YPs,
+        r = i[n].rUs,
         s = e.get(n) ?? new Map();
       for (const _ of Object.keys(r)) {
         var h = Number(_),
-          a = r[h].XPs,
+          a = r[h].iUs,
           v = s.get(h) ?? [],
           l = a.length;
         for (let t = 0; t < l; t++) {

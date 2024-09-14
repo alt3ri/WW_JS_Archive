@@ -21,9 +21,13 @@ class InputKey {
       (this.jEe = void 0),
       (this.HEe = t),
       (this.jEe = new UE.Key(new UE.FName(t))),
-      (this.IsKeyboardKey = UE.KismetInputLibrary.Key_IsKeyboardKey(this.jEe)),
+      (this.IsKeyboardKey =
+        UE.KismetInputLibrary.Key_IsKeyboardKey(this.jEe) ||
+        "Keyboard_Invalid" === t),
       (this.IsModifierKey = UE.KismetInputLibrary.Key_IsModifierKey(this.jEe)),
-      (this.IsGamepadKey = UE.KismetInputLibrary.Key_IsGamepadKey(this.jEe)),
+      (this.IsGamepadKey =
+        UE.KismetInputLibrary.Key_IsGamepadKey(this.jEe) ||
+        "Gamepad_Invalid" === t),
       (this.IsMouseButton = UE.KismetInputLibrary.Key_IsMouseButton(this.jEe)),
       (this.IsDigital = UE.KismetInputLibrary.Key_IsDigital(this.jEe)),
       (this.IsAnalog = UE.KismetInputLibrary.Key_IsAnalog(this.jEe)),
@@ -52,9 +56,9 @@ class InputKey {
   GetKeyIconPath() {
     var t;
     return this.IsKeyboardKey || this.IsMouseButton
-      ? ConfigManager_1.ConfigManager.InputSettingsConfig.GetPcKeyConfig(
+      ? (ConfigManager_1.ConfigManager.InputSettingsConfig.GetPcKeyConfig(
           this.HEe,
-        )?.KeyIconPath ?? ""
+        )?.KeyIconPath ?? "")
       : this.IsGamepadKey &&
           (t =
             ConfigManager_1.ConfigManager.InputSettingsConfig.GetGamepadKeyConfig(

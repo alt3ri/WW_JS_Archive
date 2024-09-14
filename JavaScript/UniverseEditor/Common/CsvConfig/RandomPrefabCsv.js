@@ -14,13 +14,13 @@ const CsvLoader_1 = require("./CsvLoader"),
     (0, CsvLoader_1.createCsvField)({
       Name: "RandomPrefabType",
       CnName: "随机规则",
-      RenderType: 39,
+      RenderType: 40,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "PrefabIds",
       CnName: "预制体池",
       Type: "Array<Int>",
-      RenderType: 34,
+      RenderType: 35,
     }),
   ];
 class RandomPrefabCsvLoader extends CsvLoader_1.CsvLoader {

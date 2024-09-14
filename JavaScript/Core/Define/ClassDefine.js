@@ -489,6 +489,8 @@ const Log_1 = require("../Common/Log"),
       "/Game/Aki/Data/Fight/FollowShooter/BP_FollowShooterConfig.BP_FollowShooterConfig_C",
     WBP_UILoading_C:
       "/Game/Aki/UI/Module/Loading/View/WBP_UILoading.WBP_UILoading_C",
+    BP_ReplaceHitEffect_C:
+      "/Game/Aki/Character/BaseCharacter/BP_ReplaceHitEffect.BP_ReplaceHitEffect_C",
   },
   structDefined = {
     SBulletDataMain:

@@ -36,7 +36,7 @@ const UE = require("ue");
   (exports.ROLE_CHANGEROLE_BLENDNAME = "10007");
 class ArrayIntInt {
   constructor() {
-    (this.j4n = 0), (this.W4n = 0);
+    (this.Z4n = 0), (this.e5n = 0);
   }
 }
 exports.ArrayIntInt = ArrayIntInt;

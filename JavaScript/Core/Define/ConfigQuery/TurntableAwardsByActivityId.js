@@ -17,29 +17,42 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = void 0,
-  getConfigListStat = void 0,
+const initStat = Stats_1.Stat.Create("configTurntableAwardsByActivityId.Init"),
+  getConfigListStat = Stats_1.Stat.Create(
+    "configTurntableAwardsByActivityId.GetConfigList",
+  ),
   CONFIG_LIST_STAT_PREFIX = "configTurntableAwardsByActivityId.GetConfigList(";
 exports.configTurntableAwardsByActivityId = {
   Init: () => {
-    handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
-      handleId,
-      DB,
-      COMMAND,
-    );
+    initStat.Start(),
+      (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
+        handleId,
+        DB,
+        COMMAND,
+      )),
+      initStat.Stop();
   },
-  GetConfigList: (o, i = !0) => {
-    var n;
-    if (
-      (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
-    ) {
+  GetConfigList: (t, i = !0) => {
+    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigListStat.Start();
+    var o = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${t})`),
+      n =
+        (o.Start(),
+        ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
+    if (n) {
       if (i) {
-        var e = KEY_PREFIX + `#${o})`;
+        var e = KEY_PREFIX + `#${t})`;
         const r = ConfigCommon_1.ConfigCommon.GetConfig(e);
-        if (r) return r;
+        if (r)
+          return (
+            o.Stop(),
+            getConfigListStat.Stop(),
+            ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
+            r
+          );
       }
       if (
-        (n = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair))
+        (n = ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, t, ...logPair))
       ) {
         const r = new Array();
         for (;;) {
@@ -47,36 +60,47 @@ exports.configTurntableAwardsByActivityId = {
             1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "ActivityId",
-              o,
+              t,
             ])
           )
             break;
-          var t = void 0;
+          var a = void 0;
           if (
-            (([n, t] = ConfigCommon_1.ConfigCommon.GetValue(
+            (([n, a] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
               0,
               ...logPair,
-              ["ActivityId", o],
+              ["ActivityId", t],
             )),
             !n)
           )
-            return void ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
-          t = TurntableAwards_1.TurntableAwards.getRootAsTurntableAwards(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
+            return (
+              ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+              o.Stop(),
+              getConfigListStat.Stop(),
+              void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
+            );
+          a = TurntableAwards_1.TurntableAwards.getRootAsTurntableAwards(
+            new byte_buffer_1.ByteBuffer(new Uint8Array(a.buffer)),
           );
-          r.push(t);
+          r.push(a);
         }
         return (
           i &&
-            ((e = KEY_PREFIX + `#${o})`),
+            ((e = KEY_PREFIX + `#${t})`),
             ConfigCommon_1.ConfigCommon.SaveConfig(e, r, r.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
+          o.Stop(),
+          getConfigListStat.Stop(),
+          ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
           r
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
+    o.Stop(),
+      getConfigListStat.Stop(),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };
 //# sourceMappingURL=TurntableAwardsByActivityId.js.map

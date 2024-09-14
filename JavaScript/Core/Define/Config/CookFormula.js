@@ -28,7 +28,8 @@ class CookFormula {
   get ConsumeItems() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.consumeitemsLength(),
-      (t) => this.consumeitems(t),
+      this.consumeitems,
+      this,
     );
   }
   get Proficiency() {
@@ -44,8 +45,10 @@ class CookFormula {
     return this.foodbackground();
   }
   get RoleList() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.rolelistLength(), (t) =>
-      this.rolelist(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.rolelistLength(),
+      this.rolelist,
+      this,
     );
   }
   __init(t, i) {

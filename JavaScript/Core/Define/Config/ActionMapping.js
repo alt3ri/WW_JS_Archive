@@ -16,19 +16,24 @@ class ActionMapping {
     return this.actiontype();
   }
   get PcKeys() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.pckeysLength(), (t) =>
-      this.pckeys(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.pckeysLength(),
+      this.pckeys,
+      this,
     );
   }
   get FrancePcKeys() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.francepckeysLength(),
-      (t) => this.francepckeys(t),
+      this.francepckeys,
+      this,
     );
   }
   get GamepadKeys() {
-    return GameUtils_1.GameUtils.ConvertToArray(this.gamepadkeysLength(), (t) =>
-      this.gamepadkeys(t),
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.gamepadkeysLength(),
+      this.gamepadkeys,
+      this,
     );
   }
   get MobileIconPath() {
@@ -37,11 +42,20 @@ class ActionMapping {
   get DisplayName() {
     return this.displayname();
   }
-  __init(t, s) {
-    return (this.z7 = t), (this.J7 = s), this;
+  get IsIdleAction() {
+    return this.isidleaction();
   }
-  static getRootAsActionMapping(t, s) {
-    return (s || new ActionMapping()).__init(
+  get KeyboardVersion() {
+    return this.keyboardversion();
+  }
+  get GamepadVersion() {
+    return this.gamepadversion();
+  }
+  __init(t, i) {
+    return (this.z7 = t), (this.J7 = i), this;
+  }
+  static getRootAsActionMapping(t, i) {
+    return (i || new ActionMapping()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -51,8 +65,8 @@ class ActionMapping {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   actionname(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var i = this.J7.__offset(this.z7, 6);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   actiontype() {
     var t = this.J7.__offset(this.z7, 8);
@@ -61,10 +75,10 @@ class ActionMapping {
   GetPckeysAt(t) {
     return this.pckeys(t);
   }
-  pckeys(t, s) {
-    var i = this.J7.__offset(this.z7, 10);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
+  pckeys(t, i) {
+    var s = this.J7.__offset(this.z7, 10);
+    return s
+      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   pckeysLength() {
@@ -74,10 +88,10 @@ class ActionMapping {
   GetFrancepckeysAt(t) {
     return this.francepckeys(t);
   }
-  francepckeys(t, s) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
+  francepckeys(t, i) {
+    var s = this.J7.__offset(this.z7, 12);
+    return s
+      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   francepckeysLength() {
@@ -87,10 +101,10 @@ class ActionMapping {
   GetGamepadkeysAt(t) {
     return this.gamepadkeys(t);
   }
-  gamepadkeys(t, s) {
-    var i = this.J7.__offset(this.z7, 14);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
+  gamepadkeys(t, i) {
+    var s = this.J7.__offset(this.z7, 14);
+    return s
+      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   gamepadkeysLength() {
@@ -98,12 +112,24 @@ class ActionMapping {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   mobileiconpath(t) {
-    var s = this.J7.__offset(this.z7, 16);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var i = this.J7.__offset(this.z7, 16);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   displayname(t) {
-    var s = this.J7.__offset(this.z7, 18);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var i = this.J7.__offset(this.z7, 18);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
+  isidleaction() {
+    var t = this.J7.__offset(this.z7, 20);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
+  keyboardversion() {
+    var t = this.J7.__offset(this.z7, 22);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  gamepadversion() {
+    var t = this.J7.__offset(this.z7, 24);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.ActionMapping = ActionMapping;

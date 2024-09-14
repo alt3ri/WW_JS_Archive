@@ -12,17 +12,17 @@ class ManufactureMaterialItem extends LoopScrollMediumItemGrid_1.LoopScrollMediu
   }
   OnRefresh(e, t, i) {
     var r = { Type: 4, Data: (this.fGt = e), BottomText: this.bIi() };
-    e.G6n && (r.ItemConfigId = e.f8n),
+    e.K6n && (r.ItemConfigId = e.L8n),
       this.Apply(r),
-      this.SetIsPhantomLock(!e.G6n),
+      this.SetIsPhantomLock(!e.K6n),
       this.SetSelected(!1);
   }
   bIi() {
     if (!this.fGt) return "";
-    if (this.fGt.G6n) {
-      var t = this.fGt.MVn * this.BIi,
+    if (this.fGt.K6n) {
+      var t = this.fGt.UVn * this.BIi,
         i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          this.fGt.f8n,
+          this.fGt.L8n,
         );
       let e = "";
       return (e =
