@@ -292,9 +292,9 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
   static async Y$a(a) {
     var o =
       await PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.GetTargetRelation(
-        [a.qLs.Wih],
+        [a.qLs.hrh],
       );
-    if (5 !== o.get(a.qLs.Wih)) {
+    if (5 !== o.get(a.qLs.hrh)) {
       var r,
         n,
         i,
@@ -320,8 +320,8 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
           (l = e.GetLastTimeStamp()),
           (h = a.kLs),
           (C = a.OLs),
-          (g = a.Kih),
-          (a = a.Wih),
+          (g = a._rh),
+          (a = a.hrh),
           o.AddChatContent(e, t, n, i, _, s, !0, r, l, h, C, g, a),
           o.RefreshChatPlayerData(n, C, h),
           s !== Protocol_1.Aki.Protocol.GFs.Proto_EnterTeam) &&
@@ -377,7 +377,7 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
     var o =
         await PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.GetSdkBlockingUser(),
       r = [];
-    for (const n of t) (o && o.get(n.Wih)) || r.push(n);
+    for (const n of t) (o && o.get(n.hrh)) || r.push(n);
     ModelManager_1.ModelManager.ChatModel.AddPrivateHistoryChatContent(e, r),
       ChatController.PrivateChatOperateRequest(
         Protocol_1.Aki.Protocol.xFs.Proto_OpenChat,
@@ -393,7 +393,7 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
       var r = C.B8n,
         n = a.TryGetPrivateChatRoom(r),
         o = [];
-      for (const g of C.ULs) (t && t.get(g.Wih)) || o.push(g);
+      for (const g of C.ULs) (t && t.get(g.hrh)) || o.push(g);
       n.Reset(), a.AddPrivateHistoryChatContent(n, o);
       for (const v of o) {
         var i = v.N8n,
@@ -427,7 +427,7 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
   }
   static async Kza(e) {
     var t = new Array();
-    for (const v of e.VLs) "" === v.Wih || t.includes(v.Wih) || t.push(v.Wih);
+    for (const v of e.VLs) "" === v.hrh || t.includes(v.hrh) || t.push(v.hrh);
     let a = new Map();
     0 < t.length &&
       (a =
@@ -454,7 +454,7 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
         e = e.VLs;
       o.AddTeamHistoryChatContent(r, e);
       for (const M of e)
-        5 === a.get(M.Wih) ||
+        5 === a.get(M.hrh) ||
           ((i = M.GLs),
           (_ = M.P8n),
           (s = M.p8n),
@@ -529,7 +529,7 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
   static ZFa() {
     var e = new Protocol_1.Aki.Protocol.Xzn();
     Net_1.Net.Call(29777, e, (e) => {
-      e.Qih ||
+      e.lrh ||
         (this.JFa && TimerSystem_1.TimerSystem.Has(this.JFa)) ||
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(

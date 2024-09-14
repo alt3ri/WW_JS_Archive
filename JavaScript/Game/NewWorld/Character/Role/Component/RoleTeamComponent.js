@@ -4,18 +4,18 @@ var __decorate =
   function (e, t, i, o) {
     var s,
       a = arguments.length,
-      r =
+      n =
         a < 3
           ? t
           : null === o
             ? (o = Object.getOwnPropertyDescriptor(t, i))
             : o;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      r = Reflect.decorate(e, t, i, o);
+      n = Reflect.decorate(e, t, i, o);
     else
-      for (var n = e.length - 1; 0 <= n; n--)
-        (s = e[n]) && (r = (a < 3 ? s(r) : 3 < a ? s(t, i, r) : s(t, i)) || r);
-    return 3 < a && r && Object.defineProperty(t, i, r), r;
+      for (var r = e.length - 1; 0 <= r; r--)
+        (s = e[r]) && (n = (a < 3 ? s(n) : 3 < a ? s(t, i, n) : s(t, i)) || n);
+    return 3 < a && n && Object.defineProperty(t, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleTeamComponent = void 0);
@@ -119,7 +119,7 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
       this.Drn &&
         (TimerSystem_1.TimerSystem.Remove(this.Drn), (this.Drn = void 0));
   }
-  static OnChangeRole(e, t, i, o, s, a, r, n) {
+  static OnChangeRole(e, t, i, o, s, a, n, r, h) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "SceneTeam",
@@ -128,54 +128,57 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
         ["Last", e?.Id],
         ["New", t.Id],
       );
-    var h = e?.Entity?.GetComponent(84),
-      _ = t.Entity.GetComponent(84),
-      m = h?.cBe;
-    let l = m?.SkillTarget;
-    var m = void 0 !== m && !m.IsMainSkillReadyEnd;
+    var _ = e?.Entity?.GetComponent(84),
+      m = t.Entity.GetComponent(84),
+      l = _?.cBe;
+    let f = l?.SkillTarget;
+    var l = void 0 !== l && !l.IsMainSkillReadyEnd;
     e &&
-      s &&
-      m &&
-      (!l &&
+      a &&
+      l &&
+      (!f &&
         FormationDataController_1.FormationDataController.GlobalIsInFight &&
-        ((s = h?.cZr)?.DetectSoftLockTarget(0, 0, 8),
-        (l = s?.GetCurrentTarget())),
-      (m = h?.m1t),
-      l) &&
-      m?.HasBuffAuthority() &&
-      m.AddBuff(CharacterBuffIds_1.buffId.GoDown, {
-        InstigatorId: m.CreatureDataId,
+        ((a = _?.cZr)?.DetectSoftLockTarget(0, 0, 8),
+        (f = a?.GetCurrentTarget())),
+      (l = _?.m1t),
+      f) &&
+      l?.HasBuffAuthority() &&
+      l.AddBuff(CharacterBuffIds_1.buffId.GoDown, {
+        InstigatorId: l.CreatureDataId,
         Reason: "战斗换人",
       });
-    let f = !1;
-    s = e?.Entity?.GetComponent(190);
-    s && (f = s.HasTag(504239013) || s.HasTag(855966206)),
-      _.Urn(),
-      h &&
-        h !== _ &&
+    let c = !1,
+      C = !1;
+    a = e?.Entity?.GetComponent(190);
+    a &&
+      ((C = a.HasTag(504239013) || a.HasTag(855966206)),
+      (c = a.HasTag(40422668))),
+      m.Urn(),
+      _ &&
+        _ !== m &&
         (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("SceneTeam", 49, "角色下场", ["Entity", h.Entity?.Id]),
-        _.m1t.AddBuff(CharacterBuffIds_1.buffId.WaitRemoveQteInvincible, {
-          InstigatorId: _.m1t.CreatureDataId,
+          Log_1.Log.Info("SceneTeam", 49, "角色下场", ["Entity", _.Entity?.Id]),
+        m.m1t.AddBuff(CharacterBuffIds_1.buffId.WaitRemoveQteInvincible, {
+          InstigatorId: m.m1t.CreatureDataId,
           Reason: "换人去除QTE无敌",
         }),
         GlobalData_1.GlobalData.GameInstance &&
           GlobalData_1.GlobalData.BpEventManager.当换人完成时.Broadcast(),
         t.Entity.GetComponent(57).SetDataFromOldRole(e),
         e?.Entity?.GetComponent(58)?.ClearTarget(),
-        h.Xte.HasTag(1144073280) ||
-          h.cBe.StopAllSkills("RoleTeamComponent.OnChangeRole"),
-        (m = h.Xte.HasTag(-1371021686) && !h.cBe.IsMainSkillReadyEnd),
+        _.Xte.HasTag(1144073280) ||
+          _.cBe.StopAllSkills("RoleTeamComponent.OnChangeRole"),
+        (l = _.Xte.HasTag(-1371021686) && !_.cBe.IsMainSkillReadyEnd),
         RoleInheritComponent_1.RoleInheritComponent.StateInherit(
-          h.Mrn,
           _.Mrn,
-          _.Ern.IsInQte ? 1 : 0,
-          m,
+          m.Mrn,
+          m.Ern.IsInQte ? 1 : 0,
+          l,
         ),
-        h.Arn(),
-        h.Prn(o)),
-      _.xrn(e, a, f || r),
-      _.wrn(!f && i, n);
+        _.Arn(),
+        _.Prn(s)),
+      m.xrn(e, c, n, C || r),
+      m.wrn(!C && i, o, h);
   }
   Urn() {
     var e = Global_1.Global.CharacterController,
@@ -186,46 +189,44 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
       this.Gce.StopMove(!1),
       this.Nce?.Active || this.Nce?.SetActive(!0));
   }
-  xrn(e, t, i) {
-    var o,
-      s = void 0 === e;
+  xrn(e, t, i, o) {
+    var s = void 0 === e;
     ModelManager_1.ModelManager.AutoRunModel?.IsInLogicTreeGmMode()
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("SceneTeam", 49, "人物上场，GM推进中，继承位置"),
         this.InheritTransform(s))
-      : t
-        ? i
+      : i
+        ? o
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("SceneTeam", 49, "人物上场，强制继承位置"),
             this.InheritTransform(s))
           : this.Ern.IsInQte
             ? Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("SceneTeam", 49, "人物上场，角色QTE中，不更新位置")
-            : ((i = (t = e?.Entity?.GetComponent(190))?.HasTag(-2100129479)),
-              (e = t?.HasTag(1144073280)),
-              (o = t?.HasTag(-2044964178)),
-              i || e || o
+            : ((o = (i = e?.Entity?.GetComponent(190))?.HasTag(-2100129479)),
+              (e = i?.HasTag(1144073280)),
+              (i = i?.HasTag(-2044964178)),
+              o || e || i
                 ? (Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "SceneTeam",
                       49,
                       "人物上场，上个角色还在场，进行寻点",
                     ),
-                  (i = t?.HasTag(40422668)),
                   this.Entity.GetComponent(89).SetQtePosition({
-                    Rotate: i
+                    Rotate: t
                       ? SceneTeamDefine_1.SPECIAL_CHANGE_ANGLE_AIR
                       : SceneTeamDefine_1.SPECIAL_CHANGE_ANGLE_LAND,
-                    Length: i
+                    Length: t
                       ? SceneTeamDefine_1.SPECIAL_CHANGE_DIS_AIR
                       : SceneTeamDefine_1.SPECIAL_CHANGE_DIS_LAND,
-                    Height: i
+                    Height: t
                       ? SceneTeamDefine_1.SPECIAL_CHANGE_HEIGHT_AIR
                       : SceneTeamDefine_1.SPECIAL_CHANGE_HEIGHT_LAND,
                     ReferenceTarget: !1,
-                    QteType: i ? 1 : 0,
+                    QteType: t ? 1 : 0,
                   }),
-                  this.Gce?.CharacterMovement?.SetMovementMode(i ? 3 : 1))
+                  this.Gce?.CharacterMovement?.SetMovementMode(t ? 3 : 1))
                 : (Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "SceneTeam",
@@ -273,41 +274,38 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
   Brn(e) {
     this.Hte.FixSwitchLocation(e, !0, !0);
   }
-  wrn(e, t) {
-    var i;
+  wrn(e, t, i) {
+    var o, s, a;
     this.Ern.IsInQte
       ? (this.GoBattleSkill = !1)
-      : ((s = this.Xte.HasTag(1949807524)),
+      : ((a = this.Xte.HasTag(1949807524)),
         this.cZr.DetectSoftLockTarget(),
-        (i = void 0 !== this.cZr.GetCurrentTarget()),
-        (o = this.Xte.HasTag(-1207177910)),
-        (this.GoBattleSkill = s || (e && o && i))),
+        (o = void 0 !== this.cZr.GetCurrentTarget()),
+        (s = this.Xte.HasTag(-1207177910)),
+        (this.GoBattleSkill = a || (e && s && o))),
       this.Rrn();
-    for (const a of CharacterUnifiedStateComponent_1.outGameRoleTags)
-      this.Xte.RemoveTag(a);
-    var o,
-      s = ModelManager_1.ModelManager.SceneTeamModel,
-      e =
-        (this.SetTeamTag(0),
-        !ModelManager_1.ModelManager.PlotModel.InSeamlessFormation);
-    e ? this.Entity.EnableByKey(1, !0) : this.Entity.DisableByKey(1, !0),
+    for (const n of CharacterUnifiedStateComponent_1.outGameRoleTags)
+      this.Xte.RemoveTag(n);
+    this.SetTeamTag(0),
+      !ModelManager_1.ModelManager.PlotModel.InSeamlessFormation
+        ? this.Entity.EnableByKey(1, !0)
+        : this.Entity.DisableByKey(1, !0),
       this.brn(),
       this.Hte.KuroMoveAlongFloor(Vector_1.Vector.ZeroVector, 0, "GoBattle"),
-      s.GoBattleInvincible &&
-        t &&
-        (this.m1t.AddBuff(CharacterBuffIds_1.buffId.GoBattleInvincible, {
+      t &&
+        i &&
+        this.m1t.AddBuff(CharacterBuffIds_1.buffId.GoBattleInvincible, {
           InstigatorId: this.m1t.CreatureDataId,
-          PreMessageId: t,
+          PreMessageId: i,
           Reason: "角色上场短暂无敌",
         }),
-        (s.GoBattleInvincible = !1)),
       UiCameraAnimationManager_1.UiCameraAnimationManager.IsActivate() ||
         CameraController_1.CameraController.ExitCameraMode(2),
       this.GoBattleSkill &&
-        ((o =
+        ((a =
           this.mBe.PositionState ===
           CharacterUnifiedStateTypes_1.ECharPositionState.Air),
-        this.Hte.Actor.FightCommand(o));
+        this.Hte.Actor.FightCommand(a));
   }
   brn() {
     var e, t;

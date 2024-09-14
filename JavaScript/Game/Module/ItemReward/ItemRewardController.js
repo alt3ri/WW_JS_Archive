@@ -286,7 +286,7 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
     _a.OnItemObtainNotify(e);
   }),
   (ItemRewardController.OnItemObtainNotify = (e, r) => {
-    var t = e.Trh;
+    var t = e.Frh;
     if (!(t.length <= 0)) {
       var a,
         o = [];
@@ -294,12 +294,12 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
       for (const l of t)
         1 !==
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
-          l.Irh.s5n,
+          l.Nrh.s5n,
         )
           ? ((a = new RewardItemData_1.RewardItemData(
-              l.Irh.s5n,
-              l.Irh.m9n,
-              l.Irh.b9n,
+              l.Nrh.s5n,
+              l.Nrh.m9n,
+              l.Nrh.b9n,
             )),
             o.push(a))
           : n.push(l);

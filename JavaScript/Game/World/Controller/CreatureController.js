@@ -1773,17 +1773,20 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           ),
         ConfigManager_1.ConfigManager.WorldConfig.ClearCommonSkillData();
       try {
-        var t = e.GetAllEntities();
-        for (const l of e.DelayRemoveContainer.GetAllEntities())
-          CreatureController.DestroyEntity(l, !1);
+        var t = e.GetAllEntities(),
+          o = e.DelayRemoveContainer.GetAllEntities();
+        for (let e = o.length - 1; 0 <= e; e--) {
+          var a = o[e];
+          CreatureController.DestroyEntity(a, !1);
+        }
         for (let e = t.length - 1; 0 <= e; e--) {
-          var o = t[e],
-            a = o.Entity.GetComponent(0);
+          var l = t[e],
+            n = l.Entity.GetComponent(0);
           SeamlessTravelController_1.SeamlessTravelController.WasRoleEntityInSeamlessTraveling(
-            o.Entity,
+            l.Entity,
           ) ||
             CreatureController.RemoveEntity(
-              a.GetCreatureDataId(),
+              n.GetCreatureDataId(),
               "OnLeaveLevel",
             ) ||
             (Log_1.Log.CheckError() &&
@@ -1791,8 +1794,8 @@ class CreatureController extends ControllerBase_1.ControllerBase {
                 "World",
                 3,
                 "[CreatureController.ClearWorldData] 销毁实体失败。",
-                ["CreatureDataId", a.GetCreatureDataId()],
-                ["实体类型", a.GetEntityType()],
+                ["CreatureDataId", n.GetCreatureDataId()],
+                ["实体类型", n.GetEntityType()],
               ));
         }
         ControllerHolder_1.ControllerHolder.WorldController.DoLeaveLevel(),

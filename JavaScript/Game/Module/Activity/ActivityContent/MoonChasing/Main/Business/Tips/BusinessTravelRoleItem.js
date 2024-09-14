@@ -114,12 +114,12 @@ class BusinessTravelRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
     var e = ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustRoleById(
       this.RoleId,
     );
-    i === Protocol_1.Aki.Protocol.moh.qGs
+    i === Protocol_1.Aki.Protocol.woh.qGs
       ? (AudioSystem_1.AudioSystem.PostEvent("play_ui_zhuiyuejie_positive"),
         this.FAn(e.SuccessDialog),
         this.VAn("happy", 0),
         this.zva(!0))
-      : i === Protocol_1.Aki.Protocol.moh.Proto_Bad
+      : i === Protocol_1.Aki.Protocol.woh.Proto_Bad
         ? (AudioSystem_1.AudioSystem.PostEvent("play_ui_zhuiyuejie_passive"),
           this.FAn(e.FailDialog),
           this.VAn("fail", 0),

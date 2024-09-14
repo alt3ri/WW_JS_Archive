@@ -80,7 +80,7 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
               !1,
               void 0,
               t.A5n,
-              t.Lrh,
+              t.Vrh,
               t.w7n,
             );
           ModelManager_1.ModelManager.MapModel.CreateServerSaveMark(o),
@@ -111,13 +111,13 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
             e.YVn.U7n !==
               Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_CalmingWindBell)
         ) {
-          if (e.Rrh) for (const o of e.Rrh.ubs) this.nGa(o);
+          if (e.Hrh) for (const o of e.Hrh.ubs) this.nGa(o);
           this.nGa(e.YVn, e.pbs);
         }
       }),
       (this.UQa = (e) => {
         var o = e.T7n,
-          e = e.Lrh,
+          e = e.Vrh,
           t = ModelManager_1.ModelManager.MapModel.GetDynamicMark(o);
         t
           ? (t.IsServerDisable = e)
@@ -268,7 +268,7 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
         !1,
         void 0,
         e.A5n,
-        e.Lrh,
+        e.Vrh,
         e.w7n,
       )
     );
@@ -594,7 +594,7 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
           "[地图系统]->过滤本次请求富集区信息,未收到上次返回",
           ["锁定状态：", this.jka],
         )
-      : (((t = Protocol_1.Aki.Protocol.Weh.create()).L8n = e ?? 0),
+      : (((t = Protocol_1.Aki.Protocol.hth.create()).L8n = e ?? 0),
         (this.jka = !0),
         Net_1.Net.Call(20976, t, (e) => {
           (this.jka = !1),

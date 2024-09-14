@@ -1444,81 +1444,81 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e[(e.OnRefreshRewardView = 1242)] = "OnRefreshRewardView"),
       (e[(e.OnRefreshSpecialItemAllowReqUse = 1243)] =
         "OnRefreshSpecialItemAllowReqUse"),
-      (e[(e.OnQueryProductInfo = 1244)] = "OnQueryProductInfo"),
-      (e[(e.OnSdkFocusStateChange = 1245)] = "OnSdkFocusStateChange"),
-      (e[(e.ReconnectClearData = 1246)] = "ReconnectClearData"),
-      (e[(e.OnPreEndPIE = 1247)] = "OnPreEndPIE"),
-      (e[(e.NoticeJourneyReceive = 1248)] = "NoticeJourneyReceive"),
-      (e[(e.OnEntityInOutRangeLocal = 1249)] = "OnEntityInOutRangeLocal"),
-      (e[(e.OnMyPlayerInOutRangeLocal = 1250)] = "OnMyPlayerInOutRangeLocal"),
-      (e[(e.OnActorInOutRangeLocal = 1251)] = "OnActorInOutRangeLocal"),
-      (e[(e.OnEntityInOutRangeOnline = 1252)] = "OnEntityInOutRangeOnline"),
-      (e[(e.OnPlayerInOutRangeOnline = 1253)] = "OnPlayerInOutRangeOnline"),
-      (e[(e.RoleTriggerInit = 1254)] = "RoleTriggerInit"),
-      (e[(e.OnSetLoginServerId = 1255)] = "OnSetLoginServerId"),
-      (e[(e.SetDecalShadowEnabled = 1256)] = "SetDecalShadowEnabled"),
-      (e[(e.OnSelectTimePreset = 1257)] = "OnSelectTimePreset"),
-      (e[(e.OnActionKeyChanged = 1258)] = "OnActionKeyChanged"),
-      (e[(e.OnAxisKeyChanged = 1259)] = "OnAxisKeyChanged"),
-      (e[(e.BeamCastStart = 1260)] = "BeamCastStart"),
-      (e[(e.BeamCastStop = 1261)] = "BeamCastStop"),
-      (e[(e.OnResetPhotographCamera = 1262)] = "OnResetPhotographCamera"),
-      (e[(e.OnSpecialItemNotAllow = 1263)] = "OnSpecialItemNotAllow"),
-      (e[(e.OnMarkItemShowStateChange = 1264)] = "OnMarkItemShowStateChange"),
-      (e[(e.OnAbsoluteTimeStop = 1265)] = "OnAbsoluteTimeStop"),
-      (e[(e.OnFightTestEnd = 1266)] = "OnFightTestEnd"),
-      (e[(e.OnManipulateShowLandTips = 1267)] = "OnManipulateShowLandTips"),
-      (e[(e.BeforeUiModelLoadStart = 1268)] = "BeforeUiModelLoadStart"),
-      (e[(e.OnUiModelRoleConfigIdChange = 1269)] =
+      (e[(e.OnSdkFocusStateChange = 1244)] = "OnSdkFocusStateChange"),
+      (e[(e.ReconnectClearData = 1245)] = "ReconnectClearData"),
+      (e[(e.OnPreEndPIE = 1246)] = "OnPreEndPIE"),
+      (e[(e.NoticeJourneyReceive = 1247)] = "NoticeJourneyReceive"),
+      (e[(e.OnEntityInOutRangeLocal = 1248)] = "OnEntityInOutRangeLocal"),
+      (e[(e.OnMyPlayerInOutRangeLocal = 1249)] = "OnMyPlayerInOutRangeLocal"),
+      (e[(e.OnActorInOutRangeLocal = 1250)] = "OnActorInOutRangeLocal"),
+      (e[(e.OnEntityInOutRangeOnline = 1251)] = "OnEntityInOutRangeOnline"),
+      (e[(e.OnPlayerInOutRangeOnline = 1252)] = "OnPlayerInOutRangeOnline"),
+      (e[(e.RoleTriggerInit = 1253)] = "RoleTriggerInit"),
+      (e[(e.OnSetLoginServerId = 1254)] = "OnSetLoginServerId"),
+      (e[(e.SetDecalShadowEnabled = 1255)] = "SetDecalShadowEnabled"),
+      (e[(e.OnSelectTimePreset = 1256)] = "OnSelectTimePreset"),
+      (e[(e.OnActionKeyChanged = 1257)] = "OnActionKeyChanged"),
+      (e[(e.OnAxisKeyChanged = 1258)] = "OnAxisKeyChanged"),
+      (e[(e.BeamCastStart = 1259)] = "BeamCastStart"),
+      (e[(e.BeamCastStop = 1260)] = "BeamCastStop"),
+      (e[(e.OnResetPhotographCamera = 1261)] = "OnResetPhotographCamera"),
+      (e[(e.OnSpecialItemNotAllow = 1262)] = "OnSpecialItemNotAllow"),
+      (e[(e.OnMarkItemShowStateChange = 1263)] = "OnMarkItemShowStateChange"),
+      (e[(e.OnAbsoluteTimeStop = 1264)] = "OnAbsoluteTimeStop"),
+      (e[(e.OnFightTestEnd = 1265)] = "OnFightTestEnd"),
+      (e[(e.OnManipulateShowLandTips = 1266)] = "OnManipulateShowLandTips"),
+      (e[(e.BeforeUiModelLoadStart = 1267)] = "BeforeUiModelLoadStart"),
+      (e[(e.OnUiModelRoleConfigIdChange = 1268)] =
         "OnUiModelRoleConfigIdChange"),
-      (e[(e.OnUiModelRoleDataIdChange = 1270)] = "OnUiModelRoleDataIdChange"),
-      (e[(e.OnUiModelLoadComplete = 1271)] = "OnUiModelLoadComplete"),
-      (e[(e.OnUiModelVisibleChange = 1272)] = "OnUiModelVisibleChange"),
-      (e[(e.OnUiModelSetDitherEffect = 1273)] = "OnUiModelSetDitherEffect"),
-      (e[(e.WorldMapSubMapChanged = 1274)] = "WorldMapSubMapChanged"),
-      (e[(e.WorldMapSelectMultiMap = 1275)] = "WorldMapSelectMultiMap"),
-      (e[(e.RoguelikePopularEntriesChange = 1276)] =
+      (e[(e.OnUiModelRoleDataIdChange = 1269)] = "OnUiModelRoleDataIdChange"),
+      (e[(e.OnUiModelLoadComplete = 1270)] = "OnUiModelLoadComplete"),
+      (e[(e.OnUiModelVisibleChange = 1271)] = "OnUiModelVisibleChange"),
+      (e[(e.OnUiModelSetDitherEffect = 1272)] = "OnUiModelSetDitherEffect"),
+      (e[(e.WorldMapSubMapChanged = 1273)] = "WorldMapSubMapChanged"),
+      (e[(e.WorldMapSelectMultiMap = 1274)] = "WorldMapSelectMultiMap"),
+      (e[(e.RoguelikePopularEntriesChange = 1275)] =
         "RoguelikePopularEntriesChange"),
-      (e[(e.OnSceneItemMoveEventBroken = 1277)] = "OnSceneItemMoveEventBroken"),
-      (e[(e.OnFragmentMemoryDataUpdate = 1278)] = "OnFragmentMemoryDataUpdate"),
-      (e[(e.OnFragmentMemoryCollectUpdate = 1279)] =
+      (e[(e.OnSceneItemMoveEventBroken = 1276)] = "OnSceneItemMoveEventBroken"),
+      (e[(e.OnFragmentMemoryDataUpdate = 1277)] = "OnFragmentMemoryDataUpdate"),
+      (e[(e.OnFragmentMemoryCollectUpdate = 1278)] =
         "OnFragmentMemoryCollectUpdate"),
-      (e[(e.OnFragmentTopicSelect = 1280)] = "OnFragmentTopicSelect"),
-      (e[(e.OnFragmentTopicClick = 1281)] = "OnFragmentTopicClick"),
-      (e[(e.FragmentRewardRedDot = 1282)] = "FragmentRewardRedDot"),
-      (e[(e.FragmentRewardTopicRedDot = 1283)] = "FragmentRewardTopicRedDot"),
-      (e[(e.FragmentRewardEntranceRedDot = 1284)] =
+      (e[(e.OnFragmentTopicSelect = 1279)] = "OnFragmentTopicSelect"),
+      (e[(e.OnFragmentTopicClick = 1280)] = "OnFragmentTopicClick"),
+      (e[(e.FragmentRewardRedDot = 1281)] = "FragmentRewardRedDot"),
+      (e[(e.FragmentRewardTopicRedDot = 1282)] = "FragmentRewardTopicRedDot"),
+      (e[(e.FragmentRewardEntranceRedDot = 1283)] =
         "FragmentRewardEntranceRedDot"),
-      (e[(e.OnChangeBossRushBuff = 1285)] = "OnChangeBossRushBuff"),
-      (e[(e.RequestChangeBossRushView = 1286)] = "RequestChangeBossRushView"),
-      (e[(e.BossRushDataUpdate = 1287)] = "BossRushDataUpdate"),
-      (e[(e.BossRefreshBossRushRewardRedDot = 1288)] =
+      (e[(e.OnChangeBossRushBuff = 1284)] = "OnChangeBossRushBuff"),
+      (e[(e.RequestChangeBossRushView = 1285)] = "RequestChangeBossRushView"),
+      (e[(e.BossRushDataUpdate = 1286)] = "BossRushDataUpdate"),
+      (e[(e.BossRefreshBossRushRewardRedDot = 1287)] =
         "BossRefreshBossRushRewardRedDot"),
-      (e[(e.TowerDefenseOnOpenPhantomView = 1289)] =
+      (e[(e.TowerDefenseOnOpenPhantomView = 1288)] =
         "TowerDefenseOnOpenPhantomView"),
-      (e[(e.TowerDefenseOnClickOnePhantom = 1290)] =
+      (e[(e.TowerDefenseOnClickOnePhantom = 1289)] =
         "TowerDefenseOnClickOnePhantom"),
-      (e[(e.TowerDefenseSelfPhantomConfirm = 1291)] =
+      (e[(e.TowerDefenseSelfPhantomConfirm = 1290)] =
         "TowerDefenseSelfPhantomConfirm"),
-      (e[(e.TowerDefensePhantomChanged = 1292)] = "TowerDefensePhantomChanged"),
-      (e[(e.TowerDefenseBeforeConfirmQuickRoleSelect = 1293)] =
+      (e[(e.TowerDefensePhantomChanged = 1291)] = "TowerDefensePhantomChanged"),
+      (e[(e.TowerDefenseBeforeConfirmQuickRoleSelect = 1292)] =
         "TowerDefenseBeforeConfirmQuickRoleSelect"),
-      (e[(e.TowerDefenseOnWaveChanged = 1294)] = "TowerDefenseOnWaveChanged"),
-      (e[(e.TowerDefenseOnActivityInfoUpdateNotify = 1295)] =
+      (e[(e.TowerDefenseOnWaveChanged = 1293)] = "TowerDefenseOnWaveChanged"),
+      (e[(e.TowerDefenseOnActivityInfoUpdateNotify = 1294)] =
         "TowerDefenseOnActivityInfoUpdateNotify"),
-      (e[(e.TowerDefenseOnInstanceInfoUpdateNotify = 1296)] =
+      (e[(e.TowerDefenseOnInstanceInfoUpdateNotify = 1295)] =
         "TowerDefenseOnInstanceInfoUpdateNotify"),
-      (e[(e.TowerDefenseOnPhantomInfoUpdateNotify = 1297)] =
+      (e[(e.TowerDefenseOnPhantomInfoUpdateNotify = 1296)] =
         "TowerDefenseOnPhantomInfoUpdateNotify"),
-      (e[(e.TowerDefenseShowInBattleView = 1298)] =
+      (e[(e.TowerDefenseShowInBattleView = 1297)] =
         "TowerDefenseShowInBattleView"),
-      (e[(e.TowerDefenseOnShowPhantomInFormation = 1299)] =
+      (e[(e.TowerDefenseOnShowPhantomInFormation = 1298)] =
         "TowerDefenseOnShowPhantomInFormation"),
-      (e[(e.TowerDefenseOnTowerDefenseBattleEndNotify = 1300)] =
+      (e[(e.TowerDefenseOnTowerDefenseBattleEndNotify = 1299)] =
         "TowerDefenseOnTowerDefenseBattleEndNotify"),
-      (e[(e.OnBeforeDestroyInstanceDungeonEntranceView = 1301)] =
+      (e[(e.OnBeforeDestroyInstanceDungeonEntranceView = 1300)] =
         "OnBeforeDestroyInstanceDungeonEntranceView"),
-      (e[(e.OnClickEnterInstanceSingle = 1302)] = "OnClickEnterInstanceSingle"),
+      (e[(e.OnClickEnterInstanceSingle = 1301)] = "OnClickEnterInstanceSingle"),
+      (e[(e.OnNeedRefreshByProtocol = 1302)] = "OnNeedRefreshByProtocol"),
       (e[(e.MowingBasicBuffGridItemClick = 1303)] =
         "MowingBasicBuffGridItemClick"),
       (e[(e.MowingSuperBuffGridItemClick = 1304)] =

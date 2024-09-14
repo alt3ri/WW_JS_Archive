@@ -186,8 +186,7 @@ class InputSettingsManager {
       this.RefreshAllActionKeys(!0),
       this.RefreshAllAxisKeys(!0),
       this.RefreshCombinationActionKeys(!0),
-      this.RefreshCombinationAxisKeys(),
-      InputSettings_1.InputSettings.SaveKeyMappings();
+      this.RefreshCombinationAxisKeys();
   }
   static ClearAllKeys() {
     this.qEe?.ClearAllActionKeys(),
@@ -686,14 +685,7 @@ class InputSettingsManager {
     return void 0 !== this.eFn;
   }
   static $kn() {
-    return !(
-      !this.Jkn ||
-      (LocalStorage_1.LocalStorage.SetGlobal(
-        LocalStorageDefine_1.ELocalStorageGlobalKey.CombineAction,
-        this.kEe,
-      ),
-      (this.Jkn = !1))
-    );
+    return !!this.Jkn && !(this.Jkn = !1);
   }
 }
 (exports.InputSettingsManager = InputSettingsManager),

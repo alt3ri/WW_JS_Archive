@@ -19,6 +19,7 @@ const cpp_1 = require("cpp"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
+  HotPatchKuroSdk_1 = require("../../../Launcher/HotPatchKuroSdk/HotPatchKuroSdk"),
   HotPatchLogReport_1 = require("../../../Launcher/HotPatchLogReport"),
   Platform_1 = require("../../../Launcher/Platform/Platform"),
   PlatformSdkConfig_1 = require("../../../Launcher/Platform/PlatformSdk/PlatformSdkConfig"),
@@ -62,7 +63,6 @@ const cpp_1 = require("cpp"),
   Heartbeat_1 = require("./Heartbeat"),
   HeartbeatDefine_1 = require("./HeartbeatDefine"),
   LoginModel_1 = require("./LoginModel"),
-  HotPatchKuroSdk_1 = require("../../../Launcher/HotPatchKuroSdk/HotPatchKuroSdk"),
   VERIFY_CONFIG_VERSION_INTERVAL = 9e4,
   TRY_BACK_TO_GAME_INTERVAL = 3e3,
   FOREVERTIME = 86313600;
@@ -762,33 +762,34 @@ class LoginController extends UiControllerBase_1.UiControllerBase {
           "enter_game_failed",
         ));
   }
-  static async HandleLoginGame(e, o) {
-    var r = await LoginController.EnterGameAsync();
-    return (
-      e
-        ? (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Login",
-              11,
-              "冒烟测试登录流程",
-              ["登录结果", o],
-              ["EnterGame结果", r],
-            ),
-          r || LoginController.IsLoginViewOpen() || LoginController.IMi())
-        : (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Login",
-              11,
-              "正常登录流程",
-              ["登录结果", o],
-              ["EnterGame结果", r],
-            ),
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.LoginRequestResult,
-            r,
-          )),
-      r
-    );
+  static async HandleLoginGame(r, n) {
+    return new Promise((o) => {
+      LoginController.EnterGame((e) => {
+        r
+          ? (Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info(
+                "Login",
+                11,
+                "冒烟测试登录流程",
+                ["登录结果", n],
+                ["EnterGame结果", e],
+              ),
+            e || LoginController.IsLoginViewOpen() || LoginController.IMi())
+          : (Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info(
+                "Login",
+                11,
+                "正常登录流程",
+                ["登录结果", n],
+                ["EnterGame结果", e],
+              ),
+            EventSystem_1.EventSystem.Emit(
+              EventDefine_1.EEventName.LoginRequestResult,
+              e,
+            )),
+          o(e);
+      });
+    });
   }
   static async PMi(e, o, r) {
     ModelManager_1.ModelManager.LoginModel.SetLoginStatus(
@@ -1058,6 +1059,7 @@ class LoginController extends UiControllerBase_1.UiControllerBase {
                     r.Cvs ===
                     Protocol_1.Aki.Protocol.Q4n.Proto_HaveNoCharacter),
                   ModelManager_1.ModelManager.LoginModel.SetHasCharacter(!o),
+                  ModelManager_1.ModelManager.LoginModel.SetIsNewAccount(o),
                   o || r.Cvs === Protocol_1.Aki.Protocol.Q4n.KRs
                     ? (TimeUtil_1.TimeUtil.SetServerTimeStamp(r.Rws),
                       (e = Number(MathUtils_1.MathUtils.LongToBigInt(r.Rws))),
@@ -1203,75 +1205,84 @@ class LoginController extends UiControllerBase_1.UiControllerBase {
       o <= e && r < o)
     );
   }
-  static async FMi() {
+  static FMi(n) {
     (this.IsSdkLoginMode() ||
       CloudGameManager_1.CloudGameManager.IsCloudGame) &&
-      ((o =
+      ((e =
         ConfigManager_1.ConfigManager.LoginConfig.GetDefaultSingleMapId()) &&
-        ModelManager_1.ModelManager.LoginModel.SetSingleMapId(o),
-      (o = ConfigManager_1.ConfigManager.LoginConfig.GetDefaultMultiMapId())) &&
-      ModelManager_1.ModelManager.LoginModel.SetMultiMapId(o);
-    var e,
-      o = new Protocol_1.Aki.Protocol.pss(),
-      o =
-        ((o.M7n = ModelManager_1.ModelManager.LoginModel.GetSingleMapId()),
-        (o.S7n = ModelManager_1.ModelManager.LoginModel.GetMultiMapId()),
-        (o.E7n = ModelManager_1.ModelManager.LoginModel.BornMode),
-        (o.l8n = ModelManager_1.ModelManager.LoginModel.BornLocation),
-        ModelManager_1.ModelManager.LoadingModel.SetIsLoginToWorld(!0),
-        LoginController.LogLoginProcessLink(
-          LoginDefine_1.ELoginStatus.EnterGameReq,
-        ),
-        Net_1.Net.ChangeStateEnterGame(),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Login", 17, "LoginProcedure-EnterGame-Call", [
-            "enterGameRequest",
-            o,
-          ]),
-        await Net_1.Net.CallAsync(105, o, 13e3));
-    return o
-      ? o.Cvs === Protocol_1.Aki.Protocol.Q4n.KRs ||
-          (LoginController.LogLoginProcessLink(
-            LoginDefine_1.ELoginStatus.EnterGameRet,
-            o.Cvs,
-          ),
-          o.Cvs !== Protocol_1.Aki.Protocol.Q4n.Proto_ServerFullLoadGame
-            ? (ModelManager_1.ModelManager.LoginModel.AddLoginFailCount(),
-              ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                o.Cvs,
-                106,
+        ModelManager_1.ModelManager.LoginModel.SetSingleMapId(e),
+      (e = ConfigManager_1.ConfigManager.LoginConfig.GetDefaultMultiMapId())) &&
+      ModelManager_1.ModelManager.LoginModel.SetMultiMapId(e);
+    var e = new Protocol_1.Aki.Protocol.pss();
+    (e.M7n = ModelManager_1.ModelManager.LoginModel.GetSingleMapId()),
+      (e.S7n = ModelManager_1.ModelManager.LoginModel.GetMultiMapId()),
+      (e.E7n = ModelManager_1.ModelManager.LoginModel.BornMode),
+      (e.l8n = ModelManager_1.ModelManager.LoginModel.BornLocation),
+      ModelManager_1.ModelManager.LoadingModel.SetIsLoginToWorld(!0),
+      LoginController.LogLoginProcessLink(
+        LoginDefine_1.ELoginStatus.EnterGameReq,
+      ),
+      Net_1.Net.ChangeStateEnterGame(),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("Login", 17, "LoginProcedure-EnterGame-Call", [
+          "enterGameRequest",
+          e,
+        ]),
+      Net_1.Net.Call(
+        105,
+        e,
+        (e, o) => {
+          var r;
+          e
+            ? e.Cvs === Protocol_1.Aki.Protocol.Q4n.KRs
+              ? n(!0)
+              : (LoginController.LogLoginProcessLink(
+                  LoginDefine_1.ELoginStatus.EnterGameRet,
+                  e.Cvs,
+                ),
+                e.Cvs !== Protocol_1.Aki.Protocol.Q4n.Proto_ServerFullLoadGame
+                  ? (ModelManager_1.ModelManager.LoginModel.AddLoginFailCount(),
+                    ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+                      e.Cvs,
+                      106,
+                    ),
+                    Log_1.Log.CheckInfo() &&
+                      Log_1.Log.Info("Login", 9, "请求进入游戏失败"),
+                    ModelManager_1.ModelManager.LoginModel.SetLoginStatus(
+                      LoginDefine_1.ELoginStatus.Init,
+                    ),
+                    n(!1))
+                  : LoginController.GMi(e.K9n, e.Q9n, e.Oxs).then((e) => {
+                      e
+                        ? LoginController.FMi(n)
+                        : (ModelManager_1.ModelManager.LoginModel.SetLoginStatus(
+                            LoginDefine_1.ELoginStatus.Init,
+                          ),
+                          n(!1));
+                    }))
+            : (Log_1.Log.CheckWarn() &&
+                Log_1.Log.Warn("Login", 9, "请求进入游戏失败, 超时"),
+              LoginController.LogLoginProcessLink(
+                LoginDefine_1.ELoginStatus.EnterGameRet,
+                Protocol_1.Aki.Protocol.Q4n.Proto_EnterGameTimeout,
               ),
-              Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Login", 9, "请求进入游戏失败"),
               ModelManager_1.ModelManager.LoginModel.SetLoginStatus(
                 LoginDefine_1.ELoginStatus.Init,
               ),
-              !1)
-            : (await LoginController.GMi(o.K9n, o.Q9n, o.Oxs))
-              ? LoginController.FMi()
-              : (ModelManager_1.ModelManager.LoginModel.SetLoginStatus(
-                  LoginDefine_1.ELoginStatus.Init,
-                ),
-                !1))
-      : (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Login", 9, "请求进入游戏失败, 超时"),
-        LoginController.LogLoginProcessLink(
-          LoginDefine_1.ELoginStatus.EnterGameRet,
-          Protocol_1.Aki.Protocol.Q4n.Proto_EnterGameTimeout,
-        ),
-        ModelManager_1.ModelManager.LoginModel.SetLoginStatus(
-          LoginDefine_1.ELoginStatus.Init,
-        ),
-        (o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(33)),
-        (e = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(
-          Protocol_1.Aki.Protocol.Q4n.Proto_LoginTimeout,
-        )),
-        o.SetTextArgs(e),
-        ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-          o,
-        ),
-        UiManager_1.UiManager.CloseView("NetWorkMaskView"),
-        !1);
+              (e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(33)),
+              (r =
+                ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(
+                  Protocol_1.Aki.Protocol.Q4n.Proto_LoginTimeout,
+                )),
+              e.SetTextArgs(r),
+              ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+                e,
+              ),
+              UiManager_1.UiManager.CloseView("NetWorkMaskView"),
+              n(!1));
+        },
+        13e3,
+      );
   }
   static async GMi(e, o, r) {
     UiManager_1.UiManager.IsViewOpen("LoginQueueTipsView") ||
@@ -1299,53 +1310,87 @@ class LoginController extends UiControllerBase_1.UiControllerBase {
       e
     );
   }
-  static async EnterGameAsync() {
-    return (
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Login", 17, "LoginProcedure-EnterGame-进入游戏"),
-      !!ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
+  static EnterGame(o) {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("Login", 17, "LoginProcedure-EnterGame-进入游戏"),
+      ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
         LoginDefine_1.ELoginStatus.EnterGameReq,
-      ) &&
-        (GameUtils_1.GameUtils.CreateStat("Login-EnterGameAsync"),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Login", 17, "LoginProcedure-EnterGame-请求进入游戏"),
-        (await this.FMi())
-          ? (UiManager_1.UiManager.IsViewOpen("LoginQueueTipsView") &&
-              (await UiManager_1.UiManager.CloseViewAsync(
-                "LoginQueueTipsView",
-              )),
-            ModelManager_1.ModelManager.LoginModel.CleanLoginFailCount(
-              LoginDefine_1.ECleanFailCountWay.LoginSuccess,
+      )
+        ? (GameUtils_1.GameUtils.CreateStat("Login-EnterGameAsync"),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "Login",
+              17,
+              "LoginProcedure-EnterGame-请求进入游戏",
             ),
-            ModelManager_1.ModelManager.LoginModel.SetLoginStatus(
-              LoginDefine_1.ELoginStatus.EnterGameRet,
-            ),
-            LoginController.LogLoginProcessLink(
-              LoginDefine_1.ELoginStatus.EnterGameRet,
-            ),
-            (ModelManager_1.ModelManager.LoginModel.LoginTraceId = void 0),
-            EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.EnterGameSuccess,
-            ),
-            GameUtils_1.GameUtils.CreateStat("Login-EnterGameSuccess"),
-            Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info(
-                "Login",
-                17,
-                "LoginProcedure-EnterGame-进入游戏成功",
-              ),
-            ModelManager_1.ModelManager.CreatureModel.SetGameplayTagHash(
-              UE.GASBPLibrary.GetNetworkGameplayTagNodeIndexHash(),
-            ),
-            !0)
-          : (Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn(
-                "Login",
-                17,
-                "LoginProcedure-EnterGame-进入游戏失败",
-              ),
-            !1))
-    );
+          this.FMi((e) => {
+            e
+              ? UiManager_1.UiManager.IsViewOpen("LoginQueueTipsView")
+                ? UiManager_1.UiManager.CloseViewAsync(
+                    "LoginQueueTipsView",
+                  ).then(() => {
+                    ModelManager_1.ModelManager.LoginModel.CleanLoginFailCount(
+                      LoginDefine_1.ECleanFailCountWay.LoginSuccess,
+                    ),
+                      ModelManager_1.ModelManager.LoginModel.SetLoginStatus(
+                        LoginDefine_1.ELoginStatus.EnterGameRet,
+                      ),
+                      LoginController.LogLoginProcessLink(
+                        LoginDefine_1.ELoginStatus.EnterGameRet,
+                      ),
+                      (ModelManager_1.ModelManager.LoginModel.LoginTraceId =
+                        void 0),
+                      EventSystem_1.EventSystem.Emit(
+                        EventDefine_1.EEventName.EnterGameSuccess,
+                      ),
+                      GameUtils_1.GameUtils.CreateStat(
+                        "Login-EnterGameSuccess",
+                      ),
+                      Log_1.Log.CheckInfo() &&
+                        Log_1.Log.Info(
+                          "Login",
+                          17,
+                          "LoginProcedure-EnterGame-进入游戏成功",
+                        ),
+                      ModelManager_1.ModelManager.CreatureModel.SetGameplayTagHash(
+                        UE.GASBPLibrary.GetNetworkGameplayTagNodeIndexHash(),
+                      ),
+                      o(!0);
+                  })
+                : (ModelManager_1.ModelManager.LoginModel.CleanLoginFailCount(
+                    LoginDefine_1.ECleanFailCountWay.LoginSuccess,
+                  ),
+                  ModelManager_1.ModelManager.LoginModel.SetLoginStatus(
+                    LoginDefine_1.ELoginStatus.EnterGameRet,
+                  ),
+                  LoginController.LogLoginProcessLink(
+                    LoginDefine_1.ELoginStatus.EnterGameRet,
+                  ),
+                  (ModelManager_1.ModelManager.LoginModel.LoginTraceId =
+                    void 0),
+                  EventSystem_1.EventSystem.Emit(
+                    EventDefine_1.EEventName.EnterGameSuccess,
+                  ),
+                  GameUtils_1.GameUtils.CreateStat("Login-EnterGameSuccess"),
+                  Log_1.Log.CheckInfo() &&
+                    Log_1.Log.Info(
+                      "Login",
+                      17,
+                      "LoginProcedure-EnterGame-进入游戏成功",
+                    ),
+                  ModelManager_1.ModelManager.CreatureModel.SetGameplayTagHash(
+                    UE.GASBPLibrary.GetNetworkGameplayTagNodeIndexHash(),
+                  ),
+                  o(!0))
+              : (Log_1.Log.CheckWarn() &&
+                  Log_1.Log.Warn(
+                    "Login",
+                    17,
+                    "LoginProcedure-EnterGame-进入游戏失败",
+                  ),
+                o(!1));
+          }))
+        : o(!1);
   }
   static CheckCanReConnect() {
     return LoginController.IsLoginViewOpen()

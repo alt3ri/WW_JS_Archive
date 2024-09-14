@@ -218,6 +218,7 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         this.GetItem(9).SetUIActive(!1),
         this.GetItem(12).SetUIActive(!1),
         this.GetItem(8).SetUIActive(!1),
+        this.GetVerticalLayout(16).RootUIComp.SetUIActive(!1),
         (i = this.u2o.GetAreaText()) && this.GetText(3).SetText(i),
         this.GetButton(18).RootUIComp?.SetUIActive(
           1 === this.u2o.MarkConfig.RelativeSubType,

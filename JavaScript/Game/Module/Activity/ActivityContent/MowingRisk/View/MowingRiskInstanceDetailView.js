@@ -68,18 +68,36 @@ class MowingRiskInstanceDetailView extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     this.GetItem(1)?.SetUIActive(!1), this.GetItem(7)?.SetUIActive(!1);
   }
+  NFe(t) {
+    t
+      ? (this.Vja.SetUiActive(!1),
+        this.fuo.SetUiActive(!0),
+        this.fuo.RefreshExternalByData(t))
+      : (this.Vja.SetUiActive(!0), this.fuo.SetUiActive(!1));
+  }
   async RefreshExternalByDataAsync(t) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), t.TitleTextId),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), t.ContentTextId),
       await this.nvt.RefreshByDataAsync(t.AttributeList),
-      this.fuo.RefreshExternalByData(t.LockData);
+      this.NFe(t.LockData);
+  }
+  RefreshLockItemExternalByData(t) {
+    this.NFe(t);
   }
 }
 exports.MowingRiskInstanceDetailView = MowingRiskInstanceDetailView;
 class MowingRiskInstanceDetailAttributeGridItem extends GridProxyAbstract_1.GridProxyAbstract {
   Refresh(t, e, i) {
-    this.SetTextureByPath(t.IconPath, this.GetTexture(0)),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), t.AttributeTextId);
+    var s = this.GetTexture(0),
+      s =
+        (t.IconPath
+          ? (s?.SetUIActive(!0), this.SetTextureByPath(t.IconPath, s))
+          : s?.SetUIActive(!1),
+        this.GetText(1));
+    t.AttributeTextId
+      ? (s?.SetUIActive(!0),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(s, t.AttributeTextId))
+      : s?.SetUIActive(!1);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -97,11 +115,15 @@ class MowingRiskInstanceDetailLockItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   RefreshExternalByData(t) {
-    LguiUtil_1.LguiUtil.SetLocalTextNew(
-      this.GetText(1),
-      t.LockDescriptionTextId,
-      t.LockDescriptionTextArgs,
-    );
+    var e = this.GetText(1);
+    t.LockDescriptionTextId
+      ? (e?.SetUIActive(!0),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(
+          e,
+          t.LockDescriptionTextId,
+          t.LockDescriptionTextArgs,
+        ))
+      : e?.SetUIActive(!1);
   }
 }
 //# sourceMappingURL=MowingRiskInstanceDetailView.js.map

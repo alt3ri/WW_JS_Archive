@@ -1023,7 +1023,7 @@ let SceneItemPortalComponent =
         });
     }
     rFa() {
-      var t = Protocol_1.Aki.Protocol.Veh.create();
+      var t = Protocol_1.Aki.Protocol.oth.create();
       (t.F4n = this.Wpo),
         Net_1.Net.Call(18590, t, (t) => {
           (t && t.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs) ||

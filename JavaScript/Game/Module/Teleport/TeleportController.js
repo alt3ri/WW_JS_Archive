@@ -104,7 +104,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         ));
     let l = t;
     return (((l = l || new TeleportDefine_1.TeleportContext())
-      .TeleportReason === Protocol_1.Aki.Protocol.v4s.brh ||
+      .TeleportReason === Protocol_1.Aki.Protocol.v4s.Yrh ||
       l.TeleportReason === Protocol_1.Aki.Protocol.v4s.Xvs) &&
       ModelManager_1.ModelManager.AutoRunModel.IsInLogicTreeGmMode()) ||
       (l.TeleportReason === Protocol_1.Aki.Protocol.v4s.Proto_Gm &&
@@ -387,7 +387,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       case Protocol_1.Aki.Protocol.v4s.Proto_Fall:
       case Protocol_1.Aki.Protocol.v4s.Proto_Rouge:
         break;
-      case Protocol_1.Aki.Protocol.v4s.brh:
+      case Protocol_1.Aki.Protocol.v4s.Yrh:
       case Protocol_1.Aki.Protocol.v4s.Xvs:
         if (a.Option)
           switch (a.Option.p5n) {
@@ -612,7 +612,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
             1,
           );
           break;
-        case Protocol_1.Aki.Protocol.v4s.brh:
+        case Protocol_1.Aki.Protocol.v4s.Yrh:
         case Protocol_1.Aki.Protocol.v4s.Xvs:
           if (a.Option)
             switch (a.Option.p5n) {
@@ -1222,7 +1222,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           );
     else {
       switch (((TeleportController.xIo = void 0), l.TeleportReason)) {
-        case Protocol_1.Aki.Protocol.v4s.brh:
+        case Protocol_1.Aki.Protocol.v4s.Yrh:
         case Protocol_1.Aki.Protocol.v4s.Xvs:
           if (r)
             switch (r.p5n) {

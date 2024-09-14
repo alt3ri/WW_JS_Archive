@@ -23,6 +23,9 @@ class RiskHarvestInst {
   get UnlockScore() {
     return this.unlockscore();
   }
+  get RewardScore() {
+    return this.rewardscore();
+  }
   get MaxScore() {
     return this.maxscore();
   }
@@ -86,44 +89,48 @@ class RiskHarvestInst {
     var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  maxscore() {
+  rewardscore() {
     var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  harvestbuff() {
+  maxscore() {
     var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  reward() {
+  harvestbuff() {
     var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  difficulty() {
+  reward() {
     var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  difficultyname(t) {
-    var i = this.J7.__offset(this.z7, 24);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+  difficulty() {
+    var t = this.J7.__offset(this.z7, 24);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  monsterratio(t) {
+  difficultyname(t) {
     var i = this.J7.__offset(this.z7, 26);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  timepointname(t) {
+  monsterratio(t) {
     var i = this.J7.__offset(this.z7, 28);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  scorepointname(t) {
+  timepointname(t) {
     var i = this.J7.__offset(this.z7, 30);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  timescorevalidname(t) {
+  scorepointname(t) {
     var i = this.J7.__offset(this.z7, 32);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  desc(t) {
+  timescorevalidname(t) {
     var i = this.J7.__offset(this.z7, 34);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
+  desc(t) {
+    var i = this.J7.__offset(this.z7, 36);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }

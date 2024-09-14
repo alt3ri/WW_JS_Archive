@@ -7,8 +7,11 @@ const RiskHarvestArtifactAll_1 = require("../../../../../../Core/Define/ConfigQu
   RiskHarvestBuffGroupById_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestBuffGroupById"),
   RiskHarvestBuffRewardAll_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestBuffRewardAll"),
   RiskHarvestInstAll_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestInstAll"),
+  RiskHarvestInstById_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestInstById"),
   RiskHarvestInstByInstanceID_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestInstByInstanceID"),
   RiskHarvestScoreRewardAll_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestScoreRewardAll"),
+  LocalStorage_1 = require("../../../../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../../../../Common/LocalStorageDefine"),
   ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
   type2QualityData = new Map([
     [
@@ -53,31 +56,31 @@ class MowingRiskConfigContext {
         var t,
           i,
           s = [],
-          f = [],
-          o = n.BasicBuffGroup;
+          o = [],
+          a = n.BasicBuffGroup;
         let r = 0;
         for ([t, i] of n.BuffGroup.entries()) {
-          var u = o[t];
-          s.push({ Index: t, BuffId: i, Threshold: u });
-          for (let e = r; e < u; e++) {
-            var a = (e - r) / (u - r);
-            f.push({
+          var f = a[t];
+          s.push({ Index: t, BuffId: i, Threshold: f });
+          for (let e = r; e < f; e++) {
+            var u = (e - r) / (f - r);
+            o.push({
               Count: e,
               SuperLevel: t,
-              Partial: a,
-              Overall: (a + t) / n.BuffGroup.length,
+              Partial: u,
+              Overall: (u + t) / n.BuffGroup.length,
             });
           }
-          r = u;
+          r = f;
         }
-        f.push({
-          Count: o.at(-1) ?? 0,
-          SuperLevel: o.length,
+        o.push({
+          Count: a.at(-1) ?? 0,
+          SuperLevel: a.length,
           Partial: 1,
           Overall: 1,
         }),
           this.j5a.set(n.Id, s),
-          this.L9a.set(n.Id, f);
+          this.L9a.set(n.Id, o);
       }
   }
   Dispose() {}
@@ -180,6 +183,16 @@ class MowingRiskConfigContext {
       );
     if (void 0 !== e) return e.Id;
   }
+  GetInstanceRewardScoreById(e) {
+    return (
+      RiskHarvestInstById_1.configRiskHarvestInstById.GetConfig(e)
+        ?.RewardScore ?? 0
+    );
+  }
+  GetScoreToUnlockById(e) {
+    e = RiskHarvestInstById_1.configRiskHarvestInstById.GetConfig(e);
+    return void 0 === e || 0 === e.UnlockInst ? 0 : e.UnlockScore;
+  }
   IsSuperBuffByBuffId(e) {
     return 3 === this.GetBuffTypeById(e);
   }
@@ -228,6 +241,28 @@ class MowingRiskConfigContext {
     var e =
       RiskHarvestScoreRewardAll_1.configRiskHarvestScoreRewardAll.GetConfigList();
     return void 0 === e ? 0 : e[e.length - 1].Score;
+  }
+  get IsInstanceNewCache() {
+    var e = LocalStorage_1.LocalStorage.GetPlayer(
+      LocalStorageDefine_1.ELocalStoragePlayerKey.MowingRiskIsInstanceNew,
+    );
+    if (void 0 !== e) return e;
+    var r = new Map(),
+      e = RiskHarvestInstAll_1.configRiskHarvestInstAll.GetConfigList();
+    if (void 0 !== e) {
+      for (const t of e) r.set(t.Id, !0);
+      LocalStorage_1.LocalStorage.SetPlayer(
+        LocalStorageDefine_1.ELocalStoragePlayerKey.MowingRiskIsInstanceNew,
+        r,
+      );
+    }
+    return r;
+  }
+  set IsInstanceNewCache(e) {
+    LocalStorage_1.LocalStorage.SetPlayer(
+      LocalStorageDefine_1.ELocalStoragePlayerKey.MowingRiskIsInstanceNew,
+      e,
+    );
   }
 }
 exports.MowingRiskConfigContext = MowingRiskConfigContext;

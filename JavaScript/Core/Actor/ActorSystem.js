@@ -120,6 +120,7 @@ class ActorSystem {
         var A = m.values().next();
         if (((t = A.value), m.delete(t), --ActorSystem.n6, t)) {
           if (t.IsValid()) {
+            t.OnEndPlay.Remove(ActorSystem.hbn);
             A = t.GetWorld();
             if (A && A.IsValid()) {
               if (c) {
@@ -254,7 +255,7 @@ class ActorSystem {
           ActorSystem.p6.Stop(),
           !1
         );
-      e.OnDestroyed.Add(ActorSystem._Tn);
+      e.OnDestroyed.Add(ActorSystem._Tn), e.OnEndPlay.Add(ActorSystem.hbn);
       let t = ActorSystem.ve.get(o);
       if (t) {
         if (t.Values.has(e))
@@ -349,10 +350,12 @@ class ActorSystem {
             --ActorSystem.n6,
             r.Touch(),
             ActorSystem.mp.Update(r),
-            ActorSystem.f6.push({ Actor: e, Klass: e.GetClass().GetName() }),
+            e?.IsValid() &&
+              (e.OnEndPlay.Remove(ActorSystem.hbn),
+              ActorSystem.f6.push({ Actor: e, Klass: e.GetClass().GetName() })),
             Info_1.Info.IsBuildShipping ||
               ActorSystemDebugger_1.ActorSystemDebugger.RecordGetPut({
-                ClassName: e.GetClass().GetName(),
+                ClassName: e?.GetClass()?.GetName(),
                 GetOrPut: "Evict",
                 Hit: !1,
                 TimeStamp: new Date().getTime(),
@@ -497,6 +500,22 @@ class ActorSystem {
         ]);
     }
     ActorSystem.I6.Stop();
+  }),
+  (ActorSystem.hbn = (t, e) => {
+    switch (e) {
+      case 2:
+      case 4:
+      case 1:
+        return;
+    }
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error(
+        "RenderEffect",
+        3,
+        "ActorSystem的Actor意外删除",
+        ["ActorName", t?.GetName()],
+        ["Reason", e],
+      );
   }),
   (ActorSystem._Tn = (t) => {
     var e, r;

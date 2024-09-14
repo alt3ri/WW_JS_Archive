@@ -10,8 +10,6 @@ const Info_1 = require("../../Core/Common/Info"),
   Platform_1 = require("../../Launcher/Platform/Platform"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
-  LocalStorage_1 = require("../Common/LocalStorage"),
-  LocalStorageDefine_1 = require("../Common/LocalStorageDefine"),
   ConfigManager_1 = require("../Manager/ConfigManager"),
   ControllerHolder_1 = require("../Manager/ControllerHolder"),
   ModelManager_1 = require("../Manager/ModelManager"),
@@ -37,86 +35,75 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
       !0
     );
   }
-  static async Oza() {
-    var t,
-      e = await this.InputSettingRequestAsync();
-    !e || !(t = e.iYa) || t.oYa.length <= 0
-      ? (Log_1.Log.CheckInfo() &&
+  static teh() {
+    ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.AddChangeKeyReason(
+      1,
+    ),
+      ModelManager_1.ModelManager.LoginModel.IsNewAccount
+        ? (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "InputSettings",
+              11,
+              "新号没有输入数据，还原至配置表配置",
+            ),
+          InputSettingsManager_1.InputSettingsManager.ResetDefaultInputKey())
+        : Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "InputSettings",
             11,
-            "服务端没有数据，将本地输入上传给服务端",
+            "老号没有输入数据，默认本地存储按键",
           ),
-        this.InputSettingUpdateRequest())
-      : (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "InputSettings",
-            11,
-            "服务端有对应数据,使用服务端数据刷新本地输入数据",
-          ),
-        this.tYa(e));
+      ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.RemoveChangeKeyReason(
+        1,
+      );
   }
   static InputSettingRequest() {
-    var t = new Protocol_1.Aki.Protocol.Lth();
-    Net_1.Net.Call(22420, Protocol_1.Aki.Protocol.Lth.create(t), this.tYa);
+    var t = new Protocol_1.Aki.Protocol.Vth();
+    Net_1.Net.Call(22420, Protocol_1.Aki.Protocol.Vth.create(t), this.tYa);
   }
   static async InputSettingRequestAsync() {
-    var t = new Protocol_1.Aki.Protocol.Lth();
+    var t = new Protocol_1.Aki.Protocol.Vth();
     return await Net_1.Net.CallAsync(
       22420,
-      Protocol_1.Aki.Protocol.Lth.create(t),
+      Protocol_1.Aki.Protocol.Vth.create(t),
     );
   }
   static InputSettingUpdateRequest() {
-    var t = new Protocol_1.Aki.Protocol.Ath();
+    var t = new Protocol_1.Aki.Protocol.$th();
     (t.iYa = this.BuildInputSettingsToProtoData()),
-      Net_1.Net.Call(27722, Protocol_1.Aki.Protocol.Ath.create(t), this.rYa);
+      Net_1.Net.Call(27722, Protocol_1.Aki.Protocol.$th.create(t), this.rYa);
   }
   static RefreshInputSettingsFromProtoData(e) {
-    if (
-      (ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.AddChangeKeyReason(
-        1,
-      ),
-      e)
-    ) {
-      let t = "";
-      var n = e.oYa;
-      if (!n || n.length <= 0)
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "InputSettings",
-            11,
-            "从Proto_InputSettingData刷新输入时，没有输入数据，还原至默认输入按键",
-            ["inputSettingsData", e],
-          ),
-          InputSettingsManager_1.InputSettingsManager.ResetDefaultInputKey();
-      else {
-        for (const a of n) {
-          var o = a.nYa;
-          o === Protocol_1.Aki.Protocol.coh.Proto_Mouse &&
-            ((t = InputSettingsManager_1.InputSettingsManager.DeviceLang),
-            (InputSettingsManager_1.InputSettingsManager.DeviceLang = a.Sza)),
-            this.sYa(a.qrh, o),
-            this.aYa(a.brh, o),
-            this.lYa(a.Brh, o);
-        }
-        Platform_1.Platform.IsPcPlatform() &&
-          InputSettingsManager_1.InputSettingsManager.ChangeActionAndAxisPcKeys(
-            t,
-          );
-      }
-    } else
+    if (!e || !e.oYa || e.oYa.length <= 0)
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "InputSettings",
           11,
-          "从Proto_InputSettingData刷新输入时，没有输入数据，还原至默认输入按键",
-          ["inputSettingsData", e],
+          "[RefreshInputSettingsFromProtoData]服务端没有数据，使用本地配置",
         ),
-        InputSettingsManager_1.InputSettingsManager.ResetDefaultInputKey();
-    ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.RemoveChangeKeyReason(
-      1,
-    );
+        this.teh();
+    else {
+      ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.AddChangeKeyReason(
+        1,
+      );
+      let t = "";
+      for (const o of e.oYa) {
+        var n = o.nYa;
+        n === Protocol_1.Aki.Protocol.Aoh.Proto_Mouse &&
+          ((t = InputSettingsManager_1.InputSettingsManager.DeviceLang),
+          (InputSettingsManager_1.InputSettingsManager.DeviceLang = o.Sza)),
+          this.sYa(o.Jrh, n),
+          this.aYa(o.Yrh, n),
+          this.lYa(o.zrh, n);
+      }
+      Platform_1.Platform.IsPcPlatform() &&
+        InputSettingsManager_1.InputSettingsManager.ChangeActionAndAxisPcKeys(
+          t,
+        ),
+        ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.RemoveChangeKeyReason(
+          1,
+        );
+    }
   }
   static aYa(t, e) {
     if (t) {
@@ -141,7 +128,7 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
             if (i) {
               var g = i.K7n;
               switch (e) {
-                case Protocol_1.Aki.Protocol.coh.Proto_Mouse:
+                case Protocol_1.Aki.Protocol.Aoh.Proto_Mouse:
                   if (g < a.GetKeyboardVersion()) {
                     var _ = o?.GetActionMappingConfigByActionName(L);
                     if (!_) continue;
@@ -189,25 +176,25 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
                         );
                   }
                   break;
-                case Protocol_1.Aki.Protocol.coh.uVn:
+                case Protocol_1.Aki.Protocol.Aoh.uVn:
                   if (g < a.GetGamepadVersion()) {
                     u = o?.GetActionMappingConfigByActionName(L);
                     if (!u) continue;
                     var c = u.GamepadKeys,
-                      S =
+                      l =
                         (a.SetGamepadKeys(c),
                         InputSettingsManager_1.InputSettingsManager.GetCombinationActionBindingByActionName(
                           L,
                         ));
-                    if (S) {
-                      var l,
+                    if (l) {
+                      var S,
                         I,
                         f = new Map();
-                      S.GetGamepadKeyNameMap(f);
-                      for ([l, I] of f)
+                      l.GetGamepadKeyNameMap(f);
+                      for ([S, I] of f)
                         InputSettingsManager_1.InputSettingsManager.RemoveCombinationActionKeyMap(
                           L,
-                          l,
+                          S,
                           I,
                         );
                     }
@@ -220,9 +207,9 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
                         ["keyNameList", c],
                       );
                   } else {
-                    S = i.hYa;
+                    l = i.hYa;
                     if (
-                      (a.SetGamepadKeys(S),
+                      (a.SetGamepadKeys(l),
                       a.SetGamepadVersion(g),
                       Log_1.Log.CheckDebug() &&
                         Log_1.Log.Debug(
@@ -230,9 +217,9 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
                           11,
                           "从Proto_InputSettingData刷新Action输入时，更新手柄输入按键",
                           ["actionName", L],
-                          ["keyNameList", S],
+                          ["keyNameList", l],
                         ),
-                      0 < S.length && "Gamepad_Invalid" !== S[0])
+                      0 < l.length && "Gamepad_Invalid" !== l[0])
                     ) {
                       Log_1.Log.CheckDebug() &&
                         Log_1.Log.Debug(
@@ -240,22 +227,22 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
                           11,
                           "Proto_InputSettingData服务器发现有单键配置,尝试删除本地组合键配置",
                           ["actionName", L],
-                          ["keyNameList", S],
+                          ["keyNameList", l],
                         );
                       f =
                         InputSettingsManager_1.InputSettingsManager.GetCombinationActionBindingByActionName(
                           L,
                         );
                       if (f) {
-                        var v,
-                          M,
+                        var M,
+                          v,
                           c = new Map();
                         f.GetGamepadKeyNameMap(c);
-                        for ([v, M] of c)
+                        for ([M, v] of c)
                           InputSettingsManager_1.InputSettingsManager.RemoveCombinationActionKeyMap(
                             L,
-                            v,
                             M,
+                            v,
                           );
                       }
                     }
@@ -285,7 +272,7 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
           if (r) {
             var i = r.K7n;
             switch (e) {
-              case Protocol_1.Aki.Protocol.coh.Proto_Mouse:
+              case Protocol_1.Aki.Protocol.Aoh.Proto_Mouse:
                 if (i < a.GetKeyboardVersion()) {
                   var g = o?.GetAxisMappingConfigByAxisName(I);
                   if (!g) continue;
@@ -305,7 +292,7 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
                       );
                 } else {
                   var _ = new Map(),
-                    s = r.Urh;
+                    s = r.Krh;
                   for (const f of Object.keys(s)) {
                     var p = s[f];
                     _.set(f, p);
@@ -321,7 +308,7 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
                       );
                 }
                 break;
-              case Protocol_1.Aki.Protocol.coh.uVn:
+              case Protocol_1.Aki.Protocol.Aoh.uVn:
                 if (i < a.GetGamepadVersion()) {
                   g = o?.GetAxisMappingConfigByAxisName(I);
                   if (!g) continue;
@@ -337,10 +324,10 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
                       );
                 } else {
                   var c = new Map(),
-                    S = r.Urh;
-                  for (const v of Object.keys(S)) {
-                    var l = S[v];
-                    c.set(v, l);
+                    l = r.Krh;
+                  for (const M of Object.keys(l)) {
+                    var S = l[M];
+                    c.set(M, S);
                   }
                   a.SetKeyboardKeys(c),
                     Log_1.Log.CheckDebug() &&
@@ -380,7 +367,7 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
           if (r) {
             var i = r.K7n;
             switch (e) {
-              case Protocol_1.Aki.Protocol.coh.Proto_Mouse:
+              case Protocol_1.Aki.Protocol.Aoh.Proto_Mouse:
                 if (i < a.GetKeyboardVersion()) {
                   var g = o?.GetCombinationActionConfigByActionName(u);
                   if (!g) continue;
@@ -399,7 +386,7 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
                       );
                 } else {
                   var _ = new Map();
-                  for (const c of r.xrh) _.set(c.hYa[0], c.hYa[1]);
+                  for (const c of r.Xrh) _.set(c.hYa[0], c.hYa[1]);
                   InputSettingsManager_1.InputSettingsManager.SetCombinationActionKeyboardKeys(
                     u,
                     _,
@@ -415,7 +402,7 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
                       );
                 }
                 break;
-              case Protocol_1.Aki.Protocol.coh.uVn:
+              case Protocol_1.Aki.Protocol.Aoh.uVn:
                 if (i < a.GetGamepadVersion()) {
                   g = o?.GetCombinationActionConfigByActionName(u);
                   if (!g) continue;
@@ -434,7 +421,7 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
                       );
                 } else {
                   var p = new Map();
-                  for (const S of r.xrh) p.set(S.hYa[0], S.hYa[1]);
+                  for (const l of r.Xrh) p.set(l.hYa[0], l.hYa[1]);
                   InputSettingsManager_1.InputSettingsManager.SetCombinationActionGamepadKeys(
                     u,
                     p,
@@ -475,12 +462,12 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
       i,
       g,
       _ = new Protocol_1.Aki.Protocol.iYa(),
-      s = new Protocol_1.Aki.Protocol.doh(),
-      p = new Protocol_1.Aki.Protocol.doh(),
+      s = new Protocol_1.Aki.Protocol.Doh(),
+      p = new Protocol_1.Aki.Protocol.Doh(),
       u =
-        ((s.nYa = Protocol_1.Aki.Protocol.coh.Proto_Mouse),
+        ((s.nYa = Protocol_1.Aki.Protocol.Aoh.Proto_Mouse),
         (s.Sza = InputSettingsManager_1.InputSettingsManager.DeviceLang),
-        (p.nYa = Protocol_1.Aki.Protocol.coh.uVn),
+        (p.nYa = Protocol_1.Aki.Protocol.Aoh.uVn),
         InputSettingsManager_1.InputSettingsManager.GetActionBindingMap());
     for ([t, e] of u) {
       var c = [],
@@ -494,23 +481,23 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
       n,
       o,
     ] of InputSettingsManager_1.InputSettingsManager.GetAxisBindingMap()) {
-      var S = new Map(),
-        S =
-          (o.GetPcKeyScaleMap(S),
-          this.uYa(n, s, S, o.GetKeyboardVersion()),
+      var l = new Map(),
+        l =
+          (o.GetPcKeyScaleMap(l),
+          this.uYa(n, s, l, o.GetKeyboardVersion()),
           new Map());
-      o.GetPcKeyScaleMap(S), this.uYa(n, p, S, o.GetKeyboardVersion());
+      o.GetPcKeyScaleMap(l), this.uYa(n, p, l, o.GetKeyboardVersion());
     }
     for ([
       a,
       r,
     ] of InputSettingsManager_1.InputSettingsManager.GetCombinationActionBindingMap()) {
-      var l = new Map(),
-        l =
-          (r.GetPcKeyNameMap(l),
-          this.cYa(a, s, l, r.GetKeyboardVersion()),
+      var S = new Map(),
+        S =
+          (r.GetPcKeyNameMap(S),
+          this.cYa(a, s, S, r.GetKeyboardVersion()),
           new Map());
-      r.GetGamepadKeyNameMap(l), this.cYa(a, p, l, r.GetKeyboardVersion());
+      r.GetGamepadKeyNameMap(S), this.cYa(a, p, S, r.GetKeyboardVersion());
     }
     for ([
       i,
@@ -526,65 +513,46 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
     return (_.oYa = [s, p]), _;
   }
   static _Ya(t, e, n, o) {
-    var a = new Protocol_1.Aki.Protocol._oh();
-    (a.dYa = t), (a.K7n = o), (a.hYa = n), (e.brh[t] = a);
+    var a = new Protocol_1.Aki.Protocol.Loh();
+    (a.dYa = t), (a.K7n = o), (a.hYa = n), (e.Yrh[t] = a);
   }
   static uYa(t, e, n, o) {
     var a,
       r,
-      i = new Protocol_1.Aki.Protocol.uoh();
+      i = new Protocol_1.Aki.Protocol.Roh();
     (i.CYa = t), (i.K7n = o);
-    for ([a, r] of n) i.Urh[a] = r;
-    e.Brh[t] = i;
+    for ([a, r] of n) i.Krh[a] = r;
+    e.zrh[t] = i;
   }
   static cYa(t, e, n, o) {
     var a,
       r,
-      i = new Protocol_1.Aki.Protocol.qrh();
+      i = new Protocol_1.Aki.Protocol.Jrh();
     (i.dYa = t), (i.K7n = o);
     for ([a, r] of n) {
-      var g = new Protocol_1.Aki.Protocol.loh();
-      (g.hYa = [a, r]), i.xrh.push(g);
+      var g = new Protocol_1.Aki.Protocol.Toh();
+      (g.hYa = [a, r]), i.Xrh.push(g);
     }
-    e.qrh[t] = i;
+    e.Jrh[t] = i;
   }
   static mYa(t, e, n, o) {
     var a,
       r,
-      i = new Protocol_1.Aki.Protocol.krh();
+      i = new Protocol_1.Aki.Protocol.Zrh();
     (i.CYa = t), (i.K7n = o);
     for ([a, r] of n) {
-      var g = new Protocol_1.Aki.Protocol.loh();
-      (g.hYa = [a, r]), i.xrh.push(g);
+      var g = new Protocol_1.Aki.Protocol.Toh();
+      (g.hYa = [a, r]), i.Xrh.push(g);
     }
-    e.krh[t] = i;
+    e.Zrh[t] = i;
   }
 }
 (exports.InputSettingsController = InputSettingsController),
   ((_a = InputSettingsController).Wvi = () => {
     Info_1.Info.IsMobilePlatform() ||
-      (LocalStorage_1.LocalStorage.GetPlayer(
-        LocalStorageDefine_1.ELocalStoragePlayerKey.IsInputSettingsSent,
-        !1,
-      )
-        ? (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "InputSettings",
-              11,
-              "非首次登录，直接请求服务端输入数据",
-            ),
-          _a.InputSettingRequest())
-        : (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "InputSettings",
-              11,
-              "首次登录，尝试将本地输入信息发送给服务端",
-            ),
-          _a.Oza(),
-          LocalStorage_1.LocalStorage.SetPlayer(
-            LocalStorageDefine_1.ELocalStoragePlayerKey.IsInputSettingsSent,
-            !0,
-          )));
+      (Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("InputSettings", 11, "登录直接请求服务端输入数据"),
+      _a.InputSettingRequest());
   }),
   (InputSettingsController.eYa = (t) => {
     Log_1.Log.CheckDebug() &&
@@ -595,12 +563,32 @@ class InputSettingsController extends ControllerBase_1.ControllerBase {
       );
   }),
   (InputSettingsController.tYa = (t) => {
-    Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("InputSettings", 11, "服务端回复按键信息"),
-      _a.RefreshInputSettingsFromProtoData(t?.iYa),
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.OnInputSettingResponse,
-      );
+    !t || !t.iYa || t.iYa.oYa.length <= 0
+      ? (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "InputSettings",
+            11,
+            "[TrySendInputData]服务端没有数据，使用本地配置",
+          ),
+        _a.teh(),
+        ModelManager_1.ModelManager.LoginModel.IsNewAccount ||
+          (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "InputSettings",
+              11,
+              "服务端没有数据，同步本地输入给服务端",
+            ),
+          _a.InputSettingUpdateRequest()))
+      : (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "InputSettings",
+            11,
+            "服务端有对应数据,使用服务端数据刷新本地输入数据",
+          ),
+        _a.RefreshInputSettingsFromProtoData(t?.iYa),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.OnInputSettingResponse,
+        ));
   }),
   (InputSettingsController.rYa = (t) => {
     t &&

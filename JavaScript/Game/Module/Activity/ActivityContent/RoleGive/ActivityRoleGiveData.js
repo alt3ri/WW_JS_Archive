@@ -11,11 +11,11 @@ class ActivityRoleGiveData extends ActivityData_1.ActivityBaseData {
     super(...arguments), (this.IsGetReward = !1);
   }
   PhraseEx(e) {
-    var t = e.aih;
+    var t = e.Eih;
     (ActivityRoleGiveController_1.ActivityRoleGiveController.CurrentActivityId =
       e.s5n),
       t
-        ? (this.IsGetReward = t.rih)
+        ? (this.IsGetReward = t.vih)
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error("MoonChasing", 35, "ActivityRoleGiveData无数据");
   }

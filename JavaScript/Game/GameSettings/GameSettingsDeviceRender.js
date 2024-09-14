@@ -51,6 +51,12 @@ class GameSettingsDeviceRender {
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetDeviceHardwareLevel()),
       (this.DriverDate =
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIDriverDate()),
+      (this.CPUFrequency =
+        UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCPUFrequency()),
+      (this.CPUCores = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCPUCores()),
+      (this.CPUCoresIncludingHyperthreads =
+        UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCPUCoresIncludingHyperthreads()),
+      (this.CPUBrand = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCPUBrand()),
       Platform_1.Platform.IsIOSPlatform()
         ? ((this.DeviceType = 32),
           this.DeviceScore < 150
@@ -360,12 +366,27 @@ class GameSettingsDeviceRender {
     );
   }
   static IsFrameRate120Device() {
-    return !(
+    return (
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "Render",
+          69,
+          "判断IsFrameRate120Device",
+          ["this.CPUFrequency", this.CPUFrequency],
+          [
+            "this.CPUCoresIncludingHyperthreads",
+            this.CPUCoresIncludingHyperthreads,
+          ],
+          ["this.IsLaptopCPU", this.IsLaptopCPU()],
+          ["this.Is120FrameGPU", this.Is120FrameGPU()],
+        ),
       !(
-        (3200 <= this.CPUFrequency &&
-          16 <= this.CPUCoresIncludingHyperthreads) ||
-        this.IsLaptopCPU()
-      ) || !this.Is120FrameGPU()
+        !(
+          (3200 <= this.CPUFrequency &&
+            16 <= this.CPUCoresIncludingHyperthreads) ||
+          this.IsLaptopCPU()
+        ) || !this.Is120FrameGPU()
+      )
     );
   }
   static IsMetalFxDevice() {

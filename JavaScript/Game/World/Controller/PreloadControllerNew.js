@@ -412,29 +412,44 @@ class PreloadControllerNew extends ControllerBase_1.ControllerBase {
       c = (o && o.InitPreload(m), new Array());
     u?.Start();
     const d = new PreloadDefine_1.AssetElement(m);
-    i.GetEntityConfigType() === Protocol_1.Aki.Protocol.rLs.F6n
-      ? ((t = ModelManager_1.ModelManager.GameModeModel.MapId),
-        (o = i.GetPbDataId()),
-        (t = r.PbDataPreloadDataMap.get(t)?.get(o))
-          ? this.ypr(t, d)
-          : (o = i.GetTemplateId()) &&
-            (t =
-              TemplateDataPreloadById_1.configTemplateDataPreloadById.GetConfig(
-                o,
-              )) &&
-            this.ypr(t, d))
-      : (i.GetEntityConfigType() === Protocol_1.Aki.Protocol.rLs.lTs ||
-          i.GetEntityConfigType() ===
-            Protocol_1.Aki.Protocol.rLs.Proto_Template) &&
-        ((o = i.GetPbDataId()),
-        (t =
-          TemplateDataPreloadById_1.configTemplateDataPreloadById.GetConfig(
-            o,
-          ))) &&
-        this.ypr(t, d);
-    o = new GameModePromise_1.GameModePromise();
+    switch (i.GetEntityConfigType()) {
+      case Protocol_1.Aki.Protocol.rLs.F6n:
+        var C = ModelManager_1.ModelManager.GameModeModel.MapId,
+          g = i.GetPbDataId(),
+          C = r.PbDataPreloadDataMap.get(C)?.get(g);
+        if (C) this.ypr(C, d);
+        else {
+          g = i.GetTemplateId();
+          if (!g) break;
+          C =
+            TemplateDataPreloadById_1.configTemplateDataPreloadById.GetConfig(
+              g,
+            );
+          C && this.ypr(C, d);
+        }
+        break;
+      case Protocol_1.Aki.Protocol.rLs.lTs:
+        var g = i.GetPbEntityInitData()?.BlueprintType;
+        g &&
+          (C =
+            ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(g)) &&
+          (g =
+            TemplateDataPreloadById_1.configTemplateDataPreloadById.GetConfig(
+              C.Id,
+            )) &&
+          this.ypr(g, d);
+        break;
+      case Protocol_1.Aki.Protocol.rLs.Proto_Template:
+        (C = i.GetPbDataId()),
+          (g =
+            TemplateDataPreloadById_1.configTemplateDataPreloadById.GetConfig(
+              C,
+            ));
+        g && this.ypr(g, d);
+    }
+    t = new GameModePromise_1.GameModePromise();
     if (
-      (this.LoadAssetAsync(d, m.LoadPriority, !1, o, (e) => {
+      (this.LoadAssetAsync(d, m.LoadPriority, !1, t, (e) => {
         e ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error("Preload", 4, "[预加载] 预加载固定资源失败", [
@@ -442,16 +457,16 @@ class PreloadControllerNew extends ControllerBase_1.ControllerBase {
               m.CreatureDataComponent.GetCreatureDataId(),
             ]));
       }),
-      c.push(o.Promise),
+      c.push(t.Promise),
       u?.Stop(),
       s?.Start(),
       m.FightAssetManager.SkillAssetManager.SkillAssetMap.size)
     ) {
       let o = m.FightAssetManager.SkillAssetManager.SkillAssetMap.size;
-      for (const [h, d] of m.FightAssetManager.SkillAssetManager
+      for (const [v, d] of m.FightAssetManager.SkillAssetManager
         .SkillAssetMap) {
-        var C = new GameModePromise_1.GameModePromise();
-        this.LoadAssetAsync(d, m.LoadPriority, !1, C, (e) => {
+        var A = new GameModePromise_1.GameModePromise();
+        this.LoadAssetAsync(d, m.LoadPriority, !1, A, (e) => {
           --o || s?.Stop(),
             e ||
               (Log_1.Log.CheckError() &&
@@ -463,22 +478,22 @@ class PreloadControllerNew extends ControllerBase_1.ControllerBase {
                     "CreatureDataId",
                     m.CreatureDataComponent.GetCreatureDataId(),
                   ],
-                  ["SkillId", h],
+                  ["SkillId", v],
                 ));
         }),
-          c.push(C.Promise);
+          c.push(A.Promise);
       }
     } else s?.Stop();
     f?.Start();
-    const A = m.FightAssetManager.BulletAssetManager;
-    let g = A.BulletAssetMap.size;
-    if (g)
-      for (const [E, d] of A.BulletAssetMap) {
-        var D = new GameModePromise_1.GameModePromise();
-        this.LoadAssetAsync(d, m.LoadPriority, !1, D, (e) => {
-          --g || f?.Stop(),
+    const D = m.FightAssetManager.BulletAssetManager;
+    let P = D.BulletAssetMap.size;
+    if (P)
+      for (const [p, d] of D.BulletAssetMap) {
+        var h = new GameModePromise_1.GameModePromise();
+        this.LoadAssetAsync(d, m.LoadPriority, !1, h, (e) => {
+          --P || f?.Stop(),
             e ||
-              ((e = A.IndexMapping.get(E)),
+              ((e = D.IndexMapping.get(p)),
               Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Preload",
@@ -491,15 +506,15 @@ class PreloadControllerNew extends ControllerBase_1.ControllerBase {
                   ["BulletId", e],
                 ));
         }),
-          c.push(D.Promise);
+          c.push(h.Promise);
       }
     else f?.Stop();
-    t = await Promise.all(c);
+    o = await Promise.all(c);
     if (!e.Valid) return m.DoCallback(4), n.Stop(), 4;
     if (i.GetRemoveState()) return m.DoCallback(4), n.Stop(), 4;
-    let P = !0;
-    for (const v of t) v || (P = !1);
-    return P
+    let E = !0;
+    for (const M of o) M || (E = !1);
+    return E
       ? (a.SetResult(3),
         i.SetPreloadFinished(!0),
         EventSystem_1.EventSystem.Emit(

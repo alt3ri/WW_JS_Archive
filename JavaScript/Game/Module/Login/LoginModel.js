@@ -158,6 +158,7 @@ class LoginModel extends ModelBase_1.ModelBase {
       (this.B9e = ""),
       (this.eEi = void 0),
       (this.tEi = !1),
+      (this.oeh = !1),
       (this.SmokeTestReady = !1),
       (this.SdkAccountChangeNeedExitFlag = !1),
       (this.PlayStationGameAutoLoginId = "-1"),
@@ -196,6 +197,9 @@ class LoginModel extends ModelBase_1.ModelBase {
       (this.Mla = void 0),
       (this.Sla = 0),
       (this.TryBackToGameMaxCount = 5);
+  }
+  get IsNewAccount() {
+    return this.oeh;
   }
   get pEi() {
     return LocalStorage_1.LocalStorage.GetGlobal(
@@ -633,6 +637,9 @@ class LoginModel extends ModelBase_1.ModelBase {
   }
   SetHasCharacter(t) {
     this.tEi = t;
+  }
+  SetIsNewAccount(t) {
+    this.oeh = t;
   }
   CleanCreateData() {
     (this.tEi = !1), (this.B9e = ""), (this.eEi = void 0);

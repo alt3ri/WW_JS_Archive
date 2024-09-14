@@ -206,7 +206,7 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
     });
   }
   static BuildingBuildFlowRequest(e, n) {
-    var o = Protocol_1.Aki.Protocol.ceh.create();
+    var o = Protocol_1.Aki.Protocol.Aeh.create();
     (o.W6n = e),
       Net_1.Net.Call(25983, o, (o) => {
         if (o) {
@@ -314,7 +314,7 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
           o && o.SetBestEvaluateLevel(e.WGs);
           const n =
             ModelManager_1.ModelManager.MoonChasingBusinessModel.GetResultData();
-          (n.BaseGold = e.Grh),
+          (n.BaseGold = e.toh),
             (n.Gold = e.XGs),
             (n.OriginGold = s),
             (n.CostGold = i),
@@ -483,7 +483,7 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
       ModelManager_1.ModelManager.MoonChasingBusinessModel.SetEditTeamData(o);
   }),
   (MoonChasingController.aRa = (e) => {
-    ModelManager_1.ModelManager.MoonChasingRewardModel.TargetGetCount = e.Nrh;
+    ModelManager_1.ModelManager.MoonChasingRewardModel.TargetGetCount = e.ioh;
   }),
   (MoonChasingController.TrackMoonTargetRewardRequest = (o) => {
     var e = Protocol_1.Aki.Protocol.Wfs.create();

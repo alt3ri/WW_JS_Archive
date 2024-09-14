@@ -37,7 +37,8 @@ class ActivityMowingRiskSubView extends ActivitySubViewBase_1.ActivitySubViewBas
               MarkType: i.MapMarkType,
               OpenAreaId: 0,
             }),
-            WorldMapController_1.WorldMapController.OpenView(2, !1, e))
+            WorldMapController_1.WorldMapController.OpenView(2, !1, e),
+            i.SetCurrentInstancesOld())
           : UiManager_1.UiManager.OpenView(
               "QuestView",
               i.UnFinishPreGuideQuestId,
@@ -143,6 +144,10 @@ class ActivityMowingRiskSubView extends ActivitySubViewBase_1.ActivitySubViewBas
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.MowingRiskOnRefreshRewardRedDot,
+      ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+        this.ActivityBaseData.Id,
       );
   }
 }

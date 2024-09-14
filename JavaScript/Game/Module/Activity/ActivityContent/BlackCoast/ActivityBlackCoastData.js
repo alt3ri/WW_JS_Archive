@@ -22,10 +22,10 @@ class ActivityBlackCoastData extends ActivityData_1.ActivityBaseData {
     this.InitProgressReward(), this.O9a();
   }
   PhraseEx(t) {
-    t = t._ih;
+    t = t.Lih;
     if (t) {
       this.StageUpdate(t.gMs);
-      for (const r of t.Cih) {
+      for (const r of t.Pih) {
         var e = this.GetProgressRewardDataById(r);
         e
           ? (e.Achieved = !0)

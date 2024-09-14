@@ -30,7 +30,7 @@ class ActivityRoleGiveController extends ActivityControllerBase_1.ActivityContro
     return !1;
   }
   static TrackMoonActivityRewardRequest() {
-    var e = new Protocol_1.Aki.Protocol.peh();
+    var e = new Protocol_1.Aki.Protocol.beh();
     (e.w6n = ActivityRoleGiveController.CurrentActivityId),
       Net_1.Net.Call(21232, e, (e) => {
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&

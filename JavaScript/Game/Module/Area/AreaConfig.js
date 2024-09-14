@@ -53,7 +53,7 @@ class AreaConfig extends ConfigBase_1.ConfigBase {
             );
           break;
         }
-        (t = A.Level), (n = 2 === A.Level ? e : 0), --r;
+        (t = A.Level), (n = 2 === A.Level ? A.AreaId : 0), --r;
       }
       r <= 0 &&
         Log_1.Log.CheckError() &&

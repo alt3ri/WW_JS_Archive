@@ -2,7 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MowingRiskProtocolContext = void 0);
 const ActivityData_1 = require("../../../ActivityData"),
-  Log_1 = require("../../../../../../Core/Common/Log");
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  TimeUtil_1 = require("../../../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager");
 class MowingRiskProtocolContext extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments),
@@ -15,45 +18,55 @@ class MowingRiskProtocolContext extends ActivityData_1.ActivityBaseData {
   }
   Dispose() {}
   PhraseEx(t) {
-    t = t.lih;
+    t = t.Tih;
     t && this.C6a(t);
+  }
+  GetExDataRedPointShowState() {
+    var t = ModelManager_1.ModelManager.MowingRiskModel;
+    return t.HasAnyReward || t.IsNewInstanceOpen;
   }
   ParseRiskHarvestEndNotify(t) {}
   ParseRiskHarvestInstUpdateNotify(t) {
-    this.g6a(t.Sih);
+    this.ieh(t.kih);
   }
   ParseRiskHarvestArtifactNotify(t) {
-    this.f6a(t.Aih);
+    this.f6a(t.$ih);
   }
   ParseRiskHarvestBuffUpdateNotify(t) {
-    this.f6a(t.Aih);
+    this.f6a(t.$ih);
   }
   ParseRiskHarvestBuffUnlockNotify(t) {
-    this.p6a(t.Pih);
+    this.p6a(t.Qih);
   }
   ParseRiskHarvestActivityUpdateNotify(t) {
     t = t.Izs;
     void 0 !== t && this.C6a(t);
   }
-  g6a(t) {
+  ieh(t) {
+    for (const e of t)
+      (this.d6a -= this.l6a.get(e.s5n)?.SMs ?? 0),
+        this.l6a.set(e.s5n, e),
+        (this.d6a += e.SMs);
+  }
+  reh(t) {
     this.d6a = 0;
-    for (const s of t) this.l6a.set(s.s5n, s), (this.d6a += s.SMs);
+    for (const e of t) this.l6a.set(e.s5n, e), (this.d6a += e.SMs);
   }
   M6a(t) {
     this.u6a.clear();
-    for (const s of t) this.u6a.add(s);
+    for (const e of t) this.u6a.add(e);
   }
   p6a(t) {
-    for (const s of t) this.m6a.add(s);
+    for (const e of t) this.m6a.add(e);
   }
   f6a(t) {
     if (void 0 !== t) {
       (this.h6a = t), this._6a.clear();
-      for (const s of t.Mih) this._6a.set(s.s5n, s.m9n);
+      for (const e of t.qih) this._6a.set(e.s5n, e.m9n);
     }
   }
   C6a(t) {
-    this.g6a(t.Sih), this.M6a(t.yih), this.p6a(t.Iih);
+    this.reh(t.kih), this.M6a(t.Oih), this.p6a(t.Nih);
   }
   get InstanceInfo() {
     return this.l6a;
@@ -92,6 +105,24 @@ class MowingRiskProtocolContext extends ActivityData_1.ActivityBaseData {
   }
   GetScoreById(t) {
     return this.l6a.get(t)?.SMs ?? 0;
+  }
+  IsInstanceUnlockedById(t) {
+    return this.l6a.get(t)?.K6n ?? !1;
+  }
+  IsInstancePlayedById(t) {
+    return this.l6a.get(t)?.Bih ?? !1;
+  }
+  GetInstanceUnlockTimestampById(t) {
+    t = this.l6a.get(t)?.yzs;
+    return void 0 === t
+      ? Number.MAX_VALUE
+      : MathUtils_1.MathUtils.LongToNumber(t);
+  }
+  IsInstancePassUnlockTimeById(t) {
+    return (
+      TimeUtil_1.TimeUtil.GetServerTimeStamp() >=
+      this.GetInstanceUnlockTimestampById(t)
+    );
   }
   ResetCacheInBattle() {
     Log_1.Log.CheckError() &&

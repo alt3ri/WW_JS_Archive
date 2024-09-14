@@ -42,6 +42,9 @@ let CharacterSkillTriggerComponent = class CharacterSkillTriggerComponent extend
     );
   }
   OnStart() {
+    return !0;
+  }
+  OnActivate() {
     return this.fVs(), !0;
   }
   OnEnd() {
@@ -85,8 +88,8 @@ let CharacterSkillTriggerComponent = class CharacterSkillTriggerComponent extend
         this.cBe.DtSkillInfoExtra,
         e,
       );
-      for (const h of e) {
-        var a = Number(h),
+      for (const c of e) {
+        var a = Number(c),
           s = this.cBe.GetSkillInfo(a);
         this.pVs(a, s);
       }

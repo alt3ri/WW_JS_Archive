@@ -81,6 +81,11 @@ class MowingRiskInstanceView extends UiPanelBase_1.UiPanelBase {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), i.TextId, i.TextArgs),
       this.GetText(8)?.SetText(e.BuildInstanceTotalScore());
   }
+  RefreshOnTick() {
+    var e = ModelManager_1.ModelManager.MowingRiskModel,
+      e = e.BuildInstanceDetailLockDataByInstanceId(e.CurrentInstanceId);
+    this.e8a.RefreshLockItemExternalByData(e);
+  }
   async r8a() {
     var e = new MowingRiskInstanceDetailView_1.MowingRiskInstanceDetailView();
     await e.CreateThenShowByActorAsync(this.GetItem(0).GetOwner()),

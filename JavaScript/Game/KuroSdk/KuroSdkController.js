@@ -38,7 +38,8 @@ const cpp_1 = require("cpp"),
   PlatformSdkIosGlobal_1 = require("./PlatformSdk/PlatformSdkIosGlobal"),
   PlatformSdkWindows_1 = require("./PlatformSdk/PlatformSdkWindows"),
   PlatformSdkWindowsGlobal_1 = require("./PlatformSdk/PlatformSdkWindowsGlobal"),
-  GACHATYPE = 1;
+  GACHATYPE = 1,
+  PAYDELAY = 1e4;
 class KuroSdkController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -269,22 +270,22 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
       let e = void 0;
       (e =
         1 < r.length
-          ? ((a = r[0]),
+          ? ((n = r[0]),
             (o = r[1]),
             (t = r[2]),
-            (l = r[3]),
-            (n = r[4]),
-            KuroSdkData_1.KuroSdkControllerTool.GetSdkPayProduct(a, o, t, l, n))
+            (a = r[3]),
+            (l = r[4]),
+            KuroSdkData_1.KuroSdkControllerTool.GetSdkPayProduct(n, o, t, a, l))
           : r[0]),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("KuroSdk", 28, "SdkPay", ["SdkPay", e]);
       var o,
         t,
+        a,
         l,
-        n,
-        a = new LogReportDefine_1.StartSdkPayEvent();
-      (a.s_sdk_pay_order = e.cpOrderId),
-        ControllerHolder_1.ControllerHolder.LogReportController.LogReport(a),
+        n = new LogReportDefine_1.StartSdkPayEvent();
+      (n.s_sdk_pay_order = e.cpOrderId),
+        ControllerHolder_1.ControllerHolder.LogReportController.LogReport(n),
         (ModelManager_1.ModelManager.KuroSdkModel.CurrentPayingOrderId =
           e.cpOrderId),
         this.cSe?.SdkPay(e),
@@ -299,16 +300,18 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
   static OpenFeedback() {
     KuroSdkController.cSe?.OpenFeedback();
   }
-  static SdkOpenUrlWnd(e, r, o = !0, t = !0, l = !0) {
-    KuroSdkController.cSe?.SdkOpenUrlWnd(e, r, o, t, l);
+  static SdkOpenUrlWnd(e, r, o = !0, t = !0, a = !0) {
+    KuroSdkController.cSe?.SdkOpenUrlWnd(e, r, o, t, a);
   }
   static async QueryProductByProductId(e) {
     return (
       !!KuroSdkController.cSe &&
-      (ModelManager_1.ModelManager.KuroSdkModel.QueryPromise ||
-        (ModelManager_1.ModelManager.KuroSdkModel.QueryPromise =
-          new CustomPromise_1.CustomPromise()),
-      KuroSdkController.cSe?.QueryProduct(e, this.ESe()),
+      (ModelManager_1.ModelManager.KuroSdkModel.QueryPromise &&
+        (await ModelManager_1.ModelManager.KuroSdkModel.QueryPromise.Promise),
+      this.WZa(),
+      (ModelManager_1.ModelManager.KuroSdkModel.QueryPromise =
+        new CustomPromise_1.CustomPromise()),
+      KuroSdkController.cSe.QueryProduct(e, this.ESe()),
       ModelManager_1.ModelManager.KuroSdkModel.QueryPromise.Promise)
     );
   }
@@ -324,8 +327,8 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
   static ESe() {
     return "";
   }
-  static OpenWebView(e, r, o, t, l = !0) {
-    KuroSdkController.cSe?.OpenWebView(e, r, o, t, l);
+  static OpenWebView(e, r, o, t, a = !0) {
+    KuroSdkController.cSe?.OpenWebView(e, r, o, t, a);
   }
   static KuroSdkLoginBindFunction(e) {
     KuroSdkController.cSe?.KuroSdkLoginBindFunction(e);
@@ -380,6 +383,18 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
       void 0 !== this.ySe &&
         (TimerSystem_1.TimerSystem.Remove(this.ySe), (this.ySe = void 0));
   }
+  static CancelQueryProductTimer() {
+    void 0 !== this.QZa &&
+      (TimerSystem_1.TimerSystem.Remove(this.QZa), (this.QZa = void 0));
+  }
+  static WZa() {
+    this.CancelQueryProductTimer(),
+      (this.QZa = TimerSystem_1.TimerSystem.Delay(() => {
+        ModelManager_1.ModelManager.KuroSdkModel.QueryPromise?.IsPending() &&
+          ModelManager_1.ModelManager.KuroSdkModel.QueryPromise.SetResult(!1),
+          (this.QZa = void 0);
+      }, PAYDELAY));
+  }
   static StartWaitPayItemTimer() {
     this.CancelCurrentWaitPayItemTimer(!1),
       (this.ySe = TimerSystem_1.TimerSystem.Delay(() => {
@@ -394,7 +409,7 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
       }, ConfigManager_1.ConfigManager.PayItemConfig.GetWaitPaySuccessTime()));
   }
   static RequestServerPlayStationPlayOnlyState() {
-    var e = new Protocol_1.Aki.Protocol.Reh();
+    var e = new Protocol_1.Aki.Protocol.Heh();
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("KuroSdk", 28, "RequestServerPlayStationPlayOnlyState"),
       Net_1.Net.Call(28365, e, (e) => {
@@ -413,7 +428,7 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
       }),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("KuroSdk", 28, "上报屏蔽列表", ["length", o.length]);
-    e = new Protocol_1.Aki.Protocol.qth();
+    e = new Protocol_1.Aki.Protocol.Jth();
     (e.Aza = o),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("KuroSdk", 28, "RequestServerPlayStationPlayOnlyState"),
@@ -427,7 +442,7 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
       });
   }
   static RequestChangeServerPlayStationPlayOnlyState(r) {
-    var e = new Protocol_1.Aki.Protocol.Teh();
+    var e = new Protocol_1.Aki.Protocol.Feh();
     (e.Bxa = r),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -514,6 +529,7 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
   (KuroSdkController.IsKick = !1),
   (KuroSdkController.CXn = void 0),
   (KuroSdkController.ySe = void 0),
+  (KuroSdkController.QZa = void 0),
   (KuroSdkController.gXn = () => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("KuroSdk", 28, "AndroidScreenChangeCallBack"),

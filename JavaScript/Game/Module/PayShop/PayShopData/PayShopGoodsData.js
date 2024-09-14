@@ -44,7 +44,8 @@ class PayShopGoodsData {
       (this.OBn = ""),
       (this.Kjs = !1),
       (this.UnFinishedCondition = void 0),
-      (this.SYa = !1);
+      (this.SYa = !1),
+      (this.$Za = "");
   }
   Phrase(t) {
     this.Id = t.s5n;
@@ -76,7 +77,7 @@ class PayShopGoodsData {
       (this.Sort = i.Sort),
       (this.PromotionShow = i.PromotionShow),
       (this.Kjs = i.SoldoutShowInShop),
-      (this.SYa = t.Drh),
+      (this.SYa = t.jrh),
       this.MFi();
   }
   GetIfCanBuy() {
@@ -207,6 +208,7 @@ class PayShopGoodsData {
       0 < t.BuyCondition &&
         ((this.UnFinishedCondition = []),
         this.UnFinishedCondition.push(t.BuyCondition)),
+      (this.$Za = t.ProductId),
       ModelManager_1.ModelManager.RechargeModel.SetRechargeInfo(
         t.PayId,
         t.Amount,
@@ -356,6 +358,9 @@ class PayShopGoodsData {
     return ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
       this.ItemId,
     ).ItemType;
+  }
+  GetProductId() {
+    return this.$Za;
   }
   GetIfNeedRemind() {
     var t = LocalStorage_1.LocalStorage.GetPlayer(

@@ -836,7 +836,7 @@ class RoguelikeController extends UiControllerBase_1.UiControllerBase {
       (ModelManager_1.ModelManager.RoguelikeModel.TotalRoomCount = e.rqs);
     var o =
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguelikeRoomPoolConfig(
-          e.Prh,
+          e.Qrh,
         ),
       r =
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguelikeRoomTypeConfigById(

@@ -37,9 +37,11 @@ class PlayerHeadItem extends UiPanelBase_1.UiPanelBase {
     this.RefreshByRoleId(e);
   }
   RefreshByRoleId(e) {
-    var r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleHeadIcon(e),
-      a = this.GetTexture(0);
-    this.SetRoleIcon(r, a, e);
+    var r, a;
+    0 < e &&
+      ((r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleHeadIcon(e)),
+      (a = this.GetTexture(0)),
+      this.SetRoleIcon(r, a, e));
   }
   RefreshByRoleIdUseCard(e) {
     var r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e).Card,

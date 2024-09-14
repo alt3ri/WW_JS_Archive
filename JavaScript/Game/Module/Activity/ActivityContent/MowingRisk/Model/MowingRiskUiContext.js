@@ -13,9 +13,10 @@ class MowingRiskUiContext {
       (this.NewBuffToShowCache = []),
       (this.A9a = (t) =>
         !!this.AttachedModel.IsBuffAvailableInActivity(t) &&
-        (0 === this.CurrentBuffViewUsage ||
-          (1 === this.CurrentBuffViewUsage &&
-            this.AttachedModel.IsBuffGottenInBattleById(t.Id)))),
+        (0 === this.CurrentBuffViewUsage
+          ? 0 < t.Buff.length
+          : 1 === this.CurrentBuffViewUsage &&
+            this.AttachedModel.IsBuffGottenInBattleById(t.Id))),
       (this.zYa = (t, s) =>
         t.BuffType === s.BuffType ? t.Id - s.Id : s.BuffType - t.BuffType),
       (this.AttachedModel = t);

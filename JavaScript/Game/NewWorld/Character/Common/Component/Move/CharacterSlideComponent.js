@@ -850,6 +850,7 @@ let CharacterSlideComponent =
         (this.uja(t) &&
           (this.cja(),
           this.Lie.AddTag(378770267),
+          this.Lie.AddTag(-1697149502),
           (this.r5a = !0),
           (this.i5a = !0),
           (this._Jr = LEAVE_SKI_TIME),
@@ -860,6 +861,7 @@ let CharacterSlideComponent =
       this.pJr &&
         (this.dja(),
         this.Lie.RemoveTag(378770267),
+        this.Lie.RemoveTag(-1697149502),
         (this.pJr = void 0),
         (this.i5a = !1),
         (this.r5a = !1),
@@ -908,9 +910,9 @@ let CharacterSlideComponent =
       );
     }
     mja() {
-      var t = Protocol_1.Aki.Protocol.Seh.create();
-      (t.n5a = Protocol_1.Aki.Protocol.noh.Proto_None),
-        (t.s5a = Protocol_1.Aki.Protocol.noh.Proto_Ski),
+      var t = Protocol_1.Aki.Protocol.keh.create();
+      (t.n5a = Protocol_1.Aki.Protocol.Soh.Proto_None),
+        (t.s5a = Protocol_1.Aki.Protocol.Soh.Proto_Ski),
         Net_1.Net.Call(16208, t, (t) => {
           t &&
             t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
@@ -920,9 +922,9 @@ let CharacterSlideComponent =
         });
     }
     Cja() {
-      var t = Protocol_1.Aki.Protocol.Seh.create();
-      (t.n5a = Protocol_1.Aki.Protocol.noh.Proto_Ski),
-        (t.s5a = Protocol_1.Aki.Protocol.noh.Proto_None),
+      var t = Protocol_1.Aki.Protocol.keh.create();
+      (t.n5a = Protocol_1.Aki.Protocol.Soh.Proto_Ski),
+        (t.s5a = Protocol_1.Aki.Protocol.Soh.Proto_None),
         Net_1.Net.Call(16208, t, () => {});
     }
     cja() {

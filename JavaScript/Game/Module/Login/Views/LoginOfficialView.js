@@ -242,12 +242,12 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
                 18,
               ),
               Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Login", 11, "登录请求创角成功"),
+                Log_1.Log.Info("Login", 11, "登录请求成功"),
               UiLoginSceneManager_1.UiLoginSceneManager.LoadSequenceAsync(
                 this.GetLoginSequenceName(e),
                 () => {
                   Log_1.Log.CheckInfo() &&
-                    Log_1.Log.Info("Login", 11, "登录请求创角成功,进入游戏"),
+                    Log_1.Log.Info("Login", 11, "登录请求成功,进入游戏"),
                     ModelManager_1.ModelManager.LoginModel.FinishLoginPromise();
                 },
               )));
@@ -591,14 +591,14 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
   eSi() {}
   pSi() {
     this.GetButton(11).RootUIComp.SetUIActive(
-      ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode() &&
+      ControllerHolder_1.ControllerHolder.LoginController.IsSdkLoginMode() &&
         ModelManager_1.ModelManager.LoginModel.IsSdkLoggedIn(),
     );
   }
   iSi(e) {
     var r = this.GetButton(2),
       o = this.GetButton(3);
-    ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode()
+    ControllerHolder_1.ControllerHolder.LoginController.IsSdkLoginMode()
       ? (r.RootUIComp.SetUIActive(e),
         o.RootUIComp.SetUIActive(!e),
         this.GetItem(18).SetUIActive(e))

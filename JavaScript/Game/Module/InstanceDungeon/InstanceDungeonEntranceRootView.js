@@ -38,6 +38,7 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
       (this.lli = void 0),
       (this._li = void 0),
       (this.c8a = void 0),
+      (this.JZa = 2e3),
       (this.Cli = void 0),
       (this.m8a = void 0),
       (this.lqe = void 0),
@@ -162,6 +163,15 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
               );
         }
       }),
+      (this.ZZa = () => {
+        this.Qli(), this.d8a();
+      }),
+      (this.eeh = () => {
+        if (this.Cli)
+          for (let t = 0; t < this.Cli.GetScrollItemCount(); t++)
+            this.Cli?.GetScrollItemFromIndex(t)?.UpdateSelf();
+        this.m8a?.RefreshOnTick && this.m8a.RefreshOnTick();
+      }),
       (this.Bli = () => {
         this.UiViewSequence.StopSequenceByKey("Popup"),
           this.UiViewSequence.PlaySequencePurely("Popup", !1, !0);
@@ -215,13 +225,24 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnClickEnterInstanceSingle,
       this.C8a,
-    );
+    ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnNeedRefreshByProtocol,
+        this.ZZa,
+      );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnClickEnterInstanceSingle,
       this.C8a,
-    );
+    ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnNeedRefreshByProtocol,
+        this.ZZa,
+      );
+  }
+  OnTick(t) {
+    (this.JZa -= t), 0 < this.JZa || (this.eeh(), (this.JZa = 2e3));
   }
   Fq() {
     var e, i, t;
@@ -242,7 +263,7 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
     (this.rli.length = 0), this.nli.clear(), this.sli.clear();
   }
   v8a() {
-    this.Cli?.ClearChildren();
+    this.Cli?.ClearChildren(), (this.Cli = void 0);
   }
   g8a() {
     var t = new CommonTabComponentData_1.CommonTabComponentData(
@@ -320,12 +341,12 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
     for ([i, n] of this.nli) {
       var r = i === this.ili,
         a = 1 === this.sli.get(i);
-      for (const l of n) {
+      for (const _ of n) {
         if ((e !== i && !s) || (e !== i && s && a)) {
           var h = new InstanceDungeonData_1.InstanceDetectionDynamicData();
           if (
             ((h.InstanceSeriesTitle = i),
-            (h.InstanceGirdId = l),
+            (h.InstanceGirdId = _),
             (h.IsSelect = r),
             (h.IsOnlyOneGrid = a),
             (e = i),
@@ -339,8 +360,8 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
           a ||
           (((h =
             new InstanceDungeonData_1.InstanceDetectionDynamicData()).InstanceGirdId =
-            l),
-          (h.IsSelect = l === (this.NUe ?? 0)),
+            _),
+          (h.IsSelect = _ === (this.NUe ?? 0)),
           (h.IsShow = r),
           t.push(h),
           (o = !!h.IsSelect || o)) ||
@@ -362,27 +383,27 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
       h = !!this.NUe;
     for ([n, s] of this.nli)
       if (((e = e || n), this.sli.set(n, s.length), !h))
-        for (const l of s)
+        for (const _ of s)
           (this.ili && n !== this.ili) ||
-            ((t = t || l),
+            ((t = t || _),
             (o =
               ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
-                l,
+                _,
               )) &&
-              l > this.NUe &&
+              _ > this.NUe &&
               ((r =
                 ModelManager_1.ModelManager.ExchangeRewardModel.IsFinishInstance(
-                  l,
+                  _,
                 )),
               (a =
                 ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
-                  l,
+                  _,
                   ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
                 )),
               o) &&
               !r &&
               a > i &&
-              ((this.NUe = l), (this.ili = n), (i = a)));
+              ((this.NUe = _), (this.ili = n), (i = a)));
     this.NUe || (this.NUe = t),
       this.ili || (this.ili = e),
       (ModelManager_1.ModelManager.InstanceDungeonEntranceModel.SelectInstanceId =

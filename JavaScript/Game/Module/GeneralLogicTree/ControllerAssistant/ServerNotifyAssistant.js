@@ -270,7 +270,7 @@ class ServerNotifyAssistant extends ControllerAssistantBase_1.ControllerAssistan
         var t = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
         (t && e.W5n !== t) ||
           ((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
-            e.iih,
+            e.pih,
           )).FunctionMap.set(1, () => {
             this.EMa(0, e.w5n);
           }),
@@ -312,7 +312,7 @@ class ServerNotifyAssistant extends ControllerAssistantBase_1.ControllerAssistan
   }
   EMa(e, t) {
     var r = ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
-      r = Protocol_1.Aki.Protocol.leh.create({ W5n: r, j7n: e, w5n: t });
+      r = Protocol_1.Aki.Protocol.Teh.create({ W5n: r, j7n: e, w5n: t });
     Net_1.Net.Call(19325, r, (e) => {
       e.Cvs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(

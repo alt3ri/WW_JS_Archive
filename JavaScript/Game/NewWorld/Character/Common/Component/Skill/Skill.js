@@ -482,8 +482,8 @@ class Skill {
   }
   jLa() {
     var t = this.cBe.Entity.GetComponent(0).ComponentDataMap.get("Vys")?.Vys;
-    if (t && t.Vih)
-      for (const i of t.Vih)
+    if (t && t.orh)
+      for (const i of t.orh)
         if (this.SkillId === i.r5n)
           return MathUtils_1.MathUtils.LongToBigInt(i._Vn);
     CombatLog_1.CombatLog.Error(

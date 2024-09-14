@@ -187,7 +187,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e[(e.VisionRecoveryBatchTip = 54)] = "VisionRecoveryBatchTip"),
       (e[(e.AuToTrackQuestTime = 55)] = "AuToTrackQuestTime"),
       (e[(e.GoodsRemindMap = 56)] = "GoodsRemindMap"),
-      (e[(e.IsInputSettingsSent = 57)] = "IsInputSettingsSent");
+      (e[(e.MowingRiskIsInstanceNew = 57)] = "MowingRiskIsInstanceNew");
   })(
     (ELocalStoragePlayerKey =
       exports.ELocalStoragePlayerKey || (exports.ELocalStoragePlayerKey = {})),

@@ -65,7 +65,7 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
               r,
             )?.Entity?.GetComponent(1)?.ActorLocationProxy;
         i &&
-          ((o = this.BTa.get(r).tih).push(i), o.length > POSTICKCOUNT) &&
+          ((o = this.BTa.get(r).fih).push(i), o.length > POSTICKCOUNT) &&
           (this.wTa = !1);
       }
     }
@@ -86,7 +86,7 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
         Log_1.Log.Warn("Net", 36, "StartSecFbRound repeat", ["logId", t])
       : ((this.GTa = t),
         (this.OTa = Time_1.Time.WorldTime),
-        ((e = Protocol_1.Aki.Protocol.WZa.create()).kTa =
+        ((e = Protocol_1.Aki.Protocol.heh.create()).kTa =
           MathUtils_1.MathUtils.BigIntToLong(t)),
         (e.NTa = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
         (o = this.YNr())
@@ -103,7 +103,7 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
             ]));
   }
   static VTa(t) {
-    var e = Protocol_1.Aki.Protocol.Vrh.create(),
+    var e = Protocol_1.Aki.Protocol.ooh.create(),
       o = ModelManager_1.ModelManager.RoleModel?.GetRoleInstanceById(t.RoleId),
       i = o?.GetLevelData();
     (e.txs = i?.GetBreachLevel() ?? 0),
@@ -151,7 +151,7 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
           ["logId", t],
           ["SecFbRoundLogId", this.GTa],
         )
-      : (((e = Protocol_1.Aki.Protocol.YZa.create()).kTa =
+      : (((e = Protocol_1.Aki.Protocol.ceh.create()).kTa =
           MathUtils_1.MathUtils.BigIntToLong(t)),
         (e.YTa = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
         (e.JTa = Time_1.Time.WorldTime - this.OTa),
@@ -183,7 +183,7 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
         )
       : (this.nLa(
           t,
-          Protocol_1.Aki.Protocol.Frh
+          Protocol_1.Aki.Protocol.roh
             .Proto_LogType_SecRoleFightFlow_BigWorldEnd,
         ),
         (this.iLa = -1n));
@@ -194,7 +194,7 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
       for (const i of (this.sLa = t)) {
         this.BTa || (this.BTa = new Map()),
           this.BTa.get(i.CreatureDataId) ||
-            (((e = Protocol_1.Aki.Protocol.Hrh.create()).aLa = i.RoleId),
+            (((e = Protocol_1.Aki.Protocol.noh.create()).aLa = i.RoleId),
             this.BTa.set(i.CreatureDataId, e));
         var e = this.VTa(i),
           o =
@@ -239,7 +239,7 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
   static nLa(t, e) {
     if (this.sLa && this.BTa) {
       var o,
-        i = Protocol_1.Aki.Protocol.JZa.create(),
+        i = Protocol_1.Aki.Protocol.meh.create(),
         r =
           ((i.kTa = MathUtils_1.MathUtils.BigIntToLong(t)),
           (i.D6n = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
@@ -310,7 +310,7 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
         )
       : (this.nLa(
           t,
-          Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecRoleFightFlow_InstEnd,
+          Protocol_1.Aki.Protocol.roh.Proto_LogType_SecRoleFightFlow_InstEnd,
         ),
         (this.CLa = -1n));
   }
@@ -337,7 +337,7 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
         )
       : (this.vLa &&
           (TimerSystem_1.TimerSystem.Remove(this.vLa), (this.vLa = void 0)),
-        ((e = Protocol_1.Aki.Protocol.eeh.create()).kTa =
+        ((e = Protocol_1.Aki.Protocol.geh.create()).kTa =
           MathUtils_1.MathUtils.BigIntToLong(t)),
         (e.D6n = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
         (e.zTa = this.nun),
@@ -354,7 +354,7 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
         Log_1.Log.Warn("Net", 36, "StartSecFbRound repeat", ["logId", t])
       : ((this.ELa = t),
         (this.OTa = Time_1.Time.WorldTime),
-        ((e = Protocol_1.Aki.Protocol.ieh.create()).kTa =
+        ((e = Protocol_1.Aki.Protocol.peh.create()).kTa =
           MathUtils_1.MathUtils.BigIntToLong(t)),
         (e.NTa = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
         (o = this.YNr())
@@ -382,7 +382,7 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
           ["SecWorldFlowLogId", this.ELa],
         )
       : ((this.ELa = -1n),
-        ((e = Protocol_1.Aki.Protocol.oeh.create()).kTa =
+        ((e = Protocol_1.Aki.Protocol.Meh.create()).kTa =
           MathUtils_1.MathUtils.BigIntToLong(t)),
         (e.YTa = TimeUtil_1.TimeUtil.DateFormat2(new Date())),
         (e.JTa = Time_1.Time.WorldTime - this.OTa),
@@ -402,38 +402,38 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
   (AceAntiCheatController.ATa = (t) => {
     var e = MathUtils_1.MathUtils.LongToBigInt(t.kTa);
     switch (t.mLa) {
-      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecGetReportData2Flow:
+      case Protocol_1.Aki.Protocol.roh.Proto_LogType_SecGetReportData2Flow:
         break;
-      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecFBRoundStartFlow:
+      case Protocol_1.Aki.Protocol.roh.Proto_LogType_SecFBRoundStartFlow:
         _a.qTa(e);
         break;
-      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecFBRoundEndFlow:
+      case Protocol_1.Aki.Protocol.roh.Proto_LogType_SecFBRoundEndFlow:
         _a.XTa(e);
         break;
-      case Protocol_1.Aki.Protocol.Frh
+      case Protocol_1.Aki.Protocol.roh
         .Proto_LogType_SecRoleFightFlow_BigWorldStart:
         _a.tLa(e);
         break;
-      case Protocol_1.Aki.Protocol.Frh
+      case Protocol_1.Aki.Protocol.roh
         .Proto_LogType_SecRoleFightFlow_BigWorldEnd:
         _a.oLa(e);
         break;
-      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecRoleFightFlow_InstStart:
+      case Protocol_1.Aki.Protocol.roh.Proto_LogType_SecRoleFightFlow_InstStart:
         _a.dLa(e);
         break;
-      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecRoleFightFlow_InstEnd:
+      case Protocol_1.Aki.Protocol.roh.Proto_LogType_SecRoleFightFlow_InstEnd:
         _a.gLa(e);
         break;
-      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecWorldInfoFlow_Start:
-        _a.fLa(e, MathUtils_1.MathUtils.LongToNumber(t.Vth));
+      case Protocol_1.Aki.Protocol.roh.Proto_LogType_SecWorldInfoFlow_Start:
+        _a.fLa(e, MathUtils_1.MathUtils.LongToNumber(t.oih));
         break;
-      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecWorldInfoFlow_End:
+      case Protocol_1.Aki.Protocol.roh.Proto_LogType_SecWorldInfoFlow_End:
         _a.MLa(e);
         break;
-      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecWorldStartFlow:
+      case Protocol_1.Aki.Protocol.roh.Proto_LogType_SecWorldStartFlow:
         _a.SLa(e);
         break;
-      case Protocol_1.Aki.Protocol.Frh.Proto_LogType_SecWorldSEndFlow:
+      case Protocol_1.Aki.Protocol.roh.Proto_LogType_SecWorldSEndFlow:
         _a.yLa(e);
         break;
       default:
@@ -529,7 +529,7 @@ class AceAntiCheatController extends ControllerBase_1.ControllerBase {
   (AceAntiCheatController.ReportDataRequest = () => {
     var t, e;
     Net_1.Net.IsServerConnected() &&
-      ((t = Protocol_1.Aki.Protocol.KZa.create()),
+      ((t = Protocol_1.Aki.Protocol._eh.create()),
       0 < (e = ue_1.TpSafeProxy.GetAntiData2()).byteLength &&
         (t.kLa = new Uint8Array(e)),
       Net_1.Net.Call(24479, t, () => {}));

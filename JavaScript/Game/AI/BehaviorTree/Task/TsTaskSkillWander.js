@@ -48,7 +48,10 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
       ((this.IsInitTsVariables = !0),
       (this.TsForwardFirst = this.ForwardFirst),
       (this.TsCheckSkillPeriod = this.CheckSkillPeriod),
-      (this.TsMoveState = this.MoveState),
+      (this.TsMoveState =
+        2 === this.MoveState
+          ? CharacterUnifiedStateTypes_1.ECharMoveState.Run
+          : CharacterUnifiedStateTypes_1.ECharMoveState.Walk),
       (this.TsSkillType = this.SkillType),
       (this.TsDebugLog = this.DebugLog),
       (this.TsWalkOff = this.WalkOff),
@@ -63,22 +66,12 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
   ReceiveExecuteAI(i, t) {
     (this.NavigationInterval = NAV_INTERVAL_TIME), this.InitTsVariables();
     i = i.AiController;
-    if (i) {
-      this.TsWalkOff ||
-        i.CharActorComp.Entity.GetComponent(164)?.SetWalkOffLedgeRecord(!1);
-      var s = i.CharActorComp.Entity.CheckGetComponent(161);
-      if (s.Valid)
-        switch (this.TsMoveState) {
-          case 1:
-            s.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Walk);
-            break;
-          case 2:
-            s.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Run);
-            break;
-          case 3:
-            s.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Sprint);
-        }
-    }
+    i &&
+      (this.TsWalkOff ||
+        i.CharActorComp.Entity.GetComponent(164)?.SetWalkOffLedgeRecord(!1),
+      i.CharActorComp.Entity.CheckGetComponent(161)?.SetMoveState(
+        this.TsMoveState,
+      ));
   }
   ReceiveTickAI(i, t, s) {
     this.NavigationInterval += s;
@@ -98,7 +91,9 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
             MathUtils_1.MathUtils.GetAngleByVector2D(this.TmpVector)),
           o =
             (e.FloorLocation.Subtraction(h.FloorLocation, this.TmpSelfToTarget),
-            this.TmpSelfToTarget.Size2D() - h.ScaledRadius - e.ScaledRadius),
+            Math.abs(
+              this.TmpSelfToTarget.Size2D() - h.ScaledRadius - e.ScaledRadius,
+            )),
           a = this.TmpSelfToTarget.Z,
           l = MathUtils_1.MathUtils.WrapAngle(
             MathUtils_1.MathUtils.GetAngleByVector2D(this.TmpSelfToTarget) -
@@ -125,8 +120,12 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
           ));
         if (r && a) this.Finish(!0);
         else {
-          (l = s.AiWanderInfos.GetCurrentBattleWander()),
-            (a = this.PreForward
+          l = h.Entity.GetComponent(92);
+          let i = this.TsMoveState;
+          r && !a && (i = CharacterUnifiedStateTypes_1.ECharMoveState.Walk),
+            l?.MoveState !== i && l?.SetMoveState(i);
+          (a = s.AiWanderInfos.GetCurrentBattleWander()),
+            (s = this.PreForward
               ? this.SelectedSkillPrecondition.DistanceRange.Min *
                   OTHER_THRESHOLD_RATE +
                 this.SelectedSkillPrecondition.DistanceRange.Max *
@@ -135,14 +134,22 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
                   THRESHOLD_RATE +
                 this.SelectedSkillPrecondition.DistanceRange.Max *
                   OTHER_THRESHOLD_RATE);
-          let i = l.RunTurnSpeed;
+          let t = a.RunTurnSpeed;
           this.TmpVector.DeepCopy(this.TmpSelfToTarget),
-            o < a
-              ? ((i = 2 === this.TsMoveState ? i : l.TurnSpeeds[1]),
+            o < s
+              ? ((t =
+                  this.TsMoveState ===
+                  CharacterUnifiedStateTypes_1.ECharMoveState.Run
+                    ? t
+                    : a.TurnSpeeds[1]),
                 (this.TmpVector.X = -this.TmpVector.X),
                 (this.TmpVector.Y = -this.TmpVector.Y),
                 (this.PreForward = !1))
-              : ((i = 2 === this.TsMoveState ? i : l.TurnSpeeds[0]),
+              : ((t =
+                  this.TsMoveState ===
+                  CharacterUnifiedStateTypes_1.ECharMoveState.Run
+                    ? t
+                    : a.TurnSpeeds[0]),
                 (this.PreForward = !0)),
             GravityUtils_1.GravityUtils.ConvertToPlanarVector(
               h,
@@ -154,7 +161,7 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
               this.SetMoveToLocation(
                 this.TmpVector,
                 h,
-                i,
+                t,
                 e.ActorLocationProxy,
               ))
             )
@@ -166,14 +173,13 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
               ]),
               this.StopMoveToLocation(h);
           }
-          s = h.Entity.GetComponent(38);
-          (s && s.MoveController.IsMovingToLocation()) ||
-            (h.Entity.GetComponent(92)?.MoveState !==
-            CharacterUnifiedStateTypes_1.ECharMoveState.Walk
+          o = h.Entity.GetComponent(38);
+          (o && o.MoveController.IsMovingToLocation()) ||
+            (l?.MoveState !== CharacterUnifiedStateTypes_1.ECharMoveState.Walk
               ? (AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
                   h,
                   this.TmpVector,
-                  i,
+                  t,
                 ),
                 h.SetInputDirect(h.ActorForwardProxy))
               : AiContollerLibrary_1.AiControllerLibrary.InputNearestDirection(
@@ -181,7 +187,7 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
                   this.TmpVector,
                   this.TmpQuat,
                   this.TmpVector2,
-                  i,
+                  t,
                   !0,
                   this.TmpSelfToTarget,
                 ));
@@ -250,9 +256,9 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
       for (const A of i.AiSkill.BaseSkill.RandomSkills[L].ArrayInt) {
         var T = i.AiSkill.SkillInfos.get(A);
         if (T) {
-          var c,
-            d = i.AiSkill.SkillPreconditionMap.get(T.SkillPreconditionId);
-          if (d) {
+          var d,
+            c = i.AiSkill.SkillPreconditionMap.get(T.SkillPreconditionId);
+          if (c) {
             if (
               !(T.SkillWeight <= 0) &&
               AiLibrary_1.AiLibrary.IsSkillAvailable(
@@ -269,20 +275,20 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
                 this.TsDebugLog,
               )
             )
-              if (t < d.DistanceRange.Min)
+              if (t < c.DistanceRange.Min)
                 this.TsForwardFirst && 0 === _
                   ? this.TsDebugLog &&
                     Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info("AI", 6, "    Failed: ForwardFirst")
-                  : ((c = d.DistanceRange.Min - t),
-                    n < c || l < c
+                  : ((d = c.DistanceRange.Min - t),
+                    n < d || l < d
                       ? this.TsDebugLog &&
                         Log_1.Log.CheckInfo() &&
                         Log_1.Log.Info(
                           "AI",
                           6,
                           "    Failed: BackwardBlock or MinDistance",
-                          ["MoveDist", c],
+                          ["MoveDist", d],
                           ["MinDistance", n],
                           ["MinBackwardBlock", l],
                         )
@@ -290,35 +296,35 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
                             this.AIOwner,
                             i.CharActorComp.ActorLocationProxy,
                             this.TmpBackward,
-                            c,
+                            d,
                           )
-                        ? ((l = c),
+                        ? ((l = d),
                           this.TsDebugLog &&
                             Log_1.Log.CheckInfo() &&
                             Log_1.Log.Info(
                               "AI",
                               6,
                               "    Failed: BackwardBlock",
-                              ["MoveDist", c],
+                              ["MoveDist", d],
                             ))
                         : ((_ = 1),
-                          (n = c),
-                          (this.SelectedSkillPrecondition = d)));
+                          (n = d),
+                          (this.SelectedSkillPrecondition = c)));
               else {
-                if (!(t > d.DistanceRange.Max)) {
-                  this.SelectedSkillPrecondition = d;
+                if (!(t > c.DistanceRange.Max)) {
+                  this.SelectedSkillPrecondition = c;
                   break;
                 }
                 this.TsForwardFirst || 1 !== _
-                  ? ((c = t - d.DistanceRange.Max),
-                    n < c || a < c
+                  ? ((d = t - c.DistanceRange.Max),
+                    n < d || a < d
                       ? this.TsDebugLog &&
                         Log_1.Log.CheckInfo() &&
                         Log_1.Log.Info(
                           "AI",
                           6,
                           "    Failed: ForwardBlock or MinDistance",
-                          ["MoveDist", c],
+                          ["MoveDist", d],
                           ["MinDistance", n],
                           ["MinForwardBlock", a],
                         )
@@ -326,20 +332,20 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
                             this.AIOwner,
                             i.CharActorComp.ActorLocationProxy,
                             this.TmpForward,
-                            c,
+                            d,
                           )
-                        ? ((a = c),
+                        ? ((a = d),
                           this.TsDebugLog &&
                             Log_1.Log.CheckInfo() &&
                             Log_1.Log.Info(
                               "AI",
                               6,
                               "    Failed: ForwardBlock",
-                              ["MoveDist", c],
+                              ["MoveDist", d],
                             ))
                         : ((_ = 0),
-                          (n = c),
-                          (this.SelectedSkillPrecondition = d)))
+                          (n = d),
+                          (this.SelectedSkillPrecondition = c)))
                   : this.TsDebugLog &&
                     Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info("AI", 6, "    Failed: BackwardFirst");

@@ -152,7 +152,7 @@ class LevelGeneralNetworks {
       e.q5n ? o.ActiveHandFX(t.Entity) : o.DeactiveHandFx());
   }
   static NQa(e) {
-    var t = MathUtils_1.MathUtils.LongToNumber(e.$ih),
+    var t = MathUtils_1.MathUtils.LongToNumber(e.srh),
       t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t),
       a = t.Entity.GetComponent(124),
       t = t.Entity.GetComponent(148).Config.Config.Type,
@@ -168,7 +168,7 @@ class LevelGeneralNetworks {
     (o.Rotation = e.nLs.l8n.V5n), a.PutDownItem(o, r, t);
   }
   static FQa(e) {
-    var t = MathUtils_1.MathUtils.LongToNumber(e.$ih),
+    var t = MathUtils_1.MathUtils.LongToNumber(e.srh),
       t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t),
       a = t.Entity.GetComponent(124),
       t = t.Entity.GetComponent(148).Config.Config.Type,
@@ -452,7 +452,7 @@ class LevelGeneralNetworks {
     e && (a ? e.ServerConnectEntities(t) : e.ServerDisconnectEntities(t));
   }
   static PushEntityTimeDilation(e, t) {
-    var a = Protocol_1.Aki.Protocol.ueh.create();
+    var a = Protocol_1.Aki.Protocol.Reh.create();
     (a.F4n = e), (a.dKn = t), Net_1.Net.Send(19859, a);
   }
   static CheckEntityCanPushTimeDilation(e) {
@@ -704,7 +704,7 @@ class LevelGeneralNetworks {
       });
   }),
   (LevelGeneralNetworks.GQa = (t) => {
-    var e = MathUtils_1.MathUtils.LongToNumber(t.$ih),
+    var e = MathUtils_1.MathUtils.LongToNumber(t.srh),
       a = MathUtils_1.MathUtils.LongToNumber(t.nLs.iLs);
     const o = new Array();
     o.push(e),
@@ -722,7 +722,7 @@ class LevelGeneralNetworks {
       });
   }),
   (LevelGeneralNetworks.kQa = (t) => {
-    var e = MathUtils_1.MathUtils.LongToNumber(t.$ih),
+    var e = MathUtils_1.MathUtils.LongToNumber(t.srh),
       a = MathUtils_1.MathUtils.LongToNumber(t.nLs.iLs);
     const o = new Array();
     o.push(e),
@@ -1307,10 +1307,10 @@ class LevelGeneralNetworks {
   }),
   (LevelGeneralNetworks.uXa = (e) => {
     for (const t of e.KEs)
-      t.h5n === Protocol_1.Aki.Protocol.Yrh.Proto_TeleportDungeon &&
+      t.h5n === Protocol_1.Aki.Protocol.coh.Proto_TeleportDungeon &&
         PreloadControllerClassPart2_1.InstanceDungeonController.UpdateForbidDungeon(
           t.yIs,
-          t.kih?.qih,
+          t.Zih?.Jih,
         );
   }),
   (LevelGeneralNetworks.hAe = (e) => {
@@ -1414,7 +1414,7 @@ class LevelGeneralNetworks {
       o.Entity?.Valid &&
       o.Entity?.IsInit &&
       (t = o.Entity.GetComponent(1))?.Valid &&
-      (e = MathUtils_1.MathUtils.LongToNumber(e.Yih)) &&
+      (e = MathUtils_1.MathUtils.LongToNumber(e.crh)) &&
       (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(e))?.Valid &&
       e.Entity?.Valid &&
       (e = e.Entity.GetComponent(1))?.Valid &&

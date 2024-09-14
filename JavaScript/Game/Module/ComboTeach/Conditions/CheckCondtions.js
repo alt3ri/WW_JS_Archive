@@ -220,7 +220,9 @@ class CheckNotInSkillCondition extends BaseCheckCondition {
   }
   Check(t) {
     var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
-    return !EntitySystem_1.EntitySystem.Get(e)?.GetComponent(34)?.IsInSkill();
+    return !EntitySystem_1.EntitySystem.Get(e)
+      ?.GetComponent(190)
+      ?.HasTag(-1371021686);
   }
 }
 exports.CheckNotInSkillCondition = CheckNotInSkillCondition;

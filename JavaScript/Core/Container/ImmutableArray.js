@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ImmutableArray = void 0);
-const Log_1 = require("../Common/Log");
 class ImmutableArray extends Array {
   constructor() {
     super(...arguments), (this.D$a = void 0);
@@ -54,10 +53,7 @@ class ImmutableArray extends Array {
   filter(t, r) {
     return this.PKa.filter(t, r);
   }
-  wKa(t) {
-    Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Core", 63, "ImmutableArray 不允许修改", ["函数名", t]);
-  }
+  wKa(t) {}
 }
 exports.ImmutableArray = ImmutableArray;
 //# sourceMappingURL=ImmutableArray.js.map

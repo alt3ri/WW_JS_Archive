@@ -687,10 +687,10 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
     var o = new Protocol_1.Aki.Protocol.ohs();
     (o.r6n = ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceId()),
       (o.mIa = e
-        ? Protocol_1.Aki.Protocol.aoh.Proto_Accept
+        ? Protocol_1.Aki.Protocol.Eoh.Proto_Accept
         : n
-          ? Protocol_1.Aki.Protocol.aoh.Proto_ActiveRefuse
-          : Protocol_1.Aki.Protocol.aoh.Proto_TimeOutRefuse),
+          ? Protocol_1.Aki.Protocol.Eoh.Proto_ActiveRefuse
+          : Protocol_1.Aki.Protocol.Eoh.Proto_TimeOutRefuse),
       (o.qVn = ModelManager_1.ModelManager.OnlineModel.OwnerId),
       Net_1.Net.Call(18477, o, (e) => {
         Log_1.Log.CheckDebug() &&
@@ -1420,7 +1420,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
       n.CancelMatchingTimer();
   }),
   (InstanceDungeonEntranceController.Rhi = (e) => {
-    e.mIa !== Protocol_1.Aki.Protocol.aoh.Proto_Accept &&
+    e.mIa !== Protocol_1.Aki.Protocol.Eoh.Proto_Accept &&
       ((e = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
         e.W5n,
       ).Name),
@@ -1503,9 +1503,11 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
   (InstanceDungeonEntranceController.GetInstanceSubtitleTextIdByInstanceId = (
     e,
   ) => {
-    e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e);
-    return void 0 !== e && 22 === e.InstSubType
-      ? ModelManager_1.ModelManager.MowingRiskModel.InstanceSubtitleTextId
+    var n = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e);
+    return void 0 !== n && 22 === n.InstSubType
+      ? ModelManager_1.ModelManager.MowingRiskModel.BuildInstanceSubtitleTextIdByInstanceId(
+          e,
+        )
       : void 0;
   }),
   (InstanceDungeonEntranceController.GetInstanceSubtitleArgsByInstanceId = (
@@ -1513,11 +1515,9 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
   ) => {
     var n = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e);
     return void 0 !== n && 22 === n.InstSubType
-      ? [
-          ModelManager_1.ModelManager.MowingRiskModel.GetScoreByInstanceId(
-            e,
-          ).toString(),
-        ]
+      ? ModelManager_1.ModelManager.MowingRiskModel.BuildInstanceSubtitleTextArgsByInstanceId(
+          e,
+        )
       : void 0;
   });
 //# sourceMappingURL=InstanceDungeonEntranceController.js.map

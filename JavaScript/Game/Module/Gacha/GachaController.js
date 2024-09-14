@@ -112,7 +112,7 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
             UiManager_1.UiManager.OpenView("DrawMainView")));
   }
   static async GachaPoolDetailRequestAsync(e) {
-    var a = Protocol_1.Aki.Protocol.neh.create(),
+    var a = Protocol_1.Aki.Protocol.Seh.create(),
       e = ((a.o9n = e), await Net_1.Net.CallAsync(17926, a));
     return (
       e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
@@ -240,7 +240,7 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static CommonShowRoleResult(e, a, r) {
-    var o = e.Irh.s5n;
+    var o = e.Nrh.s5n;
     if (
       1 ===
       ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(o)
