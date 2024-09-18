@@ -189,10 +189,6 @@ class MowingRiskConfigContext {
         ?.RewardScore ?? 0
     );
   }
-  GetScoreToUnlockById(e) {
-    e = RiskHarvestInstById_1.configRiskHarvestInstById.GetConfig(e);
-    return void 0 === e || 0 === e.UnlockInst ? 0 : e.UnlockScore;
-  }
   IsSuperBuffByBuffId(e) {
     return 3 === this.GetBuffTypeById(e);
   }

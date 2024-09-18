@@ -110,7 +110,7 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
         ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeOwnerId(
           e.TreeIncId,
         ),
-      t = Protocol_1.Aki.Protocol.kth.create();
+      t = Protocol_1.Aki.Protocol.Lth.create();
     (t.d9n = o ?? 0),
       (t.C9n = MathUtils_1.MathUtils.BigIntToLong(e.TreeIncId)),
       (t.b5n = e.NodeId),

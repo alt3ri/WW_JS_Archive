@@ -819,7 +819,7 @@ let CommonConnectComponent =
         (s.KHa = []);
       for (const h of e) {
         var o = h.Target.GetComponent(0),
-          n = Protocol_1.Aki.Protocol.goh.create();
+          n = Protocol_1.Aki.Protocol.noh.create();
         (n.CVn = MathUtils_1.MathUtils.NumberToLong(o.GetCreatureDataId())),
           (n.$Ha = h.PortalsId),
           s.KHa.push(n),
@@ -952,7 +952,7 @@ let CommonConnectComponent =
         (this.bWa = this.CanInteractEntity.size);
     }
     NXa(t) {
-      var e = Protocol_1.Aki.Protocol.Yth.create(),
+      var e = Protocol_1.Aki.Protocol.Gth.create(),
         i = MathUtils_1.MathUtils.NumberToLong(
           this.ActorComp.CreatureData.GetCreatureDataId(),
         );

@@ -87,7 +87,7 @@ class CalabashController extends UiControllerBase_1.UiControllerBase {
     e.forEach((e) => {
       a.push(e.IncId);
     });
-    e = Protocol_1.Aki.Protocol.tth.create();
+    e = Protocol_1.Aki.Protocol.$eh.create();
     (e.A8n = a),
       Net_1.Net.Call(20511, e, (e) => {
         e &&

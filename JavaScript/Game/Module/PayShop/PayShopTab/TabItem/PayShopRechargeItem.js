@@ -28,9 +28,6 @@ class PayShopRechargeItem extends GridProxyAbstract_1.GridProxyAbstract {
           ]),
           PayItemController_1.PayItemController.SdkPay(this.Pe.PayItemId);
       }),
-      (this.zki = () => {
-        this.Refresh(this.Pe, !1, 0);
-      }),
       (this.USe = (t) => {
         t.PayItemId === this.Pe.PayItemId &&
           ((this.Pe.CanSpecialBonus = !1),
@@ -82,10 +79,6 @@ class PayShopRechargeItem extends GridProxyAbstract_1.GridProxyAbstract {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPayItemSuccess,
         this.USe,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnQueryProductInfo,
-        this.zki,
       );
   }
   Cde() {
@@ -96,10 +89,6 @@ class PayShopRechargeItem extends GridProxyAbstract_1.GridProxyAbstract {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPayItemSuccess,
         this.USe,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnQueryProductInfo,
-        this.zki,
       );
   }
   OnBeforeDestroy() {

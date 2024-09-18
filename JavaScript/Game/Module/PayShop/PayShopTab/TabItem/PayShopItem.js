@@ -42,11 +42,6 @@ class PayShopItem extends GridProxyAbstract_1.GridProxyAbstract {
           ),
           this.OMa && this.OMa(this, this.Pe);
       }),
-      (this.zki = () => {
-        this.Pe &&
-          this.IsUiActiveInHierarchy() &&
-          this.g3i.Refresh(this.Pe.ConvertToPayShopBaseSt(), !1, 0);
-      }),
       (this.R3i = () => {
         if (this.Pe && this.IsUiActiveInHierarchy()) {
           let t = !1;
@@ -140,21 +135,13 @@ class PayShopItem extends GridProxyAbstract_1.GridProxyAbstract {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.DiscountShopTimerRefresh,
       this.R3i,
-    ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnQueryProductInfo,
-        this.zki,
-      );
+    );
   }
   Cde() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.DiscountShopTimerRefresh,
       this.R3i,
-    ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnQueryProductInfo,
-        this.zki,
-      );
+    );
   }
   Refresh(t, i, s) {
     t instanceof PayShopGoods_1.PayShopGoods &&

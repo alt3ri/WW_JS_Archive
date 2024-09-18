@@ -33,7 +33,7 @@ class DelegationResultData {
           s.push(i.OGs),
           s.push(i.kGs),
           {
-            SuccessResult: Protocol_1.Aki.Protocol.woh.Proto_Normal,
+            SuccessResult: Protocol_1.Aki.Protocol.voh.Proto_Normal,
             CharacterValueList: s,
           });
       this.jke.set(i.Q6n, s);

@@ -42,7 +42,7 @@ let PlayerFollowerComponent = class PlayerFollowerComponent extends EntityCompon
     var e = this.Entity.CheckGetComponent(0),
       e =
         ((this.j8 = e?.GetPlayerId() ?? 0),
-        e?.ComponentDataMap.get("rrh")?.rrh?.arh);
+        e?.ComponentDataMap.get("Wih")?.Wih?.Yih);
     return e && this.UpdateFollowers(e), !0;
   }
   OnClear() {

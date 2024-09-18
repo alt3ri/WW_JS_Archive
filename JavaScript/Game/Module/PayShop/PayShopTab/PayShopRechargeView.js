@@ -111,6 +111,10 @@ class PayShopRechargeView extends DiscountShopView_1.DiscountShopView {
   async OnBeforeShowAsyncImplement() {
     (this.r3i =
       await ControllerHolder_1.ControllerHolder.PayItemController.SendPayItemInfoRequestAsync()),
+      PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetIfNeedQueryProductInfoForce() &&
+        (await Promise.all([
+          ControllerHolder_1.ControllerHolder.PayItemController.QueryPayItemInfoAsync(),
+        ])),
       this.l3i();
   }
   OnBeforeShow() {

@@ -31,9 +31,6 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
       (this.Eki = 0),
       (this.TDe = void 0),
       (this.PNa = void 0),
-      (this.zki = () => {
-        this.Zki();
-      }),
       (this.DSi = () => {
         this.CloseMe();
       }),
@@ -95,17 +92,15 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
       ]);
   }
   async OnBeforeStartAsync() {
-    await ControllerHolder_1.ControllerHolder.PayGiftController.SendPayGiftInfoRequestAsync();
+    await ControllerHolder_1.ControllerHolder.PayGiftController.SendPayGiftInfoRequestAsync(),
+      PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetIfNeedQueryProductInfoForce() &&
+        (await ControllerHolder_1.ControllerHolder.PayGiftController.QueryPayGiftInfoAsync());
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
       this.DSi,
     ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnQueryProductInfo,
-        this.zki,
-      ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SdkPayEnd,
         this.wNa,
@@ -116,10 +111,6 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
       EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
       this.DSi,
     ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnQueryProductInfo,
-        this.zki,
-      ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SdkPayEnd,
         this.wNa,
@@ -153,19 +144,29 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
         CommonDefine_1.MILLIONSECOND_PER_SECOND,
       )),
       this.RefreshLeftTime(),
-      this.Zki();
-    const t = new Array();
-    this.o2i().forEach((e) => {
-      e = ModelManager_1.ModelManager.PayGiftModel.GetPayGiftDataById(e);
-      t.push(e.ProductId.toString());
-    }),
-      ControllerHolder_1.ControllerHolder.PayItemController.QueryProductInfoAsync(
-        t,
-      ),
+      this.Zki(),
       this.BNa(),
       PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.ShowPlayStationStoreIcon(
         PLAYSTATIONICONPOSITION,
       );
+  }
+  OnAfterShow() {
+    this.KZa();
+  }
+  async KZa() {
+    var e =
+      PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetIfNeedQueryProductInfoForce();
+    if (!e) {
+      const t = new Array();
+      this.o2i().forEach((e) => {
+        e = ModelManager_1.ModelManager.PayGiftModel.GetPayGiftDataById(e);
+        t.push(e.ProductId.toString());
+      }),
+        await ControllerHolder_1.ControllerHolder.PayItemController.QueryProductInfoAsync(
+          t,
+        ),
+        this.Zki();
+    }
   }
   BNa() {
     var e =

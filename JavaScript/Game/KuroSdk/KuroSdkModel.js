@@ -131,7 +131,8 @@ class KuroSdkModel extends ModelBase_1.ModelBase {
     e.forEach((e) => {
       this.LSe.set(e.GoodId, e);
     }),
-      this.QueryPromise?.SetResult(!0);
+      this.QueryPromise?.SetResult(!0),
+      (this.QueryPromise = void 0);
   }
   GetQueryProductCurrency(e) {
     (e = ConfigManager_1.ConfigManager.PayItemConfig.GetPayConf(Number(e))),

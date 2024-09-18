@@ -161,6 +161,15 @@ class BattleUiPool {
           ]),
         !1);
   }
+  GetSrcActor(t) {
+    var e = this.WXe.get(t);
+    if (e?.Actor) return e.Actor;
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("Battle", 18, "BattleUiPool没有缓存该预制体", [
+        "resourceId",
+        t,
+      ]);
+  }
   GetHeadStateView(t) {
     return this.GetActor(t, this.XXe, !1);
   }

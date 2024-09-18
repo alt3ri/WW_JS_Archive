@@ -77,7 +77,7 @@ class PayShopGoodsData {
       (this.Sort = i.Sort),
       (this.PromotionShow = i.PromotionShow),
       (this.Kjs = i.SoldoutShowInShop),
-      (this.SYa = t.jrh),
+      (this.SYa = t.brh),
       this.MFi();
   }
   GetIfCanBuy() {

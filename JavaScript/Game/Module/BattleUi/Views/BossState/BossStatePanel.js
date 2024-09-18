@@ -71,7 +71,7 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                 new MergeMonsterHeadStateView_1.MergeMonsterHeadStateView()),
               this.Prt.Refresh(t),
               (t = this.GetItem(0)),
-              (e = BattleUiControl_1.BattleUiControl.Pool.GetHeadStateView(
+              (e = BattleUiControl_1.BattleUiControl.Pool.GetSrcActor(
                 this.Prt.GetResourceId(),
               )),
               (e = LguiUtil_1.LguiUtil.DuplicateActor(e, t)),

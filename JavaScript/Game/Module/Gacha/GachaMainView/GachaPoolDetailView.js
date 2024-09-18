@@ -32,7 +32,7 @@ class GachaPoolDetailView extends UiViewBase_1.UiViewBase {
         i.Id,
       ),
       i =
-        (this.GetText(0).SetText(t.brh.brh),
+        (this.GetText(0).SetText(t.Erh.Erh),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(3),
           "GachaPoolDetailTitle",
@@ -40,30 +40,30 @@ class GachaPoolDetailView extends UiViewBase_1.UiViewBase {
         ),
         ConfigManager_1.ConfigManager.GachaConfig?.GetGachaPoolConfig(i.Id)),
       i = ConfigManager_1.ConfigManager.GachaConfig?.GetGachaConfig(i.GachaId),
-      e = (a, i) => (a.xrh ? -1 : i.xrh ? 1 : 0),
+      e = (a, i) => (a.yrh ? -1 : i.yrh ? 1 : 0),
       o = [],
       l =
-        (null != t.brh?.Brh &&
-          0 < t.brh?.Brh.length &&
+        (null != t.Erh?.Irh &&
+          0 < t.Erh?.Irh.length &&
           (((l = new GachaPoolDetailData()).TitleTextKey =
             "GachaPoolDetail_FiveStar_" + i?.RuleGroupId),
-          (l.ItemList = t.brh.Brh.sort(e)),
+          (l.ItemList = t.Erh.Irh.sort(e)),
           ((a = new GachaPoolDetailGrid()).Data = l),
           (l = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
           o.push(a.CreateByActorAsync(l.GetOwner())),
           this.AddChild(a)),
-        null != t.brh?.qrh &&
-          0 < t.brh?.qrh.length &&
+        null != t.Erh?.Trh &&
+          0 < t.Erh?.Trh.length &&
           (((l = new GachaPoolDetailData()).TitleTextKey =
             "GachaPoolDetail_FiveStar_" + i?.RuleGroupId),
-          (l.ItemList = t.brh.qrh.sort(e)),
+          (l.ItemList = t.Erh.Trh.sort(e)),
           ((a = new GachaPoolDetailGrid()).Data = l),
           (l = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
           o.push(a.CreateByActorAsync(l.GetOwner())),
           this.AddChild(a)),
         []);
-    null != t.brh?.krh && 0 < t.brh?.krh.length && l.push(...t.brh.krh),
-      null != t.brh?.Orh && 0 < t.brh?.Orh.length && l.push(...t.brh.Orh),
+    null != t.Erh?.Lrh && 0 < t.Erh?.Lrh.length && l.push(...t.Erh.Lrh),
+      null != t.Erh?.Rrh && 0 < t.Erh?.Rrh.length && l.push(...t.Erh.Rrh),
       0 < l.length &&
         (((a = new GachaPoolDetailData()).TitleTextKey =
           "GachaPoolDetail_FourStar_" + i?.RuleGroupId),
@@ -72,11 +72,11 @@ class GachaPoolDetailView extends UiViewBase_1.UiViewBase {
         (a = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
         o.push(l.CreateByActorAsync(a.GetOwner())),
         this.AddChild(l)),
-      null != t.brh?.Grh &&
-        0 < t.brh?.Grh.length &&
+      null != t.Erh?.Arh &&
+        0 < t.Erh?.Arh.length &&
         (((a = new GachaPoolDetailData()).TitleTextKey =
           "GachaPoolDetail_ThreeStar_" + i?.RuleGroupId),
-        (a.ItemList = t.brh.Grh.sort(e)),
+        (a.ItemList = t.Erh.Arh.sort(e)),
         ((l = new GachaPoolDetailGrid()).Data = a),
         (i = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
         o.push(l.CreateByActorAsync(i.GetOwner())),
@@ -127,7 +127,7 @@ class GachaPoolDropItem extends UiPanelBase_1.UiPanelBase {
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
           this.Data.L8n,
         ),
-      t = this.Data.xrh ? "GachaDropItemUp" : "GachaPoolDropItemNormal";
+      t = this.Data.yrh ? "GachaDropItemUp" : "GachaPoolDropItemNormal";
     1 === i
       ? ((a = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(
           this.Data.L8n,

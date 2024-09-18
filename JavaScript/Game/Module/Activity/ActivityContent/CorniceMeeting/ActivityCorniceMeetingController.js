@@ -18,9 +18,9 @@ class ActivityCorniceMeetingController extends ActivityControllerBase_1.Activity
         var t = ActivityCorniceMeetingController.GetCurrentActivityData();
         t &&
           (t = t.GetLevelEntryData(e._ps)) &&
-          (e.Dih && (t.MaxScore = e.SMs),
+          (e.pih && (t.MaxScore = e.SMs),
           (t.CurrentScore = e.SMs),
-          e.wih && (t.RemainTime = e.Rih),
+          e.vih && (t.RemainTime = e.gih),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.RefreshCorniceMeetingRedDot,
             e._ps,
@@ -56,7 +56,7 @@ class ActivityCorniceMeetingController extends ActivityControllerBase_1.Activity
     );
   }
   static CorniceMeetingRewardRequest(t, r, i) {
-    var e = new Protocol_1.Aki.Protocol.weh();
+    var e = new Protocol_1.Aki.Protocol.veh();
     (e._ps = t),
       (e.t8n = r),
       Net_1.Net.Call(21613, e, (e) => {
@@ -74,7 +74,7 @@ class ActivityCorniceMeetingController extends ActivityControllerBase_1.Activity
       });
   }
   static CorniceMeetingChallengeTransRequest(e) {
-    var t = new Protocol_1.Aki.Protocol.Ith();
+    var t = new Protocol_1.Aki.Protocol.dth();
     (t._ps = e),
       Net_1.Net.Call(29074, t, (e) => {
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&

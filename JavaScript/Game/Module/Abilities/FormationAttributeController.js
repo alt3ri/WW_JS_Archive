@@ -359,7 +359,7 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
     var e = MathUtils_1.MathUtils.LongToNumber(t.D6n),
       r = MathUtils_1.MathUtils.LongToNumber(t.pGs),
       i = MathUtils_1.MathUtils.LongToNumber(t.MGs),
-      t = MathUtils_1.MathUtils.LongToNumber(t.eoh);
+      t = MathUtils_1.MathUtils.LongToNumber(t.Hrh);
     _a.TimeCheck(e, r, i, t);
   }),
   (FormationAttributeController.TimeCheckRequest = () => {
@@ -376,7 +376,7 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
           ((e = MathUtils_1.MathUtils.LongToNumber(t.D6n)),
           (r = MathUtils_1.MathUtils.LongToNumber(t.pGs)),
           (i = MathUtils_1.MathUtils.LongToNumber(t.MGs)),
-          (t = MathUtils_1.MathUtils.LongToNumber(t.eoh)),
+          (t = MathUtils_1.MathUtils.LongToNumber(t.Hrh)),
           _a.TimeCheck(e, r, i, t));
       }));
   }),

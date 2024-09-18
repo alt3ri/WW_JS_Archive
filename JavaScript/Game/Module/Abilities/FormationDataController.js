@@ -206,7 +206,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
     var e = t.W5n,
       a = _a.GetPlayerEntity(e)?.GetComponent(206);
     a
-      ? a.UpdateFollowers(t.arh)
+      ? a.UpdateFollowers(t.Yih)
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Battle", 49, "找不到对应的PlayerFollower组件", [
           "PlayerId",

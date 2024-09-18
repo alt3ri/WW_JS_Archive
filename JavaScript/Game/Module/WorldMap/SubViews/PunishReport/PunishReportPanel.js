@@ -101,24 +101,23 @@ class PunishReportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
     s
       ? (this.GetText(1).ShowTextNew(s.MarkTitle),
         (i = this.u2o.GetAreaText()) && this.GetText(3).SetText(i),
-        (i = this.u2o.GetPunishReportTarget()),
-        (s = s.MarkDesc.split("|")[i.GetBoxNum]),
-        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), s),
+        (i = s.MarkDesc.split("|")[this.u2o.IsPunishReportFinish() ? 1 : 0]),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), i),
         this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
-        (i = t.IsMultiMap()),
-        this.GetSprite(23).SetUIActive(i),
-        i &&
-          ((s = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+        (s = t.IsMultiMap()),
+        this.GetSprite(23).SetUIActive(s),
+        s &&
+          ((i = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
             WorldMapDefine_1.MULTI_MAP_SELECT_ICON_PATH,
           )),
-          this.SetSpriteByPath(s, this.GetSprite(23), !1)),
-        (i = e.ShowFlag === Protocol_1.Aki.Protocol.U5s.Proto_ShowDisable),
-        this.GetSprite(24).SetUIActive(i),
-        i &&
-          ((s = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+          this.SetSpriteByPath(i, this.GetSprite(23), !1)),
+        (s = e.ShowFlag === Protocol_1.Aki.Protocol.U5s.Proto_ShowDisable),
+        this.GetSprite(24).SetUIActive(s),
+        s &&
+          ((i = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
             WorldMapDefine_1.BLOCK_MARK_ICON_PATH,
           )),
-          this.SetSpriteByPath(s, this.GetSprite(24), !1)),
+          this.SetSpriteByPath(i, this.GetSprite(24), !1)),
         this.GetItem(12).SetUIActive(!1),
         this.GetVerticalLayout(7).RootUIComp.SetUIActive(!1),
         this.GetItem(6).SetUIActive(!1),
@@ -130,11 +129,11 @@ class PunishReportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         this.GetItem(32).SetUIActive(e),
         this.oza.SetUiActive(!1),
         e &&
-          ((i = this.GetButton(29)),
-          (s = TeleportController_1.TeleportController.CheckCanTeleport()),
+          ((s = this.GetButton(29)),
+          (i = TeleportController_1.TeleportController.CheckCanTeleport()),
           (e = MarkUiUtils_1.MarkUiUtils.FindNearbyValidGotoMark(this.Map, t)),
-          this.oza.SetUiActive(!s || void 0 === e),
-          i.SetSelfInteractive(s && void 0 !== e)),
+          this.oza.SetUiActive(!i || void 0 === e),
+          s.SetSelfInteractive(i && void 0 !== e)),
         this.GetItem(14).SetUIActive(!0),
         this.GetItem(26).SetUIActive(!1),
         this.GetVerticalLayout(16).RootUIComp.SetUIActive(!0),
@@ -169,7 +168,7 @@ class PunishReportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         s.SetNumTxt("x1"),
         s.SetLockActive(!1),
         s.SetToggleEmptyActive(!0),
-        s.SetToggleSelectedActive(2 === e || 1 === e);
+        s.SetToggleSelectedActive(1 === e);
     }
   }
   OnBeforeDestroy() {

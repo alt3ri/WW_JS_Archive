@@ -12,9 +12,7 @@ const MultiTextLang_1 = require("../../../../../../Core/Define/ConfigQuery/Multi
   MowingRiskConfigContext_1 = require("./MowingRiskConfigContext"),
   MowingRiskProtocolContext_1 = require("./MowingRiskProtocolContext"),
   MowingRiskUiContext_1 = require("./MowingRiskUiContext"),
-  RiskHarvestInstById_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestInstById"),
-  StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
-  TimeUtil_1 = require("../../../../../Common/TimeUtil");
+  StringUtils_1 = require("../../../../../../Core/Utils/StringUtils");
 class MowingRiskModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -27,7 +25,9 @@ class MowingRiskModel extends ModelBase_1.ModelBase {
           this.BuildActivityRewardViewData(),
         );
       }),
-      (this.InstanceSubViewResourceId = "UiItem_CheckpointsMowing");
+      (this.IsNewInstanceOpen = !1),
+      (this.InstanceSubViewResourceId = "UiItem_CheckpointsMowing"),
+      (this.InstanceSubtitleTextId = "TowerDefence_GPint");
   }
   OnInit() {
     return (
@@ -51,7 +51,7 @@ class MowingRiskModel extends ModelBase_1.ModelBase {
     this.K5a?.ParseRiskHarvestArtifactNotify(t);
   }
   SyncProtocolRiskHarvestBuffUpdateNotify(t) {
-    this.K5a?.ParseRiskHarvestBuffUpdateNotify(t), this.$5a?.SyncNewBuff(t.jih);
+    this.K5a?.ParseRiskHarvestBuffUpdateNotify(t), this.$5a?.SyncNewBuff(t.bih);
   }
   SyncProtocolRiskHarvestBuffUnlockNotify(t) {
     this.K5a?.ParseRiskHarvestBuffUnlockNotify(t);
@@ -80,9 +80,9 @@ class MowingRiskModel extends ModelBase_1.ModelBase {
         return "";
     }
   }
-  GetMaxScoreById(t) {
-    t = RiskHarvestInstById_1.configRiskHarvestInstById.GetConfig(t);
-    return t ? t.MaxScore : 0;
+  GetScoreByInstanceId(t) {
+    t = this.Q5a.GetIdByInstanceId(t);
+    return void 0 === t ? 0 : this.K5a.GetScoreById(t);
   }
   BuildBuffIntroduceDataInOverviewById(t) {
     var e = this.Q5a,
@@ -198,33 +198,13 @@ class MowingRiskModel extends ModelBase_1.ModelBase {
     return { TitleTextId: t?.Name ?? "", IconPath: t?.TitleSprite ?? "" };
   }
   BuildInstanceDetailDataByInstanceId(t) {
-    var e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(t),
-      i = this.Q5a.GetIdByInstanceId(t);
+    t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(t);
     return {
-      TitleTextId: e?.MapName ?? "",
-      ContentTextId: e?.DungeonDesc ?? "",
-      AttributeList: [{ AttributeTextId: e?.MonsterTips }],
-      LockData:
-        void 0 !== i && this.K5a.IsInstanceUnlockedById(i)
-          ? void 0
-          : this.BuildInstanceLockDataByInstanceId(t),
+      TitleTextId: t?.MapName ?? "",
+      ContentTextId: t?.DungeonDesc ?? "",
+      AttributeList: [{ IconPath: "", AttributeTextId: t?.MonsterTips ?? "" }],
+      LockData: { LockDescriptionTextId: "", LockDescriptionTextArgs: [] },
     };
-  }
-  BuildInstanceDetailLockDataByInstanceId(t) {
-    var e = this.Q5a.GetIdByInstanceId(t);
-    return void 0 !== e && this.K5a.IsInstanceUnlockedById(e)
-      ? void 0
-      : this.BuildInstanceLockDataByInstanceId(t);
-  }
-  BuildInstanceLockDataByInstanceId(t) {
-    var t = this.Q5a.GetIdByInstanceId(t),
-      e = { IsUnlock: !1 };
-    return (
-      void 0 !== t &&
-        ((e.LockDescriptionTextId = this.YZa(t)),
-        (e.LockDescriptionTextArgs = this.zZa(t))),
-      e
-    );
   }
   BuildInstanceRecommendDataByInstanceId(t) {
     return {
@@ -272,14 +252,6 @@ class MowingRiskModel extends ModelBase_1.ModelBase {
       QualityTexPath: e.GetNewBuffQualityTexPathById(t),
     };
   }
-  BuildInstanceSubtitleTextIdByInstanceId(t) {
-    t = this.Q5a.GetIdByInstanceId(t);
-    if (void 0 !== t) return this.YZa(t);
-  }
-  BuildInstanceSubtitleTextArgsByInstanceId(t) {
-    t = this.Q5a.GetIdByInstanceId(t);
-    if (void 0 !== t) return this.zZa(t);
-  }
   IsSuperBuffById(t) {
     return this.Q5a.IsSuperBuffByBuffId(t);
   }
@@ -295,24 +267,6 @@ class MowingRiskModel extends ModelBase_1.ModelBase {
   }
   IsBuffAvailableInActivity(t) {
     return this.K5a.Id === t.ActivityId;
-  }
-  IsInstanceUnlockedByInstanceId(t) {
-    t = this.Q5a.GetIdByInstanceId(t);
-    return void 0 !== t && this.K5a.IsInstanceUnlockedById(t);
-  }
-  IsInstanceNewById(t) {
-    return this.Q5a.IsInstanceNewCache.get(t) ?? !1;
-  }
-  SetInstanceOldById(t) {
-    var e = this.Q5a.IsInstanceNewCache;
-    e.set(t, !1), (this.Q5a.IsInstanceNewCache = e);
-  }
-  SetCurrentInstancesOld() {
-    var t,
-      e = this.K5a.InstanceInfo,
-      i = this.Q5a.IsInstanceNewCache;
-    for ([t] of e) this.K5a.IsInstancePassUnlockTimeById(t) && i.set(t, !1);
-    this.Q5a.IsInstanceNewCache = i;
   }
   z5a(t) {
     return { TabName: this.J5a(t), TabTips: this.Z5a(), DataList: this.e6a(t) };
@@ -376,8 +330,8 @@ class MowingRiskModel extends ModelBase_1.ModelBase {
     return t;
   }
   o6a(t) {
-    var e = this.K5a.InstanceInfo.get(t.Id);
-    return void 0 === e || !e.K6n || e.SMs < t.RewardScore ? 0 : e.mLs ? 2 : 1;
+    t = this.K5a.InstanceInfo.get(t.Id);
+    return void 0 !== t && t.K6n && t.Iih ? (t.mLs ? 2 : 1) : 0;
   }
   n6a(t) {
     var e = this.K5a;
@@ -413,7 +367,7 @@ class MowingRiskModel extends ModelBase_1.ModelBase {
       case 1:
         return (
           ConfigManager_1.ConfigManager.TextConfig?.GetTextById(
-            "RiskHarvest_PointTap",
+            "BossRushScoreRewardText",
           ) ?? ""
         );
       default:
@@ -422,9 +376,7 @@ class MowingRiskModel extends ModelBase_1.ModelBase {
   }
   Z5a() {
     return StringUtils_1.StringUtils.Format(
-      MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-        "RiskHarvest_InstanceToppoint",
-      ),
+      MultiTextLang_1.configMultiTextLang.GetLocalTextNew("MowingTotalPoint"),
       this.K5a.TotalScore.toString(),
     );
   }
@@ -435,31 +387,6 @@ class MowingRiskModel extends ModelBase_1.ModelBase {
         ConfigManager_1.ConfigManager.TextConfig.GetTextById("OverSeaServerLv"),
         t.toString(),
       );
-  }
-  YZa(t) {
-    return this.K5a.IsInstanceUnlockedById(t)
-      ? "RiskHarvest_InstanceToppoint"
-      : this.K5a.IsInstancePassUnlockTimeById(t)
-        ? "RiskHarvest_Unlock"
-        : "Text_ActiveToOpenTime_Text";
-  }
-  zZa(t) {
-    var e,
-      i,
-      r = [];
-    return (
-      this.K5a.IsInstanceUnlockedById(t)
-        ? ((i = this.K5a.GetScoreById(t)), r.push(i.toString()))
-        : ((i = this.K5a.GetInstanceUnlockTimestampById(t)),
-          (e = TimeUtil_1.TimeUtil.GetServerTimeStamp()) < i
-            ? ((i = i - e),
-              (e = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat(
-                i * TimeUtil_1.TimeUtil.Millisecond,
-              )),
-              r.push(e.CountDownText))
-            : ((i = this.Q5a.GetScoreToUnlockById(t)), r.push(i.toString()))),
-      r
-    );
   }
   get ActivityData() {
     return this.K5a;
@@ -512,21 +439,6 @@ class MowingRiskModel extends ModelBase_1.ModelBase {
   get CurrentInstanceId() {
     return ModelManager_1.ModelManager.InstanceDungeonEntranceModel
       .SelectInstanceId;
-  }
-  get IsNewInstanceOpen() {
-    var t,
-      e,
-      i,
-      r = this.Q5a.IsInstanceNewCache,
-      s = new Map();
-    for ([t, e] of r) {
-      var n = this.K5a.GetInstanceUnlockTimestampById(t),
-        a = s.get(n) ?? !0,
-        o = this.K5a.IsInstancePassUnlockTimeById(t);
-      s.set(n, a && !this.K5a.IsInstancePlayedById(t) && e && o);
-    }
-    for ([, i] of s) if (i) return !0;
-    return !1;
   }
   get IsPreQuestFinished() {
     return this.K5a.GetPreGuideQuestFinishState();

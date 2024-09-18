@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayPackageShopView = void 0);
 const Log_1 = require("../../../../Core/Common/Log"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
@@ -56,26 +57,28 @@ class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
         0 < this.PayShopGoodsList.length,
       ),
       this.GetItem(8).SetUIActive(this.PayShopGoodsList.length <= 0),
-      this.CheckIfNeedShowPlayStationStoreIcon();
+      this.CheckIfNeedShowPlayStationStoreIcon(),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("Shop", 11, "PayPackageShopView Reload");
   }
-  UpdateTabs(o) {
-    const i = ModelManager_1.ModelManager.PayGiftModel.GetTabList();
+  UpdateTabs(t) {
+    const r = ModelManager_1.ModelManager.PayGiftModel.GetTabList();
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Shop",
         11,
         "PayShop:TabView 页签数据",
         ["ViewName", this.GetViewName()],
-        ["Data", i],
+        ["Data", r],
       );
-    var e = i.length;
+    var e = r.length;
     this.TabGroup.ResetLastSelectTab();
     this.TabGroup.RefreshTabItemByLength(e, () => {
-      var e, t;
-      for ([e, t] of this.TabGroup.GetTabItemMap())
-        t.UpdateView(this.CurrentShopId, i[e]),
-          t.BindRedDot("PayShopTab", i[e]);
-      this.TabGroup.SelectToggleByIndex(o, !0);
+      var e, o;
+      for ([e, o] of this.TabGroup.GetTabItemMap())
+        o.UpdateView(this.CurrentShopId, r[e]),
+          o.BindRedDot("PayShopTab", r[e]);
+      this.TabGroup.SelectToggleByIndex(t, !0);
     }),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Shop", 11, "PayShop:TabView 选择页签", [
@@ -88,7 +91,19 @@ class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
       ControllerHolder_1.ControllerHolder.PayGiftController.SendPayGiftInfoRequestAsync(),
       ControllerHolder_1.ControllerHolder.PayItemController.SendPayItemInfoRequestAsync(),
     ]);
-    (this.r3i = e.every((e) => e)), this.n3i();
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetIfNeedQueryProductInfoForce() &&
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Shop",
+          11,
+          "PayPackageShopView ifNeedQueryProductInfoForce",
+        ),
+      await Promise.all([
+        ControllerHolder_1.ControllerHolder.PayGiftController.QueryPayGiftInfoAsync(),
+        ControllerHolder_1.ControllerHolder.PayItemController.QueryPayItemInfoAsync(),
+      ])),
+      (this.r3i = e.every((e) => e)),
+      this.n3i();
   }
   OnBeforeShow() {
     this.GetItem(4).SetUIActive(!0), this.TabGroup.SetActive(!0);

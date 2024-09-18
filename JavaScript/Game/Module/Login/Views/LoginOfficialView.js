@@ -591,14 +591,14 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
   eSi() {}
   pSi() {
     this.GetButton(11).RootUIComp.SetUIActive(
-      ControllerHolder_1.ControllerHolder.LoginController.IsSdkLoginMode() &&
+      ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode() &&
         ModelManager_1.ModelManager.LoginModel.IsSdkLoggedIn(),
     );
   }
   iSi(e) {
     var r = this.GetButton(2),
       o = this.GetButton(3);
-    ControllerHolder_1.ControllerHolder.LoginController.IsSdkLoginMode()
+    ControllerHolder_1.ControllerHolder.LoginController.IsGlobalSdkLoginMode()
       ? (r.RootUIComp.SetUIActive(e),
         o.RootUIComp.SetUIActive(!e),
         this.GetItem(18).SetUIActive(e))

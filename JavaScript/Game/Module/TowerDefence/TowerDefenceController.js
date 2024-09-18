@@ -108,7 +108,7 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
         }
       }),
       (this.Z7a = (e) => {
-        const n = MathUtils_1.MathUtils.LongToNumber(e.bih);
+        const n = MathUtils_1.MathUtils.LongToNumber(e.Eih);
         var r = TimeUtil_1.TimeUtil.GetServerStopTimeStamp();
         const t = TimeUtil_1.TimeUtil.SetTimeSecond(n - r);
         var o = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat3(t);
@@ -161,7 +161,7 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
       }),
       (this.eHa = (e) => {
         var n,
-          r = MathUtils_1.MathUtils.LongToNumber(e.bih),
+          r = MathUtils_1.MathUtils.LongToNumber(e.Eih),
           t = TimeUtil_1.TimeUtil.GetServerStopTimeStamp(),
           r = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat3(
             TimeUtil_1.TimeUtil.SetTimeSecond(r - t),
@@ -172,7 +172,7 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
             65,
             "局内玩家玩家玩家复活通知",
             ["notify", e],
-            ["time", MathUtils_1.MathUtils.LongToNumber(e.bih)],
+            ["time", MathUtils_1.MathUtils.LongToNumber(e.Eih)],
             [
               "local time with stop",
               TimeUtil_1.TimeUtil.GetServerStopTimeStamp(),
@@ -716,7 +716,7 @@ class TowerDefenseController extends ActivityControllerBase_1.ActivityController
                 ? ((e = "TowerDefenceWinTime"),
                   (n = TimeUtil_1.TimeUtil.GetTimeString(t.Qxs)),
                   (a[1].DescriptionTextId = "TowerDefenceBestTime"),
-                  (a[1].DescriptionArgs = [t.xih]))
+                  (a[1].DescriptionArgs = [t.yih]))
                 : ((e = "TowerDefencelose"), (n = ""))
               : ((e = "MowingCurrentPoint"), (n = ""), (r = t.SMs)),
             TowerDefenseController.CheckIsInstanceSingle()

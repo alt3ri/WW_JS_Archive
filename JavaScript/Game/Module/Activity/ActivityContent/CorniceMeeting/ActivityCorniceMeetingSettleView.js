@@ -169,12 +169,12 @@ class ActivityCorniceMeetingSettleDetailPanel extends UiPanelBase_1.UiPanelBase 
         e.CurrentScore.toString(),
         e?.GetMaxScoreConfig(),
       ),
-      (t = TimeUtil_1.TimeUtil.GetTimeString(this.Data.Rih)),
+      (t = TimeUtil_1.TimeUtil.GetTimeString(this.Data.gih)),
       this.GetText(1).SetText(t),
       this.GetItem(5).SetUIActive(e.CurrentScore >= e.GetMaxScoreConfig()),
       this.GetItem(4).SetUIActive(0 < e.CurrentScore),
-      this.GetItem(3).SetUIActive(this.Data.wih && !this.Data.Dih),
-      this.GetItem(2).SetUIActive(this.Data.Dih),
+      this.GetItem(3).SetUIActive(this.Data.vih && !this.Data.pih),
+      this.GetItem(2).SetUIActive(this.Data.pih),
       this.GetItem(6).SetUIActive(!1));
   }
 }

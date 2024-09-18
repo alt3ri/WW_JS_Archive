@@ -1,14 +1,11 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true,
-});
-exports.GameUtils = undefined;
-// const Log_1 = require("../Core/Common/Log");
-// const Stats_1 = require("../Core/Common/Stats");
-const ImmutableArray_1 = require("../Core/Container/ImmutableArray");
-const ImmutableMap_1 = require("../Core/Container/ImmutableMap");
-// const TimerSystem_1 = require("../Core/Timer/TimerSystem");
+Object.defineProperty(exports, "__esModule", { value: !0 }),
+  (exports.GameUtils = void 0);
+const Log_1 = require("../Core/Common/Log"),
+  Stats_1 = require("../Core/Common/Stats"),
+  ImmutableArray_1 = require("../Core/Container/ImmutableArray"),
+  ImmutableMap_1 = require("../Core/Container/ImmutableMap"),
+  TimerSystem_1 = require("../Core/Timer/TimerSystem");
 class GameUtils {
   static async WaitFrame() {
     return new Promise((e) => {
@@ -17,42 +14,24 @@ class GameUtils {
       });
     });
   }
-  static ConvertToArray(r, t, a = undefined) {
-    // if (r === 0) {
-    //   return this.u_i;
-    // }
+  static ConvertToArray(r, t, a = void 0) {
+    if (0 === r) return this.u_i;
     var o = new Array();
-    for (let e = 0; e < r; e++) {
-      if (a) {
-        o.push(t.call(a, e));
-      } else {
-        o.push(t(e));
-      }
-    }
+    for (let e = 0; e < r; e++) a ? o.push(t.call(a, e)) : o.push(t(e));
     return o;
   }
-  static ConvertToMap(r, t, a, o = undefined) {
-    // if (r === 0) {
-    //   return this.BKa;
-    // }
+  static ConvertToMap(r, t, a, o = void 0) {
+    if (0 === r) return this.BKa;
     var m = new Map();
-    for (let e = 0; e < r; e++) {
-      if (o) {
-        m.set(t.call(o, e), a.call(o, e));
-      } else {
-        m.set(t(e), a(e));
-      }
-    }
+    for (let e = 0; e < r; e++)
+      o ? m.set(t.call(o, e), a.call(o, e)) : m.set(t(e), a(e));
     return m;
   }
   static CreateStat(e) {
-    // var r = Stats_1.Stat.Create(e);
-    // r.Start();
-    // r.Stop();
-    // if (Log_1.Log.CheckInfo()) {
-    //   Log_1.Log.Info("Game", 52, e);
-    // }
+    var r = Stats_1.Stat.Create(e);
+    r.Start(), r.Stop(), Log_1.Log.CheckInfo() && Log_1.Log.Info("Game", 52, e);
   }
 }
-(exports.GameUtils = GameUtils).u_i = new ImmutableArray_1.ImmutableArray();
-GameUtils.BKa = new ImmutableMap_1.ImmutableMap(); //# sourceMappingURL=GameUtils.js.map
+((exports.GameUtils = GameUtils).u_i = new ImmutableArray_1.ImmutableArray()),
+  (GameUtils.BKa = new ImmutableMap_1.ImmutableMap());
+//# sourceMappingURL=GameUtils.js.map

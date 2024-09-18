@@ -1518,67 +1518,66 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e[(e.OnBeforeDestroyInstanceDungeonEntranceView = 1300)] =
         "OnBeforeDestroyInstanceDungeonEntranceView"),
       (e[(e.OnClickEnterInstanceSingle = 1301)] = "OnClickEnterInstanceSingle"),
-      (e[(e.OnNeedRefreshByProtocol = 1302)] = "OnNeedRefreshByProtocol"),
-      (e[(e.MowingBasicBuffGridItemClick = 1303)] =
+      (e[(e.MowingBasicBuffGridItemClick = 1302)] =
         "MowingBasicBuffGridItemClick"),
-      (e[(e.MowingSuperBuffGridItemClick = 1304)] =
+      (e[(e.MowingSuperBuffGridItemClick = 1303)] =
         "MowingSuperBuffGridItemClick"),
-      (e[(e.MowingRiskInBattleViewSetActive = 1305)] =
+      (e[(e.MowingRiskInBattleViewSetActive = 1304)] =
         "MowingRiskInBattleViewSetActive"),
-      (e[(e.MowingRiskInBattleRootUpdate = 1306)] =
+      (e[(e.MowingRiskInBattleRootUpdate = 1305)] =
         "MowingRiskInBattleRootUpdate"),
-      (e[(e.MowingRiskOnInstanceClearRewardResponse = 1307)] =
+      (e[(e.MowingRiskOnInstanceClearRewardResponse = 1306)] =
         "MowingRiskOnInstanceClearRewardResponse"),
-      (e[(e.MowingRiskOnScoreRewardResponse = 1308)] =
+      (e[(e.MowingRiskOnScoreRewardResponse = 1307)] =
         "MowingRiskOnScoreRewardResponse"),
-      (e[(e.MowingRiskOnBuffCountRewardResponse = 1309)] =
+      (e[(e.MowingRiskOnBuffCountRewardResponse = 1308)] =
         "MowingRiskOnBuffCountRewardResponse"),
-      (e[(e.MowingRiskOnRefreshRewardRedDot = 1310)] =
+      (e[(e.MowingRiskOnRefreshRewardRedDot = 1309)] =
         "MowingRiskOnRefreshRewardRedDot"),
-      (e[(e.MowingRiskOnRefreshBuffAllRedDot = 1311)] =
+      (e[(e.MowingRiskOnRefreshBuffAllRedDot = 1310)] =
         "MowingRiskOnRefreshBuffAllRedDot"),
-      (e[(e.MowingRiskOnBuffTipsAfterDestroy = 1312)] =
+      (e[(e.MowingRiskOnBuffTipsAfterDestroy = 1311)] =
         "MowingRiskOnBuffTipsAfterDestroy"),
-      (e[(e.MowingRiskOnNeedPlayLevelUpSequence = 1313)] =
+      (e[(e.MowingRiskOnNeedPlayLevelUpSequence = 1312)] =
         "MowingRiskOnNeedPlayLevelUpSequence"),
-      (e[(e.OnSetGameModeDataDone = 1314)] = "OnSetGameModeDataDone"),
-      (e[(e.OnBossRushBuffViewOpened = 1315)] = "OnBossRushBuffViewOpened"),
-      (e[(e.OnTutorialTipExistChanged = 1316)] = "OnTutorialTipExistChanged"),
-      (e[(e.OnTutorialUpdate = 1317)] = "OnTutorialUpdate"),
-      (e[(e.LevelLoadingLockTimeDilation = 1318)] =
+      (e[(e.OnSetGameModeDataDone = 1313)] = "OnSetGameModeDataDone"),
+      (e[(e.OnBossRushBuffViewOpened = 1314)] = "OnBossRushBuffViewOpened"),
+      (e[(e.OnTutorialTipExistChanged = 1315)] = "OnTutorialTipExistChanged"),
+      (e[(e.OnTutorialUpdate = 1316)] = "OnTutorialUpdate"),
+      (e[(e.LevelLoadingLockTimeDilation = 1317)] =
         "LevelLoadingLockTimeDilation"),
-      (e[(e.LevelLoadingUnlockDilation = 1319)] = "LevelLoadingUnlockDilation"),
-      (e[(e.BusinessInvestResult = 1320)] = "BusinessInvestResult"),
-      (e[(e.SetDelegationResultData = 1321)] = "SetDelegationResultData"),
-      (e[(e.PopularityChange = 1322)] = "PopularityChange"),
-      (e[(e.OpenTipsTravelView = 1323)] = "OpenTipsTravelView"),
-      (e[(e.OpenTipsShopView = 1324)] = "OpenTipsShopView"),
-      (e[(e.UnlockMoonChasingData = 1325)] = "UnlockMoonChasingData"),
-      (e[(e.RefreshCorniceMeetingRedDot = 1326)] =
+      (e[(e.LevelLoadingUnlockDilation = 1318)] = "LevelLoadingUnlockDilation"),
+      (e[(e.BusinessInvestResult = 1319)] = "BusinessInvestResult"),
+      (e[(e.SetDelegationResultData = 1320)] = "SetDelegationResultData"),
+      (e[(e.PopularityChange = 1321)] = "PopularityChange"),
+      (e[(e.OpenTipsTravelView = 1322)] = "OpenTipsTravelView"),
+      (e[(e.OpenTipsShopView = 1323)] = "OpenTipsShopView"),
+      (e[(e.UnlockMoonChasingData = 1324)] = "UnlockMoonChasingData"),
+      (e[(e.RefreshCorniceMeetingRedDot = 1325)] =
         "RefreshCorniceMeetingRedDot"),
-      (e[(e.OnClickActivityCorniceMeetingTab = 1327)] =
+      (e[(e.OnClickActivityCorniceMeetingTab = 1326)] =
         "OnClickActivityCorniceMeetingTab"),
-      (e[(e.OnPlayerFollowerCreate = 1328)] = "OnPlayerFollowerCreate"),
-      (e[(e.OnPlayerFollowerDestroy = 1329)] = "OnPlayerFollowerDestroy"),
-      (e[(e.OnPlayerFollowerEnableChange = 1330)] =
+      (e[(e.OnPlayerFollowerCreate = 1327)] = "OnPlayerFollowerCreate"),
+      (e[(e.OnPlayerFollowerDestroy = 1328)] = "OnPlayerFollowerDestroy"),
+      (e[(e.OnPlayerFollowerEnableChange = 1329)] =
         "OnPlayerFollowerEnableChange"),
-      (e[(e.BuildAnimFinish = 1331)] = "BuildAnimFinish"),
-      (e[(e.ConditionUnlockRole = 1332)] = "ConditionUnlockRole"),
-      (e[(e.TakenRewardTargetData = 1333)] = "TakenRewardTargetData"),
-      (e[(e.RefreshRewardTargetData = 1334)] = "RefreshRewardTargetData"),
-      (e[(e.RefreshDelegate = 1335)] = "RefreshDelegate"),
-      (e[(e.ElevatorMove = 1336)] = "ElevatorMove"),
-      (e[(e.OnHighSpeedModeChanged = 1337)] = "OnHighSpeedModeChanged"),
-      (e[(e.OnDropDownListVisibleChanged = 1338)] =
+      (e[(e.BuildAnimFinish = 1330)] = "BuildAnimFinish"),
+      (e[(e.ConditionUnlockRole = 1331)] = "ConditionUnlockRole"),
+      (e[(e.TakenRewardTargetData = 1332)] = "TakenRewardTargetData"),
+      (e[(e.RefreshRewardTargetData = 1333)] = "RefreshRewardTargetData"),
+      (e[(e.RefreshDelegate = 1334)] = "RefreshDelegate"),
+      (e[(e.ElevatorMove = 1335)] = "ElevatorMove"),
+      (e[(e.OnHighSpeedModeChanged = 1336)] = "OnHighSpeedModeChanged"),
+      (e[(e.OnDropDownListVisibleChanged = 1337)] =
         "OnDropDownListVisibleChanged"),
-      (e[(e.OnGlobalFootstepMaterialChange = 1339)] =
+      (e[(e.OnGlobalFootstepMaterialChange = 1338)] =
         "OnGlobalFootstepMaterialChange"),
-      (e[(e.OnPortalRegister = 1340)] = "OnPortalRegister"),
-      (e[(e.OnPortalUnRegister = 1341)] = "OnPortalUnRegister"),
-      (e[(e.OnChangeModuleDebugLevel = 1342)] = "OnChangeModuleDebugLevel"),
-      (e[(e.OnMarkActorInFighting = 1343)] = "OnMarkActorInFighting"),
-      (e[(e.OnPunishMarkStateChanged = 1344)] = "OnPunishMarkStateChanged"),
-      (e[(e.OnInputSettingResponse = 1345)] = "OnInputSettingResponse"),
-      (e[(e.OnInputSettingUpdateNotify = 1346)] = "OnInputSettingUpdateNotify");
+      (e[(e.OnPortalRegister = 1339)] = "OnPortalRegister"),
+      (e[(e.OnPortalUnRegister = 1340)] = "OnPortalUnRegister"),
+      (e[(e.OnChangeModuleDebugLevel = 1341)] = "OnChangeModuleDebugLevel"),
+      (e[(e.OnMarkActorInFighting = 1342)] = "OnMarkActorInFighting"),
+      (e[(e.OnPunishMarkStateChanged = 1343)] = "OnPunishMarkStateChanged"),
+      (e[(e.OnInputSettingResponse = 1344)] = "OnInputSettingResponse"),
+      (e[(e.OnInputSettingUpdateNotify = 1345)] = "OnInputSettingUpdateNotify");
   })((EEventName = exports.EEventName || (exports.EEventName = {})));
 //# sourceMappingURL=EventDefine.js.map

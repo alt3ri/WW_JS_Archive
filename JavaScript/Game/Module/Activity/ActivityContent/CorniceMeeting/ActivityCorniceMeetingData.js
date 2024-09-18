@@ -21,9 +21,9 @@ class ActivityCorniceMeetingLevelEntryData {
       (this.RewardedMap = new Map()),
       (this.LevelPlayId = e),
       (this.MaxScore = t.tBs),
-      (this.RemainTime = t.Rih),
+      (this.RemainTime = t.gih),
       (this.UnlockTime = MathUtils_1.MathUtils.LongToNumber(t.yzs)),
-      t.Aih.forEach((t) => {
+      t.fih.forEach((t) => {
         this.RewardedMap.set(t, !0);
       });
   }
@@ -41,7 +41,7 @@ class ActivityCorniceMeetingLevelEntryData {
   UpdateData(t) {
     (this.MaxScore = t.tBs),
       (this.UnlockTime = MathUtils_1.MathUtils.LongToNumber(t.yzs)),
-      t.Aih.forEach((t) => {
+      t.fih.forEach((t) => {
         this.RewardedMap.set(t, !0);
       });
   }
@@ -143,16 +143,16 @@ class ActivityCorniceMeetingData extends ActivityData_1.ActivityBaseData {
       (this.UnlockTime = 0);
   }
   PhraseEx(t) {
-    this.UnlockTime = MathUtils_1.MathUtils.LongToNumber(t.Iih.Mih);
-    for (const e of Object.keys(t.Iih.Sih))
+    this.UnlockTime = MathUtils_1.MathUtils.LongToNumber(t.dih.lih);
+    for (const e of Object.keys(t.dih._ih))
       0 === this.CurrentSelectLevelPlayId &&
         (this.CurrentSelectLevelPlayId = Number(e)),
         this.LevelEntryMap.has(Number(e))
-          ? this.LevelEntryMap.get(Number(e))?.UpdateData(t.Iih.Sih[Number(e)])
+          ? this.LevelEntryMap.get(Number(e))?.UpdateData(t.dih._ih[Number(e)])
           : this.LevelEntryMap.set(
               Number(e),
               new ActivityCorniceMeetingLevelEntryData(
-                t.Iih.Sih[Number(e)],
+                t.dih._ih[Number(e)],
                 Number(e),
               ),
             );

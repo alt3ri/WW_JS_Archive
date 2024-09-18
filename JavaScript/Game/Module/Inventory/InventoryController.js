@@ -125,7 +125,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       var n =
         ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(e);
       if (n && n.CanDeprecate()) {
-        var o = new Protocol_1.Aki.Protocol.Zeh();
+        var o = new Protocol_1.Aki.Protocol.Veh();
         (o.b9n = e), (o.q9n = t ? 1 : 2);
         const r = n.GetIsLock();
         Net_1.Net.Call(16867, o, (e) => {

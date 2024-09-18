@@ -87,23 +87,7 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
   static KOi() {
     ControllerHolder_1.ControllerHolder.KuroSdkController.CancelCurrentWaitPayItemTimer();
   }
-  static async SendPayItemInfoRequestAsync() {
-    var e = Protocol_1.Aki.Protocol.Hhs.create(),
-      e =
-        ((e.K7n = ModelManager_1.ModelManager.PayItemModel.Version),
-        await Net_1.Net.CallAsync(24911, e));
-    if (!e) return !1;
-    if (
-      (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
-        ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          e.Q4n,
-          21666,
-        ),
-      !e.K7n || !e.OUs)
-    )
-      return !1;
-    (ModelManager_1.ModelManager.PayItemModel.Version = e.K7n),
-      ModelManager_1.ModelManager.PayItemModel.InitDataListByServer(e.OUs);
+  static async QueryPayItemInfoAsync() {
     var e = ModelManager_1.ModelManager.PayItemModel.GetDataList(),
       r = new Array();
     for (const t of e) {
@@ -113,13 +97,32 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
         );
       o && r.push(o);
     }
-    return await this.QueryProductInfoAsync(r), !0;
+    return this.QueryProductInfoAsync(r);
+  }
+  static async SendPayItemInfoRequestAsync() {
+    var e = Protocol_1.Aki.Protocol.Hhs.create(),
+      e =
+        ((e.K7n = ModelManager_1.ModelManager.PayItemModel.Version),
+        await Net_1.Net.CallAsync(24911, e));
+    return !(
+      !e ||
+      (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
+        ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+          e.Q4n,
+          21666,
+        ),
+      !e.K7n) ||
+      !e.OUs ||
+      ((ModelManager_1.ModelManager.PayItemModel.Version = e.K7n),
+      ModelManager_1.ModelManager.PayItemModel.InitDataListByServer(e.OUs),
+      0)
+    );
   }
   static async QueryProductInfoAsync(e) {
     if (0 === e.length)
       return (
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
             "Pay",
             17,
             "QueryProductInfoAsync failed, productIds is null",
@@ -155,19 +158,17 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
           !1
         );
       ModelManager_1.ModelManager.PayItemModel.UpdateProductInfoMap(o.DataList);
-    } else
-      await ControllerHolder_1.ControllerHolder.KuroSdkController.QueryProductByProductId(
+    } else if (
+      !(await ControllerHolder_1.ControllerHolder.KuroSdkController.QueryProductByProductId(
         e,
-      ),
-        PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().ShowPlayStationStoreIcon(
-          0,
-        );
-    return (
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.OnQueryProductInfo,
-      ),
-      !0
-    );
+      ))
+    )
+      return (
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Pay", 28, "查询失败", ["productIds", e]),
+        !1
+      );
+    return !0;
   }
   static SdkPayNew(e) {
     var r;

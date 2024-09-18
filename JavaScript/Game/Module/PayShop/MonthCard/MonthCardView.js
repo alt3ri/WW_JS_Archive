@@ -28,9 +28,6 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
       (this.eFi = void 0),
       (this.tFi = !1),
       (this.PNa = void 0),
-      (this.zki = () => {
-        this.iFi();
-      }),
       (this.dtt = () => {
         HelpController_1.HelpController.OpenHelpById(MONTH_CARD_HELP_ID);
       }),
@@ -73,6 +70,8 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
       ControllerHolder_1.ControllerHolder.PayGiftController.SendPayGiftInfoRequestAsync(),
       ControllerHolder_1.ControllerHolder.MonthCardController.RequestMonthCardData(),
     ]),
+      PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetIfNeedQueryProductInfoForce() &&
+        (await ControllerHolder_1.ControllerHolder.PayGiftController.QueryPayGiftInfoAsync()),
       (this.Z2i = new GetItemPanel()),
       await this.Z2i.CreateByActorAsync(this.GetItem(5).GetOwner()),
       this.AddChild(this.Z2i),
@@ -161,10 +160,6 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
       this.rFi,
     ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnQueryProductInfo,
-        this.zki,
-      ),
-      EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SdkPayEnd,
         this.Eza,
       );
@@ -175,10 +170,6 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
       this.rFi,
     ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnQueryProductInfo,
-        this.zki,
-      ),
-      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SdkPayEnd,
         this.Eza,
       );
@@ -187,7 +178,20 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
     this.GetTabBehavior(UiTabSequence_1.UiTabSequence)
       ?.GetLevelSequencePlayer()
       .PlayLevelSequenceByName("Start"),
-      ModelManager_1.ModelManager.MonthCardModel.RefreshNextShowPayButtonRedDotTime();
+      ModelManager_1.ModelManager.MonthCardModel.RefreshNextShowPayButtonRedDotTime(),
+      this.KZa();
+  }
+  async KZa() {
+    var e, t;
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetIfNeedQueryProductInfoForce() ||
+      ((e = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(
+        PayShopDefine_1.MONTH_CARD_SHOP_ID,
+      )),
+      (t = new Array()).push(e.GetGetPayGiftData().ProductId),
+      await ControllerHolder_1.ControllerHolder.PayItemController.QueryProductInfoAsync(
+        t,
+      ),
+      this.iFi());
   }
   nFi() {
     var e = 0 <= ModelManager_1.ModelManager.MonthCardModel.GetRemainDays();

@@ -80,7 +80,7 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
         e &&
           (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
             ? (ModelManager_1.ModelManager.MingSuModel.RefreshDragonPoolDropItems(
-                e.Kih,
+                e.kih,
               ),
               o && o())
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -90,22 +90,22 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static SendOpenDarkCoastDeliveryRequest(o, n) {
-    var e = new Protocol_1.Aki.Protocol.Nth();
+    var e = new Protocol_1.Aki.Protocol.Dth();
     (e.k7n = o),
-      Net_1.Net.Call(25864, Protocol_1.Aki.Protocol.Nth.create(e), (e) => {
+      Net_1.Net.Call(25864, Protocol_1.Aki.Protocol.Dth.create(e), (e) => {
         e &&
           (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
             ? (ModelManager_1.ModelManager.MingSuModel.RefreshDragonPoolDropItems(
-                e.Kih,
+                e.kih,
               ),
               ModelManager_1.ModelManager.MingSuModel.RefreshDarkCoastGuardInfo(
                 o,
-                e.Yih,
-                e.zih,
+                e.Gih,
+                e.Nih,
               ),
               ModelManager_1.ModelManager.MingSuModel.RefreshDragonPoolLevelGains(
                 o,
-                e.Xih,
+                e.Oih,
               ),
               n && n())
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -115,26 +115,26 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static async SendDarkCoastDeliveryRequestAsync() {
-    var e = new Protocol_1.Aki.Protocol.Nth(),
+    var e = new Protocol_1.Aki.Protocol.Dth(),
       e =
         ((e.k7n = MingSuDefine_1.DARK_COAST_POOL_CONFIG_ID),
         await Net_1.Net.CallAsync(
           25864,
-          Protocol_1.Aki.Protocol.Nth.create(e),
+          Protocol_1.Aki.Protocol.Dth.create(e),
         ));
     e &&
       e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs &&
       (ModelManager_1.ModelManager.MingSuModel.RefreshDragonPoolDropItems(
-        e.Kih,
+        e.kih,
       ),
       ModelManager_1.ModelManager.MingSuModel.RefreshDarkCoastGuardInfo(
         MingSuDefine_1.DARK_COAST_POOL_CONFIG_ID,
-        e.Yih,
-        e.zih,
+        e.Gih,
+        e.Nih,
       ),
       ModelManager_1.ModelManager.MingSuModel.RefreshDragonPoolLevelGains(
         MingSuDefine_1.DARK_COAST_POOL_CONFIG_ID,
-        e.Xih,
+        e.Oih,
       ));
   }
   static SendHandInMingSuRequest(t) {
@@ -230,17 +230,17 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static SendMingSuHandRewardRequest(n) {
-    var e = new Protocol_1.Aki.Protocol.Bth();
+    var e = new Protocol_1.Aki.Protocol.Ith();
     (e.k7n = n),
       (e.AVn =
         ModelManager_1.ModelManager.MingSuModel.CurrentInteractCreatureDataLongId),
-      Net_1.Net.Call(26716, Protocol_1.Aki.Protocol.Bth.create(e), (e) => {
+      Net_1.Net.Call(26716, Protocol_1.Aki.Protocol.Ith.create(e), (e) => {
         var o;
         e &&
           (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
             ? (ModelManager_1.ModelManager.MingSuModel.RefreshDragonPoolLevelGains(
                 n,
-                e.Xih,
+                e.Oih,
               ),
               (o =
                 ModelManager_1.ModelManager.MingSuModel.GetDragonPoolInstanceById(

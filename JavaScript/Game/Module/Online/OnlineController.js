@@ -554,10 +554,10 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
   static ReceiveRechallengeRequest(e, n) {
     var o = new Protocol_1.Aki.Protocol.H1s();
     (o.j7n = e
-      ? Protocol_1.Aki.Protocol.Ioh.Proto_Accept
+      ? Protocol_1.Aki.Protocol.doh.Proto_Accept
       : n
-        ? Protocol_1.Aki.Protocol.Ioh.Proto_ActiveRefuse
-        : Protocol_1.Aki.Protocol.Ioh.Proto_TimeOutRefuse),
+        ? Protocol_1.Aki.Protocol.doh.Proto_ActiveRefuse
+        : Protocol_1.Aki.Protocol.doh.Proto_TimeOutRefuse),
       Net_1.Net.Call(17713, o, (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
@@ -624,13 +624,13 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static PlayerCreatePsnSessionRequest(e) {
-    var n = new Protocol_1.Aki.Protocol.Mth();
+    var n = new Protocol_1.Aki.Protocol.lth();
     (n.JNa = e),
       Net_1.Net.Call(17643, n, (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
             "协议id",
-            "9626" + Protocol_1.Aki.Protocol.Sth.name,
+            "9626" + Protocol_1.Aki.Protocol._th.name,
           ]);
       });
   }
@@ -1131,7 +1131,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
   }),
   (OnlineController.ReceiveRechallengeNotify = (e) => {
     var n = e.W5n;
-    e.j7n !== Protocol_1.Aki.Protocol.Ioh.Proto_Accept
+    e.j7n !== Protocol_1.Aki.Protocol.doh.Proto_Accept
       ? (UiManager_1.UiManager.IsViewOpen("OnlineChallengeStateView") &&
           UiManager_1.UiManager.CloseView("OnlineChallengeStateView"),
         n !== ModelManager_1.ModelManager.PlayerInfoModel?.GetId() &&
@@ -1261,7 +1261,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       _a.JoinPlayerSession(e.JNa);
   }),
   (OnlineController.SyncPlayerLocationNotify = (e) => {
-    for (const o of e.drh) {
+    for (const o of e.irh) {
       let e =
         ModelManager_1.ModelManager.OnlineModel.GetOtherScenePlayerDataByPlayerId(
           o.W5n,

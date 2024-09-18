@@ -264,7 +264,8 @@ class PlatformSdkBase {
   }
   QueryProduct(e, o) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("KuroSdk", 28, "需要模块内重写QueryProduct");
+      Log_1.Log.Debug("KuroSdk", 28, "需要模块内重写QueryProduct"),
+      ModelManager_1.ModelManager.KuroSdkModel.QueryPromise?.SetResult(!0);
   }
   ShareByteData(e, o) {
     e = Json_1.Json.Stringify(e);
@@ -614,7 +615,7 @@ class PlatformSdkBase {
             e,
           ]);
         e = this.OnQueryProduct(e);
-        ModelManager_1.ModelManager.KuroSdkModel?.OnQueryProductInfo(e);
+        ModelManager_1.ModelManager.KuroSdkModel.OnQueryProductInfo(e);
       });
   }
   OnQueryProduct(e) {}

@@ -65,7 +65,7 @@ class ActivityBlackCoastController extends ActivityControllerBase_1.ActivityCont
     );
   }
   static RequestDataProgressReward(t, e) {
-    var r = new Protocol_1.Aki.Protocol.pth();
+    var r = new Protocol_1.Aki.Protocol.ath();
     (r.w6n = t),
       (r.w9a = e),
       Net_1.Net.Call(21211, r, (t) => {
@@ -75,11 +75,11 @@ class ActivityBlackCoastController extends ActivityControllerBase_1.ActivityCont
               t.fMs,
               23378,
             );
-          else for (const e of this.P9a()) e.SetProgressRewardDataGot(t.Pih);
+          else for (const e of this.P9a()) e.SetProgressRewardDataGot(t.Mih);
       });
   }
   static RequestTaskReward(r, o) {
-    var t = new Protocol_1.Aki.Protocol.gth();
+    var t = new Protocol_1.Aki.Protocol.nth();
     (t.gps = o),
       Net_1.Net.Call(28429, t, (t) => {
         if (t)

@@ -136,19 +136,18 @@ class SceneTeamController extends ControllerBase_1.ControllerBase {
     var t = e?.FilterSameRole ?? !0;
     const r = e?.GoDownWaitSkillEnd ?? !1,
       a = e?.ForceInheritTransform ?? !0,
-      n = e?.GoBattleInvincible ?? !1,
-      l = ModelManager_1.ModelManager.SceneTeamModel;
-    var e = l.GetCurrentTeamItem,
-      i = l.GetTeamItem(o, { ParamType: 3 });
-    if (i && (!t || e?.GetCreatureDataId() !== o)) {
-      t = i.EntityHandle?.Entity;
+      n = ModelManager_1.ModelManager.SceneTeamModel;
+    var e = n.GetCurrentTeamItem,
+      l = n.GetTeamItem(o, { ParamType: 3 });
+    if (l && (!t || e?.GetCreatureDataId() !== o)) {
+      t = l.EntityHandle?.Entity;
       if (t) {
-        var _ = SceneTeamController.Bpo();
+        var i = SceneTeamController.Bpo();
         if (
-          _ !== Protocol_1.Aki.Protocol.f6s.Proto_SignleWorld ||
+          i !== Protocol_1.Aki.Protocol.f6s.Proto_SignleWorld ||
           GlobalData_1.GlobalData.Networking()
         )
-          if (i.IsDead())
+          if (l.IsDead())
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("SceneTeam", 49, "角色已经死亡", [
                 "CreatureDataId",
@@ -160,29 +159,29 @@ class SceneTeamController extends ControllerBase_1.ControllerBase {
                 "CreatureDataId",
                 o,
               ]),
-              (l.ChangingRole = !0);
-            const m =
+              (n.ChangingRole = !0);
+            const s =
               ModelManager_1.ModelManager.CombatMessageModel.GenMessageId();
-            var s = new Protocol_1.Aki.Protocol.qis();
-            (s.Q6n = i.GetConfigId),
-              (s.$Hn = _),
+            var _ = new Protocol_1.Aki.Protocol.qis();
+            (_.Q6n = l.GetConfigId),
+              (_.$Hn = i),
               CombatMessage_1.CombatNet.Call(
                 28609,
                 t,
-                s,
+                _,
                 (e) => {
                   var t;
                   e &&
                     (Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info("SceneTeam", 49, "切换当前角色响应"),
-                    (l.ChangingRole = !1),
+                    (n.ChangingRole = !1),
                     e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
                       ? ModelManager_1.ModelManager.GameModeModel.IsMulti &&
                         (this.Tpo.Start(),
-                        this.seh(o, r, a, n, m),
+                        this.ResponseChangeRole(o, r, a, s),
                         this.Tpo.Stop())
                       : (e = e.Q6n) && 0 !== e
-                        ? (t = l
+                        ? (t = n
                             .GetTeamItem(e, { ParamType: 0, OnlyMyRole: !0 })
                             ?.GetCreatureDataId())
                           ? (Log_1.Log.CheckInfo() &&
@@ -193,7 +192,7 @@ class SceneTeamController extends ControllerBase_1.ControllerBase {
                                 ["角色Id", e],
                               ),
                             this.Tpo.Start(),
-                            this.seh(t, r, a),
+                            this.ResponseChangeRole(t, r, a, s),
                             this.Tpo.Stop())
                           : Log_1.Log.CheckError() &&
                             Log_1.Log.Error(
@@ -211,20 +210,22 @@ class SceneTeamController extends ControllerBase_1.ControllerBase {
                           ));
                 },
                 void 0,
-                m,
+                s,
               ),
               ModelManager_1.ModelManager.GameModeModel.IsMulti ||
-                (this.Tpo.Start(), this.seh(o, r, a, n, m), this.Tpo.Stop());
+                (this.Tpo.Start(),
+                this.ResponseChangeRole(o, r, a, s),
+                this.Tpo.Stop());
           }
         else
-          (_ = !i.EntityHandle?.Entity?.Active),
+          (i = !l.EntityHandle?.Entity?.Active),
             (t = e?.EntityHandle?.Entity?.GetComponent(89)?.IsInQte ?? !1),
-            (s = ModelManager_1.ModelManager.SceneTeamModel.ChangeRoleCooldown),
-            l.ChangeRole(o, {
+            (_ = ModelManager_1.ModelManager.SceneTeamModel.ChangeRoleCooldown),
+            n.ChangeRole(o, {
               UseGoBattleSkill: !t,
-              CoolDown: s,
+              CoolDown: _,
               GoDownWaitSkillEnd: r,
-              AllowRefreshTransform: _,
+              AllowRefreshTransform: i,
               ForceInheritTransform: a,
             });
       }
@@ -237,30 +238,29 @@ class SceneTeamController extends ControllerBase_1.ControllerBase {
         ? Protocol_1.Aki.Protocol.f6s.Proto_MultiWorld
         : Protocol_1.Aki.Protocol.f6s.Proto_SignleWorld;
   }
-  static seh(e, t = !1, o = !0, r = !1, a = void 0) {
-    var n, l, i;
+  static ResponseChangeRole(e, t = !1, o = !0, r = void 0) {
+    var a, n, l;
     ModelManager_1.ModelManager.GameModeModel.IsTeleport
       ? (ModelManager_1.ModelManager.SceneTeamModel.ChangeCreatureDataIdCache =
           e)
-      : ((n = ModelManager_1.ModelManager.SceneTeamModel),
+      : ((a = ModelManager_1.ModelManager.SceneTeamModel),
         this.Lpo.Start(),
-        n.RefreshLastTransform(),
+        a.RefreshLastTransform(),
         this.Lpo.Stop(),
-        (l = (i = n.GetTeamItem(e, { ParamType: 3 }))?.EntityHandle.Entity) &&
-        i.IsMyRole()
-          ? ((i = l.GetComponent(89)),
+        (n = (l = a.GetTeamItem(e, { ParamType: 3 }))?.EntityHandle.Entity) &&
+        l.IsMyRole()
+          ? ((l = n.GetComponent(89)),
             this.Dpo.Start(),
-            (i = n.ChangeRole(e, {
-              UseGoBattleSkill: !i.IsInQte,
-              GoBattleInvincible: r,
-              CoolDown: n.ChangeRoleCooldown,
+            (l = a.ChangeRole(e, {
+              UseGoBattleSkill: !l.IsInQte,
+              CoolDown: a.ChangeRoleCooldown,
               GoDownWaitSkillEnd: t,
-              AllowRefreshTransform: !l.Active,
+              AllowRefreshTransform: !n.Active,
               ForceInheritTransform: o,
-              MessageId: a,
+              MessageId: r,
             })),
             this.Dpo.Stop(),
-            i || (ModelManager_1.ModelManager.SceneTeamModel.ChangingRole = !1))
+            l || (ModelManager_1.ModelManager.SceneTeamModel.ChangingRole = !1))
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("SceneTeam", 49, "队伍实体无法获取或非本机", [
                 "CreatureDataId",
@@ -501,7 +501,7 @@ class SceneTeamController extends ControllerBase_1.ControllerBase {
             "massage",
             e,
           ]),
-          SceneTeamController.seh(t);
+          SceneTeamController.ResponseChangeRole(t);
       else {
         var n = MathUtils_1.MathUtils.LongToNumber(e.CUs),
           l = ModelManager_1.ModelManager.CreatureModel.GetEntity(n);
@@ -591,7 +591,7 @@ class SceneTeamController extends ControllerBase_1.ControllerBase {
           IsRetain: l.MRs,
         });
       }
-      t.push({ PlayerId: n.W5n, CurrentGroupType: n.urh, Groups: o });
+      t.push({ PlayerId: n.W5n, CurrentGroupType: n.erh, Groups: o });
     }
     ModelManager_1.ModelManager.SceneTeamModel.UpdateAllPlayerData(t);
   }),

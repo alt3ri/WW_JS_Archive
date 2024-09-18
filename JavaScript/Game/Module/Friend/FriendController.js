@@ -412,7 +412,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
       );
   }
   static RequestSearchPlayerBasicInfoBySdkId(e) {
-    var r = new Protocol_1.Aki.Protocol.Geh();
+    var r = new Protocol_1.Aki.Protocol.Aeh();
     (r.Vxa = e),
       Net_1.Net.Call(22978, r, (e) => {
         if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs)

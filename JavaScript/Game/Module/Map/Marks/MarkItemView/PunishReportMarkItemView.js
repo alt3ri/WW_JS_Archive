@@ -28,7 +28,7 @@ class PunishReportMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
   OnSafeUpdate(e, t, i) {
     this.OZa.UpdateIconPath(), this.OnIconPathChanged(this.Holder.IconPath);
     var s,
-      n = this.OZa.IsPunishReportClaim();
+      n = this.OZa.IsPunishReportFinish();
     n &&
       ((s =
         ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(

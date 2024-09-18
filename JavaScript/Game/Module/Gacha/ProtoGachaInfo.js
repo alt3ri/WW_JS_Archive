@@ -22,12 +22,12 @@ class ProtoGachaPoolInfo {
       (this.BeginTime = MathUtils_1.MathUtils.LongToNumber(t.cps)),
       (this.EndTime = MathUtils_1.MathUtils.LongToNumber(t.dps)),
       (this.Title = t.tbs),
-      (this.Description = t.Rrh),
-      (this.UiType = t.Arh),
-      (this.ThemeColor = t.Drh),
-      (this.ShowIdList = t.wrh),
-      (this.UpList = t.Prh),
-      (this.PreviewIdList = t.Urh);
+      (this.Description = t.grh),
+      (this.UiType = t.frh),
+      (this.ThemeColor = t.prh),
+      (this.ShowIdList = t.vrh),
+      (this.UpList = t.Mrh),
+      (this.PreviewIdList = t.Srh);
     t = ConfigManager_1.ConfigManager.GachaConfig.GetGachaPoolConfig(this.Id);
     t && (this.Sort = t.Sort);
   }

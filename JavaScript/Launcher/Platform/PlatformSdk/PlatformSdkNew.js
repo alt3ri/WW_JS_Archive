@@ -173,9 +173,6 @@ class PlatformSdkNew {
   CheckUserPremium() {
     return 0;
   }
-  GetIfNeedQueryProductInfoForce() {
-    return !1;
-  }
   NotifyPlayStationPremium(e) {}
   CreatePlayerSession(e, r) {
     return "-1";

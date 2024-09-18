@@ -49,9 +49,9 @@ class PayPackageData {
       (this.TabId = t.mBs ?? 0),
       (this.Type = t.h5n ?? 3),
       (this.IsLock = t.pBs ?? !1),
-      (this.IsCanBuy = t.$rh ?? !0),
-      (this.IsRemind = t.jrh ?? !1),
-      (this.BuyCondition = t.Wrh ?? []),
+      (this.IsCanBuy = t.xrh ?? !0),
+      (this.IsRemind = t.brh ?? !1),
+      (this.BuyCondition = t.Brh ?? []),
       this.MFi(),
       this.vFi.SetGoodsData(this.ConvertToPayShopGoodsData()),
       this.vFi.SetPayGiftId(this.Id);

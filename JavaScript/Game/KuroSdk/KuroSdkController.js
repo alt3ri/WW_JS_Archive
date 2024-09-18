@@ -409,7 +409,7 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
       }, ConfigManager_1.ConfigManager.PayItemConfig.GetWaitPaySuccessTime()));
   }
   static RequestServerPlayStationPlayOnlyState() {
-    var e = new Protocol_1.Aki.Protocol.Heh();
+    var e = new Protocol_1.Aki.Protocol.Ueh();
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("KuroSdk", 28, "RequestServerPlayStationPlayOnlyState"),
       Net_1.Net.Call(28365, e, (e) => {
@@ -428,7 +428,7 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
       }),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("KuroSdk", 28, "上报屏蔽列表", ["length", o.length]);
-    e = new Protocol_1.Aki.Protocol.Jth();
+    e = new Protocol_1.Aki.Protocol.Fth();
     (e.Aza = o),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("KuroSdk", 28, "RequestServerPlayStationPlayOnlyState"),
@@ -442,7 +442,7 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
       });
   }
   static RequestChangeServerPlayStationPlayOnlyState(r) {
-    var e = new Protocol_1.Aki.Protocol.Feh();
+    var e = new Protocol_1.Aki.Protocol.weh();
     (e.Bxa = r),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(

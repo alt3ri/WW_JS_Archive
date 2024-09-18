@@ -1059,7 +1059,6 @@ class LoginController extends UiControllerBase_1.UiControllerBase {
                     r.Cvs ===
                     Protocol_1.Aki.Protocol.Q4n.Proto_HaveNoCharacter),
                   ModelManager_1.ModelManager.LoginModel.SetHasCharacter(!o),
-                  ModelManager_1.ModelManager.LoginModel.SetIsNewAccount(o),
                   o || r.Cvs === Protocol_1.Aki.Protocol.Q4n.KRs
                     ? (TimeUtil_1.TimeUtil.SetServerTimeStamp(r.Rws),
                       (e = Number(MathUtils_1.MathUtils.LongToBigInt(r.Rws))),

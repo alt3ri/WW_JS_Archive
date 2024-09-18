@@ -209,7 +209,7 @@ class ActivityBaseData {
       )),
       (this.P4e = t.K6n),
       (this.x4e = t.qps),
-      (this.x4a = t.yih),
+      (this.x4a = t.uih),
       this.OnInit(t);
   }
   Phrase(t) {
@@ -223,7 +223,7 @@ class ActivityBaseData {
       )),
       (this.P4e = t.K6n),
       (this.x4e = t.qps),
-      (this.x4a = t.yih);
+      (this.x4a = t.uih);
     var e = new StringBuilder_1.StringBuilder();
     e.Append(t.s5n),
       e.Append("_"),

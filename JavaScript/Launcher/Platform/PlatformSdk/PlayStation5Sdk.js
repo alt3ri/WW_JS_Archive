@@ -408,23 +408,23 @@ class PlayStation5Sdk extends PlatformSdkNew_1.PlatformSdkNew {
     let u = !1;
     var d = [];
     for (let e = 0; e < r.Num(); e++) {
-      var c = r.Get(e);
-      const _ = c.id;
-      var S,
+      var S = r.Get(e);
+      const _ = S.id;
+      var c,
         h = s.find((e) => e.channelGoodsId === _);
       h
-        ? (((S = new PlatformSdkNew_1.DisplayProductInfo()).GoodId = h.goodsId),
-          (S.Price = c.displayPrice),
-          (S.ChannelGoodId = _),
-          (S.GoodLabel = c.label),
-          (S.Desc = c.description),
-          (S.Name = c.displayName),
-          d.push(S))
+        ? (((c = new PlatformSdkNew_1.DisplayProductInfo()).GoodId = h.goodsId),
+          (c.Price = S.displayPrice),
+          (c.ChannelGoodId = _),
+          (c.GoodLabel = S.label),
+          (c.Desc = S.description),
+          (c.Name = S.displayName),
+          d.push(c))
         : (LauncherLog_1.LauncherLog.Error(
             "[PlatformSdkNew][PlayStation5Sdk] QueryProductInfo Error, PSN商品信息在SDK商品配置中找不到",
             ["PSN商品信息 psnId", _],
-            ["PSN商品信息 displayName", c.displayName],
-            ["PSN商品信息 displayPrice", c.displayPrice],
+            ["PSN商品信息 displayName", S.displayName],
+            ["PSN商品信息 displayPrice", S.displayPrice],
           ),
           (u = !0));
     }
@@ -656,9 +656,6 @@ class PlayStation5Sdk extends PlatformSdkNew_1.PlatformSdkNew {
           "[PlatformSdkNew][PlayStation5Sdk] Login failed, empty authCode",
         ),
         this.Xza);
-  }
-  GetIfNeedQueryProductInfoForce() {
-    return !0;
   }
   RefreshAccessToken(e) {
     this.$za = e;

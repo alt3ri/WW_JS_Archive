@@ -8,6 +8,7 @@ const UE = require("ue"),
   PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
   TabComponent_1 = require("../../Common/TabComponent/TabComponent"),
@@ -166,6 +167,7 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
       this.UpdateTabs(e),
       this.kot(),
       this.OnDiscountShopAfterShow(),
+      this.KZa(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Shop", 11, "PayShop:TabView 界面AfterShow", [
           "ViewName",
@@ -222,6 +224,23 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
   }
   OnBeforeDestroy() {
     this.TabGroup.Destroy(), this.LoopScrollView.ClearGridProxies();
+  }
+  async KZa() {
+    var e =
+      PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetIfNeedQueryProductInfoForce();
+    if (!e) {
+      var t = new Array();
+      for (const i of this.PayShopGoodsList)
+        i instanceof PayShopGoods_1.PayShopGoods
+          ? i.IsDirect() &&
+            "" !== i.GetGoodsData().GetProductId() &&
+            t.push(i.GetGoodsData().GetProductId())
+          : t.push(i.ProductId);
+      await ControllerHolder_1.ControllerHolder.PayItemController.QueryProductInfoAsync(
+        t,
+      ),
+        this.LoopScrollView.RefreshAllGridProxies();
+    }
   }
 }
 exports.DiscountShopView = DiscountShopView;
